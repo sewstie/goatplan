@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  engine:
+    name: C++ engine (build + tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S engine -B engine/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror"
+      - name: Build
+        run: cmake --build engine/build -j
+      - name: Test
+        run: ctest --test-dir engine/build --output-on-failure
+
+  web:
+    name: Web app (lint + build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build

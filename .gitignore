@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# C++ / CMake build output
+engine/build/
+build/
+cmake-build-*/
+compile_commands.json
+
+# WebAssembly output (rebuilt from engine/)
+apps/web/public/wasm/
+
+# Downloaded data (large, re-fetchable). Fixtures are kept.
+data/raw/*
+!data/raw/.gitkeep
+
+# Env files
+.env
+.env*.local
+
+# Editors / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+*.log
