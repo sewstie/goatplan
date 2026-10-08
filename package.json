@@ -1,0 +1,19 @@
+{
+  "name": "goatplan",
+  "private": true,
+  "description": "Course planner for WPI students: pick courses, compare sections and professors, build a conflict-free term schedule.",
+  "workspaces": [
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "npm run dev -w web",
+    "build": "npm run build -w web",
+    "lint": "npm run lint -w web",
+    "data:fetch": "node scripts/fetch-courses.mjs",
+    "engine:build": "cmake -S engine -B engine/build -DCMAKE_BUILD_TYPE=Release && cmake --build engine/build -j",
+    "engine:test": "npm run engine:build && ctest --test-dir engine/build --output-on-failure"
+  }
+}
