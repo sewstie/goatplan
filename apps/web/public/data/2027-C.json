@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05"},
-  "generatedAt": "2026-10-11T21:26:05Z",
+  "generatedAt": "2026-10-12T01:07:49Z",
   "courses": [
     {
       "code": "AB 1533",
@@ -478,7 +478,7 @@
       "level": "Undergraduate",
       "description": "BB 1001. Introduction to Biology (Cat. I; 1/3 unit) This course is designed for students seeking a broad overview of biologic concepts, especially at the cell and organism level. It is conducted in an active style including the use of case studies, class discussion/participation, and classroom polling systems. The major goal of this course is to help students become more informed citizens, skeptical when presented with data in the media, and knowledgeable enough to question and make informed decisions about scientific advances and science policy. It will primarily focus on current topics which may include genetic engineering, viruses and vaccines, antibiotic resistant bacteria, the evolution of infectious diseases. This course is intended for non-life science majors. Recommended background: High School Biology",
       "sections": [
-        {"id":"BB 1001-C01","code":"C01","type":"lecture","status":"open","enrolled":61,"capacity":120,"waitlist":{"taken":0,"capacity":25},"instructors":["Benjamin Nephew"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Unity Hall 400"}]}
+        {"id":"BB 1001-C01","code":"C01","type":"lecture","status":"open","enrolled":62,"capacity":120,"waitlist":{"taken":0,"capacity":25},"instructors":["Benjamin Nephew"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Unity Hall 400"}]}
       ],
       "options": [
         ["BB 1001-C01"]
@@ -2072,7 +2072,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces the theoretical foundations of computer science. These form the basis for a more complete understanding of the proficiency in computer science.Topics include computational models, formal languages, and an introduction to compatibility and complexity theory, including NP-completeness.Students will be expected to complete a variety of exercises and proofs.Undergraduate credit may not be earned both for this course and for CS 5003.Recommended Background: Discrete mathematics (CS 2022 or equivalent) and algorithms (CS 2223 or equivalent).Students who have credit for CS 4121 may not receive credit for CS 3133.",
       "sections": [
-        {"id":"CS 3133-C01","code":"C01","type":"lecture","status":"open","enrolled":76,"capacity":100,"waitlist":{"taken":0,"capacity":20},"instructors":["Michael Engling"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]}
+        {"id":"CS 3133-C01","code":"C01","type":"lecture","status":"open","enrolled":75,"capacity":100,"waitlist":{"taken":0,"capacity":20},"instructors":["Michael Engling"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]}
       ],
       "options": [
         ["CS 3133-C01"]
@@ -2100,7 +2100,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces the student to the design, use, and application of database management systems.Topics include the relational data model, relational query languages, design theory, and conceptual data design and modeling for relational database design. Techniques that provide for data independence and minimal redundancy will be discussed.Students will be expected to design and implement database system applications.Undergraduate credit may not be earned both for this course and for CS 4431or CS 542.Recommended background: CS 2022 and either CS 2102, CS 2103, or CS 2119.",
       "sections": [
-        {"id":"CS 3431-C01","code":"C01","type":"lecture","status":"open","enrolled":27,"capacity":75,"waitlist":{"taken":0,"capacity":20},"instructors":["Rodica Neamtu"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":540,"end":650,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]}
+        {"id":"CS 3431-C01","code":"C01","type":"lecture","status":"open","enrolled":28,"capacity":75,"waitlist":{"taken":0,"capacity":20},"instructors":["Rodica Neamtu"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":540,"end":650,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]}
       ],
       "options": [
         ["CS 3431-C01"]
@@ -2428,7 +2428,7 @@
       "level": "Graduate",
       "description": "This course gives a broad survey of artificial intelligence. The course will cover methods from search, probabilistic reasoning, and learning, among other topics. Selected topics involving the applications of these tools are investigated. Such topics might include natural language understanding, scene understanding, game playing, and planning. (Prerequisites: familiarity with data structures and a high-level programming language.)",
       "sections": [
-        {"id":"CS 534-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Dachun Sun"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
+        {"id":"CS 534-S01","code":"S01","type":"lecture","status":"open","enrolled":8,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Dachun Sun"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
         {"id":"CS 534-S03","code":"S03","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Chun-Kit Ngan"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
@@ -3106,8 +3106,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course covers the systematic design of advanced digital systems using FPGAs. The emphasis is on top-down design starting with high level models using a hardware description language (such as VHDL or Verilog) as a tool for the design, synthesis, modeling, test bench development, and testing and verification of complete digital systems. These types of systems include the use of embedded soft core processors as well as lower level modules created from custom logic or imported IP blocks. Interfaces will be developed to access devices external to the FPGA such as memory or peripheral communication devices. The integration of tools and design methodologies will be addressed through a discussion of system on a chip (SOC) integration, methodologies, design for performance, and design for test. Topics: Hardware description languages, system modeling, synthesis, simulation and testing of digital circuits; Design integration to achieve specific system design goals including architecture, planning and integration, and testing; Use of soft core and IP modules to meet specific architecture and design goals. Laboratory exercises: Students will design and implement a complete sophisticated embedded digital system on an FPGA. HDL design of digital systems including lower level components and integration of higher level IP cores, simulating the design with test benches, and synthesizing and implementing these designs with FPGA development boards including interfacing to external devices. Recommended background: ECE 2029 and ECE 2049 Students who have received credit for ECE 3810 may not receive credit for ECE 3829.",
       "sections": [
-        {"id":"ECE 3829-CL01","code":"CL01","type":"lecture","status":"open","enrolled":56,"capacity":84,"waitlist":{"taken":0,"capacity":20},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Atwater Kent 219"}]},
-        {"id":"ECE 3829-CX01","code":"CX01","type":"lab","status":"open","enrolled":23,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":480,"end":650,"location":"Atwater Kent 317 ECE Lab"}]},
+        {"id":"ECE 3829-CL01","code":"CL01","type":"lecture","status":"open","enrolled":57,"capacity":84,"waitlist":{"taken":0,"capacity":20},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Atwater Kent 219"}]},
+        {"id":"ECE 3829-CX01","code":"CX01","type":"lab","status":"open","enrolled":24,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":480,"end":650,"location":"Atwater Kent 317 ECE Lab"}]},
         {"id":"ECE 3829-CX02","code":"CX02","type":"lab","status":"open","enrolled":18,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]},
         {"id":"ECE 3829-CX03","code":"CX03","type":"lab","status":"open","enrolled":15,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]}
       ],
@@ -3662,7 +3662,7 @@
       "level": "Undergraduate",
       "description": "Systems Thinking is a holistic approach to problem solving that recognizes that system behavior and performance are the result of underlying structures. Systems Thinking provides tools that enable program managers, systems engineers, scientists, economists, and business managers to identify, understand, and control systems in order to improve system performance. The Systems Thinking analysis accounts for feedback and resistance to change often exhibited by real world systems. In this course, students will study system identification and delineation, causal loops and feedback diagrams, stock-and-flow diagrams, system leverage points, delays and oscillations, mental models and unintended consequences, and behavior patterns; and use these concepts to improve the performance of engineering, business, and complex social systems. The course will explore great system failures, how they might have been avoided, and how we can learn from them. Finally, students will learn how Systems Thinking explains the occasional irrational behavior of individuals, departments, businesses, and governments. Examples covered in this course may include the failure of strictly technological “fixes” to social issues (as in the government’s installation of wells in Togo in the 1980s,) the 2008 financial meltdown, the failure of the Lockheed L-188 Electra Turboprop Airplane, the failure of the Tacoma Narrows Bridge (“Galloping Gertie”) in 1940, the decline of many commercial fisheries around the world, the failure and success of companies like Research In Motion and Apple, and the unintended consequences of combating drug-related crime. Recommended background: None.",
       "sections": [
-        {"id":"ES 1500-C01","code":"C01","type":"lecture","status":"open","enrolled":16,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Jamie Monat"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Kaven Hall 204"}]}
+        {"id":"ES 1500-C01","code":"C01","type":"lecture","status":"open","enrolled":15,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Jamie Monat"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Kaven Hall 204"}]}
       ],
       "options": [
         ["ES 1500-C01"]
@@ -3794,8 +3794,8 @@
       "level": "Undergraduate",
       "description": "Cat. I Characteristics of control systems. Mathematical representation of control components and systems. Laplace transforms, transfer functions, block and signal flow diagrams. Transient response analysis. Introduction to the root-locus method and stability analysis. Frequency response techniques including Bode, polar, and Nichols plots. This sequence of courses in the field of control engineering (ES 3011) is generally available to all juniors and seniors regardless of department. A good background in mathematics is required; familiarity with Laplace transforms, complex variables and matrices is desirable but not mandatory. All students taking Control Engineering I should have an understanding of ordinary differential equations (MA 2051 or equivalent) and basic physics through electricity and magnetism (PH 1120/1121). Control Engineering I may be considered a terminal course, or it may be the first course for those students wishing to do extensive work in this field. Students taking the sequence of two courses will be prepared for graduate work in the field. Recommended background: Ordinary Differential Equations (MA 2051) and Electricity and Magnestism (PH 1120, PH 1121). Students may not receive credit for both ES 3011 and ECE 3012",
       "sections": [
-        {"id":"ES 3011-CL01","code":"CL01","type":"lecture","status":"waitlist","enrolled":60,"capacity":60,"waitlist":{"taken":1,"capacity":15},"instructors":["Hunter Zhang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Salisbury Labs 411"}]},
-        {"id":"ES 3011-CX01","code":"CX01","type":"lab","status":"open","enrolled":29,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Hunter Zhang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":590,"location":"Higgins Labs 031 ME Computer Lab"}]},
+        {"id":"ES 3011-CL01","code":"CL01","type":"lecture","status":"open","enrolled":59,"capacity":60,"waitlist":{"taken":1,"capacity":15},"instructors":["Hunter Zhang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Salisbury Labs 411"}]},
+        {"id":"ES 3011-CX01","code":"CX01","type":"lab","status":"open","enrolled":28,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Hunter Zhang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":590,"location":"Higgins Labs 031 ME Computer Lab"}]},
         {"id":"ES 3011-CX02","code":"CX02","type":"lab","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Hunter Zhang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Higgins Labs 031 ME Computer Lab"}]}
       ],
       "options": [
@@ -3843,7 +3843,7 @@
       "level": "Undergraduate",
       "description": "Cat. I In the modern competitive and global world confronting today’s engineers, innovation and entrepreneurship (I&E) are increasingly important perspectives for every engineering career. Individuals proficient in I&E are likely to possess unique competitive advantage over those who do not. This course develops the foundation for developing such proficiency by examining the functional roles of the business/commercial aspects of engineering disciplines as well as establishing a basis for innovative thinking. Specific cases where I&E has led to new products innovation and new enterprise development will supplement course materials.",
       "sections": [
-        {"id":"ETR 1100-C01","code":"C01","type":"lecture","status":"open","enrolled":36,"capacity":50,"waitlist":{"taken":8,"capacity":10},"instructors":["Ardian Preci"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Innovation Studio 105 Active Learning Classroom"}]}
+        {"id":"ETR 1100-C01","code":"C01","type":"lecture","status":"open","enrolled":36,"capacity":50,"waitlist":{"taken":9,"capacity":10},"instructors":["Ardian Preci"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Innovation Studio 105 Active Learning Classroom"}]}
       ],
       "options": [
         ["ETR 1100-C01"]
@@ -5636,7 +5636,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to manufacturing science and engineering andprototype part production. It emphasizes CNC (computer-controlled)machining. Students will learn how to go from a solid (CAD, computer-aideddesign) model to a machined part, using CAM software (computer-aidedmanufacturing) and CNC machining. They will also be exposed to associatedissues in manufacturing process analysis, engineering design, material science,and in dimensional and surface metrology. Using machining as an example, thescience of manufacturing processes is developed in a combination of class workand laboratory experience. The laboratory experience includes an experimentalcomponent that relates process variables in machining with performance andmachined part quality. Students whose project work will necessitate fabricationof parts and those who want a background in manufacturing process science andengineering should take this course.",
       "sections": [
-        {"id":"ME 1800-CL01","code":"CL01","type":"lecture","status":"open","enrolled":63,"capacity":72,"waitlist":{"taken":12,"capacity":15},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Unity Hall 500"}]},
+        {"id":"ME 1800-CL01","code":"CL01","type":"lecture","status":"open","enrolled":63,"capacity":72,"waitlist":{"taken":11,"capacity":15},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Unity Hall 500"}]},
         {"id":"ME 1800-CX01","code":"CX01","type":"lab","status":"closed","enrolled":18,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Washburn 107 Machine Shop"}]},
         {"id":"ME 1800-CX02","code":"CX02","type":"lab","status":"closed","enrolled":18,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Washburn 107 Machine Shop"}]},
         {"id":"ME 1800-CX03","code":"CX03","type":"lab","status":"closed","enrolled":18,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Washburn 107 Machine Shop"}]},
@@ -8257,7 +8257,7 @@
       "level": "Undergraduate",
       "description": "TH 3400: Lighting Design (Units: 1/3; Cat. II) This course examines the principles and practice of theatrical lighting design. Students will develop skills in all parts of the design process, from play analysis and visual research to system design and cueing. Through class discussion, hands-on activities, and creative design projects, students will develop their abilities to recognize, develop, communicate, and execute lighting design ideas. Though primarily focused on live performance (theatre, dance, opera, music, etc.), this course will also teach ideas and skills applicable to other mediums (architecture, film/TV, animation, etc.). Students may not receive credit for TH 3400 and TH340X. Recommended background: This course is suitable for anyone interested in environmental/performance design. TH 2400: Fundamentals of Theatrical Production Design provides useful (though not essential) preparation for this course",
       "sections": [
-        {"id":"TH 3400-C01","code":"C01","type":"lecture","status":"open","enrolled":0,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Laura Eckelman"],"delivery":"in-person","meetings":[{"days":["Mon","Wed","Thu"],"start":720,"end":830,"location":"Little Theatre / Riley Commons"}]}
+        {"id":"TH 3400-C01","code":"C01","type":"lecture","status":"open","enrolled":1,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Laura Eckelman"],"delivery":"in-person","meetings":[{"days":["Mon","Wed","Thu"],"start":720,"end":830,"location":"Little Theatre / Riley Commons"}]}
       ],
       "options": [
         ["TH 3400-C01"]
@@ -8335,7 +8335,7 @@
       "sections": [
         {"id":"WPE 1012-C01","code":"C01","type":"workshop","status":"open","enrolled":24,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["Armando Dunn"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":840,"end":890,"location":"Recreation Center Courts 1-2"}]},
         {"id":"WPE 1012-C02","code":"C02","type":"workshop","status":"open","enrolled":23,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["John Salivonchik"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]},
-        {"id":"WPE 1012-C03","code":"C03","type":"workshop","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["Christopher Bartley"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":540,"end":590,"location":"Recreation Center Courts 1-2"}]}
+        {"id":"WPE 1012-C03","code":"C03","type":"workshop","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["Christopher Bartley"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":540,"end":590,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
         ["WPE 1012-C01"],
