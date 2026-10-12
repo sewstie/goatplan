@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05"},
-  "generatedAt": "2026-10-12T01:07:49Z",
+  "generatedAt": "2026-10-12T18:51:49Z",
   "courses": [
     {
       "code": "AB 1533",
@@ -346,7 +346,7 @@
       "level": "Undergraduate",
       "description": "What is the role of art to be in the modern world? Can art be a vehicle for social change, or should art be a self-critical discipline that pursues primarily aesthetic ends? What is the relationship between art and mass culture? Using primary sources, this course focuses on some of the theorists and artistic trends since the mid-nineteenth century that have sought to resolve this dilemma. These include: Ruskin, Morris and the Arts and Crafts Movement; Art for Art’s Sake; the German Werkbund and the Bauhaus; American industrial design",
       "sections": [
-        {"id":"AR 3112-C01","code":"C01","type":"lecture","status":"open","enrolled":1,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["David Samson"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Olin Hall 218"}]}
+        {"id":"AR 3112-C01","code":"C01","type":"lecture","status":"open","enrolled":2,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["David Samson"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Olin Hall 218"}]}
       ],
       "options": [
         ["AR 3112-C01"]
@@ -2039,7 +2039,7 @@
       "description": "Cat. I This course provides the student with an understanding of the basic components of a general-purpose operating system. Topics include processes, process management, synchronization, input/output devices and their programming, interrupts, memory management, resource allocation, and an introduction to file systems. Students will be expected to design and implement a large piece ofsystem software in the C programming language.Undergraduate credit may not be earned both for this course and for CS 502.Recommended background: CS 2303 or CS 2301, and CS 2011.",
       "sections": [
         {"id":"CS 3013-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":53,"capacity":53,"waitlist":{"taken":0,"capacity":20},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Washburn 229"}]},
-        {"id":"CS 3013-C02","code":"C02","type":"lecture","status":"open","enrolled":28,"capacity":75,"waitlist":{"taken":0,"capacity":20},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Washburn 229"}]}
+        {"id":"CS 3013-C02","code":"C02","type":"lecture","status":"open","enrolled":29,"capacity":75,"waitlist":{"taken":0,"capacity":20},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Washburn 229"}]}
       ],
       "options": [
         ["CS 3013-C01"],
@@ -3998,7 +3998,7 @@
       "description": "This course provides an introduction to automatically activated fire suppression and detection systems. A general overview is presented of relevant physical and chemical phenomena, and commonly used hardware in automatic sprinklers, gaseous agent, foam and dry chemical systems. Typical contemporary installations and current installation and approval standards are reviewed.",
       "sections": [
         {"id":"FP 553-S01","code":"S01","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Milosh Puchovsky"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
-        {"id":"FP 553-S02","code":"S02","type":"lecture","status":"open","enrolled":17,"capacity":18,"waitlist":{"taken":0,"capacity":5},"instructors":["Milosh Puchovsky"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":540,"end":710,"location":"Gateway Park 2 Room 1226"}]}
+        {"id":"FP 553-S02","code":"S02","type":"lecture","status":"open","enrolled":16,"capacity":18,"waitlist":{"taken":0,"capacity":5},"instructors":["Milosh Puchovsky"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":540,"end":710,"location":"Gateway Park 2 Room 1226"}]}
       ],
       "options": [
         ["FP 553-S01"],
@@ -5791,7 +5791,7 @@
       "level": "Graduate",
       "description": "(2 credits) Overview of stability concepts and examination of various methods for assessing stability such as linearization and Lyapunov methods. Introduction to various design methods based on linearization, sliding modes, adaptive control, and feedback linearization. Demonstration and performance analysis on engineering systems such as flexible robotic manipulators, mobile robots, spacecraft attitude control and aircraft control systems. Control synthesis and analysis is performed using Matlab®/Simulink®. (Prerequisites: Familiarity with ordinary differential equations, introductory control theory at the undergraduate level, fundamentals of linear algebra. Familiarity with Matlab® is strongly recommended.)",
       "sections": [
-        {"id":"ME 5221-C01","code":"C01","type":"lecture","status":"open","enrolled":9,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Mustapha Fofana"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Washburn 229"}]}
+        {"id":"ME 5221-C01","code":"C01","type":"lecture","status":"open","enrolled":10,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Mustapha Fofana"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Washburn 229"}]}
       ],
       "options": [
         ["ME 5221-C01"]
@@ -5989,7 +5989,7 @@
       "level": "Graduate",
       "description": "Seminars on current issues related to various areas of mechanical engineering are presented by authorities in their fields. All full-time mechanical engineering students are required to register and attend.",
       "sections": [
-        {"id":"ME 591-C01","code":"C01","type":"seminar","status":"open","enrolled":42,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Kedar Prashant Shete"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"ME 591-C01","code":"C01","type":"seminar","status":"open","enrolled":43,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Kedar Prashant Shete"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["ME 591-C01"]
@@ -7817,8 +7817,8 @@
       "level": "Graduate",
       "description": "This course demonstrates the synergy between the control theory and robotics through applications and provides an in-depth coverage of control of manipulators and mobile robots. Topics include linearization, state space modeling and control of linear and nonlinear systems, feedback control, Lyapunov stability analysis of nonlinear control systems, set-point control, trajectory and motion control, compliance and force control, impedance control, adaptive robot control, robust control, and other advanced control topics. Course projects will emphasize simulation and practical implementation of control systems for robotic applications. (Prerequisites: RBE 500 or equivalent, Linear algebra; Differential equations; Linear systems and control theory as in ECE 504 or consent of the instructor)",
       "sections": [
-        {"id":"RBE 502-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Akin Tatoglu"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
-        {"id":"RBE 502-S02","code":"S02","type":"lecture","status":"open","enrolled":20,"capacity":60,"waitlist":{"taken":0,"capacity":40},"instructors":["Giovanni Pittiglio"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Goddard Hall 227 Classroom"}]}
+        {"id":"RBE 502-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Akin Tatoglu"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
+        {"id":"RBE 502-S02","code":"S02","type":"lecture","status":"open","enrolled":21,"capacity":60,"waitlist":{"taken":0,"capacity":40},"instructors":["Giovanni Pittiglio"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Goddard Hall 227 Classroom"}]}
       ],
       "options": [
         ["RBE 502-S01"],

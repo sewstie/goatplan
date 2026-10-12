@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-10-12T01:07:49Z",
+  "generatedAt": "2026-10-12T18:51:49Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -259,7 +259,7 @@
       "level": "Undergraduate",
       "description": "The successive phases of modern art, especially painting, are examined in light of the late-19th-century break with the 600-year old tradition of representation. Topics covered include: non-objective art and abstraction—theory and practice, primitivism in modern art, surrealism and the irrational, the impact of photography on modern painting, cubism and collage, regionalism and abstract expressionism as American art forms, Pop art and popular culture, and the problem of concept versus representation in art. (Formerly AR 2300.)",
       "sections": [
-        {"id":"AR 2111-D01","code":"D01","type":"lecture","status":"open","enrolled":17,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Salisbury Labs 011"}]}
+        {"id":"AR 2111-D01","code":"D01","type":"lecture","status":"open","enrolled":18,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Salisbury Labs 011"}]}
       ],
       "options": [
         ["AR 2111-D01"]
@@ -3088,7 +3088,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides an introduction to the analysis and design of continuoustime control systems. Topics covered in the course include: modeling in the frequency and time domain, characteristics of control systems time response, reduction of multiple subsystems, analysis of systems transient response, stability, steady-state errors, root locus techniques, design of PI, PD, and PID controllers via root locus, frequency response techniques, and design via frequency response. The course will not have a formal laboratory. It will include projects which will require the use of software such as MATLAB, Simulink, or LabVIEW for analysis and design of control systems. Recommended Background: Ordinary Differential Equations (MA 2051), Sensors, Circuits, and Systems (ECE 2019), and Continuous-time Signal and System Analysis (ECE 2311). Students may not receive credit for both ES 3011 and ECE 3012.",
       "sections": [
-        {"id":"ECE 3012-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":40,"capacity":40,"waitlist":{"taken":9,"capacity":15},"instructors":["Bo Tang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu"],"start":900,"end":950,"location":"Washburn 229"}]}
+        {"id":"ECE 3012-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":40,"capacity":40,"waitlist":{"taken":8,"capacity":15},"instructors":["Bo Tang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu"],"start":900,"end":950,"location":"Washburn 229"}]}
       ],
       "options": [
         ["ECE 3012-D01"]
@@ -4053,7 +4053,7 @@
       "description": "This course provides an introduction to automatically activated fire suppression and detection systems. A general overview is presented of relevant physical and chemical phenomena, and commonly used hardware in automatic sprinklers, gaseous agent, foam and dry chemical systems. Typical contemporary installations and current installation and approval standards are reviewed.",
       "sections": [
         {"id":"FP 553-S01","code":"S01","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Milosh Puchovsky"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
-        {"id":"FP 553-S02","code":"S02","type":"lecture","status":"open","enrolled":17,"capacity":18,"waitlist":{"taken":0,"capacity":5},"instructors":["Milosh Puchovsky"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":540,"end":710,"location":"Gateway Park 2 Room 1226"}]}
+        {"id":"FP 553-S02","code":"S02","type":"lecture","status":"open","enrolled":16,"capacity":18,"waitlist":{"taken":0,"capacity":5},"instructors":["Milosh Puchovsky"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":540,"end":710,"location":"Gateway Park 2 Room 1226"}]}
       ],
       "options": [
         ["FP 553-S01"],
@@ -4342,7 +4342,7 @@
       "level": "Undergraduate",
       "description": "This course uses interdisciplinary, thematic, and case study approaches to explore sexuality in the modern world. It takes as its starting point the understanding that sex and power are interrelated and that they manifest differently in different social and cultural contexts (including spaces and places to which WPI students may travel as part of their global projects experience). Further, this course recognizes that the categorization, experiences, and treatment of queer persons and bodies and non-normative sexuality have changed over time and space, as have sexual mores and conceptualizations of “purity” and “deviance,” which are linked to class, race, dis/ability, and power relations within and between states. This course may include the study of the history of sexuality in the United States and globally; national and international activism around sexual liberation and LGBTQ+ pride; religion and sexuality; the relationship of LGBTQ+ activism to other civil rights movements; sex work; sexual violence; cultural representations of queer and non-normative sexualities, and “anti-genderism” and authoritarian populism. This course may be repeated for different topics. Recommended background: None",
       "sections": [
-        {"id":"HU 2901-D01","code":"D01","type":"lecture","title":"Topics in Sexuality and LGBTQ+ Studies: Queering Bioethics","status":"open","enrolled":7,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Elizabeth Victor"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Olin Hall 109"}]}
+        {"id":"HU 2901-D01","code":"D01","type":"lecture","title":"Topics in Sexuality and LGBTQ+ Studies: Queering Bioethics","status":"open","enrolled":8,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Elizabeth Victor"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Olin Hall 109"}]}
       ],
       "options": [
         ["HU 2901-D01"]
@@ -4594,8 +4594,8 @@
       "level": "Undergraduate",
       "description": "Game Audio II serves as an intermediate level audio design course, where digital recording principles and techniques are studied along with their practical applications for use in game development. Students will also gain deeper insight into 2-D vs. 3-D audio propagation, as well as learn more complex techniques in digital editing, mixing, signal processing, mastering, and playback strategies. Lab exercises may include interactive dialogue scripting and recording; loop-based music production; custom sound effects creation and Foley design; and audio engine integration. A team project will be the creation of a comprehensive game sound effects library over the course of the term. Recommended background: Game Audio (IMGD 2030)",
       "sections": [
-        {"id":"IMGD 3030-DL01","code":"DL01","type":"lecture","status":"open","enrolled":12,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Unity Hall 235 IMGD Lab"}]},
-        {"id":"IMGD 3030-DX01","code":"DX01","type":"lab","status":"open","enrolled":12,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":830,"location":"Unity Hall 235 IMGD Lab"}]}
+        {"id":"IMGD 3030-DL01","code":"DL01","type":"lecture","status":"open","enrolled":13,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Unity Hall 235 IMGD Lab"}]},
+        {"id":"IMGD 3030-DX01","code":"DX01","type":"lab","status":"open","enrolled":13,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":830,"location":"Unity Hall 235 IMGD Lab"}]}
       ],
       "options": [
         ["IMGD 3030-DL01","IMGD 3030-DX01"]
@@ -4665,7 +4665,7 @@
       "level": "Undergraduate",
       "description": "Cat. II Level Design and Environmental Storytelling This course covers the broad topic of designing environments, maps, and spaces for games and interactive media. The course uses a variety of lenses, such as architecture, visual composition, drama, and interactive design, introducing key concepts through texts, analyzing them in designed spaces from digital media and elsewhere, and then applying them through creative work in a range of formats. Interactive spaces embody more than the tools, perspectives, or disciplines they are built from, and this course focuses on mastery of overall design principles as a synthesis of these, including presentation of finished works in document, image, and video capture. Recommended background includes familiarity with 3d art and design software, interactive design fundamentals, such as AR 2101 and IMGD 2740, and experience with the development cycle, such as IMGD 1001 and IMGD 2900.",
       "sections": [
-        {"id":"IMGD 4700-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":20,"capacity":20,"waitlist":{"taken":7,"capacity":10},"instructors":["Ben Schneider"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Kaven Hall 203 CARS Computer Lab"}]}
+        {"id":"IMGD 4700-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":20,"capacity":20,"waitlist":{"taken":8,"capacity":10},"instructors":["Ben Schneider"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Kaven Hall 203 CARS Computer Lab"}]}
       ],
       "options": [
         ["IMGD 4700-D01"]
@@ -5628,7 +5628,7 @@
       "sections": [
         {"id":"ME 3902-D01","code":"D01","type":"lecture","status":"open","enrolled":29,"capacity":30,"waitlist":{"taken":1,"capacity":10},"instructors":["Reza Ebadi"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":540,"end":710,"location":"Higgins Labs 031 ME Computer Lab"}]},
         {"id":"ME 3902-D02","code":"D02","type":"lecture","status":"open","enrolled":25,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Reza Ebadi"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":780,"end":950,"location":"Higgins Labs 031 ME Computer Lab"}]},
-        {"id":"ME 3902-D03","code":"D03","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":5,"capacity":10},"instructors":["Ahmet Sabuncu"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":770,"location":"Higgins Labs 031 ME Computer Lab"}]},
+        {"id":"ME 3902-D03","code":"D03","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":4,"capacity":10},"instructors":["Ahmet Sabuncu"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":770,"location":"Higgins Labs 031 ME Computer Lab"}]},
         {"id":"ME 3902-D04","code":"D04","type":"lecture","status":"closed","enrolled":20,"capacity":20,"waitlist":{"taken":10,"capacity":10},"instructors":["Ahmet Sabuncu"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":780,"end":950,"location":"Higgins Labs 031 ME Computer Lab"}]}
       ],
       "options": [
@@ -5820,7 +5820,7 @@
       "level": "Graduate",
       "description": "(2 credits) The two introductory classes on materials science (MTE 511 and MTE 512) describe the structure property relationships in materials. The purpose of this class is to provide a basic knowledge of the principles pertaining to the physical, mechanical and chemical properties of materials. The primary focus of this class will be on mechanical properties. The thermal, tensile, compressive, flexural and shear properties of metallic alloys, ceramics and glasses and plastics will be discussed. Fundamental aspects of fracture mechanics and viscoelasticity will be presented. An overview of dynamic properties such as fatigue, impact and creep will be provided. The relationship between the structural parameters and the preceding mechanical properties will be described. Basic composite theories will be presented to describe fiber-reinforced composites and nanocomposites. Various factors associated with material degradation during use will be discussed. Some introductory definitions of electrical and optical properties will be outlined. (Prerequisites: senior or graduate standing or consent of the instructor.) Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 594P).",
       "sections": [
-        {"id":"ME 5312-D01","code":"D01","type":"lecture","status":"open","enrolled":32,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Thomas Christiansen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Innovation Studio 203 Active Learning Classroom South"}]}
+        {"id":"ME 5312-D01","code":"D01","type":"lecture","status":"open","enrolled":33,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Thomas Christiansen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Innovation Studio 203 Active Learning Classroom South"}]}
       ],
       "options": [
         ["ME 5312-D01"]
@@ -5892,7 +5892,7 @@
       "level": "Graduate",
       "description": "Seminars on current issues related to various areas of mechanical engineering are presented by authorities in their fields. All full-time mechanical engineering students are required to register and attend.",
       "sections": [
-        {"id":"ME 591-D01","code":"D01","type":"seminar","status":"open","enrolled":43,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Jiawei Yang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Olin Hall 107"}]}
+        {"id":"ME 591-D01","code":"D01","type":"seminar","status":"open","enrolled":44,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Jiawei Yang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Olin Hall 107"}]}
       ],
       "options": [
         ["ME 591-D01"]
@@ -6311,7 +6311,7 @@
       "level": "Graduate",
       "description": "(2 credits) The two introductory classes on materials science (MTE 511 and MTE 512) describe the structure property relationships in materials. The purpose of this class is to provide a basic knowledge of the principles pertaining to the physical, mechanical and chemical properties of materials. The primary focus of this class will be on mechanical properties. The thermal, tensile, compressive, flexural and shear properties of metallic alloys, ceramics and glasses and plastics will be discussed. Fundamental aspects of fracture mechanics and viscoelasticity will be presented. An overview of dynamic properties such as fatigue, impact and creep will be provided. The relationship between the structural parameters and the preceding mechanical properties will be described. Basic composite theories will be presented to describe fiber-reinforced composites and nanocomposites. Various factors associated with material degradation during use will be discussed. Some introductory definitions of electrical and optical properties will be outlined. (Prerequisites: senior or graduate standing or consent of the instructor.) Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 594P).",
       "sections": [
-        {"id":"MTE 512-D01","code":"D01","type":"lecture","status":"open","enrolled":32,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Thomas Christiansen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Innovation Studio 203 Active Learning Classroom South"}]}
+        {"id":"MTE 512-D01","code":"D01","type":"lecture","status":"open","enrolled":33,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Thomas Christiansen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Innovation Studio 203 Active Learning Classroom South"}]}
       ],
       "options": [
         ["MTE 512-D01"]
@@ -7541,8 +7541,8 @@
       "level": "Graduate",
       "description": "This course demonstrates the synergy between the control theory and robotics through applications and provides an in-depth coverage of control of manipulators and mobile robots. Topics include linearization, state space modeling and control of linear and nonlinear systems, feedback control, Lyapunov stability analysis of nonlinear control systems, set-point control, trajectory and motion control, compliance and force control, impedance control, adaptive robot control, robust control, and other advanced control topics. Course projects will emphasize simulation and practical implementation of control systems for robotic applications. (Prerequisites: RBE 500 or equivalent, Linear algebra; Differential equations; Linear systems and control theory as in ECE 504 or consent of the instructor)",
       "sections": [
-        {"id":"RBE 502-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Akin Tatoglu"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
-        {"id":"RBE 502-S02","code":"S02","type":"lecture","status":"open","enrolled":20,"capacity":60,"waitlist":{"taken":0,"capacity":40},"instructors":["Giovanni Pittiglio"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Goddard Hall 227 Classroom"}]}
+        {"id":"RBE 502-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Akin Tatoglu"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
+        {"id":"RBE 502-S02","code":"S02","type":"lecture","status":"open","enrolled":21,"capacity":60,"waitlist":{"taken":0,"capacity":40},"instructors":["Giovanni Pittiglio"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Goddard Hall 227 Classroom"}]}
       ],
       "options": [
         ["RBE 502-S01"],
@@ -8087,7 +8087,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course will teach basic walking techniques and principles with the goal for students to develop and implement an individualized conditioning program for themselves.",
       "sections": [
-        {"id":"WPE 1009-D01","code":"D01","type":"workshop","status":"waitlist","enrolled":33,"capacity":33,"waitlist":{"taken":9,"capacity":15},"instructors":["Brenden Casey"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Track"}]},
+        {"id":"WPE 1009-D01","code":"D01","type":"workshop","status":"waitlist","enrolled":33,"capacity":33,"waitlist":{"taken":10,"capacity":15},"instructors":["Brenden Casey"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Track"}]},
         {"id":"WPE 1009-D02","code":"D02","type":"workshop","status":"waitlist","enrolled":33,"capacity":33,"waitlist":{"taken":3,"capacity":15},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Recreation Center Track"}]},
         {"id":"WPE 1009-D03","code":"D03","type":"workshop","status":"waitlist","enrolled":33,"capacity":33,"waitlist":{"taken":6,"capacity":15},"instructors":["Philip Jackson"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Track"}]}
       ],
