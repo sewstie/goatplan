@@ -1,7 +1,3 @@
-// Run with: npm run data:test
-// Uses the real rows in data/fixtures/sample-sections.json plus a few rows
-// written out here for the cases the fixture doesn't have.
-
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
@@ -21,7 +17,6 @@ const fixture = (name) => new URL(`../../data/fixtures/${name}`, import.meta.url
 const sample = JSON.parse(readFileSync(fixture("sample-sections.json"), "utf8")).Report_Entry;
 const sampleRow = (id) => sample.find((r) => r.Course_Section.startsWith(`${id} - `));
 
-// A full WPI row for section `code` of `course`, with any fields replaced.
 const row = (course, code, fields = {}) => ({
   Course_Title: `${course} - Sample Course`,
   Course_Section: `${course}-${code} - Sample Course`,
@@ -350,7 +345,6 @@ describe("buildTerms", () => {
     const { terms, report } = buildTerms([
       row("AE 2320", "A01"),
       row("AE 2320", "B01", B_TERM),
-      // MA 501-F01 keeps its time all semester but changes rooms after A Term.
       row("MA 501", "F01", {
         ...FALL_SEMESTER,
         Meeting_Patterns:
@@ -375,7 +369,6 @@ describe("buildTerms", () => {
     assert.deepEqual(inB.meetings, [
       { days: ["Tue", "Fri"], start: 840, end: 920, location: "Fuller Labs 311" },
     ]);
-    // A section that runs for exactly the term has no dates of its own.
     assert.equal("dates" in sectionById(termById(terms, "2026-A"), "AE 2320-A01"), false);
   });
 
@@ -434,11 +427,11 @@ describe("validateTerm", () => {
   it("counts every broken meeting, number and option", () => {
     const [term] = buildTerms([row("AE 2320", "A01"), row("AE 2320", "A02")]).terms;
     const [a01, a02] = term.courses[0].sections;
-    a01.meetings[0].end = a01.meetings[0].start; // ends when it starts
+    a01.meetings[0].end = a01.meetings[0].start;
     a01.enrolled = Number.NaN;
-    a02.id = "AE 2320-A01"; // same id twice
+    a02.id = "AE 2320-A01";
     a02.meetings[0].days = ["Thursday"];
-    term.courses[0].options = [["AE 2320-A99"]]; // points at nothing
+    term.courses[0].options = [["AE 2320-A99"]];
     term.courses.push({ ...term.courses[0], code: "AE 9999", sections: [], options: [] });
 
     assert.equal(validateTerm(term, warn), 6);

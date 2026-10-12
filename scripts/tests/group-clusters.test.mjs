@@ -1,12 +1,8 @@
-// Run with: npm run data:test
-// Each case mirrors a course from WPI's real data.
-
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import { buildOptions, groupBy } from "../lib/group-clusters.mjs";
 
-// section("AE 3010-AL01", "lecture", "5074") → { id, type, cluster }
 const section = (id, type, cluster = null) => ({ id, type, cluster });
 const many = (prefix, numbers, type, cluster = null) =>
   numbers.map((n) => section(`${prefix}${String(n).padStart(2, "0")}`, type, cluster));

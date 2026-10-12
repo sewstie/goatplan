@@ -1,6 +1,3 @@
-// Run with: npm run data:test
-// The strings are copied from WPI's real data.
-
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
@@ -264,7 +261,6 @@ describe("cleanDescription", () => {
     assert.equal(cleanDescription("summer &#43; B term"), "summer + B term");
     assert.equal(cleanDescription("a student&#39;s &#34;plan&#34;"), 'a student\'s "plan"');
     assert.equal(cleanDescription("x &lt; y &#x3e; z"), "x < y > z");
-    // An entity is decoded once, and an unknown one is left as it is.
     assert.equal(cleanDescription("&amp;lt; &bogus;"), "&lt; &bogus;");
   });
 
