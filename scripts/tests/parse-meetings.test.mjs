@@ -1,6 +1,3 @@
-// Run with: npm run data:test
-// The strings are copied from WPI's real data.
-
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
@@ -70,7 +67,6 @@ describe("parseMeetings", () => {
   });
 
   it("reads several patterns and sorts them in week order", () => {
-    // AS 3003-CL01
     const meetings = parseMeetings(
       "W | 1:00 PM - 2:50 PM; M | 1:00 PM - 1:50 PM",
       "Fuller Labs 320; Olin Hall 126",
@@ -82,7 +78,6 @@ describe("parseMeetings", () => {
   });
 
   it("uses a single room for every pattern", () => {
-    // BB 1102-B01
     const meetings = parseMeetings(
       "M-R | 2:00 PM - 3:50 PM; W | 2:00 PM - 2:50 PM",
       "Unity Hall 520",
@@ -94,7 +89,6 @@ describe("parseMeetings", () => {
   });
 
   it("matches rooms through Section_Details when the lists differ in length", () => {
-    // HU 3900-B01: three patterns but only two rooms, listed in another order.
     const meetings = parseMeetings(
       "T | 10:00 AM - 11:50 AM; R | 10:00 AM - 10:50 AM; M | 10:00 AM - 10:50 AM",
       "Salisbury Labs 226 HUA Seminar Room; Daniels Hall 102E CWB Programming Room",
@@ -113,7 +107,6 @@ describe("parseMeetings", () => {
   });
 
   it("keeps one meeting when a class is split across two rooms", () => {
-    // ES 2501-AD03
     const patterns = "W | 12:00 PM - 1:50 PM";
     const locations = "Innovation Studio 203 Active Learning Classroom South; Salisbury Labs 105";
     const expected = [
@@ -136,7 +129,6 @@ describe("parseMeetings", () => {
   });
 
   it("keeps the date range of a pattern that covers part of a semester", () => {
-    // MA 501-F01 meets at the same time all semester but changes rooms after A Term.
     const meetings = parseMeetings(
       "T-F | 2:00 PM - 3:20 PM | 10/19/2026 - 12/11/2026; " +
         "T-F | 2:00 PM - 3:20 PM | 08/20/2026 - 10/09/2026",
@@ -164,7 +156,6 @@ describe("parseMeetings", () => {
     assert.deepEqual(parseMeetings("", ""), []);
     assert.deepEqual(parseMeetings(undefined, undefined), []);
     assert.deepEqual(parseMeetings("TBA", "TBA"), []);
-    // An online section: a location but no pattern.
     assert.deepEqual(
       parseMeetings("", "Online-asynchronous", { details: "Online-asynchronous |" }),
       [],

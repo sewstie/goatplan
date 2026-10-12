@@ -1,5 +1,4 @@
-// Builds the clean structure described in docs/data-format.md out of WPI's
-// flat rows: rows → sections → courses (with options) → one object per term.
+// WPI's flat rows → sections → courses → one object per term.
 
 import { buildOptions, groupBy } from "./group-clusters.mjs";
 import {
@@ -21,20 +20,14 @@ const compare = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
 const isDate = (s) => /^\d{4}-\d{2}-\d{2}$/.test(s ?? "");
 const slug = (s) => (s ?? "").trim().toLowerCase().replace(/\s+/g, "-") || "unknown";
 
-// Two texts count as the same if they only differ in case, spacing or punctuation.
+// Same text apart from case, spacing and punctuation.
 const squash = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 const sameText = (a, b) => squash(a) === squash(b);
 
-// ISO dates compare correctly as plain strings.
+// ISO dates compare fine as plain strings.
 const overlaps = (a, b) => a.start <= b.end && b.start <= a.end;
 
-// Remembers every value a parser couldn't read, with how often it appeared and
-// a few sections it appeared in, so odd formats show up in the summary on day
-// one instead of in a bug report.
-//
-//   const unparsed = collectUnparsed();
-//   unparsed.add("Meeting_Patterns", "M-W | noon", "AE 2320-CL01");
-//   unparsed.entries() → [{ field, value, count, examples }]
+// Collects every value the parsers couldn't read, for the summary.
 export function collectUnparsed() {
   const seen = new Map();
   return {
@@ -53,7 +46,6 @@ export function collectUnparsed() {
   };
 }
 
-// Why a row is not a real section, or null if it is one.
 export function skipReason(row) {
   const course = parseCourseTitle(row.Course_Title);
   const section = parseCourseSection(row.Course_Section);
@@ -61,10 +53,6 @@ export function skipReason(row) {
   return section.placeholder;
 }
 
-// One WPI row → one section. Combines every parser into the section object
-// from docs/data-format.md, followed by the fields buildCourse needs and then
-// drops or moves to the course (course, period, cluster, title, ...).
-// Meetings still carry their date range here, if WPI gave one.
 export function buildSection(row, { onUnparsed } = {}) {
   const course = parseCourseTitle(row.Course_Title);
   const parsed = parseCourseSection(row.Course_Section);
@@ -100,6 +88,7 @@ export function buildSection(row, { onUnparsed } = {}) {
       onUnparsed: (pattern) => note("Meeting_Patterns", pattern),
     }),
 
+    // buildCourse uses these, then drops them or keeps only what differs from the course.
     course: course.code,
     period: row.Offering_Period ?? "",
     cluster: row.CF_LRV_Cluster_Ref_ID || null,
@@ -114,8 +103,7 @@ export function buildSection(row, { onUnparsed } = {}) {
   };
 }
 
-// The value most sections agree on. Ties go to the value `prefer` ranks first,
-// or to the one seen first.
+// Ties go to whatever prefer() ranks first, otherwise to the first one seen.
 function mostCommon(values, { key = (v) => v, prefer = () => 0 } = {}) {
   const tally = new Map();
   for (const value of values) {
@@ -127,8 +115,7 @@ function mostCommon(values, { key = (v) => v, prefer = () => 0 } = {}) {
   return ranked[0]?.value ?? null;
 }
 
-// A semester-long section can change rooms between terms, so WPI lists its
-// meetings once per date range. Keep the ones that fall inside this term.
+// A semester-long section can list a different room for each term. Keep this term's.
 function meetingsInTerm(meetings, term) {
   const inTerm = meetings.filter(
     (m) => !m.dates || !term?.start || !term?.end || overlaps(m.dates, term),
@@ -136,10 +123,6 @@ function meetingsInTerm(meetings, term) {
   return mergeMeetings(inTerm.map(({ dates, ...meeting }) => meeting));
 }
 
-// All rows of one course in one term → the course, with sorted sections and
-// its options. Values WPI repeats on every row (description, credits) are
-// stored once on the course; a section only carries its own title,
-// description, credits or dates when they differ.
 export function buildCourse(rows, { term = null, onUnparsed } = {}) {
   const built = rows
     .map((row) => buildSection(row, { onUnparsed }))
@@ -168,8 +151,7 @@ export function buildCourse(rows, { term = null, onUnparsed } = {}) {
       { key: squash },
     ) ?? "";
 
-  // A lecture and a lab only belong together if they run over the same
-  // period, so a semester-long section never pairs with a one-term one.
+  // A semester-long lecture never pairs with a one-term lab.
   const options = [...groupBy(sections, (s) => s.period).values()]
     .flatMap(buildOptions)
     .sort((a, b) => compare(a.join("\n"), b.join("\n")));
@@ -206,7 +188,7 @@ export function buildCourse(rows, { term = null, onUnparsed } = {}) {
   };
 }
 
-// The dates most sections of a term share are the term's own dates.
+// The dates most of a term's sections share.
 function termDates(rows) {
   const dated = rows.filter(
     (r) => isDate(r.Course_Section_Start_Date) && isDate(r.Course_Section_End_Date),
@@ -219,14 +201,7 @@ function termDates(rows) {
   return { start, end };
 }
 
-// Every row → one { term, courses } object per lettered term, sorted by date.
-//
-// WPI's file also has periods that aren't a lettered term: full semesters
-// (A + B or C + D) and late-start online courses. Their sections go into every
-// lettered term they overlap, so each term file holds everything that meets
-// during that term. Such a section carries its own `dates`.
-//
-// Also returns a report of what was left out or moved, for the summary.
+// Semester-long and late-start sections go into every lettered term they overlap.
 export function buildTerms(rows, { onUnparsed } = {}) {
   const skipped = {};
   const real = [];
@@ -280,8 +255,7 @@ export function buildTerms(rows, { onUnparsed } = {}) {
   return { terms, report };
 }
 
-// Sections that appear in no option: they exist, but WPI's data doesn't say
-// what to take them with, so they can't be scheduled.
+// Sections in no option: WPI doesn't say what to take them with.
 export function unscheduledSections({ courses }) {
   return courses.flatMap((course) => {
     const used = new Set(course.options.flat());
@@ -291,10 +265,6 @@ export function unscheduledSections({ courses }) {
 
 const isCount = (n) => Number.isInteger(n) && n >= 0;
 
-// Checks one term for anything that would break the engine or the UI: missing
-// term dates, bad meeting times, NaNs, options that point at missing sections,
-// courses with no options. Prints one warning per problem and returns how many
-// it found.
 export function validateTerm({ term, courses }, warn = console.warn) {
   let problems = 0;
   const problem = (where, message) => {
@@ -302,7 +272,7 @@ export function validateTerm({ term, courses }, warn = console.warn) {
     warn(`  ! ${term.id} ${where}: ${message}`);
   };
 
-  // Without its dates a term can't be told apart from one that has ended.
+  // Without dates there's no telling whether the term has ended.
   if (!isDate(term.start) || !isDate(term.end) || term.start > term.end) {
     problem("term", `dates are ${term.start} to ${term.end}`);
   }

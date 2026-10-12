@@ -1,10 +1,6 @@
 #!/usr/bin/env node
-// Turns WPI's raw course listing (data/raw/courselistings.json, saved by
-// fetch-courses.mjs) into the clean per-term files the web app and the engine
-// read: apps/web/public/data/<term id>.json plus index.json.
-//
-// Only current and upcoming terms are published; files of terms that have
-// ended are deleted. The format and those rules are in docs/data-format.md.
+// Turns data/raw/courselistings.json into one clean file per term in
+// apps/web/public/data/. The format is described in docs/data-format.md.
 //
 // Usage:
 //   npm run data:normalize
@@ -28,14 +24,12 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const defaultIn = join(root, "data", "raw", "courselistings.json");
 const defaultOut = join(root, "apps", "web", "public", "data");
 
-// The files this script owns in the output folder: "2026-B.json", "2027-E1.json".
+// Only files named like a term ("2026-B.json") ever get deleted.
 const TERM_FILE = /^\d{4}-[A-Z][A-Z0-9]*\.json$/;
 
-// Paths inside the repo are printed relative to it, anything else in full.
 const shown = (path) => (relative(root, path).startsWith("..") ? path : relative(root, path));
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
-// Loads the raw file and checks that it has the shape fetch-courses.mjs saves.
 async function readRaw(path) {
   let text;
   try {
@@ -54,10 +48,7 @@ async function readRaw(path) {
   return raw;
 }
 
-// Writes <id>.json for each term, plus index.json for the term picker, and
-// deletes the file of any term that is no longer published.
-// A file whose data didn't change is left alone and keeps its old
-// generatedAt, so a day without changes makes no git diff at all.
+// A file whose data didn't change keeps its old generatedAt, so a quiet day makes no git diff.
 async function writeTermFiles(terms, outDir, generatedAt) {
   await mkdir(outDir, { recursive: true });
 
@@ -160,8 +151,7 @@ async function main() {
   }
 
   const { kept: terms, dropped } = selectTerms(allTerms, today);
-  // Stop here rather than delete every term file: this should not happen while
-  // WPI lists the next year before the current one ends.
+  // Don't delete every file over this. WPI normally lists next year before this one ends.
   if (terms.length === 0) {
     throw new Error(`Every term in WPI's data ended before ${today}. Nothing was written.`);
   }
@@ -172,7 +162,7 @@ async function main() {
     throw new Error(`Validation found ${plural(problems, "problem")}. Nothing was written.`);
   }
 
-  // The fetch time rather than "now", so the same raw file always gives the same output.
+  // Fetch time, not "now", so the same raw file always gives the same output.
   const generatedAt = (raw.fetchedAt ?? new Date().toISOString()).replace(/\.\d+Z$/, "Z");
   console.log("Files:");
   await writeTermFiles(terms, outDir, generatedAt);

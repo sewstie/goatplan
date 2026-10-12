@@ -1,11 +1,7 @@
-// Writes the term files as JSON with one section and one option per line.
-//
-// That keeps the files small (no indentation inside a section) while a day's
-// git diff still shows exactly the sections whose seats or times changed.
+// One section and one option per line, so the daily git diff only shows what changed.
 
 const line = (indent, value, last) => `${indent}${JSON.stringify(value)}${last ? "" : ","}`;
 
-// { term, generatedAt, courses } → the text of <term id>.json
 export function formatTermFile({ term, generatedAt, courses }) {
   const out = [
     "{",
@@ -30,7 +26,6 @@ export function formatTermFile({ term, generatedAt, courses }) {
   return `${out.join("\n")}\n`;
 }
 
-// { terms: [...] } → the text of index.json, one term per line.
 export function formatIndexFile({ terms }) {
   const out = ["{", `  "terms": [`];
   terms.forEach((t, i) => out.push(line("    ", t, i === terms.length - 1)));

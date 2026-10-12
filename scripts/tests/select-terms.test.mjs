@@ -1,6 +1,3 @@
-// Run with: npm run data:test
-// The term dates are WPI's real ones for 2026-27.
-
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
@@ -15,7 +12,6 @@ const A = built("2026-A", "Fall", "2026-08-20", "2026-10-09");
 const B = built("2026-B", "Fall", "2026-10-19", "2026-12-11");
 const C = built("2027-C", "Spring", "2027-01-13", "2027-03-05");
 const D = built("2027-D", "Spring", "2027-03-15", "2027-05-05");
-// Next academic year. WPI's file has a stray pair of 2027 B Term sections today.
 const NEXT_A = built("2027-A", "Fall", "2027-08-19", "2027-10-08");
 const NEXT_B = built("2027-B", "Fall", "2027-10-18", "2027-12-10");
 const NEXT_C = built("2028-C", "Spring", "2028-01-12", "2028-03-03");
