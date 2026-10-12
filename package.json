@@ -16,7 +16,8 @@
     "engine:build": "cmake -S engine -B engine/build -DCMAKE_BUILD_TYPE=Release && cmake --build engine/build -j",
     "engine:test": "npm run engine:build && ctest --test-dir engine/build --output-on-failure",
     "data:normalize": "node scripts/normalize.mjs",
-    "data:update": "npm run data:fetch && npm run data:normalize"
+    "data:update": "npm run data:fetch && npm run data:normalize",
+    "data:test": "node --test scripts/tests/*.test.mjs"
   },
   "allowScripts": {
     "unrs-resolver@1.12.2": true

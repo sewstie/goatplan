@@ -1,4 +1,6 @@
 {
+  "fetchedAt": "2026-10-11T21:26:05.263Z",
+  "source": "https://courselistings.wpi.edu/assets/prod-data.json",
   "Report_Entry": [
     {
       "Course_Title": "AB 1531 - Elementary Arabic I",
@@ -18,7 +20,15 @@
       "Subject": "Arabic",
       "CF_LRV_Cluster_Ref_ID": "",
       "Student_Course_Section_Cluster": "",
-      "Course_Description": "<p>Shortened for the fixture.</p>"
+      "Course_Description": "<p>Shortened for the fixture.</p>",
+      "Course_Section_Start_Date": "2026-08-20",
+      "Public_Notes": "",
+      "Academic_Level": "Undergraduate",
+      "Section_Details": "Fuller Labs 311 | M-T-R-F | 9:00 AM - 9:50 AM",
+      "Course_Tags": "Degree Attribute :: Humanities and Arts; Offering Pattern :: Category I",
+      "Academic_Units": "Humanities and Arts Department",
+      "Course_Section_End_Date": "2026-10-09",
+      "Course_Section_Owner": "Humanities and Arts Department"
     },
     {
       "Course_Title": "ACC 2060 - Financial Statements For Decision Making",
@@ -38,7 +48,15 @@
       "Subject": "Accounting",
       "CF_LRV_Cluster_Ref_ID": "",
       "Student_Course_Section_Cluster": "",
-      "Course_Description": "<p>Shortened for the fixture.</p>"
+      "Course_Description": "<p>Shortened for the fixture.</p>",
+      "Course_Section_Start_Date": "2026-10-19",
+      "Public_Notes": "",
+      "Academic_Level": "Undergraduate",
+      "Section_Details": "Salisbury Labs 105 | T-F | 12:00 PM - 1:50 PM",
+      "Course_Tags": "Offering Pattern :: Category I",
+      "Academic_Units": "Business School",
+      "Course_Section_End_Date": "2026-12-11",
+      "Course_Section_Owner": "Business School"
     },
     {
       "Course_Title": "AE 2320 - Introduction to Orbital Mechanics",
@@ -58,7 +76,15 @@
       "Subject": "Aerospace Engineering",
       "CF_LRV_Cluster_Ref_ID": "STUDENT_COURSE_SECTION_CLUSTER-3-5323",
       "Student_Course_Section_Cluster": "2027 Spring C Term: AE 2320 - Introduction to Orbital Mechanics ()",
-      "Course_Description": "<p>Shortened for the fixture.</p>"
+      "Course_Description": "<p>Shortened for the fixture.</p>",
+      "Course_Section_Start_Date": "2027-01-13",
+      "Public_Notes": "",
+      "Academic_Level": "Undergraduate",
+      "Section_Details": "Unity Hall 400 | M-T-W-R-F | 9:00 AM - 9:50 AM",
+      "Course_Tags": "Offering Pattern :: Category I",
+      "Academic_Units": "Aerospace Engineering Department",
+      "Course_Section_End_Date": "2027-03-05",
+      "Course_Section_Owner": "Aerospace Engineering Department"
     },
     {
       "Course_Title": "AE 2320 - Introduction to Orbital Mechanics",
@@ -78,7 +104,15 @@
       "Subject": "Aerospace Engineering",
       "CF_LRV_Cluster_Ref_ID": "STUDENT_COURSE_SECTION_CLUSTER-3-5323",
       "Student_Course_Section_Cluster": "2027 Spring C Term: AE 2320 - Introduction to Orbital Mechanics ()",
-      "Course_Description": "<p>Shortened for the fixture.</p>"
+      "Course_Description": "<p>Shortened for the fixture.</p>",
+      "Course_Section_Start_Date": "2027-01-13",
+      "Public_Notes": "",
+      "Academic_Level": "Undergraduate",
+      "Section_Details": "Higgins Labs 230 Geom Modeling Computer Lab | R | 2:00 PM - 2:50 PM",
+      "Course_Tags": "Offering Pattern :: Category I",
+      "Academic_Units": "Aerospace Engineering Department",
+      "Course_Section_End_Date": "2027-03-05",
+      "Course_Section_Owner": "Aerospace Engineering Department"
     },
     {
       "Course_Title": "AE 2320 - Introduction to Orbital Mechanics",
@@ -98,7 +132,15 @@
       "Subject": "Aerospace Engineering",
       "CF_LRV_Cluster_Ref_ID": "STUDENT_COURSE_SECTION_CLUSTER-3-5323",
       "Student_Course_Section_Cluster": "2027 Spring C Term: AE 2320 - Introduction to Orbital Mechanics ()",
-      "Course_Description": "<p>Shortened for the fixture.</p>"
+      "Course_Description": "<p>Shortened for the fixture.</p>",
+      "Course_Section_Start_Date": "2027-01-13",
+      "Public_Notes": "",
+      "Academic_Level": "Undergraduate",
+      "Section_Details": "Higgins Labs 230 Geom Modeling Computer Lab | R | 3:00 PM - 3:50 PM",
+      "Course_Tags": "Offering Pattern :: Category I",
+      "Academic_Units": "Aerospace Engineering Department",
+      "Course_Section_End_Date": "2027-03-05",
+      "Course_Section_Owner": "Aerospace Engineering Department"
     },
     {
       "Course_Title": "AE 2320 - Introduction to Orbital Mechanics",
@@ -118,7 +160,15 @@
       "Subject": "Aerospace Engineering",
       "CF_LRV_Cluster_Ref_ID": "STUDENT_COURSE_SECTION_CLUSTER-3-5323",
       "Student_Course_Section_Cluster": "2027 Spring C Term: AE 2320 - Introduction to Orbital Mechanics ()",
-      "Course_Description": "<p>Shortened for the fixture.</p>"
+      "Course_Description": "<p>Shortened for the fixture.</p>",
+      "Course_Section_Start_Date": "2027-01-13",
+      "Public_Notes": "",
+      "Academic_Level": "Undergraduate",
+      "Section_Details": "Higgins Labs 230 Geom Modeling Computer Lab | R | 4:00 PM - 4:50 PM",
+      "Course_Tags": "Offering Pattern :: Category I",
+      "Academic_Units": "Aerospace Engineering Department",
+      "Course_Section_End_Date": "2027-03-05",
+      "Course_Section_Owner": "Aerospace Engineering Department"
     },
     {
       "Course_Title": "AE 4310 - Fundamentals of Aircraft Dynamics and Control",
@@ -138,7 +188,15 @@
       "Subject": "Aerospace Engineering",
       "CF_LRV_Cluster_Ref_ID": "",
       "Student_Course_Section_Cluster": "",
-      "Course_Description": "<p>Shortened for the fixture. Note the empty instructor.</p>"
+      "Course_Description": "<p>Shortened for the fixture. Note the empty instructor.</p>",
+      "Course_Section_Start_Date": "2027-01-13",
+      "Public_Notes": "",
+      "Academic_Level": "Undergraduate",
+      "Section_Details": "Higgins Labs 116 | M-T-W-R-F | 11:00 AM - 11:50 AM",
+      "Course_Tags": "Offering Pattern :: Category I",
+      "Academic_Units": "Aerospace Engineering Department",
+      "Course_Section_End_Date": "2027-03-05",
+      "Course_Section_Owner": "Aerospace Engineering Department"
     }
   ]
 }

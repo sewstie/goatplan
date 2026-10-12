@@ -42,14 +42,17 @@ npm run engine:test
 
 ## Everyday commands
 
-| Command                | What it does                                              |
-| ---------------------- | --------------------------------------------------------- |
-| `npm run dev`          | Start the web app at http://localhost:3000                |
-| `npm run build`        | Production build of the web app                           |
-| `npm run lint`         | Lint the web app                                          |
-| `npm run engine:build` | Build the C++ engine and CLI                              |
-| `npm run engine:test`  | Build the engine and run the unit tests                   |
-| `npm run data:fetch`   | Download the latest WPI section data into `data/raw/`     |
+| Command                  | What it does                                               |
+| ------------------------ | ---------------------------------------------------------- |
+| `npm run dev`            | Start the web app at http://localhost:3000                 |
+| `npm run build`          | Production build of the web app                            |
+| `npm run lint`           | Lint the web app                                           |
+| `npm run engine:build`   | Build the C++ engine and CLI                               |
+| `npm run engine:test`    | Build the engine and run the unit tests                    |
+| `npm run data:fetch`     | Download the latest WPI section data into `data/raw/`      |
+| `npm run data:normalize` | Turn that download into `apps/web/public/data/<term>.json` |
+| `npm run data:update`    | Fetch, then normalize                                      |
+| `npm run data:test`      | Run the unit tests of the data scripts                     |
 
 Try the engine on its own: `./engine/build/goatplan_cli`
 
@@ -59,3 +62,6 @@ Course and section data comes from WPI's public course listings
 (`https://courselistings.wpi.edu/assets/prod-data.json`). Fetch it occasionally
 from the script, not from the browser on every page load. Professor ratings are
 not included in that data; the app links out to Rate My Professors.
+
+`scripts/normalize.mjs` turns the download into one clean JSON file per term.
+The format is described in [docs/data-format.md](docs/data-format.md).
