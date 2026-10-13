@@ -54,7 +54,7 @@ npm run engine:test
 | `npm run data:update`    | Fetch, then normalize                                      |
 | `npm run data:test`      | Run the unit tests of the data scripts                     |
 
-Try the engine on its own: `./engine/build/goatplan_cli`
+Try the engine on its own: `./engine/build/goatplan_cli apps/web/public/data/2026-B.json` (any term file works)
 
 ## Data
 

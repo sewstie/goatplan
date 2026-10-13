@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(FetchContent)
+
 # Tests run natively only (not when building WebAssembly with emcmake).
 if(EMSCRIPTEN)
     set(GOATPLAN_TESTS_DEFAULT OFF)
@@ -16,6 +18,7 @@ option(GOATPLAN_BUILD_TESTS "Build GoogleTest unit tests" ${GOATPLAN_TESTS_DEFAU
 
 # --- Core library: the scheduling engine -----------------------------------
 add_library(goatplan_core
+    src/json_io.cpp
     src/schedule.cpp
 )
 target_include_directories(goatplan_core PUBLIC include)
@@ -24,6 +27,19 @@ if(MSVC)
 else()
     target_compile_options(goatplan_core PRIVATE -Wall -Wextra -Wpedantic)
 endif()
+
+# Use an installed nlohmann_json if there is one (e.g. `brew install
+# nlohmann-json`); otherwise download it once.
+find_package(nlohmann_json 3.12 QUIET)
+if(NOT nlohmann_json_FOUND)
+    FetchContent_Declare(
+        json
+        URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    )
+    FetchContent_MakeAvailable(json)
+endif()
+target_link_libraries(goatplan_core PRIVATE nlohmann_json::nlohmann_json)
 
 # --- Command-line tool for trying the engine without the web app -----------
 add_executable(goatplan_cli src/main.cpp)
@@ -35,7 +51,6 @@ if(GOATPLAN_BUILD_TESTS)
     # or `apt install libgtest-dev`); otherwise download it once.
     find_package(GTest QUIET)
     if(NOT GTest_FOUND)
-        include(FetchContent)
         FetchContent_Declare(
             googletest
             URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.tar.gz
@@ -48,9 +63,18 @@ if(GOATPLAN_BUILD_TESTS)
 
     enable_testing()
     add_executable(goatplan_tests
+        tests/json_io_test.cpp
         tests/schedule_test.cpp
     )
-    target_link_libraries(goatplan_tests PRIVATE goatplan_core GTest::gtest_main)
+    target_link_libraries(goatplan_tests PRIVATE
+        goatplan_core
+        nlohmann_json::nlohmann_json
+        GTest::gtest_main
+    )
+
+    # An absolute path, so tests find the fixtures from any folder.
+    cmake_path(SET GOATPLAN_FIXTURES NORMALIZE "${CMAKE_CURRENT_SOURCE_DIR}/../data/fixtures")
+    target_compile_definitions(goatplan_tests PRIVATE GOATPLAN_FIXTURES="${GOATPLAN_FIXTURES}")
 
     include(GoogleTest)
     gtest_discover_tests(goatplan_tests)
