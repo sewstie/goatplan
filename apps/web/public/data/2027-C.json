@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05"},
-  "generatedAt": "2026-10-12T18:51:49Z",
+  "generatedAt": "2026-10-13T16:51:27Z",
   "courses": [
     {
       "code": "AB 1533",
@@ -478,7 +478,7 @@
       "level": "Undergraduate",
       "description": "BB 1001. Introduction to Biology (Cat. I; 1/3 unit) This course is designed for students seeking a broad overview of biologic concepts, especially at the cell and organism level. It is conducted in an active style including the use of case studies, class discussion/participation, and classroom polling systems. The major goal of this course is to help students become more informed citizens, skeptical when presented with data in the media, and knowledgeable enough to question and make informed decisions about scientific advances and science policy. It will primarily focus on current topics which may include genetic engineering, viruses and vaccines, antibiotic resistant bacteria, the evolution of infectious diseases. This course is intended for non-life science majors. Recommended background: High School Biology",
       "sections": [
-        {"id":"BB 1001-C01","code":"C01","type":"lecture","status":"open","enrolled":62,"capacity":120,"waitlist":{"taken":0,"capacity":25},"instructors":["Benjamin Nephew"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Unity Hall 400"}]}
+        {"id":"BB 1001-C01","code":"C01","type":"lecture","status":"open","enrolled":63,"capacity":120,"waitlist":{"taken":0,"capacity":25},"instructors":["Benjamin Nephew"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Unity Hall 400"}]}
       ],
       "options": [
         ["BB 1001-C01"]
@@ -492,7 +492,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is designed for students seeking a broad overview of ecological systems and the effect of humans on the ecosystems. It provides an introduction to natural ecosystems, population growth, and the interaction between human populations and our environment. It is conducted in an active style including the use of case studies, class discussion/participation, and classroom polling systems. The major goal of this course is to help students become more informed environmental citizens, skeptical when presented with data in the media, and knowledgeable enough to question and make informed decisions about the environment. It will primarily focus on current topics but areas of discussion likely to be covered include ecosystems, populations, biodiversity, pollution, environmental economics and climate change. This course is intended for non- life science majors. Recommended background: High School Biology",
       "sections": [
-        {"id":"BB 1002-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":100,"capacity":100,"waitlist":{"taken":8,"capacity":20},"instructors":["Michael Buckholt"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 500"}]}
+        {"id":"BB 1002-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":100,"capacity":100,"waitlist":{"taken":9,"capacity":20},"instructors":["Michael Buckholt"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 500"}]}
       ],
       "options": [
         ["BB 1002-C01"]
@@ -506,7 +506,7 @@
       "level": "Undergraduate",
       "description": "BB 1101: Foundations of Cellular and Molecular Biotechnology. In this foundational course, students will explore the cellular and molecular basis of life through lectures, discussion, and project work. Students will gain an understanding of how genetic information is stored and used, as well as how the structures of cells underlie their functions. There will be a focus on the application of these topics to genetic engineering and biotechnology. This course is designed for BBT majors and minors, as well as others who plan further study in topics such as cell biology, molecular biology, and genetics. Credit cannot be received for both BB 1101 and BB 1035. Units: 1/3 Category: Category I Recommended Background: a solid working knowledge of biological principles such as would be learned in a rigorous high school biology course.",
       "sections": [
-        {"id":"BB 1101-C01","code":"C01","type":"lecture","status":"open","enrolled":58,"capacity":72,"waitlist":{"taken":0,"capacity":20},"instructors":["Louis Roberts"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Unity Hall 420"}]}
+        {"id":"BB 1101-C01","code":"C01","type":"lecture","status":"open","enrolled":57,"capacity":72,"waitlist":{"taken":0,"capacity":20},"instructors":["Louis Roberts"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Unity Hall 420"}]}
       ],
       "options": [
         ["BB 1101-C01"]
@@ -798,8 +798,8 @@
       "description": "Antibodies constitute the most rapidly growing class of human therapeutics, and the second largest class of drugs after vaccines. The generation of a potent antibody therapeutics is an iterative design process that involves the generation and optimization of antibodies to improve their clinical potential. Dozens of monoclonal antibodies are in clinical use to treat graft rejection, Crohn’s disease, asthma, leukemia, other cancers, and immune disorders. They continue to generate a market value approaching $200 billion and growing nearly 15% each year. Molecular biology makes it possible to reproducibly clone recombinant versions of antibodies, including chimeric, humanized, and human antibodies with optimized effectiveness. In this course, we explore the use of antibodies as therapeutic agents based on early-stage discovery, generation, and selection of antibodies from immune and non-immune sources. Topics include the origin and structure of antibodies, their molecular and pharmacological properties, and key methods used in the biotechnology industry to develop and produce them. In addition, will uncover the fast-growing antibodies as antibody-drug conjugates for cancer therapeutics. Weekly online assessments are designed to ensure understanding. Prerequisite Courses: An undergraduate level background in Molecular Biology, Cell Biology, basics of immunology or equivalent experience is recommended.",
       "sections": [
         {"id":"BB 570-C01","code":"C01","type":"lecture","title":"ST: Quantitative Biology","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":0,"capacity":5},"instructors":["Shane McInally"],"delivery":"in-person","credits":2,"meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South"}],"description":"(variable credit) Speciality subject courses are offered based on the expertise of the department faculty such as Stem Cell Biology."},
-        {"id":"BB 570-SL02","code":"SL02","type":"lecture","title":"ST: Antibody Therapeutics","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]},
-        {"id":"BB 570-SX02","code":"SX02","type":"lab","title":"ST: Antibody Therapeutics","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"BB 570-SL02","code":"SL02","type":"lecture","title":"ST: Antibody Therapeutics","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]},
+        {"id":"BB 570-SX02","code":"SX02","type":"lab","title":"ST: Antibody Therapeutics","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["BB 570-C01"],
@@ -960,8 +960,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/6 unit) This laboratory-driven solid biomechanics course provides hands-on experience in characterizing the mechanical properties of biological tissues such as bone, tendons, ligaments, skin, and blood vessels and their synthetic analogs. Students gain an in-depth understanding of the course material by performing uniaxial tension and compression, bending, and torsion tests on hard and soft tissues using industry-standard testing equipment and completing mechanical and statistical analysis of the data. Recommended background: A solid knowledge of mechanics of materials (ES2502) and material science (ES 2001). Students who have previously taken BME3504 may not receive credit for this course. Some sections of this course may be offered as Writing Intensive (WI).",
       "sections": [
-        {"id":"BME 3505-CL01","code":"CL01","type":"lecture","status":"open","enrolled":15,"capacity":36,"waitlist":{"taken":0,"capacity":10},"instructors":["John Obayemi"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":900,"end":950,"location":"Olin Hall 109"}]},
-        {"id":"BME 3505-CX01","code":"CX01","type":"lab","status":"open","enrolled":7,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["John Obayemi"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":900,"end":950,"location":"Goddard Hall 207 BME Lab"}]},
+        {"id":"BME 3505-CL01","code":"CL01","type":"lecture","status":"open","enrolled":16,"capacity":36,"waitlist":{"taken":0,"capacity":10},"instructors":["John Obayemi"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":900,"end":950,"location":"Olin Hall 109"}]},
+        {"id":"BME 3505-CX01","code":"CX01","type":"lab","status":"open","enrolled":8,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["John Obayemi"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":900,"end":950,"location":"Goddard Hall 207 BME Lab"}]},
         {"id":"BME 3505-CX02","code":"CX02","type":"lab","status":"open","enrolled":3,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["John Obayemi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Goddard Hall 207 BME Lab"}]},
         {"id":"BME 3505-CX03","code":"CX03","type":"lab","status":"open","enrolled":5,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["John Obayemi"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":900,"end":950,"location":"Goddard Hall 207 BME Lab"}]}
       ],
@@ -995,7 +995,7 @@
       "sections": [
         {"id":"BME 3811-CX01","code":"CX01","type":"lab","status":"closed","enrolled":12,"capacity":12,"waitlist":{"taken":5,"capacity":5},"instructors":["Zoe Reidinger"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":660,"end":770,"location":"Salisbury Labs 219 BB Lab"}]},
         {"id":"BME 3811-CX02","code":"CX02","type":"lab","status":"open","enrolled":7,"capacity":12,"waitlist":{"taken":0,"capacity":5},"instructors":["Zoe Reidinger"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":950,"location":"Salisbury Labs 219 BB Lab"}]},
-        {"id":"BME 3811-CX03","code":"CX03","type":"lab","status":"open","enrolled":7,"capacity":12,"waitlist":{"taken":0,"capacity":5},"instructors":["Zoe Reidinger"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":840,"end":950,"location":"Salisbury Labs 219 BB Lab"}]}
+        {"id":"BME 3811-CX03","code":"CX03","type":"lab","status":"open","enrolled":6,"capacity":12,"waitlist":{"taken":0,"capacity":5},"instructors":["Zoe Reidinger"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":840,"end":950,"location":"Salisbury Labs 219 BB Lab"}]}
       ],
       "options": [
         ["BME 3811-CX01"],
@@ -1098,7 +1098,7 @@
       "level": "Graduate",
       "description": "An introduction to the fundamentals of medical device design controls from concept generation to manufacturing. Students work in teams to navigate through the medical device design and development lifecycle on various device types, fulfilling design control requirements while learning what is required to bring a concept to life in industry. Students may not receive credit if they previously completed this course as BME 595: Special Topics. *Does not fulfil technical depth requirement.",
       "sections": [
-        {"id":"BME 535-S01","code":"S01","type":"lecture","status":"open","enrolled":5,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":[],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Online-synchronous"}]}
+        {"id":"BME 535-S01","code":"S01","type":"lecture","status":"open","enrolled":5,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Joel Kent"],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Online-synchronous"}]}
       ],
       "options": [
         ["BME 535-S01"]
@@ -1308,7 +1308,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course develops an understanding of classical and modern structural analysis. Topics include loading systems, and the analysis of statically determinate and statically indeterminate beams, frames, trusses, structural floor systems for buildings, bridges, and other structural assemblies.Recommended background: CE 2000 and CE 2001.Suggested background: CE 1030.",
       "sections": [
-        {"id":"CE 2002-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":110,"capacity":110,"waitlist":{"taken":2,"capacity":20},"instructors":["Tahar El-Korchi"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 400"}]}
+        {"id":"CE 2002-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":110,"capacity":110,"waitlist":{"taken":1,"capacity":20},"instructors":["Tahar El-Korchi"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 400"}]}
       ],
       "options": [
         ["CE 2002-C01"]
@@ -1812,7 +1812,7 @@
       "level": "Undergraduate",
       "description": "Cat. II The goal of this course is to prepare students for future work in energy-related fields by providing an overview of the challenges related to energy production. Students will study several major energy systems. The details of such energy systems will be examined using engineering principles, particularly focusing on relevant chemical processes. For example, the details and processes of a typical power plant or a refinery will be examined. Students will also become familiar with environmental and economic issues related to energy production. Topics to be covered may include: fossil fuels, the hydrogen economy, biofuels, nuclear energy, fuel cells, batteries, and the electricity grid. Recommended background: knowledge of chemistry (CH 1010, 1020, 1030), differential and integral calculus, and chemical processes (CHE 2011). Students may not receive credit for both CHE 3702 and CHE 320X. This course will be offered in 2019-20, and in alternating years thereafter.",
       "sections": [
-        {"id":"CHE 3702-C01","code":"C01","type":"lecture","status":"open","enrolled":7,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Geoffrey Tompsett"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":600,"end":650,"location":"Stratton Hall 313"}]}
+        {"id":"CHE 3702-C01","code":"C01","type":"lecture","status":"open","enrolled":8,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Geoffrey Tompsett"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":600,"end":650,"location":"Stratton Hall 313"}]}
       ],
       "options": [
         ["CHE 3702-C01"]
@@ -1826,8 +1826,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is intended to provide laboratory application of fundamental principles of chemical process dynamics and feedback control. This includes open-loop dynamics of typical chemical engineering processes such as distillation, fluid flow, chemical reactors and heated stirred tanks. Closed-loop experiments will involve control loop design, controller tuning, multivariable, and computer control.Students will be required to design and execute their own experiments based on supplied objectives. Analysis and presentation of the results will be done through oral and written reports.Recommended background: knowledge of fluid flow and heat transfer, mathematics and chemical engineering principles.",
       "sections": [
-        {"id":"CHE 4405-CD01","code":"CD01","type":"discussion","status":"open","enrolled":18,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Nikolaos Kazantzis"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Higgins Labs 116"}]},
-        {"id":"CHE 4405-CL01","code":"CL01","type":"lecture","status":"open","enrolled":18,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Nikolaos Kazantzis"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Goddard Hall 227 Classroom"}]}
+        {"id":"CHE 4405-CD01","code":"CD01","type":"discussion","status":"open","enrolled":17,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Nikolaos Kazantzis"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Higgins Labs 116"}]},
+        {"id":"CHE 4405-CL01","code":"CL01","type":"lecture","status":"open","enrolled":17,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Nikolaos Kazantzis"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Goddard Hall 227 Classroom"}]}
       ],
       "options": [
         ["CHE 4405-CD01","CHE 4405-CL01"]
@@ -1869,7 +1869,7 @@
       "level": "Graduate",
       "description": "Presentations on scientific advances by recognized experts in various fields of chemical engineering and related disciplines. The course will be graded on a Pass/Fail basis.",
       "sections": [
-        {"id":"CHE 503-S01","code":"S01","type":"lecture","status":"open","enrolled":13,"capacity":64,"waitlist":{"taken":0,"capacity":10},"instructors":["Elizabeth Stewart"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Goddard Hall 227 Classroom"}]}
+        {"id":"CHE 503-S01","code":"S01","type":"lecture","status":"open","enrolled":14,"capacity":64,"waitlist":{"taken":0,"capacity":10},"instructors":["Elizabeth Stewart"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Goddard Hall 227 Classroom"}]}
       ],
       "options": [
         ["CHE 503-S01"]
@@ -3603,7 +3603,7 @@
       "level": "Undergraduate",
       "description": "Cat. II This course introduces Geographic Information Systems (GIS) as a powerful mapping and analytical tool. Topics include GIS data structure, map projections, and fundamental GIS techniques for spatial analysis. Laboratory exercises concentrate on applying concepts presented in lectures and will focus on developing skills using ArcGIS. These exercises include examples of GIS applications in environmental modeling, socio-demographic change and site suitability analyses. Although the course is computer-intensive, no programming background is required. This course will be offered in 2019-20, and in alternating years thereafter. Note: Students may not receive credit for both ENV 150X and ENV 1500.",
       "sections": [
-        {"id":"ENV 1500-C01","code":"C01","type":"lecture","status":"open","enrolled":21,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Stephen McCauley"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Fuller Labs 311"}]}
+        {"id":"ENV 1500-C01","code":"C01","type":"lecture","status":"open","enrolled":22,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Stephen McCauley"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Fuller Labs 311"}]}
       ],
       "options": [
         ["ENV 1500-C01"]
@@ -3707,7 +3707,7 @@
       "description": "Cat. I This is an introductory course that addresses the analysis of basic mechanical and structural elements. Topics include general concepts of stresses, strains, and material properties of common engineering materials. Also covered are two-dimensional stress transformations, principal stresses, Mohr’s circle and deformations due to mechanical and thermal effects. Applications are to uniaxially loaded bars, circular shafts under torsion, bending and shearing and deflection of beams, and buckling of columns. Both statically determinate and indeterminate problems are analyzed. Recommended background; mechanical systems (ES 2501 or equivalent), differential (MA 1021) and integral (MA 1022) calculus, vector algebra (MA 1023), and double and triple integration (MA 1024).",
       "sections": [
         {"id":"ES 2502-CD01","code":"CD01","type":"discussion","status":"closed","enrolled":90,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Jiawei Yang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Unity Hall 400"}]},
-        {"id":"ES 2502-CL01","code":"CL01","type":"lecture","status":"waitlist","enrolled":90,"capacity":90,"waitlist":{"taken":10,"capacity":20},"instructors":["Jiawei Yang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Unity Hall 400"}]}
+        {"id":"ES 2502-CL01","code":"CL01","type":"lecture","status":"waitlist","enrolled":90,"capacity":90,"waitlist":{"taken":9,"capacity":20},"instructors":["Jiawei Yang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Unity Hall 400"}]}
       ],
       "options": [
         ["ES 2502-CD01","ES 2502-CL01"]
@@ -3780,7 +3780,7 @@
       "level": "Undergraduate",
       "description": "Cat. I A study of the fundamental laws of statics, kinematics, and dynamics applied to fluid mechanics. The course will include fluid properties, conservation of mass, momentum, and energy as applied to real and ideal fluids. Laminar and turbulent flows, fluid resistance, and basic boundary layer theory will also be considered. Recommended background: basic physics, basic differential equations, and vectors.",
       "sections": [
-        {"id":"ES 3004-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":13,"capacity":20},"instructors":["Fiona Zoutendyk"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":900,"end":950,"location":"Higgins Labs 218 Discovery Classroom"}]}
+        {"id":"ES 3004-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":12,"capacity":20},"instructors":["Fiona Zoutendyk"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":900,"end":950,"location":"Higgins Labs 218 Discovery Classroom"}]}
       ],
       "options": [
         ["ES 3004-C01"]
@@ -5194,8 +5194,8 @@
       "level": "Undergraduate",
       "description": "Cat. I, This course provides a deeper understanding of topics introduced in MA 2071, and continues the development of linear algebra. Topics covered include: abstract vector spaces, linear transformations, matrix representations of a linear transformation, determinants, characteristic and minimal polynomials, diagonalization, eigenvalues and eigenvectors, the matrix exponential, inner product spaces. This course is designed primarily for Mathematical Science majors and those interested in the deeper mathematical issues underlying linear algebra. Recommended background: MA 2071 or MA 2072.",
       "sections": [
-        {"id":"MA 2073-CD02","code":"CD02","type":"discussion","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Stratton Hall 205"}]},
-        {"id":"MA 2073-CL02","code":"CL02","type":"lecture","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Stratton Hall 313"}]}
+        {"id":"MA 2073-CD02","code":"CD02","type":"discussion","status":"open","enrolled":17,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Stratton Hall 205"}]},
+        {"id":"MA 2073-CL02","code":"CL02","type":"lecture","status":"open","enrolled":17,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Stratton Hall 313"}]}
       ],
       "options": [
         ["MA 2073-CD02","MA 2073-CL02"]
@@ -5877,7 +5877,7 @@
       "level": "Graduate",
       "description": "(2 credits) This course will provide an integrated overview of the design, selection and use of synthetic plastics. The basic chemistry associated with polymerization and the structure of commercial plastics will be described. Various aspects of polymer crystallization and glass transition will be outlined. Salient aspects of fluid flow and heat transfer during the processing of plastics will be highlighted. Fundamentals of the diverse processing operations used to shape plastics and the resulting structures that develop after processing will be discussed. The mechanical behavior of plastics including elastic deformation, rubber elasticity, yielding, viscoelasticity, fracture and creep will be discussed. Plastic 164 Mechanical Engineering Return to Table of Contents Mechanical Engineering 165 degradation and environmental issues associated with recycling and disposal of plastics will be examined. Typical techniques used in the analysis and testing of plastics will be described and a working knowledge of various terminologies used in commercial practice will be provided. Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 594A).",
       "sections": [
-        {"id":"ME 5358-C01","code":"C01","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Michael Fritschy"],"delivery":"online-async","meetings":[]}
+        {"id":"ME 5358-C01","code":"C01","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Michael Fritschy"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["ME 5358-C01"]
@@ -5947,7 +5947,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"ME 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":2,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"ME 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":3,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["ME 5420-C01"]
@@ -6076,7 +6076,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"MFE 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":2,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"MFE 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":3,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MFE 5420-C01"]
@@ -6216,7 +6216,7 @@
       "level": "Graduate",
       "description": "This course presents the specific concepts, techniques and tools for managing projects effectively. The role of the project manager as team leader is examined, together with important techniques for controlling cost, schedules and performance parameters. Lectures, case studies and projects are combined to develop skills needed by project managers in today’s environment.",
       "sections": [
-        {"id":"MIS 576-S01","code":"S01","type":"lecture","status":"open","enrolled":59,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Paul Delvy"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"MIS 576-S01","code":"S01","type":"lecture","status":"closed","enrolled":60,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Paul Delvy"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["MIS 576-S01"]
@@ -6274,7 +6274,7 @@
       "level": "Graduate",
       "description": "This course explores how Machine Learning (ML) and Artificial Intelligence (AI) is applied to solve business problems, to satisfy specific business needs, or to discover new opportunities for businesses. Applications of ML and AI are constantly evolving across many industries. This course utilizes existing AutoML solutions to address issues identified in business case studies (e.g. predicting hospital readmissions, loans likely to default, customer churn). The course covers the machine learning project life cycle starting with defining ML project objectives, acquiring and exploring data, modeling using AutoML tools, interpretation of models and communication of outcomes, and implementation and deployment of predictive models in organizations.",
       "sections": [
-        {"id":"MIS 587-S01","code":"S01","type":"lecture","status":"open","enrolled":14,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["ZQ Cheng"],"delivery":"hybrid","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Thu"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
+        {"id":"MIS 587-S01","code":"S01","type":"lecture","status":"open","enrolled":13,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["ZQ Cheng"],"delivery":"hybrid","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Thu"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
       ],
       "options": [
         ["MIS 587-S01"]
@@ -6480,7 +6480,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"MTE 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":2,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"MTE 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":3,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MTE 5420-C01"]
@@ -6510,7 +6510,7 @@
       "level": "Graduate",
       "description": "(2 credits) This course will provide an integrated overview of the design, selection and use of synthetic plastics. The basic chemistry associated with polymerization and the structure of commercial plastics will be described. Various aspects of polymer crystallization and glass transition will be outlined. Salient aspects of fluid flow and heat transfer during the processing of plastics will be highlighted. Fundamentals of the diverse processing operations used to shape plastics and the resulting structures that develop after processing will be discussed. The mechanical behavior of plastics including elastic deformation, rubber elasticity, yielding, viscoelasticity, fracture and creep will be discussed. Plastic 164 Mechanical Engineering Return to Table of Contents Mechanical Engineering 165 degradation and environmental issues associated with recycling and disposal of plastics will be examined. Typical techniques used in the analysis and testing of plastics will be described and a working knowledge of various terminologies used in commercial practice will be provided. Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 594A).",
       "sections": [
-        {"id":"MTE 558-C01","code":"C01","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Michael Fritschy"],"delivery":"online-async","meetings":[]}
+        {"id":"MTE 558-C01","code":"C01","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Michael Fritschy"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MTE 558-C01"]
@@ -6984,7 +6984,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides an introduction to prescriptive analytics, which involves the application of mathematical and computational sciences, such as linear optimization and simulation, to recommend optimal courses of action for decision making. The course will feature decision problems arising from a variety of contexts such as capacity management, finance, healthcare, humanitarian relief, inventory management, production planning, staffing, and supply chain. The emphasis of the course is the application of such techniques to recommend a best strategy or course of action for the particular context. Recommended background: Basic statistics, equivalent to that in MA 2611 and MA 2612.",
       "sections": [
-        {"id":"OIE 2081-C01","code":"C01","type":"lecture","status":"open","enrolled":21,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Sahar Ebrahimi Bajgani"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Salisbury Labs 105"}]}
+        {"id":"OIE 2081-C01","code":"C01","type":"lecture","status":"open","enrolled":20,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Sahar Ebrahimi Bajgani"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Salisbury Labs 105"}]}
       ],
       "options": [
         ["OIE 2081-C01"]
@@ -7443,7 +7443,7 @@
       "level": "Graduate",
       "description": "Students interested in Biophysics/ Soft Condensed Matter read journal articles, prepare presentations and give short talks, engage in critical discussion, and provide feedback to fellow students. The objectives of the course are for students to learn about current topics in the broad area Biophysics/ Soft Condensed Matter and biotechnology and to improve their professional skills. This course is repeatable for additional credit. Students may take up to 5 credits of PH571 as elective course credit to meet graduate program distribution requirements. Credit: 1.0 Recommended background: A bachelor’s degree in science, technology, engineering, or mathematics",
       "sections": [
-        {"id":"PH 571-S01","code":"S01","type":"lecture","status":"open","enrolled":0,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Qi Wen"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":720,"end":770,"location":"Olin Hall 109"}]}
+        {"id":"PH 571-S01","code":"S01","type":"lecture","status":"open","enrolled":1,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Qi Wen"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":720,"end":770,"location":"Olin Hall 109"}]}
       ],
       "options": [
         ["PH 571-S01"]
@@ -8131,7 +8131,7 @@
       "level": "Graduate",
       "description": "This course will study and contrast various important architectural frameworks, representations, tools, and methodologies in order to provide scalable and flexible approaches for enterprises operating in dynamic and complex environments. Enterprise-level system architecting tools will be discussed and demonstrated. At a minimum, the DoDAF, FEAF, Zachman, and TOGAF architectural frameworks will be discussed in depth. Other topics will include analysis of architectural alternatives to meet physical and logical objectives and providing information and systems assurance in an environment that takes people, processes, and technology into account. Modeling tools such as UML/SysML and the use of model-driven architectures will be presented. Validation of the architecture with stakeholders will be discussed. Methods of identifying risks and opportunities associated with the architectural choice will be explored. Practical examples will be included for illustration. (Prerequisite: SYS 501 Concepts of Systems Engineering)",
       "sections": [
-        {"id":"SYS 510-S01","code":"S01","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Robert Tranchina"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"SYS 510-S01","code":"S01","type":"lecture","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Robert Tranchina"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["SYS 510-S01"]
@@ -8765,10 +8765,10 @@
       "level": "Undergraduate",
       "description": "WPE 1611 Introduction to Mindfulness (Cat. I, 1/12 unit) Introduction to Mindfulness is an evidence-based mindfulness curriculum designed for college aged adults by the Mindfulness Institute for Emerging Adults (MIEA). During this course, you will learn useful, practical tools to help manage your stress and increase self-compassion. Students will practice a variety of meditation skills, engage with the MIEA Mobile App, read the companion book, and participate in class discussion.",
       "sections": [
-        {"id":"WPE 1611-C01","code":"C01","type":"workshop","status":"open","enrolled":14,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]},
+        {"id":"WPE 1611-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1611-C02","code":"C02","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Diana Fiorentino"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":830,"location":"Daniels Hall 102E CWB Programming Room"}]},
-        {"id":"WPE 1611-C03","code":"C03","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Robin Benoit"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":890,"location":"Daniels Hall 102E CWB Programming Room"}]},
-        {"id":"WPE 1611-C04","code":"C04","type":"workshop","status":"open","enrolled":14,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Shavaun Cloran"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]}
+        {"id":"WPE 1611-C03","code":"C03","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":1,"capacity":10},"instructors":["Robin Benoit"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":890,"location":"Daniels Hall 102E CWB Programming Room"}]},
+        {"id":"WPE 1611-C04","code":"C04","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Shavaun Cloran"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]}
       ],
       "options": [
         ["WPE 1611-C01"],
@@ -8949,8 +8949,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is designed for students who wish to work intensively on their writing . The course will emphasize the processes of composing and revising, the rhetorical strategies of written exposition and argumentation, and the reading and citation practices central to academic inquiry . In a workshop setting, students will write a sequence of short papers and complete one longer writing project based on multiple source texts; learn to read critically and respond helpfully to each other’s writing; and make oral presentations from written texts . Where applicable, the topical theme of the class will be provided via the Registrar’s office .",
       "sections": [
-        {"id":"WR 1010-C01","code":"C01","type":"lecture","status":"open","enrolled":12,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Shana Lessing"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Kaven Hall 204"}]},
-        {"id":"WR 1010-C02","code":"C02","type":"lecture","status":"open","enrolled":4,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Lerie M. Gabriel"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":480,"end":590,"location":"Salisbury Labs 011"}]}
+        {"id":"WR 1010-C01","code":"C01","type":"lecture","status":"open","enrolled":11,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Shana Lessing"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Kaven Hall 204"}]},
+        {"id":"WR 1010-C02","code":"C02","type":"lecture","status":"open","enrolled":5,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Lerie M. Gabriel"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":480,"end":590,"location":"Salisbury Labs 011"}]}
       ],
       "options": [
         ["WR 1010-C01"],
@@ -8993,7 +8993,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course will cover basic principles of prose style for expository and argumentative writing. Students will learn to evaluate writing for stylistic problems and will learn revision strategies for addressing those problems. The ultimate goal of the course is to help students write sentences and paragraphs that are clear, concise, and graceful. In the first part of the course, students will review parts of speech, basic sentence types, and sentence and paragraph structure in order to understand how sentences are put together and the impact their construction has on readers. Then, through hands-on writing exercises and extensive revision of their own and others’ writing, students will learn strategies for tightening their prose (concision), achieving “flow” (cohesion and coherence) and improving usage (language specificity and precision). Recommended background: Basic knowledge of rhetorical writing (e.g., WR 1010, Elements of Writing, WR 1011, Writing About Science & Technology, or WR 1020, Introduction to Rhetoric.",
       "sections": [
-        {"id":"WR 2010-C01","code":"C01","type":"lecture","status":"open","enrolled":12,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Ryan Madan"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Stratton Hall 311"}]}
+        {"id":"WR 2010-C01","code":"C01","type":"lecture","status":"open","enrolled":11,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Ryan Madan"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Stratton Hall 311"}]}
       ],
       "options": [
         ["WR 2010-C01"]
@@ -9091,7 +9091,7 @@
       "level": "Undergraduate",
       "description": "Cat. II Medical Writing will provide students with advanced opportunities to create clinically-oriented documents about disease, treatment, and medical research. Students will learn how to develop, structure, and present medical reports that integrate anatomy and physiology, disease history (including associated human and environmental factors), epidemiology, clinical presentation, differential diagnosis, and prognosis. The course will operate as a series of student projects in which students create scientific documents from major disease categories. The course will be focused on disease characterization for more advanced audiences and preparation for future graduate and professional writing in medicine or the life sciences. Students may not receive credit for both WR 4210 and WR 421X. Recommended background: Prior courses or projects (GPS, IQP) in health, medicine, or science writing. Exposure to anatomy and physiology would be helpful. The course is designed for 3rd and 4th year students with a strong interest in pursuing careers or continued education in medicine or public health.",
       "sections": [
-        {"id":"WR 4210-C01","code":"C01","type":"lecture","status":"open","enrolled":11,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Brenton Faber"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Olin Hall 218"}]}
+        {"id":"WR 4210-C01","code":"C01","type":"lecture","status":"open","enrolled":12,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Brenton Faber"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Olin Hall 218"}]}
       ],
       "options": [
         ["WR 4210-C01"]
