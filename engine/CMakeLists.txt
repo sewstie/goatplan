@@ -21,6 +21,7 @@ add_library(goatplan_core
     src/filters.cpp
     src/json_io.cpp
     src/schedule.cpp
+    src/solver.cpp
     src/week_mask.cpp
 )
 target_include_directories(goatplan_core PUBLIC include)
@@ -47,6 +48,9 @@ target_link_libraries(goatplan_core PRIVATE nlohmann_json::nlohmann_json)
 add_executable(goatplan_cli src/main.cpp)
 target_link_libraries(goatplan_cli PRIVATE goatplan_core)
 
+add_executable(goatplan_solver_cli src/solver_cli.cpp)
+target_link_libraries(goatplan_solver_cli PRIVATE goatplan_core)
+
 # --- Unit tests --------------------------------------------------------------
 if(GOATPLAN_BUILD_TESTS)
     # Use an installed GoogleTest if there is one (e.g. `brew install googletest`
@@ -68,6 +72,7 @@ if(GOATPLAN_BUILD_TESTS)
         tests/filters_test.cpp
         tests/json_io_test.cpp
         tests/schedule_test.cpp
+        tests/solver_test.cpp
         tests/week_mask_test.cpp
     )
     target_link_libraries(goatplan_tests PRIVATE
