@@ -18,6 +18,7 @@ option(GOATPLAN_BUILD_TESTS "Build GoogleTest unit tests" ${GOATPLAN_TESTS_DEFAU
 
 # --- Core library: the scheduling engine -----------------------------------
 add_library(goatplan_core
+    src/filters.cpp
     src/json_io.cpp
     src/schedule.cpp
     src/week_mask.cpp
@@ -64,6 +65,7 @@ if(GOATPLAN_BUILD_TESTS)
 
     enable_testing()
     add_executable(goatplan_tests
+        tests/filters_test.cpp
         tests/json_io_test.cpp
         tests/schedule_test.cpp
         tests/week_mask_test.cpp
