@@ -26,7 +26,7 @@ nlohmann::json oneCourseTerm() {
         }]
     })");
 }
-}  // namespace
+}
 
 TEST(JsonIo, LoadsTheSmallFixture) {
     const Term term = loadTermFile(GOATPLAN_FIXTURES "/2027-C.small.json");

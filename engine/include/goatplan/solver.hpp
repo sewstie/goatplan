@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "goatplan/filters.hpp"
+#include "goatplan/score.hpp"
 
 namespace goatplan {
     struct SolveLimits {
@@ -13,6 +14,7 @@ namespace goatplan {
     };
     struct Schedule {
         std::vector<std::size_t> picks;
+        Score score;
     };
     struct SolveResult {
         std::uint64_t total = 0;
@@ -21,5 +23,6 @@ namespace goatplan {
         std::vector<Schedule> schedules;
     };
     SolveResult solve(const std::vector<CourseChoices>& choices,
-                    const SolveLimits& limits = {});
+                    const SolveLimits& limits = {},
+                    const ScoreWeights& weights = {});
 }

@@ -2,22 +2,51 @@
 #include <algorithm>
 #include <limits>
 #include <numeric>
+#include <queue>
 #include <stdexcept>
 
 namespace goatplan {
     namespace {
+        // Lower total wins; equal totals fall back to picks so every run gives the same order.
+        bool better(int total, const std::vector<std::size_t>& picks, const Schedule& other) {
+            if (total != other.score.total) {
+                return total < other.score.total;
+            }
+            return picks < other.picks;
+        }
+        struct Better {
+            bool operator()(const Schedule& a, const Schedule& b) const {
+                return better(a.score.total, a.picks, b);
+            }
+        };
+        // The worst kept schedule is on top, ready to be replaced.
+        using Kept = std::priority_queue<Schedule, std::vector<Schedule>, Better>;
+
         struct Search {
             const std::vector<CourseChoices>& choices;
             const SolveLimits& limits;
+            const ScoreWeights& weights;
             const std::vector<std::size_t>& order;
             SolveResult& result;
             std::vector<std::size_t> picks;
+            Kept kept;
+            void keep(const WeekMask& week) {
+                if (limits.maxSchedules == 0) {
+                    return;
+                }
+                const Score score = scoreOf(week, weights);
+                if (kept.size() == limits.maxSchedules) {
+                    if (!better(score.total, picks, kept.top())) {
+                        return;
+                    }
+                    kept.pop();
+                }
+                kept.push(Schedule{picks, score});
+            }
             void search(std::size_t depth, WeekMask used) {
                 if (depth == order.size()) {
                     ++result.total;
-                    if (result.schedules.size() < limits.maxSchedules) {
-                        result.schedules.push_back(Schedule{picks});
-                    }
+                    keep(used);
                     return;
                 }
                 const std::size_t c = order[depth];
@@ -46,7 +75,8 @@ namespace goatplan {
             }
         };
     }
-    SolveResult solve(const std::vector<CourseChoices>& choices, const SolveLimits& limits) {
+    SolveResult solve(const std::vector<CourseChoices>& choices, const SolveLimits& limits,
+                      const ScoreWeights& weights) {
         for (const CourseChoices& choice : choices) {
             if (choice.masks.size() != choice.options.size()) {
                 throw std::invalid_argument("Solver requires one mask per filtered option");
@@ -67,9 +97,16 @@ namespace goatplan {
             [&](std::size_t a, std::size_t b) {
                 return choices[a].options.size() < choices[b].options.size();
             });
-        Search search{choices, limits, order, result,
-                    std::vector<std::size_t>(choices.size())};
+        Search search{choices, limits, weights, order, result,
+                    std::vector<std::size_t>(choices.size()), Kept{}};
         search.search(0, WeekMask{});
+
+        result.schedules.reserve(search.kept.size());
+        while (!search.kept.empty()) {
+            result.schedules.push_back(search.kept.top());
+            search.kept.pop();
+        }
+        std::reverse(result.schedules.begin(), result.schedules.end());
         return result;
     }
 }
