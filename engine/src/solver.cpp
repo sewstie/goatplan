@@ -1,29 +1,33 @@
 #include "goatplan/solver.hpp"
+#include "goatplan/groups.hpp"
 #include <algorithm>
 #include <limits>
 #include <numeric>
 #include <queue>
 #include <stdexcept>
+#include <utility>
 
 namespace goatplan {
     namespace {
-        // Lower total wins; equal totals fall back to picks so every run gives the same order.
-        bool better(int total, const std::vector<std::size_t>& picks, const Schedule& other) {
+        struct Found {
+            std::vector<std::size_t> groups;
+            Score score;
+        };
+        bool better(int total, const std::vector<std::size_t>& groups, const Found& other) {
             if (total != other.score.total) {
                 return total < other.score.total;
             }
-            return picks < other.picks;
+            return groups < other.groups;
         }
         struct Better {
-            bool operator()(const Schedule& a, const Schedule& b) const {
-                return better(a.score.total, a.picks, b);
+            bool operator()(const Found& a, const Found& b) const {
+                return better(a.score.total, a.groups, b);
             }
         };
-        // The worst kept schedule is on top, ready to be replaced.
-        using Kept = std::priority_queue<Schedule, std::vector<Schedule>, Better>;
+        using Kept = std::priority_queue<Found, std::vector<Found>, Better>;
 
         struct Search {
-            const std::vector<CourseChoices>& choices;
+            const std::vector<CourseGroups>& courses;
             const SolveLimits& limits;
             const ScoreWeights& weights;
             const std::vector<std::size_t>& order;
@@ -41,17 +45,18 @@ namespace goatplan {
                     }
                     kept.pop();
                 }
-                kept.push(Schedule{picks, score});
+                kept.push(Found{picks, score});
             }
-            void search(std::size_t depth, WeekMask used) {
+            void search(std::size_t depth, const WeekMask& used, std::uint64_t schedules) {
                 if (depth == order.size()) {
-                    ++result.total;
+                    result.total += schedules;
+                    ++result.patterns;
                     keep(used);
                     return;
                 }
                 const std::size_t c = order[depth];
-                const auto& masks = choices[c].masks;
-                for (std::size_t k = 0; k < masks.size(); ++k) {
+                const auto& groups = courses[c].groups;
+                for (std::size_t g = 0; g < groups.size(); ++g) {
                     if (result.steps == std::numeric_limits<std::uint64_t>::max()) {
                         result.capped = true;
                         return;
@@ -61,25 +66,36 @@ namespace goatplan {
                         result.capped = true;
                         return;
                     }
-                    if (masks[k].intersects(used)) {
+                    if (groups[g].mask.intersects(used)) {
                         continue;
                     }
-                    picks[c] = k;
+                    picks[c] = g;
                     WeekMask next = used;
-                    next |= masks[k];
-                    search(depth + 1, next);
+                    next |= groups[g].mask;
+                    search(depth + 1, next, schedules * groups[g].members.size());
                     if (result.capped) {
                         return;
                     }
                 }
             }
         };
+
+        std::size_t mostOpenSeats(const CourseChoices& choice, const std::vector<std::size_t>& members) {
+            std::size_t best = members.front();
+            for (std::size_t member : members) {
+                if (choice.openSeats[member] > choice.openSeats[best]) {
+                    best = member;
+                }
+            }
+            return best;
+        }
     }
     SolveResult solve(const std::vector<CourseChoices>& choices, const SolveLimits& limits,
                       const ScoreWeights& weights) {
         for (const CourseChoices& choice : choices) {
-            if (choice.masks.size() != choice.options.size()) {
-                throw std::invalid_argument("Solver requires one mask per filtered option");
+            if (choice.masks.size() != choice.options.size() ||
+                choice.openSeats.size() != choice.options.size()) {
+                throw std::invalid_argument("Solver requires one mask and one seat count per filtered option");
             }
         }
         SolveResult result;
@@ -91,22 +107,34 @@ namespace goatplan {
                 return result;
             }
         }
-        std::vector<std::size_t> order(choices.size());
+        const std::vector<CourseGroups> courses = groupByTime(choices);
+        std::vector<std::size_t> order(courses.size());
         std::iota(order.begin(), order.end(), std::size_t{0});
         std::stable_sort(order.begin(), order.end(),
             [&](std::size_t a, std::size_t b) {
-                return choices[a].options.size() < choices[b].options.size();
+                return courses[a].groups.size() < courses[b].groups.size();
             });
-        Search search{choices, limits, weights, order, result,
-                    std::vector<std::size_t>(choices.size()), Kept{}};
-        search.search(0, WeekMask{});
+        Search search{courses, limits, weights, order, result,
+                    std::vector<std::size_t>(courses.size()), Kept{}};
+        search.search(0, WeekMask{}, 1);
 
-        result.schedules.reserve(search.kept.size());
+        std::vector<Found> found;
+        found.reserve(search.kept.size());
         while (!search.kept.empty()) {
-            result.schedules.push_back(search.kept.top());
+            found.push_back(search.kept.top());
             search.kept.pop();
         }
-        std::reverse(result.schedules.begin(), result.schedules.end());
+        result.schedules.reserve(found.size());
+        for (auto it = found.rbegin(); it != found.rend(); ++it) {
+            Schedule schedule;
+            schedule.score = it->score;
+            for (std::size_t c = 0; c < courses.size(); ++c) {
+                const std::vector<std::size_t>& members = courses[c].groups[it->groups[c]].members;
+                schedule.picks.push_back(mostOpenSeats(choices[c], members));
+                schedule.alternatives.push_back(members);
+            }
+            result.schedules.push_back(std::move(schedule));
+        }
         return result;
     }
 }

@@ -14,10 +14,12 @@ namespace goatplan {
     };
     struct Schedule {
         std::vector<std::size_t> picks;
+        std::vector<std::vector<std::size_t>> alternatives;
         Score score;
     };
     struct SolveResult {
         std::uint64_t total = 0;
+        std::uint64_t patterns = 0;
         bool capped = false;
         std::uint64_t steps = 0;
         std::vector<Schedule> schedules;
