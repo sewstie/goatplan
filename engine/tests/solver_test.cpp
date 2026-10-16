@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <initializer_list>
 #include <random>
+#include <set>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -20,24 +21,32 @@ using Picks = std::vector<std::size_t>;
 
 struct Time { int day; int start; int end; };
 
+void addOption(CourseChoices& choice, const WeekMask& mask) {
+    choice.options.push_back(100 + choice.options.size() * 10);
+    choice.masks.push_back(mask);
+    choice.openSeats.push_back(-1);
+}
+
 CourseChoices choicesFromTimes(std::initializer_list<Time> times) {
     CourseChoices choice;
     for (const Time& time : times) {
-        choice.options.push_back(100 + choice.options.size() * 10);
         WeekMask mask;
         mask.addRange(time.day, time.start, time.end);
-        choice.masks.push_back(mask);
+        addOption(choice, mask);
     }
     return choice;
 }
 
-CourseChoices untimedChoices(std::size_t count) {
+CourseChoices sameTimeChoices(std::size_t count, Time time) {
     CourseChoices choice;
-    for (std::size_t i = 0; i < count; ++i) {
-        choice.options.push_back(100 + i * 10);
-        choice.masks.push_back(WeekMask{});
-    }
+    WeekMask mask;
+    mask.addRange(time.day, time.start, time.end);
+    for (std::size_t i = 0; i < count; ++i) addOption(choice, mask);
     return choice;
+}
+
+CourseChoices threeTimesOn(int day) {
+    return choicesFromTimes({{day, 600, 650}, {day, 660, 710}, {day, 720, 770}});
 }
 
 std::vector<CourseChoices> independentCourses() {
@@ -60,13 +69,27 @@ void expectConflictFree(const std::vector<CourseChoices>& choices, const SolveRe
     }
 }
 
+void expectAlternativesMatch(const std::vector<CourseChoices>& choices, const SolveResult& result) {
+    for (const Schedule& schedule : result.schedules) {
+        ASSERT_EQ(schedule.alternatives.size(), choices.size());
+        for (std::size_t c = 0; c < choices.size(); ++c) {
+            const Picks& alternatives = schedule.alternatives[c];
+            EXPECT_TRUE(std::is_sorted(alternatives.begin(), alternatives.end()));
+            EXPECT_NE(std::find(alternatives.begin(), alternatives.end(), schedule.picks[c]),
+                      alternatives.end());
+            for (std::size_t option : alternatives) {
+                EXPECT_EQ(choices[c].masks[option], choices[c].masks[schedule.picks[c]]);
+            }
+        }
+    }
+}
+
 WeekMask weekOf(const std::vector<CourseChoices>& choices, const Picks& picks) {
     WeekMask week;
     for (std::size_t i = 0; i < choices.size(); ++i) week |= choices[i].masks[picks[i]];
     return week;
 }
 
-// Each schedule as (score total, picks), which is also the order they should come in.
 std::vector<std::pair<int, Picks>> ranked(const SolveResult& result) {
     std::vector<std::pair<int, Picks>> list;
     for (const Schedule& schedule : result.schedules) list.emplace_back(schedule.score.total, schedule.picks);
@@ -74,19 +97,20 @@ std::vector<std::pair<int, Picks>> ranked(const SolveResult& result) {
 }
 
 void expectBestFirst(const std::vector<CourseChoices>& choices, const SolveResult& result) {
-    for (const Schedule& schedule : result.schedules) {
+    for (std::size_t s = 0; s < result.schedules.size(); ++s) {
+        const Schedule& schedule = result.schedules[s];
         EXPECT_EQ(schedule.score.total, scoreOf(weekOf(choices, schedule.picks)).total);
+        if (s > 0) EXPECT_LE(result.schedules[s - 1].score.total, schedule.score.total);
     }
-    const auto list = ranked(result);
-    EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
 }
 
+// Each course picks its 8 options from only 4 times, so many of them share a time.
 std::vector<CourseChoices> randomCourses(std::uint32_t seed) {
     std::mt19937 rng(seed);
     std::vector<CourseChoices> choices(3);
     for (CourseChoices& choice : choices) {
-        for (std::size_t i = 0; i < 6; ++i) {
-            WeekMask mask;
+        std::vector<WeekMask> times(4);
+        for (WeekMask& mask : times) {
             const int ranges = 1 + static_cast<int>(rng() % 2);
             for (int r = 0; r < ranges; ++r) {
                 const int day = static_cast<int>(rng() % 3);
@@ -94,9 +118,8 @@ std::vector<CourseChoices> randomCourses(std::uint32_t seed) {
                 const int end = start + (1 + static_cast<int>(rng() % 3)) * 5;
                 mask.addRange(day, start, end);
             }
-            choice.options.push_back(100 + i);
-            choice.masks.push_back(mask);
         }
+        for (int i = 0; i < 8; ++i) addOption(choice, times[rng() % times.size()]);
     }
     return choices;
 }
@@ -105,6 +128,7 @@ std::vector<CourseChoices> randomCourses(std::uint32_t seed) {
 TEST(Solver, NoCoursesGivesEmptyResult) {
     const SolveResult result = solve({});
     EXPECT_EQ(result.total, 0u);
+    EXPECT_EQ(result.patterns, 0u);
     EXPECT_EQ(result.steps, 0u);
     EXPECT_FALSE(result.capped);
     EXPECT_TRUE(result.schedules.empty());
@@ -114,6 +138,7 @@ TEST(Solver, NoCoursesGivesEmptyResult) {
 TEST(Solver, OneCourseComesBackBestFirst) {
     const SolveResult result = solve({choicesFromTimes({{0, 540, 590}, {0, 600, 650}, {0, 660, 710}})});
     EXPECT_EQ(result.total, 3u);
+    EXPECT_EQ(result.patterns, 3u);
     EXPECT_EQ(result.steps, 3u);
     EXPECT_EQ(ranked(result), (std::vector<std::pair<int, Picks>>{{60, {1}}, {60, {2}}, {240, {0}}}));
 }
@@ -122,6 +147,7 @@ TEST(Solver, IndependentCoursesGiveEveryCombination) {
     const auto choices = independentCourses();
     const SolveResult result = solve(choices);
     EXPECT_EQ(result.total, 6u);
+    EXPECT_EQ(result.patterns, 6u);
     EXPECT_EQ(result.schedules.size(), 6u);
     EXPECT_EQ(result.steps, 8u);
     EXPECT_FALSE(result.capped);
@@ -138,7 +164,7 @@ TEST(Solver, CoursesAtTheSameTimeGiveNothing) {
 TEST(Solver, CourseWithNoOptionsStopsBeforeSearching) {
     SolveLimits limits;
     limits.stepBudget = 0;
-    const SolveResult result = solve({untimedChoices(3), CourseChoices{}}, limits);
+    const SolveResult result = solve({threeTimesOn(0), CourseChoices{}}, limits);
     EXPECT_EQ(result.total, 0u);
     EXPECT_EQ(result.steps, 0u);
     EXPECT_FALSE(result.capped);
@@ -156,7 +182,7 @@ TEST(Solver, ReturnedSchedulesHaveNoClashes) {
     expectBestFirst(choices, result);
 }
 
-// The second course is searched first because it has fewer options.
+// The second course is searched first because it has fewer times.
 TEST(Solver, PicksStayInInputOrder) {
     const std::vector<CourseChoices> choices{
         choicesFromTimes({{0, 540, 590}, {1, 540, 590}, {0, 550, 600}}),
@@ -209,6 +235,52 @@ TEST(Solver, PassesWeightsToTheScore) {
     EXPECT_EQ(ranked(result), (std::vector<std::pair<int, Picks>>{{1, {0}}, {1, {1}}}));
 }
 
+TEST(Solver, SameTimeOptionsShareASchedule) {
+    const std::vector<CourseChoices> choices{
+        sameTimeChoices(3, {0, 600, 650}),
+        choicesFromTimes({{1, 600, 650}, {2, 660, 710}})
+    };
+    const SolveResult result = solve(choices);
+    EXPECT_EQ(result.total, 6u);
+    EXPECT_EQ(result.patterns, 2u);
+    ASSERT_EQ(result.schedules.size(), 2u);
+    for (const Schedule& schedule : result.schedules) {
+        EXPECT_EQ(schedule.alternatives[0], Picks({0, 1, 2}));
+        EXPECT_EQ(schedule.alternatives[1].size(), 1u);
+    }
+    expectConflictFree(choices, result);
+    expectAlternativesMatch(choices, result);
+}
+
+TEST(Solver, ShowsTheAlternativeWithTheMostOpenSeats) {
+    CourseChoices choice = sameTimeChoices(4, {0, 600, 650});
+    auto shown = [&](std::vector<int> seats) {
+        choice.openSeats = std::move(seats);
+        const SolveResult result = solve({choice});
+        EXPECT_EQ(result.schedules.at(0).alternatives[0], Picks({0, 1, 2, 3}));
+        return result.schedules.at(0).picks[0];
+    };
+    EXPECT_EQ(shown({2, 7, -1, 7}), 1u);
+    EXPECT_EQ(shown({-1, -1, 3, -1}), 2u);
+    EXPECT_EQ(shown({-1, -1, -1, -1}), 0u);
+    EXPECT_EQ(shown({0, 0, 0, 0}), 0u);
+}
+
+// 2500 real schedules, but only one time pattern to search.
+TEST(Solver, IdenticalOptionsTakeTwoSteps) {
+    const std::vector<CourseChoices> choices{
+        sameTimeChoices(50, {0, 600, 650}),
+        sameTimeChoices(50, {1, 600, 650})
+    };
+    const SolveResult result = solve(choices);
+    EXPECT_EQ(result.total, 2500u);
+    EXPECT_EQ(result.patterns, 1u);
+    EXPECT_EQ(result.steps, 2u);
+    ASSERT_EQ(result.schedules.size(), 1u);
+    EXPECT_EQ(result.schedules[0].alternatives[0].size(), 50u);
+    EXPECT_EQ(result.schedules[0].alternatives[1].size(), 50u);
+}
+
 TEST(Solver, MaxSchedulesDoesNotStopCounting) {
     const auto choices = independentCourses();
     SolveLimits limits;
@@ -216,6 +288,7 @@ TEST(Solver, MaxSchedulesDoesNotStopCounting) {
     const SolveResult limited = solve(choices, limits);
     const SolveResult full = solve(choices);
     EXPECT_EQ(limited.total, full.total);
+    EXPECT_EQ(limited.patterns, full.patterns);
     EXPECT_EQ(limited.steps, full.steps);
     EXPECT_FALSE(limited.capped);
     ASSERT_EQ(limited.schedules.size(), 2u);
@@ -228,12 +301,13 @@ TEST(Solver, ZeroMaxSchedulesStillCounts) {
     limits.maxSchedules = 0;
     const SolveResult result = solve(independentCourses(), limits);
     EXPECT_EQ(result.total, 6u);
+    EXPECT_EQ(result.patterns, 6u);
     EXPECT_TRUE(result.schedules.empty());
     EXPECT_FALSE(result.capped);
 }
 
 TEST(Solver, SmallBudgetStopsWithALowerBound) {
-    const std::vector<CourseChoices> choices{untimedChoices(3), untimedChoices(3), untimedChoices(3)};
+    const std::vector<CourseChoices> choices{threeTimesOn(0), threeTimesOn(1), threeTimesOn(2)};
     SolveLimits limits;
     limits.stepBudget = 5;
     const SolveResult result = solve(choices, limits);
@@ -248,44 +322,61 @@ TEST(Solver, SmallBudgetStopsWithALowerBound) {
 TEST(Solver, BudgetBoundaries) {
     SolveLimits limits;
     limits.stepBudget = 0;
-    SolveResult result = solve({untimedChoices(3)}, limits);
+    SolveResult result = solve({threeTimesOn(0)}, limits);
     EXPECT_TRUE(result.capped);
     EXPECT_EQ(result.total, 0u);
     EXPECT_EQ(result.steps, 1u);
 
     limits.stepBudget = 3;
-    result = solve({untimedChoices(3)}, limits);
+    result = solve({threeTimesOn(0)}, limits);
     EXPECT_FALSE(result.capped);
     EXPECT_EQ(result.total, 3u);
     EXPECT_EQ(result.steps, 3u);
 
     limits.stepBudget = 2;
-    result = solve({untimedChoices(3)}, limits);
+    result = solve({threeTimesOn(0)}, limits);
     EXPECT_TRUE(result.capped);
     EXPECT_EQ(result.total, 2u);
     EXPECT_EQ(result.steps, 3u);
 }
 
-TEST(Solver, MismatchedMasksThrow) {
-    CourseChoices choice = untimedChoices(2);
+TEST(Solver, MismatchedSizesThrow) {
+    CourseChoices choice = threeTimesOn(0);
     choice.masks.pop_back();
     EXPECT_THROW(solve({choice}), std::invalid_argument);
     EXPECT_THROW(solve({choice, CourseChoices{}}), std::invalid_argument);
+
+    choice = threeTimesOn(0);
+    choice.openSeats.pop_back();
+    EXPECT_THROW(solve({choice}), std::invalid_argument);
 }
 
-// Brute force scores every clash-free combination and sorts them the way solve should.
+// Brute force goes through every real combination. Of those that share the same
+// times, the one with the lowest positions stands for the pattern, as solve shows it.
 TEST(Solver, MatchesBruteForceOnRandomCourses) {
     for (std::uint32_t seed = 0; seed < 20; ++seed) {
         SCOPED_TRACE(seed);
         const std::vector<CourseChoices> choices = randomCourses(seed);
+        std::vector<Picks> firstWithMask(3, Picks(8));
+        for (std::size_t c = 0; c < 3; ++c) {
+            const auto& masks = choices[c].masks;
+            for (std::size_t i = 0; i < 8; ++i) {
+                firstWithMask[c][i] = static_cast<std::size_t>(
+                    std::find(masks.begin(), masks.end(), masks[i]) - masks.begin());
+            }
+        }
+
+        std::uint64_t real = 0;
         std::vector<std::pair<int, Picks>> expected;
-        for (std::size_t x = 0; x < 6; ++x) {
-            for (std::size_t y = 0; y < 6; ++y) {
-                for (std::size_t z = 0; z < 6; ++z) {
+        for (std::size_t x = 0; x < 8; ++x) {
+            for (std::size_t y = 0; y < 8; ++y) {
+                for (std::size_t z = 0; z < 8; ++z) {
                     const WeekMask& a = choices[0].masks[x];
                     const WeekMask& b = choices[1].masks[y];
                     const WeekMask& c = choices[2].masks[z];
                     if (a.intersects(b) || a.intersects(c) || b.intersects(c)) continue;
+                    ++real;
+                    if (x != firstWithMask[0][x] || y != firstWithMask[1][y] || z != firstWithMask[2][z]) continue;
                     expected.emplace_back(scoreOf(weekOf(choices, {x, y, z})).total, Picks{x, y, z});
                 }
             }
@@ -293,17 +384,19 @@ TEST(Solver, MatchesBruteForceOnRandomCourses) {
         std::sort(expected.begin(), expected.end());
 
         SolveLimits limits;
-        limits.maxSchedules = 216;
+        limits.maxSchedules = 512;
         const SolveResult result = solve(choices, limits);
         EXPECT_FALSE(result.capped);
-        EXPECT_EQ(result.total, expected.size());
+        EXPECT_EQ(result.total, real);
+        EXPECT_EQ(result.patterns, expected.size());
         EXPECT_EQ(ranked(result), expected);
         expectConflictFree(choices, result);
+        expectAlternativesMatch(choices, result);
         expectBestFirst(choices, result);
 
         limits.maxSchedules = 5;
         const SolveResult top = solve(choices, limits);
-        EXPECT_EQ(top.total, expected.size());
+        EXPECT_EQ(top.total, real);
         expected.resize(std::min<std::size_t>(expected.size(), 5));
         EXPECT_EQ(ranked(top), expected);
     }
@@ -317,8 +410,12 @@ TEST(Solver, SameInputGivesSameResult) {
     const SolveResult second = solve(choices, limits);
     ASSERT_FALSE(first.schedules.empty());
     EXPECT_EQ(first.total, second.total);
+    EXPECT_EQ(first.patterns, second.patterns);
     EXPECT_EQ(first.steps, second.steps);
     EXPECT_EQ(ranked(first), ranked(second));
+    for (std::size_t s = 0; s < first.schedules.size(); ++s) {
+        EXPECT_EQ(first.schedules[s].alternatives, second.schedules[s].alternatives);
+    }
 }
 
 TEST(Solver, MatchesBruteForceOnFixture) {
@@ -331,14 +428,19 @@ TEST(Solver, MatchesBruteForceOnFixture) {
             const auto choices = filterOptions(
                 term, {term.courses[i].code, term.courses[j].code}, Preferences{});
             std::uint64_t expected = 0;
+            std::set<std::pair<WeekMask, WeekMask>> patterns;
             for (const WeekMask& x : choices[0].masks) {
                 for (const WeekMask& y : choices[1].masks) {
-                    if (!x.intersects(y)) ++expected;
+                    if (x.intersects(y)) continue;
+                    ++expected;
+                    patterns.emplace(x, y);
                 }
             }
             const SolveResult result = solve(choices);
             EXPECT_EQ(result.total, expected);
+            EXPECT_EQ(result.patterns, patterns.size());
             expectConflictFree(choices, result);
+            expectAlternativesMatch(choices, result);
             expectBestFirst(choices, result);
             foundCompatiblePair = foundCompatiblePair || result.total > 0;
         }

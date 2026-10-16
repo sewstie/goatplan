@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <compare>
 #include <cstddef>
 #include <cstdint>
 #include "goatplan/model.hpp"
@@ -39,7 +40,7 @@ namespace goatplan {
             bool empty() const;
             std::size_t slotCount() const;
             DaySpan daySpan(int dayIndex) const;
-            bool operator==(const WeekMask&) const = default;
+            auto operator<=>(const WeekMask&) const = default;
         private:
             std::array<std::uint64_t, kWordsPerWeek> words_{};
     };

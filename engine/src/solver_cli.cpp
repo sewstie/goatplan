@@ -1,4 +1,5 @@
 #include "goatplan/filters.hpp"
+#include "goatplan/groups.hpp"
 #include "goatplan/json_io.hpp"
 #include "goatplan/solver.hpp"
 
@@ -96,6 +97,8 @@ namespace {
                     std::cout << (section.code.empty() ? section.id : section.code);
                     first = false;
                 }
+                const std::size_t sameTime = result.schedules[s].alternatives.at(i).size() - 1;
+                if (sameTime > 0) std::cout << " (+" << sameTime << " same time)";
                 std::cout << '\n';
             }
         }
@@ -151,15 +154,22 @@ int main(int argc, char* argv[]) {
         const auto filtered = Clock::now();
         const SolveResult result = solve(choices, limits);
         const auto end = Clock::now();
-        for (const CourseChoices& choice : choices) {
-            std::cout << choice.course->code << ": kept=" << choice.options.size()
-                      << '/' << choice.course->options.size()
-                      << " NotLocked=" << choice.removed[static_cast<std::size_t>(FilterReason::NotLocked)]
-                      << " NotOpen=" << choice.removed[static_cast<std::size_t>(FilterReason::NotOpen)]
-                      << " StartsTooEarly=" << choice.removed[static_cast<std::size_t>(FilterReason::StartsTooEarly)]
-                      << " Blocked=" << choice.removed[static_cast<std::size_t>(FilterReason::Blocked)] << '\n';
+        const auto groups = groupByTime(choices);
+        for (std::size_t c = 0; c < choices.size(); ++c) {
+            const CourseChoices& choice = choices[c];
+            std::cout << choice.course->code << ": " << choice.options.size() << " options → "
+                      << groups[c].groups.size() << " different times";
+            if (choice.options.size() != choice.course->options.size()) {
+                std::cout << " (filters kept " << choice.options.size() << '/' << choice.course->options.size()
+                          << ": NotLocked=" << choice.removed[static_cast<std::size_t>(FilterReason::NotLocked)]
+                          << " NotOpen=" << choice.removed[static_cast<std::size_t>(FilterReason::NotOpen)]
+                          << " StartsTooEarly=" << choice.removed[static_cast<std::size_t>(FilterReason::StartsTooEarly)]
+                          << " Blocked=" << choice.removed[static_cast<std::size_t>(FilterReason::Blocked)] << ')';
+            }
+            std::cout << '\n';
         }
-        std::cout << "total=" << result.total
+        std::cout << "patterns=" << result.patterns
+                  << " total=" << result.total
                   << " capped=" << (result.capped ? "true" : "false")
                   << " steps=" << result.steps
                   << " retained=" << result.schedules.size()
