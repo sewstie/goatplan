@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-10-15T14:04:47Z",
+  "generatedAt": "2026-10-16T13:52:59Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -122,7 +122,7 @@
       "description": "The Seminar is a degree requirement for all graduate students and is offered during A, B, C, and D term. The Seminar consists of presentations by experts on technical and broader professional topics. Presentations are also offered by graduate students on topics related to their directed research, dissertation, or industrial experiences. The Seminar is offered in pass/fail mode based on attendance.",
       "sections": [
         {"id":"AE 5032-D01","code":"D01","type":"seminar","status":"open","enrolled":25,"capacity":50,"waitlist":{"taken":0,"capacity":30},"instructors":["Michael Demetriou"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Goddard Hall 227 Classroom"}]},
-        {"id":"AE 5032-D02","code":"D02","type":"seminar","status":"open","enrolled":16,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Demetriou"],"delivery":"online-sync","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Online-synchronous"}]}
+        {"id":"AE 5032-D02","code":"D02","type":"seminar","status":"open","enrolled":15,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Demetriou"],"delivery":"online-sync","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Online-synchronous"}]}
       ],
       "options": [
         ["AE 5032-D01"],
@@ -287,7 +287,7 @@
       "level": "Undergraduate",
       "description": "This course introduces design principles and their application to create effective forms of graphic communication. The students will learn the fundamentals of visual communication and will work on projects to analyze, organize, and solve design problems. Topics may include: the design process; figure/ground; shape; dynamic balance; Gestalt principles; typography; layout and composition; color; production and presentation in digital formats.",
       "sections": [
-        {"id":"AR 2301-D01","code":"D01","type":"lecture","status":"open","enrolled":14,"capacity":24,"waitlist":{"taken":7,"capacity":10},"instructors":["Roshanak Bigonah"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Salisbury Labs 123 Computer Lab"}]}
+        {"id":"AR 2301-D01","code":"D01","type":"lecture","status":"open","enrolled":14,"capacity":24,"waitlist":{"taken":8,"capacity":10},"instructors":["Roshanak Bigonah"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Salisbury Labs 123 Computer Lab"}]}
       ],
       "options": [
         ["AR 2301-D01"]
@@ -1390,9 +1390,9 @@
       "level": "Undergraduate",
       "description": "In this course, students learn how to perform analytical methods and conduct laboratory experiments relevant to natural and engineered treatment systems in environmental engineering. Topics in water quality, water treatment, wastewater treatment, and reactors are included. The course focuses on data acquisition, analysis, and interpretation. Recommended background: CE 3059, CE 3060, and CE 3061.",
       "sections": [
-        {"id":"CE 3063-DL01","code":"DL01","type":"lecture","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Jeanine Dudle"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu"],"start":660,"end":710,"location":"Unity Hall 405"}]},
-        {"id":"CE 3063-DX01","code":"DX01","type":"lab","status":"open","enrolled":11,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Jeanine Dudle"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":950,"location":"Kaven Hall 010 CE Lab"}]},
-        {"id":"CE 3063-DX02","code":"DX02","type":"lab","status":"closed","enrolled":12,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Jeanine Dudle"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":950,"location":"Kaven Hall 010 CE Lab"}]}
+        {"id":"CE 3063-DL01","code":"DL01","type":"lecture","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Harold Walker"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu"],"start":660,"end":710,"location":"Unity Hall 405"}]},
+        {"id":"CE 3063-DX01","code":"DX01","type":"lab","status":"open","enrolled":11,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Harold Walker"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":950,"location":"Kaven Hall 010 CE Lab"}]},
+        {"id":"CE 3063-DX02","code":"DX02","type":"lab","status":"closed","enrolled":12,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Harold Walker"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":950,"location":"Kaven Hall 010 CE Lab"}]}
       ],
       "options": [
         ["CE 3063-DL01","CE 3063-DX01"],
@@ -2041,8 +2041,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to an object-oriented model of programming, with an emphasis on the programming approaches useful in creating software applications. Students will be expected to design, implement, and debug object-oriented programs. Topics include inheritance, user interfaces, and database access. This course is for non-CS majors with prior programming experience and an interest in building software applications. Programming experience such as found in CS 1101, CS 1102, CS 1004, or CS 1005.",
       "sections": [
-        {"id":"CS 2119-DL01","code":"DL01","type":"lecture","status":"open","enrolled":22,"capacity":48,"waitlist":{"taken":0,"capacity":15},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Kaven Hall 116"}]},
-        {"id":"CS 2119-DX01","code":"DX01","type":"lab","status":"open","enrolled":19,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Atwater Kent 013 Computer Lab"}]},
+        {"id":"CS 2119-DL01","code":"DL01","type":"lecture","status":"open","enrolled":23,"capacity":48,"waitlist":{"taken":0,"capacity":15},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Kaven Hall 116"}]},
+        {"id":"CS 2119-DX01","code":"DX01","type":"lab","status":"open","enrolled":20,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Atwater Kent 013 Computer Lab"}]},
         {"id":"CS 2119-DX02","code":"DX02","type":"lab","status":"open","enrolled":3,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":590,"location":"Atwater Kent 013 Computer Lab"}]}
       ],
       "options": [
@@ -2248,7 +2248,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides an introduction to modern cryptography and communication security. It focuses on how cryptographic algorithms and protocols work and how to use them. The course covers the concepts of block ciphers and message authentication codes, public key encryption, digital signatures, and key establishment, as well as common examples and uses of such schemes, including the AES, RSA-OAEP, and the Digital Signature Algorithm. Basic cryptanalytic techniques and examples of practical security solutions are explored to understand how to design and evaluate modern security solutions. The course is suited for students interested in cryptography or other security related fields such as trusted computing, network and OS security, or general IT security. Recommended background: Experience in expressing algorithms in a modern programming language (e.g., ECE 2049 or CS 2301). Suggested background: Discrete mathematics (CS 2022/MA 2201 or equivalent).",
       "sections": [
-        {"id":"CS 4801-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":95,"capacity":95,"waitlist":{"taken":0,"capacity":20},"instructors":["Koksal Mus"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 500"}]}
+        {"id":"CS 4801-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":95,"capacity":95,"waitlist":{"taken":1,"capacity":20},"instructors":["Koksal Mus"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 500"}]}
       ],
       "options": [
         ["CS 4801-D01"]
@@ -2680,7 +2680,7 @@
       "level": "Graduate",
       "description": "This 3-credit graduate qualifying project, typically done in teams, provides a capstone experience in applying Artificial Intelligence skills to a real-world problem. It will be carried out in cooperation with an industrial sponsor and is approved and overseen by a core or collaborative faculty member in the Artificial Intelligence Program. This offering integrates theory and practice of Artificial Intelligence and includes the utilization of tools and techniques acquired in the Artificial Intelligence Program to a real-world problem. In addition to a written report, this project must be presented in a formal presentation to faculty of the AI program and sponsors. Professional development skills, such as communication, teamwork, leadership, and collaboration, will be practiced. This course is a degree requirement for the Master of Science in Artificial Intelligence (MS-AI) Students outside the MS-AI program must get the instructor’s approval before. Prerequisites Completion of at least 24 credits of the AI degree, or consent of the instructor. With permission of the instructor, the GQP can be taken a 2nd time for a total of 6 credits.",
       "sections": [
-        {"id":"CS 594-S01","code":"S01","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":1,"capacity":10},"instructors":["Bahman Moraffah"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
+        {"id":"CS 594-S01","code":"S01","type":"lecture","status":"open","enrolled":36,"capacity":40,"waitlist":{"taken":1,"capacity":10},"instructors":["Bahman Moraffah"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
       ],
       "options": [
         ["CS 594-S01"]
@@ -2948,7 +2948,7 @@
       "level": "Graduate",
       "description": "This 3-credit graduate qualifying project, typically done in teams, provides a capstone experience in applying Artificial Intelligence skills to a real-world problem. It will be carried out in cooperation with an industrial sponsor and is approved and overseen by a core or collaborative faculty member in the Artificial Intelligence Program. This offering integrates theory and practice of Artificial Intelligence and includes the utilization of tools and techniques acquired in the Artificial Intelligence Program to a real-world problem. In addition to a written report, this project must be presented in a formal presentation to faculty of the AI program and sponsors. Professional development skills, such as communication, teamwork, leadership, and collaboration, will be practiced. This course is a degree requirement for the Master of Science in Artificial Intelligence (MS-AI) Students outside the MS-AI program must get the instructor’s approval before. Prerequisites Completion of at least 24 credits of the AI degree, or consent of the instructor. With permission of the instructor, the GQP can be taken a 2nd time for a total of 6 credits.",
       "sections": [
-        {"id":"DS 594-S01","code":"S01","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":1,"capacity":10},"instructors":["Bahman Moraffah"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
+        {"id":"DS 594-S01","code":"S01","type":"lecture","status":"open","enrolled":36,"capacity":40,"waitlist":{"taken":1,"capacity":10},"instructors":["Bahman Moraffah"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
       ],
       "options": [
         ["DS 594-S01"]
@@ -2962,7 +2962,7 @@
       "level": "Graduate",
       "description": "The Graduate Qualifying Project, or GQP, is a 3-credit project, typically done in teams that is carried out in cooperation with a sponsor or industrial partner. It will be overseen by a faculty member affiliated with the Data Science Program and will offer integrated theory and practice of Data Science including the utilization of tools and techniques acquired in the Data Science Program. In addition to a written report, this project must be presented in a formal demonstration to the faculty of the Data Science program and sponsors. Professional development skills, such as communication, teamwork, leadership, and collaboration, along with storytelling, will be practiced. Prerequisites: DS 501, completion of at least 24 credits of the DS degree, and consent of the instructor.",
       "sections": [
-        {"id":"DS 598-S01","code":"S01","type":"other","title":"Graduate Qualifying Project","status":"open","enrolled":34,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Fatemeh Emdad","Chun-Kit Ngan"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]},
+        {"id":"DS 598-S01","code":"S01","type":"other","title":"Graduate Qualifying Project","status":"open","enrolled":35,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Fatemeh Emdad","Chun-Kit Ngan"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]},
         {"id":"DS 598-S02","code":"S02","type":"other","title":"Graduate Qualifying Project","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Fatemeh Emdad","Chun-Kit Ngan"],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Online-synchronous"}]}
       ],
       "options": [
@@ -3152,7 +3152,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides an introduction to modern cryptography and communication security. It focuses on how cryptographic algorithms and protocols work and how to use them. The course covers the concepts of block ciphers and message authentication codes, public key encryption, digital signatures, and key establishment, as well as common examples and uses of such schemes, including the AES, RSA-OAEP, and the Digital Signature Algorithm. Basic cryptanalytic techniques and examples of practical security solutions are explored to understand how to design and evaluate modern security solutions. The course is suited for students interested in cryptography or other security related fields such as trusted computing, network and OS security, or general IT security. Recommended background: Experience in expressing algorithms in a modern programming language (e.g., ECE 2049 or CS 2301). Suggested background: Discrete mathematics (CS 2022/MA 2201 or equivalent).",
       "sections": [
-        {"id":"ECE 4802-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":95,"capacity":95,"waitlist":{"taken":0,"capacity":20},"instructors":["Koksal Mus"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 500"}]}
+        {"id":"ECE 4802-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":95,"capacity":95,"waitlist":{"taken":1,"capacity":20},"instructors":["Koksal Mus"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 500"}]}
       ],
       "options": [
         ["ECE 4802-D01"]
@@ -3180,7 +3180,7 @@
       "level": "Graduate",
       "description": "Applications of probability theory and its engineering applications. Random variables, distribution and density functions. Functions of random variables, moments and characteristic functions. Sequences of random variables, stochastic convergence and the central limit theorem. Concept of a stochastic process, stationary processes and ergodicity. Correlation functions, spectral analysis and their application to linear systems. Mean square estimation. Prerequisite: Undergraduate course in signals and systems.",
       "sections": [
-        {"id":"ECE 502-S01","code":"S01","type":"lecture","status":"open","enrolled":4,"capacity":30,"waitlist":{"taken":8,"capacity":20},"instructors":["Gregary Prince"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"ECE 502-S01","code":"S01","type":"lecture","status":"open","enrolled":4,"capacity":30,"waitlist":{"taken":9,"capacity":20},"instructors":["Gregary Prince"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["ECE 502-S01"]
@@ -3194,7 +3194,7 @@
       "level": "Graduate",
       "description": "Discrete-time signals and systems, frequency analysis, sampling of continuous time signals, the z-transform, implementation of discrete time systems, the discrete Fourier transform, fast Fourier transform algorithms, filter design techniques. Prerequisites: Courses in complex variables, basic signals and systems.",
       "sections": [
-        {"id":"ECE 503-S02","code":"S02","type":"lecture","status":"open","enrolled":31,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Galahad Wernsing"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":1080,"end":1250,"location":"Atwater Kent 219"}]}
+        {"id":"ECE 503-S02","code":"S02","type":"lecture","status":"open","enrolled":32,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Galahad Wernsing"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":1080,"end":1250,"location":"Atwater Kent 219"}]}
       ],
       "options": [
         ["ECE 503-S02"]
@@ -3280,7 +3280,7 @@
       "level": "Graduate",
       "description": "This graduate level course examines the principles of Power System Analysis. It will begin with a review of AC circuit analysis. The course will then cover the topics of transmission line parameter calculation, symmetrical component analysis, transformer and load modeling, symmetrical and unsymmetrical fault analysis, power flow, and power systems stability. Prerequisites: Knowledge of circuit analysis, basic calculus and differential equations, elementary matrix analysis and basic computer programming.",
       "sections": [
-        {"id":"ECE 5500-S01","code":"S01","type":"lecture","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":14,"capacity":20},"instructors":["Mahmood Mirheydar"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"ECE 5500-S01","code":"S01","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":13,"capacity":20},"instructors":["Mahmood Mirheydar"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["ECE 5500-S01"]
@@ -3295,7 +3295,7 @@
       "description": "This graduate level course introduces the student to the effects of electromagnetic transients in distribution systems. Topics include transient analysis, lightning and switching surges, mechanisms of transient generation, insulation coordination, grounding, surge protection devices, and shielding. Prerequisite: ECE 5500 Power System Analysis.",
       "sections": [
         {"id":"ECE 5511-LS01","code":"LS01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Edvina Uzunovic"],"delivery":"online-async","dates":{"start":"2027-04-12","end":"2027-06-25"},"meetings":[]},
-        {"id":"ECE 5511-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Edvina Uzunovic"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"ECE 5511-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Edvina Uzunovic"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["ECE 5511-LS01"],
@@ -3310,7 +3310,7 @@
       "level": "Graduate",
       "description": "This graduate level course will further explore alternating current circuits, three phase circuits, basics of electromagnetic field theory, magnetic circuits, inductance, and electromechanical energy conversion. Topics also include ideal transformer, iron-core transformer, voltage regulation, efficiency equivalent circuit, and three phase transformers. Induction machine construction, equivalent circuit, torque speed characteristics, and single phase motors, synchronous machine construction, equivalent circuit, power relationships phasor diagrams, and synchronous motors will be covered. Direct current machine construction, types, efficiency, power flow diagram, and external characteristics will be discussed",
       "sections": [
-        {"id":"ECE 5512-S01","code":"S01","type":"lecture","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Zeeshan Ahmed"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"ECE 5512-S01","code":"S01","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Zeeshan Ahmed"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["ECE 5512-S01"]
@@ -3688,7 +3688,7 @@
       "level": "Undergraduate",
       "description": "Cat. I The study of environmental problems and their solutions requires an interdisciplinary approach. This course will examine current environmental issues from the intersection of several key disciplines including: environmental philosophy and history, environmental policy, and science. The course will develop these different approaches for analyzing environmental problems, explore the tensions between them, and present a framework for integrating them. Topics such as environmental justice, developing nations, globalization, and climate change policy will be explored.",
       "sections": [
-        {"id":"ENV 1100-D01","code":"D01","type":"lecture","status":"open","enrolled":24,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Achirri Ismael"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Salisbury Labs 104"}]}
+        {"id":"ENV 1100-D01","code":"D01","type":"lecture","status":"open","enrolled":25,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Achirri Ismael"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Salisbury Labs 104"}]}
       ],
       "options": [
         ["ENV 1100-D01"]
@@ -3806,7 +3806,7 @@
       "description": "Cat. I This is an introductory course that addresses the analysis of basic mechanical and structural elements. Topics include general concepts of stresses, strains, and material properties of common engineering materials. Also covered are two-dimensional stress transformations, principal stresses, Mohr’s circle and deformations due to mechanical and thermal effects. Applications are to uniaxially loaded bars, circular shafts under torsion, bending and shearing and deflection of beams, and buckling of columns. Both statically determinate and indeterminate problems are analyzed. Recommended background; mechanical systems (ES 2501 or equivalent), differential (MA 1021) and integral (MA 1022) calculus, vector algebra (MA 1023), and double and triple integration (MA 1024).",
       "sections": [
         {"id":"ES 2502-DD01","code":"DD01","type":"discussion","status":"closed","enrolled":80,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Mehul Bhatia"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Atwater Kent 219"}]},
-        {"id":"ES 2502-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":80,"capacity":80,"waitlist":{"taken":1,"capacity":15},"instructors":["Mehul Bhatia"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 400"}]}
+        {"id":"ES 2502-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":80,"capacity":80,"waitlist":{"taken":2,"capacity":15},"instructors":["Mehul Bhatia"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 400"}]}
       ],
       "options": [
         ["ES 2502-DD01","ES 2502-DL01"]
@@ -3821,9 +3821,9 @@
       "description": "Cat. I Engineers should be able to formulate and solve problems that involve forces that act on bodies which are moving. This course deals with the kinematics and dynamics of particles and rigid bodies which move in a plane. Topics covered will include: kinematics of particles and rigid bodies, equations of motion, work-energy methods, and impulse and momentum. In this course a basic introduction to mechanical vibration is also discussed. Basic equations will be developed with respect to translating and rotating coordinate systems. Recommended background: Statics (ES 2501 or CE 2000).",
       "sections": [
         {"id":"ES 2503-DD01","code":"DD01","type":"discussion","status":"open","enrolled":85,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Alireza Nejad"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Washburn 229"}]},
-        {"id":"ES 2503-DD02","code":"DD02","type":"discussion","status":"open","enrolled":68,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Moradi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Higgins Labs 116"}]},
+        {"id":"ES 2503-DD02","code":"DD02","type":"discussion","status":"open","enrolled":69,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Moradi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Higgins Labs 116"}]},
         {"id":"ES 2503-DL01","code":"DL01","type":"lecture","status":"open","enrolled":85,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Alireza Nejad"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Higgins Labs 116"}]},
-        {"id":"ES 2503-DL02","code":"DL02","type":"lecture","status":"open","enrolled":68,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Lee Moradi"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Higgins Labs 116"}]}
+        {"id":"ES 2503-DL02","code":"DL02","type":"lecture","status":"open","enrolled":69,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Lee Moradi"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Higgins Labs 116"}]}
       ],
       "options": [
         ["ES 2503-DD01","ES 2503-DL01"],
@@ -4520,7 +4520,7 @@
       "level": "Graduate",
       "description": "This project-based course is an interdisciplinary exercise that integrates the technical aspects of systems engineering with the challenges of meeting business goals within the framework of the organizational structure. It allows students to apply the skills and knowledge acquired throughout the Systems Engineering Leadership curriculum. Students are encouraged to select projects with practical significance to their current and future professional responsibilities. Each project is normally conducted in teams of two to four students. They are administered, advised, and evaluated by WPI faculty as part of the learning experience, but students are also encouraged to seek mentorship from experienced systems engineers. (Prerequisites: Since the Capstone Project will draw on knowledge obtained throughout the degree program, it is expected that the student will have completed most or all of the coursework within their plan of study before undertaking the engineering leadership project.)",
       "sections": [
-        {"id":"IDG 598-S01","code":"S01","type":"lecture","status":"open","enrolled":2,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Larry Mallak","Donald Gelosh"],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":1080,"end":1200,"location":"Online-synchronous"}]}
+        {"id":"IDG 598-S01","code":"S01","type":"lecture","status":"open","enrolled":2,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Larry Mallak"],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":1080,"end":1200,"location":"Online-synchronous"}]}
       ],
       "options": [
         ["IDG 598-S01"]
@@ -5762,8 +5762,8 @@
       "level": "Graduate",
       "description": "Review of governing differential equations and boundary conditions for heat transfer analysis. Multidimensional and unsteady conduction, including effects of variable material properties. Analytical and numerical solution methods. Forced and free convection with laminar and turbulent flow in internal and external flows. Characteristics of radiant energy spectra and radiative properties of surfaces. Radiative heat transfer in absorbing and emitting media. Systems with combined conduction, convection and radiation. Condensation, evaporation, and boiling phenomena. (Prerequisite: Background in thermodynamics, fluid dynamics, ordinary and partial differential equations, and basic undergraduate physics.)",
       "sections": [
-        {"id":"ME 516-S01","code":"S01","type":"lecture","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Jamal Yagoobi"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Wed"],"start":840,"end":920,"location":"Stratton Hall 207"}]},
-        {"id":"ME 516-S02","code":"S02","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Jamal Yagoobi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"ME 516-S01","code":"S01","type":"lecture","status":"open","enrolled":17,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Jamal Yagoobi"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Wed"],"start":840,"end":920,"location":"Stratton Hall 207"}]},
+        {"id":"ME 516-S02","code":"S02","type":"lecture","status":"open","enrolled":4,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Jamal Yagoobi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["ME 516-S01"],
@@ -6121,7 +6121,7 @@
       "level": "Graduate",
       "description": "This course provides students with the knowledge and skills to design, develop, and use business dashboards for monitoring organizational performance and making data-driven decisions. On the technical side, students will learn and apply business intelligence software to organize, represent, and analyze data about customers, products, sales, marketing, operations, and financials. They will learn to create strategic, operational, and analytical dashboards displaying key performance indicators (KPIs) for managerial decision-making. On the business side, students will learn the connections between business strategy and plans, the KPIs that measure performance compared to those plans, and how to use dashboards to manage organizational performance. Students will also learn the technical and managerial challenges of creating and deploying these business intelligence best practices so that organizations gain value from their data. The course includes business cases and hands-on analyses of business data. It is designed for any student interested in learning about data-driven business performance management, including students whose primary focus is Business Management, Data Science, IT, Marketing, or Operations.",
       "sections": [
-        {"id":"MIS 584-S02","code":"S02","type":"lecture","status":"open","enrolled":20,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Nima Kordzadeh"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"MIS 584-S02","code":"S02","type":"lecture","status":"open","enrolled":21,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Nima Kordzadeh"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["MIS 584-S02"]
@@ -6445,7 +6445,7 @@
       "level": "Undergraduate",
       "description": "Cat. II Through an introduction to the musical contributions of Louis Armstrong, Duke Ellington, Charlie Parker, Miles Davis and others, students are exposed to the chronological development of the language of jazz. Each jazz era is examined in detail including the musical and social contexts which helped define it. Participants are expected to build aural skills with the goal of identifying specific historical periods through the recognition of particular musical characteristics. Students examine in depth one artist of their choice. This course will be offered in 2020-21, and in alternating years thereafter. [This replaces MU 4623. Credit is not allowed for both MU 4623 and MU 2719.]",
       "sections": [
-        {"id":"MU 2010-D01","code":"D01","type":"lecture","status":"open","enrolled":15,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Douglas Olsen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Alden Hall B06 Janet Earle Room"}]}
+        {"id":"MU 2010-D01","code":"D01","type":"lecture","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Douglas Olsen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Alden Hall B06 Janet Earle Room"}]}
       ],
       "options": [
         ["MU 2010-D01"]
@@ -6917,7 +6917,7 @@
       "level": "Graduate",
       "description": "The environmental implications and responsibilities of organizations begin at an organization’s boundaries with management of their operations, but also extend to incorporate interorganizational relationships and networks, the supply chain. We will investigate the practice and theory of sustainable supply chains and operations management in organizations throughout the world. This course is intended to provide students with understanding the intra- and interorganizational implications of environmental sustainability practices and policies. The role of organizational supply chain management functions, activities, tools and methods and their relationship to the natural environment will be introduced and discussed. The goals are for students to grasp the scope of general supply chain/operations management and environmental sustainability as they relate to the firm; to be able to relate to the manners in which management may respond and collaborate internally and with suppliers, customers, and various other stakeholders influencing and influenced by operational and supply chain activities from practical and theoretical case studies; able to evaluate various factors and understand tradeoffs in management decisions as they pertain to environmental supply chain management.",
       "sections": [
-        {"id":"OIE 549-S01","code":"S01","type":"lecture","title":"Sustainable Supply Chain and Operations Management","status":"open","enrolled":5,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["Joseph Sarkis"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"OIE 549-S01","code":"S01","type":"lecture","title":"Sustainable Supply Chain and Operations Management","status":"open","enrolled":6,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["Joseph Sarkis"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["OIE 549-S01"]
@@ -7158,7 +7158,7 @@
       "level": "Undergraduate",
       "description": "Cat. I An introduction to the basic principles of thermodynamics and statistical physics. Topics covered include: basic ideas of probability theory, statistical description of systems of particles, thermodynamic laws, entropy, microcanonical and canonical ensembles, ideal and real gases, ensembles of weakly interacting spin 1/2 systems. Recommended background: knowledge of quantum mechanics and thermodynamics at the level of ES 3001.",
       "sections": [
-        {"id":"PH 3206-D01","code":"D01","type":"lecture","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Germano Iannacchione"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Washburn 323"}]}
+        {"id":"PH 3206-D01","code":"D01","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Germano Iannacchione"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Washburn 323"}]}
       ],
       "options": [
         ["PH 3206-D01"]
@@ -7230,7 +7230,7 @@
       "level": "Graduate",
       "description": "Phonons and specific heat of solids; electronic conductivity and band theory of solids; Fermi and Bose gases, Optical properties of materials. Magnetic interactions.",
       "sections": [
-        {"id":"PH 554-S01","code":"S01","type":"lecture","status":"open","enrolled":12,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Lyubov Titova"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Olin Hall 218"}]}
+        {"id":"PH 554-S01","code":"S01","type":"lecture","status":"open","enrolled":11,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Lyubov Titova"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Olin Hall 218"}]}
       ],
       "options": [
         ["PH 554-S01"]
@@ -7685,7 +7685,7 @@
       "level": "Graduate",
       "description": "This project-based course integrates robotics engineering theory and practice, and provides the opportunity to apply the skills and knowledge acquired in the Robotics Engineering curriculum. The project is normally conducted in teams of two to four students. Students are encouraged to select projects with practical significance to their current and future professional responsibilities. The projects are administered, advised, and evaluated by WPI faculty as part of the learning experience, but students are also encouraged to seek mentorship from experienced colleagues in the Robotics Engineering profession. The project will include substantial analysis and/or design and conclude with a written report and a public presentation. Prerequisites: The student must have completed the 9-credit RBE Foundations and additional 6 credits including any combination of RBE core, electives, and Engineering Context before enrolling in RBE 594.",
       "sections": [
-        {"id":"RBE 594-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":20,"waitlist":{"taken":2,"capacity":20},"instructors":[],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
+        {"id":"RBE 594-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":20,"waitlist":{"taken":2,"capacity":20},"instructors":["Andre Rosendo"],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
         {"id":"RBE 594-S02","code":"S02","type":"lecture","status":"open","enrolled":2,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Haichong Zhang"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Olin Hall 218"}]}
       ],
       "options": [
@@ -8439,7 +8439,7 @@
       "level": "Undergraduate",
       "description": "Club Sports are activities in various sports and wellness that are organized and recognized by SGA as Class II organizations and open to any undergraduate student. Students who are properly registered in advance for the club activity in their interest area (more information regarding Club Sports can be found at wpi.edu/+techsync) and meet the established criteria for participation by the club as well as by PERA department policy, may be eligible for WPE course credit. Practice and/or competition times vary but are generally in the evenings and weekends. Participating students may incur additional fees for equipment, travel, and/or uniforms",
       "sections": [
-        {"id":"WPE 1230-S01","code":"S01","type":"workshop","status":"open","enrolled":2,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Ann McCarron"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"WPE 1230-S01","code":"S01","type":"workshop","status":"open","enrolled":3,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Ann McCarron"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["WPE 1230-S01"]
@@ -8532,7 +8532,7 @@
       "description": "WPE 1612 Introductory Yoga Cat. I (1/12 unit) This yoga class focuses on connecting the mind, body, and spirit through an awareness of breath. Participating in yoga can improve core strength, flexibility, balance, mindfulness, and relaxation and decrease stress. Those with any level of yoga experience (including first timers) are welcome.",
       "sections": [
         {"id":"WPE 1612-D01","code":"D01","type":"workshop","status":"open","enrolled":22,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Meng Le"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":1080,"end":1130,"location":"Recreation Center Dance"}]},
-        {"id":"WPE 1612-D02","code":"D02","type":"workshop","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":4,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1020,"end":1070,"location":"Recreation Center Dance"}]}
+        {"id":"WPE 1612-D02","code":"D02","type":"workshop","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":3,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1020,"end":1070,"location":"Recreation Center Dance"}]}
       ],
       "options": [
         ["WPE 1612-D01"],
@@ -8659,7 +8659,7 @@
       "level": "Undergraduate",
       "description": "",
       "sections": [
-        {"id":"WPE 2016-D01","code":"D01","type":"workshop","status":"open","enrolled":22,"capacity":999,"waitlist":{"taken":0,"capacity":0},"instructors":["Jason Steele"],"delivery":"in-person","meetings":[]}
+        {"id":"WPE 2016-D01","code":"D01","type":"workshop","status":"open","enrolled":21,"capacity":999,"waitlist":{"taken":0,"capacity":0},"instructors":["Jason Steele"],"delivery":"in-person","meetings":[]}
       ],
       "options": [
         ["WPE 2016-D01"]
