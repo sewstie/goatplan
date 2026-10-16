@@ -46,7 +46,6 @@ Term threeWayClash() {
     });
 }
 
-// A is emptied by three different rules, and undoing any one of them brings it back.
 struct EveryRule {
     Term term = makeTerm({
         {"A", {at(Monday, 8), at(Monday, 9), at(Tuesday, 10, SectionStatus::Waitlist), at(Wednesday, 10)}},
@@ -60,7 +59,7 @@ struct EveryRule {
         prefs.blocked.addRange(2, 600, 660);
     }
 };
-}  // namespace
+}
 
 TEST(Diagnose, NothingToExplainWhenSchedulesExist) {
     const Term term = makeTerm({{"A", {at(Monday, 9)}}, {"B", {at(Monday, 10)}}});
@@ -87,6 +86,21 @@ TEST(Diagnose, LateStartEmptiesACourse) {
     EXPECT_TRUE(diagnosis.minimalClash.empty());
     EXPECT_EQ(diagnosis.fixes, (Fixes{{FixKind::RelaxStartsAfter, 0, 13 * 60, 1},
                                      {FixKind::DropCourse, 0, -1, 1}}));
+}
+
+TEST(Diagnose, SuggestsTheLatestStartThatActuallyFits) {
+    const Term term = makeTerm({
+        {"A", {at(Monday, 12), at(Monday, 13)}},
+        {"B", {at(Monday, 13)}}
+    });
+    Preferences prefs;
+    prefs.startsAfter = 15 * 60;
+    const Diagnosis diagnosis = diagnose(term, {"A", "B"}, prefs);
+    ASSERT_EQ(diagnosis.emptyCourses.size(), 2u);
+    EXPECT_EQ(diagnosis.emptyCourses[0].latestStartsAfter, 13 * 60);
+    EXPECT_EQ(diagnosis.emptyCourses[1].latestStartsAfter, 13 * 60);
+    ASSERT_FALSE(diagnosis.fixes.empty());
+    EXPECT_EQ(diagnosis.fixes[0], (Fix{FixKind::RelaxStartsAfter, 0, 12 * 60, 1}));
 }
 
 TEST(Diagnose, CourseWithNoOptionsInTheData) {
@@ -160,7 +174,7 @@ TEST(Diagnose, PreferenceFixesComeBeforeDroppingACourse) {
     const Diagnosis diagnosis = diagnose(term, {"A", "B"}, prefs);
     EXPECT_EQ(diagnosis.clashingPairs, (Pairs{{0, 1}}));
     EXPECT_EQ(diagnosis.fixes, (Fixes{{FixKind::AllowFull, 0, -1, 3},
-                                     {FixKind::RelaxStartsAfter, 0, -1, 1},
+                                     {FixKind::RelaxStartsAfter, 0, 8 * 60, 1},
                                      {FixKind::DropCourse, 0, -1, 3},
                                      {FixKind::DropCourse, 1, -1, 1}}));
 }

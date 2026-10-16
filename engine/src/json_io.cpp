@@ -1,33 +1,31 @@
 #include "goatplan/json_io.hpp"
 
 #include <fstream>
+#include <optional>
 #include <sstream>
 #include <unordered_map>
 #include <utility>
 
 #include <nlohmann/json.hpp>
 
+#include "day_names.hpp"
+
 namespace goatplan {
     namespace {
         using json = nlohmann::json;
 
         DayMask readDays(const json& j) {
-            static const std::unordered_map<std::string, Day> days{
-                {"Mon", Monday}, {"Tue", Tuesday}, {"Wed", Wednesday}, {"Thu", Thursday},
-                {"Fri", Friday}, {"Sat", Saturday}, {"Sun", Sunday},
-            };
             DayMask mask = 0;
             for (const json& name : j) {
-                const auto found = days.find(name.get<std::string>());
-                if (found == days.end()) {
+                const std::optional<Day> day = dayFromName(name.get<std::string>());
+                if (!day) {
                     throw TermLoadError("unknown day " + name.dump());
                 }
-                mask |= found->second;
+                mask |= *day;
             }
             return mask;
         }
 
-        // Workshops, and any type added to the data later, count as Other.
         SectionType readSectionType(const json& j) {
             static const std::unordered_map<std::string, SectionType> types{
                 {"lecture", SectionType::Lecture},

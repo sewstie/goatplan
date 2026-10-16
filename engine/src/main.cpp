@@ -1,112 +1,206 @@
-// Command-line entry point for the GoatPlan engine.
-// For now it loads a term file and prints a few counts; later it will print
-// every schedule that fits.
-
 #include <algorithm>
 #include <cstddef>
-#include <cstdio>
+#include <cstdint>
+#include <exception>
+#include <fstream>
+#include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
-#include "goatplan/filters.hpp"
-#include "goatplan/json_io.hpp"
-#include "goatplan/week_mask.hpp"
+#include <nlohmann/json.hpp>
+
+#include "goatplan/engine.hpp"
 
 namespace {
-    // Options that meet at exactly the same times count once.
-    std::size_t countDifferentTimes(const goatplan::Course& course) {
-        std::vector<goatplan::WeekMask> seen;
-        for (const goatplan::CourseOption& option : course.options) {
-            const goatplan::WeekMask mask = goatplan::maskOf(course, option);
-            if (std::find(seen.begin(), seen.end(), mask) == seen.end()) {
-                seen.push_back(mask);
+    using json = nlohmann::json;
+
+    const char* kUsage =
+        "Usage: goatplan_cli <term.json> <request.json | -> [--text]\n"
+        "  -       read the request from stdin\n"
+        "  --text  print the response as readable text instead of JSON\n";
+
+    bool readFile(const std::string& path, std::string& text) {
+        std::ifstream file(path);
+        if (!file) {
+            return false;
+        }
+        std::ostringstream content;
+        content << file.rdbuf();
+        text = content.str();
+        return true;
+    }
+
+    std::string clockTime(int minutes) {
+        const int hour = minutes / 60;
+        std::ostringstream text;
+        text << (hour % 12 == 0 ? 12 : hour % 12) << ':' << std::setw(2) << std::setfill('0')
+             << minutes % 60 << (hour < 12 ? " AM" : " PM");
+        return text.str();
+    }
+
+    std::string joined(const std::vector<std::string>& parts, const std::string& last) {
+        std::string text;
+        for (std::size_t i = 0; i < parts.size(); ++i) {
+            if (i > 0) text += i + 1 == parts.size() ? last : ", ";
+            text += parts[i];
+        }
+        return text;
+    }
+
+    std::string plural(std::uint64_t n, const std::string& one, const std::string& many) {
+        return std::to_string(n) + ' ' + (n == 1 ? one : many);
+    }
+
+    std::string sectionList(const json& ids, const std::string& code) {
+        std::string text;
+        for (const json& id : ids) {
+            std::string name = id.get<std::string>();
+            if (name.rfind(code + "-", 0) == 0) name.erase(0, code.size() + 1);
+            if (!text.empty()) text += " + ";
+            text += name;
+        }
+        return text;
+    }
+
+    void printSchedules(const json& schedules) {
+        const std::size_t shown = std::min<std::size_t>(3, schedules.size());
+        for (std::size_t s = 0; s < shown; ++s) {
+            const json& score = schedules[s]["score"];
+            std::cout << "Schedule " << s + 1 << ": score " << score["total"]
+                      << " (early " << score["earlyMinutes"] << ", gaps " << score["gapMinutes"]
+                      << ", days " << score["days"] << ")\n";
+            for (const json& course : schedules[s]["courses"]) {
+                const std::string code = course["code"];
+                std::cout << "  " << code << ": " << sectionList(course["sections"], code);
+                const std::size_t sameTime = course["alternatives"].size() - 1;
+                if (sameTime > 0) std::cout << " (+" << sameTime << " same time)";
+                std::cout << '\n';
             }
         }
-        return seen.size();
-    }
-
-    // "10:00" becomes 600 minutes; anything that isn't a time of day becomes -1.
-    int parseTime(const std::string& text) {
-        int hours = 0;
-        int minutes = 0;
-        char extra = 0;
-        if (std::sscanf(text.c_str(), "%d:%d%c", &hours, &minutes, &extra) != 2 ||
-            hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-            return -1;
+        if (schedules.size() > shown) {
+            std::cout << "...and " << schedules.size() - shown << " more in the JSON\n";
         }
-        return hours * 60 + minutes;
     }
 
-    const char* reasonName(goatplan::FilterReason reason) {
-        switch (reason) {
-            case goatplan::FilterReason::NotLocked: return "not locked";
-            case goatplan::FilterReason::NotOpen: return "not open";
-            case goatplan::FilterReason::StartsTooEarly: return "starts too early";
-            case goatplan::FilterReason::Blocked: return "blocked";
-            case goatplan::FilterReason::Count: break;
+    std::string fixText(const json& fix) {
+        const std::string kind = fix["kind"];
+        if (kind == "relaxStartsAfter") {
+            const int startsAfter = fix["startsAfter"];
+            return startsAfter == 0 ? "turn off starts-after" : "start after " + clockTime(startsAfter) + " instead";
         }
-        return "?";
+        if (kind == "clearBlocked") return "clear your blocked times";
+        if (kind == "allowFull") return "allow full sections";
+        if (kind == "unlock") return "unlock your " + fix["course"].get<std::string>() + " sections";
+        if (kind == "dropCourse") return "drop " + fix["course"].get<std::string>();
+        return kind;
     }
 
-    void printFiltered(const goatplan::CourseChoices& choices, const std::string& startsAfter) {
-        std::cout << choices.course->code << " starting at " << startsAfter << " or later: "
-                  << choices.options.size() << " of " << choices.course->options.size()
-                  << " options left";
-        const char* separator = ", removed ";
-        for (std::size_t i = 0; i < choices.removed.size(); ++i) {
-            if (choices.removed[i] == 0) {
+    void printDiagnosis(const json& diagnosis, int startsAfter) {
+        if (diagnosis["unsure"].get<bool>()) {
+            std::cout << "Too many combinations to check, try fewer courses.\n";
+            return;
+        }
+        for (const json& empty : diagnosis["emptyCourses"]) {
+            std::cout << empty["code"].get<std::string>() << ": ";
+            if (empty["optionsInData"] == 0) {
+                std::cout << "no options in the data (it may have no set meeting times)\n";
                 continue;
             }
-            std::cout << separator << choices.removed[i] << " "
-                      << reasonName(static_cast<goatplan::FilterReason>(i));
-            separator = ", ";
+            const json& removed = empty["removed"];
+            std::vector<std::string> reasons;
+            if (int n = removed["notLocked"])
+                reasons.push_back(plural(n, "doesn't include your locked sections", "don't include your locked sections"));
+            if (int n = removed["notOpen"])
+                reasons.push_back(plural(n, "is full", "are full"));
+            if (int n = removed["startsTooEarly"]) {
+                const std::string before = "before " + clockTime(startsAfter);
+                reasons.push_back(plural(n, "starts " + before, "start " + before));
+            }
+            if (int n = removed["blocked"])
+                reasons.push_back(plural(n, "hits your blocked times", "hit your blocked times"));
+            std::cout << "no options left (" << joined(reasons, ", ") << ")\n";
         }
-        std::cout << '\n';
+        for (const json& pair : diagnosis["clashingPairs"]) {
+            std::cout << pair[0].get<std::string>() << " and " << pair[1].get<std::string>()
+                      << " never fit together\n";
+        }
+        if (!diagnosis["minimalClash"].empty()) {
+            std::cout << joined(diagnosis["minimalClash"].get<std::vector<std::string>>(), " and ")
+                      << " can't all fit together, though any two of them can\n";
+        }
+        for (const json& fix : diagnosis["fixes"]) {
+            std::cout << "Try: " << fixText(fix) << " → " << (fix["capped"].get<bool>() ? "at least " : "")
+                      << plural(fix["schedules"], "schedule", "schedules") << '\n';
+        }
+        if (diagnosis["fixes"].empty()) std::cout << "None of the usual fixes help here.\n";
+    }
+
+    void printText(const json& response, const json& request) {
+        if (!response["ok"].get<bool>()) {
+            const json& error = response["error"];
+            std::cout << "Error (" << error["code"].get<std::string>() << "): "
+                      << error["message"].get<std::string>() << '\n';
+            return;
+        }
+        std::cout << response["termId"].get<std::string>() << ": "
+                  << plural(response["total"], "schedule", "schedules") << " in "
+                  << plural(response["patterns"], "time pattern", "time patterns") << " ("
+                  << response["steps"] << " steps, " << std::fixed << std::setprecision(3)
+                  << response["elapsedMs"].get<double>() << " ms)\n";
+        if (response["capped"].get<bool>()) {
+            std::cout << "The step budget ran out, so these counts are a lower bound.\n";
+        }
+        printSchedules(response["schedules"]);
+        if (!response["diagnosis"].is_null()) {
+            const json::json_pointer path("/preferences/startsAfter");
+            const int startsAfter = request.contains(path) && request[path].is_number_integer()
+                ? request[path].get<int>() : 0;
+            printDiagnosis(response["diagnosis"], startsAfter);
+        }
     }
 }
 
 int main(int argc, char** argv) {
-    using namespace goatplan;
-
-    const char* usage = "Usage: goatplan_cli <term.json> [course code] [--starts-after HH:MM]\n";
-    std::vector<std::string> positional;
-    std::string startsAfter;
-    Preferences prefs;
-    for (int i = 1; i < argc; ++i) {
-        const std::string arg = argv[i];
-        if (arg != "--starts-after") {
-            positional.push_back(arg);
-            continue;
-        }
-        if (i + 1 == argc || (prefs.startsAfter = parseTime(argv[i + 1])) < 0) {
-            std::cerr << "goatplan_cli: --starts-after needs a time like 10:00\n" << usage;
-            return 1;
-        }
-        startsAfter = argv[++i];
-    }
-    if (positional.empty() || positional.size() > 2) {
-        std::cerr << usage;
+    std::vector<std::string> args(argv + 1, argv + argc);
+    const auto textFlag = std::find(args.begin(), args.end(), "--text");
+    const bool asText = textFlag != args.end();
+    if (asText) args.erase(textFlag);
+    if (args.size() != 2) {
+        std::cerr << kUsage;
         return 1;
     }
-    const std::string code = positional.size() > 1 ? positional[1] : "PH 1120";
 
     try {
-        const Term term = loadTermFile(positional[0]);
-        std::cout << term.id << " " << term.name << ": " << term.courses.size() << " courses\n";
-
-        if (const Course* course = term.findCourse(code)) {
-            std::cout << code << ": " << course->sections.size() << " sections, " << course->options.size()
-                      << " options, " << countDifferentTimes(*course) << " with different times\n";
-            if (!startsAfter.empty()) {
-                printFiltered(filterOptions(term, {code}, prefs).at(0), startsAfter);
-            }
-        } else {
-            std::cout << code << " is not in this term\n";
+        std::string termText;
+        if (!readFile(args[0], termText)) {
+            std::cerr << "goatplan_cli: can't open " << args[0] << '\n';
+            return 1;
         }
-    } catch (const TermLoadError& error) {
+        goatplan::Engine engine;
+        engine.loadTerm(termText);
+
+        std::string requestText;
+        if (args[1] == "-") {
+            std::ostringstream content;
+            content << std::cin.rdbuf();
+            requestText = content.str();
+        } else if (!readFile(args[1], requestText)) {
+            std::cerr << "goatplan_cli: can't open " << args[1] << '\n';
+            return 1;
+        }
+
+        const std::string response = engine.handle(requestText);
+        const json parsed = json::parse(response);
+        if (asText) {
+            printText(parsed, json::parse(requestText, nullptr, false));
+        } else {
+            std::cout << response << '\n';
+        }
+        return parsed["ok"].get<bool>() ? 0 : 1;
+    } catch (const std::exception& error) {
         std::cerr << "goatplan_cli: " << error.what() << '\n';
         return 1;
     }
-    return 0;
 }

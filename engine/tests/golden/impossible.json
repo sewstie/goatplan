@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "version": 1,
+  "termId": "2027-C",
+  "total": 0,
+  "patterns": 0,
+  "capped": false,
+  "steps": 0,
+  "schedules": [],
+  "diagnosis": {
+    "unsure": false,
+    "emptyCourses": [
+      {
+        "code": "AE 2320",
+        "optionsInData": 3,
+        "removed": {
+          "notLocked": 0,
+          "notOpen": 1,
+          "startsTooEarly": 2,
+          "blocked": 0
+        },
+        "latestStartsAfter": 540
+      }
+    ],
+    "clashingPairs": [],
+    "minimalClash": [],
+    "fixes": [
+      {
+        "kind": "relaxStartsAfter",
+        "startsAfter": 540,
+        "schedules": 2,
+        "capped": false
+      },
+      {
+        "kind": "dropCourse",
+        "course": "AE 2320",
+        "schedules": 1,
+        "capped": false
+      }
+    ]
+  }
+}

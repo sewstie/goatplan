@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "courses": ["PH 1120", "MA 1022", "CS 2102"],
+  "preferences": {
+    "startsAfter": 600,
+    "blocked": [{ "day": "Mon", "start": 720, "end": 780 }],
+    "onlyOpen": true,
+    "locked": { "PH 1120": ["PH 1120-BL01"] }
+  },
+  "sort": { "earlyCutoff": 600, "perEarlyMinute": 3, "perGapMinute": 1, "perDay": 60 },
+  "limits": { "maxSchedules": 5, "stepBudget": 5000000 }
+}

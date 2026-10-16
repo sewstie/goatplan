@@ -40,7 +40,7 @@ namespace {
           if (section.capacity == 0) {
               continue;
           }
-          const int available = section.capacity - section.enrolled;
+          const int available = std::max(0, section.capacity - section.enrolled);
           if (!foundNumber || available < smallest) {
               smallest = available;
           }

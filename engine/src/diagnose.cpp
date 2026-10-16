@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <iterator>
 #include <numeric>
+#include <optional>
 #include <set>
 
 namespace goatplan {
@@ -15,22 +16,56 @@ namespace goatplan {
             return solve(choices, limits);
         }
 
+        int earliestStart(const Course& course, const CourseOption& option) {
+            int earliest = -1;
+            for (std::size_t section : option) {
+                for (const Meeting& meeting : course.sections.at(section).meetings) {
+                    if (earliest < 0 || meeting.start < earliest) {
+                        earliest = meeting.start;
+                    }
+                }
+            }
+            return earliest;
+        }
+
         int latestWorkingStart(const Term& term, const std::string& code, Preferences prefs) {
             prefs.startsAfter = 0;
             const CourseChoices choice = filterOptions(term, {code}, prefs).at(0);
             int latest = -1;
             for (std::size_t option : choice.options) {
-                int earliest = -1;
-                for (std::size_t section : choice.course->options[option]) {
-                    for (const Meeting& meeting : choice.course->sections.at(section).meetings) {
-                        if (earliest < 0 || meeting.start < earliest) {
-                            earliest = meeting.start;
-                        }
-                    }
-                }
-                latest = std::max(latest, earliest);
+                latest = std::max(latest, earliestStart(*choice.course, choice.course->options[option]));
             }
             return latest;
+        }
+
+        std::optional<int> latestStartsAfterThatFits(const Term& term, const std::vector<std::string>& courseCodes,
+                                                     const Preferences& prefs, const SolveLimits& limits) {
+            std::set<int> earlier;
+            for (const std::string& code : courseCodes) {
+                const Course& course = *term.findCourse(code);
+                for (const CourseOption& option : course.options) {
+                    const int start = earliestStart(course, option);
+                    if (start >= 0 && start < prefs.startsAfter) {
+                        earlier.insert(start);
+                    }
+                }
+            }
+            const std::vector<int> starts(earlier.begin(), earlier.end());
+            std::optional<int> best;
+            std::size_t low = 0;
+            std::size_t high = starts.size();
+            while (low < high) {
+                const std::size_t mid = low + (high - low) / 2;
+                Preferences changed = prefs;
+                changed.startsAfter = starts[mid];
+                if (quickSolve(filterOptions(term, courseCodes, changed), limits).total > 0) {
+                    best = starts[mid];
+                    low = mid + 1;
+                } else {
+                    high = mid;
+                }
+            }
+            return best;
         }
 
         bool fitTogether(const CourseGroups& a, const CourseGroups& b) {
@@ -126,14 +161,8 @@ namespace goatplan {
             };
 
             if (prefs.startsAfter != 0) {
-                int latest = -1;
-                for (const EmptyCourse& empty : diagnosis.emptyCourses) {
-                    if (empty.latestStartsAfter >= 0 && (latest < 0 || empty.latestStartsAfter < latest)) {
-                        latest = empty.latestStartsAfter;
-                    }
-                }
-                if (latest <= 0 || !attempt(Fix{FixKind::RelaxStartsAfter, 0, latest})) {
-                    attempt(Fix{FixKind::RelaxStartsAfter});
+                if (const auto startsAfter = latestStartsAfterThatFits(term, courseCodes, prefs, limits)) {
+                    attempt(Fix{FixKind::RelaxStartsAfter, 0, *startsAfter});
                 }
             }
             if (!prefs.blocked.empty()) {

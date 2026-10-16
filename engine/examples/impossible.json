@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "courses": ["PH 1120", "MA 1022", "CS 2102"],
+  "preferences": { "startsAfter": 900 }
+}
