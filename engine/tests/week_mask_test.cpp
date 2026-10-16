@@ -147,3 +147,56 @@ TEST(WeekMask, AgreesWithTheExactOverlapCheckOnTheFixture) {
         }
     }
 }
+
+TEST(WeekMask, EmptyDayHasNoSpan) {
+    const DaySpan span = WeekMask{}.daySpan(kMon);
+    EXPECT_EQ(span.first, -1);
+    EXPECT_EQ(span.last, -1);
+    EXPECT_EQ(span.filled, 0);
+}
+
+TEST(WeekMask, DaySpanOfOneClass) {
+    WeekMask mask;
+    mask.addRange(kMon, at(9, 0), at(9, 50));
+    const DaySpan span = mask.daySpan(kMon);
+    EXPECT_EQ(span.first, 108);
+    EXPECT_EQ(span.last, 117);
+    EXPECT_EQ(span.filled, 10);
+    EXPECT_EQ(mask.daySpan(kTue).filled, 0);
+}
+
+// Slots 62-64 sit in two different words.
+TEST(WeekMask, DaySpanAcrossAWordBoundary) {
+    WeekMask mask;
+    mask.addRange(kTue, at(5, 10), at(5, 25));
+    const DaySpan span = mask.daySpan(kTue);
+    EXPECT_EQ(span.first, 62);
+    EXPECT_EQ(span.last, 64);
+    EXPECT_EQ(span.filled, 3);
+    EXPECT_EQ(mask.slotCount(), 3u);
+
+    WeekMask justSlot64;
+    justSlot64.addRange(kTue, at(5, 20), at(5, 25));
+    EXPECT_TRUE(mask.intersects(justSlot64));
+}
+
+TEST(WeekMask, DaySpanReachesTheLastSlotOfSunday) {
+    WeekMask mask;
+    mask.addRange(kSun, at(23, 55), at(24, 0));
+    const DaySpan span = mask.daySpan(kSun);
+    EXPECT_EQ(span.first, 287);
+    EXPECT_EQ(span.last, 287);
+    EXPECT_EQ(span.filled, 1);
+}
+
+TEST(WeekMask, FullDaysDoNotSpillIntoEachOther) {
+    WeekMask mask;
+    mask.addRange(kTue, at(0, 0), at(24, 0));
+    EXPECT_EQ(mask.daySpan(kMon).filled, 0);
+    EXPECT_EQ(mask.daySpan(2).filled, 0);
+    const DaySpan span = mask.daySpan(kTue);
+    EXPECT_EQ(span.first, 0);
+    EXPECT_EQ(span.last, 287);
+    EXPECT_EQ(span.filled, 288);
+    EXPECT_THROW((void)mask.daySpan(7), std::invalid_argument);
+}
