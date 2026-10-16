@@ -47,11 +47,16 @@ namespace goatplan {
                 }
                 kept.push(Found{picks, score});
             }
+            bool finished() const {
+                return result.capped || (limits.stopAtFirst && result.patterns > 0);
+            }
             void search(std::size_t depth, const WeekMask& used, std::uint64_t schedules) {
                 if (depth == order.size()) {
                     result.total += schedules;
                     ++result.patterns;
-                    keep(used);
+                    if (!limits.stopAtFirst) {
+                        keep(used);
+                    }
                     return;
                 }
                 const std::size_t c = order[depth];
@@ -73,7 +78,7 @@ namespace goatplan {
                     WeekMask next = used;
                     next |= groups[g].mask;
                     search(depth + 1, next, schedules * groups[g].members.size());
-                    if (result.capped) {
+                    if (finished()) {
                         return;
                     }
                 }

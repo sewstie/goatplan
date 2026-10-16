@@ -340,6 +340,37 @@ TEST(Solver, BudgetBoundaries) {
     EXPECT_EQ(result.steps, 3u);
 }
 
+TEST(Solver, StopAtFirstEndsAtTheFirstSchedule) {
+    const std::vector<CourseChoices> choices{threeTimesOn(0), threeTimesOn(1), threeTimesOn(2)};
+    SolveLimits limits;
+    limits.stopAtFirst = true;
+    const SolveResult result = solve(choices, limits);
+    EXPECT_EQ(result.total, 1u);
+    EXPECT_EQ(result.patterns, 1u);
+    EXPECT_EQ(result.steps, 3u);
+    EXPECT_FALSE(result.capped);
+    EXPECT_TRUE(result.schedules.empty());
+}
+
+TEST(Solver, StopAtFirstStillSearchesEverythingWhenNothingFits) {
+    const std::vector<CourseChoices> choices{
+        choicesFromTimes({{0, 540, 590}, {0, 600, 650}}),
+        choicesFromTimes({{0, 540, 590}, {0, 600, 650}}),
+        choicesFromTimes({{0, 540, 590}, {0, 600, 650}})
+    };
+    SolveLimits limits;
+    limits.stopAtFirst = true;
+    const SolveResult result = solve(choices, limits);
+    EXPECT_EQ(result.total, 0u);
+    EXPECT_FALSE(result.capped);
+    EXPECT_EQ(result.steps, solve(choices).steps);
+
+    limits.stepBudget = 3;
+    const SolveResult capped = solve(choices, limits);
+    EXPECT_EQ(capped.total, 0u);
+    EXPECT_TRUE(capped.capped);
+}
+
 TEST(Solver, MismatchedSizesThrow) {
     CourseChoices choice = threeTimesOn(0);
     choice.masks.pop_back();
