@@ -1,3 +1,4 @@
+#include "goatplan/diagnose.hpp"
 #include "goatplan/filters.hpp"
 #include "goatplan/groups.hpp"
 #include "goatplan/json_io.hpp"
@@ -12,6 +13,7 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <system_error>
@@ -103,6 +105,78 @@ namespace {
             }
         }
     }
+    std::string clockTime(int minutes) {
+        const int hour = minutes / 60;
+        std::ostringstream text;
+        text << (hour % 12 == 0 ? 12 : hour % 12) << ':' << std::setw(2) << std::setfill('0')
+             << minutes % 60 << (hour < 12 ? " AM" : " PM");
+        return text.str();
+    }
+    std::string joined(const std::vector<std::string>& parts, const std::string& last) {
+        std::string text;
+        for (std::size_t i = 0; i < parts.size(); ++i) {
+            if (i > 0) text += i + 1 == parts.size() ? last : ", ";
+            text += parts[i];
+        }
+        return text;
+    }
+    std::string fixText(const Fix& fix, const std::vector<std::string>& codes) {
+        switch (fix.kind) {
+            case FixKind::RelaxStartsAfter:
+                return fix.startsAfter < 0 ? "turn off starts-after"
+                                           : "start after " + clockTime(fix.startsAfter) + " instead";
+            case FixKind::ClearBlocked: return "clear your blocked times";
+            case FixKind::AllowFull: return "allow full sections";
+            case FixKind::Unlock: return "unlock your " + codes[fix.course] + " sections";
+            case FixKind::DropCourse: return "drop " + codes[fix.course];
+        }
+        return "";
+    }
+    void printDiagnosis(const Diagnosis& diagnosis, const std::vector<std::string>& codes,
+                        const Preferences& prefs) {
+        if (diagnosis.unsure) {
+            std::cout << "Too many combinations to check, try fewer courses.\n";
+            return;
+        }
+        for (const EmptyCourse& empty : diagnosis.emptyCourses) {
+            std::cout << codes[empty.course] << ": ";
+            if (empty.optionsInData == 0) {
+                std::cout << "no options in the data (it may have no set meeting times)\n";
+                continue;
+            }
+            const auto count = [&](FilterReason reason) {
+                return empty.removed[static_cast<std::size_t>(reason)];
+            };
+            const auto phrase = [](int n, const std::string& one, const std::string& many) {
+                return std::to_string(n) + ' ' + (n == 1 ? one : many);
+            };
+            std::vector<std::string> reasons;
+            if (int n = count(FilterReason::NotLocked))
+                reasons.push_back(phrase(n, "doesn't include your locked sections", "don't include your locked sections"));
+            if (int n = count(FilterReason::NotOpen))
+                reasons.push_back(phrase(n, "is full", "are full"));
+            if (int n = count(FilterReason::StartsTooEarly)) {
+                const std::string before = "before " + clockTime(prefs.startsAfter);
+                reasons.push_back(phrase(n, "starts " + before, "start " + before));
+            }
+            if (int n = count(FilterReason::Blocked))
+                reasons.push_back(phrase(n, "hits your blocked times", "hit your blocked times"));
+            std::cout << "no options left (" << joined(reasons, ", ") << ")\n";
+        }
+        for (const auto& [a, b] : diagnosis.clashingPairs) {
+            std::cout << codes[a] << " and " << codes[b] << " never fit together\n";
+        }
+        if (!diagnosis.minimalClash.empty()) {
+            std::vector<std::string> names;
+            for (std::size_t c : diagnosis.minimalClash) names.push_back(codes[c]);
+            std::cout << joined(names, " and ") << " can't all fit together, though any two of them can\n";
+        }
+        for (const Fix& fix : diagnosis.fixes) {
+            std::cout << "Try: " << fixText(fix, codes) << " → " << (fix.capped ? "at least " : "")
+                      << fix.schedules << (fix.schedules == 1 ? " schedule" : " schedules") << '\n';
+        }
+        if (diagnosis.fixes.empty()) std::cout << "None of the usual fixes help here.\n";
+    }
 }
 int main(int argc, char* argv[]) {
     if (argc < 2) { usage(); return 1; }
@@ -177,6 +251,7 @@ int main(int argc, char* argv[]) {
                   << " filter_ms=" << milliseconds(start, filtered)
                   << " solve_ms=" << milliseconds(filtered, end) << '\n';
         if (result.capped) std::cout << "total is a lower bound because the step budget ran out.\n";
+        if (result.total == 0) printDiagnosis(diagnose(term, codes, prefs, limits), codes, prefs);
         printSchedules(choices, result);
         return 0;
     } catch (const std::exception& error) {

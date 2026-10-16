@@ -11,6 +11,7 @@ namespace goatplan {
     struct SolveLimits {
         std::size_t maxSchedules = 200;
         std::uint64_t stepBudget = 5'000'000;
+        bool stopAtFirst = false;
     };
     struct Schedule {
         std::vector<std::size_t> picks;
