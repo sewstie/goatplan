@@ -1,11 +1,13 @@
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <cstddef>
 #include <cstdint>
 #include <initializer_list>
 #include <random>
 #include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "goatplan/json_io.hpp"
@@ -57,6 +59,47 @@ void expectConflictFree(const std::vector<CourseChoices>& choices, const SolveRe
         }
     }
 }
+
+WeekMask weekOf(const std::vector<CourseChoices>& choices, const Picks& picks) {
+    WeekMask week;
+    for (std::size_t i = 0; i < choices.size(); ++i) week |= choices[i].masks[picks[i]];
+    return week;
+}
+
+// Each schedule as (score total, picks), which is also the order they should come in.
+std::vector<std::pair<int, Picks>> ranked(const SolveResult& result) {
+    std::vector<std::pair<int, Picks>> list;
+    for (const Schedule& schedule : result.schedules) list.emplace_back(schedule.score.total, schedule.picks);
+    return list;
+}
+
+void expectBestFirst(const std::vector<CourseChoices>& choices, const SolveResult& result) {
+    for (const Schedule& schedule : result.schedules) {
+        EXPECT_EQ(schedule.score.total, scoreOf(weekOf(choices, schedule.picks)).total);
+    }
+    const auto list = ranked(result);
+    EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
+}
+
+std::vector<CourseChoices> randomCourses(std::uint32_t seed) {
+    std::mt19937 rng(seed);
+    std::vector<CourseChoices> choices(3);
+    for (CourseChoices& choice : choices) {
+        for (std::size_t i = 0; i < 6; ++i) {
+            WeekMask mask;
+            const int ranges = 1 + static_cast<int>(rng() % 2);
+            for (int r = 0; r < ranges; ++r) {
+                const int day = static_cast<int>(rng() % 3);
+                const int start = 540 + static_cast<int>(rng() % 8) * 5;
+                const int end = start + (1 + static_cast<int>(rng() % 3)) * 5;
+                mask.addRange(day, start, end);
+            }
+            choice.options.push_back(100 + i);
+            choice.masks.push_back(mask);
+        }
+    }
+    return choices;
+}
 }  // namespace
 
 TEST(Solver, NoCoursesGivesEmptyResult) {
@@ -67,12 +110,12 @@ TEST(Solver, NoCoursesGivesEmptyResult) {
     EXPECT_TRUE(result.schedules.empty());
 }
 
-TEST(Solver, OneCourseKeepsOptionOrder) {
+// 9:00 is an hour early; 10:00 and 11:00 tie, so picks decide.
+TEST(Solver, OneCourseComesBackBestFirst) {
     const SolveResult result = solve({choicesFromTimes({{0, 540, 590}, {0, 600, 650}, {0, 660, 710}})});
     EXPECT_EQ(result.total, 3u);
     EXPECT_EQ(result.steps, 3u);
-    ASSERT_EQ(result.schedules.size(), 3u);
-    for (std::size_t i = 0; i < 3; ++i) EXPECT_EQ(result.schedules[i].picks, Picks({i}));
+    EXPECT_EQ(ranked(result), (std::vector<std::pair<int, Picks>>{{60, {1}}, {60, {2}}, {240, {0}}}));
 }
 
 TEST(Solver, IndependentCoursesGiveEveryCombination) {
@@ -110,6 +153,7 @@ TEST(Solver, ReturnedSchedulesHaveNoClashes) {
     const SolveResult result = solve(choices);
     EXPECT_GT(result.total, 0u);
     expectConflictFree(choices, result);
+    expectBestFirst(choices, result);
 }
 
 // The second course is searched first because it has fewer options.
@@ -125,17 +169,44 @@ TEST(Solver, PicksStayInInputOrder) {
     EXPECT_EQ(choices[0].options[result.schedules[0].picks[0]], 110u);
 }
 
-TEST(Solver, EqualSizeCoursesKeepTheirOrder) {
+// Every combination is two 10:00 classes on two days, so all four tie.
+TEST(Solver, EqualScoresAreOrderedByPicks) {
     SolveLimits limits;
     limits.maxSchedules = 2;
     const SolveResult result = solve({
-        choicesFromTimes({{0, 540, 590}, {0, 600, 650}}),
-        choicesFromTimes({{1, 540, 590}, {1, 600, 650}})
+        choicesFromTimes({{0, 600, 650}, {2, 600, 650}}),
+        choicesFromTimes({{1, 600, 650}, {3, 600, 650}})
     }, limits);
     EXPECT_EQ(result.total, 4u);
-    ASSERT_EQ(result.schedules.size(), 2u);
-    EXPECT_EQ(result.schedules[0].picks, Picks({0, 0}));
-    EXPECT_EQ(result.schedules[1].picks, Picks({0, 1}));
+    EXPECT_EQ(ranked(result), (std::vector<std::pair<int, Picks>>{{120, {0, 0}}, {120, {0, 1}}}));
+}
+
+// The search finds 8:00 + 8:00 first, and it is the worst of the four.
+TEST(Solver, KeepsTheBestEvenWhenItIsFoundLast) {
+    const std::vector<CourseChoices> choices{
+        choicesFromTimes({{0, 480, 530}, {0, 660, 710}}),
+        choicesFromTimes({{1, 480, 530}, {1, 660, 710}})
+    };
+    SolveLimits limits;
+    limits.maxSchedules = 1;
+    const SolveResult result = solve(choices, limits);
+    EXPECT_EQ(result.total, 4u);
+    ASSERT_EQ(result.schedules.size(), 1u);
+    EXPECT_EQ(result.schedules[0].picks, Picks({1, 1}));
+    EXPECT_EQ(result.schedules[0].score.total, 120);
+
+    const SolveResult all = solve(choices);
+    ASSERT_EQ(all.schedules.size(), 4u);
+    EXPECT_EQ(all.schedules.back().picks, Picks({0, 0}));
+}
+
+TEST(Solver, PassesWeightsToTheScore) {
+    const std::vector<CourseChoices> choices{choicesFromTimes({{0, 540, 590}, {0, 600, 650}})};
+    ScoreWeights weights;
+    weights.earlyCutoff = 8 * 60;
+    weights.perDay = 1;
+    const SolveResult result = solve(choices, SolveLimits{}, weights);
+    EXPECT_EQ(ranked(result), (std::vector<std::pair<int, Picks>>{{1, {0}}, {1, {1}}}));
 }
 
 TEST(Solver, MaxSchedulesDoesNotStopCounting) {
@@ -202,48 +273,52 @@ TEST(Solver, MismatchedMasksThrow) {
     EXPECT_THROW(solve({choice, CourseChoices{}}), std::invalid_argument);
 }
 
+// Brute force scores every clash-free combination and sorts them the way solve should.
 TEST(Solver, MatchesBruteForceOnRandomCourses) {
     for (std::uint32_t seed = 0; seed < 20; ++seed) {
         SCOPED_TRACE(seed);
-        std::mt19937 rng(seed);
-        std::vector<CourseChoices> choices(3);
-        for (CourseChoices& choice : choices) {
-            for (std::size_t i = 0; i < 6; ++i) {
-                WeekMask mask;
-                const int ranges = 1 + static_cast<int>(rng() % 2);
-                for (int r = 0; r < ranges; ++r) {
-                    const int day = static_cast<int>(rng() % 3);
-                    const int start = 540 + static_cast<int>(rng() % 8) * 5;
-                    const int end = start + (1 + static_cast<int>(rng() % 3)) * 5;
-                    mask.addRange(day, start, end);
-                }
-                choice.options.push_back(100 + i);
-                choice.masks.push_back(mask);
-            }
-        }
-        std::uint64_t expected = 0;
-        for (const WeekMask& x : choices[0].masks) {
-            for (const WeekMask& y : choices[1].masks) {
-                for (const WeekMask& z : choices[2].masks) {
-                    if (!x.intersects(y) && !x.intersects(z) && !y.intersects(z)) ++expected;
+        const std::vector<CourseChoices> choices = randomCourses(seed);
+        std::vector<std::pair<int, Picks>> expected;
+        for (std::size_t x = 0; x < 6; ++x) {
+            for (std::size_t y = 0; y < 6; ++y) {
+                for (std::size_t z = 0; z < 6; ++z) {
+                    const WeekMask& a = choices[0].masks[x];
+                    const WeekMask& b = choices[1].masks[y];
+                    const WeekMask& c = choices[2].masks[z];
+                    if (a.intersects(b) || a.intersects(c) || b.intersects(c)) continue;
+                    expected.emplace_back(scoreOf(weekOf(choices, {x, y, z})).total, Picks{x, y, z});
                 }
             }
         }
+        std::sort(expected.begin(), expected.end());
+
         SolveLimits limits;
         limits.maxSchedules = 216;
         const SolveResult result = solve(choices, limits);
         EXPECT_FALSE(result.capped);
-        EXPECT_EQ(result.total, expected);
-        EXPECT_EQ(result.schedules.size(), expected);
+        EXPECT_EQ(result.total, expected.size());
+        EXPECT_EQ(ranked(result), expected);
         expectConflictFree(choices, result);
-        std::vector<bool> seen(216, false);
-        for (const Schedule& schedule : result.schedules) {
-            const Picks& p = schedule.picks;
-            const std::size_t key = p[0] * 36 + p[1] * 6 + p[2];
-            EXPECT_FALSE(seen[key]);
-            seen[key] = true;
-        }
+        expectBestFirst(choices, result);
+
+        limits.maxSchedules = 5;
+        const SolveResult top = solve(choices, limits);
+        EXPECT_EQ(top.total, expected.size());
+        expected.resize(std::min<std::size_t>(expected.size(), 5));
+        EXPECT_EQ(ranked(top), expected);
     }
+}
+
+TEST(Solver, SameInputGivesSameResult) {
+    const std::vector<CourseChoices> choices = randomCourses(7);
+    SolveLimits limits;
+    limits.maxSchedules = 10;
+    const SolveResult first = solve(choices, limits);
+    const SolveResult second = solve(choices, limits);
+    ASSERT_FALSE(first.schedules.empty());
+    EXPECT_EQ(first.total, second.total);
+    EXPECT_EQ(first.steps, second.steps);
+    EXPECT_EQ(ranked(first), ranked(second));
 }
 
 TEST(Solver, MatchesBruteForceOnFixture) {
@@ -264,6 +339,7 @@ TEST(Solver, MatchesBruteForceOnFixture) {
             const SolveResult result = solve(choices);
             EXPECT_EQ(result.total, expected);
             expectConflictFree(choices, result);
+            expectBestFirst(choices, result);
             foundCompatiblePair = foundCompatiblePair || result.total > 0;
         }
     }

@@ -79,7 +79,10 @@ namespace {
     void printSchedules(const std::vector<CourseChoices>& choices, const SolveResult& result) {
         const std::size_t count = std::min(std::size_t{3}, result.schedules.size());
         for (std::size_t s = 0; s < count; ++s) {
-            std::cout << "Schedule " << s + 1 << ":\n";
+            const Score& score = result.schedules[s].score;
+            std::cout << "Schedule " << s + 1 << ": total " << score.total
+                      << " — early " << score.earlyMinutes << ", gaps " << score.gapMinutes
+                      << ", days " << score.days << '\n';
             for (std::size_t i = 0; i < choices.size(); ++i) {
                 const CourseChoices& choice = choices[i];
                 const std::size_t filteredPosition = result.schedules[s].picks.at(i);

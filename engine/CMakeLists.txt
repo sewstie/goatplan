@@ -21,6 +21,7 @@ add_library(goatplan_core
     src/filters.cpp
     src/json_io.cpp
     src/schedule.cpp
+    src/score.cpp
     src/solver.cpp
     src/week_mask.cpp
 )
@@ -72,6 +73,7 @@ if(GOATPLAN_BUILD_TESTS)
         tests/filters_test.cpp
         tests/json_io_test.cpp
         tests/schedule_test.cpp
+        tests/score_test.cpp
         tests/solver_test.cpp
         tests/week_mask_test.cpp
     )
