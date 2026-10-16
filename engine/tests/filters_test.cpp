@@ -43,7 +43,6 @@ Section section(const std::string& id, SectionType type, SectionStatus status,
     return result;
 }
 
-// One lecture on Monday 9:00 and three labs: open, waitlisted, closed with no capacity.
 Term sampleTerm() {
     Course course;
     course.code = "TEST 100";
@@ -70,7 +69,6 @@ CourseChoices choicesFor(const Term& term, const Preferences& prefs) {
 
 Term smallFixture() { return loadTermFile(GOATPLAN_FIXTURES "/2027-C.small.json"); }
 
-// A slow, obvious version of the rules to compare filterOptions against.
 FilterReason referenceReason(const Course& course, const CourseOption& option,
                              const Preferences& prefs) {
     const auto locks = prefs.locked.find(course.code);
@@ -117,7 +115,7 @@ void expectMatchesReference(const Term& term, const Course& course, const Prefer
     EXPECT_EQ(actual.options, expectedKept) << course.code;
     EXPECT_EQ(actual.removed, expectedRemoved) << course.code;
 }
-}  // namespace
+}
 
 TEST(Filters, NoPreferencesKeepsEverything) {
     const Term term = sampleTerm();
@@ -238,6 +236,9 @@ TEST(Filters, OpenSeatsAreTheSmallestKnownCount) {
     EXPECT_EQ(choicesFor(term, Preferences{}).openSeats, std::vector<int>({3, 10, -1}));
 
     term.courses[0].sections[1].enrolled = term.courses[0].sections[1].capacity;
+    EXPECT_EQ(choicesFor(term, Preferences{}).openSeats[0], 0);
+
+    term.courses[0].sections[1].enrolled = term.courses[0].sections[1].capacity + 2;
     EXPECT_EQ(choicesFor(term, Preferences{}).openSeats[0], 0);
 }
 

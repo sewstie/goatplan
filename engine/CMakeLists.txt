@@ -19,6 +19,7 @@ option(GOATPLAN_BUILD_TESTS "Build GoogleTest unit tests" ${GOATPLAN_TESTS_DEFAU
 # --- Core library: the scheduling engine -----------------------------------
 add_library(goatplan_core
     src/diagnose.cpp
+    src/engine.cpp
     src/filters.cpp
     src/groups.cpp
     src/json_io.cpp
@@ -49,10 +50,7 @@ target_link_libraries(goatplan_core PRIVATE nlohmann_json::nlohmann_json)
 
 # --- Command-line tool for trying the engine without the web app -----------
 add_executable(goatplan_cli src/main.cpp)
-target_link_libraries(goatplan_cli PRIVATE goatplan_core)
-
-add_executable(goatplan_solver_cli src/solver_cli.cpp)
-target_link_libraries(goatplan_solver_cli PRIVATE goatplan_core)
+target_link_libraries(goatplan_cli PRIVATE goatplan_core nlohmann_json::nlohmann_json)
 
 # --- Unit tests --------------------------------------------------------------
 if(GOATPLAN_BUILD_TESTS)
@@ -73,6 +71,7 @@ if(GOATPLAN_BUILD_TESTS)
     enable_testing()
     add_executable(goatplan_tests
         tests/diagnose_test.cpp
+        tests/engine_api_test.cpp
         tests/filters_test.cpp
         tests/groups_test.cpp
         tests/json_io_test.cpp
@@ -89,7 +88,9 @@ if(GOATPLAN_BUILD_TESTS)
 
     # An absolute path, so tests find the fixtures from any folder.
     cmake_path(SET GOATPLAN_FIXTURES NORMALIZE "${CMAKE_CURRENT_SOURCE_DIR}/../data/fixtures")
-    target_compile_definitions(goatplan_tests PRIVATE GOATPLAN_FIXTURES="${GOATPLAN_FIXTURES}")
+    target_compile_definitions(goatplan_tests PRIVATE
+        GOATPLAN_FIXTURES="${GOATPLAN_FIXTURES}"
+        GOATPLAN_GOLDEN_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/golden")
 
     include(GoogleTest)
     gtest_discover_tests(goatplan_tests)

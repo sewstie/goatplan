@@ -1,0 +1,120 @@
+{
+  "ok": true,
+  "version": 1,
+  "termId": "2027-C",
+  "total": 3,
+  "patterns": 3,
+  "capped": false,
+  "steps": 4,
+  "schedules": [
+    {
+      "score": {
+        "total": 1680,
+        "earlyMinutes": 300,
+        "gapMinutes": 480,
+        "days": 5
+      },
+      "courses": [
+        {
+          "code": "AE 2320",
+          "sections": [
+            "AE 2320-CL01",
+            "AE 2320-CX01"
+          ],
+          "openSeats": 0,
+          "alternatives": [
+            [
+              "AE 2320-CL01",
+              "AE 2320-CX01"
+            ]
+          ]
+        },
+        {
+          "code": "AE 4310",
+          "sections": [
+            "AE 4310-C01"
+          ],
+          "openSeats": 17,
+          "alternatives": [
+            [
+              "AE 4310-C01"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "score": {
+        "total": 1740,
+        "earlyMinutes": 300,
+        "gapMinutes": 540,
+        "days": 5
+      },
+      "courses": [
+        {
+          "code": "AE 2320",
+          "sections": [
+            "AE 2320-CL01",
+            "AE 2320-CX02"
+          ],
+          "openSeats": 4,
+          "alternatives": [
+            [
+              "AE 2320-CL01",
+              "AE 2320-CX02"
+            ]
+          ]
+        },
+        {
+          "code": "AE 4310",
+          "sections": [
+            "AE 4310-C01"
+          ],
+          "openSeats": 17,
+          "alternatives": [
+            [
+              "AE 4310-C01"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "score": {
+        "total": 1800,
+        "earlyMinutes": 300,
+        "gapMinutes": 600,
+        "days": 5
+      },
+      "courses": [
+        {
+          "code": "AE 2320",
+          "sections": [
+            "AE 2320-CL01",
+            "AE 2320-CX03"
+          ],
+          "openSeats": 31,
+          "alternatives": [
+            [
+              "AE 2320-CL01",
+              "AE 2320-CX03"
+            ]
+          ]
+        },
+        {
+          "code": "AE 4310",
+          "sections": [
+            "AE 4310-C01"
+          ],
+          "openSeats": 17,
+          "alternatives": [
+            [
+              "AE 4310-C01"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "diagnosis": null
+}
