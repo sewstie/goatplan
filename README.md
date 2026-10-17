@@ -54,7 +54,7 @@ npm run engine:test
 | `npm run data:update`    | Fetch, then normalize                                      |
 | `npm run data:test`      | Run the unit tests of the data scripts                     |
 
-Try the engine on its own: `./engine/build/goatplan_cli apps/web/public/data/2026-B.json` (any term file works)
+Try the engine on its own: `./engine/build/goatplan_cli apps/web/public/data/2026-B.json engine/examples/basic.json --text`. Leave out `--text` to get the raw JSON response, or pass `-` instead of a file to read the request from stdin. The request and response format is in [docs/engine-api.md](docs/engine-api.md).
 
 ## Data
 
