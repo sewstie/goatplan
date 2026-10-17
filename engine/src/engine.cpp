@@ -191,7 +191,7 @@ namespace goatplan {
             if (!root.is_object()) {
                 throw RequestError{"badRequest", "The request must be a JSON object", nullptr};
             }
-            const json& version = required(root, "version", "version");
+            const json version = required(root, "version", "version");
             if (!version.is_number_integer()) {
                 throw badRequest("version", "must be a whole number");
             }
@@ -202,7 +202,7 @@ namespace goatplan {
             }
 
             Request request;
-            const json& courses = required(root, "courses", "courses");
+            const json courses = required(root, "courses", "courses");
             if (!courses.is_array() || courses.empty()) {
                 throw badRequest("courses", "must be a list of at least one course code");
             }
