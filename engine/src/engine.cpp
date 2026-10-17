@@ -31,6 +31,8 @@ namespace goatplan {
         constexpr std::uint64_t kMaxStepBudget = 50'000'000;
         constexpr int kMaxWeight = 10'000;
         constexpr int kMinutesPerDay = 1440;
+        constexpr const char* kUnknownError =
+            R"({"ok":false,"version":1,"error":{"code":"internal","message":"Unknown error","detail":null}})";
 
         struct RequestError {
             std::string code;
@@ -373,6 +375,26 @@ namespace goatplan {
         term_ = parseTerm(termJson);
     }
 
+    std::string Engine::loadTermJson(std::string_view termJson) {
+        try {
+            try {
+                loadTerm(termJson);
+                return dump({
+                    {"ok", true},
+                    {"version", kVersion},
+                    {"termId", term_->id},
+                    {"courses", term_->courses.size()},
+                });
+            } catch (const TermLoadError& error) {
+                return dump(errorResponse("badTerm", std::string("The term file isn't usable: ") + error.what(), nullptr));
+            } catch (const std::exception& error) {
+                return dump(errorResponse("internal", error.what(), nullptr));
+            }
+        } catch (...) {
+            return kUnknownError;
+        }
+    }
+
     std::string Engine::handle(std::string_view requestJson) const {
         try {
             try {
@@ -386,7 +408,7 @@ namespace goatplan {
                 return dump(errorResponse("internal", error.what(), nullptr));
             }
         } catch (...) {
-            return R"({"ok":false,"version":1,"error":{"code":"internal","message":"Unknown error","detail":null}})";
+            return kUnknownError;
         }
     }
 }

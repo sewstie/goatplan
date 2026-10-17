@@ -8,13 +8,14 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(FetchContent)
 
-# Tests run natively only (not when building WebAssembly with emcmake).
+# The engine reports problems by throwing, and without WebAssembly exceptions
+# every throw in the browser would abort instead of being caught.
 if(EMSCRIPTEN)
-    set(GOATPLAN_TESTS_DEFAULT OFF)
-else()
-    set(GOATPLAN_TESTS_DEFAULT ON)
+    add_compile_options(-fwasm-exceptions)
+    add_link_options(-fwasm-exceptions)
 endif()
-option(GOATPLAN_BUILD_TESTS "Build GoogleTest unit tests" ${GOATPLAN_TESTS_DEFAULT})
+
+option(GOATPLAN_BUILD_TESTS "Build GoogleTest unit tests (native builds only)" ON)
 
 # --- Core library: the scheduling engine -----------------------------------
 add_library(goatplan_core
@@ -49,11 +50,13 @@ endif()
 target_link_libraries(goatplan_core PRIVATE nlohmann_json::nlohmann_json)
 
 # --- Command-line tool for trying the engine without the web app -----------
-add_executable(goatplan_cli src/main.cpp)
-target_link_libraries(goatplan_cli PRIVATE goatplan_core nlohmann_json::nlohmann_json)
+if(NOT EMSCRIPTEN)
+    add_executable(goatplan_cli src/main.cpp)
+    target_link_libraries(goatplan_cli PRIVATE goatplan_core nlohmann_json::nlohmann_json)
+endif()
 
 # --- Unit tests --------------------------------------------------------------
-if(GOATPLAN_BUILD_TESTS)
+if(GOATPLAN_BUILD_TESTS AND NOT EMSCRIPTEN)
     # Use an installed GoogleTest if there is one (e.g. `brew install googletest`
     # or `apt install libgtest-dev`); otherwise download it once.
     find_package(GTest QUIET)
@@ -94,4 +97,25 @@ if(GOATPLAN_BUILD_TESTS)
 
     include(GoogleTest)
     gtest_discover_tests(goatplan_tests)
+endif()
+
+# --- WebAssembly module for the web app (emcmake only) ----------------------
+if(EMSCRIPTEN)
+    add_executable(goatplan_wasm src/wasm_bindings.cpp)
+    target_link_libraries(goatplan_wasm PRIVATE goatplan_core)
+    target_link_options(goatplan_wasm PRIVATE
+        -lembind
+        -O3
+        -sMODULARIZE=1
+        -sEXPORT_ES6=1
+        -sEXPORT_NAME=createGoatplan
+        -sENVIRONMENT=worker,node
+        -sALLOW_MEMORY_GROWTH=1
+    )
+    cmake_path(SET GOATPLAN_WEB_ENGINE NORMALIZE "${CMAKE_CURRENT_SOURCE_DIR}/../apps/web/public/engine")
+    set_target_properties(goatplan_wasm PROPERTIES
+        OUTPUT_NAME goatplan
+        SUFFIX ".mjs"
+        RUNTIME_OUTPUT_DIRECTORY "${GOATPLAN_WEB_ENGINE}"
+    )
 endif()

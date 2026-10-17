@@ -110,6 +110,24 @@ TEST(EngineApi, NeedsATermFirst) {
     EXPECT_TRUE(response["error"]["detail"].is_null());
 }
 
+TEST(EngineApi, LoadTermJsonNamesTheTerm) {
+    Engine engine;
+    const json response = json::parse(engine.loadTermJson(readText(GOATPLAN_FIXTURES "/2027-C.small.json")));
+    EXPECT_EQ(response, json::parse(R"({"ok": true, "version": 1, "termId": "2027-C", "courses": 2})"));
+    EXPECT_TRUE(engine.hasTerm());
+}
+
+TEST(EngineApi, LoadTermJsonRefusesBrokenJson) {
+    Engine engine = fixtureEngine();
+    for (const std::string text : {"{not json", "", R"({"term": {"id": "2027-C",)"}) {
+        SCOPED_TRACE(text);
+        std::string response;
+        EXPECT_NO_THROW(response = engine.loadTermJson(text));
+        expectError(json::parse(response), "badTerm");
+    }
+    EXPECT_EQ(call(engine, kBoth)["termId"], "2027-C");
+}
+
 TEST(EngineApi, BrokenJsonIsABadRequest) {
     const Engine engine = fixtureEngine();
     for (const std::string text : {"{not json", "", "[1, 2]", "null", "\"AE 2320\"", "{\"version\": 1,"}) {
