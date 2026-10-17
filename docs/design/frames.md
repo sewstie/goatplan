@@ -1,0 +1,1 @@
+https://www.figma.com/design/wKCRpXUKVwygCL5vn7F05W/GoatPlan?node-id=0-1&p=f&t=oGsmlalhHmS6qorE-0
