@@ -152,8 +152,43 @@ something:
    option for this course, or `null` when `startsAfter` wasn't the problem.
 2. `clashingPairs`: two courses that never fit together, whatever sections you
    pick.
-3. `minimalClash`: when every pair fits but all of them together don't, the
-   smallest group of courses that still can't all fit.
+3. `minimalClash`: when every pair fits but all of them together don't, a
+   group of courses that still can't all fit, where every course in it is
+   needed for the clash.
+
+A list that no step filled is empty (`[]`), never missing.
+
+### The shapes of `clashingPairs` and `minimalClash`
+
+This section writes down what the version 1 engine already returns. It
+documents existing behavior; version 1 is unchanged.
+
+- `clashingPairs` is a list of pairs. Each pair is a list of exactly two course
+  codes, `[first, second]`, in the order the courses appear in the request
+  (repeats removed). Every clashing pair is listed, so one course can be in
+  several pairs. Pairs are sorted by the position of their first course, then
+  their second.
+- `minimalClash` is a list of course codes, in request order. The engine starts
+  with all the requested courses and leaves each one out in turn, in request
+  order. If the others still can't fit without it, it stays out. So leaving out
+  any one course of the result lets the rest fit, but it isn't always the
+  smallest such group. If one of these checks runs out of steps, that course
+  stays in the group.
+
+Real answers from B Term 2026. `["AE 2310", "CS 2102", "AE 2330"]` gives a
+clashing pair:
+
+```json
+"clashingPairs": [["AE 2310", "AE 2330"]],
+"minimalClash": []
+```
+
+`["AR 1100", "AREN 2004", "RBE 2020"]` fits pair by pair, but not all three:
+
+```json
+"clashingPairs": [],
+"minimalClash": ["AR 1100", "AREN 2004", "RBE 2020"]
+```
 
 Then `fixes` lists changes that were actually tried and do give schedules.
 Preference changes come first and dropping a course last. Within each, the
@@ -182,7 +217,9 @@ The diagnosis always names courses by code, never by position.
 ```
 
 `message` is plain English for people. `detail` is for code: the course code,
-section ID, field or version the error is about, or `null`.
+section ID, field or version the error is about, or `null`. It's always a
+string or `null`; the version comes back as JSON text, so version 2 gives
+`"2"` (existing behavior, written down with the diagnosis shapes above).
 
 | `code`               | When                                                         | `detail` |
 | -------------------- | ------------------------------------------------------------ | -------- |
