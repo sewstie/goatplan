@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-10-16T13:52:59Z",
+  "generatedAt": "2026-10-17T12:52:39Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -24,7 +24,7 @@
       "level": "Undergraduate",
       "description": "This course covers the fundamentals of inviscid and viscous incompressible fluid dynamics. Topics presented will be considered from the following: fluid kinematics and deformation; integral conservation laws of mass, momentum and energy for finite systems and control volumes; differential conservation laws of mass, momentum and energy; the Navier-Stokes equations; the streamfunction and the velocity potential. Applications will be considered from the following topics: hydrostatics; incompressible, inviscid, irrotational (potential) flows; incompressible boundary layer flows; viscous incompressible steady internal and external flows; and dimensional analysis. Recommended background: differential equations (MA2051 or equivalent), dynamics (ES 2503, PH 2101 or equivalent), thermodynamics (ES 3001, PH 2101, CH 3510 or equivalent). Students may not receive credit for both AE 2110 and AE 3602.",
       "sections": [
-        {"id":"AE 2110-D01","code":"D01","type":"lecture","status":"open","enrolled":35,"capacity":82,"waitlist":{"taken":0,"capacity":10},"instructors":["Zachary Taillefer"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Washburn 229"}]}
+        {"id":"AE 2110-D01","code":"D01","type":"lecture","status":"open","enrolled":36,"capacity":82,"waitlist":{"taken":0,"capacity":10},"instructors":["Zachary Taillefer"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Washburn 229"}]}
       ],
       "options": [
         ["AE 2110-D01"]
@@ -122,7 +122,7 @@
       "description": "The Seminar is a degree requirement for all graduate students and is offered during A, B, C, and D term. The Seminar consists of presentations by experts on technical and broader professional topics. Presentations are also offered by graduate students on topics related to their directed research, dissertation, or industrial experiences. The Seminar is offered in pass/fail mode based on attendance.",
       "sections": [
         {"id":"AE 5032-D01","code":"D01","type":"seminar","status":"open","enrolled":25,"capacity":50,"waitlist":{"taken":0,"capacity":30},"instructors":["Michael Demetriou"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Goddard Hall 227 Classroom"}]},
-        {"id":"AE 5032-D02","code":"D02","type":"seminar","status":"open","enrolled":15,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Demetriou"],"delivery":"online-sync","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Online-synchronous"}]}
+        {"id":"AE 5032-D02","code":"D02","type":"seminar","status":"open","enrolled":14,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Demetriou"],"delivery":"online-sync","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Online-synchronous"}]}
       ],
       "options": [
         ["AE 5032-D01"],
@@ -153,7 +153,7 @@
       "level": "Graduate",
       "description": "This course introduces concepts needed to evaluate the performance of the most commonly used electric and chemical spacecraft propulsion systems. Fundamental topics in electric propulsion include plasma generation and ion acceleration, magnetic field design, and beam neutralization. Applications include electrostatic ion and Hall thrusters. Fundamental topics in chemical propulsion include propellant thermochemistry and ideal performance. Applications include bipropellant and monopropellant chemistry, catalyst-bed, and nozzle design considerations. Discussion of each class of thruster will be supplemented with specific examples of flight hardware. Students cannot receive credit for this course if they have taken AE/ME 5111 “Spacecraft Propulsion”.",
       "sections": [
-        {"id":"AE 5232-D01","code":"D01","type":"lecture","status":"open","enrolled":37,"capacity":40,"waitlist":{"taken":0,"capacity":30},"instructors":["Zachary Taillefer"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 311"}]}
+        {"id":"AE 5232-D01","code":"D01","type":"lecture","status":"open","enrolled":35,"capacity":40,"waitlist":{"taken":0,"capacity":30},"instructors":["Zachary Taillefer"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 311"}]}
       ],
       "options": [
         ["AE 5232-D01"]
@@ -197,7 +197,7 @@
       "level": "Graduate",
       "description": "This course is an introductory graduate level course. Fundamental topics will be chosen from the following: three-dimensional states of stress; measures of strain; plane stress and plane strain; thermoelasticity; Airy stress function; and energy methods. Applied topics will be chosen from the following: bending and shear stresses on unsymmetric cross-sections; bending of composite beams; bending of curved beams; torsion of thin-walled noncircular cross sections; and failure criteria. Students cannot receive credit for this course if they have taken AE/ME 5380 “Foundations of Elasticity” or AE/ME 5381 “Applied Elasticity”.",
       "sections": [
-        {"id":"AE 5431-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":15},"instructors":["Mark Richman"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Higgins Labs 154"}]},
+        {"id":"AE 5431-D01","code":"D01","type":"lecture","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":15},"instructors":["Mark Richman"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Higgins Labs 154"}]},
         {"id":"AE 5431-D02","code":"D02","type":"lecture","status":"open","enrolled":3,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Mark Richman"],"delivery":"online-sync","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Online-synchronous"}]}
       ],
       "options": [
@@ -413,7 +413,7 @@
       "level": "Undergraduate",
       "description": "This course aims to further a student’s knowledge of the architectural design process through study of ideas, principles and methods of design and construction. Studio: Architectural concepts are developed with the completion of a project of expanded scope and complexity. The course emphasizes the development of form, space, spatial relationships, materials, context, program, and architectural presentation techniques. Hand drawing and sketching, modeling and visualization software, orthographic drawings, detail drawings, and physical models are used to explore, develop, and communicate architectural design concepts. Lectures: The lecture/lab component of the course focuses on three-dimensional modeling and architectural representation techniques. Students are introduced to advanced modeling software in engineering and architectural design practice. Topics include three dimensional modeling, rendering, animation, and parametric design. This course uses studio, lecture, and lab based teaching methods Recommended background: Intermediate architectural design (AREN 2002 and AREN 2004 or equivalent)",
       "sections": [
-        {"id":"AREN 3002-D01","code":"D01","type":"lecture","status":"open","enrolled":24,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Soroush Farzin","Tahar El-Korchi"],"delivery":"in-person","meetings":[{"days":["Mon","Wed","Thu"],"start":840,"end":1070,"location":"Kaven Hall 207"}]},
+        {"id":"AREN 3002-D01","code":"D01","type":"lecture","status":"open","enrolled":23,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Soroush Farzin","Tahar El-Korchi"],"delivery":"in-person","meetings":[{"days":["Mon","Wed","Thu"],"start":840,"end":1070,"location":"Kaven Hall 207"}]},
         {"id":"AREN 3002-D02","code":"D02","type":"lecture","status":"open","enrolled":12,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Soroush Farzin","Tahar El-Korchi"],"delivery":"in-person","meetings":[{"days":["Mon","Wed","Thu"],"start":840,"end":1070,"location":"Kaven Hall 202 Stats Computer Lab"}]}
       ],
       "options": [
@@ -708,7 +708,7 @@
       "level": "Undergraduate",
       "description": "Cat. I Through lecture, reading, and discussion, this course will help students understand the origin of immune cells in bone marrow development, the distinction between innate and adaptive immunity, and the function of the immune system in health and disease. The mechanisms responsible for the exquisite specificity of the adaptive immune system will be described. Throughout the course, the probable paths of evolution of the immune system will be stressed. As examples of major genetic diseases of immunity, case studies will be discussed on a weekly basis. Recommended background: a working knowledge of the concepts in cell biology, genetics and biochemistry (BB 2550, BB 2920, CH 4110 and 4120 or equivalent)",
       "sections": [
-        {"id":"BB 3920-D01","code":"D01","type":"lecture","status":"open","enrolled":14,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Jill Rulfs"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":600,"end":650,"location":"Unity Hall 405"}]}
+        {"id":"BB 3920-D01","code":"D01","type":"lecture","status":"open","enrolled":15,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Jill Rulfs"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":600,"end":650,"location":"Unity Hall 405"}]}
       ],
       "options": [
         ["BB 3920-D01"]
@@ -1080,7 +1080,7 @@
       "level": "Undergraduate",
       "description": "Cat. II This course emphasizes the applications of fluid mechanics to biological problems. The course concentrates primarily on the human circulatory and respiratory systems. Topics covered include: blood flow in the heart, arteries, veins and microcirculation and air flow in the lungs and airways. Mass transfer across the walls of these systems is also presented. Recommended background: ME 3501 and fluid mechanics equivalent to ES 3004. This course will be offered in 2020-21, and in alternating years thereafter.",
       "sections": [
-        {"id":"BME 4606-D01","code":"D01","type":"lecture","status":"open","enrolled":12,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Brian Savilonis"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Salisbury Labs 406"}]}
+        {"id":"BME 4606-D01","code":"D01","type":"lecture","status":"open","enrolled":13,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Brian Savilonis"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Salisbury Labs 406"}]}
       ],
       "options": [
         ["BME 4606-D01"]
@@ -1165,7 +1165,7 @@
       "level": "Graduate",
       "description": "This biomechanics course focuses on advanced techniques for the characterization of the structure and function of hard and soft tissues and their relationship to physiological processes. Applications include tissue injury, wound healing, the effect of pathological conditions upon tissue properties, and design of medical devices and prostheses. (Prerequisite: An understanding of basic continuum mechanics.)",
       "sections": [
-        {"id":"BME 552-S01","code":"S01","type":"lecture","status":"open","enrolled":15,"capacity":20,"waitlist":{"taken":5,"capacity":5},"instructors":["Adriana Hera"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Thu"],"start":1080,"end":1250,"location":"Kaven Hall 115"}]}
+        {"id":"BME 552-S01","code":"S01","type":"lecture","status":"open","enrolled":16,"capacity":20,"waitlist":{"taken":5,"capacity":5},"instructors":["Adriana Hera"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Thu"],"start":1080,"end":1250,"location":"Kaven Hall 115"}]}
       ],
       "options": [
         ["BME 552-S01"]
@@ -1221,7 +1221,7 @@
       "level": "Graduate",
       "description": "(0 credits) Topics in biomedical engineering are presented both by authorities in the field and graduate students in the program. Provides a forum for the communication of current research and an opportunity for graduate students to prepare and deliver oral presentations. Students may meet the attendance requirement for this course in several ways, including attendance at weekly biomedical engineering seminars on the WPI campus, attendance at similar seminar courses at other universities or biotech firms, attendance at appropriate conferences, meetings or symposia, or in any other way deemed appropriate by the course instructor.",
       "sections": [
-        {"id":"BME 591-S01","code":"S01","type":"seminar","status":"open","enrolled":18,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Solomon Mensah"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":720,"end":770,"location":"Gateway Park 1 Room 1002"}]}
+        {"id":"BME 591-S01","code":"S01","type":"seminar","status":"open","enrolled":19,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Solomon Mensah"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":720,"end":770,"location":"Gateway Park 1 Room 1002"}]}
       ],
       "options": [
         ["BME 591-S01"]
@@ -1348,7 +1348,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides an understanding of the practice of structural engineering. It builds upon the fundamental skills developed in CE 2000, CE 2001, and CE 2002 to present the principles of structures and their elements. The courseprovides a perspective for dealing with the issues of strength, stiffness, and stability. Although wood is the principle material used to develop the study of the interrelationship between analysis and design of structural systems, structural steel and reinforced concrete systems are also discussed. It also introduces students to the use of building codes for design criteria. The role of the structural engineer in the design process and cost factors are also discussed.Recommended background: CE 2000, CE 2001, and CE 2002.Suggested background: CE 1030.",
       "sections": [
-        {"id":"CE 3010-D01","code":"D01","type":"lecture","status":"open","enrolled":97,"capacity":110,"waitlist":{"taken":0,"capacity":20},"instructors":["Tahar El-Korchi"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Unity Hall 500"}]}
+        {"id":"CE 3010-D01","code":"D01","type":"lecture","status":"open","enrolled":96,"capacity":110,"waitlist":{"taken":0,"capacity":20},"instructors":["Tahar El-Korchi"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Unity Hall 500"}]}
       ],
       "options": [
         ["CE 3010-D01"]
@@ -1390,9 +1390,9 @@
       "level": "Undergraduate",
       "description": "In this course, students learn how to perform analytical methods and conduct laboratory experiments relevant to natural and engineered treatment systems in environmental engineering. Topics in water quality, water treatment, wastewater treatment, and reactors are included. The course focuses on data acquisition, analysis, and interpretation. Recommended background: CE 3059, CE 3060, and CE 3061.",
       "sections": [
-        {"id":"CE 3063-DL01","code":"DL01","type":"lecture","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Harold Walker"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu"],"start":660,"end":710,"location":"Unity Hall 405"}]},
+        {"id":"CE 3063-DL01","code":"DL01","type":"lecture","status":"open","enrolled":22,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Harold Walker"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu"],"start":660,"end":710,"location":"Unity Hall 405"}]},
         {"id":"CE 3063-DX01","code":"DX01","type":"lab","status":"open","enrolled":11,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Harold Walker"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":950,"location":"Kaven Hall 010 CE Lab"}]},
-        {"id":"CE 3063-DX02","code":"DX02","type":"lab","status":"closed","enrolled":12,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Harold Walker"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":950,"location":"Kaven Hall 010 CE Lab"}]}
+        {"id":"CE 3063-DX02","code":"DX02","type":"lab","status":"open","enrolled":11,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Harold Walker"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":950,"location":"Kaven Hall 010 CE Lab"}]}
       ],
       "options": [
         ["CE 3063-DL01","CE 3063-DX01"],
@@ -1980,8 +1980,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to the structure and behavior of modern digital computers and the way they execute programs. Machine organization topics include the Von Neumann model of execution, functional organization of computer hardware, the memory hierarchy, caching performance, and pipelining. Assembly language topics include representations of numbers in computers, basic instruction sets, addressing modes, stacks and procedures, low-level I/O, and the functions of compilers, assemblers, linkers, and loaders. The course also presents how code and data structures of higher-level languages are mapped into the assembly language and machine representations of a modern processor. Programming projects will be carried out in the C language and the assembly language of a modern processor.Recommended background: CS 2301 or CS 2303, or a significant knowledge of C/C++.",
       "sections": [
-        {"id":"CS 2011-DL01","code":"DL01","type":"lecture","status":"open","enrolled":26,"capacity":135,"waitlist":{"taken":0,"capacity":20},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
-        {"id":"CS 2011-DX01","code":"DX01","type":"lab","status":"open","enrolled":6,"capacity":27,"waitlist":{"taken":0,"capacity":0},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":530,"location":"Salisbury Labs 123 Computer Lab"}]},
+        {"id":"CS 2011-DL01","code":"DL01","type":"lecture","status":"open","enrolled":27,"capacity":135,"waitlist":{"taken":0,"capacity":20},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
+        {"id":"CS 2011-DX01","code":"DX01","type":"lab","status":"open","enrolled":7,"capacity":27,"waitlist":{"taken":0,"capacity":0},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":530,"location":"Salisbury Labs 123 Computer Lab"}]},
         {"id":"CS 2011-DX02","code":"DX02","type":"lab","status":"open","enrolled":1,"capacity":27,"waitlist":{"taken":0,"capacity":0},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":590,"location":"Salisbury Labs 123 Computer Lab"}]},
         {"id":"CS 2011-DX03","code":"DX03","type":"lab","status":"open","enrolled":4,"capacity":27,"waitlist":{"taken":0,"capacity":0},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Salisbury Labs 123 Computer Lab"}]},
         {"id":"CS 2011-DX04","code":"DX04","type":"lab","status":"open","enrolled":8,"capacity":27,"waitlist":{"taken":0,"capacity":0},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Salisbury Labs 123 Computer Lab"}]},
@@ -2058,7 +2058,7 @@
       "level": "Undergraduate",
       "description": "Cat. I Building on a fundamental knowledge of data structures, data abstraction techniques, and mathematical tools, a number of examples of algorithm design and analysis — worst case and average case — will be developed. Topics include greedy algorithms, divide-and-conquer, dynamic programming, heuristics, and probabilistic algorithms. Problems will be drawn from areas such as sorting, graph theory, and string processing. The influence of the computational model on algorithm design will be discussed. Students will be expected to perform analysis on a variety of algorithms.Recommended background: CS 2102 or CS 2103, and CS 2022.",
       "sections": [
-        {"id":"CS 2223-D01","code":"D01","type":"lecture","status":"open","enrolled":37,"capacity":125,"waitlist":{"taken":0,"capacity":20},"instructors":["Michael Engling"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
+        {"id":"CS 2223-D01","code":"D01","type":"lecture","status":"open","enrolled":38,"capacity":125,"waitlist":{"taken":0,"capacity":20},"instructors":["Michael Engling"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
         {"id":"CS 2223-D02","code":"D02","type":"lecture","status":"open","enrolled":23,"capacity":70,"waitlist":{"taken":0,"capacity":15},"instructors":["Yu-Shan Sun"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Unity Hall 420"}]}
       ],
       "options": [
@@ -2164,7 +2164,7 @@
       "level": "Undergraduate",
       "description": "Cat.I In this course, students will explore both theoretical and practical aspects of machine learning, including algorithms for regression, classification, dimensionality reduction, clustering, and density estimation. Specific topics may include neural networks and deep learning, Bayesian networks and probabilistic graphical models, principal component analysis, k-means clustering, decision trees and random forests, support vector machines, and kernel methods. Recommended background: Multivariate Calculus (MA 1024 or MA 1034), Linear Algebra (such as MA 2071), Probability (MA 2621 or MA 2631), and Algorithms (CS 2223). Students may not earn credit for both CS 453X and CS 4342. Undergraduate credit may not be earned both for this course and for CS 539.",
       "sections": [
-        {"id":"CS 4342-D01","code":"D01","type":"lecture","status":"open","enrolled":45,"capacity":60,"waitlist":{"taken":0,"capacity":5},"instructors":["Raha Moraffah"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Salisbury Labs 305"}]}
+        {"id":"CS 4342-D01","code":"D01","type":"lecture","status":"open","enrolled":44,"capacity":60,"waitlist":{"taken":0,"capacity":5},"instructors":["Raha Moraffah"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Salisbury Labs 305"}]}
       ],
       "options": [
         ["CS 4342-D01"]
@@ -2206,7 +2206,7 @@
       "level": "Undergraduate",
       "description": "Cat. II This course concentrates on the study of the internals of database management systems. Topics include principles and theories of physical storage management, advanced query languages, query processing and optimization, index structures for relational databases, transaction processing, concurrency control, distributed databases, and database recovery, security, client server and transaction processing systems. Students may be expected to design and implement softwarecomponents that make up modern database systems.Undergraduate credit may not be earned both for this course and CS 542.Recommended background: CS 3431 and CS 3733.This course will be offered in 2019-20, and in alternating years thereafter.",
       "sections": [
-        {"id":"CS 4432-D01","code":"D01","type":"lecture","status":"open","enrolled":53,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Roee Shraga"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Unity Hall 420"}]}
+        {"id":"CS 4432-D01","code":"D01","type":"lecture","status":"open","enrolled":54,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Roee Shraga"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Unity Hall 420"}]}
       ],
       "options": [
         ["CS 4432-D01"]
@@ -2508,7 +2508,7 @@
       "level": "Graduate",
       "description": "This course examines current issues in the computer implementation of visual perception. Topics include image formation, edge detection, segmentation, shape-from-shading, motion, stereo, texture analysis, pattern classification and object recognition. We will discuss various representations for visual information, including sketches and intrinsic images. (Prerequisites: CS 534, CS 543, CS 545, or the equivalent of one of these courses.)",
       "sections": [
-        {"id":"CS 549-S01","code":"S01","type":"lecture","status":"open","enrolled":27,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Nitin Sanket"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Salisbury Labs 402"}]},
+        {"id":"CS 549-S01","code":"S01","type":"lecture","status":"open","enrolled":26,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Nitin Sanket"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Salisbury Labs 402"}]},
         {"id":"CS 549-S02","code":"S02","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Alexandros Lioulemes"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
@@ -2680,7 +2680,7 @@
       "level": "Graduate",
       "description": "This 3-credit graduate qualifying project, typically done in teams, provides a capstone experience in applying Artificial Intelligence skills to a real-world problem. It will be carried out in cooperation with an industrial sponsor and is approved and overseen by a core or collaborative faculty member in the Artificial Intelligence Program. This offering integrates theory and practice of Artificial Intelligence and includes the utilization of tools and techniques acquired in the Artificial Intelligence Program to a real-world problem. In addition to a written report, this project must be presented in a formal presentation to faculty of the AI program and sponsors. Professional development skills, such as communication, teamwork, leadership, and collaboration, will be practiced. This course is a degree requirement for the Master of Science in Artificial Intelligence (MS-AI) Students outside the MS-AI program must get the instructor’s approval before. Prerequisites Completion of at least 24 credits of the AI degree, or consent of the instructor. With permission of the instructor, the GQP can be taken a 2nd time for a total of 6 credits.",
       "sections": [
-        {"id":"CS 594-S01","code":"S01","type":"lecture","status":"open","enrolled":36,"capacity":40,"waitlist":{"taken":1,"capacity":10},"instructors":["Bahman Moraffah"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
+        {"id":"CS 594-S01","code":"S01","type":"lecture","status":"open","enrolled":37,"capacity":40,"waitlist":{"taken":1,"capacity":10},"instructors":["Bahman Moraffah"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
       ],
       "options": [
         ["CS 594-S01"]
@@ -2948,7 +2948,7 @@
       "level": "Graduate",
       "description": "This 3-credit graduate qualifying project, typically done in teams, provides a capstone experience in applying Artificial Intelligence skills to a real-world problem. It will be carried out in cooperation with an industrial sponsor and is approved and overseen by a core or collaborative faculty member in the Artificial Intelligence Program. This offering integrates theory and practice of Artificial Intelligence and includes the utilization of tools and techniques acquired in the Artificial Intelligence Program to a real-world problem. In addition to a written report, this project must be presented in a formal presentation to faculty of the AI program and sponsors. Professional development skills, such as communication, teamwork, leadership, and collaboration, will be practiced. This course is a degree requirement for the Master of Science in Artificial Intelligence (MS-AI) Students outside the MS-AI program must get the instructor’s approval before. Prerequisites Completion of at least 24 credits of the AI degree, or consent of the instructor. With permission of the instructor, the GQP can be taken a 2nd time for a total of 6 credits.",
       "sections": [
-        {"id":"DS 594-S01","code":"S01","type":"lecture","status":"open","enrolled":36,"capacity":40,"waitlist":{"taken":1,"capacity":10},"instructors":["Bahman Moraffah"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
+        {"id":"DS 594-S01","code":"S01","type":"lecture","status":"open","enrolled":37,"capacity":40,"waitlist":{"taken":1,"capacity":10},"instructors":["Bahman Moraffah"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
       ],
       "options": [
         ["DS 594-S01"]
@@ -2962,7 +2962,7 @@
       "level": "Graduate",
       "description": "The Graduate Qualifying Project, or GQP, is a 3-credit project, typically done in teams that is carried out in cooperation with a sponsor or industrial partner. It will be overseen by a faculty member affiliated with the Data Science Program and will offer integrated theory and practice of Data Science including the utilization of tools and techniques acquired in the Data Science Program. In addition to a written report, this project must be presented in a formal demonstration to the faculty of the Data Science program and sponsors. Professional development skills, such as communication, teamwork, leadership, and collaboration, along with storytelling, will be practiced. Prerequisites: DS 501, completion of at least 24 credits of the DS degree, and consent of the instructor.",
       "sections": [
-        {"id":"DS 598-S01","code":"S01","type":"other","title":"Graduate Qualifying Project","status":"open","enrolled":35,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Fatemeh Emdad","Chun-Kit Ngan"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]},
+        {"id":"DS 598-S01","code":"S01","type":"other","title":"Graduate Qualifying Project","status":"open","enrolled":36,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Fatemeh Emdad","Chun-Kit Ngan"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Unity Hall 520"}]},
         {"id":"DS 598-S02","code":"S02","type":"other","title":"Graduate Qualifying Project","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Fatemeh Emdad","Chun-Kit Ngan"],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Online-synchronous"}]}
       ],
       "options": [
@@ -3088,7 +3088,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides an introduction to the analysis and design of continuoustime control systems. Topics covered in the course include: modeling in the frequency and time domain, characteristics of control systems time response, reduction of multiple subsystems, analysis of systems transient response, stability, steady-state errors, root locus techniques, design of PI, PD, and PID controllers via root locus, frequency response techniques, and design via frequency response. The course will not have a formal laboratory. It will include projects which will require the use of software such as MATLAB, Simulink, or LabVIEW for analysis and design of control systems. Recommended Background: Ordinary Differential Equations (MA 2051), Sensors, Circuits, and Systems (ECE 2019), and Continuous-time Signal and System Analysis (ECE 2311). Students may not receive credit for both ES 3011 and ECE 3012.",
       "sections": [
-        {"id":"ECE 3012-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":40,"capacity":40,"waitlist":{"taken":7,"capacity":15},"instructors":["Bo Tang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu"],"start":900,"end":950,"location":"Washburn 229"}]}
+        {"id":"ECE 3012-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":40,"capacity":40,"waitlist":{"taken":6,"capacity":15},"instructors":["Bo Tang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu"],"start":900,"end":950,"location":"Washburn 229"}]}
       ],
       "options": [
         ["ECE 3012-D01"]
@@ -3295,7 +3295,7 @@
       "description": "This graduate level course introduces the student to the effects of electromagnetic transients in distribution systems. Topics include transient analysis, lightning and switching surges, mechanisms of transient generation, insulation coordination, grounding, surge protection devices, and shielding. Prerequisite: ECE 5500 Power System Analysis.",
       "sections": [
         {"id":"ECE 5511-LS01","code":"LS01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Edvina Uzunovic"],"delivery":"online-async","dates":{"start":"2027-04-12","end":"2027-06-25"},"meetings":[]},
-        {"id":"ECE 5511-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Edvina Uzunovic"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"ECE 5511-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Edvina Uzunovic"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["ECE 5511-LS01"],
@@ -3768,10 +3768,10 @@
       "sections": [
         {"id":"ES 2001-DD01","code":"DD01","type":"discussion","status":"open","enrolled":79,"capacity":100,"waitlist":{"taken":0,"capacity":0},"instructors":["Danielle Cote"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Unity Hall 500"}]},
         {"id":"ES 2001-DD02","code":"DD02","type":"discussion","status":"open","enrolled":28,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Makhlouf Makhlouf"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Higgins Labs 116"}]},
-        {"id":"ES 2001-DD03","code":"DD03","type":"discussion","status":"open","enrolled":20,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Lichao Fang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Higgins Labs 218 Discovery Classroom"}]},
+        {"id":"ES 2001-DD03","code":"DD03","type":"discussion","status":"open","enrolled":21,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Lichao Fang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Higgins Labs 218 Discovery Classroom"}]},
         {"id":"ES 2001-DL01","code":"DL01","type":"lecture","status":"open","enrolled":79,"capacity":100,"waitlist":{"taken":1,"capacity":20},"instructors":["Danielle Cote"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Unity Hall 500"}]},
         {"id":"ES 2001-DL02","code":"DL02","type":"lecture","status":"open","enrolled":28,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Makhlouf Makhlouf"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Higgins Labs 218 Discovery Classroom"}]},
-        {"id":"ES 2001-DL03","code":"DL03","type":"lecture","status":"open","enrolled":20,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Lichao Fang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Higgins Labs 218 Discovery Classroom"}]}
+        {"id":"ES 2001-DL03","code":"DL03","type":"lecture","status":"open","enrolled":21,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Lichao Fang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Higgins Labs 218 Discovery Classroom"}]}
       ],
       "options": [
         ["ES 2001-DD01","ES 2001-DL01"],
@@ -3787,9 +3787,9 @@
       "level": "Undergraduate",
       "description": "Cat. I This is an introductory course in the engineering mechanics sequence that serves as a foundation for other courses in mechanical engineering. The course covers general two- and three-dimensional force and couple systems, distributed loads, resultant forces, moments of forces, free body diagrams, equilibrium of particles and finite sized bodies. Specific topics include friction, trusses, shear forces, bodies subjected to distributed loads, bending moments in beams, and first and second moments of plane areas. Recommended background: Differential (MA 1021) and integral (MA 1022) calculus, vector algebra (MA 1023), and double and triple integration (MA 1024).",
       "sections": [
-        {"id":"ES 2501-DD01","code":"DD01","type":"discussion","status":"open","enrolled":19,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":590,"location":"Unity Hall 400"}]},
+        {"id":"ES 2501-DD01","code":"DD01","type":"discussion","status":"open","enrolled":20,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":590,"location":"Unity Hall 400"}]},
         {"id":"ES 2501-DD02","code":"DD02","type":"discussion","status":"open","enrolled":27,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":830,"location":"Unity Hall 500"}]},
-        {"id":"ES 2501-DL01","code":"DL01","type":"lecture","status":"open","enrolled":19,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Jessica Rosewitz"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
+        {"id":"ES 2501-DL01","code":"DL01","type":"lecture","status":"open","enrolled":20,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Jessica Rosewitz"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
         {"id":"ES 2501-DL02","code":"DL02","type":"lecture","status":"open","enrolled":27,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 500"}]}
       ],
       "options": [
@@ -3881,8 +3881,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course presents the fundamentals of heat transfer in the three modes of conduction, convection, and radiation. Topics include steady-state and transient heat conduction, forced external and internal convection, natural convection, heat exchanger analysis, radiation properties, and radiative exchange between surfaces. Recommended background: knowledge of thermodynamics, fluid mechanics, and ordinary differential equations (ES 3001, ES 3004, and MA 2051) or equivalents.",
       "sections": [
-        {"id":"ES 3003-DD01","code":"DD01","type":"discussion","status":"open","enrolled":78,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["James Urban"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":530,"location":"Innovation Studio 203 Active Learning Classroom South / Innovation Studio 205 Active Learning Classroom North"}]},
-        {"id":"ES 3003-DL01","code":"DL01","type":"lecture","status":"open","enrolled":78,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["James Urban"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":480,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South / Innovation Studio 205 Active Learning Classroom North"}]}
+        {"id":"ES 3003-DD01","code":"DD01","type":"discussion","status":"open","enrolled":79,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["James Urban"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":530,"location":"Innovation Studio 203 Active Learning Classroom South / Innovation Studio 205 Active Learning Classroom North"}]},
+        {"id":"ES 3003-DL01","code":"DL01","type":"lecture","status":"open","enrolled":79,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["James Urban"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":480,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South / Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
         ["ES 3003-DD01","ES 3003-DL01"]
@@ -4098,7 +4098,7 @@
       "level": "Graduate",
       "description": "Principles of combustion explosions are taught along with explosion hazard and protection applications. Topics include a review of flammability limit concentrations for flammable gases and dusts; thermochemical equilibrium calculations of adiabatic closed-vessel deflagration pressures, and detonation pressures and velocities; pressure development as a function of time for closed vessels and vented enclosures; the current status of explosion suppression technology; and vapor cloud explosion hazards.",
       "sections": [
-        {"id":"FP 575-S01","code":"S01","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Lorenz Boeck"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"FP 575-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Lorenz Boeck"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["FP 575-S01"]
@@ -4112,7 +4112,7 @@
       "level": "Graduate",
       "description": "This class is intended to provide an engineer with the basic understanding of various combustion phenomena. It will begin by covering fundamental governing equations for reacting flow, chemical kinetics, and mechanisms of hydrocarbon oxidation. The theory of deflagrations and detonations will be studied. The course will touch briefly on themes of combustion diagnostics, environmental issues, and power generation. Emphasis will also be given on the recent research interest on micro-scale combustion applications. The primary goal of the class is to provide students with tools and understanding to solve the basic problems in combustion and to enable them to read and understand the literature in this broad field of study.",
       "sections": [
-        {"id":"FP 580-S01","code":"S01","type":"lecture","title":"SP: Combustion","status":"open","enrolled":4,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Ali Rangwala"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
+        {"id":"FP 580-S01","code":"S01","type":"lecture","title":"SP: Combustion","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Ali Rangwala"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
         {"id":"FP 580-S02","code":"S02","type":"lecture","title":"SP: Combustion","status":"open","enrolled":7,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Ali Rangwala"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":840,"end":1010,"location":"Gateway Park 2 Room 1226"}]}
       ],
       "options": [
@@ -4128,7 +4128,7 @@
       "level": "Graduate",
       "description": "FP 582: Quantitative Risk Analysis (3 credits) This course will cover fundamentals of facility siting studies (FSS), quantitative risk assessments (QRA) and mitigation techniques. The primary objectives are to provide a thorough foundation and knowledge of the inputs, methodologies and typical types of results for FSS and QRAs. It will also provide knowledge of how QRAs can be used to identify and prioritize risk mitigation strategies to make informed and effective risk mitigation decisions. This course is ideal for PSM managers, process safety engineers, facility siting coordinators / SMEs, and anyone involved in the facility siting decision making process.",
       "sections": [
-        {"id":"FP 582-S01","code":"S01","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Stephen Kmiotek"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"FP 582-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Stephen Kmiotek"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["FP 582-S01"]
@@ -4450,7 +4450,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is open to students accepted to off-campus IQP centers and programs . The course introduces students to research design, methods for social science research, and analysis . It also provides practice in specific research and field skills using the project topics students have selected in conjunction with sponsoring agencies . Students learn to develop social science hypotheses based upon literature reviews in their topic areas and apply concepts drawn from social psychology, anthropology, sociology, economics and other areas as appropriate . Students make presentations, write an organized project proposal, and develop a communication model for reporting their project findings . Some sections of this course may be offered as Writing Intensive (WI).",
       "sections": [
-        {"id":"ID 2050-D01","code":"D01","type":"lecture","title":"SOC SCI RES-IQP: Acadia National Park ME (WI)","status":"open","enrolled":14,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Goddard Hall 227 Classroom"}]},
+        {"id":"ID 2050-D01","code":"D01","type":"lecture","title":"SOC SCI RES-IQP: Acadia National Park ME (WI)","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Goddard Hall 227 Classroom"}]},
         {"id":"ID 2050-D02","code":"D02","type":"lecture","title":"SOC SCI RES-IQP: Worcester Community Project Center (WI)","status":"open","enrolled":1,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Innovation Studio 203 Active Learning Classroom South"}]},
         {"id":"ID 2050-D03","code":"D03","type":"lecture","title":"SOC SCI RES-IQP- Beijing China (WI)","status":"open","enrolled":0,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Innovation Studio 205 Active Learning Classroom North"}]},
         {"id":"ID 2050-D04","code":"D04","type":"lecture","title":"SOC SCI RES-IQP- London England (WI)","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Unity Hall 500"}]},
@@ -4463,7 +4463,7 @@
         {"id":"ID 2050-D11","code":"D11","type":"lecture","title":"SOC SCI RES-IQP- Reykjavik, Iceland (WI)","status":"open","enrolled":0,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Tom Hollywood"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Salisbury Labs 411"}]},
         {"id":"ID 2050-D12","code":"D12","type":"lecture","title":"SOC SCI RES-IQP- Zurich, Switzerland (WI)","status":"open","enrolled":0,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Laureen Elgert"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Salisbury Labs 104"}]},
         {"id":"ID 2050-D13","code":"D13","type":"lecture","title":"SOC SCI RES-IQP- Venice (WI)","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Stephen McCauley"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Unity Hall 405"}]},
-        {"id":"ID 2050-D14","code":"D14","type":"lecture","title":"SOC SCI RES-IQP- Istanbul, Turkey (WI)","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Stratton Hall 313"}]},
+        {"id":"ID 2050-D14","code":"D14","type":"lecture","title":"SOC SCI RES-IQP- Istanbul, Turkey (WI)","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Stratton Hall 313"}]},
         {"id":"ID 2050-D15","code":"D15","type":"lecture","title":"SOC SCI RES-IQP- Copenhagen (WI)","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Stratton Hall 301"}]}
       ],
       "options": [
@@ -4506,7 +4506,7 @@
       "level": "Graduate",
       "description": "The purpose of this zero credit course is to familiarize pre-doctoral and postdoctoral trainees with basic ethical issues in research confronting scientists and engineers. The course includes five lectures and five student-led discussion sessions on topics such as experimental design best practices, research involving animal subjects, authorship, and research misconduct. Student learning will be assessed through in-class formative assessments as well as small group presentations during the discussion sessions. The course is recommended for all graduate students and postdocs who are engaged in research and will be offered in 2018 and each year thereafter.",
       "sections": [
-        {"id":"ID 500-S01","code":"S01","type":"lecture","status":"open","enrolled":1,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":[],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Higgins Labs 114"}]}
+        {"id":"ID 500-S01","code":"S01","type":"lecture","status":"open","enrolled":0,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":[],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Higgins Labs 114"}]}
       ],
       "options": [
         ["ID 500-S01"]
@@ -4594,8 +4594,8 @@
       "level": "Undergraduate",
       "description": "Game Audio II serves as an intermediate level audio design course, where digital recording principles and techniques are studied along with their practical applications for use in game development. Students will also gain deeper insight into 2-D vs. 3-D audio propagation, as well as learn more complex techniques in digital editing, mixing, signal processing, mastering, and playback strategies. Lab exercises may include interactive dialogue scripting and recording; loop-based music production; custom sound effects creation and Foley design; and audio engine integration. A team project will be the creation of a comprehensive game sound effects library over the course of the term. Recommended background: Game Audio (IMGD 2030)",
       "sections": [
-        {"id":"IMGD 3030-DL01","code":"DL01","type":"lecture","status":"open","enrolled":13,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Unity Hall 235 IMGD Lab"}]},
-        {"id":"IMGD 3030-DX01","code":"DX01","type":"lab","status":"open","enrolled":13,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":830,"location":"Unity Hall 235 IMGD Lab"}]}
+        {"id":"IMGD 3030-DL01","code":"DL01","type":"lecture","status":"open","enrolled":14,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Unity Hall 235 IMGD Lab"}]},
+        {"id":"IMGD 3030-DX01","code":"DX01","type":"lab","status":"open","enrolled":14,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":830,"location":"Unity Hall 235 IMGD Lab"}]}
       ],
       "options": [
         ["IMGD 3030-DL01","IMGD 3030-DX01"]
@@ -4988,8 +4988,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (14-week course) The topics for integral calculus (MA 1022) are covered in this course: the concept of the definite integral, the Fundamental Theorem of Calculus, integration techniques, and applications of integration. Applications include: area, volume, arc length, center of mass, work, force, and exponential growth and decay. Logarithmic and exponential functions are studied in depth. Arithmetic and geometric sequences and series will also be covered. Key historical events in the development of integral calculus are examined. Technology will be used as appropriate to support the material being studied.This course extends for 14 weeks and offers 1/3 unit of credit. It is designed for students who would benefit from additional contact hours and who need to strengthen their mathematical background. Although the course will make use of computers, no programming experience is assumed. Students may not receive credit for both MA 1120 and MA 1022 or MA 1102.",
       "sections": [
-        {"id":"MA 1120-SD01","code":"SD01","type":"discussion","title":"Calculus II W/ Prelim Topics","status":"open","enrolled":4,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Johnson"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Fri"],"start":540,"end":590,"location":"Stratton Hall 301"}]},
-        {"id":"MA 1120-SL01","code":"SL01","type":"lecture","title":"Calculus II W/ Prelim Topics","status":"open","enrolled":4,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michael Johnson"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Tue","Thu"],"start":540,"end":590,"location":"Olin Hall 109"}]}
+        {"id":"MA 1120-SD01","code":"SD01","type":"discussion","title":"Calculus II W/ Prelim Topics","status":"open","enrolled":5,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Johnson"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Fri"],"start":540,"end":590,"location":"Stratton Hall 301"}]},
+        {"id":"MA 1120-SL01","code":"SL01","type":"lecture","title":"Calculus II W/ Prelim Topics","status":"open","enrolled":5,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michael Johnson"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Tue","Thu"],"start":540,"end":590,"location":"Olin Hall 109"}]}
       ],
       "options": [
         ["MA 1120-SD01","MA 1120-SL01"]
@@ -5151,8 +5151,8 @@
       "level": "Undergraduate",
       "description": "Cat. II This course introduces the concepts and techniques of combinatorics— a part of mathematics with applications in computer science and in the social, biological, and physical sciences. Emphasis will be given to problem solving. Topics will be selected from: basic counting methods, inclusion-exclusion principle, generating functions, recurrence relations, systems of distinct representatives, combinatorial designs, combinatorial algorithms and applications of combinatorics. This course is designed primarily for Mathematical Sciences majors and those interested in the deeper mathematical issues underlying combinatorics. Undergraduate credit may not be earned both for this course and for MA 3273. Recommended background: MA 2071. This course will be offered in 2019-20, and in alternating years thereafter.",
       "sections": [
-        {"id":"MA 2273-DD01","code":"DD01","type":"discussion","status":"open","enrolled":13,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Brigitte Servatius"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Stratton Hall 313"}]},
-        {"id":"MA 2273-DL01","code":"DL01","type":"lecture","status":"open","enrolled":13,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Brigitte Servatius"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Stratton Hall 313"}]}
+        {"id":"MA 2273-DD01","code":"DD01","type":"discussion","status":"open","enrolled":12,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Brigitte Servatius"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Stratton Hall 313"}]},
+        {"id":"MA 2273-DL01","code":"DL01","type":"lecture","status":"open","enrolled":12,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Brigitte Servatius"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Stratton Hall 313"}]}
       ],
       "options": [
         ["MA 2273-DD01","MA 2273-DL01"]
@@ -5371,7 +5371,7 @@
       "level": "Graduate",
       "description": "This course develops mathematical techniques used in the engineering disciplines. Preliminary concepts will be reviewed as necessary, including vector spaces, matrices and eigen values. The principal topics covered will include vector calculus, Fourier transforms, fast Fourier transforms and Laplace transformations. Applications of these techniques for the solution of boundary value and initial value problems will be given. The problems treated and solved in this course are typical of those seen in applications and include problems of heat conduction, mechanical vibrations and wave propagation. Prerequisite: A knowledge of ordinary differential equations, linear algebra and multivariable calculus is assumed.)",
       "sections": [
-        {"id":"MA 501-S01","code":"S01","type":"lecture","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":8,"capacity":20},"instructors":["Jeffrey Barden"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"MA 501-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":8,"capacity":20},"instructors":["Jeffrey Barden"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["MA 501-S01"]
@@ -5414,7 +5414,7 @@
       "description": "This course is an introduction to statistics forgraduate students in engineering and the sciences.Topics covered include basic data analysis, issues in the design of studies, an introduction to probability,point and interval estimation and hypothesistesting for means and proportions from oneand two samples, simple and multiple regression,analysis of one and two-way tables, one-way analysisof variance. As time permits, additional topics,such as distribution-free methods and the designand analysis of factorial studies will be considered.(Prerequisites: Integral and differential calculus.)",
       "sections": [
         {"id":"MA 511-S01","code":"S01","type":"lecture","status":"open","enrolled":23,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Carly Thorp"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Stratton Hall 202"}]},
-        {"id":"MA 511-S02","code":"S02","type":"lecture","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Michael Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"MA 511-S02","code":"S02","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Michael Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["MA 511-S01"],
@@ -5627,7 +5627,7 @@
       "description": "Cat. I This course is designed to develop experimental skills in engineering measurement methods, based on electronic instrumentation and computerbased data acquisition systems, such as the Raspberry Pi (a primarily digital microprocessor) and an Arduino (a primarily analog microcontroller). The lectures are concerned with the engineering design requirements as well as the principles of instrumentation, whereas the laboratory modules afford the student an opportunity to use these devices in actual experiments. Lecture topics include: discussions of standards, measurement and sensing devices, experiment planning, data acquisition, analysis of experimental data, and report writing. Laboratory experiments address mechanical (force/torque/strain measurements, motion/vibration measurements), energy (heat transfer, temperature, flow measurements), materials measurements (materials processing, measurement of strain and position in mechanical testing of materials), and instrumentation. The course culminates with an open-ended project of the students choosing. This open-ended project will illuminate the skills gained by the student to utilize multiple sensors and equipment to monitor and/or control physical situations. Recommended background: introductory heat transfer (ES3003 or equivalent), introductory stress and dynamic mechanics (ES 2502 & ES 2503 or equivalents), introductory electrical and computer engineering (ES2010 or equivalent) and introductory materials (such as ES 2001 or equivalent).",
       "sections": [
         {"id":"ME 3902-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":1,"capacity":10},"instructors":["Reza Ebadi"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":540,"end":710,"location":"Higgins Labs 031 ME Computer Lab"}]},
-        {"id":"ME 3902-D02","code":"D02","type":"lecture","status":"open","enrolled":26,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Reza Ebadi"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":780,"end":950,"location":"Higgins Labs 031 ME Computer Lab"}]},
+        {"id":"ME 3902-D02","code":"D02","type":"lecture","status":"open","enrolled":26,"capacity":30,"waitlist":{"taken":1,"capacity":10},"instructors":["Reza Ebadi"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":780,"end":950,"location":"Higgins Labs 031 ME Computer Lab"}]},
         {"id":"ME 3902-D03","code":"D03","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":3,"capacity":10},"instructors":["Ahmet Sabuncu"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":770,"location":"Higgins Labs 031 ME Computer Lab"}]},
         {"id":"ME 3902-D04","code":"D04","type":"lecture","status":"closed","enrolled":20,"capacity":20,"waitlist":{"taken":10,"capacity":10},"instructors":["Ahmet Sabuncu"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":780,"end":950,"location":"Higgins Labs 031 ME Computer Lab"}]}
       ],
@@ -5706,7 +5706,7 @@
       "level": "Undergraduate",
       "description": "Cat. II This course emphasizes the applications of fluid mechanics to biological problems. The course concentrates primarily on the human circulatory and respiratory systems. Topics covered include: blood flow in the heart, arteries, veins and microcirculation and air flow in the lungs and airways. Mass transfer across the walls of these systems is also presented. Recommended background: ME 3501 and fluid mechanics equivalent to ES 3004. This course will be offered in 2020-21, and in alternating years thereafter.",
       "sections": [
-        {"id":"ME 4606-D01","code":"D01","type":"lecture","status":"open","enrolled":12,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Brian Savilonis"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Salisbury Labs 406"}]}
+        {"id":"ME 4606-D01","code":"D01","type":"lecture","status":"open","enrolled":13,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Brian Savilonis"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Salisbury Labs 406"}]}
       ],
       "options": [
         ["ME 4606-D01"]
@@ -5848,7 +5848,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"ME 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":4,"capacity":15,"waitlist":{"taken":6,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"ME 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":4,"capacity":15,"waitlist":{"taken":5,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["ME 5420-D01"]
@@ -5878,7 +5878,7 @@
       "level": "Graduate",
       "description": "This biomechanics course focuses on advanced techniques for the characterization of the structure and function of hard and soft tissues and their relationship to physiological processes. Applications include tissue injury, wound healing, the effect of pathological conditions upon tissue properties, and design of medical devices and prostheses. (Prerequisite: An understanding of basic continuum mechanics.)",
       "sections": [
-        {"id":"ME 552-S01","code":"S01","type":"lecture","status":"open","enrolled":15,"capacity":20,"waitlist":{"taken":5,"capacity":5},"instructors":["Adriana Hera"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Thu"],"start":1080,"end":1250,"location":"Kaven Hall 115"}]}
+        {"id":"ME 552-S01","code":"S01","type":"lecture","status":"open","enrolled":16,"capacity":20,"waitlist":{"taken":5,"capacity":5},"instructors":["Adriana Hera"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Thu"],"start":1080,"end":1250,"location":"Kaven Hall 115"}]}
       ],
       "options": [
         ["ME 552-S01"]
@@ -5979,7 +5979,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"MFE 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":4,"capacity":15,"waitlist":{"taken":6,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"MFE 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":4,"capacity":15,"waitlist":{"taken":5,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MFE 5420-D01"]
@@ -6325,7 +6325,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"MTE 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":4,"capacity":15,"waitlist":{"taken":6,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"MTE 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":4,"capacity":15,"waitlist":{"taken":5,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MTE 5420-D01"]
@@ -6354,7 +6354,7 @@
       "description": "(3 credits) This course is intended to provide a fundamental understanding of thermodynamic and kinetic principles associated with phase transformations. The mechanisms of phase transformations will be discussed in terms of driving forces to establish a theoretical background for various physical phenomena. The principles of nucleation and growth and spinodal transformations will be described. The theoretical analysis of diffusion controlled and interface controlled growth will be presented The basic concepts of martensitic transformations will be highlighted. Specific examples will include solidification, crystallization, precipitation, sintering, phase separation and transformation toughening. (Prerequisites: MTE 511 and MTE 512, ME 4850 or equivalent.)",
       "sections": [
         {"id":"MTE 550-S01","code":"S01","type":"lecture","status":"open","enrolled":5,"capacity":34,"waitlist":{"taken":0,"capacity":10},"instructors":["Danielle Cote"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Atwater Kent 232"}]},
-        {"id":"MTE 550-S02","code":"S02","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Kyle Tsaknopoulos","Danielle Cote"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"MTE 550-S02","code":"S02","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Kyle Tsaknopoulos","Danielle Cote"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["MTE 550-S01"],
@@ -6370,7 +6370,7 @@
       "description": "This course introduces students to current developments in nanoscale science and technology. The current advance of materials and devices constituting of building blocks of metals, semiconductors, ceramics or polymers that are nanometer size (1- 100 nm) are reviewed. The profound implications for technology and science of this research field are discussed. The differences of the properties of matter on the nanometer scale from those on the macroscopic scale due to the size confinement, predominance of interfacial phenomena and quantum mechanics are studied. The main issues and techniques relevant to science and technologies on the nanometer scale are considered. New developments in this field and future perspectives are presented. Topics covered include: fabrication of nanoscale structures, characterization at nanoscale, molecular electronics, nanoscale mechanics, new architecture, nano-optics and societal impacts. Recommended background: ES 2001 Introduction to Materials or equivalent.",
       "sections": [
         {"id":"MTE 575-D01","code":"D01","type":"lecture","status":"open","enrolled":25,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Pratap Rao"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Stratton Hall 201"}]},
-        {"id":"MTE 575-D02","code":"D02","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Pratap Rao"],"delivery":"online-async","meetings":[]}
+        {"id":"MTE 575-D02","code":"D02","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Pratap Rao"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MTE 575-D01"],
@@ -6427,7 +6427,7 @@
       "level": "Undergraduate",
       "description": "MU 1100 Foundations of Music Theory and Aural Skills (1/3 unit; Cat. I) This course introduces basic music theory concepts and helps students develop aural skills. Course topics include scales, intervals, chords, harmonic progressions, and rhythm. Activities include both written work in music notation and ear training exercises. Recommended Background: some basic knowledge of reading music",
       "sections": [
-        {"id":"MU 1100-D01","code":"D01","type":"lecture","status":"open","enrolled":6,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Mitchell Lutch"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Alden Hall B06 Janet Earle Room"}]},
+        {"id":"MU 1100-D01","code":"D01","type":"lecture","status":"open","enrolled":5,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Mitchell Lutch"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Alden Hall B06 Janet Earle Room"}]},
         {"id":"MU 1100-D02","code":"D02","type":"lecture","status":"open","enrolled":5,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Monica Hatch Moysey"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Alden Hall B06 Janet Earle Room"}]},
         {"id":"MU 1100-D03","code":"D03","type":"lecture","status":"open","enrolled":3,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Monica Hatch Moysey"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Alden Hall B06 Janet Earle Room"}]}
       ],
@@ -6459,7 +6459,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course will investigate the sonic organization of musical works and performances, focusing on fundamental questions involved in the process of composition: How do I connect different ideas? How can I make a larger work out of smaller parts? How can I vary statements to create interest without compromising coherence? Where do I start? A progressive series of composition projects will build techniques in relevant areas including rhythm, harmony, melody, and form. Exercises in mechanics will be complemented by contemplation and discussion of artistic, aesthetic and philosophical ideas that are equally important in the compositional process. We will examine the relationship between musical works and how they are communicated as instructions to others (e.g. orally, as symbols, prose, graphic images, or computer programs). Weekly listening, reading, and composition assignments draw on a broad range of musical styles and intellectual traditions from various cultures and historical periods. Recommended background: understanding of basic music theory through coursework (e.g. MU 1511, Introduction to Music or MU 1611, Fundamentals of Music) or equivalent experience.",
       "sections": [
-        {"id":"MU 2100-D01","code":"D01","type":"lecture","status":"open","enrolled":13,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Jonathan Blumhofer"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Alden Hall B30 Music Technology Lab"}]}
+        {"id":"MU 2100-D01","code":"D01","type":"lecture","status":"open","enrolled":14,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Jonathan Blumhofer"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Alden Hall B30 Music Technology Lab"}]}
       ],
       "options": [
         ["MU 2100-D01"]
@@ -6959,12 +6959,12 @@
       "level": "Undergraduate",
       "description": "Cat. I A calculus-based introduction with laboratory to the theory of electricity and magnetism. Topics include: Coulomb’s law, electric and magnetic fields, capacitance, electrical current and resistance, and electromagnetic induction. Students may not receive credit for both PH 1120 and PH 1121. Recommended Background Working knowledge of the material presented in PH 1110 or PH 1111, of differential and integral calculus (MA 1021 and MA 1022).",
       "sections": [
-        {"id":"PH 1120-DD01","code":"DD01","type":"discussion","status":"open","enrolled":23,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":900,"end":950,"location":"Olin Hall 126"}]},
+        {"id":"PH 1120-DD01","code":"DD01","type":"discussion","status":"open","enrolled":22,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":900,"end":950,"location":"Olin Hall 126"}]},
         {"id":"PH 1120-DD03","code":"DD03","type":"discussion","status":"open","enrolled":1,"capacity":34,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Olin Hall 126"}]},
         {"id":"PH 1120-DD04","code":"DD04","type":"discussion","status":"open","enrolled":1,"capacity":34,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":720,"end":770,"location":"Olin Hall 126"}]},
         {"id":"PH 1120-DD05","code":"DD05","type":"discussion","status":"open","enrolled":0,"capacity":34,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Olin Hall 126"}]},
         {"id":"PH 1120-DD06","code":"DD06","type":"discussion","status":"open","enrolled":3,"capacity":34,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":840,"end":890,"location":"Olin Hall 126"}]},
-        {"id":"PH 1120-DL01","code":"DL01","type":"lecture","status":"open","enrolled":28,"capacity":170,"waitlist":{"taken":0,"capacity":0},"instructors":["Snehalata Kadam"],"delivery":"in-person","meetings":[{"days":["Mon","Wed","Fri"],"start":900,"end":950,"location":"Olin Hall 107"}]},
+        {"id":"PH 1120-DL01","code":"DL01","type":"lecture","status":"open","enrolled":27,"capacity":170,"waitlist":{"taken":0,"capacity":0},"instructors":["Snehalata Kadam"],"delivery":"in-person","meetings":[{"days":["Mon","Wed","Fri"],"start":900,"end":950,"location":"Olin Hall 107"}]},
         {"id":"PH 1120-DS01","code":"DS01","type":"lecture","status":"open","enrolled":29,"capacity":110,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":540,"end":650,"location":"Unity Hall 400"}]},
         {"id":"PH 1120-DS01-Multipurpose","code":"DS01-Multipurpose","type":"discussion","status":"open","enrolled":29,"capacity":110,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":590,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
         {"id":"PH 1120-DS02","code":"DS02","type":"lecture","status":"open","enrolled":6,"capacity":110,"waitlist":{"taken":0,"capacity":0},"instructors":["Izabela Stroe"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":540,"end":650,"location":"Unity Hall 400"}]},
@@ -6980,7 +6980,7 @@
         {"id":"PH 1120-DX09","code":"DX09","type":"lab","status":"open","enrolled":3,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":660,"end":770,"location":"Olin Hall 208 Physics Lab"}]},
         {"id":"PH 1120-DX10","code":"DX10","type":"lab","status":"open","enrolled":6,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":780,"end":890,"location":"Olin Hall 208 Physics Lab"}]},
         {"id":"PH 1120-DX11","code":"DX11","type":"lab","status":"open","enrolled":0,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":900,"end":1010,"location":"Olin Hall 208 Physics Lab"}]},
-        {"id":"PH 1120-DX12","code":"DX12","type":"lab","status":"open","enrolled":2,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":890,"location":"Olin Hall 211 Physics Lab"}]},
+        {"id":"PH 1120-DX12","code":"DX12","type":"lab","status":"open","enrolled":1,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":890,"location":"Olin Hall 211 Physics Lab"}]},
         {"id":"PH 1120-DX14","code":"DX14","type":"lab","status":"open","enrolled":0,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":650,"location":"Olin Hall 211 Physics Lab"}]},
         {"id":"PH 1120-DX15","code":"DX15","type":"lab","status":"open","enrolled":6,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":770,"location":"Olin Hall 211 Physics Lab"}]},
         {"id":"PH 1120-DX16","code":"DX16","type":"lab","status":"open","enrolled":0,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Olin Hall 211 Physics Lab"}]}
@@ -7627,7 +7627,7 @@
       "level": "Graduate",
       "description": "This course examines current issues in the computer implementation of visual perception. Topics include image formation, edge detection, segmentation, shape-from-shading, motion, stereo, texture analysis, pattern classification and object recognition. We will discuss various representations for visual information, including sketches and intrinsic images. (Prerequisites: CS 534, CS 543, CS 545, or the equivalent of one of these courses.)",
       "sections": [
-        {"id":"RBE 549-S01","code":"S01","type":"lecture","status":"open","enrolled":27,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Nitin Sanket"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Salisbury Labs 402"}]},
+        {"id":"RBE 549-S01","code":"S01","type":"lecture","status":"open","enrolled":26,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Nitin Sanket"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Salisbury Labs 402"}]},
         {"id":"RBE 549-S02","code":"S02","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Alexandros Lioulemes"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
@@ -7685,7 +7685,7 @@
       "level": "Graduate",
       "description": "This project-based course integrates robotics engineering theory and practice, and provides the opportunity to apply the skills and knowledge acquired in the Robotics Engineering curriculum. The project is normally conducted in teams of two to four students. Students are encouraged to select projects with practical significance to their current and future professional responsibilities. The projects are administered, advised, and evaluated by WPI faculty as part of the learning experience, but students are also encouraged to seek mentorship from experienced colleagues in the Robotics Engineering profession. The project will include substantial analysis and/or design and conclude with a written report and a public presentation. Prerequisites: The student must have completed the 9-credit RBE Foundations and additional 6 credits including any combination of RBE core, electives, and Engineering Context before enrolling in RBE 594.",
       "sections": [
-        {"id":"RBE 594-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":20,"waitlist":{"taken":2,"capacity":20},"instructors":["Andre Rosendo"],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
+        {"id":"RBE 594-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":20,"waitlist":{"taken":2,"capacity":20},"instructors":["Andre Rosendo"],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
         {"id":"RBE 594-S02","code":"S02","type":"lecture","status":"open","enrolled":2,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Haichong Zhang"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Olin Hall 218"}]}
       ],
       "options": [
@@ -7882,7 +7882,7 @@
       "description": "Systems Engineering is a multifaceted discipline, involving human, organizational, and various technical variables that work together to create complex systems. This course is an introduction and overview of the methods and disciplines that systems engineers use to define, develop, and deploy systems. It includes specific integrated examples, projects, and team building exercises to aid in understanding and appreciating fundamental principles. Topics covered include; Introduction to Systems Engineering; Requirements Development; Functional Analysis and Requirements Allocation; System Architecture and System Design; Integration, Verification and Validation; Trade Studies; Systems Analysis, Modeling and Simulation; Specialty Engineering; Risk Management; and Technical Planning and Management. (Prerequisite: an undergraduate degree in engineering or science, or permission of the instructor.)",
       "sections": [
         {"id":"SYS 501-LS01","code":"LS01","type":"lecture","status":"open","enrolled":2,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Beth Wilson"],"delivery":"online-async","dates":{"start":"2027-04-12","end":"2027-06-25"},"meetings":[]},
-        {"id":"SYS 501-S01","code":"S01","type":"lecture","status":"open","enrolled":14,"capacity":30,"waitlist":{"taken":11,"capacity":20},"instructors":["Christopher Piccirillo"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"SYS 501-S01","code":"S01","type":"lecture","status":"open","enrolled":14,"capacity":30,"waitlist":{"taken":10,"capacity":20},"instructors":["Christopher Piccirillo"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["SYS 501-LS01"],
@@ -8106,7 +8106,7 @@
       "description": "Cat. I (1/12 unit) Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
         {"id":"WPE 1011-D01","code":"D01","type":"workshop","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["Matthew Kelly"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":840,"end":890,"location":"Athletic Field"}]},
-        {"id":"WPE 1011-D02","code":"D02","type":"workshop","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["Christopher Robertson"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":660,"end":710,"location":"Athletic Field"}]}
+        {"id":"WPE 1011-D02","code":"D02","type":"workshop","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["Christopher Robertson"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":660,"end":710,"location":"Athletic Field"}]}
       ],
       "options": [
         ["WPE 1011-D01"],
@@ -8355,7 +8355,7 @@
       "level": "Undergraduate",
       "description": "Cat. I Running is an activity that helps to develop good health, well-being and discipline through goal setting. This club and course will offer runners of all levels the opportunity to participate, develop and learn how running can benefit them now and into the future.",
       "sections": [
-        {"id":"WPE 1221-S07","code":"S07","type":"workshop","status":"open","enrolled":17,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Ann McCarron"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"WPE 1221-S07","code":"S07","type":"workshop","status":"open","enrolled":18,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Ann McCarron"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["WPE 1221-S07"]
@@ -8532,7 +8532,7 @@
       "description": "WPE 1612 Introductory Yoga Cat. I (1/12 unit) This yoga class focuses on connecting the mind, body, and spirit through an awareness of breath. Participating in yoga can improve core strength, flexibility, balance, mindfulness, and relaxation and decrease stress. Those with any level of yoga experience (including first timers) are welcome.",
       "sections": [
         {"id":"WPE 1612-D01","code":"D01","type":"workshop","status":"open","enrolled":22,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Meng Le"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":1080,"end":1130,"location":"Recreation Center Dance"}]},
-        {"id":"WPE 1612-D02","code":"D02","type":"workshop","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":3,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1020,"end":1070,"location":"Recreation Center Dance"}]}
+        {"id":"WPE 1612-D02","code":"D02","type":"workshop","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":4,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1020,"end":1070,"location":"Recreation Center Dance"}]}
       ],
       "options": [
         ["WPE 1612-D01"],
@@ -8688,7 +8688,7 @@
       "description": "Cat. I This course will cover basic principles of prose style for expository and argumentative writing. Students will learn to evaluate writing for stylistic problems and will learn revision strategies for addressing those problems. The ultimate goal of the course is to help students write sentences and paragraphs that are clear, concise, and graceful. In the first part of the course, students will review parts of speech, basic sentence types, and sentence and paragraph structure in order to understand how sentences are put together and the impact their construction has on readers. Then, through hands-on writing exercises and extensive revision of their own and others’ writing, students will learn strategies for tightening their prose (concision), achieving “flow” (cohesion and coherence) and improving usage (language specificity and precision). Recommended background: Basic knowledge of rhetorical writing (e.g., WR 1010, Elements of Writing, WR 1011, Writing About Science & Technology, or WR 1020, Introduction to Rhetoric.",
       "sections": [
         {"id":"WR 2010-D01","code":"D01","type":"lecture","status":"open","enrolled":15,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Shana Lessing"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":480,"end":590,"location":"Kaven Hall 204"}]},
-        {"id":"WR 2010-D02","code":"D02","type":"lecture","status":"open","enrolled":1,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Sarah Riddick"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Olin Hall 109"}]}
+        {"id":"WR 2010-D02","code":"D02","type":"lecture","status":"open","enrolled":2,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Sarah Riddick"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Olin Hall 109"}]}
       ],
       "options": [
         ["WR 2010-D01"],
