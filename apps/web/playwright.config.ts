@@ -11,7 +11,7 @@ export default defineConfig({
   projects: [
     { name: "production", testMatch: "shell.spec.ts", use: { baseURL: productionUrl } },
     // /dev pages 404 in production, so they are tested on the dev server.
-    { name: "dev-pages", testMatch: "primitives.spec.ts", use: { baseURL: devUrl } },
+    { name: "dev-pages", testMatch: /(primitives|engine)\.spec\.ts/, use: { baseURL: devUrl } },
   ],
   webServer: [
     {
