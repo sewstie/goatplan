@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 9 * * *"
   workflow_dispatch:
+    inputs:
+      allow_drop:
+        description: "Commit even if a term lost more than 10% of its sections (WPI really cancelled them)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -18,6 +23,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Test the data scripts
+        run: npm run data:test
+
       - name: Download WPI course listings
         run: npm run data:fetch
 
@@ -28,6 +36,10 @@ jobs:
           else
             echo "normalize.mjs not written yet, skipping"
           fi
+
+      - name: Stop if a term lost too many sections
+        if: ${{ !inputs.allow_drop }}
+        run: node scripts/check-section-drop.mjs
 
       - name: Commit if anything changed
         run: |

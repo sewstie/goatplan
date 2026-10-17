@@ -318,6 +318,17 @@ Before writing anything, the script checks that each term has its dates, that
 points to real sections, and that no course ends up with zero options. If a
 check fails, nothing is written or deleted.
 
+The daily update then runs `scripts/check-section-drop.mjs`, which compares the
+new `index.json` with the one in the last commit. If a term that hasn't ended
+lost more than 10% of its sections, or disappeared, the update stops and
+commits nothing. On a normal day only a handful of sections change, so a drop
+like that almost always means WPI sent a partial file.
+
+If the drop is real, say WPI cancelled a lot of sections at once, start the
+"Update course data" workflow by hand from the Actions tab and tick
+`allow_drop`. That run skips the check and commits the update. Scheduled runs
+always check.
+
 The parsers are in `scripts/lib/` and are tested with Node's built-in test
 runner, using real strings from WPI's data:
 
