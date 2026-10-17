@@ -18,6 +18,37 @@ jobs:
       - name: Test
         run: ctest --test-dir engine/build --output-on-failure
 
+  wasm:
+    name: WebAssembly engine (build + smoke test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: mymindstorm/setup-emsdk@v16
+        with:
+          version: "6.0.12"
+      - run: npm run engine:build
+      - run: npm run engine:wasm
+      - run: npm run engine:wasm:test
+      - name: Check the committed WebAssembly build is up to date
+        run: |
+          git diff --exit-code --stat -- apps/web/public/engine || {
+            echo "::error::apps/web/public/engine doesn't match the engine code. Run npm run engine:wasm and commit the output."
+            exit 1
+          }
+
+  data:
+    name: Data scripts (tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm run data:test
+
   web:
     name: Web app (lint + build)
     runs-on: ubuntu-latest
