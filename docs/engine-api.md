@@ -5,15 +5,23 @@ the same way. They load a term once, then send requests as JSON text and get
 JSON text back. This page is the contract. The TypeScript types in the web app
 copy it, so change this page first and the code second.
 
+This is version 1, and it's frozen. Nothing in it gets renamed, removed or
+changes meaning. A change like that becomes version 2.
+
 ```cpp
 goatplan::Engine engine;
-engine.loadTerm(termJson);                       // throws TermLoadError if the file is bad
+std::string loaded = engine.loadTermJson(termJson);
 std::string response = engine.handle(requestJson);
 ```
 
+In JavaScript the same two calls are `loadTerm` and `handle` on the
+WebAssembly module, see [engine/README.md](../engine/README.md). The
+command-line tool uses `engine.loadTerm`, which throws `TermLoadError` instead
+of answering with an error.
+
 A few rules hold for every call:
 
-- `handle` never throws. Every problem comes back as `{"ok": false, "error": {...}}`.
+- `loadTermJson` and `handle` never throw. Every problem comes back as `{"ok": false, "error": {...}}`.
 - Sections are named by their IDs from the term file, never by positions. IDs
   are stable, so the website can save them in plans.
 - Every request and response carries `"version": 1`. If the format changes,
@@ -23,6 +31,18 @@ A few rules hold for every call:
   `stepBudget` to 50,000,000, whatever the request asks for.
 
 Times are always minutes after midnight, so 600 is 10:00 AM and 780 is 1:00 PM.
+
+## Loading a term
+
+`loadTermJson` takes the text of a term file (see [data-format.md](data-format.md))
+and answers with the term's ID and how many courses it has:
+
+```json
+{ "ok": true, "version": 1, "termId": "2026-B", "courses": 589 }
+```
+
+If the text isn't a usable term file, the answer is a `badTerm` error, and the
+term that was loaded before, if any, stays loaded.
 
 ## Request
 
@@ -166,7 +186,8 @@ section ID, field or version the error is about, or `null`.
 
 | `code`               | When                                                         | `detail` |
 | -------------------- | ------------------------------------------------------------ | -------- |
-| `noTerm`             | `handle` was called before `loadTerm`.                       | `null` |
+| `noTerm`             | `handle` was called before a term was loaded.                | `null` |
+| `badTerm`            | `loadTermJson` got text that isn't a usable term file, like broken JSON or a missing field. | `null` |
 | `badRequest`         | Broken JSON, a missing field, a wrong type or a value out of range. The message names the field. | The field, like `preferences.blocked[0].end`, or `null` for broken JSON. |
 | `unsupportedVersion` | `version` isn't 1.                                           | The version sent. |
 | `unknownCourse`      | A course code isn't in the loaded term.                      | The code. |
