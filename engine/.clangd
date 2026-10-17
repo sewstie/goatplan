@@ -1,0 +1,6 @@
+# Only the Emscripten build compiles this file. clangd reads the native build's
+# flags, can't find emscripten/bind.h and would show errors that aren't real.
+If:
+  PathMatch: src/wasm_bindings\.cpp
+Diagnostics:
+  Suppress: "*"
