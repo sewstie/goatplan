@@ -56,7 +56,7 @@ export function Select({
   return (
     <div
       className={cx(
-        "relative items-center text-ink has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus has-[:disabled]:bg-surface-disabled has-[:disabled]:text-ink-faint",
+        "relative items-center text-ink transition-[border-color,box-shadow] has-[:focus-visible]:border-choice-line has-[:focus-visible]:shadow-field-focus has-[:disabled]:bg-surface-disabled has-[:disabled]:text-ink-faint",
         wrapperClasses[variant],
         className,
       )}
