@@ -19,16 +19,25 @@ type SectionChoiceCardProps = {
   course: Course;
   section: Section;
   locked: boolean;
+  onUnlocked?: () => void;
 };
 
 /** One chosen section: its heading, Lock / Unlock (or why it can't be locked) and its facts. */
-export function SectionChoiceCard({ course, section, locked }: SectionChoiceCardProps) {
+export function SectionChoiceCard({ course, section, locked, onUnlocked }: SectionChoiceCardProps) {
   const heading = sectionHeading(section);
   const place = placeLine(section);
 
   let control;
-  if (locked || !isOnlyChoice(course, section.id)) {
-    control = <LockButton courseCode={course.code} sectionId={section.id} sectionName={heading} locked={locked} />;
+  if (locked || (hasSetTime(section) && !isOnlyChoice(course, section.id))) {
+    control = (
+      <LockButton
+        courseCode={course.code}
+        sectionId={section.id}
+        sectionName={heading}
+        locked={locked}
+        onUnlocked={onUnlocked}
+      />
+    );
   } else {
     control = <Badge size="sm">{hasSetTime(section) ? `Only ${typeWord(section.type)}` : "No set time"}</Badge>;
   }
