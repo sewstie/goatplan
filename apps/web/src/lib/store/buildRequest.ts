@@ -24,7 +24,7 @@ export function buildRequest(plan: Pick<Draft, "courses" | "preferences" | "lock
     courses,
     preferences: {
       startsAfter: plan.preferences.startsAfter,
-      blocked: plan.preferences.blocked.map((block) => ({ ...block })),
+      blocked: plan.preferences.blocked.map(({ day, start, end }) => ({ day, start, end })),
       onlyOpen: plan.preferences.onlyOpen,
       locked,
     },
