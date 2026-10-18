@@ -1,8 +1,7 @@
 import { WEEK } from "@/lib/data/days";
 import type { Day, TermFile } from "@/lib/data/types";
-import type { BlockedTime } from "@/lib/engine/types";
 import { isSortPresetId } from "./sortPresets";
-import type { Draft, PlanPreferences } from "./types";
+import type { Draft, PlanBlockedTime, PlanPreferences } from "./types";
 
 export const DRAFT_VERSION = 1;
 export const LAST_TERM_KEY = "goatplan:term:v1";
@@ -46,14 +45,21 @@ const isMinute = (value: unknown): value is number =>
 const isRecordOf = <T>(value: unknown, check: (item: unknown) => item is T): value is Record<string, T> =>
   isObject(value) && Object.values(value).every(check);
 
-function isBlockedTime(value: unknown): value is BlockedTime {
+function isBlockedTime(value: unknown): value is PlanBlockedTime {
   return (
     isObject(value) &&
     WEEK.includes(value.day as Day) &&
     isMinute(value.start) &&
     isMinute(value.end) &&
-    (value.start as number) < (value.end as number)
+    (value.start as number) < (value.end as number) &&
+    (value.label === undefined || typeof value.label === "string")
   );
+}
+
+/** Keeps a name only when it has some text. */
+function copyBlockedTime({ day, start, end, label }: PlanBlockedTime): PlanBlockedTime {
+  const name = label?.trim();
+  return name ? { day, start, end, label: name } : { day, start, end };
 }
 
 const isChoice = (value: unknown): value is Record<string, string[]> => isRecordOf(value, isStringArray);
@@ -72,7 +78,7 @@ export function parseDraft(value: unknown): Draft | null {
     courses: [...courses],
     preferences: {
       startsAfter,
-      blocked: blocked.map(({ day, start, end }) => ({ day, start, end })),
+      blocked: blocked.map(copyBlockedTime),
       onlyOpen,
     },
     locks: { ...locks },
