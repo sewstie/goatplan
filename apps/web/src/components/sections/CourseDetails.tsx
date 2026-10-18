@@ -22,7 +22,8 @@ export function CourseDetails({ course }: { course: Course }) {
     (state) => selectCurrentSchedule(state)?.courses.find((item) => item.code === code)?.alternatives ?? NO_ALTERNATIVES,
   );
   const locked = usePlanner((state) => state.locks[code] ?? NONE);
-  const solved = usePlanner((state) => state.solveStatus === "done" || state.solveStatus === "error");
+  // Only an answer from the engine can say nothing fits; a crashed worker says nothing about the plan.
+  const solved = usePlanner((state) => state.solveStatus === "done");
 
   // With no schedule for this course, locked sections stay visible so they can be unlocked.
   const sections = sectionsById(course, chosen.length > 0 ? chosen : locked);
