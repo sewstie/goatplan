@@ -23,7 +23,7 @@ export function CourseRow({ code, title, sections, swatch, locked, selected, onS
         onClick={onSelect}
         data-course-row={code}
         className={cx(
-          "flex w-full cursor-pointer gap-9 rounded-card border border-transparent px-10 py-12 text-left focus-visible:outline-offset-[-2px]",
+          "flex w-full cursor-pointer gap-9 rounded-card border border-transparent px-10 py-12 text-left",
           selected ? "bg-surface-selected" : "hover:bg-surface-subtle",
         )}
       >
