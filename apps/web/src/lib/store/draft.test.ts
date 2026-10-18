@@ -43,6 +43,19 @@ describe("draft storage", () => {
     expect(readDraft(storage, "2027-D")).toBeNull();
   });
 
+  it("keeps the names of blocked times and drops empty ones", () => {
+    const storage = new MemoryStorage();
+    const blocked = [
+      { day: "Tue" as const, start: 840, end: 960, label: " Work " },
+      { day: "Wed" as const, start: 720, end: 780, label: "  " },
+    ];
+    writeDraft(storage, "2027-C", { ...saved, preferences: { ...saved.preferences, blocked } });
+    expect(readDraft(storage, "2027-C")?.preferences.blocked).toEqual([
+      { day: "Tue", start: 840, end: 960, label: "Work" },
+      { day: "Wed", start: 720, end: 780 },
+    ]);
+  });
+
   it.each([
     ["not JSON", "{oops"],
     ["another version", JSON.stringify({ ...saved, version: 2 })],
@@ -54,6 +67,10 @@ describe("draft storage", () => {
       JSON.stringify({ ...saved, version: 1, preferences: { ...saved.preferences, blocked: [{ day: "Mon", start: 900, end: 800 }] } }),
     ],
     ["an unknown day", JSON.stringify({ ...saved, version: 1, preferences: { ...saved.preferences, blocked: [{ day: "Xyz", start: 1, end: 2 }] } })],
+    [
+      "a block name that isn't text",
+      JSON.stringify({ ...saved, version: 1, preferences: { ...saved.preferences, blocked: [{ day: "Mon", start: 1, end: 2, label: 5 }] } }),
+    ],
     ["an unknown sort", JSON.stringify({ ...saved, version: 1, sortPreset: "random" })],
     ["locks not lists", JSON.stringify({ ...saved, version: 1, locks: { "AE 2320": "CX02" } })],
     ["null", "null"],

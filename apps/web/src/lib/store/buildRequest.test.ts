@@ -33,6 +33,16 @@ describe("buildRequest", () => {
     });
   });
 
+  it("leaves the names of blocked times out of the request", () => {
+    const request = buildRequest(
+      plan({
+        courses: ["AE 2320"],
+        preferences: { startsAfter: 540, blocked: [{ day: "Tue", start: 840, end: 960, label: "Work" }], onlyOpen: true },
+      }),
+    );
+    expect(request?.preferences?.blocked).toEqual([{ day: "Tue", start: 840, end: 960 }]);
+  });
+
   it("drops repeated courses", () => {
     expect(buildRequest(plan({ courses: ["AE 2320", "AE 2320", "AE 2410"] }))?.courses).toEqual(["AE 2320", "AE 2410"]);
   });
