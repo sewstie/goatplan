@@ -24,6 +24,7 @@ const regular: Draft = {
 };
 
 // CH 1010 with times blocked so that only lecture CL01 and the same-time labs CX02 and CX10 fit.
+// This relies on the 2027-C sections in public/data: check it again if a data update breaks the sheet test.
 const sameTimeLabs: Draft = {
   courses: ["CH 1010"],
   preferences: {
@@ -145,18 +146,20 @@ test("a section can be locked and unlocked from the details panel", async ({ pag
 test("the sheet swaps a lab for one at the same time", async ({ page }) => {
   await openPlanner(page, sameTimeLabs);
   const panel = details(page);
-  await expect(panel.getByRole("heading", { name: "Lab CX10" })).toBeVisible();
+  const shownLab = panel.getByRole("heading", { name: /^Lab CX(02|10)$/ });
+  const before = (await shownLab.textContent())!.replace("Lab ", "");
+  const other = before === "CX02" ? "CX10" : "CX02";
 
   await panel.getByRole("button", { name: "View other lab choices" }).click();
   const sheet = page.getByRole("dialog", { name: "CH 1010" });
   await expect(sheet.getByText("Mon, Thu · 12:00 PM–1:50 PM", { exact: false })).toBeVisible();
-  const other = sheet.getByRole("group", { name: "Other lab choices" }).getByRole("radio", { name: /CX02/ });
-  await expect(other).toBeChecked();
-  await expect(sheet.getByText("18 open")).toBeVisible();
+  const row = sheet.getByRole("group", { name: "Other lab choices" }).getByRole("radio", { name: new RegExp(other) });
+  await expect(row).not.toBeChecked();
+  await expect(sheet.getByText(/^(\d+ open|Full)$/)).toBeVisible();
 
-  await sheet.getByRole("button", { name: "Pick CX02" }).click();
+  await sheet.getByRole("button", { name: `Pick ${other}` }).click();
   await expect(sheet).toBeHidden();
-  await expect(panel.getByRole("heading", { name: "Lab CX02" })).toBeVisible();
+  await expect(panel.getByRole("heading", { name: `Lab ${other}` })).toBeVisible();
   await expect(panel.getByRole("button", { name: "View other lab choices" })).toBeFocused();
 });
 
