@@ -15,13 +15,11 @@ export function ProfessorPicker({ instructors, initial }: ProfessorPickerProps) 
   const [name, setName] = useState(initial);
 
   return (
-    <div className="flex flex-col gap-4">
-      <span aria-hidden className="mt-12 mb-5 text-10 leading-14-5 font-650 text-ink">
-        Professor
-      </span>
+    <div className="mt-12 flex flex-col gap-4">
       <Select
         variant="box"
         label="Professor"
+        hideLabel={false}
         options={instructors.map((instructor) => ({ value: instructor, label: instructor }))}
         value={name}
         onChange={(event) => setName(event.target.value)}

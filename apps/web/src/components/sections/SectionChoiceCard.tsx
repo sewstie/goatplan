@@ -55,7 +55,11 @@ export function SectionChoiceCard({ course, section, locked, onUnlocked }: Secti
             {line}
           </MetaRow>
         ))}
-        {place && <MetaRow icon={<MapPin />}>{place}</MetaRow>}
+        {place && (
+          <MetaRow icon={<MapPin />}>
+            <span title={place.full === place.text ? undefined : place.full}>{place.text}</span>
+          </MetaRow>
+        )}
         <MetaRow icon={<Users />}>{seatsLine(section)}</MetaRow>
         <MetaRow icon={<GraduationCap />}>{instructorLine(section)}</MetaRow>
       </ul>

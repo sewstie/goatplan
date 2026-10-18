@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { rateMyProfessorsUrl } from "@/lib/data";
@@ -8,6 +8,7 @@ import { solved, termFile } from "@/lib/store/testing/fixtures";
 import { ChooseAlternativeSheet } from "./ChooseAlternativeSheet";
 import { CourseDetailsPanel } from "./CourseDetailsPanel";
 import { polyfillDialog, startTestPlanner, waitForSolve } from "./testing/plannerStore";
+import { orbitalMechanics } from "./testing/sections";
 
 vi.mock("@/lib/store", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/store")>()),
@@ -50,6 +51,35 @@ function threeSameTimeLabs(request: SolveRequest): SolveResponse {
       : course,
   );
   return { ...response, total: 1, schedules: [{ ...schedule, courses }] };
+}
+
+/** The fixture term with AE 2320's labs at different times: CX01 Thu 2 PM, CX02 and CX04 Thu 3 PM. */
+function termWithTimedLabs(): TermFile {
+  const term = termFile("2027-C");
+  term.courses[0] = orbitalMechanics;
+  return term;
+}
+
+/** One schedule per lab time, as the engine would send them; `withCx02` false leaves out the 3 PM one. */
+function labsByTime(withCx02 = true) {
+  return (request: SolveRequest): SolveResponse => {
+    const response = solved(request);
+    if (!response.ok) return response;
+    const [template] = response.schedules;
+    const withLab = (sections: string[], alternatives: string[][]) => ({
+      ...template,
+      courses: template.courses.map((course) =>
+        course.code === "AE 2320" ? { ...course, sections, alternatives } : course,
+      ),
+    });
+    const cx01 = withLab(["AE 2320-CL01", "AE 2320-CX01"], [["AE 2320-CL01", "AE 2320-CX01"]]);
+    const cx02 = withLab(["AE 2320-CL01", "AE 2320-CX02"], [
+      ["AE 2320-CL01", "AE 2320-CX02"],
+      ["AE 2320-CL01", "AE 2320-CX04"],
+    ]);
+    const schedules = withCx02 ? [cx01, cx02] : [cx01];
+    return { ...response, total: schedules.length, patterns: schedules.length, schedules };
+  };
 }
 
 const card = (name: string) => screen.getByRole("heading", { name }).closest("article") as HTMLElement;
@@ -165,6 +195,27 @@ describe("CourseDetailsPanel", () => {
     expect(link).toHaveAttribute("target", "_blank");
   });
 
+  it("follows the selected course, and says so after a click on its calendar block", async () => {
+    const { store } = await startTestPlanner({ courses: ["AE 2320", "AE 2410"] });
+    render(<CourseDetailsPanel />);
+
+    expect(screen.getByRole("heading", { level: 2, name: "AE 2320" })).toBeInTheDocument();
+    expect(screen.queryByText("Selected course")).not.toBeInTheDocument();
+    act(() => store.getState().selectCourse("AE 2410", "AE 2410-C01"));
+    expect(screen.getByRole("heading", { level: 2, name: "AE 2410" })).toBeInTheDocument();
+    expect(screen.getByText("Selected course")).toBeInTheDocument();
+  });
+
+  it("shows a room as building and number, with the full name as its title", async () => {
+    const term = termWithTimedLabs();
+    term.courses[0].sections[1].meetings[0].location = "Higgins Labs 230 Geom Modeling Computer Lab";
+    await startTestPlanner({ courses: ["AE 2320"] }, { term, solve: labsByTime() });
+    render(<CourseDetailsPanel />);
+
+    const room = within(card("Lab CX01")).getByText("Higgins Labs 230");
+    expect(room).toHaveAttribute("title", "Higgins Labs 230 Geom Modeling Computer Lab");
+  });
+
   it("explains a missing instructor instead of offering reviews", async () => {
     const term = termFile("2027-C");
     term.courses[1].sections[0].instructors = [];
@@ -185,12 +236,13 @@ describe("ChooseAlternativeSheet", () => {
 
     const opener = screen.getByRole("button", { name: "View other lab choices" });
     await userEvent.click(opener);
-    const sheet = screen.getByRole("dialog", { name: "AE 2320" });
-    expect(within(sheet).getByText(/same time as your lab CX01/)).toHaveFocus();
+    const sheet = screen.getByRole("dialog", { name: "Choose a lab" });
+    expect(within(sheet).getByText(/fit around the rest of your schedule/)).toHaveFocus();
     expect(within(sheet).getByRole("button", { name: "Close" })).not.toHaveFocus();
     const group = within(sheet).getByRole("group", { name: "Other lab choices" });
+    expect(within(group).getByText(/your lab now/).parentElement).toHaveTextContent("CX01, your lab now");
     expect(within(group).getByRole("radio", { name: /CX02/ })).not.toBeChecked();
-    expect(within(group).getByText("30 open")).toBeInTheDocument();
+    expect(within(group).getAllByText("30 open")).toHaveLength(2);
 
     await userEvent.click(within(sheet).getByRole("button", { name: "Pick CX02" }));
 
@@ -207,7 +259,7 @@ describe("ChooseAlternativeSheet", () => {
     renderPanelAndSheet();
 
     await userEvent.click(screen.getByRole("button", { name: "View other lab choices" }));
-    const sheet = screen.getByRole("dialog", { name: "AE 2320" });
+    const sheet = screen.getByRole("dialog", { name: "Choose a lab" });
     expect(within(sheet).getByRole("button", { name: "Pick CX03" })).toBeInTheDocument();
 
     await userEvent.click(within(sheet).getByRole("radio", { name: /CX02/ }));
@@ -216,6 +268,46 @@ describe("ChooseAlternativeSheet", () => {
 
     const key = Object.keys(store.getState().alternatives)[0];
     expect(store.getState().alternatives[key]).toEqual({ "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"] });
+  });
+
+  it("lists labs at other times and switches to the schedule that has the one picked", async () => {
+    const { store, requests } = await startTestPlanner(
+      { courses: ["AE 2320"] },
+      { term: termWithTimedLabs(), solve: labsByTime() },
+    );
+    renderPanelAndSheet();
+
+    await userEvent.click(screen.getByRole("button", { name: "View other lab choices" }));
+    const sheet = screen.getByRole("dialog", { name: "Choose a lab" });
+    expect(within(sheet).getByText(/your lab now/).parentElement?.nextElementSibling).toHaveTextContent(
+      /^Thu · 2:00 PM–2:50 PM$/,
+    );
+    // CX02 and CX04 meet at the same time, so their rooms say which is which.
+    expect(within(sheet).getByRole("radio", { name: /^CX02\s*Thu · 3:00 PM–3:50 PM · Higgins Labs 230/ })).toBeInTheDocument();
+    expect(within(sheet).getByRole("radio", { name: /^CX04\s*Thu · 3:00 PM–3:50 PM · Higgins Labs 231/ })).toBeInTheDocument();
+
+    await userEvent.click(within(sheet).getByRole("radio", { name: /CX04/ }));
+    await userEvent.click(within(sheet).getByRole("button", { name: "Pick CX04" }));
+
+    expect(store.getState()).toMatchObject({ scheduleIndex: 1, locks: {} });
+    expect(screen.getByRole("heading", { name: "Lab CX04" })).toBeInTheDocument();
+    expect(requests).toHaveLength(1);
+  });
+
+  it("locks a lab that no schedule in the answer has, and solves again", async () => {
+    const { store, requests } = await startTestPlanner(
+      { courses: ["AE 2320"] },
+      { term: termWithTimedLabs(), solve: labsByTime(false) },
+    );
+    renderPanelAndSheet();
+
+    await userEvent.click(screen.getByRole("button", { name: "View other lab choices" }));
+    await userEvent.click(within(screen.getByRole("dialog")).getByRole("radio", { name: /CX02/ }));
+    await userEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Pick CX02" }));
+
+    expect(store.getState().locks).toEqual({ "AE 2320": ["AE 2320-CX02"] });
+    await waitForSolve(store);
+    expect(requests.at(-1)?.preferences?.locked).toEqual({ "AE 2320": ["AE 2320-CX02"] });
   });
 
   it("closes without changing anything", async () => {

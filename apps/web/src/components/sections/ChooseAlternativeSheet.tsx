@@ -1,31 +1,21 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
-import { useShallow } from "zustand/react/shallow";
+import { useEffect, useRef } from "react";
 import { Sheet } from "@/components/ui/Sheet";
-import { selectChosenSections, selectCurrentSchedule, usePlanner } from "@/lib/store";
+import { usePlanner } from "@/lib/store";
 import { useAlternativeSheet } from "./alternativeSheet";
-import { sameTimeChoices } from "./sameTimeChoices";
-import { SameTimeChooser } from "./SameTimeChooser";
+import { SectionChooser } from "./SectionChooser";
+import { useSectionChoices } from "./useSectionChoices";
 
-const NONE: string[] = [];
-const NO_ALTERNATIVES: string[][] = [];
-
-/** Picks another section that meets at the same time. Opened from "View other … choices" in the details panel. */
+/**
+ * "Choose a lab": the course's other labs (or sections) that fit around the rest of the schedule,
+ * same-time ones included. Opened from "View other … choices" in the details panel.
+ */
 export function ChooseAlternativeSheet() {
   const code = useAlternativeSheet((state) => state.course);
   const close = useAlternativeSheet((state) => state.close);
   const course = usePlanner((state) => (code ? state.term?.courses.find((item) => item.code === code) : undefined));
-  const chosen = usePlanner(useShallow((state) => (code ? selectChosenSections(state)[code] ?? NONE : NONE)));
-  const alternatives = usePlanner((state) =>
-    code
-      ? selectCurrentSchedule(state)?.courses.find((item) => item.code === code)?.alternatives ?? NO_ALTERNATIVES
-      : NO_ALTERNATIVES,
-  );
-  const choices = useMemo(
-    () => (course ? sameTimeChoices(course, alternatives, chosen) : null),
-    [course, alternatives, chosen],
-  );
+  const choices = useSectionChoices(course);
   const open = choices !== null;
   const introRef = useRef<HTMLParagraphElement>(null);
 
@@ -36,9 +26,9 @@ export function ChooseAlternativeSheet() {
   }, [open]);
 
   return (
-    <Sheet open={open} onClose={close} title={course?.code ?? ""}>
+    <Sheet open={open} onClose={close} title={choices ? `Choose a ${choices.kind}` : ""}>
       {course && choices && (
-        <SameTimeChooser
+        <SectionChooser
           key={`${course.code}:${choices.current.label}`}
           course={course}
           choices={choices}

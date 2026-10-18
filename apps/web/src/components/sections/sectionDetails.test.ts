@@ -62,7 +62,15 @@ describe("meetingLines", () => {
 
 describe("placeLine", () => {
   it("shows the room", () => {
-    expect(placeLine(makeSection("AE 2320-CL01"))).toBe("Unity Hall 400");
+    expect(placeLine(makeSection("AE 2320-CL01"))?.text).toBe("Unity Hall 400");
+  });
+
+  it("shortens a room to its building and number, and keeps the full name", () => {
+    const meetings = [{ days: ["Thu" as const], start: 900, end: 950, location: "Higgins Labs 230 Geom Modeling Computer Lab" }];
+    expect(placeLine(makeSection("AE 2320-CX02", { meetings }))).toEqual({
+      text: "Higgins Labs 230",
+      full: "Higgins Labs 230 Geom Modeling Computer Lab",
+    });
   });
 
   it("lists different rooms once each", () => {
@@ -73,13 +81,13 @@ describe("placeLine", () => {
         { days: ["Fri"], start: 540, end: 590, location: "Goddard Hall 109" },
       ],
     });
-    expect(placeLine(section)).toBe("Olin Hall 126 · Goddard Hall 109");
+    expect(placeLine(section)?.text).toBe("Olin Hall 126 · Goddard Hall 109");
   });
 
   it("describes online sections by how they are taught", () => {
     const meetings = [{ days: ["Tue" as const], start: 960, end: 1070, location: "Online-synchronous" }];
-    expect(placeLine(makeSection("AE 5231-C02", { delivery: "online-sync", meetings }))).toBe("Online · synchronous");
-    expect(placeLine(makeSection("X 1-ON01", { delivery: "online-async", meetings: [] }))).toBe("Online · asynchronous");
+    expect(placeLine(makeSection("AE 5231-C02", { delivery: "online-sync", meetings }))?.text).toBe("Online · synchronous");
+    expect(placeLine(makeSection("X 1-ON01", { delivery: "online-async", meetings: [] }))?.text).toBe("Online · asynchronous");
   });
 
   it("is null when there is nothing to show", () => {

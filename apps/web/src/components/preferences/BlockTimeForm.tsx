@@ -67,36 +67,28 @@ export function BlockTimeForm({ id, onSubmit, onError, errorId, nameRef }: Block
         </div>
       </fieldset>
       <div className="grid grid-cols-2 gap-10">
-        <div className="flex flex-col">
-          <span aria-hidden className="mb-5 text-10 leading-14-5 font-650 text-ink">
-            From
-          </span>
-          <Select
-            variant="box"
-            label="From"
-            className="min-h-38"
-            options={START_OPTIONS}
-            value={String(start)}
-            onChange={(event) => {
-              const next = Number(event.target.value);
-              setStart(next);
-              setEnd((current) => endAfter(next, current));
-            }}
-          />
-        </div>
-        <div className="flex flex-col">
-          <span aria-hidden className="mb-5 text-10 leading-14-5 font-650 text-ink">
-            To
-          </span>
-          <Select
-            variant="box"
-            label="To"
-            className="min-h-38"
-            options={blockEndOptions(start)}
-            value={String(end)}
-            onChange={(event) => setEnd(Number(event.target.value))}
-          />
-        </div>
+        <Select
+          variant="box"
+          label="From"
+          hideLabel={false}
+          className="min-h-38"
+          options={START_OPTIONS}
+          value={String(start)}
+          onChange={(event) => {
+            const next = Number(event.target.value);
+            setStart(next);
+            setEnd((current) => endAfter(next, current));
+          }}
+        />
+        <Select
+          variant="box"
+          label="To"
+          hideLabel={false}
+          className="min-h-38"
+          options={blockEndOptions(start)}
+          value={String(end)}
+          onChange={(event) => setEnd(Number(event.target.value))}
+        />
       </div>
     </form>
   );

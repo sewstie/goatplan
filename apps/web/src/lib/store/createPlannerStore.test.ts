@@ -592,6 +592,19 @@ describe("pickOption", () => {
     expect(engine.solve).toHaveBeenCalledTimes(1);
   });
 
+  it("after locking, shows the schedule that keeps the rest of the shown one", async () => {
+    const { state, engine } = await planned((request) => separateLabs(request, 1));
+    engine.solve.mockImplementation(async (request) => separateLabs(request, 2));
+    state().pickOption("AE 2320", ["AE 2320-CL01", "AE 2320-CX02"]);
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(state().scheduleIndex).toBe(1);
+    expect(selectChosenSections(state())["AE 2320"]).toEqual(["AE 2320-CL01", "AE 2320-CX02"]);
+
+    state().setPreferences({ onlyOpen: false });
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(state().scheduleIndex).toBe(0);
+  });
+
   it("ignores the shown option and options the course doesn't have", async () => {
     const { state } = await planned();
     const before = state();

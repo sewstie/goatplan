@@ -78,6 +78,8 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
   let termToken = 0;
   let solveToken = 0;
   let initialized: Promise<void> | null = null;
+  // Sections (course code → ids) the next answer should show when it has a schedule with them.
+  let showNext: Readonly<Record<string, readonly string[]>> | null = null;
 
   return createStore<PlannerStore>()((set, get) => {
     function clearSolveTimer() {
@@ -102,7 +104,17 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
           response = await deps.engine.solve(request);
         }
         if (token !== solveToken) return false;
-        set({ response, scheduleIndex: 0, solveStatus: "done" });
+        const wanted = showNext;
+        showNext = null;
+        const schedules = response.ok ? response.schedules : [];
+        const found = wanted ? findSchedule(schedules, wanted) : null;
+        if (!found) {
+          set({ response, scheduleIndex: 0, solveStatus: "done" });
+          return true;
+        }
+        const alternatives = withChoices(get().alternatives, scheduleKey(schedules[found.index]), found.choices);
+        set({ response, scheduleIndex: found.index, solveStatus: "done", alternatives });
+        writeDraft(deps.storage, termId, draftOf(get()));
         return true;
       } catch (error) {
         if (token !== solveToken || error instanceof EngineSupersededError) return false;
@@ -135,6 +147,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       if (state.termStatus !== "ready" || !state.termId) return;
       const update = changes(state);
       if (!update) return;
+      showNext = null;
       set(update);
       writeDraft(deps.storage, state.termId, draftOf(get()));
       if (options.solve) scheduleSolve();
@@ -169,6 +182,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       const token = ++termToken;
       clearSolveTimer();
       solveToken += 1;
+      showNext = null;
       set({
         ...emptyDraft(),
         termId,
@@ -256,16 +270,8 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         }
         writeDraft(deps.storage, termId, draftOf(get()));
         if (!buildRequest(get())) return true;
-        if (!(await runSolve()) || solveTimer) return false;
-
-        const current = get();
-        const found = findSchedule(selectSchedules(current), chosen);
-        if (found) {
-          const key = scheduleKey(selectSchedules(current)[found.index]);
-          set({ scheduleIndex: found.index, alternatives: withChoices(current.alternatives, key, found.choices) });
-          writeDraft(deps.storage, termId, draftOf(get()));
-        }
-        return true;
+        showNext = chosen;
+        return runSolve();
       },
 
       addCourse(code) {
@@ -364,11 +370,13 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
           return;
         }
 
-        // Locks that the new option drops would leave nothing to show, so they go.
+        // Locks that the new option drops would leave nothing to show, so they go. The new answer then
+        // shows the option with the rest of the schedule, as the student saw it, when it can.
         changeDraft(() => {
           const kept = (state.locks[courseCode] ?? []).filter((id) => sectionIds.includes(id));
           return { ...selection, locks: { ...state.locks, [courseCode]: [...new Set([...kept, ...added])] } };
         });
+        showNext = wanted;
       },
 
       setScheduleIndex(index) {
