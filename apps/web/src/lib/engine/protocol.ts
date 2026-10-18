@@ -3,7 +3,8 @@ import type { LoadTermResponse, SolveRequest, SolveResponse } from "./types";
 // Messages between EngineClient and engine.worker.ts.
 
 export type WorkerRequest =
-  | { id: number; kind: "loadTerm"; termId: string }
+  /** `buffer` is the term file's bytes, transferred; without it the worker fetches the file itself. */
+  | { id: number; kind: "loadTerm"; termId: string; buffer?: ArrayBuffer }
   | { id: number; kind: "solve"; request: SolveRequest };
 
 /** Why a request got no engine answer at all (engine errors come back as responses). */

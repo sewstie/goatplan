@@ -66,6 +66,29 @@ test("shell at 834 stacks the details under the calendar", async ({ page }) => {
   await page.screenshot({ path: `${screenshotDir}/shell-834.png`, fullPage: true });
 });
 
+test("the planner downloads its term file once, for both the page and the engine", async ({ page }) => {
+  const requested: string[] = [];
+  page.on("request", (request) => requested.push(new URL(request.url()).pathname));
+
+  await page.goto("/");
+  const status = page.locator("[data-planner-term-status]");
+  await expect(status).toHaveAttribute("data-planner-term-status", "ready", { timeout: 30_000 });
+  // Give a late download from the worker time to show up.
+  await page.waitForTimeout(500);
+
+  const termId = await status.getAttribute("data-planner-term");
+  expect(termId).toMatch(/^\d{4}-[A-Z]$/);
+  expect(requested.filter((path) => path === `/data/${termId}.json`)).toHaveLength(1);
+  expect(requested.filter((path) => path === "/data/index.json")).toHaveLength(1);
+  expect(requested.filter((path) => path === "/engine/goatplan.wasm")).toHaveLength(1);
+});
+
+test("/plans has the Sections to register page", async ({ page }) => {
+  await page.goto("/plans");
+  await expect(page.getByRole("heading", { level: 1, name: "Sections to register" })).toBeVisible();
+  await expect(page.getByRole("complementary", { name: "Term and courses" })).toBeVisible();
+});
+
 test("dev pages return 404 in production", async ({ request }) => {
   expect((await request.get("/dev/ui")).status()).toBe(404);
   expect((await request.get("/dev/engine")).status()).toBe(404);

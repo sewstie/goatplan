@@ -1,27 +1,49 @@
+import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
+import { TermBreadcrumbs } from "@/components/courses/TermBreadcrumbs";
+import { TermPicker } from "@/components/courses/TermPicker";
+import { PlanActions } from "@/components/plans/PlanActions";
+import { PreferencesBar } from "@/components/preferences/PreferencesBar";
+import { ScheduleBanner } from "@/components/schedule/ScheduleBanner";
+import { ScheduleSummary } from "@/components/schedule/ScheduleSummary";
+import { ScheduleSwitcher } from "@/components/schedule/ScheduleSwitcher";
+import { ScheduleView } from "@/components/schedule/ScheduleView";
+import { ChooseAlternativeSheet } from "@/components/sections/ChooseAlternativeSheet";
+import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
 import { AppShell } from "@/components/shell/AppShell";
-import { Placeholder } from "@/components/shell/Placeholder";
+import { PlannerBootstrap } from "@/components/shell/PlannerBootstrap";
 import { Sidebar } from "@/components/shell/Sidebar";
 import { WorkspaceHeader } from "@/components/shell/WorkspaceHeader";
 
 export default function PlannerPage() {
   return (
-    <AppShell
-      sidebar={
-        <Sidebar>
-          <Placeholder name="term-picker" className="h-73" />
-          <Placeholder name="course-search" className="h-58.5" />
-          <Placeholder name="course-list" className="flex-1" />
-        </Sidebar>
-      }
-      header={
-        <WorkspaceHeader
-          title="Schedule planner"
-          actions={<Placeholder name="plan-actions" className="h-36 w-206" />}
-        />
-      }
-      toolbar={<Placeholder name="preferences" className="min-h-35.5" />}
-      schedule={<Placeholder name="calendar" className="flex-1" />}
-      details={<Placeholder name="course-details" className="flex-1" />}
-    />
+    <>
+      <AppShell
+        sidebar={
+          <Sidebar>
+            <TermPicker />
+            <CourseSearchPanel />
+          </Sidebar>
+        }
+        header={
+          <WorkspaceHeader
+            title="Schedule planner"
+            breadcrumbs={<TermBreadcrumbs />}
+            titleAside={<ScheduleSwitcher />}
+            subtitle={<ScheduleSummary />}
+            actions={<PlanActions />}
+          />
+        }
+        toolbar={<PreferencesBar />}
+        banner={<ScheduleBanner />}
+        schedule={<ScheduleView />}
+        details={
+          <>
+            <CourseDetailsPanel />
+            <ChooseAlternativeSheet />
+          </>
+        }
+      />
+      <PlannerBootstrap />
+    </>
   );
 }

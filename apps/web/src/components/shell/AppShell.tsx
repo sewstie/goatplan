@@ -4,11 +4,13 @@ type AppShellProps = {
   sidebar: ReactNode;
   header: ReactNode;
   toolbar?: ReactNode;
+  /** Full-width messages between the toolbar and the calendar, like "No schedule fits." */
+  banner?: ReactNode;
   schedule: ReactNode;
   details?: ReactNode;
 };
 
-export function AppShell({ sidebar, header, toolbar, schedule, details }: AppShellProps) {
+export function AppShell({ sidebar, header, toolbar, banner, schedule, details }: AppShellProps) {
   return (
     <>
       <a
@@ -26,6 +28,7 @@ export function AppShell({ sidebar, header, toolbar, schedule, details }: AppShe
         >
           {header}
           {toolbar}
+          {banner}
           <div className="flex flex-1 flex-col gap-(--size-gutter) wide:min-h-0 wide:flex-row">
             <section
               aria-label="Weekly schedule"

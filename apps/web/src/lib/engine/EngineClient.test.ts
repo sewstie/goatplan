@@ -12,12 +12,14 @@ import type {
 
 class FakeWorker implements EngineWorker {
   posted: WorkerRequest[] = [];
+  transferred: Transferable[][] = [];
   terminated = false;
   onmessage: EngineWorker["onmessage"] = null;
   onerror: EngineWorker["onerror"] = null;
 
-  postMessage(message: WorkerRequest) {
+  postMessage(message: WorkerRequest, transfer: Transferable[] = []) {
     this.posted.push(message);
+    this.transferred.push(transfer);
   }
 
   terminate() {
@@ -82,6 +84,22 @@ describe("EngineClient", () => {
     worker().answer(solved(24));
     await expect(solve).resolves.toEqual(solved(24));
     expect(workers).toHaveLength(1);
+  });
+
+  it("transfers the term file's bytes to the worker when it has them", async () => {
+    const { client, worker } = setup();
+    const bytes = new TextEncoder().encode('{"term":{}}').buffer;
+    const load = client.loadTerm("2027-C", bytes);
+    expect(worker().posted[0]).toEqual({ id: 1, kind: "loadTerm", termId: "2027-C", buffer: bytes });
+    expect(worker().transferred[0]).toEqual([bytes]);
+    worker().answer(loaded("2027-C"));
+    await load;
+
+    const reload = client.loadTerm("2027-C", null);
+    expect(worker().posted[1]).toEqual({ id: 2, kind: "loadTerm", termId: "2027-C" });
+    expect(worker().transferred[1]).toEqual([]);
+    worker().answer(loaded("2027-C"));
+    await reload;
   });
 
   it("resolves engine errors as responses instead of rejecting", async () => {
