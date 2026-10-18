@@ -30,7 +30,7 @@ components/
   courses/              search   term picker, course search, "Your courses", breadcrumbs
   schedule/             schedule calendar, schedule switcher, summary line, banner
   preferences/          prefs    the Preferences row
-  sections/             prefs    details panel, lock controls, choose-alternative sheet
+  sections/             prefs    details panel, lock controls, the "Choose a lab" sheet
   plans/                plans    Save / Saved plans, registration sheet and summary
 lib/
   data/                 lead     term files and formatting helpers
