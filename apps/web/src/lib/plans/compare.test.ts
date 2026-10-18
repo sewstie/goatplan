@@ -48,6 +48,8 @@ describe("hasUnsavedChanges", () => {
     expect(hasUnsavedChanges(plan, { ...working, preferences: { ...working.preferences, startsAfter: 600 } })).toBe(true);
     expect(hasUnsavedChanges(plan, { ...working, preferences: { ...working.preferences, onlyOpen: false } })).toBe(true);
     expect(hasUnsavedChanges(plan, { ...working, preferences: { ...working.preferences, blocked: [] } })).toBe(true);
+    const named = working.preferences.blocked.map((block) => ({ ...block, label: "Work" }));
+    expect(hasUnsavedChanges(plan, { ...working, preferences: { ...working.preferences, blocked: named } })).toBe(true);
   });
 
   it("notices a different section, and skips sections while no schedule is shown", () => {

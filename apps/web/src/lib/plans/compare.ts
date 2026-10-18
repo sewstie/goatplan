@@ -1,5 +1,4 @@
-import type { BlockedTime } from "@/lib/engine/types";
-import type { Draft } from "@/lib/store";
+import type { Draft, PlanBlockedTime } from "@/lib/store";
 import type { SavedPlan } from "./types";
 
 /** The parts of the working plan that "Unsaved changes" looks at. */
@@ -19,7 +18,8 @@ function sameGroups(a: Record<string, readonly string[]>, b: Record<string, read
   return [...keys].every((key) => sameSet(a[key] ?? [], b[key] ?? []));
 }
 
-const blockKey = (block: BlockedTime) => `${block.day} ${block.start} ${block.end}`;
+// A renamed blocked time counts as a change too.
+const blockKey = (block: PlanBlockedTime) => `${block.day} ${block.start} ${block.end} ${block.label?.trim() ?? ""}`;
 
 /**
  * Opening a plan replaces its term's working draft. True when that draft has courses that aren't

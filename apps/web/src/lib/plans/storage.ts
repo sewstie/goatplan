@@ -1,6 +1,5 @@
 import { WEEK, type Day, type Meeting, type Section } from "@/lib/data";
-import type { BlockedTime } from "@/lib/engine/types";
-import { SORT_PRESET_IDS, type SortPresetId } from "@/lib/store";
+import { SORT_PRESET_IDS, type PlanBlockedTime, type SortPresetId } from "@/lib/store";
 import type { SavedCourse, SavedPlan } from "./types";
 
 // Saved plans have their own keys, apart from the planner store's drafts ("goatplan:draft:").
@@ -81,14 +80,21 @@ function isSavedCourse(value: unknown): value is SavedCourse {
   );
 }
 
-function isBlockedTime(value: unknown): value is BlockedTime {
+function isBlockedTime(value: unknown): value is PlanBlockedTime {
   return (
     isObject(value) &&
     WEEK.includes(value.day as Day) &&
     isMinute(value.start) &&
     isMinute(value.end) &&
-    (value.start as number) < (value.end as number)
+    (value.start as number) < (value.end as number) &&
+    (value.label === undefined || typeof value.label === "string")
   );
+}
+
+/** Keeps a blocked time's name, like "Work", when it has some text. */
+function copyBlockedTime({ day, start, end, label }: PlanBlockedTime): PlanBlockedTime {
+  const name = label?.trim();
+  return name ? { day, start, end, label: name } : { day, start, end };
 }
 
 const isLocks = (value: unknown): value is Record<string, string[]> =>
@@ -116,7 +122,7 @@ export function parsePlan(value: unknown): SavedPlan | null {
     locks: { ...locks },
     preferences: {
       startsAfter: preferences.startsAfter,
-      blocked: preferences.blocked.map(({ day, start, end }) => ({ day, start, end })),
+      blocked: preferences.blocked.map(copyBlockedTime),
       onlyOpen: preferences.onlyOpen,
     },
     sortPreset: sortPreset as SortPresetId,

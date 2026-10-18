@@ -28,7 +28,7 @@ describe("ScheduleView", () => {
     expect(screen.getByText("No classes before 9:00 AM")).toBeInTheDocument();
     expect(screen.getByText("Auto-fit · 8:30 AM–4:30 PM")).toBeInTheDocument();
     expect(screen.getByText("Monday–Friday")).toBeInTheDocument();
-    expect(within(screen.getByRole("group", { name: "Tuesday" })).getByText("2:00 PM–4:00 PM")).toBeInTheDocument();
+    expect(within(screen.getByRole("group", { name: "Tuesday" })).getByText("2 PM–4 PM")).toBeInTheDocument();
   });
 
   it("shows details in a tooltip outside the clipped card on hover and focus, and Escape closes it", async () => {
