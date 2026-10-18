@@ -189,16 +189,62 @@ test("the sheet swaps a lab for one at the same time", async ({ page }) => {
   const other = before === "CX02" ? "CX10" : "CX02";
 
   await panel.getByRole("button", { name: "View other lab choices" }).click();
-  const sheet = page.getByRole("dialog", { name: "CH 1010" });
-  await expect(sheet.getByText("Mon, Thu · 12:00 PM–1:50 PM", { exact: false })).toBeVisible();
-  const row = sheet.getByRole("group", { name: "Other lab choices" }).getByRole("radio", { name: new RegExp(other) });
+  const sheet = page.getByRole("dialog", { name: "Choose a lab" });
+  const group = sheet.getByRole("group", { name: "Other lab choices" });
+  await expect(group.getByText(`${before}, your lab now`)).toBeAttached();
+  const row = group.getByRole("radio", { name: new RegExp(other) });
   await expect(row).not.toBeChecked();
-  await expect(sheet.getByText(/^(\d+ open|Full)$/)).toBeVisible();
+  await expect(group.locator("label", { hasText: other })).toContainText("Mon, Thu · 12:00 PM–1:50 PM · Goddard Hall");
 
   await sheet.getByRole("button", { name: `Pick ${other}` }).click();
   await expect(sheet).toBeHidden();
   await expect(panel.getByRole("heading", { name: `Lab ${other}` })).toBeVisible();
   await expect(panel.getByRole("button", { name: "View other lab choices" })).toBeFocused();
+});
+
+test("choosing a lab at another time switches schedules, or locks it when no schedule has it", async ({ page }) => {
+  await openPlanner(page, regular);
+  const panel = details(page);
+  const lab = () => panel.getByRole("heading", { name: /^Lab CX0\d$/ });
+
+  await panel.getByRole("button", { name: "View other lab choices" }).click();
+  const sheet = page.getByRole("dialog", { name: "Choose a lab" });
+  await expect(sheet.getByText("These labs fit around the rest of your schedule", { exact: false })).toBeFocused();
+  const pick = sheet.getByRole("button", { name: /^Pick CX0\d$/ });
+  const first = (await pick.textContent())!.replace("Pick ", "");
+  await pick.click();
+  await expect(sheet).toBeHidden();
+  await expect(lab()).toHaveText(`Lab ${first}`);
+  // The engine had a schedule with that lab, so nothing got locked.
+  expect((await savedDraft(page)).locks).toEqual({});
+
+  await panel.getByRole("button", { name: `Lock Lab ${first}` }).click();
+  await waitForSchedules(page);
+  await panel.getByRole("button", { name: "View other lab choices" }).click();
+  const second = (await pick.textContent())!.replace("Pick ", "");
+  await pick.click();
+  await waitForSchedules(page);
+  await expect(lab()).toHaveText(`Lab ${second}`);
+  await expect(panel.getByRole("button", { name: `Unlock Lab ${second}` })).toBeVisible();
+  expect((await savedDraft(page)).locks).toEqual({ "AE 2320": [`AE 2320-${second}`] });
+});
+
+test("the details panel follows the course picked in the sidebar or on the calendar", async ({ page }) => {
+  await openPlanner(page, regular);
+  const panel = details(page);
+  await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
+
+  await page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: /^AE 2410/ }).click();
+  await expect(panel.getByRole("heading", { level: 2, name: "AE 2410" })).toBeVisible();
+  await expect(panel.getByText("Selected course")).toHaveCount(0);
+
+  await page.getByRole("region", { name: "Weekly schedule" }).getByRole("button", { name: /^AE 2210 C01, .*Wednesday/ }).click();
+  await expect(panel.getByRole("heading", { level: 2, name: "AE 2210" })).toBeVisible();
+  await expect(panel.getByText("Selected course")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: /^AE 2210/ })).toHaveAttribute(
+    "aria-current",
+    "true",
+  );
 });
 
 for (const [width, height] of [
@@ -221,11 +267,11 @@ for (const [width, height] of [
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
   });
 
-  test(`same-time sheet screenshot at ${width}`, async ({ page }) => {
+  test(`lab sheet screenshot at ${width}`, async ({ page }) => {
     await page.setViewportSize({ width, height });
-    await openPlanner(page, sameTimeLabs);
+    await openPlanner(page, regular);
     await details(page).getByRole("button", { name: "View other lab choices" }).click();
-    await expect(page.getByRole("dialog", { name: "CH 1010" })).toBeVisible();
+    await expect(page.getByRole("dialog", { name: "Choose a lab" })).toBeVisible();
     await page.screenshot({ path: `${screenshotDir}/prefs-sheet-${width}.png`, animations: "disabled" });
   });
 }

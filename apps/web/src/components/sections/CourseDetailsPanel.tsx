@@ -4,11 +4,10 @@ import { usePlanner } from "@/lib/store";
 import { CourseDetails } from "./CourseDetails";
 import { PanelIntro } from "./PanelIntro";
 import { PanelSkeleton } from "./PanelSkeleton";
-import { useSelectedCourse } from "./useSelectedCourse";
 
 /** The details panel: section choices, Lock / Unlock and the professor, or the intro when no course is picked. */
 export function CourseDetailsPanel() {
-  const code = useSelectedCourse();
+  const code = usePlanner((state) => state.selectedCourse);
   const termStatus = usePlanner((state) => state.termStatus);
   const course = usePlanner((state) => (code ? state.term?.courses.find((item) => item.code === code) : undefined));
 

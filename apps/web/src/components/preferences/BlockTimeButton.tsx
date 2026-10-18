@@ -61,8 +61,7 @@ export function BlockTimeButton() {
             <Button variant="secondary" size="md" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            {/* Without this the border stays darker than the hover fill and reads as an outline. */}
-            <Button type="submit" size="md" form={formId} className="enabled:hover:border-transparent">
+            <Button type="submit" size="md" form={formId}>
               Block time
             </Button>
           </>

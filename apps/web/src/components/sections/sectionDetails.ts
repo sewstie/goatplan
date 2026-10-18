@@ -1,4 +1,4 @@
-import { formatDays, formatOpenSeats, formatTimeRange, isFull, sectionTypeName } from "@/lib/data";
+import { formatDays, formatOpenSeats, formatTimeRange, isFull, roomName, sectionTypeName } from "@/lib/data";
 import type { Course, Delivery, Section, SectionType } from "@/lib/data/types";
 
 /** "Lecture CL01". Sections of type "other" show only their code ("ON01"). */
@@ -29,12 +29,15 @@ const ONLINE: Partial<Record<Delivery, string>> = {
   "online-async": "Online · asynchronous",
 };
 
-/** The rooms, or how an online section is taught. null when the data has neither. */
-export function placeLine(section: Pick<Section, "meetings" | "delivery">): string | null {
+/**
+ * The rooms as building and number ("Higgins Labs 230"), or how an online section is taught, with the
+ * rooms' full names. null when the data has neither.
+ */
+export function placeLine(section: Pick<Section, "meetings" | "delivery">): { text: string; full: string } | null {
   const online = ONLINE[section.delivery];
-  if (online) return online;
+  if (online) return { text: online, full: online };
   const rooms = [...new Set(section.meetings.map((meeting) => meeting.location.trim()).filter(Boolean))];
-  return rooms.length > 0 ? rooms.join(" · ") : null;
+  return rooms.length > 0 ? { text: rooms.map(roomName).join(" · "), full: rooms.join(" · ") } : null;
 }
 
 /** "36 of 120 seats open", with " · Full" when no seat is left. */

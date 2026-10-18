@@ -34,7 +34,7 @@ export function PreferencesBar() {
         checked={onlyOpen}
         onCheckedChange={(checked) => setPreferences({ onlyOpen: checked })}
         label="Only open sections"
-        className="ml-3 rounded-pill"
+        className="ml-3"
       />
       <SortSelect />
     </div>

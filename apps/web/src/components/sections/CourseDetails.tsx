@@ -4,31 +4,28 @@ import { useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { uniqueInstructors } from "@/lib/data";
 import type { Course } from "@/lib/data/types";
-import { selectChosenSections, selectCurrentSchedule, usePlanner } from "@/lib/store";
+import { selectChosenSections, usePlanner } from "@/lib/store";
 import { OtherChoicesButton } from "./OtherChoicesButton";
 import { ProfessorPicker } from "./ProfessorPicker";
-import { sameTimeChoices } from "./sameTimeChoices";
 import { SectionChoiceCard } from "./SectionChoiceCard";
 import { hasSetTime, sectionsById } from "./sectionDetails";
+import { useSectionChoices } from "./useSectionChoices";
 
 const NONE: string[] = [];
-const NO_ALTERNATIVES: string[][] = [];
 
 /** The details panel for one course (div.app-3.md, "course" variant). */
 export function CourseDetails({ course }: { course: Course }) {
   const code = course.code;
   const chosen = usePlanner(useShallow((state) => selectChosenSections(state)[code] ?? NONE));
-  const alternatives = usePlanner(
-    (state) => selectCurrentSchedule(state)?.courses.find((item) => item.code === code)?.alternatives ?? NO_ALTERNATIVES,
-  );
   const locked = usePlanner((state) => state.locks[code] ?? NONE);
+  const selectedSection = usePlanner((state) => (state.selectedCourse === code ? state.selectedSection : null));
   // Only a real answer can say nothing fits: an engine error or a crashed worker says nothing about the plan.
   const answered = usePlanner((state) => state.solveStatus === "done" && state.response?.ok === true);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   // With no schedule for this course, locked sections stay visible so they can be unlocked.
   const sections = sectionsById(course, chosen.length > 0 ? chosen : locked);
-  const choices = useMemo(() => sameTimeChoices(course, alternatives, chosen), [course, alternatives, chosen]);
+  const choices = useSectionChoices(course);
   const instructors = useMemo(() => uniqueInstructors(course.sections), [course]);
   const shownInstructors = uniqueInstructors(sections);
   // Cards shown only because they're locked disappear on Unlock, so focus goes to the heading.
@@ -37,6 +34,10 @@ export function CourseDetails({ course }: { course: Course }) {
 
   return (
     <div className="flex flex-col gap-4">
+      {/* After a click on one of its calendar blocks (div.app-19.md). */}
+      {selectedSection && chosen.includes(selectedSection) && (
+        <p className="text-9 leading-13 font-650 text-ink-muted">Selected course</p>
+      )}
       <h2 ref={headingRef} tabIndex={-1} className="text-21 leading-25-2 font-700 tracking-heading text-ink">
         {code}
       </h2>
