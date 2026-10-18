@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { Sheet } from "@/components/ui/Sheet";
 import { selectChosenSections, selectCurrentSchedule, usePlanner } from "@/lib/store";
@@ -26,11 +26,25 @@ export function ChooseAlternativeSheet() {
     () => (course ? sameTimeChoices(course, alternatives, chosen) : null),
     [course, alternatives, chosen],
   );
+  const open = choices !== null;
+  const introRef = useRef<HTMLParagraphElement>(null);
+
+  // The sheet would focus its close button, which Safari outlines; start at the explanation instead.
+  // This runs after the sheet's own effect has opened it.
+  useEffect(() => {
+    if (open) introRef.current?.focus();
+  }, [open]);
 
   return (
-    <Sheet open={choices !== null} onClose={close} title={course?.code ?? ""}>
+    <Sheet open={open} onClose={close} title={course?.code ?? ""}>
       {course && choices && (
-        <SameTimeChooser key={`${course.code}:${choices.current.label}`} course={course} choices={choices} onPicked={close} />
+        <SameTimeChooser
+          key={`${course.code}:${choices.current.label}`}
+          course={course}
+          choices={choices}
+          onPicked={close}
+          introRef={introRef}
+        />
       )}
     </Sheet>
   );

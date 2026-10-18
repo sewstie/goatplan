@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useState, type Ref } from "react";
 import { Check } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
 import type { Course } from "@/lib/data/types";
@@ -12,10 +12,12 @@ type SameTimeChooserProps = {
   course: Course;
   choices: SameTimeChoices;
   onPicked: () => void;
+  /** The explanation at the top, which takes focus when the sheet opens. */
+  introRef?: Ref<HTMLParagraphElement>;
 };
 
 /** The inside of ChooseAlternativeSheet: the other same-time sections and a Pick button. */
-export function SameTimeChooser({ course, choices, onPicked }: SameTimeChooserProps) {
+export function SameTimeChooser({ course, choices, onPicked, introRef }: SameTimeChooserProps) {
   const chooseAlternative = usePlanner((state) => state.chooseAlternative);
   // As in div.app-16, nothing is checked at first and the button suggests the one with the most open seats.
   const [selected, setSelected] = useState<string | null>(null);
@@ -25,7 +27,8 @@ export function SameTimeChooser({ course, choices, onPicked }: SameTimeChooserPr
   return (
     <div className="flex flex-col">
       <p className="text-11 leading-17-6 font-510 text-ink">{course.title}</p>
-      <p className="mt-8 text-10 leading-17-5 text-ink-muted">
+      {/* Focused by script only, to start reading here; it isn't in the Tab order, so it needs no ring. */}
+      <p ref={introRef} tabIndex={-1} className="mt-8 text-10 leading-17-5 text-ink-muted outline-none">
         These meet at the same time as your {choices.kind} {choices.current.label} (
         <span className="whitespace-nowrap">{choices.times.join(", ")}</span>), so your calendar stays the same.
       </p>

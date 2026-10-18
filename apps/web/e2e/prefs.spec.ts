@@ -120,6 +120,7 @@ test("the block form works with the keyboard and checks its days", async ({ page
   await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Block a time" });
   await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("textbox", { name: "Name (optional)" })).toBeFocused();
   const before = await dialog.boundingBox();
   await dialog.getByRole("button", { name: "Block time" }).click();
   await expect(dialog.getByRole("alert")).toHaveText("Pick at least one day.");
@@ -129,6 +130,33 @@ test("the block form works with the keyboard and checks its days", async ({ page
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
   await expect(preferencesRow(page).getByRole("button", { name: "Block a time" })).toBeFocused();
+});
+
+test("the block form opens without a ring on Close and keeps its size while hovering", async ({ page }) => {
+  await openPlanner(page, regular);
+
+  await preferencesRow(page).getByRole("button", { name: "Block a time" }).click();
+  const dialog = page.getByRole("dialog", { name: "Block a time" });
+  await expect(dialog.getByRole("textbox", { name: "Name (optional)" })).toBeFocused();
+  await expect(dialog.getByRole("button", { name: "Close" })).not.toBeFocused();
+
+  const size = await dialog.boundingBox();
+  const parts = [
+    dialog.getByRole("button", { name: "Close" }),
+    dialog.getByRole("textbox", { name: "Name (optional)" }),
+    ...["Monday", "Thursday", "Sunday"].map((day) => dialog.getByRole("checkbox", { name: day })),
+    dialog.getByRole("combobox", { name: "From" }),
+    dialog.getByRole("combobox", { name: "To" }),
+    dialog.getByRole("button", { name: "Cancel" }),
+    dialog.getByRole("button", { name: "Block time" }),
+  ];
+  for (const part of parts) {
+    await part.hover();
+    expect(await dialog.boundingBox()).toEqual(size);
+  }
+  await dialog.getByRole("checkbox", { name: "Wednesday" }).check();
+  await dialog.getByRole("button", { name: "Cancel" }).hover();
+  expect(await dialog.boundingBox()).toEqual(size);
 });
 
 test("a section can be locked and unlocked from the details panel", async ({ page }) => {
