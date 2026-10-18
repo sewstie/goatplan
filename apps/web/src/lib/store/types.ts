@@ -3,10 +3,15 @@ import type { BlockedTime, Fix, SolveResponse } from "@/lib/engine/types";
 
 export type SortPresetId = "fewestEarly" | "fewestGaps" | "fewestDays";
 
+/** A blocked time with the name the student gave it, like "Work". The name never goes to the engine. */
+export interface PlanBlockedTime extends BlockedTime {
+  label?: string;
+}
+
 export interface PlanPreferences {
   /** Minutes after midnight; 0 turns the rule off. */
   startsAfter: number;
-  blocked: BlockedTime[];
+  blocked: PlanBlockedTime[];
   onlyOpen: boolean;
 }
 
