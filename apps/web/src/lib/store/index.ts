@@ -3,15 +3,15 @@ import type { StoreApi } from "zustand/vanilla";
 import { loadTerm, loadTermIndex, takeTermBuffer } from "@/lib/data/load";
 import { getEngineClient } from "@/lib/engine";
 import { createPlannerStore } from "./createPlannerStore";
-import { browserStorage } from "./draft";
-import type { PlannerStore } from "./types";
+import { browserStorage, readDraft } from "./draft";
+import type { Draft, PlannerStore } from "./types";
 
 export * from "./types";
 export { buildRequest, MAX_SCHEDULES } from "./buildRequest";
 export { SORT_PRESETS, SORT_PRESET_IDS } from "./sortPresets";
 export { DEFAULT_PREFERENCES } from "./draft";
 export { SOLVE_DELAY_MS } from "./createPlannerStore";
-export { scheduleKey, selectChosenSections, selectCurrentSchedule, selectSchedules } from "./selectors";
+export { findSchedule, scheduleKey, selectChosenSections, selectCurrentSchedule, selectSchedules } from "./selectors";
 
 let store: StoreApi<PlannerStore> | null = null;
 
@@ -25,6 +25,11 @@ export function getPlannerStore(): StoreApi<PlannerStore> {
     storage: browserStorage(),
   });
   return store;
+}
+
+/** The draft this browser keeps for a term, or null. Lets plans check for unsaved work in a term that isn't open. */
+export function storedDraft(termId: string): Draft | null {
+  return readDraft(browserStorage(), termId);
 }
 
 /**

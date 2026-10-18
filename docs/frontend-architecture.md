@@ -126,6 +126,8 @@ page) starts the store in the browser by calling `init()`.
 | `scheduleIndex` | Which schedule in `response.schedules` is shown. |
 | `solveStatus` | `idle`, `waiting` (the 200 ms pause after a change), `solving`, `done` or `error`. |
 | `solveError` | Why the engine gave no answer at all (for example, the worker crashed). Engine errors are in `response`. |
+| `selectedCourse` | The course the details panel shows and "Your courses" marks. The first course once a term loads; not saved in the draft. |
+| `selectedSection` | The section whose calendar blocks are selected, after a click on a block; `null` otherwise. |
 
 ### Actions
 
@@ -133,20 +135,26 @@ page) starts the store in the browser by calling `init()`.
 |---|---|
 | `init()` | Loads the term list and opens the term used last time, or else the first upcoming one. |
 | `setTerm(termId)` | Switches term: downloads the file once (page and engine), restores that term's draft and solves. |
-| `addCourse(code)` | Adds a course from the current term (ignored if unknown or already added). |
-| `removeCourse(code)` | Removes a course with its locks and picked alternatives. |
+| `openPlan(termId, plan, chosen?)` | Opens a saved plan in one step: switches term if needed, replaces the draft (courses, preferences, locks, sort), solves once and shows the schedule with the `chosen` sections. Resolves to `false` if the term couldn't load. |
+| `addCourse(code)` | Adds a course from the current term (ignored if unknown or already added) and selects it. |
+| `removeCourse(code)` | Removes a course with its locks and picked alternatives. If it was selected, the next course (or the one before) is selected. |
+| `selectCourse(code, sectionId?)` | Selects a planned course, and optionally one of its sections; `null` clears the selection. |
 | `setPreferences(changes)` | Changes any of `startsAfter`, `blocked` and `onlyOpen`. |
 | `lockSection(course, sectionId)` | Keeps only schedules that use that section (the course must be in the plan). |
 | `unlockSection(course, sectionId)` | Removes that lock. |
 | `setSortPreset(preset)` | Changes the Sort order. |
 | `chooseAlternative(course, sectionIds)` | Picks a same-time alternative in the current schedule. It doesn't solve again. |
+| `pickOption(course, sectionIds)` | Takes another option of a course and keeps the rest of the shown schedule: shows a schedule from the answer that has both, or else locks the option's new sections (in place of locks it drops) and solves again. |
+| `setScheduleIndex(index)` | Shows the schedule at that position, kept within the answer. |
 | `nextSchedule()` / `previousSchedule()` | Pages through the schedules, stopping at the ends. |
 | `applyFix(fix)` | Applies a fix from `response.diagnosis.fixes`: start later, clear blocked times, allow full sections, unlock or drop a course. |
 
 Selectors and helpers that come with it: `selectSchedules`,
 `selectCurrentSchedule`, `selectChosenSections` (course → the section ids taken
-in the current schedule, with picked alternatives), `scheduleKey`,
-`buildRequest`, `SORT_PRESETS`, `DEFAULT_PREFERENCES`, `MAX_SCHEDULES`.
+in the current schedule, with picked alternatives), `findSchedule` (the first
+schedule that can show given sections), `scheduleKey`, `storedDraft(termId)`
+(the draft this browser keeps for a term), `buildRequest`, `SORT_PRESETS`,
+`DEFAULT_PREFERENCES`, `MAX_SCHEDULES`.
 
 ### How it behaves
 

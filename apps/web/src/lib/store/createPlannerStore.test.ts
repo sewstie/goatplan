@@ -53,6 +53,17 @@ function setup(options: { storage?: MemoryStorage; terms?: TermSummary[] } = {})
 /** Lets pending promise callbacks run. */
 const flush = () => vi.advanceTimersByTimeAsync(0);
 
+/** Like the fixture engine, but each schedule shows one lab with no same-time alternative. */
+function separateLabs(request: SolveRequest, count = 2): SolveResponse {
+  const response = solved(request);
+  if (!response.ok) return response;
+  response.schedules = response.schedules.slice(0, count);
+  for (const schedule of response.schedules) {
+    for (const course of schedule.courses) course.alternatives = [[...course.sections]];
+  }
+  return response;
+}
+
 beforeEach(() => {
   vi.useFakeTimers();
 });
@@ -392,5 +403,218 @@ describe("switching terms", () => {
     expect(state()).toMatchObject({ termStatus: "error", termError: "Couldn’t load /data/2027-C.json (HTTP 404)." });
     await state().setTerm("not a term");
     expect(state()).toMatchObject({ termStatus: "error", termError: "There is no term not a term." });
+  });
+});
+
+describe("selected course", () => {
+  async function ready(storage = new MemoryStorage()) {
+    const context = setup({ storage });
+    await context.state().init();
+    return context;
+  }
+
+  it("is the first planned course once the term loads, and nothing while it loads", async () => {
+    const storage = new MemoryStorage();
+    storage.setItem(
+      draftKey("2027-C"),
+      JSON.stringify({
+        version: 1,
+        courses: ["AE 2410", "AE 2320"],
+        preferences: { startsAfter: 0, blocked: [], onlyOpen: true },
+        locks: {},
+        sortPreset: "fewestEarly",
+        alternatives: {},
+      }),
+    );
+    const { state, deps } = setup({ storage });
+    const slow = deferred<TermFile>();
+    deps.loadTerm.mockImplementationOnce(() => slow.promise);
+    const loading = state().init();
+    await flush();
+    expect(state()).toMatchObject({ termStatus: "loading", selectedCourse: null });
+    slow.resolve(termFile("2027-C"));
+    await loading;
+    expect(state()).toMatchObject({ selectedCourse: "AE 2410", selectedSection: null });
+
+    await state().setTerm("2027-D");
+    expect(state().selectedCourse).toBeNull();
+  });
+
+  it("follows a new course and isn't saved with the draft", async () => {
+    const { state, storage } = await ready();
+    state().addCourse("AE 2320");
+    state().addCourse("AE 2410");
+    expect(state().selectedCourse).toBe("AE 2410");
+    expect(storage.getItem(draftKey("2027-C"))).not.toContain("selected");
+  });
+
+  it("selects a planned course and one of its sections, and ignores other courses", async () => {
+    const { state } = await ready();
+    state().addCourse("AE 2320");
+    state().addCourse("AE 2410");
+    state().selectCourse("AE 2320", "AE 2320-CX02");
+    expect(state()).toMatchObject({ selectedCourse: "AE 2320", selectedSection: "AE 2320-CX02" });
+    state().selectCourse("AB 1533");
+    expect(state()).toMatchObject({ selectedCourse: "AE 2320", selectedSection: "AE 2320-CX02" });
+    state().selectCourse("AE 2410");
+    expect(state()).toMatchObject({ selectedCourse: "AE 2410", selectedSection: null });
+    state().selectCourse(null);
+    expect(state()).toMatchObject({ selectedCourse: null, selectedSection: null });
+  });
+
+  it("moves to the next course, else the one before, when the selected course is removed", async () => {
+    const { state } = await ready();
+    for (const code of ["AE 2320", "AE 2410", "AB 1533"]) state().addCourse(code);
+    state().selectCourse("AE 2410", "AE 2410-C01");
+    state().removeCourse("AE 2410");
+    expect(state()).toMatchObject({ selectedCourse: "AB 1533", selectedSection: null });
+    state().removeCourse("AB 1533");
+    expect(state().selectedCourse).toBe("AE 2320");
+    state().addCourse("AE 2410");
+    state().selectCourse("AE 2320");
+    state().removeCourse("AE 2410");
+    expect(state().selectedCourse).toBe("AE 2320");
+    state().removeCourse("AE 2320");
+    expect(state().selectedCourse).toBeNull();
+  });
+});
+
+describe("openPlan", () => {
+  const plan = {
+    courses: ["AE 2410", "AE 2320"],
+    preferences: { startsAfter: 600, blocked: [{ day: "Fri" as const, start: 840, end: 960, label: "Work" }], onlyOpen: false },
+    locks: { "AE 2320": ["AE 2320-CX02"] },
+    sortPreset: "fewestGaps" as const,
+  };
+  const chosen = { "AE 2410": ["AE 2410-C01"], "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"] };
+
+  it("switches term, replaces the draft and solves once", async () => {
+    const { state, engine, storage } = setup();
+    await state().init();
+    state().addCourse("AB 1533");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    engine.solve.mockClear();
+
+    const opened = state().openPlan("2027-D", plan, chosen);
+    await vi.runAllTimersAsync();
+    expect(await opened).toBe(true);
+    expect(engine.solve).toHaveBeenCalledTimes(1);
+    expect(state()).toMatchObject({ termId: "2027-D", ...plan, selectedCourse: "AE 2410", solveStatus: "done" });
+    expect(readDraft(storage, "2027-D")).toMatchObject(plan);
+    expect(readDraft(storage, "2027-C")?.courses).toEqual(["AB 1533"]);
+  });
+
+  it("shows the saved sections, picking the same-time alternative", async () => {
+    const { state } = setup();
+    await state().init();
+    const opened = state().openPlan("2027-C", plan, chosen);
+    await vi.runAllTimersAsync();
+    await opened;
+    expect(state().scheduleIndex).toBe(0);
+    expect(selectChosenSections(state())).toEqual(chosen);
+  });
+
+  it("pages to the schedule with the saved sections", async () => {
+    const { state, engine } = setup();
+    engine.solve.mockImplementation(async (request) => separateLabs(request));
+    await state().init();
+    const opened = state().openPlan("2027-C", plan, chosen);
+    await vi.runAllTimersAsync();
+    await opened;
+    expect(state().scheduleIndex).toBe(1);
+    expect(selectChosenSections(state())).toEqual(chosen);
+  });
+
+  it("solves once without the debounce when the term is already open", async () => {
+    const { state, engine } = setup();
+    await state().init();
+    state().addCourse("AB 1533");
+    engine.solve.mockClear();
+    const opened = state().openPlan("2027-C", { ...plan, courses: ["AE 2320", "ZZ 9999"] });
+    await flush();
+    expect(await opened).toBe(true);
+    await vi.runAllTimersAsync();
+    expect(engine.solve).toHaveBeenCalledTimes(1);
+    expect(state()).toMatchObject({ courses: ["AE 2320"], selectedCourse: "AE 2320" });
+  });
+
+  it("gives up when the term can't load", async () => {
+    const { state } = setup();
+    const opened = state().openPlan("not a term", plan, chosen);
+    await vi.runAllTimersAsync();
+    expect(await opened).toBe(false);
+    expect(state().termStatus).toBe("error");
+  });
+});
+
+describe("pickOption", () => {
+  async function planned(solve?: (request: SolveRequest) => SolveResponse) {
+    const context = setup();
+    if (solve) context.engine.solve.mockImplementation(async (request) => solve(request));
+    await context.state().init();
+    context.state().addCourse("AE 2320");
+    context.state().addCourse("AE 2410");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    context.engine.solve.mockClear();
+    return context;
+  }
+
+  it("picks a same-time option in the shown schedule without solving", async () => {
+    const { state, engine } = await planned();
+    state().nextSchedule();
+    state().pickOption("AE 2320", ["AE 2320-CX01", "AE 2320-CL01"]);
+    expect(state().scheduleIndex).toBe(1);
+    expect(selectChosenSections(state())["AE 2320"]).toEqual(["AE 2320-CL01", "AE 2320-CX01"]);
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).not.toHaveBeenCalled();
+  });
+
+  it("pages to a schedule that has the option and the rest of the shown one", async () => {
+    const { state, engine } = await planned(separateLabs);
+    state().selectCourse("AE 2320", "AE 2320-CX01");
+    state().pickOption("AE 2320", ["AE 2320-CL01", "AE 2320-CX02"]);
+    expect(state()).toMatchObject({ scheduleIndex: 1, locks: {}, selectedSection: "AE 2320-CX02" });
+    expect(selectChosenSections(state())["AE 2320"]).toEqual(["AE 2320-CL01", "AE 2320-CX02"]);
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).not.toHaveBeenCalled();
+  });
+
+  it("locks the option's new section when no schedule has it, in place of a lock it drops", async () => {
+    const { state, engine } = await planned((request) => separateLabs(request, 1));
+    state().lockSection("AE 2320", "AE 2320-CL01");
+    state().lockSection("AE 2320", "AE 2320-CX01");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    engine.solve.mockClear();
+
+    state().pickOption("AE 2320", ["AE 2320-CL01", "AE 2320-CX02"]);
+    expect(state().locks).toEqual({ "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"] });
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).toHaveBeenCalledTimes(1);
+  });
+
+  it("ignores the shown option and options the course doesn't have", async () => {
+    const { state } = await planned();
+    const before = state();
+    state().pickOption("AE 2320", ["AE 2320-CL01", "AE 2320-CX01"]);
+    state().pickOption("AE 2320", ["AE 2320-CX01", "AE 2320-CX02"]);
+    state().pickOption("AB 1533", ["AB 1533-C01"]);
+    expect(state()).toBe(before);
+  });
+});
+
+describe("setScheduleIndex", () => {
+  it("shows a schedule by position, kept within the answer", async () => {
+    const { state } = setup();
+    await state().init();
+    state().setScheduleIndex(1);
+    expect(state().scheduleIndex).toBe(0);
+    state().addCourse("AE 2320");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    state().setScheduleIndex(1);
+    expect(state().scheduleIndex).toBe(1);
+    state().setScheduleIndex(9);
+    expect(state().scheduleIndex).toBe(1);
+    state().setScheduleIndex(-1);
+    expect(state().scheduleIndex).toBe(0);
   });
 });
