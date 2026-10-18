@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05"},
-  "generatedAt": "2026-10-17T12:52:39Z",
+  "generatedAt": "2026-10-18T13:08:28Z",
   "courses": [
     {
       "code": "AB 1533",
@@ -154,7 +154,7 @@
       "level": "Graduate",
       "description": "This course presents topics in incompressible fluid dynamics at the introductory graduate level. Topics are chosen from: continuum fluids; kinematics and deformation for Newtonian fluids; integral and differential form of the mass conservation, momentum, and energy equations; potential flows; unidirectional steady incompressible viscous flows; unidirectional transient incompressible viscous flows; boundary layers; vortical flows. Students cannot receive credit for this course if they have taken AE/ME 5101 “Fluid Dynamics” or AE/ME 5107 “Applied Fluid Dynamics.”",
       "sections": [
-        {"id":"AE 5131-C01","code":"C01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Nikolaos Gatsonis"],"delivery":"online-async","meetings":[]}
+        {"id":"AE 5131-C01","code":"C01","type":"lecture","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Nikolaos Gatsonis"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["AE 5131-C01"]
@@ -331,7 +331,7 @@
       "description": "This course explores the art and history of different regions on the Silk Road. The topics include visual storytelling, historical and cultural interactions, mythical places, and creatures. The students will create contemporary 2D and 3D digital projects inspired by the multicultural infusion of the arts of ancient regions such as central Asia, China, and the middle east. Students will learn to design motifs and patterns, digital paintings, texturing, and 3D modeling by using Adobe CC and Autodesk Maya software.",
       "sections": [
         {"id":"AR 2750-C02","code":"C02","type":"lecture","title":"Topics In Studio Art: Aesthetics, Visual Design, and UI","status":"open","enrolled":6,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Roshanak Bigonah"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Salisbury Labs 123 Computer Lab"}]},
-        {"id":"AR 2750-C03","code":"C03","type":"lecture","title":"Topics In Studio Art: Puppet Lab","status":"open","enrolled":4,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Marie Keller"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":950,"location":"Gordon Library 208 Art Studio"}],"description":"Cat. III This course explores building puppets for performance while introducing traditions and histories to the present. Puppeteering will be practiced in a supportive environment to discover possibilities for storytelling through manipulation and therefore inform design and fabrication processes. Students interested in character creation, theatrical set design, and those participating in the theater discipline's Spring Showcase are encouraged to register. Recommended background: AR 1100"}
+        {"id":"AR 2750-C03","code":"C03","type":"lecture","title":"Topics In Studio Art: Puppet Lab","status":"open","enrolled":5,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Marie Keller"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":950,"location":"Gordon Library 208 Art Studio"}],"description":"Cat. III This course explores building puppets for performance while introducing traditions and histories to the present. Puppeteering will be practiced in a supportive environment to discover possibilities for storytelling through manipulation and therefore inform design and fabrication processes. Students interested in character creation, theatrical set design, and those participating in the theater discipline's Spring Showcase are encouraged to register. Recommended background: AR 1100"}
       ],
       "options": [
         ["AR 2750-C02"],
@@ -548,9 +548,9 @@
       "level": "Undergraduate",
       "description": "BB2803 Anatomy and Physiology Laboratory (Cat. I; 1/6 unit) This course is an active exploration of topics in anatomy and physiology through the use of simulations, measurements, and hands-on discovery. It will be particularly relevant to any student considering a health-related career, doing work where body structure is central, or has interest in how body systems connect. A significant portion of this discovery will be accomplished by a hands-on dissection. Examples of the specific types of experiences and techniques included in this course are comparative and general anatomy of several organisms; physiology and function of body systems, processes, and organs; Enzyme Linked Immunosorbent Assay (ELISA); and microscopy. Students may not receive credit for this course and BB 2903. Recommended background: at least one college-level biology course.",
       "sections": [
-        {"id":"BB 2803-CL01","code":"CL01","type":"lecture","status":"open","enrolled":53,"capacity":80,"waitlist":{"taken":0,"capacity":20},"instructors":["Chris Collins"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
+        {"id":"BB 2803-CL01","code":"CL01","type":"lecture","status":"open","enrolled":52,"capacity":80,"waitlist":{"taken":0,"capacity":20},"instructors":["Chris Collins"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
         {"id":"BB 2803-CX01","code":"CX01","type":"lab","status":"open","enrolled":19,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Chris Collins"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":710,"location":"Goddard Hall 206 BB Lab"}]},
-        {"id":"BB 2803-CX02","code":"CX02","type":"lab","status":"open","enrolled":17,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Chris Collins"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":950,"location":"Goddard Hall 206 BB Lab"}]},
+        {"id":"BB 2803-CX02","code":"CX02","type":"lab","status":"open","enrolled":16,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Chris Collins"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":950,"location":"Goddard Hall 206 BB Lab"}]},
         {"id":"BB 2803-CX03","code":"CX03","type":"lab","status":"open","enrolled":15,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Chris Collins"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":540,"end":710,"location":"Goddard Hall 206 BB Lab"}]},
         {"id":"BB 2803-CX04","code":"CX04","type":"lab","status":"open","enrolled":2,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Chris Collins"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":950,"location":"Goddard Hall 206 BB Lab"}]}
       ],
@@ -598,7 +598,7 @@
       "level": "Undergraduate",
       "description": "BB 3813 Animal Cell Culture Techniques Laboratory (Cat. I; 1/6 unit) Basic laboratory skills in mammalian cell culture including cell counting, freezing and thawing cell lines, and culture of suspension and attached cells. Recommended background: knowledge of aseptic technique (BB 1801 or 2815 or equivalent) and cell biology (BB 2550 or equivalent). Students may not receive credit for this course and BB 3513.",
       "sections": [
-        {"id":"BB 3813-CX01","code":"CX01","type":"lab","status":"waitlist","enrolled":5,"capacity":5,"waitlist":{"taken":1,"capacity":2},"instructors":["Jill Rulfs"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-02-05"},"meetings":[{"days":["Tue","Fri"],"start":540,"end":710,"location":"Goddard Hall 212 BB Lab"}]},
+        {"id":"BB 3813-CX01","code":"CX01","type":"lab","status":"waitlist","enrolled":5,"capacity":5,"waitlist":{"taken":0,"capacity":2},"instructors":["Jill Rulfs"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-02-05"},"meetings":[{"days":["Tue","Fri"],"start":540,"end":710,"location":"Goddard Hall 212 BB Lab"}]},
         {"id":"BB 3813-CX02","code":"CX02","type":"lab","status":"waitlist","enrolled":5,"capacity":5,"waitlist":{"taken":0,"capacity":2},"instructors":["Jill Rulfs"],"delivery":"in-person","dates":{"start":"2027-02-08","end":"2027-03-05"},"meetings":[{"days":["Tue","Fri"],"start":540,"end":710,"location":"Goddard Hall 212 BB Lab"}]}
       ],
       "options": [
@@ -614,7 +614,7 @@
       "level": "Undergraduate",
       "description": "BB 3840 Design and Expression of Biomolecules Laboratory Students will gain experience in several fundamental skills applicable to academic and industrial research and development. Producing a biologic product is of paramount interest in both basic and applied research and requires the ability to both design and produce a functional product. There are numerous potential variables that influence the amount, quality, and cost of producing these molecules. This course will explore some of those variables which allow students to design, test, and evaluate strategies for product and process optimizations. Students will learn how DNA sequences are designed, constructed, and analyzed. A model organism will be grown and induced to express a protein product using common fermentation principles and techniques. Students will evaluate efficiency of the fermentation and output of the gene product through an original research project of their design. Students may not receive credit for BB 3840 and either BB 3512 or BB 3517. Units: 1/3 Category I Recommended background: Working knowledge of the principles of molecular biology (BB 1101, BB 2920, or 3950 or equivalent) and cell biology (BB 2550 or equivalent), as well as relevant biology laboratory experience (BB 1801, 3827, or equivalent).",
       "sections": [
-        {"id":"BB 3840-CX01","code":"CX01","type":"lab","status":"open","enrolled":9,"capacity":16,"waitlist":{"taken":0,"capacity":5},"instructors":["Floyd Brownewell"],"delivery":"in-person","meetings":[{"days":["Tue","Wed","Thu"],"start":780,"end":950,"location":"Goddard Hall 205 BB Lab"}]}
+        {"id":"BB 3840-CX01","code":"CX01","type":"lab","status":"open","enrolled":10,"capacity":16,"waitlist":{"taken":0,"capacity":5},"instructors":["Floyd Brownewell"],"delivery":"in-person","meetings":[{"days":["Tue","Wed","Thu"],"start":780,"end":950,"location":"Goddard Hall 205 BB Lab"}]}
       ],
       "options": [
         ["BB 3840-CX01"]
@@ -642,7 +642,7 @@
       "level": "Undergraduate",
       "description": "This course will introduce quantitative approaches to address outstanding questions from various biological disciplines. A combination of lectures, readings, and computational exercises will be used to illustrate how to use simple mathematical models to understand complex biological phenomena. We will discuss and examine different biological problems from diverse areas of biological research, including cell biology, genetics, and public health to highlight the broad applicability of these approaches. Primary scientific literature will be used to introduce these topics, as well as the quantitative experimental techniques used to test these models. Units: 1/3 Recommended Background: A strong background in cell biology and genetics (BB2550, BB2920, or equivalent).",
       "sections": [
-        {"id":"BB 402X-C01","code":"C01","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Shane McInally"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South"}]}
+        {"id":"BB 402X-C01","code":"C01","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Shane McInally"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South"}]}
       ],
       "options": [
         ["BB 402X-C01"]
@@ -656,7 +656,7 @@
       "level": "Undergraduate",
       "description": "BB4050: Cancer Biology In this course, students will learn and apply advanced cellular and molecular biology concepts to understand causes and consequences of cancer cell transformation. Through an integration of primary literature and lecture material students will explore how research into basic mechanisms of cancer biology is used to identify therapeutic targets and inform drug design. This course will cover discussion of the hallmarks of cancer including the deregulation of cell growth, cell death, and metabolism; corruption of genome stability; evasion of immune response; and metastatic potential. Students may not earn credit for both BB3050 and BB4050. Units: 1/3 Category: Category I Recommended Background: A thorough understanding of genetics (BB 2920 or equivalent), cell biology (BB 2550 or equivalent), and molecular biology (BB 3950 or equivalent).",
       "sections": [
-        {"id":"BB 4050-C01","code":"C01","type":"lecture","status":"open","enrolled":20,"capacity":40,"waitlist":{"taken":0,"capacity":5},"instructors":["Amity Manning"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Unity Hall 405"}]}
+        {"id":"BB 4050-C01","code":"C01","type":"lecture","status":"open","enrolled":19,"capacity":40,"waitlist":{"taken":0,"capacity":5},"instructors":["Amity Manning"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Unity Hall 405"}]}
       ],
       "options": [
         ["BB 4050-C01"]
@@ -797,7 +797,7 @@
       "level": "Graduate",
       "description": "Antibodies constitute the most rapidly growing class of human therapeutics, and the second largest class of drugs after vaccines. The generation of a potent antibody therapeutics is an iterative design process that involves the generation and optimization of antibodies to improve their clinical potential. Dozens of monoclonal antibodies are in clinical use to treat graft rejection, Crohn’s disease, asthma, leukemia, other cancers, and immune disorders. They continue to generate a market value approaching $200 billion and growing nearly 15% each year. Molecular biology makes it possible to reproducibly clone recombinant versions of antibodies, including chimeric, humanized, and human antibodies with optimized effectiveness. In this course, we explore the use of antibodies as therapeutic agents based on early-stage discovery, generation, and selection of antibodies from immune and non-immune sources. Topics include the origin and structure of antibodies, their molecular and pharmacological properties, and key methods used in the biotechnology industry to develop and produce them. In addition, will uncover the fast-growing antibodies as antibody-drug conjugates for cancer therapeutics. Weekly online assessments are designed to ensure understanding. Prerequisite Courses: An undergraduate level background in Molecular Biology, Cell Biology, basics of immunology or equivalent experience is recommended.",
       "sections": [
-        {"id":"BB 570-C01","code":"C01","type":"lecture","title":"ST: Quantitative Biology","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":0,"capacity":5},"instructors":["Shane McInally"],"delivery":"in-person","credits":2,"meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South"}],"description":"(variable credit) Speciality subject courses are offered based on the expertise of the department faculty such as Stem Cell Biology."},
+        {"id":"BB 570-C01","code":"C01","type":"lecture","title":"ST: Quantitative Biology","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":5},"instructors":["Shane McInally"],"delivery":"in-person","credits":2,"meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South"}],"description":"(variable credit) Speciality subject courses are offered based on the expertise of the department faculty such as Stem Cell Biology."},
         {"id":"BB 570-SL02","code":"SL02","type":"lecture","title":"ST: Antibody Therapeutics","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]},
         {"id":"BB 570-SX02","code":"SX02","type":"lab","title":"ST: Antibody Therapeutics","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
@@ -842,7 +842,7 @@
       "level": "Undergraduate",
       "description": "This course will introduce quantitative approaches to address outstanding questions from various biological disciplines. A combination of lectures, readings, and computational exercises will be used to illustrate how to use simple mathematical models to understand complex biological phenomena. We will discuss and examine different biological problems from diverse areas of biological research, including cell biology, genetics, and public health to highlight the broad applicability of these approaches. Primary scientific literature will be used to introduce these topics, as well as the quantitative experimental techniques used to test these models. Units: 1/3 Recommended Background: A strong background in cell biology and genetics (BB2550, BB2920, or equivalent).",
       "sections": [
-        {"id":"BCB 402X-C01","code":"C01","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Shane McInally"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South"}]}
+        {"id":"BCB 402X-C01","code":"C01","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Shane McInally"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South"}]}
       ],
       "options": [
         ["BCB 402X-C01"]
@@ -884,7 +884,7 @@
       "level": "Graduate",
       "description": "An offering of this course will cover a topic of current interest in detail. See the Supplement section of the online catalog at www.wpi.edu/+gradcat for descriptions of courses to be offered in this academic year. Prerequisites will vary with topic.",
       "sections": [
-        {"id":"BCB 590-C01","code":"C01","type":"lecture","title":"ST: Quantitative Biology","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Shane McInally"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South"}]}
+        {"id":"BCB 590-C01","code":"C01","type":"lecture","title":"ST: Quantitative Biology","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Shane McInally"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South"}]}
       ],
       "options": [
         ["BCB 590-C01"]
@@ -2038,8 +2038,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides the student with an understanding of the basic components of a general-purpose operating system. Topics include processes, process management, synchronization, input/output devices and their programming, interrupts, memory management, resource allocation, and an introduction to file systems. Students will be expected to design and implement a large piece ofsystem software in the C programming language.Undergraduate credit may not be earned both for this course and for CS 502.Recommended background: CS 2303 or CS 2301, and CS 2011.",
       "sections": [
-        {"id":"CS 3013-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":53,"capacity":53,"waitlist":{"taken":0,"capacity":20},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Washburn 229"}]},
-        {"id":"CS 3013-C02","code":"C02","type":"lecture","status":"open","enrolled":29,"capacity":75,"waitlist":{"taken":0,"capacity":20},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Washburn 229"}]}
+        {"id":"CS 3013-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":53,"capacity":53,"waitlist":{"taken":1,"capacity":20},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Washburn 229"}]},
+        {"id":"CS 3013-C02","code":"C02","type":"lecture","status":"open","enrolled":28,"capacity":75,"waitlist":{"taken":0,"capacity":20},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Washburn 229"}]}
       ],
       "options": [
         ["CS 3013-C01"],
@@ -2055,7 +2055,7 @@
       "description": "Cat. I This course makes the student aware of the social, moral, ethical, and philosophical impact of computers and computer-based systems on society, both now and in the future. Topics include major computer-based applications and their impact, human machine relationships, and the major problems of controlling the use of computers. Students will be expected to contribute to classroom discussions and to complete a number of significant writing assignments. This course is recommended for juniors and seniors. The Social Science Requirement cannot be satisfied by this course. Undergraduate credit may not be earned both for this course and for CS 505. Recommended background: a general knowledge of computers and computer systems",
       "sections": [
         {"id":"CS 3043-C01","code":"C01","type":"lecture","status":"open","enrolled":29,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Crystal Brown"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Innovation Studio 203 Active Learning Classroom South"}]},
-        {"id":"CS 3043-C02","code":"C02","type":"lecture","status":"open","enrolled":18,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 411"}]},
+        {"id":"CS 3043-C02","code":"C02","type":"lecture","status":"open","enrolled":19,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 411"}]},
         {"id":"CS 3043-C03","code":"C03","type":"lecture","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Olin Hall 109"}]}
       ],
       "options": [
@@ -2202,7 +2202,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course studies the problem of making computers act in ways which we call\"intelligent\". Topics include major theories, tools and applications of artificial intelligence, aspects of knowledge representation, searching and planning, and natural language understanding.Students will be expected to complete projects which express problems that require search in state spaces, and to propose appropriate methods for solving the problems.Undergraduate credit may not be earned both for this course and for CS 534.Recommended background: CS 2102 or CS 2103; CS 2223; and CS 3133.",
       "sections": [
-        {"id":"CS 4341-C01","code":"C01","type":"lecture","status":"open","enrolled":45,"capacity":70,"waitlist":{"taken":0,"capacity":10},"instructors":["Dachun Sun"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":540,"end":650,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]}
+        {"id":"CS 4341-C01","code":"C01","type":"lecture","status":"open","enrolled":46,"capacity":70,"waitlist":{"taken":0,"capacity":10},"instructors":["Dachun Sun"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":540,"end":650,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]}
       ],
       "options": [
         ["CS 4341-C01"]
@@ -2300,7 +2300,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course studies the use of the computer to model and graphically render two- and three-dimensional structures. Topics include graphics devices and languages, 2- and 3-D object representations, and various aspects of rendering realistic images.Students will be expected to implement programs which span all stages of the 3-D graphics pipeline, including clipping, projection, arbitrary viewing, hidden surface removal and shading.Undergraduate credit may not be earned both for this course and for CS 543.Recommended background: CS 2223, CS 2303 and MA 2071.",
       "sections": [
-        {"id":"CS 4731-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":45,"capacity":45,"waitlist":{"taken":3,"capacity":20},"instructors":["Joshua Cuneo"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 500"}]}
+        {"id":"CS 4731-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":45,"capacity":45,"waitlist":{"taken":2,"capacity":20},"instructors":["Joshua Cuneo"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 500"}]}
       ],
       "options": [
         ["CS 4731-C01"]
@@ -3042,8 +3042,8 @@
       "level": "Undergraduate",
       "description": "ECE 2039: Computational Engineering (1/3 Units; Cat. I) Computational Engineering describes the methods and practices of software programming in the context of electrical and computer engineering (ECE), specifically, the construction of programs to be efficiently implemented on hardware. In this regard, the course covers programming design and methodology, developing efficient code using C programming language, hardware device abstraction, and modeling. In doing so, starting with basic programming techniques in the high-level programming language C, the course describes the relevant software and hardware device abstraction levels. Additionally, program analysis, debugging methods, issues encountered when interfacing with signals to/from external devices, and computer engineering models, such as finite state machines and timing in computing hardware, are explained. The course uses assignments/projects to provide hands-on experience with software programming to solve problems in electrical and computer engineering practice. Recommended Background: A prior course in computer programming, such as CS 1004, CS 1101/2, or BME 1004.",
       "sections": [
-        {"id":"ECE 2039-CL01","code":"CL01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":1,"capacity":20},"instructors":["Zane Weissman"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Atwater Kent 116 Newell Hall"}]},
-        {"id":"ECE 2039-CX01","code":"CX01","type":"lab","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Zane Weissman"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":590,"location":"Unity Hall 420"}]},
+        {"id":"ECE 2039-CL01","code":"CL01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":0,"capacity":20},"instructors":["Zane Weissman"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Atwater Kent 116 Newell Hall"}]},
+        {"id":"ECE 2039-CX01","code":"CX01","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Zane Weissman"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":590,"location":"Unity Hall 420"}]},
         {"id":"ECE 2039-CX02","code":"CX02","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Zane Weissman"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Unity Hall 405"}]}
       ],
       "options": [
@@ -3074,8 +3074,8 @@
       "description": "Cat. I This course is the first of a two-course sequence in electronic circuit design. It begins with a substantive treatment of the fundamental behavior of semiconductor materials and moves on to the semiconductor diode, the bipolar transistor, and the field-effect transistor. Laboratory exercises are provided to reinforce the theory of operation of these devices. Numerous circuit applications are considered, including: power supplies, transistor amplifiers, and FET switches. Topics include: the pn junction, diode operation, transducers, rectification, voltage regulation, limiting and clamping circuits, transistor operation, biasing, small-signal and large-signal models, transistors amplifiers, and switching applications. Recommended background: ECE 2019.",
       "sections": [
         {"id":"ECE 2201-CL01","code":"CL01","type":"lecture","status":"open","enrolled":76,"capacity":80,"waitlist":{"taken":0,"capacity":15},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Atwater Kent 219"}]},
-        {"id":"ECE 2201-CX01","code":"CX01","type":"lab","status":"open","enrolled":25,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":650,"location":"Atwater Kent 227 ECE Lab"}]},
-        {"id":"ECE 2201-CX02","code":"CX02","type":"lab","status":"closed","enrolled":31,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":830,"location":"Atwater Kent 227 ECE Lab"}]},
+        {"id":"ECE 2201-CX01","code":"CX01","type":"lab","status":"open","enrolled":26,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":650,"location":"Atwater Kent 227 ECE Lab"}]},
+        {"id":"ECE 2201-CX02","code":"CX02","type":"lab","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":830,"location":"Atwater Kent 227 ECE Lab"}]},
         {"id":"ECE 2201-CX03","code":"CX03","type":"lab","status":"closed","enrolled":20,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":1010,"location":"Atwater Kent 227 ECE Lab"}]}
       ],
       "options": [
@@ -3092,7 +3092,7 @@
       "level": "Undergraduate",
       "description": "ECE 2312: Discrete-Time Signal and System Analysis (1/3 Units; Cat. I) This course provides an introduction to the time and frequency domain analysis of discrete-time signals and linear systems. Topics include sampling and quantization, characterization of discrete-time sequences, the discrete-time Fourier transform, the discrete Fourier transform and its applications, the Z transform and its applications, convolution, characterization of FIR and IIR discrete-time systems, and the analysis and design of discrete-time filters. The course will include a focus on applications such as sampling and quantization, audio processing, navigation systems, and communications. Extensive use will be made of simulation tools, including Matlab. Recommended Background: ECE 2039 (preferred for ECE majors) or a prior course in computer programming such as CS 2301/3, CS 1004 or CS 1101/2; MA 2051; and ECE 2311.",
       "sections": [
-        {"id":"ECE 2312-C01","code":"C01","type":"lecture","status":"open","enrolled":62,"capacity":65,"waitlist":{"taken":0,"capacity":20},"instructors":["Alexander Wyglinski"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":900,"end":950,"location":"Atwater Kent 233"}]}
+        {"id":"ECE 2312-C01","code":"C01","type":"lecture","status":"open","enrolled":61,"capacity":65,"waitlist":{"taken":0,"capacity":20},"instructors":["Alexander Wyglinski"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":900,"end":950,"location":"Atwater Kent 233"}]}
       ],
       "options": [
         ["ECE 2312-C01"]
@@ -3106,8 +3106,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course covers the systematic design of advanced digital systems using FPGAs. The emphasis is on top-down design starting with high level models using a hardware description language (such as VHDL or Verilog) as a tool for the design, synthesis, modeling, test bench development, and testing and verification of complete digital systems. These types of systems include the use of embedded soft core processors as well as lower level modules created from custom logic or imported IP blocks. Interfaces will be developed to access devices external to the FPGA such as memory or peripheral communication devices. The integration of tools and design methodologies will be addressed through a discussion of system on a chip (SOC) integration, methodologies, design for performance, and design for test. Topics: Hardware description languages, system modeling, synthesis, simulation and testing of digital circuits; Design integration to achieve specific system design goals including architecture, planning and integration, and testing; Use of soft core and IP modules to meet specific architecture and design goals. Laboratory exercises: Students will design and implement a complete sophisticated embedded digital system on an FPGA. HDL design of digital systems including lower level components and integration of higher level IP cores, simulating the design with test benches, and synthesizing and implementing these designs with FPGA development boards including interfacing to external devices. Recommended background: ECE 2029 and ECE 2049 Students who have received credit for ECE 3810 may not receive credit for ECE 3829.",
       "sections": [
-        {"id":"ECE 3829-CL01","code":"CL01","type":"lecture","status":"open","enrolled":58,"capacity":84,"waitlist":{"taken":0,"capacity":20},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Atwater Kent 219"}]},
-        {"id":"ECE 3829-CX01","code":"CX01","type":"lab","status":"open","enrolled":24,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":480,"end":650,"location":"Atwater Kent 317 ECE Lab"}]},
+        {"id":"ECE 3829-CL01","code":"CL01","type":"lecture","status":"open","enrolled":57,"capacity":84,"waitlist":{"taken":0,"capacity":20},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Atwater Kent 219"}]},
+        {"id":"ECE 3829-CX01","code":"CX01","type":"lab","status":"open","enrolled":23,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":480,"end":650,"location":"Atwater Kent 317 ECE Lab"}]},
         {"id":"ECE 3829-CX02","code":"CX02","type":"lab","status":"open","enrolled":18,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]},
         {"id":"ECE 3829-CX03","code":"CX03","type":"lab","status":"open","enrolled":16,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]}
       ],
@@ -3253,7 +3253,7 @@
       "level": "Graduate",
       "description": "This graduate level course examines the principles of Power System Analysis. It will begin with a review of AC circuit analysis. The course will then cover the topics of transmission line parameter calculation, symmetrical component analysis, transformer and load modeling, symmetrical and unsymmetrical fault analysis, power flow, and power systems stability. Prerequisites: Knowledge of circuit analysis, basic calculus and differential equations, elementary matrix analysis and basic computer programming.",
       "sections": [
-        {"id":"ECE 5500-S01","code":"S01","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":13,"capacity":20},"instructors":["Mahmood Mirheydar"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"ECE 5500-S01","code":"S01","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":12,"capacity":20},"instructors":["Mahmood Mirheydar"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["ECE 5500-S01"]
@@ -3295,7 +3295,7 @@
       "level": "Graduate",
       "description": "This graduate level course covers advanced topics in the principles and practices of power system protective relaying. The course seeks to provide an understanding of how protective relays are applied to protect power system components. While the subject is presented from a theoretical viewpoint, many practical examples are included. Examples specific to both new installations and existing, older facilities will be included. Course content is not specific to any particular manufacturer’s equipment. The course begins with applications of protective devices to generators. This will include distributed generation as well as wind-turbine and inverter-connected sources. Transformer protection is covered next, including application procedures for older, electromechanical relays as well as modern numeric relay designs. A unit on bus protection is covered next, including all typical high-speed and time backup bus protection schemes. Transmission line and distribution feeder protection is covered in detail including both conventional and communications-assisted schemes. The course ends with a unit on other protection applications such as under frequency load shedding, reclosing and out-of-step relaying. Prerequisite: ECE 5521 Protective Relaying. Note: Credit cannot be awarded for this course if credit has already been received for ECE 5520 Power System Protection and Control.",
       "sections": [
-        {"id":"ECE 5522-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Dean Sorensen"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"ECE 5522-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Dean Sorensen"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["ECE 5522-S01"]
@@ -3589,7 +3589,7 @@
       "level": "Undergraduate",
       "description": "Cat. II This course examines the concept of “strange” and the figure of the “stranger” in a wide range of written and visual texts, from Shakespeare to Albert Camus to the 2017 horror/comedy film Get Out. We will focus on depictions of religious, racial, gendered, and other forms of alienation and otherness, from both an insider’s and outsider’s perspective. This course will be offered in 2020-21, and in alternating years thereafter.",
       "sections": [
-        {"id":"EN 3226-C01","code":"C01","type":"lecture","status":"open","enrolled":19,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Ephraim"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Fuller Labs 311"}]}
+        {"id":"EN 3226-C01","code":"C01","type":"lecture","status":"open","enrolled":17,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Ephraim"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Fuller Labs 311"}]}
       ],
       "options": [
         ["EN 3226-C01"]
@@ -4521,7 +4521,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces non-technical studies of computer-based interactive media and games. The course develops a vocabulary for discussing games and other interactive media, and tools for analyzing them. Students are expected to provide written critiques using the critical approaches presented in the course. The games and other interactive media critiqued may be commercially available or under development.",
       "sections": [
-        {"id":"IMGD 1000-C01","code":"C01","type":"lecture","status":"open","enrolled":8,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Melissa Kagen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Fuller Labs 311"}]}
+        {"id":"IMGD 1000-C01","code":"C01","type":"lecture","status":"open","enrolled":7,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Melissa Kagen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Fuller Labs 311"}]}
       ],
       "options": [
         ["IMGD 1000-C01"]
@@ -5194,8 +5194,8 @@
       "level": "Undergraduate",
       "description": "Cat. I, This course provides a deeper understanding of topics introduced in MA 2071, and continues the development of linear algebra. Topics covered include: abstract vector spaces, linear transformations, matrix representations of a linear transformation, determinants, characteristic and minimal polynomials, diagonalization, eigenvalues and eigenvectors, the matrix exponential, inner product spaces. This course is designed primarily for Mathematical Science majors and those interested in the deeper mathematical issues underlying linear algebra. Recommended background: MA 2071 or MA 2072.",
       "sections": [
-        {"id":"MA 2073-CD02","code":"CD02","type":"discussion","status":"open","enrolled":17,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Stratton Hall 205"}]},
-        {"id":"MA 2073-CL02","code":"CL02","type":"lecture","status":"open","enrolled":17,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Stratton Hall 313"}]}
+        {"id":"MA 2073-CD02","code":"CD02","type":"discussion","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Stratton Hall 205"}]},
+        {"id":"MA 2073-CL02","code":"CL02","type":"lecture","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Stratton Hall 313"}]}
       ],
       "options": [
         ["MA 2073-CD02","MA 2073-CL02"]
@@ -5919,7 +5919,7 @@
       "level": "Graduate",
       "description": "(2 credits) This course is suitable as an introductory graduate level course. Topics covered will be chosen from the following: bending and shear stresses in unsymmetric beams; bending of composite beams; bending of curved beams; torsion of thin-walled noncircular cross sections; beams on elastic foundations; stress concentrations; failure criteria; stability of columns; and bending of plates. This course may be taken independent of ME 5301.",
       "sections": [
-        {"id":"ME 5381-C01","code":"C01","type":"lecture","status":"open","enrolled":20,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Alireza Nejad"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Higgins Labs 154"}]}
+        {"id":"ME 5381-C01","code":"C01","type":"lecture","status":"open","enrolled":19,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Alireza Nejad"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Higgins Labs 154"}]}
       ],
       "options": [
         ["ME 5381-C01"]
@@ -6216,7 +6216,7 @@
       "level": "Graduate",
       "description": "This course presents the specific concepts, techniques and tools for managing projects effectively. The role of the project manager as team leader is examined, together with important techniques for controlling cost, schedules and performance parameters. Lectures, case studies and projects are combined to develop skills needed by project managers in today’s environment.",
       "sections": [
-        {"id":"MIS 576-S01","code":"S01","type":"lecture","status":"open","enrolled":59,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Paul Delvy"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"MIS 576-S01","code":"S01","type":"lecture","status":"open","enrolled":58,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Paul Delvy"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["MIS 576-S01"]
@@ -7135,8 +7135,8 @@
         {"id":"PH 1110-CL01","code":"CL01","type":"lecture","status":"open","enrolled":33,"capacity":170,"waitlist":{"taken":0,"capacity":0},"instructors":["Germano Iannacchione"],"delivery":"in-person","meetings":[{"days":["Mon","Wed","Fri"],"start":660,"end":710,"location":"Olin Hall 107"}]},
         {"id":"PH 1110-CS02","code":"CS02","type":"lecture","status":"open","enrolled":4,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Hektor Kashuri"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Unity Hall 520"}]},
         {"id":"PH 1110-CS02-Multipurpose","code":"CS02-Multipurpose","type":"discussion","status":"open","enrolled":4,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Hektor Kashuri"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Unity Hall 520"}]},
-        {"id":"PH 1110-CT01","code":"CT01","type":"discussion","status":"open","enrolled":3,"capacity":54,"waitlist":{"taken":0,"capacity":0},"instructors":["Nancy Burnham"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Unity Hall 520"}]},
-        {"id":"PH 1110-CT01-Multipurpose","code":"CT01-Multipurpose","type":"lecture","status":"open","enrolled":3,"capacity":54,"waitlist":{"taken":0,"capacity":0},"instructors":["Nancy Burnham"],"delivery":"online-async","meetings":[]},
+        {"id":"PH 1110-CT01","code":"CT01","type":"discussion","status":"open","enrolled":4,"capacity":54,"waitlist":{"taken":0,"capacity":0},"instructors":["Nancy Burnham"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Unity Hall 520"}]},
+        {"id":"PH 1110-CT01-Multipurpose","code":"CT01-Multipurpose","type":"lecture","status":"open","enrolled":4,"capacity":54,"waitlist":{"taken":0,"capacity":0},"instructors":["Nancy Burnham"],"delivery":"online-async","meetings":[]},
         {"id":"PH 1110-CX01","code":"CX01","type":"lab","status":"open","enrolled":6,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":900,"end":1010,"location":"Olin Hall 208 Physics Lab"}]},
         {"id":"PH 1110-CX02","code":"CX02","type":"lab","status":"open","enrolled":7,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":660,"end":770,"location":"Olin Hall 208 Physics Lab"}]},
         {"id":"PH 1110-CX03","code":"CX03","type":"lab","status":"open","enrolled":1,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":890,"location":"Olin Hall 114"}]},
@@ -7149,7 +7149,7 @@
         {"id":"PH 1110-CX11","code":"CX11","type":"lab","status":"open","enrolled":1,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":540,"end":650,"location":"Olin Hall 208 Physics Lab"}]},
         {"id":"PH 1110-CX13","code":"CX13","type":"lab","status":"open","enrolled":4,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":900,"end":1010,"location":"Olin Hall 208 Physics Lab"}]},
         {"id":"PH 1110-CX14","code":"CX14","type":"lab","status":"open","enrolled":1,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":650,"location":"Olin Hall 211 Physics Lab"}]},
-        {"id":"PH 1110-CX15","code":"CX15","type":"lab","status":"open","enrolled":1,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Olin Hall 114"}]},
+        {"id":"PH 1110-CX15","code":"CX15","type":"lab","status":"open","enrolled":2,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Olin Hall 114"}]},
         {"id":"PH 1110-CX16","code":"CX16","type":"lab","status":"open","enrolled":0,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Olin Hall 114"}]},
         {"id":"PH 1110-CX18","code":"CX18","type":"lab","status":"open","enrolled":0,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":900,"end":1010,"location":"Olin Hall 211 Physics Lab"}]}
       ],
@@ -7261,11 +7261,11 @@
       "level": "Undergraduate",
       "description": "Cat. I An introduction to oscillating systems and waves. Topics include: free, clamped forced, and coupled oscillations of physical systems, traveling waves and wave packets, reflection, and interference phenomena. Recommended background: working knowledge of the material covered in PH 1110 and PH 1120 (or PH 1111 and PH 1121) and completion of MA 1021, MA 1022 and MA 1023.",
       "sections": [
-        {"id":"PH 1140-CD01","code":"CD01","type":"discussion","status":"open","enrolled":41,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Unity Hall 500"}]},
-        {"id":"PH 1140-CL01","code":"CL01","type":"lecture","status":"open","enrolled":41,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 500"}]},
+        {"id":"PH 1140-CD01","code":"CD01","type":"discussion","status":"open","enrolled":42,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Unity Hall 500"}]},
+        {"id":"PH 1140-CL01","code":"CL01","type":"lecture","status":"open","enrolled":42,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 500"}]},
         {"id":"PH 1140-CX01","code":"CX01","type":"lab","status":"open","enrolled":9,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":650,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1140-CX02","code":"CX02","type":"lab","status":"open","enrolled":13,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":770,"location":"Olin Hall 117 Physics Lab"}]},
-        {"id":"PH 1140-CX03","code":"CX03","type":"lab","status":"open","enrolled":15,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":890,"location":"Olin Hall 117 Physics Lab"}]},
+        {"id":"PH 1140-CX03","code":"CX03","type":"lab","status":"open","enrolled":16,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":890,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1140-CX04","code":"CX04","type":"lab","status":"open","enrolled":4,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":660,"end":770,"location":"Olin Hall 117 Physics Lab"}]}
       ],
       "options": [
@@ -8086,7 +8086,7 @@
       "description": "Cat. I This course makes the student aware of the social, moral, ethical, and philosophical impact of computers and computer-based systems on society, both now and in the future. Topics include major computer-based applications and their impact, human machine relationships, and the major problems of controlling the use of computers. Students will be expected to contribute to classroom discussions and to complete a number of significant writing assignments. This course is recommended for juniors and seniors. The Social Science Requirement cannot be satisfied by this course. Undergraduate credit may not be earned both for this course and for CS 505. Recommended background: a general knowledge of computers and computer systems",
       "sections": [
         {"id":"SS 3043-C01","code":"C01","type":"lecture","status":"open","enrolled":29,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Crystal Brown"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Innovation Studio 203 Active Learning Classroom South"}]},
-        {"id":"SS 3043-C02","code":"C02","type":"lecture","status":"open","enrolled":18,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 411"}]},
+        {"id":"SS 3043-C02","code":"C02","type":"lecture","status":"open","enrolled":19,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 411"}]},
         {"id":"SS 3043-C03","code":"C03","type":"lecture","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Olin Hall 109"}]}
       ],
       "options": [
@@ -8117,7 +8117,7 @@
       "level": "Graduate",
       "description": "Systems Engineering is a multifaceted discipline, involving human, organizational, and various technical variables that work together to create complex systems. This course is an introduction and overview of the methods and disciplines that systems engineers use to define, develop, and deploy systems. It includes specific integrated examples, projects, and team building exercises to aid in understanding and appreciating fundamental principles. Topics covered include; Introduction to Systems Engineering; Requirements Development; Functional Analysis and Requirements Allocation; System Architecture and System Design; Integration, Verification and Validation; Trade Studies; Systems Analysis, Modeling and Simulation; Specialty Engineering; Risk Management; and Technical Planning and Management. (Prerequisite: an undergraduate degree in engineering or science, or permission of the instructor.)",
       "sections": [
-        {"id":"SYS 501-S01","code":"S01","type":"lecture","status":"open","enrolled":14,"capacity":30,"waitlist":{"taken":10,"capacity":20},"instructors":["Christopher Piccirillo"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"SYS 501-S01","code":"S01","type":"lecture","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":10,"capacity":20},"instructors":["Christopher Piccirillo"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["SYS 501-S01"]
@@ -8351,7 +8351,7 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/12 unit) Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
-        {"id":"WPE 1018-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":28,"capacity":28,"waitlist":{"taken":6,"capacity":10},"instructors":["Mickey Cahoon"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Recreation Center Courts 1-2"}]},
+        {"id":"WPE 1018-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":28,"capacity":28,"waitlist":{"taken":5,"capacity":10},"instructors":["Mickey Cahoon"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Recreation Center Courts 1-2"}]},
         {"id":"WPE 1018-C02","code":"C02","type":"workshop","status":"waitlist","enrolled":29,"capacity":28,"waitlist":{"taken":6,"capacity":10},"instructors":["Cherise Galasso"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
@@ -8768,7 +8768,7 @@
         {"id":"WPE 1611-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1611-C02","code":"C02","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Diana Fiorentino"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":830,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1611-C03","code":"C03","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":1,"capacity":10},"instructors":["Robin Benoit"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":890,"location":"Daniels Hall 102E CWB Programming Room"}]},
-        {"id":"WPE 1611-C04","code":"C04","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":1,"capacity":10},"instructors":["Shavaun Cloran"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]}
+        {"id":"WPE 1611-C04","code":"C04","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":2,"capacity":10},"instructors":["Shavaun Cloran"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]}
       ],
       "options": [
         ["WPE 1611-C01"],
@@ -8802,7 +8802,7 @@
       "description": "WPE 1699 Special Topics in Holistic Well-Being, Cat. I (1/12 unit) This course provides an opportunity for students to learn about a special topic in holistic wellbeing. The topics are subject to change on a rotating basis to provide flexibility in the offerings based upon student interest and the latest practice and science of well-being.",
       "sections": [
         {"id":"WPE 1699-C01","code":"C01","type":"workshop","title":"ST in Holistic Well-Being: Regenerative Cultures","status":"open","enrolled":3,"capacity":17,"waitlist":{"taken":0,"capacity":10},"instructors":["Katherine Foo"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":770,"location":"Daniels Hall 102E CWB Programming Room"}]},
-        {"id":"WPE 1699-C02","code":"C02","type":"workshop","title":"ST in Holistic Well-Being: Sophomore Success-Navigating Your Second Year at WPI","status":"open","enrolled":8,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Lillian Schreiner"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":770,"location":"Innovation Studio 205 Active Learning Classroom North"}]},
+        {"id":"WPE 1699-C02","code":"C02","type":"workshop","title":"ST in Holistic Well-Being: Sophomore Success-Navigating Your Second Year at WPI","status":"open","enrolled":9,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Lillian Schreiner"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":770,"location":"Innovation Studio 205 Active Learning Classroom North"}]},
         {"id":"WPE 1699-C03","code":"C03","type":"workshop","title":"ST in Holistic Well-Being: Intermediate Yoga","status":"closed","enrolled":0,"capacity":0,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[]},
         {"id":"WPE 1699-C04","code":"C04","type":"workshop","title":"ST in Holistic Well-Being: Intuitive Eating","status":"open","enrolled":5,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Shavaun Cloran"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":650,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1699-C07","code":"C07","type":"workshop","title":"ST in Holistic Well-Being: Strategies for College Learning and Productivity","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Laura Susanin"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":890,"location":"Salisbury Labs 411"}]}
