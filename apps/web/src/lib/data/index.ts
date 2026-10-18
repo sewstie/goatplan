@@ -6,3 +6,5 @@ export * from "./days";
 export * from "./seats";
 export * from "./sections";
 export * from "./instructors";
+export * from "./rooms";
+export * from "./fit";

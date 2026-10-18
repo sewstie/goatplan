@@ -24,8 +24,8 @@ app/
   plans/                plans    /plans, "Sections to register"
   dev/                  lead     /dev/ui and /dev/engine; 404 in production
 components/
-  ui/                   lead     primitives: Button, IconButton, Badge, Chip, Toggle, Select,
-                                 TextInput, Card, Dialog, Sheet, Tooltip
+  ui/                   lead     primitives: Button, ButtonLink, IconButton, Badge, Chip, Toggle,
+                                 Select, TextInput, Card, Dialog, Sheet, Tooltip; course colors
   shell/                lead     AppShell, Sidebar, WorkspaceHeader, Placeholder, PlannerBootstrap
   courses/              search   term picker, course search, "Your courses", breadcrumbs
   schedule/             schedule calendar, schedule switcher, summary line, banner
@@ -179,6 +179,13 @@ schedule that can show given sections), `scheduleKey`, `storedDraft(termId)`
   `data-format.md`, and formatting helpers for times, days, seats, section
   labels, instructors and the Rate My Professors link. Use them instead of
   formatting by hand. Search, section display and seat math are TypeScript.
+  - `roomName(location)` shortens a room to its building and number
+    ("Higgins Labs 230"). Show the full location as a `title` where it's cut.
+  - `meetingSpans`, `spansOverlap` and `meetsRules` check whether sections
+    overlap or pass the preferences, with the engine's 5-minute slots.
+- `components/ui/courseColors.ts`: `courseSlot(courses, code)` and
+  `COURSE_COLORS`, so the calendar blocks, the sidebar swatches and the "No set
+  time" items use the same color for a course.
 - `lib/engine`: the engine runs in a Web Worker behind `EngineClient`. Features
   don't call it: the store owns the engine and puts its answers in `response`.
   The types follow `engine-api.md`.

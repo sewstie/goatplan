@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 type WorkspaceHeaderProps = {
-  title: string;
+  title: ReactNode;
   breadcrumbs?: ReactNode;
   titleAside?: ReactNode;
   subtitle?: ReactNode;
@@ -27,7 +27,8 @@ export function WorkspaceHeader({
         </div>
         <div className="min-h-15 text-10 leading-14-5 text-ink-muted">{subtitle}</div>
       </div>
-      <div className="flex max-w-(--size-actions) flex-wrap items-center justify-end gap-10">
+      {/* ml-auto keeps the actions on the right when they wrap under the title on narrow screens. */}
+      <div className="ml-auto flex max-w-(--size-actions) flex-wrap items-center justify-end gap-10">
         {actions}
       </div>
     </header>

@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { cx } from "@/components/ui/cx";
+import { DetailsPanel } from "./DetailsPanel";
 
 type AppShellProps = {
   sidebar: ReactNode;
@@ -8,9 +10,30 @@ type AppShellProps = {
   banner?: ReactNode;
   schedule: ReactNode;
   details?: ReactNode;
+  /** The names screen readers give the two main regions. */
+  scheduleLabel?: string;
+  detailsLabel?: string;
+  /**
+   * Below the wide breakpoint the main region is 630px tall, which suits the calendar. "content" lets
+   * it grow with longer content instead, like the registration sheet.
+   */
+  scheduleFit?: "fixed" | "content";
+  /** No details panel while the planner's term can't load (div.app-2.md). */
+  hideDetailsOnTermError?: boolean;
 };
 
-export function AppShell({ sidebar, header, toolbar, banner, schedule, details }: AppShellProps) {
+export function AppShell({
+  sidebar,
+  header,
+  toolbar,
+  banner,
+  schedule,
+  details,
+  scheduleLabel = "Weekly schedule",
+  detailsLabel = "Course details",
+  scheduleFit = "fixed",
+  hideDetailsOnTermError = false,
+}: AppShellProps) {
   return (
     <>
       <a
@@ -31,18 +54,18 @@ export function AppShell({ sidebar, header, toolbar, banner, schedule, details }
           {banner}
           <div className="flex flex-1 flex-col gap-(--size-gutter) wide:min-h-0 wide:flex-row">
             <section
-              aria-label="Weekly schedule"
-              className="relative flex h-630 shrink-0 flex-col overflow-hidden rounded-panel bg-surface wide:h-auto wide:min-h-0 wide:flex-1"
+              aria-label={scheduleLabel}
+              className={cx(
+                "relative flex shrink-0 flex-col overflow-hidden rounded-panel bg-surface wide:h-auto wide:min-h-0 wide:flex-1",
+                scheduleFit === "fixed" ? "h-630" : "min-h-630",
+              )}
             >
               {schedule}
             </section>
             {details && (
-              <aside
-                aria-label="Course details"
-                className="flex flex-col rounded-panel bg-surface px-16 py-20 wide:w-(--size-details) wide:shrink-0 wide:overflow-y-auto"
-              >
+              <DetailsPanel label={detailsLabel} hideOnTermError={hideDetailsOnTermError}>
                 {details}
-              </aside>
+              </DetailsPanel>
             )}
           </div>
         </main>

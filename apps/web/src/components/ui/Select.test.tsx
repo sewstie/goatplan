@@ -20,6 +20,13 @@ describe("Select", () => {
     expect(screen.getByRole("combobox", { name: "Starts after" })).toBeInTheDocument();
   });
 
+  it("can show the label above a box, and clicking it focuses the select", async () => {
+    render(<Select variant="box" label="Professor" hideLabel={false} options={terms} />);
+    await userEvent.click(screen.getByText("Professor"));
+    expect(screen.getByRole("combobox", { name: "Professor" })).toHaveFocus();
+    expect(screen.getByText("Professor")).not.toHaveClass("sr-only");
+  });
+
   it("reports changes", async () => {
     const onChange = vi.fn();
     render(<Select label="Term" options={terms} defaultValue="2027-C" onChange={onChange} />);
