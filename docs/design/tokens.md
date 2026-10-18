@@ -244,6 +244,7 @@ No shadow variables exist. These are the only shadows in the frames:
 | `--shadow-selected` | `0 0 0 0.5px var(--color-accent)` | Ring around a selected block (with a 1px accent border) |
 | `--shadow-block-hover` | `0 2px 5px 0 rgb(76 51 35 / 0.07)` | Hovered calendar block |
 | `--shadow-popover` | `0 4px 7px 0 rgb(36 41 65 / 0.09)` | Tooltip (Figma: drop shadow) |
+| `--shadow-field-focus` | `0 0 0 1px var(--color-choice-line)`, then a 4px halo of `--color-choice-line` at 40% | Focus on form fields: text inputs, selects, checkbox pills (with a `--color-choice-line` border). **Proposed, not in Figma yet.** Buttons keep the `--color-focus` outline. |
 
 Nothing else has a shadow: panels, cards and buttons are flat.
 
