@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 import { getPlannerStore } from "@/lib/store";
 import { ScheduleView } from "./ScheduleView";
-import { resetPlanner, setPlanner, solved } from "./testing/plannerFixtures";
+import { resetPlanner, setPlanner, solved, term } from "./testing/plannerFixtures";
 
 afterEach(resetPlanner);
 
@@ -16,6 +16,28 @@ function renderInCard() {
 }
 
 describe("ScheduleView", () => {
+  it("keeps the full answer's range while paging and ignores the starts-after band", () => {
+    const data = structuredClone(term);
+    data.courses[0].sections.find((section) => section.code === "CX02")!.meetings[0].end = 1200;
+    setPlanner({ term: data, response: solved(["CX01", "CX02"]) });
+    renderInCard();
+    expect(screen.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeInTheDocument();
+    act(() => getPlannerStore().setState({ scheduleIndex: 1 }));
+    expect(screen.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeInTheDocument();
+    act(() => getPlannerStore().setState({ preferences: { startsAfter: 60, blocked: [], onlyOpen: true } }));
+    expect(screen.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeInTheDocument();
+    act(() => getPlannerStore().setState({ response: solved(["CX01"]), scheduleIndex: 0 }));
+    expect(screen.getByText("Auto-fit · 8:00 AM–5:00 PM")).toBeInTheDocument();
+  });
+
+  it("draws evening blocked times on an empty plan", () => {
+    setPlanner({ courses: [], response: null, preferences: { startsAfter: 540, blocked: [{ day: "Sat", start: 1080, end: 1200 }], onlyOpen: true } });
+    renderInCard();
+    expect(screen.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeInTheDocument();
+    expect(screen.getByText("7 days")).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Saturday" })).toHaveTextContent("6 PM–8 PM");
+  });
+
   it("draws one labelled block per meeting, by day", () => {
     setPlanner({ locks: { "AE 2320": ["AE 2320-CX01"] } });
     renderInCard();
@@ -26,7 +48,7 @@ describe("ScheduleView", () => {
       "AE 2320 CX01, Introduction to Orbital Mechanics, Thursday, 2:00 PM–2:50 PM, Higgins Labs 230 Geom Modeling Computer Lab, Ye Lu, locked",
     ]);
     expect(screen.getByText("No classes before 9:00 AM")).toBeInTheDocument();
-    expect(screen.getByText("Auto-fit · 8:30 AM–4:30 PM")).toBeInTheDocument();
+    expect(screen.getByText("Auto-fit · 8:00 AM–5:00 PM")).toBeInTheDocument();
     expect(screen.getByText("Monday–Friday")).toBeInTheDocument();
     expect(within(screen.getByRole("group", { name: "Tuesday" })).getByText("2 PM–4 PM")).toBeInTheDocument();
   });
@@ -100,7 +122,7 @@ describe("ScheduleView", () => {
   });
 
   it("shows the first-visit message, the loading placeholders and the load error", async () => {
-    setPlanner({ courses: [], response: null });
+    setPlanner({ courses: [], response: null, preferences: { startsAfter: 540, blocked: [], onlyOpen: true } });
     const { unmount } = renderInCard();
     expect(screen.getByRole("heading", { name: "Add your first course" })).toBeInTheDocument();
     expect(screen.getByText("No timed courses yet")).toBeInTheDocument();

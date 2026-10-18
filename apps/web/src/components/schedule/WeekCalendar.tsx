@@ -26,37 +26,49 @@ type WeekCalendarProps = {
 
 /** The calendar card's content: day names, the time grid and the caption (div.app.md). */
 export function WeekCalendar({ days, range, caption, renderDay, background, overlay, footer }: WeekCalendarProps) {
-  const [gridRef, gridHeight] = useElementHeight<HTMLDivElement>();
+  const [viewportRef, viewportHeight] = useElementHeight<HTMLDivElement>();
   const hours = (range.end - range.start) / 60;
+  const gridHeight = viewportHeight === null ? null : Math.max(viewportHeight - 17, hours * 36);
   const density = blockDensity(gridHeight === null ? null : gridHeight / hours);
   const marks = hourMarks(range);
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <DayHeader days={days} />
-      <div className="flex min-h-0 flex-1 pt-9 pr-8 pb-8">
-        <TimeAxis range={range} marks={marks} />
-        <div ref={gridRef} className="relative min-w-0 flex-1">
-          {marks.map((minute) => (
-            <div
-              key={minute}
-              aria-hidden
-              className="absolute inset-x-0 border-t border-line"
-              style={{ top: `${percentOf(range, minute)}%` }}
-            />
-          ))}
-          {background}
-          <div
-            className="absolute inset-0 grid"
-            style={{ gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))` }}
-          >
-            {days.map((day) => (
-              <div key={day} role="group" aria-label={DAY_NAMES[day]} className="relative border-l border-line">
-                {renderDay?.(day, density)}
-              </div>
+      <div
+        ref={viewportRef}
+        role="group"
+        aria-label="Calendar time grid"
+        tabIndex={0}
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
+      >
+        <div
+          className="flex pt-9 pr-8 pb-8 motion-safe:transition-[height] motion-safe:duration-180"
+          style={{ height: gridHeight === null ? "100%" : gridHeight + 17, minHeight: hours * 36 + 17 }}
+        >
+          <TimeAxis range={range} marks={marks} />
+          <div className="relative min-w-0 flex-1">
+            {marks.map((minute) => (
+              <div
+                key={minute}
+                aria-hidden
+                className="absolute inset-x-0 border-t border-line motion-safe:transition-[top] motion-safe:duration-180"
+                style={{ top: `${percentOf(range, minute)}%` }}
+              />
             ))}
+            {background}
+            <div
+              className="absolute inset-0 grid"
+              style={{ gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))` }}
+            >
+              {days.map((day) => (
+                <div key={day} role="group" aria-label={DAY_NAMES[day]} className="relative border-l border-line">
+                  {renderDay?.(day, density)}
+                </div>
+              ))}
+            </div>
+            {overlay}
           </div>
-          {overlay}
         </div>
       </div>
       {footer}

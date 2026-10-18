@@ -10,9 +10,10 @@ import { TermErrorCalendar } from "./TermErrorCalendar";
 export function ScheduleView() {
   const termStatus = usePlanner((state) => state.termStatus);
   const hasCourses = usePlanner((state) => state.courses.length > 0);
+  const hasBlockedTimes = usePlanner((state) => state.preferences.blocked.length > 0);
 
   if (termStatus === "error") return <TermErrorCalendar />;
   if (termStatus !== "ready") return <LoadingCalendar />;
-  if (!hasCourses) return <EmptyCalendar />;
+  if (!hasCourses && !hasBlockedTimes) return <EmptyCalendar />;
   return <PlanCalendar />;
 }

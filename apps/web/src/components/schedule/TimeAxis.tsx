@@ -7,7 +7,7 @@ export function TimeAxis({ range, marks }: { range: TimeRange; marks: readonly n
       {marks.map((minute) => (
         <span
           key={minute}
-          className="absolute right-7 -translate-y-1/2 text-8-5 leading-12-33 whitespace-nowrap text-ink-muted"
+          className="absolute right-7 -translate-y-1/2 text-8-5 leading-12-33 whitespace-nowrap text-ink-muted motion-safe:transition-[top] motion-safe:duration-180"
           style={{ top: `${percentOf(range, minute)}%` }}
         >
           {formatTimeShort(minute)}
