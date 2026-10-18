@@ -31,7 +31,7 @@ export function TextInput({
       >
         {label}
       </label>
-      <div className="group flex min-h-38 items-center gap-8 rounded-control border border-line bg-surface px-9 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus has-[:disabled]:border-line-disabled has-[:disabled]:bg-surface-disabled">
+      <div className="group flex min-h-38 items-center gap-8 rounded-control border border-line bg-surface px-9 transition-[border-color,box-shadow] has-[:focus-visible]:border-choice-line has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-accent-soft has-[:disabled]:border-line-disabled has-[:disabled]:bg-surface-disabled">
         {icon && (
           <span
             aria-hidden
