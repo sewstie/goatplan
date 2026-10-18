@@ -1,6 +1,6 @@
 import type { Ref } from "react";
 import { BookmarkSimple } from "@phosphor-icons/react/ssr";
-import { ButtonLink } from "./ButtonLink";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 
 /** The empty list, in the style of the calendar's message card (div.app.md). */
 export function NoSavedPlans({ headingRef }: { headingRef?: Ref<HTMLHeadingElement> }) {

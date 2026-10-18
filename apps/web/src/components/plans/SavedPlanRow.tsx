@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { countLabel, savedLabel, sectionCount, type SavedPlan } from "@/lib/plans";
 import type { TermFileState } from "@/lib/plans/useTermFile";
-import { ButtonLink } from "./ButtonLink";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { PlanChangeNote } from "./PlanChangeNote";
 
 type SavedPlanRowProps = {

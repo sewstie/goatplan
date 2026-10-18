@@ -58,13 +58,16 @@ afterEach(() => {
 describe("openPlanInPlanner", () => {
   it("switches term and replaces the working draft with the plan", async () => {
     const plan = await savedPlanForTermD();
-    const { store } = setup();
+    const { store, engine } = setup();
     await store.getState().init();
     store.getState().addCourse("AB 1533");
+    await vi.runAllTimersAsync();
+    engine.solve.mockClear();
 
     const opened = openPlanInPlanner(store, plan);
     await vi.runAllTimersAsync();
     expect(await opened).toBe(true);
+    expect(engine.solve).toHaveBeenCalledTimes(1);
 
     expect(store.getState()).toMatchObject({
       termId: "2027-D",

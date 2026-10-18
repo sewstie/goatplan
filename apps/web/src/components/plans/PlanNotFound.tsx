@@ -1,5 +1,5 @@
 import { Warning } from "@phosphor-icons/react/ssr";
-import { ButtonLink } from "./ButtonLink";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 
 /** /plans?plan=… for a plan this browser doesn't have, like a deleted one or a link from another device. */
 export function PlanNotFound() {

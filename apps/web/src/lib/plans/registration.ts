@@ -2,6 +2,7 @@ import {
   formatDays,
   formatTimeRange,
   openSeats,
+  roomName,
   sectionTypeName,
   type Section,
   type Term,
@@ -20,7 +21,10 @@ export interface RegistrationRow {
   seats: string;
   /** "Mon–Fri · 9:00–9:50 AM", one line per meeting. */
   meetings: string[];
+  /** Building and room, "Higgins Labs 230". */
   room: string;
+  /** The rooms' full names from the data, "Higgins Labs 230 Geom Modeling Computer Lab". */
+  roomFull: string;
   instructors: string;
   /** What changed since the plan was saved, when the latest data is known. */
   change: PlanChange | null;
@@ -39,9 +43,10 @@ export function meetingLines(section: Pick<Section, "meetings">): string[] {
   );
 }
 
-function rooms(section: Section): string {
+function rooms(section: Section): { room: string; roomFull: string } {
   const names = [...new Set(section.meetings.map((meeting) => meeting.location.trim()).filter(Boolean))];
-  return names.length > 0 ? names.join(", ") : "No room listed";
+  if (names.length === 0) return { room: "No room listed", roomFull: "No room listed" };
+  return { room: names.map(roomName).join(", "), roomFull: names.join(", ") };
 }
 
 function instructors(section: Section): string {
@@ -71,7 +76,7 @@ export function registrationRows(plan: SavedPlan, term: TermFile | null): Regist
         // A removed section's old seat count would mislead.
         seats: gone ? sectionTypeName(shown.type) : `${sectionTypeName(shown.type)} · ${openSeats(shown)} open`,
         meetings: meetingLines(shown),
-        room: rooms(shown),
+        ...rooms(shown),
         instructors: instructors(shown),
         change,
       };

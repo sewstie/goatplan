@@ -4,7 +4,9 @@ import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
 import { TermBreadcrumbs } from "@/components/courses/TermBreadcrumbs";
 import { TermPicker } from "@/components/courses/TermPicker";
 import { PlanActions } from "@/components/plans/PlanActions";
+import { PlansPageActions } from "@/components/plans/PlansPageActions";
 import { PlansSubtitle } from "@/components/plans/PlansSubtitle";
+import { PlansTitle } from "@/components/plans/PlansTitle";
 import { RegistrationPrint } from "@/components/plans/RegistrationPrint";
 import { RegistrationSheet } from "@/components/plans/RegistrationSheet";
 import { RegistrationSummary } from "@/components/plans/RegistrationSummary";
@@ -37,7 +39,11 @@ export default function PlansPage() {
           }
           header={
             <WorkspaceHeader
-              title="Sections to register"
+              title={
+                <Suspense fallback="Sections to register">
+                  <PlansTitle />
+                </Suspense>
+              }
               breadcrumbs={<TermBreadcrumbs />}
               titleAside={
                 <Suspense>
@@ -49,10 +55,17 @@ export default function PlansPage() {
                   <PlansSubtitle />
                 </Suspense>
               }
-              actions={<PlanActions />}
+              actions={
+                <Suspense fallback={<PlanActions />}>
+                  <PlansPageActions />
+                </Suspense>
+              }
             />
           }
           toolbar={<PreferencesBar />}
+          scheduleLabel="Sections to register"
+          detailsLabel="Plan summary"
+          scheduleFit="content"
           schedule={
             <Suspense>
               <RegistrationSheet />

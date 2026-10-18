@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { describeChange, findPlanChanges, isSeriousChange, termLabel, type SavedPlan } from "@/lib/plans";
 import { useTermFile } from "@/lib/plans/useTermFile";
 import { usePlanner } from "@/lib/store";
-import { ButtonLink } from "./ButtonLink";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useOpenPlan } from "./useOpenPlan";
 
 const WORKDAY_URL = "https://workday.wpi.edu";

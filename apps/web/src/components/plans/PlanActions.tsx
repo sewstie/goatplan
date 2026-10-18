@@ -1,7 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { createPlan, defaultPlanName, getPlansSource, newPlanId, settled, termLabel, updatePlan } from "@/lib/plans";
+import {
+  createPlan,
+  defaultPlanName,
+  getPlansSource,
+  newPlanId,
+  settled,
+  termLabel,
+  updatePlan,
+  type SavedPlan,
+} from "@/lib/plans";
 import { getPlannerStore, usePlanner } from "@/lib/store";
 import { PlanNameDialog } from "./PlanNameDialog";
 import { PlanStatus } from "./PlanStatus";
@@ -12,9 +21,18 @@ import { usePlanSaveState } from "./usePlanSaveState";
 
 const COULDNT_SAVE = "Couldn’t save. Browser storage is full or blocked.";
 
+type PlanActionsProps = {
+  /**
+   * The saved plan on screen (/plans?plan=…). When it isn't the plan open in the planner, the status
+   * describes it: a saved plan, with nothing to save.
+   */
+  shownPlan?: SavedPlan | null;
+};
+
 /** "Saved plans" and the Save schedule button in the header (div.app-12.md). */
-export function PlanActions() {
+export function PlanActions({ shownPlan = null }: PlanActionsProps) {
   const save = usePlanSaveState();
+  const status = shownPlan && shownPlan.id !== save.currentPlan?.id ? "saved" : save.status;
   const term = usePlanner((state) => state.term?.term ?? null);
   const { requestOpen, dialog } = useOpenPlan();
   const [naming, setNaming] = useState<"first" | "copy" | null>(null);
@@ -52,7 +70,7 @@ export function PlanActions() {
   return (
     <>
       <div className="flex items-center gap-10">
-        <PlanStatus status={save.status} error={error} />
+        <PlanStatus status={status} error={error} />
         <SavedPlansMenu
           plans={save.termPlans}
           termName={term ? termLabel(term) : null}
@@ -64,7 +82,7 @@ export function PlanActions() {
         />
       </div>
       <SaveScheduleButton
-        saved={save.status === "saved"}
+        saved={status === "saved"}
         disabled={!save.canSave || save.busy || saving}
         onSave={saveChanges}
       />

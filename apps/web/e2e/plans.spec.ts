@@ -63,6 +63,18 @@ const changedPlan = (() => {
   return changed;
 })();
 
+/** Nine courses, longer than the 630px the main region has on tablets. */
+const longPlan = (() => {
+  const long = savedPlan("plan-long", "Everything", "2026-10-17T12:00:00.000Z");
+  const extra = term.courses.filter((item) => !long.courses.includes(item.code)).slice(0, 6);
+  long.courses = [...long.courses, ...extra.map((item) => item.code)];
+  long.schedule = [
+    ...long.schedule,
+    ...extra.map((item) => ({ code: item.code, title: item.title, sections: [structuredClone(item.sections[0])] })),
+  ];
+  return long;
+})();
+
 const baseStorage = { "goatplan:term:v1": "2027-C", "goatplan:draft:v1:2027-C": draft };
 const savedStorage = {
   ...baseStorage,
@@ -213,7 +225,8 @@ test.describe("Sections to register", () => {
   test("shows the saved plan's sections and copies the list", async ({ page }) => {
     await seed(page, savedStorage);
     await page.goto("/plans?plan=plan-design");
-    await expect(page.getByRole("heading", { level: 1, name: "Sections to register" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sections to register · Plan 1");
+    await expect(page.getByRole("region", { name: "Sections to register" })).toBeVisible();
     await expect(header(page)).toContainText("Schedule 1 of 1");
     await expect(header(page)).toContainText("3 courses · 4 sections · Saved plan");
     await expect(page.getByRole("heading", { level: 2, name: "Ready for Workday" })).toBeVisible();
@@ -235,7 +248,7 @@ test.describe("Sections to register", () => {
     await expect(page.getByRole("button", { name: "Copied" })).toBeVisible();
     expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(list);
 
-    const summary = page.getByRole("complementary", { name: "Course details" });
+    const summary = page.getByRole("complementary", { name: "Plan summary" });
     await expect(summary.getByText("Plan ready")).toBeVisible();
     await expect(summary.getByRole("listitem")).toHaveText([
       "Lecture and lab choices included",
@@ -272,10 +285,14 @@ test.describe("Sections to register", () => {
   test("flags seats and sections that changed since the plan was saved", async ({ page }) => {
     await seed(page, twoPlansStorage);
     await page.goto("/plans?plan=plan-changed");
-    const summary = page.getByRole("complementary", { name: "Course details" });
+    const summary = page.getByRole("complementary", { name: "Plan summary" });
     await expect(summary.getByText("Saved plan needs attention")).toBeVisible();
     await expect(summary.getByRole("heading", { level: 3 })).toHaveText("AE 2410 C09 was removed.");
     await expect(summary.getByRole("button", { name: "Open in planner" })).toBeVisible();
+    // The planner has Plan 1 open; the header describes the plan on screen, which is saved.
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sections to register · Mornings free");
+    await expect(header(page).getByRole("status")).toHaveText("Schedule saved");
+    await expect(header(page).getByRole("button", { name: "Saved", exact: true })).toHaveAttribute("aria-disabled", "true");
     const rows = page.getByRole("table").getByRole("row");
     await expect(rows.nth(2)).toContainText(/Was \d+ open/);
     await expect(rows.nth(3)).toContainText("No longer offered");
@@ -283,11 +300,32 @@ test.describe("Sections to register", () => {
     await screenshot(page, "plans-attention-1440");
   });
 
+  test("the header says when the plan on screen has unsaved changes in the planner", async ({ page }) => {
+    await seed(page, unsavedStorage);
+    await page.goto("/plans?plan=plan-design");
+    await plannerSettled(page);
+    await expect(header(page).getByRole("status")).toHaveText("Unsaved changes");
+    await expect(header(page).getByRole("button", { name: "Save schedule" })).toBeEnabled();
+  });
+
+  test("a long plan makes the page longer on a tablet instead of scrolling inside a box", async ({ page }) => {
+    await seed(page, { ...savedStorage, "goatplan:plans:v1:plan:plan-long": longPlan });
+    await page.setViewportSize({ width: 834, height: 1194 });
+    await page.goto("/plans?plan=plan-long");
+    const region = page.getByRole("region", { name: "Sections to register" });
+    await expect(region.getByRole("table").getByRole("row")).toHaveCount(11);
+    expect((await region.boundingBox())!.height).toBeGreaterThan(630);
+    const scrolls = await region.evaluate((element) =>
+      [element, ...element.children].some((node) => node.scrollHeight > node.clientHeight + 1),
+    );
+    expect(scrolls).toBe(false);
+  });
+
   test("says when the latest course data can't be checked", async ({ page }) => {
     await seed(page, savedStorage);
     await page.route("**/data/2027-C.json", (route) => route.fulfill({ status: 500 }));
     await page.goto("/plans?plan=plan-design");
-    const summary = page.getByRole("complementary", { name: "Course details" });
+    const summary = page.getByRole("complementary", { name: "Plan summary" });
     await expect(summary).toContainText("Couldn’t check the latest course data.");
     await expect(page.getByRole("table").getByRole("row")).toHaveCount(5);
   });
