@@ -17,7 +17,9 @@ export function BlockTimeButton() {
   const [open, setOpen] = useState(false);
   // A new key each time the dialog opens, so the form starts empty.
   const [formKey, setFormKey] = useState(0);
+  const [error, setError] = useState<string | null>(null);
   const formId = useId();
+  const errorId = useId();
 
   function handleSubmit(days: Day[], start: number, end: number) {
     setPreferences({ blocked: addBlocked(blocked, days, start, end) });
@@ -31,6 +33,7 @@ export function BlockTimeButton() {
         icon={<Plus />}
         onClick={() => {
           setFormKey((key) => key + 1);
+          setError(null);
           setOpen(true);
         }}
       >
@@ -43,16 +46,28 @@ export function BlockTimeButton() {
         description="GoatPlan won’t put classes in this time."
         footer={
           <>
+            {error && (
+              <p id={errorId} role="alert" className="mr-auto self-center text-9 leading-13-5 text-warning">
+                {error}
+              </p>
+            )}
             <Button variant="secondary" size="md" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button type="submit" size="md" form={formId}>
+            {/* Without this the border stays darker than the hover fill and reads as an outline. */}
+            <Button type="submit" size="md" form={formId} className="enabled:hover:border-transparent">
               Block time
             </Button>
           </>
         }
       >
-        <BlockTimeForm key={formKey} id={formId} onSubmit={handleSubmit} />
+        <BlockTimeForm
+          key={formKey}
+          id={formId}
+          onSubmit={handleSubmit}
+          onError={setError}
+          errorId={error ? errorId : undefined}
+        />
       </Dialog>
     </>
   );

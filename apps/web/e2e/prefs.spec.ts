@@ -113,8 +113,11 @@ test("the block form works with the keyboard and checks its days", async ({ page
   await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Block a time" });
   await expect(dialog).toBeVisible();
+  const before = await dialog.boundingBox();
   await dialog.getByRole("button", { name: "Block time" }).click();
   await expect(dialog.getByRole("alert")).toHaveText("Pick at least one day.");
+  // The message sits next to the buttons, so the dialog doesn't grow or jump.
+  expect(await dialog.boundingBox()).toEqual(before);
 
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
