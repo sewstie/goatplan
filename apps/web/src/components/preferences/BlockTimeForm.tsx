@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type Ref } from "react";
 import { Select } from "@/components/ui/Select";
 import { TextInput } from "@/components/ui/TextInput";
 import { WEEK } from "@/lib/data";
@@ -15,12 +15,14 @@ type BlockTimeFormProps = {
   onError: (message: string | null) => void;
   /** The id of that message while it is shown. */
   errorId?: string;
+  /** The name field, which takes focus when the dialog opens. */
+  nameRef?: Ref<HTMLInputElement>;
 };
 
 const START_OPTIONS = blockStartOptions();
 
 /** A name, days and a time range to keep free. The dialog's footer holds its submit button. */
-export function BlockTimeForm({ id, onSubmit, onError, errorId }: BlockTimeFormProps) {
+export function BlockTimeForm({ id, onSubmit, onError, errorId, nameRef }: BlockTimeFormProps) {
   const [label, setLabel] = useState("");
   const [days, setDays] = useState<Day[]>([]);
   const [start, setStart] = useState(12 * 60);
@@ -43,6 +45,7 @@ export function BlockTimeForm({ id, onSubmit, onError, errorId }: BlockTimeFormP
   return (
     <form id={id} noValidate onSubmit={handleSubmit} className="flex flex-col gap-14 pt-8">
       <TextInput
+        ref={nameRef}
         label="Name (optional)"
         hideLabel={false}
         placeholder="Work"

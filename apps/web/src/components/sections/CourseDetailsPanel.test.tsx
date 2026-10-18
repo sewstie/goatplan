@@ -186,7 +186,8 @@ describe("ChooseAlternativeSheet", () => {
     const opener = screen.getByRole("button", { name: "View other lab choices" });
     await userEvent.click(opener);
     const sheet = screen.getByRole("dialog", { name: "AE 2320" });
-    expect(within(sheet).getByText(/same time as your lab CX01/)).toBeInTheDocument();
+    expect(within(sheet).getByText(/same time as your lab CX01/)).toHaveFocus();
+    expect(within(sheet).getByRole("button", { name: "Close" })).not.toHaveFocus();
     const group = within(sheet).getByRole("group", { name: "Other lab choices" });
     expect(within(group).getByRole("radio", { name: /CX02/ })).not.toBeChecked();
     expect(within(group).getByText("30 open")).toBeInTheDocument();

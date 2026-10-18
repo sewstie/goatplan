@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Plus } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
@@ -20,6 +20,13 @@ export function BlockTimeButton() {
   const [error, setError] = useState<string | null>(null);
   const formId = useId();
   const errorId = useId();
+  const nameRef = useRef<HTMLInputElement>(null);
+
+  // The dialog would focus its close button, which Safari outlines; start in the name field instead.
+  // This runs after the dialog's own effect has opened it.
+  useEffect(() => {
+    if (open) nameRef.current?.focus();
+  }, [open]);
 
   function handleSubmit(days: Day[], start: number, end: number, label: string) {
     setPreferences({ blocked: addBlocked(blocked, days, start, end, label) });
@@ -64,6 +71,7 @@ export function BlockTimeButton() {
         <BlockTimeForm
           key={formKey}
           id={formId}
+          nameRef={nameRef}
           onSubmit={handleSubmit}
           onError={setError}
           errorId={error ? errorId : undefined}

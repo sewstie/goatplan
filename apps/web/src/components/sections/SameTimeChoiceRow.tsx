@@ -15,7 +15,7 @@ export function SameTimeChoiceRow({ name, choice, checked, onSelect }: SameTimeC
   return (
     <label
       className={cx(
-        "flex cursor-pointer items-center gap-7 rounded-row border px-7 pt-11 pb-8 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus",
+        "flex cursor-pointer items-center gap-7 rounded-row border px-7 pt-11 pb-8 transition-[background-color,border-color,box-shadow] has-[:focus-visible]:border-choice-line has-[:focus-visible]:shadow-field-focus",
         checked ? "border-choice-line bg-choice-surface" : "border-line hover:bg-surface-selected",
       )}
     >
