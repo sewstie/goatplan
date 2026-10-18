@@ -1,5 +1,6 @@
 export * from "./types";
 export * from "./load";
+export * from "./terms";
 export * from "./time";
 export * from "./days";
 export * from "./seats";

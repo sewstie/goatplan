@@ -39,7 +39,6 @@ export function createEngineHost(deps: EngineHostDeps) {
   }
 
   async function fetchTerm(termId: string): Promise<string> {
-    if (!isTermId(termId)) throw new HostFailure("fetchFailed", `Not a term id: ${termId}`);
     try {
       return await deps.fetchTermText(termId);
     } catch (cause) {
@@ -47,10 +46,11 @@ export function createEngineHost(deps: EngineHostDeps) {
     }
   }
 
-  async function loadTerm(termId: string): Promise<LoadTermResponse> {
+  async function loadTerm(termId: string, buffer?: ArrayBuffer): Promise<LoadTermResponse> {
+    if (!isTermId(termId)) throw new HostFailure("fetchFailed", `Not a term id: ${termId}`);
     if (loaded?.termId === termId) return loaded.response;
     const engine = await getModule();
-    const text = await fetchTerm(termId);
+    const text = buffer ? new TextDecoder().decode(buffer) : await fetchTerm(termId);
     const response = JSON.parse(engine.loadTerm(text)) as LoadTermResponse;
     // A term that fails to load leaves the previous one loaded, as the engine does.
     if (response.ok) loaded = { termId, response };
@@ -61,7 +61,7 @@ export function createEngineHost(deps: EngineHostDeps) {
     try {
       const response =
         message.kind === "loadTerm"
-          ? await loadTerm(message.termId)
+          ? await loadTerm(message.termId, message.buffer)
           : (JSON.parse((await getModule()).handle(JSON.stringify(message.request))) as SolveResponse);
       return { id: message.id, type: "result", response };
     } catch (error) {

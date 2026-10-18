@@ -1,0 +1,136 @@
+import { WEEK } from "@/lib/data/days";
+import type { Day, TermFile } from "@/lib/data/types";
+import type { BlockedTime } from "@/lib/engine/types";
+import { isSortPresetId } from "./sortPresets";
+import type { Draft, PlanPreferences } from "./types";
+
+export const DRAFT_VERSION = 1;
+export const LAST_TERM_KEY = "goatplan:term:v1";
+
+export function draftKey(termId: string): string {
+  return `goatplan:draft:v${DRAFT_VERSION}:${termId}`;
+}
+
+export type DraftStorage = Pick<Storage, "getItem" | "setItem">;
+
+/** The first-visit design starts at 9:00 AM with only open sections. */
+export const DEFAULT_PREFERENCES: Readonly<PlanPreferences> = { startsAfter: 540, blocked: [], onlyOpen: true };
+
+export function emptyDraft(): Draft {
+  return {
+    courses: [],
+    preferences: { ...DEFAULT_PREFERENCES, blocked: [] },
+    locks: {},
+    sortPreset: "fewestEarly",
+    alternatives: {},
+  };
+}
+
+/** localStorage, or null where it doesn't exist or is blocked. */
+export function browserStorage(): DraftStorage | null {
+  try {
+    return typeof window === "undefined" ? null : window.localStorage;
+  } catch {
+    return null;
+  }
+}
+
+type Json = Record<string, unknown>;
+
+const isObject = (value: unknown): value is Json =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+const isStringArray = (value: unknown): value is string[] =>
+  Array.isArray(value) && value.every((item) => typeof item === "string");
+const isMinute = (value: unknown): value is number =>
+  Number.isInteger(value) && (value as number) >= 0 && (value as number) <= 1440;
+const isRecordOf = <T>(value: unknown, check: (item: unknown) => item is T): value is Record<string, T> =>
+  isObject(value) && Object.values(value).every(check);
+
+function isBlockedTime(value: unknown): value is BlockedTime {
+  return (
+    isObject(value) &&
+    WEEK.includes(value.day as Day) &&
+    isMinute(value.start) &&
+    isMinute(value.end) &&
+    (value.start as number) < (value.end as number)
+  );
+}
+
+const isChoice = (value: unknown): value is Record<string, string[]> => isRecordOf(value, isStringArray);
+
+/** A saved draft, or null if the data is broken or from another version. Never throws. */
+export function parseDraft(value: unknown): Draft | null {
+  if (!isObject(value) || value.version !== DRAFT_VERSION) return null;
+  const { courses, preferences, locks, sortPreset, alternatives } = value;
+  if (!isStringArray(courses) || !isRecordOf(locks, isStringArray) || !isSortPresetId(sortPreset)) return null;
+  if (!isRecordOf(alternatives, isChoice) || !isObject(preferences)) return null;
+  const { startsAfter, blocked, onlyOpen } = preferences;
+  if (!isMinute(startsAfter) || typeof onlyOpen !== "boolean") return null;
+  if (!Array.isArray(blocked) || !blocked.every(isBlockedTime)) return null;
+
+  return {
+    courses: [...courses],
+    preferences: {
+      startsAfter,
+      blocked: blocked.map(({ day, start, end }) => ({ day, start, end })),
+      onlyOpen,
+    },
+    locks: { ...locks },
+    sortPreset,
+    alternatives: { ...alternatives },
+  };
+}
+
+export function readDraft(storage: DraftStorage | null, termId: string): Draft | null {
+  try {
+    const raw = storage?.getItem(draftKey(termId));
+    return raw ? parseDraft(JSON.parse(raw)) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function writeDraft(storage: DraftStorage | null, termId: string, draft: Draft): void {
+  try {
+    storage?.setItem(draftKey(termId), JSON.stringify({ version: DRAFT_VERSION, ...draft }));
+  } catch {
+    // Full or blocked storage: the draft just isn't kept.
+  }
+}
+
+export function readLastTerm(storage: DraftStorage | null): string | null {
+  try {
+    return storage?.getItem(LAST_TERM_KEY) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export function writeLastTerm(storage: DraftStorage | null, termId: string): void {
+  try {
+    storage?.setItem(LAST_TERM_KEY, termId);
+  } catch {
+    // Same as writeDraft.
+  }
+}
+
+/** Drops what the term no longer has: unknown courses, locks on missing sections, choices for removed courses. */
+export function sanitizeDraft(draft: Draft, term: TermFile): Draft {
+  const coursesByCode = new Map(term.courses.map((course) => [course.code, course]));
+  const courses = [...new Set(draft.courses)].filter((code) => coursesByCode.has(code));
+
+  const locks: Draft["locks"] = {};
+  for (const code of courses) {
+    const sectionIds = new Set(coursesByCode.get(code)!.sections.map((section) => section.id));
+    const kept = [...new Set(draft.locks[code] ?? [])].filter((id) => sectionIds.has(id));
+    if (kept.length > 0) locks[code] = kept;
+  }
+
+  const alternatives: Draft["alternatives"] = {};
+  for (const [scheduleKey, choice] of Object.entries(draft.alternatives)) {
+    const kept = Object.fromEntries(Object.entries(choice).filter(([code]) => courses.includes(code)));
+    if (Object.keys(kept).length > 0) alternatives[scheduleKey] = kept;
+  }
+
+  return { ...draft, courses, locks, alternatives };
+}

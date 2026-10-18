@@ -36,6 +36,15 @@ describe("engine host", () => {
     expect(engine.loadTerm).toHaveBeenCalledWith('{"term":{"id":"2027-C"}}');
   });
 
+  it("decodes transferred bytes instead of fetching the file", async () => {
+    const { host, engine, fetchTermText } = setup();
+    const buffer = new TextEncoder().encode('{"term":{"id":"2027-C"}}').buffer;
+    const reply = await host.handle({ id: 1, kind: "loadTerm", termId: "2027-C", buffer });
+    expect(reply).toMatchObject({ type: "result", response: { ok: true, termId: "2027-C" } });
+    expect(engine.loadTerm).toHaveBeenCalledWith('{"term":{"id":"2027-C"}}');
+    expect(fetchTermText).not.toHaveBeenCalled();
+  });
+
   it("starts the engine once and doesn't reload a term that is already loaded", async () => {
     const { host, loadModule, fetchTermText } = setup();
     await host.handle({ id: 1, kind: "loadTerm", termId: "2027-C" });

@@ -21,7 +21,7 @@ export class EngineFailureError extends Error {
 }
 
 export interface EngineWorker {
-  postMessage(message: WorkerRequest): void;
+  postMessage(message: WorkerRequest, transfer?: Transferable[]): void;
   terminate(): void;
   onmessage: ((event: MessageEvent<WorkerReply>) => void) | null;
   onerror: ((event: ErrorEvent) => void) | null;
@@ -54,8 +54,14 @@ export class EngineClient {
 
   constructor(private readonly createWorker: () => EngineWorker = createEngineWorker) {}
 
-  loadTerm(termId: string): Promise<LoadTermResponse> {
-    return this.enqueue({ id: this.nextId++, kind: "loadTerm", termId }) as Promise<LoadTermResponse>;
+  /**
+   * Loads a term into the engine. Pass the term file's bytes (from takeTermBuffer) to move them to the
+   * worker without copying or downloading them again; without them the worker fetches the file.
+   */
+  loadTerm(termId: string, buffer?: ArrayBuffer | null): Promise<LoadTermResponse> {
+    const message: WorkerRequest = { id: this.nextId++, kind: "loadTerm", termId };
+    if (buffer) message.buffer = buffer;
+    return this.enqueue(message) as Promise<LoadTermResponse>;
   }
 
   solve(request: SolveRequest): Promise<SolveResponse> {
@@ -89,7 +95,9 @@ export class EngineClient {
     const next = this.waiting.shift();
     if (!next) return;
     this.inFlight = next;
-    this.ensureWorker().postMessage(next.message);
+    const { message } = next;
+    const transfer = message.kind === "loadTerm" && message.buffer ? [message.buffer] : [];
+    this.ensureWorker().postMessage(message, transfer);
   }
 
   private ensureWorker(): EngineWorker {

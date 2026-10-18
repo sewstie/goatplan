@@ -4,7 +4,7 @@ import { useCallback, useEffect, useId, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Select } from "@/components/ui/Select";
-import { loadTerm, loadTermIndex } from "@/lib/data/load";
+import { loadTerm, loadTermIndex, takeTermBuffer } from "@/lib/data/load";
 import type { TermSummary } from "@/lib/data/types";
 import { EngineClient, EngineSupersededError } from "@/lib/engine/EngineClient";
 import type { SolveRequest, SolveResponse } from "@/lib/engine/types";
@@ -52,7 +52,9 @@ export function EnginePlayground() {
         setTermId(id);
         setStatus(`Loading ${id}…`);
         const started = performance.now();
-        const [response, termFile] = await Promise.all([client.loadTerm(id), loadTerm(id)]);
+        // One download: the page parses the file and the worker gets its bytes.
+        const termFile = await loadTerm(id);
+        const response = await client.loadTerm(id, takeTermBuffer(id));
         const roundTripMs = performance.now() - started;
         if (!response.ok) {
           setStatus(`${id} didn’t load: ${response.error.message}`);

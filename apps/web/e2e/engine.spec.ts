@@ -12,10 +12,20 @@ async function valueOf(page: Page, label: string): Promise<string> {
   return (await term.locator("xpath=following-sibling::dd[1]").textContent()) ?? "";
 }
 
+let requested: string[] = [];
+
 test.beforeEach(async ({ page }) => {
+  requested = [];
+  page.on("request", (request) => requested.push(new URL(request.url()).pathname));
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/dev/engine");
   await expect(page.getByText(/^Loaded \d{4}-[A-Z] · \d+ courses/)).toBeVisible({ timeout: 60_000 });
+});
+
+test("loads a term with a single download", async ({ page }) => {
+  const termId = (await page.getByText(/^Loaded \d{4}-[A-Z]/).textContent())!.match(/\d{4}-[A-Z]/)![0];
+  await page.waitForTimeout(500);
+  expect(requested.filter((path) => path === `/data/${termId}.json`)).toHaveLength(1);
 });
 
 test("sends a request and shows the response and the time it took", async ({ page }) => {

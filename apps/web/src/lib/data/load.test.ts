@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { clearDataCache, DataLoadError, isTermId, loadTerm, loadTermIndex } from "./load";
+import { clearDataCache, DataLoadError, isTermId, loadTerm, loadTermIndex, takeTermBuffer } from "./load";
 
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
@@ -57,6 +57,19 @@ describe("loadTerm", () => {
 
     fetchMock.mockResolvedValueOnce(new Response("{not json", { status: 200 }));
     await expect(loadTerm("2027-C")).rejects.toBeInstanceOf(DataLoadError);
+  });
+
+  it("keeps the term file's bytes for the engine, handed over once", async () => {
+    const body = { term: { id: "2027-C" } };
+    fetchMock.mockResolvedValue(jsonResponse(body));
+    await loadTerm("2027-C");
+
+    const bytes = takeTermBuffer("2027-C");
+    expect(bytes).toBeInstanceOf(ArrayBuffer);
+    expect(JSON.parse(new TextDecoder().decode(bytes!))).toEqual(body);
+    expect(takeTermBuffer("2027-C")).toBeNull();
+    expect(takeTermBuffer("2027-D")).toBeNull();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it("refuses anything that isn't a term id without fetching", async () => {
