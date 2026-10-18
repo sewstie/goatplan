@@ -14,8 +14,8 @@ import {
   writeLastTerm,
   type DraftStorage,
 } from "./draft";
-import { scheduleKey, selectCurrentSchedule, selectSchedules } from "./selectors";
-import type { Draft, PlannerState, PlannerStore } from "./types";
+import { findSchedule, scheduleKey, selectChosenSections, selectCurrentSchedule, selectSchedules } from "./selectors";
+import type { AlternativeChoices, Draft, PlannerState, PlannerStore } from "./types";
 
 /** How long the store waits after the last change before it asks the engine. */
 export const SOLVE_DELAY_MS = 200;
@@ -41,7 +41,11 @@ const initialState: PlannerState = {
   scheduleIndex: 0,
   solveStatus: "idle",
   solveError: null,
+  selectedCourse: null,
+  selectedSection: null,
 };
+
+type Selection = Pick<PlannerState, "selectedCourse" | "selectedSection">;
 
 function describe(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
@@ -52,10 +56,18 @@ function draftOf(state: PlannerState): Draft {
   return { courses, preferences, locks, sortPreset, alternatives };
 }
 
+const sameSet = (a: readonly string[], b: readonly string[]) => a.length === b.length && a.every((id) => b.includes(id));
+
 function withoutKey<T>(record: Record<string, T>, key: string): Record<string, T> {
   const copy = { ...record };
   delete copy[key];
   return copy;
+}
+
+/** Sets the picked alternatives of one schedule, replacing what was picked there before. */
+function withChoices(alternatives: AlternativeChoices, key: string, choices: Record<string, string[]>): AlternativeChoices {
+  const rest = withoutKey(alternatives, key);
+  return Object.keys(choices).length > 0 ? { ...rest, [key]: choices } : rest;
 }
 
 export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
@@ -73,11 +85,12 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       solveTimer = null;
     }
 
-    async function runSolve() {
+    /** Asks the engine now. Resolves to false when a newer change or term made the answer moot. */
+    async function runSolve(): Promise<boolean> {
       const state = get();
       const request = buildRequest(state);
       const termId = state.termId;
-      if (!request || !termId || state.termStatus !== "ready") return;
+      if (!request || !termId || state.termStatus !== "ready") return false;
 
       const token = ++solveToken;
       set({ solveStatus: "solving", solveError: null });
@@ -88,11 +101,13 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
           await deps.engine.loadTerm(termId);
           response = await deps.engine.solve(request);
         }
-        if (token !== solveToken) return;
+        if (token !== solveToken) return false;
         set({ response, scheduleIndex: 0, solveStatus: "done" });
+        return true;
       } catch (error) {
-        if (token !== solveToken || error instanceof EngineSupersededError) return;
+        if (token !== solveToken || error instanceof EngineSupersededError) return false;
         set({ solveStatus: "error", solveError: describe(error) });
+        return true;
       }
     }
 
@@ -112,7 +127,10 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
     }
 
     /** Changes the draft, saves it for this term and solves again. Ignored until the term is ready. */
-    function changeDraft(changes: (state: PlannerState) => Partial<Draft> | null, options = { solve: true }) {
+    function changeDraft(
+      changes: (state: PlannerState) => (Partial<Draft> & Partial<Selection>) | null,
+      options = { solve: true },
+    ) {
       const state = get();
       if (state.termStatus !== "ready" || !state.termId) return;
       const update = changes(state);
@@ -122,9 +140,16 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       if (options.solve) scheduleSolve();
     }
 
-    function removeCourse(state: PlannerState, code: string): Partial<Draft> | null {
-      if (!state.courses.includes(code)) return null;
+    function removeCourse(state: PlannerState, code: string): (Partial<Draft> & Partial<Selection>) | null {
+      const index = state.courses.indexOf(code);
+      if (index < 0) return null;
+      // A removed course hands the selection to its neighbour, like keyboard focus in "Your courses".
+      const selection: Partial<Selection> =
+        state.selectedCourse === code
+          ? { selectedCourse: state.courses[index + 1] ?? state.courses[index - 1] ?? null, selectedSection: null }
+          : {};
       return {
+        ...selection,
         courses: state.courses.filter((course) => course !== code),
         locks: withoutKey(state.locks, code),
         alternatives: Object.fromEntries(
@@ -133,10 +158,48 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       };
     }
 
-    function moveSchedule(step: number) {
+    function setScheduleIndex(index: number) {
       const count = selectSchedules(get()).length;
       if (count === 0) return;
-      set({ scheduleIndex: Math.min(count - 1, Math.max(0, get().scheduleIndex + step)) });
+      set({ scheduleIndex: Math.min(count - 1, Math.max(0, Math.trunc(index))) });
+    }
+
+    /** Starts loading a term with the draft it should open with. Resolves to true once it's ready. */
+    async function switchTerm(termId: string, draftFor: () => Draft): Promise<boolean> {
+      const token = ++termToken;
+      clearSolveTimer();
+      solveToken += 1;
+      set({
+        ...emptyDraft(),
+        termId,
+        term: null,
+        termStatus: "loading",
+        termError: null,
+        response: null,
+        scheduleIndex: 0,
+        solveStatus: "idle",
+        solveError: null,
+        selectedCourse: null,
+        selectedSection: null,
+      });
+      try {
+        if (!isTermId(termId)) throw new Error(`There is no term ${termId}.`);
+        writeLastTerm(deps.storage, termId);
+        const term = await deps.loadTerm(termId);
+        if (token !== termToken) return false;
+        // The term file's bytes move to the worker, so the file is downloaded only once.
+        const loaded = await deps.engine.loadTerm(termId, deps.takeTermBuffer(termId));
+        if (token !== termToken) return false;
+        if (!loaded.ok) throw new Error(loaded.error.message);
+
+        const draft = sanitizeDraft(draftFor(), term);
+        set({ ...draft, term, termStatus: "ready", selectedCourse: draft.courses[0] ?? null });
+        return true;
+      } catch (error) {
+        if (token !== termToken) return false;
+        set({ termStatus: "error", termError: describe(error) });
+        return false;
+      }
     }
 
     return {
@@ -163,48 +226,66 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       },
 
       async setTerm(termId) {
-        const token = ++termToken;
-        clearSolveTimer();
-        solveToken += 1;
-        set({
-          ...emptyDraft(),
-          termId,
-          term: null,
-          termStatus: "loading",
-          termError: null,
-          response: null,
-          scheduleIndex: 0,
-          solveStatus: "idle",
-          solveError: null,
-        });
-        try {
-          if (!isTermId(termId)) throw new Error(`There is no term ${termId}.`);
-          writeLastTerm(deps.storage, termId);
-          const term = await deps.loadTerm(termId);
-          if (token !== termToken) return;
-          // The term file's bytes move to the worker, so the file is downloaded only once.
-          const loaded = await deps.engine.loadTerm(termId, deps.takeTermBuffer(termId));
-          if (token !== termToken) return;
-          if (!loaded.ok) throw new Error(loaded.error.message);
+        if (await switchTerm(termId, () => readDraft(deps.storage, termId) ?? emptyDraft())) void runSolve();
+      },
 
-          const draft = sanitizeDraft(readDraft(deps.storage, termId) ?? emptyDraft(), term);
-          set({ ...draft, term, termStatus: "ready" });
-          void runSolve();
-        } catch (error) {
-          if (token !== termToken) return;
-          set({ termStatus: "error", termError: describe(error) });
+      async openPlan(termId, plan, chosen = {}) {
+        const draft: Draft = {
+          courses: [...plan.courses],
+          preferences: structuredClone(plan.preferences),
+          locks: structuredClone(plan.locks),
+          sortPreset: plan.sortPreset,
+          alternatives: {},
+        };
+        const state = get();
+        if (state.termId === termId && state.termStatus === "ready" && state.term) {
+          clearSolveTimer();
+          solveToken += 1;
+          const sanitized = sanitizeDraft(draft, state.term);
+          set({
+            ...sanitized,
+            response: null,
+            scheduleIndex: 0,
+            solveStatus: "idle",
+            solveError: null,
+            selectedCourse: sanitized.courses[0] ?? null,
+            selectedSection: null,
+          });
+        } else if (!(await switchTerm(termId, () => draft))) {
+          return false;
         }
+        writeDraft(deps.storage, termId, draftOf(get()));
+        if (!buildRequest(get())) return true;
+        if (!(await runSolve()) || solveTimer) return false;
+
+        const current = get();
+        const found = findSchedule(selectSchedules(current), chosen);
+        if (found) {
+          const key = scheduleKey(selectSchedules(current)[found.index]);
+          set({ scheduleIndex: found.index, alternatives: withChoices(current.alternatives, key, found.choices) });
+          writeDraft(deps.storage, termId, draftOf(get()));
+        }
+        return true;
       },
 
       addCourse(code) {
         changeDraft((state) => {
           const known = state.term?.courses.some((course) => course.code === code);
-          return known && !state.courses.includes(code) ? { courses: [...state.courses, code] } : null;
+          if (!known || state.courses.includes(code)) return null;
+          return { courses: [...state.courses, code], selectedCourse: code, selectedSection: null };
         });
       },
 
       removeCourse(code) {
         changeDraft((state) => removeCourse(state, code));
+      },
+
+      selectCourse(code, sectionId = null) {
+        if (code === null) {
+          set({ selectedCourse: null, selectedSection: null });
+          return;
+        }
+        if (get().courses.includes(code)) set({ selectedCourse: code, selectedSection: sectionId });
       },
 
       setPreferences(changes) {
@@ -255,12 +336,51 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         );
       },
 
+      pickOption(courseCode, sectionIds) {
+        const state = get();
+        const schedules = selectSchedules(state);
+        const current = selectCurrentSchedule(state);
+        const course = state.term?.courses.find((item) => item.code === courseCode);
+        if (!current || !course || !state.termId || !state.courses.includes(courseCode)) return;
+        if (!course.options.some((option) => sameSet(option, sectionIds))) return;
+
+        const chosen = selectChosenSections(state);
+        const shown = chosen[courseCode] ?? [];
+        if (sameSet(shown, sectionIds)) return;
+        const wanted = { ...chosen, [courseCode]: [...sectionIds] };
+        const added = sectionIds.filter((id) => !shown.includes(id));
+        const selection: Partial<Selection> =
+          state.selectedCourse === courseCode && state.selectedSection && !sectionIds.includes(state.selectedSection)
+            ? { selectedSection: added[0] ?? null }
+            : {};
+
+        // The shown schedule first, so a same-time pick doesn't page away from it.
+        const here = findSchedule([current], wanted);
+        const found = here ? { ...here, index: state.scheduleIndex } : findSchedule(schedules, wanted);
+        if (found) {
+          const key = scheduleKey(schedules[found.index]);
+          set({ ...selection, scheduleIndex: found.index, alternatives: withChoices(state.alternatives, key, found.choices) });
+          writeDraft(deps.storage, state.termId, draftOf(get()));
+          return;
+        }
+
+        // Locks that the new option drops would leave nothing to show, so they go.
+        changeDraft(() => {
+          const kept = (state.locks[courseCode] ?? []).filter((id) => sectionIds.includes(id));
+          return { ...selection, locks: { ...state.locks, [courseCode]: [...new Set([...kept, ...added])] } };
+        });
+      },
+
+      setScheduleIndex(index) {
+        setScheduleIndex(index);
+      },
+
       nextSchedule() {
-        moveSchedule(1);
+        setScheduleIndex(get().scheduleIndex + 1);
       },
 
       previousSchedule() {
-        moveSchedule(-1);
+        setScheduleIndex(get().scheduleIndex - 1);
       },
 
       applyFix(fix: Fix) {

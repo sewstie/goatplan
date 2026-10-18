@@ -19,6 +19,30 @@ export function selectCurrentSchedule(state: Pick<PlannerState, "response" | "sc
 const sameSections = (a: readonly string[], b: readonly string[]) =>
   a.length === b.length && a.every((id, index) => id === b[index]);
 
+const sameSet = (a: readonly string[], b: readonly string[]) => a.length === b.length && a.every((id) => b.includes(id));
+
+/**
+ * The first schedule that can show these sections (course code → section ids) for all its courses,
+ * with the alternatives to pick where they differ from the sections the engine shows.
+ */
+export function findSchedule(
+  schedules: readonly Schedule[],
+  wanted: Readonly<Record<string, readonly string[]>>,
+): { index: number; choices: Record<string, string[]> } | null {
+  for (const [index, schedule] of schedules.entries()) {
+    const choices: Record<string, string[]> = {};
+    const fits = schedule.courses.every((course) => {
+      const ids = wanted[course.code];
+      const option = ids && course.alternatives.find((alternative) => sameSet(alternative, ids));
+      if (!option) return false;
+      if (!sameSet(option, course.sections)) choices[course.code] = option;
+      return true;
+    });
+    if (fits) return { index, choices };
+  }
+  return null;
+}
+
 /**
  * course code → the section ids the student takes in the current schedule: the alternative they
  * picked, or the one the engine shows. Builds a new object, so read it with useShallow or useMemo.
