@@ -44,7 +44,7 @@ export function SameTimeChooser({ course, choices, onPicked }: SameTimeChooserPr
       <Button
         fullWidth
         icon={<Check aria-hidden />}
-        className="mt-12"
+        className="mt-12 enabled:hover:border-transparent"
         onClick={() => {
           chooseAlternative(course.code, pick.sectionIds);
           onPicked();

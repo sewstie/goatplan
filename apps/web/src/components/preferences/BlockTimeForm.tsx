@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Select } from "@/components/ui/Select";
 import { WEEK } from "@/lib/data";
 import type { Day } from "@/lib/data/types";
@@ -10,27 +10,29 @@ import { blockEndOptions, blockStartOptions, endAfter } from "./timeOptions";
 type BlockTimeFormProps = {
   id: string;
   onSubmit: (days: Day[], start: number, end: number) => void;
+  /** The dialog shows the message next to its buttons, so the dialog keeps its height. */
+  onError: (message: string | null) => void;
+  /** The id of that message while it is shown. */
+  errorId?: string;
 };
 
 const START_OPTIONS = blockStartOptions();
 
 /** Days and a time range to keep free. The dialog's footer holds its submit button. */
-export function BlockTimeForm({ id, onSubmit }: BlockTimeFormProps) {
+export function BlockTimeForm({ id, onSubmit, onError, errorId }: BlockTimeFormProps) {
   const [days, setDays] = useState<Day[]>([]);
   const [start, setStart] = useState(12 * 60);
   const [end, setEnd] = useState(13 * 60);
-  const [error, setError] = useState<string | null>(null);
-  const errorId = useId();
 
   function toggleDay(day: Day, checked: boolean) {
     setDays((current) => (checked ? [...current, day] : current.filter((item) => item !== day)));
-    if (checked) setError(null);
+    if (checked) onError(null);
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (days.length === 0) {
-      setError("Pick at least one day.");
+      onError("Pick at least one day.");
       return;
     }
     onSubmit(days, start, end);
@@ -38,7 +40,7 @@ export function BlockTimeForm({ id, onSubmit }: BlockTimeFormProps) {
 
   return (
     <form id={id} noValidate onSubmit={handleSubmit} className="flex flex-col gap-14 pt-8">
-      <fieldset aria-describedby={error ? errorId : undefined} className="flex flex-col">
+      <fieldset aria-describedby={errorId} className="flex flex-col">
         <legend className="mb-6 text-10 leading-14-5 font-650 text-ink">Days</legend>
         <div className="flex flex-wrap gap-5">
           {WEEK.map((day) => (
@@ -50,11 +52,6 @@ export function BlockTimeForm({ id, onSubmit }: BlockTimeFormProps) {
             />
           ))}
         </div>
-        {error && (
-          <p id={errorId} role="alert" className="pt-6 text-9 leading-13-5 text-warning">
-            {error}
-          </p>
-        )}
       </fieldset>
       <div className="grid grid-cols-2 gap-10">
         <div className="flex flex-col">
