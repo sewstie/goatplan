@@ -112,16 +112,22 @@ Things to know first:
 | `--color-hatch-a` | `#edf0f4` | color/grey/94 5 | Hatch stripe 1 (blocked time, early band) |
 | `--color-hatch-b` | `#f8f9fb` | color/grey/98 2 | Hatch stripe 2 |
 | `--color-course-1` | `#30333a` | color/grey/21 (Tuna) | Course 1 block **and** swatch (dark; text `--color-on-accent`) |
+| `--color-course-1-soft` | `#eeefef` | **proposed, not in Figma yet** | Course 1 "No set time" item (course 1 at 8% on white) |
+| `--color-course-1-hover-line` | `#697387` | **proposed, not in Figma yet** | Course 1 block border on hover. Lighter than the dark fill, the same as `--color-ink-muted`. |
 | `--color-course-2` | `#ffeadc` | color/grey/93 (Derby) | Course 2 block (peach) |
+| `--color-course-2-soft` | `#fef6f1` | **proposed, not in Figma yet** | Course 2 "No set time" item (swatch at 15% on white) |
 | `--color-course-2-swatch` | `#f7c5a3` | color/orange/80 (Manhattan) | Course 2 swatch |
 | `--color-course-2-hover-line` | `#bd8e6e` | color/orange/59 (Muddy Waters) | Course 2 block border on hover |
 | `--color-course-3` | `#f4f2cc` | color/yellow/88 (Mint Julep) | Course 3 block (yellow) |
+| `--color-course-3-soft` | `#f9f9ec` | **proposed, not in Figma yet** | Course 3 "No set time" item (swatch at 15% on white) |
 | `--color-course-3-swatch` | `#dad57e` | color/yellow/67 (Chenin) | Course 3 swatch |
+| `--color-course-3-hover-line` | `#a2a065` | **proposed, not in Figma yet** | Course 3 block border on hover (swatch at 70% with `--color-ink`) |
 | `--color-course-4` | `#eeebff` | color/grey/96 5 (Titan White) | Course 4 block (lavender) |
 | `--color-course-4-soft` | `#f6f4ff` | color/grey/98 4 (Magnolia) | Course 4 "No set time" item |
 | `--color-course-4-swatch` | `#b9b1e9` | color/blue/80 2 (Biloba Flower) | Course 4 swatch |
+| `--color-course-4-hover-line` | `#8b86b0` | **proposed, not in Figma yet** | Course 4 block border on hover (swatch at 70% with `--color-ink`) |
 
-Course text on slots 2–4 is `--color-ink`. Hover borders for slots 1, 3 and 4 are not in Figma and have no token yet. Until they do, use a darker shade of the slot color, like `#bd8e6e` is for slot 2.
+Course text on slots 2–4 is `--color-ink`. Only the slot 2 hover border and the slot 4 soft fill are in Figma; the other hover borders and soft fills are proposed, made the same way. `components/ui/courseColors.ts` maps each slot to its classes, for the calendar and the sidebar alike.
 
 ### Figma colors with no token of their own
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   ArrowClockwise,
+  ArrowSquareOut,
   BookmarkSimple,
   CalendarBlank,
   CaretLeft,
@@ -15,6 +16,7 @@ import {
 } from "@phosphor-icons/react/ssr";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Card } from "@/components/ui/Card";
 import { IconButton } from "@/components/ui/IconButton";
 import { Select } from "@/components/ui/Select";
@@ -68,9 +70,17 @@ export default function UiPrimitivesPage() {
           <Button size="sm" icon={<ArrowClockwise />}>
             Switch to C Term
           </Button>
-          <Button size="sm" icon={<Check />} className="w-112">
+          <Button size="sm" icon={<Check />} className="w-112" aria-disabled="true">
             Saved
           </Button>
+        </DemoRow>
+        <DemoRow label="Links that look like buttons">
+          <ButtonLink href="https://workday.wpi.edu" external icon={<ArrowSquareOut />}>
+            Open Workday
+          </ButtonLink>
+          <ButtonLink href="/plans" size="sm" variant="secondary">
+            All saved plans
+          </ButtonLink>
         </DemoRow>
         <DemoRow label="Secondary and warning">
           <Button variant="secondary" size="md" icon={<CalendarBlank />}>

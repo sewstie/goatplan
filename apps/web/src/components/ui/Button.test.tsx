@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { Button } from "./Button";
+import { ButtonLink } from "./ButtonLink";
 import { IconButton } from "./IconButton";
 
 describe("Button", () => {
@@ -26,6 +27,30 @@ describe("Button", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: "Save schedule" }));
     expect(onClick).not.toHaveBeenCalled();
+  });
+});
+
+describe("ButtonLink", () => {
+  it("is a link with a button's look", () => {
+    render(
+      <ButtonLink href="/plans?plan=p1" size="sm">
+        Sections to register
+      </ButtonLink>,
+    );
+    const link = screen.getByRole("link", { name: "Sections to register" });
+    expect(link).toHaveAttribute("href", "/plans?plan=p1");
+    expect(link).toHaveClass("bg-accent", "min-h-32");
+  });
+
+  it("says when it opens in a new tab", () => {
+    render(
+      <ButtonLink href="https://workday.wpi.edu" external variant="secondary">
+        Open Workday
+      </ButtonLink>,
+    );
+    const link = screen.getByRole("link", { name: /^Open Workday\s*\(opens in a new tab\)$/ });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveClass("bg-surface");
   });
 });
 

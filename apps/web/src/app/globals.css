@@ -80,14 +80,20 @@
   --color-hatch-a: #edf0f4;
   --color-hatch-b: #f8f9fb;
   --color-course-1: #30333a;
+  --color-course-1-soft: #eeefef;
+  --color-course-1-hover-line: #697387;
   --color-course-2: #ffeadc;
+  --color-course-2-soft: #fef6f1;
   --color-course-2-swatch: #f7c5a3;
   --color-course-2-hover-line: #bd8e6e;
   --color-course-3: #f4f2cc;
+  --color-course-3-soft: #f9f9ec;
   --color-course-3-swatch: #dad57e;
+  --color-course-3-hover-line: #a2a065;
   --color-course-4: #eeebff;
   --color-course-4-soft: #f6f4ff;
   --color-course-4-swatch: #b9b1e9;
+  --color-course-4-hover-line: #8b86b0;
 
   --text-*: initial;
   --text-25: 25px;

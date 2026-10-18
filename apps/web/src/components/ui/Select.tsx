@@ -10,6 +10,8 @@ export type SelectOption = { value: string; label: string; disabled?: boolean };
 
 type SelectProps = Omit<ComponentProps<"select">, "children"> & {
   label: string;
+  /** The field and box variants hide their label unless this is false; then it sits above the box. */
+  hideLabel?: boolean;
   options: SelectOption[];
   variant?: SelectVariant;
 };
@@ -17,8 +19,8 @@ type SelectProps = Omit<ComponentProps<"select">, "children"> & {
 const wrapperClasses: Record<SelectVariant, string> = {
   field: "flex min-h-40 rounded-card border border-line bg-surface",
   box: "flex min-h-35 rounded-row border border-line bg-surface",
-  pill: "inline-flex min-h-32 gap-6 rounded-pill bg-surface pl-10",
-  menu: "inline-flex min-w-146 gap-6 rounded-row bg-surface pl-9",
+  pill: "inline-flex min-h-32 gap-6 rounded-pill bg-surface pl-9",
+  menu: "inline-flex min-w-146 gap-6 rounded-row bg-surface pl-8",
 };
 
 // Bordered fields get the same focus look as text inputs: a lavender border and a soft halo.
@@ -43,8 +45,9 @@ const labelClasses: Record<SelectVariant, string> = {
 const selectClasses: Record<SelectVariant, string> = {
   field: "w-full py-10 pr-31 pl-11 text-12 leading-17-4 font-700",
   box: "w-full py-9 pr-28 pl-9 text-10 leading-14-5",
-  pill: "field-sizing-content py-8.75 pr-28 text-10 leading-14-5 font-650",
-  menu: "field-sizing-content py-7.5 pr-25 text-9 leading-13",
+  // 1px of left padding on the select itself: without it a pill on a half pixel cuts off the first letter.
+  pill: "field-sizing-content py-8.75 pr-28 pl-1 text-10 leading-14-5 font-650",
+  menu: "field-sizing-content py-7.5 pr-25 pl-1 text-9 leading-13",
 };
 
 const caretClasses: Record<SelectVariant, string> = {
@@ -56,6 +59,7 @@ const caretClasses: Record<SelectVariant, string> = {
 
 export function Select({
   label,
+  hideLabel = true,
   options,
   variant = "field",
   id,
@@ -64,8 +68,17 @@ export function Select({
 }: SelectProps) {
   const generatedId = useId();
   const selectId = id ?? generatedId;
+  const labelAbove = !hideLabel && (variant === "field" || variant === "box");
+  const labelElement = (
+    <label
+      htmlFor={selectId}
+      className={labelAbove ? "pb-5 text-10 leading-14-5 font-650 text-ink" : labelClasses[variant]}
+    >
+      {label}
+    </label>
+  );
 
-  return (
+  const field = (
     <div
       className={cx(
         "relative items-center text-ink transition-[border-color,box-shadow] has-[:focus-visible]:border-choice-line has-[:focus-visible]:shadow-field-focus has-[:disabled]:bg-surface-disabled has-[:disabled]:text-ink-faint",
@@ -74,9 +87,7 @@ export function Select({
         className,
       )}
     >
-      <label htmlFor={selectId} className={labelClasses[variant]}>
-        {label}
-      </label>
+      {!labelAbove && labelElement}
       <select
         id={selectId}
         className={cx(
@@ -95,6 +106,14 @@ export function Select({
         aria-hidden
         className={cx("pointer-events-none absolute top-1/2 -translate-y-1/2", caretClasses[variant])}
       />
+    </div>
+  );
+
+  if (!labelAbove) return field;
+  return (
+    <div className="flex flex-col">
+      {labelElement}
+      {field}
     </div>
   );
 }

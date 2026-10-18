@@ -22,7 +22,7 @@ export function Toggle({
       aria-checked={checked}
       onClick={() => onCheckedChange(!checked)}
       className={cx(
-        "inline-flex cursor-pointer items-center gap-7 text-9 leading-13 text-ink disabled:cursor-not-allowed disabled:opacity-45",
+        "inline-flex cursor-pointer items-center gap-7 rounded-pill text-9 leading-13 text-ink disabled:cursor-not-allowed disabled:opacity-45",
         className,
       )}
       {...rest}
