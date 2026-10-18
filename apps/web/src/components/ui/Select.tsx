@@ -21,6 +21,18 @@ const wrapperClasses: Record<SelectVariant, string> = {
   menu: "inline-flex min-w-146 gap-6 rounded-row bg-surface pl-9",
 };
 
+// Bordered fields get the same focus look as text inputs: a lavender border and a soft halo.
+const fieldFocus =
+  "transition-[border-color,box-shadow] has-[:focus-visible]:border-choice-line has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-accent-soft";
+const ringFocus = "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus";
+
+const focusClasses: Record<SelectVariant, string> = {
+  field: fieldFocus,
+  box: fieldFocus,
+  pill: ringFocus,
+  menu: ringFocus,
+};
+
 const labelClasses: Record<SelectVariant, string> = {
   field: "sr-only",
   box: "sr-only",
@@ -56,8 +68,9 @@ export function Select({
   return (
     <div
       className={cx(
-        "relative items-center text-ink has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus has-[:disabled]:bg-surface-disabled has-[:disabled]:text-ink-faint",
+        "relative items-center text-ink has-[:disabled]:bg-surface-disabled has-[:disabled]:text-ink-faint",
         wrapperClasses[variant],
+        focusClasses[variant],
         className,
       )}
     >
