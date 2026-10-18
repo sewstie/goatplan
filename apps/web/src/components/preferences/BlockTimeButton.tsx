@@ -40,7 +40,7 @@ export function BlockTimeButton() {
         open={open}
         onClose={() => setOpen(false)}
         title="Block a time"
-        description="GoatPlan won't put classes in this time."
+        description="GoatPlan won’t put classes in this time."
         footer={
           <>
             <Button variant="secondary" size="md" onClick={() => setOpen(false)}>
