@@ -47,6 +47,20 @@ describe("plan storage", () => {
     expect(readPlans(storage).map((plan) => plan.id)).toEqual(["plan-1"]);
   });
 
+  it("keeps the names of blocked times", () => {
+    const good = { version: PLANS_VERSION, ...designPlan() };
+    const blocked = [
+      { day: "Tue", start: 840, end: 960, label: "Work" },
+      { day: "Fri", start: 840, end: 960, label: " " },
+    ];
+    expect(parsePlan({ ...good, preferences: { ...good.preferences, blocked } })?.preferences.blocked).toEqual([
+      { day: "Tue", start: 840, end: 960, label: "Work" },
+      { day: "Fri", start: 840, end: 960 },
+    ]);
+    const unnamed = [{ day: "Tue", start: 840, end: 960, label: 4 }];
+    expect(parsePlan({ ...good, preferences: { ...good.preferences, blocked: unnamed } })).toBeNull();
+  });
+
   it("rejects plans with missing or wrong fields", () => {
     const good = { version: PLANS_VERSION, ...designPlan() };
     expect(parsePlan(good)).toEqual(designPlan());

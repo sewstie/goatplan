@@ -19,8 +19,8 @@ type SelectProps = Omit<ComponentProps<"select">, "children"> & {
 const wrapperClasses: Record<SelectVariant, string> = {
   field: "flex min-h-40 rounded-card border border-line bg-surface",
   box: "flex min-h-35 rounded-row border border-line bg-surface",
-  pill: "inline-flex min-h-32 gap-6 rounded-pill bg-surface pl-9",
-  menu: "inline-flex min-w-146 gap-6 rounded-row bg-surface pl-8",
+  pill: "inline-flex min-h-32 gap-6 rounded-pill bg-surface pl-10",
+  menu: "inline-flex min-w-146 gap-6 rounded-row bg-surface pl-9",
 };
 
 // Bordered fields get the same focus look as text inputs: a lavender border and a soft halo.
@@ -42,12 +42,13 @@ const labelClasses: Record<SelectVariant, string> = {
   menu: "text-9 leading-13 text-ink-muted",
 };
 
+// Only the field and box selects take their box's corners. The pill and menu selects stay square:
+// a 16px curve clipped the top and bottom of the value's first letter.
 const selectClasses: Record<SelectVariant, string> = {
-  field: "w-full py-10 pr-31 pl-11 text-12 leading-17-4 font-700",
-  box: "w-full py-9 pr-28 pl-9 text-10 leading-14-5",
-  // 1px of left padding on the select itself: without it a pill on a half pixel cuts off the first letter.
-  pill: "field-sizing-content py-8.75 pr-28 pl-1 text-10 leading-14-5 font-650",
-  menu: "field-sizing-content py-7.5 pr-25 pl-1 text-9 leading-13",
+  field: "w-full rounded-[inherit] py-10 pr-31 pl-11 text-12 leading-17-4 font-700",
+  box: "w-full rounded-[inherit] py-9 pr-28 pl-9 text-10 leading-14-5",
+  pill: "field-sizing-content py-8.75 pr-28 text-10 leading-14-5 font-650",
+  menu: "field-sizing-content py-7.5 pr-25 text-9 leading-13",
 };
 
 const caretClasses: Record<SelectVariant, string> = {
@@ -91,7 +92,7 @@ export function Select({
       <select
         id={selectId}
         className={cx(
-          "cursor-pointer appearance-none rounded-[inherit] bg-transparent outline-none disabled:cursor-not-allowed",
+          "cursor-pointer appearance-none bg-transparent outline-none disabled:cursor-not-allowed",
           selectClasses[variant],
         )}
         {...rest}

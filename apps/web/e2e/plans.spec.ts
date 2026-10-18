@@ -397,6 +397,22 @@ test.describe("Saved plans list", () => {
     expect(locks).toEqual({ "AE 2320": ["AE 2320-CX02"] });
   });
 
+  test("opening a plan keeps the names of its blocked times", async ({ page }) => {
+    const blocked = preferences.blocked.map((block) => ({ ...block, label: "Work" }));
+    await seed(page, {
+      ...savedStorage,
+      "goatplan:plans:v1:plan:plan-design": { ...plan, preferences: { ...preferences, blocked } },
+    });
+    await page.goto("/plans");
+    await plannerSettled(page);
+    // The planner's draft has the same times without a name, which counts as an unsaved change.
+    await page.getByRole("button", { name: "Open in planner Plan 1" }).click();
+    await page.getByRole("dialog", { name: "Open “Plan 1”?" }).getByRole("button", { name: "Open plan" }).click();
+    await expect(header(page).getByRole("status")).toHaveText("Schedule saved", { timeout: 30_000 });
+    await expect(page.getByRole("group", { name: "Preferences" }).getByText("Work")).toBeVisible();
+    await expect(page.getByRole("group", { name: "Tuesday" }).getByText("Work")).toBeVisible();
+  });
+
   test("shows a way to the planner when nothing is saved", async ({ page }) => {
     await seed(page, baseStorage);
     await page.goto("/plans");

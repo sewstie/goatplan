@@ -9,7 +9,7 @@ type OtherChoicesButtonProps = {
   kind: string;
 };
 
-/** Opens ChooseAlternativeSheet with the sections that meet at the same time. */
+/** Opens ChooseAlternativeSheet, "Choose a lab", with the course's other options that fit. */
 export function OtherChoicesButton({ courseCode, kind }: OtherChoicesButtonProps) {
   const open = useAlternativeSheet((state) => state.open);
 

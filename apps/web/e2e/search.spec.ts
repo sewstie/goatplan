@@ -237,6 +237,9 @@ test.describe("screenshots", () => {
     test(`search screens at ${width}`, async ({ page }) => {
       await page.setViewportSize({ width, height });
       await open(page, { term: "2027-C", courses: ["AE 2320"] });
+      // Save schedule fades in once the engine answers; screenshots wait for it.
+      await expect(page.getByRole("button", { name: "Save schedule" })).toBeEnabled({ timeout: 30_000 });
+      await page.waitForTimeout(300);
       await page.screenshot({ path: `${screenshotDir}/search-planned-${width}.png`, fullPage: true });
 
       await searchBox(page).fill("ae 2");

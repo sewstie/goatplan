@@ -12,7 +12,10 @@ type BlockedTimeBlockProps = {
   style: CSSProperties;
 };
 
-/** A time the student blocked, hatched like the early band (div.app-3.md): its name, or else its time, then "blocked". */
+/**
+ * A time the student blocked, hatched like the early band (div.app-3.md): its name and time, or just
+ * its time written short ("2 PM–4 PM") so it fits a narrow column, then "blocked".
+ */
 export function BlockedTimeBlock({ start, end, label, density, style }: BlockedTimeBlockProps) {
   const dense = density === "dense";
   const time = formatTimeRange(start, end);
@@ -25,7 +28,7 @@ export function BlockedTimeBlock({ start, end, label, density, style }: BlockedT
       )}
       style={style}
     >
-      <p className="truncate text-9 leading-13 font-600">{label ?? time}</p>
+      <p className="truncate text-9 leading-13 font-600">{label ?? formatTimeRange(start, end, "short")}</p>
       {label && <p className={cx(small, "mt-4")}>{time}</p>}
       <p className={small}>blocked</p>
     </div>

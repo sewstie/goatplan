@@ -48,10 +48,12 @@ async function openPlan(page: Page, plan: Plan | null) {
 
 const calendar = (page: Page) => page.getByRole("region", { name: "Weekly schedule" });
 
-/** Saves the state at 1440 (the current size) and again at the 834 tablet width. */
+/** Saves the state at 1440 (the current size) and again at the 834 tablet width, after buttons finish fading. */
 async function screenshotBoth(page: Page, name: string) {
+  await page.waitForTimeout(300);
   await page.screenshot({ path: `${screenshotDir}/schedule-${name}-1440.png` });
   await page.setViewportSize({ width: 834, height: 1194 });
+  await page.waitForTimeout(300);
   await page.screenshot({ path: `${screenshotDir}/schedule-${name}-834.png`, fullPage: true });
   await page.setViewportSize({ width: 1440, height: 900 });
 }
@@ -132,6 +134,21 @@ test("block tooltips render outside the calendar card, so a late block's tooltip
     "aria-current",
     "true",
   );
+});
+
+test("clicking a block selects it and opens its course in the details panel", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await openPlan(page, designPlan);
+  await page.getByRole("button", { name: /^AE 2410 C01, .*Monday/ }).click();
+  const lab = calendar(page).getByRole("button", { name: /^AE 2320 CX02/ });
+  await lab.click();
+  await expect(lab).toHaveAttribute("aria-pressed", "true");
+  const panel = page.getByRole("complementary", { name: "Course details" });
+  await expect(panel.getByText("Selected course")).toBeVisible();
+  await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
+  await page.mouse.move(0, 0);
+  await lab.blur();
+  await screenshotBoth(page, "selected");
 });
 
 test("the switcher pages through schedules with its arrows and the arrow keys, and notes the cap", async ({ page }) => {
