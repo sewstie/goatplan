@@ -193,6 +193,14 @@ test.describe("Save schedule", () => {
     await expect(trigger).toHaveAttribute("aria-expanded", "false");
     await expect(trigger).toBeFocused();
 
+    // A dialog opened from the menu gives focus back to the menu's button.
+    await trigger.click();
+    await page.getByRole("button", { name: "Save as a new plan" }).click();
+    await expect(page.getByRole("dialog", { name: "Save as a new plan" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toBeHidden();
+    await expect(trigger).toBeFocused();
+
     await trigger.click();
     await page.getByRole("link", { name: "Sections to register" }).click();
     await expect(page).toHaveURL(/\/plans\?plan=plan-design$/);
@@ -275,6 +283,15 @@ test.describe("Sections to register", () => {
     await screenshot(page, "plans-attention-1440");
   });
 
+  test("says when the latest course data can't be checked", async ({ page }) => {
+    await seed(page, savedStorage);
+    await page.route("**/data/2027-C.json", (route) => route.fulfill({ status: 500 }));
+    await page.goto("/plans?plan=plan-design");
+    const summary = page.getByRole("complementary", { name: "Course details" });
+    await expect(summary).toContainText("Couldn’t check the latest course data.");
+    await expect(page.getByRole("table").getByRole("row")).toHaveCount(5);
+  });
+
   test("says so when the plan isn't in this browser", async ({ page }) => {
     await seed(page, savedStorage);
     await page.goto("/plans?plan=missing");
@@ -314,12 +331,13 @@ test.describe("Saved plans list", () => {
     const remove = page.getByRole("dialog", { name: "Delete “Fridays off”?" });
     await remove.getByRole("button", { name: "Delete plan" }).click();
     await expect(page.getByRole("heading", { level: 4 })).toHaveText(["Plan 1"]);
+    await expect(page.getByRole("heading", { name: "Your saved plans" })).toBeFocused();
 
     await page.reload();
     await expect(page.getByRole("heading", { level: 4 })).toHaveText(["Plan 1"]);
     await page.getByRole("button", { name: "Delete Plan 1" }).click();
     await page.getByRole("button", { name: "Delete plan", exact: true }).click();
-    await expect(page.getByRole("heading", { name: "No saved plans yet" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "No saved plans yet" })).toBeFocused();
     await expect(header(page).getByRole("status")).toHaveText("");
   });
 

@@ -10,7 +10,7 @@ function Example({ onFallback }: { onFallback: () => void }) {
   const ref = useRef<HTMLPreElement>(null);
   return (
     <>
-      <CopySectionListButton text={TEXT} previewRef={ref} onFallback={onFallback} />
+      <CopySectionListButton text={TEXT} previewRef={ref} onCopied={() => {}} onFallback={onFallback} />
       <pre ref={ref}>{TEXT}</pre>
     </>
   );

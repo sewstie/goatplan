@@ -33,7 +33,7 @@ export function RegistrationTable({ rows, className }: { rows: RegistrationRow[]
       </thead>
       <tbody>
         {rows.map((row) => (
-          <tr key={row.id} className="break-inside-avoid">
+          <tr key={row.id} className="h-[67.4px] break-inside-avoid">
             <td className={bodyCell}>
               <div className="flex flex-col gap-3.5">
                 <span className="text-11 leading-17-6 font-700 text-ink">{row.course}</span>

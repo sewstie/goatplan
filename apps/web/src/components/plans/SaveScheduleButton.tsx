@@ -14,7 +14,7 @@ export function SaveScheduleButton({ saved, disabled, onSave }: SaveScheduleButt
   if (saved) {
     // Stays accent filled and focusable, but there is nothing to save.
     return (
-      <Button aria-disabled="true" icon={<Check aria-hidden />} className="min-w-112 cursor-default">
+      <Button aria-disabled="true" icon={<Check aria-hidden />} className="min-w-112 cursor-default aria-disabled:enabled:hover:bg-accent">
         Saved
       </Button>
     );
