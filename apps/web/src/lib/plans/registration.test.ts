@@ -28,10 +28,21 @@ describe("registrationRows", () => {
       seats: "Lecture · 36 open",
       meetings: ["Mon–Fri · 9:00–9:50 AM"],
       room: "Unity Hall 400",
+      roomFull: "Unity Hall 400",
       instructors: "Ye Lu",
       change: null,
     });
     expect(rows[1]).toMatchObject({ seats: "Lab · 4 open", meetings: ["Thu · 3:00–3:50 PM"], room: "Higgins Labs 230" });
+  });
+
+  it("shows a room as building and number, and keeps its full name", () => {
+    const plan = designPlan();
+    plan.schedule[0].sections.find((item) => item.code === "CX02")!.meetings[0].location =
+      "Higgins Labs 230 Geom Modeling Computer Lab";
+    expect(registrationRows(plan, null)[1]).toMatchObject({
+      room: "Higgins Labs 230",
+      roomFull: "Higgins Labs 230 Geom Modeling Computer Lab",
+    });
   });
 
   it("shows the latest seats and flags the change", () => {

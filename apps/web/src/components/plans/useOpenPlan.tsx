@@ -3,8 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { getPlansSource, openPlanInPlanner, wouldDiscardWork, type SavedPlan, type WorkingPlan } from "@/lib/plans";
-import { getPlannerStore, selectChosenSections, selectCurrentSchedule } from "@/lib/store";
-import { browserStorage, readDraft } from "@/lib/store/draft";
+import { getPlannerStore, selectChosenSections, selectCurrentSchedule, storedDraft } from "@/lib/store";
 import { OpenPlanDialog } from "./OpenPlanDialog";
 
 /** The draft a plan of this term would replace: the live one, or the one stored for another term. */
@@ -19,7 +18,7 @@ function workingDraft(termId: string): WorkingPlan | null {
       chosen: hasSchedule ? selectChosenSections(state) : null,
     };
   }
-  const draft = readDraft(browserStorage(), termId);
+  const draft = storedDraft(termId);
   return draft && { ...draft, chosen: null };
 }
 

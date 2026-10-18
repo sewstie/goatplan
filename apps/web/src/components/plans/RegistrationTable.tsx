@@ -60,7 +60,9 @@ export function RegistrationTable({ rows, className }: { rows: RegistrationRow[]
             </td>
             <td className={cx(bodyCell, "pt-15.5")}>
               <div className="flex flex-col gap-3">
-                <span className="text-10 leading-16 text-ink">{row.room}</span>
+                <span title={row.roomFull === row.room ? undefined : row.roomFull} className="text-10 leading-16 text-ink">
+                  {row.room}
+                </span>
                 <span className="text-9 leading-13 text-ink-muted">{row.instructors}</span>
               </div>
             </td>
