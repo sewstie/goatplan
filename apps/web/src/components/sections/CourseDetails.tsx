@@ -33,6 +33,7 @@ export function CourseDetails({ course }: { course: Course }) {
   const shownInstructors = uniqueInstructors(sections);
   // Cards shown only because they're locked disappear on Unlock, so focus goes to the heading.
   const focusHeading = chosen.length === 0 ? () => headingRef.current?.focus() : undefined;
+  const untimed = sections.some((section) => !hasSetTime(section));
 
   return (
     <div className="flex flex-col gap-4">
@@ -63,13 +64,14 @@ export function CourseDetails({ course }: { course: Course }) {
 
       {choices && <OtherChoicesButton courseCode={code} kind={choices.kind} />}
 
-      {sections.some((section) => !hasSetTime(section)) && (
+      {untimed && (
         <p className="pt-7 text-10 leading-17-5 text-ink-muted">
           This section appears in the No set time strip. It does not block calendar time.
         </p>
       )}
 
-      {sections.length > 0 && shownInstructors.length === 0 && (
+      {/* div.app-13 shows only the strip note for an untimed section without an instructor. */}
+      {sections.length > 0 && shownInstructors.length === 0 && !untimed && (
         <div className="pt-7 text-10 leading-17-5 text-ink-muted">
           <p>Instructor not assigned yet.</p>
           <p>Professor reviews appear when an instructor is available.</p>

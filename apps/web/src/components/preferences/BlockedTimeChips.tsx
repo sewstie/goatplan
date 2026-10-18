@@ -14,6 +14,8 @@ type BlockedTimeChipsProps = {
 export function BlockedTimeChips({ onAllRemoved }: BlockedTimeChipsProps) {
   const blocked = usePlanner((state) => state.preferences.blocked);
   const setPreferences = usePlanner((state) => state.setPreferences);
+  // The store ignores changes until the term is ready; then nothing is removed and focus shouldn't move later.
+  const ready = usePlanner((state) => state.termStatus === "ready");
   const groups = useMemo(() => groupBlocked(blocked), [blocked]);
   const listRef = useRef<HTMLSpanElement>(null);
   // The position of a pill just removed, so focus can move to its neighbour once it's gone.
@@ -41,7 +43,7 @@ export function BlockedTimeChips({ onAllRemoved }: BlockedTimeChipsProps) {
             value={days}
             detail={times}
             onRemove={() => {
-              removedIndex.current = index;
+              if (ready) removedIndex.current = index;
               setPreferences({ blocked: removeGroup(blocked, group) });
             }}
             removeLabel={`Remove blocked time ${days} ${times}`}
