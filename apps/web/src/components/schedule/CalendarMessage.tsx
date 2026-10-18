@@ -5,13 +5,18 @@ type CalendarMessageProps = {
   title: string;
   children: ReactNode;
   actions?: ReactNode;
+  /** "alert" for errors, so screen readers announce them. */
+  role?: "alert";
 };
 
 /** The card over the empty grid: first visit and "Couldn’t load" (div.app.md, div.app-2.md). */
-export function CalendarMessage({ icon, title, children, actions }: CalendarMessageProps) {
+export function CalendarMessage({ icon, title, children, actions, role }: CalendarMessageProps) {
   return (
     <div className="pointer-events-none absolute inset-x-12 top-[24%] flex justify-center">
-      <div className="pointer-events-auto flex w-full max-w-(--size-message) flex-col items-center gap-6 rounded-message border border-line bg-surface-overlay px-20 py-28 text-center">
+      <div
+        role={role}
+        className="pointer-events-auto flex w-full max-w-(--size-message) flex-col items-center gap-6 rounded-message border border-line bg-surface-overlay px-20 py-28 text-center"
+      >
         <span aria-hidden className="flex size-42 items-center justify-center rounded-tile bg-accent-soft [&_svg]:size-23">
           {icon}
         </span>

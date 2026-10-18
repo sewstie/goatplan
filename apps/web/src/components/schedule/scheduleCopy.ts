@@ -1,4 +1,3 @@
-import { formatTimeShort } from "@/lib/data/time";
 import type { Delivery } from "@/lib/data/types";
 import type { Score, SolveResponse } from "@/lib/engine/types";
 import type { SolveStatus, TermStatus } from "@/lib/store/types";
@@ -24,15 +23,15 @@ export function formatDuration(minutes: number): string {
   return rest === 0 ? `${hours} h` : `${hours} h ${rest} min`;
 }
 
-/** The chips after the summary line: what the shown schedule is like, in the terms the Sort order uses. */
-export function scoreChips(score: Score, earlyCutoff: number): string[] {
-  const cutoff = formatTimeShort(earlyCutoff);
+/**
+ * The chips after the summary line: what the shown schedule is like, in the terms the Sort order uses.
+ * "Early" is the Sort cutoff (10 AM), not the start-time preference, so the chips don't name a time.
+ */
+export function scoreChips(score: Score): string[] {
   return [
     `${count("day", score.days)} on campus`,
     score.gapMinutes === 0 ? "No gaps between classes" : `${formatDuration(score.gapMinutes)} between classes`,
-    score.earlyMinutes === 0
-      ? `No classes before ${cutoff}`
-      : `${formatDuration(score.earlyMinutes)} of class before ${cutoff}`,
+    score.earlyMinutes === 0 ? "No early classes" : `${formatDuration(score.earlyMinutes)} of early classes`,
   ];
 }
 
@@ -110,7 +109,13 @@ export function bannerMessage(input: BannerInput): BannerMessage | null {
     return { tone: "loading", title: "Finding schedules…", detail: "This can take a few seconds with many courses." };
   }
   if (!response) return null;
-  if (!response.ok) return { tone: "warning", title: "Couldn’t check your schedules.", detail: response.error.message };
+  if (!response.ok) {
+    const detail =
+      response.error.code === "unknownCourse" && response.error.detail
+        ? `${response.error.detail} isn’t offered this term any more. Remove it to see your schedules.`
+        : "Something went wrong. Change a preference to try again.";
+    return { tone: "warning", title: "Couldn’t check your schedules.", detail };
+  }
 
   if (response.total === 0) {
     const diagnosis = response.diagnosis;

@@ -48,18 +48,18 @@ describe("small helpers", () => {
 
 describe("scoreChips", () => {
   it("describes days, gaps and early classes", () => {
-    expect(scoreChips({ total: 1430, days: 5, gapMinutes: 230, earlyMinutes: 300 }, 600)).toEqual([
+    expect(scoreChips({ total: 1430, days: 5, gapMinutes: 230, earlyMinutes: 300 })).toEqual([
       "5 days on campus",
       "3 h 50 min between classes",
-      "5 h of class before 10 AM",
+      "5 h of early classes",
     ]);
   });
 
   it("says when there are no gaps or early classes", () => {
-    expect(scoreChips({ total: 0, days: 1, gapMinutes: 0, earlyMinutes: 0 }, 600)).toEqual([
+    expect(scoreChips({ total: 0, days: 1, gapMinutes: 0, earlyMinutes: 0 })).toEqual([
       "1 day on campus",
       "No gaps between classes",
-      "No classes before 10 AM",
+      "No early classes",
     ]);
   });
 });
@@ -154,7 +154,11 @@ describe("bannerMessage", () => {
         ...base,
         response: { ok: false, version: 1, error: { code: "unknownCourse", message: "No course PH 9999 in 2027-C", detail: "PH 9999" } },
       }),
-    ).toEqual({ tone: "warning", title: "Couldn’t check your schedules.", detail: "No course PH 9999 in 2027-C" });
+    ).toEqual({
+      tone: "warning",
+      title: "Couldn’t check your schedules.",
+      detail: "PH 9999 isn’t offered this term any more. Remove it to see your schedules.",
+    });
     expect(bannerMessage({ ...base, response: noFit({ clashingPairs: [["AB 1533", "AE 2320"]] }) })).toEqual({
       tone: "warning",
       title: "No schedule fits.",

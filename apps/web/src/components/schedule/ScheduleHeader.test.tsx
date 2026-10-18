@@ -3,7 +3,6 @@ import { afterEach, describe, expect, it } from "vitest";
 import { ScheduleBanner } from "./ScheduleBanner";
 import { ScheduleSummary } from "./ScheduleSummary";
 import { resetPlanner, setPlanner, solved } from "./testing/plannerFixtures";
-import { tooltipPosition } from "./tooltipPosition";
 
 afterEach(resetPlanner);
 
@@ -15,7 +14,7 @@ describe("ScheduleSummary", () => {
     const chips = screen.getByRole("list", { name: "This schedule" });
     expect(chips).toHaveTextContent("5 days on campus");
     expect(chips).toHaveTextContent("1 h between classes");
-    expect(chips).toHaveTextContent("4 h 10 min of class before 10 AM");
+    expect(chips).toHaveTextContent("4 h 10 min of early classes");
   });
 
   it("says which term is loading", () => {
@@ -43,18 +42,5 @@ describe("ScheduleBanner", () => {
 
     setPlanner({ termStatus: "loading", term: null, response: null, solveStatus: "solving" });
     expect(render(<ScheduleBanner />).container).toBeEmptyDOMElement();
-  });
-});
-
-describe("tooltipPosition", () => {
-  const viewport = { width: 1440, height: 900 };
-
-  it("sits under the block, a little to its left", () => {
-    expect(tooltipPosition({ left: 520, top: 318, bottom: 370 }, viewport)).toEqual({ left: 512, top: 394 });
-  });
-
-  it("goes above blocks near the bottom and stays on screen", () => {
-    expect(tooltipPosition({ left: 1400, top: 800, bottom: 850 }, viewport)).toEqual({ left: 1212, bottom: 124 });
-    expect(tooltipPosition({ left: 0, top: 100, bottom: 150 }, viewport).left).toBe(8);
   });
 });

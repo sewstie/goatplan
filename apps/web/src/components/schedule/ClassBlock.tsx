@@ -59,8 +59,9 @@ export function ClassBlock({ item, density, style, selected, onSelect, onShowDet
     >
       <span className={cx("flex min-w-0 items-center", text.title)}>
         {item.locked && <LockSimple aria-hidden className="size-10 shrink-0" />}
-        <span className={cx("shrink-0 font-700 whitespace-nowrap", text.code)}>{item.courseCode}</span>
-        <span className={cx("truncate", text.section)}>{item.sectionCode}</span>
+        {/* In a narrow lane the section code gives way first, then the course code gets an ellipsis. */}
+        <span className={cx("min-w-0 truncate font-700", text.code)}>{item.courseCode}</span>
+        <span className={cx("min-w-0 shrink-[50] truncate", text.section)}>{item.sectionCode}</span>
       </span>
       <span className={cx("truncate", text.time)}>{formatTimeRange(item.start, item.end)}</span>
       {item.location && <span className={cx("truncate opacity-85", text.room)}>{item.location}</span>}

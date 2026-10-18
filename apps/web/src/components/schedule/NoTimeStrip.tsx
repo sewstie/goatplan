@@ -17,7 +17,9 @@ export function NoTimeStrip({ items }: { items: readonly UntimedItem[] }) {
       <h3 id={headingId} className="text-10 leading-14-5 font-700">
         No set time
       </h3>
-      <ul className="flex flex-col gap-6">
+      {/* Capped so many untimed sections can't squeeze the grid; the rest scroll. */}
+      <ul className="flex max-h-120 flex-col gap-6 overflow-y-auto">
+
         {items.map((item) => (
           <li
             key={item.sectionId}

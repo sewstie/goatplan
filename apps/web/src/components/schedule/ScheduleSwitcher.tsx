@@ -8,6 +8,9 @@ import { CountPill } from "./CountPill";
 
 const MOVES: Readonly<Record<string, "previous" | "next">> = { ArrowLeft: "previous", ArrowRight: "next" };
 
+// The arrows use aria-disabled at the ends so they keep focus, so the disabled look is set here.
+const ARROW_DISABLED = "aria-disabled:cursor-not-allowed aria-disabled:opacity-45 aria-disabled:hover:bg-surface";
+
 /** Schedule agent: "Schedule 3 of 24" with arrows, or "0 schedules fit", next to the title. */
 export function ScheduleSwitcher() {
   const termStatus = usePlanner((state) => state.termStatus);
@@ -64,7 +67,7 @@ export function ScheduleSwitcher() {
         aria-disabled={atStart}
         aria-keyshortcuts="ArrowLeft"
         onClick={() => !atStart && previousSchedule()}
-        className="aria-disabled:cursor-not-allowed aria-disabled:opacity-45"
+        className={ARROW_DISABLED}
       />
       <CountPill>
         Schedule {index + 1} of {count.toLocaleString("en-US")}
@@ -75,7 +78,7 @@ export function ScheduleSwitcher() {
         aria-disabled={atEnd}
         aria-keyshortcuts="ArrowRight"
         onClick={() => !atEnd && nextSchedule()}
-        className="aria-disabled:cursor-not-allowed aria-disabled:opacity-45"
+        className={ARROW_DISABLED}
       />
     </div>
   );
