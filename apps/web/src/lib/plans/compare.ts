@@ -21,6 +21,15 @@ function sameGroups(a: Record<string, readonly string[]>, b: Record<string, read
 
 const blockKey = (block: BlockedTime) => `${block.day} ${block.start} ${block.end}`;
 
+/**
+ * Opening a plan replaces its term's working draft. True when that draft has courses that aren't
+ * saved as they are, so the student should confirm first.
+ */
+export function wouldDiscardWork(currentPlan: SavedPlan | null, working: WorkingPlan | null): boolean {
+  if (!working || working.courses.length === 0) return false;
+  return !currentPlan || hasUnsavedChanges(currentPlan, working);
+}
+
 /** True when the working plan differs from the saved one in courses, sections, locks or preferences. */
 export function hasUnsavedChanges(plan: SavedPlan, working: WorkingPlan): boolean {
   if (!sameSet(plan.courses, working.courses)) return true;

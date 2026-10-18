@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { countLabel, meetingLines, registrationRows, sectionCount, sectionListText, termLabel } from "./registration";
+import {
+  countLabel,
+  meetingLines,
+  registrationRows,
+  savedLabel,
+  sectionCount,
+  sectionListText,
+  termLabel,
+} from "./registration";
 import { designPlan, section, termWith } from "./testing";
 
 describe("registrationRows", () => {
@@ -40,7 +48,12 @@ describe("registrationRows", () => {
     const term = termWith(plan);
     term.courses = term.courses.filter((course) => course.code !== "AE 2210");
     const removed = registrationRows(plan, term).at(-1)!;
-    expect(removed).toMatchObject({ section: "C01", room: "Salisbury Labs 104", change: { kind: "courseRemoved" } });
+    expect(removed).toMatchObject({
+      section: "C01",
+      seats: "Lecture",
+      room: "Salisbury Labs 104",
+      change: { kind: "courseRemoved" },
+    });
     expect(registrationRows(plan, null).every((row) => row.change === null)).toBe(true);
   });
 
@@ -84,5 +97,10 @@ describe("labels", () => {
     expect(countLabel(1, "course")).toBe("1 course");
     expect(countLabel(3, "section")).toBe("3 sections");
     expect(termLabel({ name: "C Term", season: "Spring", year: 2027 })).toBe("C Term · Spring 2027");
+  });
+
+  it("shows when a plan was saved", () => {
+    expect(savedLabel("2026-10-17T12:00:00.000Z")).toBe("Saved Oct 17, 2026");
+    expect(savedLabel("not a date")).toBe("Saved");
   });
 });

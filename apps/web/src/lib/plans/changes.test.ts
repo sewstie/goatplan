@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { TermFile } from "@/lib/data";
-import { changeLabel, describeChange, findPlanChanges, isSeriousChange } from "./changes";
+import { changeLabel, describeChange, findPlanChanges, isSeriousChange, rowChangeLabel } from "./changes";
 import { designPlan, termWith } from "./testing";
 
 function editSection(term: TermFile, id: string, edit: (section: TermFile["courses"][number]["sections"][number]) => void) {
@@ -91,6 +91,13 @@ describe("describing changes", () => {
     expect(changeLabel({ kind: "seats", course: "AE 2320", section: "CX02", before: 4, after: 2 })).toBe(
       "AE 2320 CX02: 2 open (was 4)",
     );
+  });
+
+  it("labels a change on the section's own row", () => {
+    expect(rowChangeLabel({ kind: "filled", course: "AE 2320", section: "CX02" })).toBe("Filled up since you saved");
+    expect(rowChangeLabel({ kind: "seats", course: "AE 2320", section: "CX02", before: 4, after: 2 })).toBe("Was 4 open");
+    expect(rowChangeLabel({ kind: "courseRemoved", course: "AE 2210" })).toBe("No longer offered");
+    expect(rowChangeLabel({ kind: "time", course: "AE 2320", section: "CX02" })).toBe("New time since you saved");
   });
 
   it("treats only a seat count change as not serious", () => {
