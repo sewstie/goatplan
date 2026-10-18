@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { hasUnsavedChanges, type WorkingPlan } from "./compare";
+import { hasUnsavedChanges, wouldDiscardWork, type WorkingPlan } from "./compare";
 import { getSaveState } from "./saveState";
 import { designPlan } from "./testing";
 
@@ -55,6 +55,19 @@ describe("hasUnsavedChanges", () => {
     working.chosen!["AE 2320"] = ["AE 2320-CL01", "AE 2320-CX03"];
     expect(hasUnsavedChanges(designPlan(), working)).toBe(true);
     expect(hasUnsavedChanges(designPlan(), { ...working, chosen: null })).toBe(false);
+  });
+});
+
+describe("wouldDiscardWork", () => {
+  it("asks before replacing courses that were never saved or changed since", () => {
+    expect(wouldDiscardWork(null, workingFrom())).toBe(true);
+    expect(wouldDiscardWork(designPlan(), { ...workingFrom(), locks: {} })).toBe(true);
+  });
+
+  it("doesn't ask for an empty draft or one that is saved as it is", () => {
+    expect(wouldDiscardWork(null, null)).toBe(false);
+    expect(wouldDiscardWork(null, { ...workingFrom(), courses: [] })).toBe(false);
+    expect(wouldDiscardWork(designPlan(), workingFrom())).toBe(false);
   });
 });
 

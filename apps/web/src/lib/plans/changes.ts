@@ -76,6 +76,21 @@ export function changeLabel(change: PlanChange): string {
   }
 }
 
+/** A label for the section's own row, where the course and section are already shown. */
+export function rowChangeLabel(change: PlanChange): string {
+  switch (change.kind) {
+    case "courseRemoved":
+    case "sectionRemoved":
+      return "No longer offered";
+    case "filled":
+      return "Filled up since you saved";
+    case "seats":
+      return `Was ${change.before} open`;
+    case "time":
+      return "New time since you saved";
+  }
+}
+
 function seatCount(count: number): string {
   return count === 1 ? "1 seat" : `${count} seats`;
 }
