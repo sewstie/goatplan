@@ -14,7 +14,7 @@ beforeAll(() => {
   };
 });
 
-function renderDialog(onSubmit = vi.fn(() => null)) {
+function renderDialog(onSubmit = vi.fn((): string | null => null)) {
   render(
     <PlanNameDialog
       open
