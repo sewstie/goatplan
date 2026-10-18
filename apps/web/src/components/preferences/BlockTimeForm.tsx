@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Select } from "@/components/ui/Select";
+import { TextInput } from "@/components/ui/TextInput";
 import { WEEK } from "@/lib/data";
 import type { Day } from "@/lib/data/types";
 import { DayCheckbox } from "./DayCheckbox";
@@ -9,7 +10,7 @@ import { blockEndOptions, blockStartOptions, endAfter } from "./timeOptions";
 
 type BlockTimeFormProps = {
   id: string;
-  onSubmit: (days: Day[], start: number, end: number) => void;
+  onSubmit: (days: Day[], start: number, end: number, label: string) => void;
   /** The dialog shows the message next to its buttons, so the dialog keeps its height. */
   onError: (message: string | null) => void;
   /** The id of that message while it is shown. */
@@ -18,8 +19,9 @@ type BlockTimeFormProps = {
 
 const START_OPTIONS = blockStartOptions();
 
-/** Days and a time range to keep free. The dialog's footer holds its submit button. */
+/** A name, days and a time range to keep free. The dialog's footer holds its submit button. */
 export function BlockTimeForm({ id, onSubmit, onError, errorId }: BlockTimeFormProps) {
+  const [label, setLabel] = useState("");
   const [days, setDays] = useState<Day[]>([]);
   const [start, setStart] = useState(12 * 60);
   const [end, setEnd] = useState(13 * 60);
@@ -35,11 +37,19 @@ export function BlockTimeForm({ id, onSubmit, onError, errorId }: BlockTimeFormP
       onError("Pick at least one day.");
       return;
     }
-    onSubmit(days, start, end);
+    onSubmit(days, start, end, label);
   }
 
   return (
     <form id={id} noValidate onSubmit={handleSubmit} className="flex flex-col gap-14 pt-8">
+      <TextInput
+        label="Name (optional)"
+        hideLabel={false}
+        placeholder="Work"
+        maxLength={30}
+        value={label}
+        onChange={(event) => setLabel(event.target.value)}
+      />
       <fieldset aria-describedby={errorId} className="flex flex-col">
         <legend className="mb-6 text-10 leading-14-5 font-650 text-ink">Days</legend>
         <div className="flex flex-wrap gap-5">
@@ -61,6 +71,7 @@ export function BlockTimeForm({ id, onSubmit, onError, errorId }: BlockTimeFormP
           <Select
             variant="box"
             label="From"
+            className="min-h-38"
             options={START_OPTIONS}
             value={String(start)}
             onChange={(event) => {
@@ -77,6 +88,7 @@ export function BlockTimeForm({ id, onSubmit, onError, errorId }: BlockTimeFormP
           <Select
             variant="box"
             label="To"
+            className="min-h-38"
             options={blockEndOptions(start)}
             value={String(end)}
             onChange={(event) => setEnd(Number(event.target.value))}

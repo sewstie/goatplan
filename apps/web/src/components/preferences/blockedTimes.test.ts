@@ -1,16 +1,18 @@
 import { describe, expect, it } from "vitest";
-import type { BlockedTime } from "@/lib/engine/types";
+import type { PlanBlockedTime } from "@/lib/store";
 import { addBlocked, groupBlocked, groupDays, groupTimes, removeGroup } from "./blockedTimes";
 
-const work: BlockedTime[] = [
+const work: PlanBlockedTime[] = [
   { day: "Fri", start: 840, end: 960 },
   { day: "Tue", start: 840, end: 960 },
 ];
 
+const named = (label: string, times: PlanBlockedTime[]) => times.map((time) => ({ ...time, label }));
+
 describe("groupBlocked", () => {
   it("puts days with the same range in one group, in week order", () => {
     const [group] = groupBlocked(work);
-    expect(group).toEqual({ start: 840, end: 960, days: ["Tue", "Fri"] });
+    expect(group).toEqual({ label: null, start: 840, end: 960, days: ["Tue", "Fri"] });
     expect(groupDays(group)).toBe("Tue, Fri");
     expect(groupTimes(group)).toBe("2 PM–4 PM");
   });
@@ -21,6 +23,18 @@ describe("groupBlocked", () => {
       ["Tue, Wed, Fri", "2 PM–4 PM"],
       ["Mon", "12 PM–1 PM"],
     ]);
+  });
+
+  it("keeps the name, and splits the same range with different names", () => {
+    const groups = groupBlocked([...named("Work", work), { day: "Thu", start: 840, end: 960, label: "Gym" }]);
+    expect(groups.map((group) => [group.label, groupDays(group)])).toEqual([
+      ["Work", "Tue, Fri"],
+      ["Gym", "Thu"],
+    ]);
+  });
+
+  it("treats a blank name as no name", () => {
+    expect(groupBlocked([{ day: "Mon", start: 720, end: 780, label: "  " }])[0].label).toBeNull();
   });
 
   it("collapses three or more days in a row", () => {
@@ -36,16 +50,24 @@ describe("groupBlocked", () => {
 });
 
 describe("addBlocked", () => {
-  it("adds one entry per day", () => {
+  it("adds one entry per day, without a name by default", () => {
     expect(addBlocked([], ["Thu", "Mon"], 720, 780)).toEqual([
       { day: "Mon", start: 720, end: 780 },
       { day: "Thu", start: 720, end: 780 },
     ]);
   });
 
-  it("skips days that already block exactly that range", () => {
-    const result = addBlocked(work, ["Tue", "Wed"], 840, 960);
-    expect(result).toEqual([...work, { day: "Wed", start: 840, end: 960 }]);
+  it("adds the name, trimmed", () => {
+    expect(addBlocked([], ["Tue"], 840, 960, "  Work ")).toEqual([{ day: "Tue", start: 840, end: 960, label: "Work" }]);
+  });
+
+  it("renames a day that already blocks exactly that range instead of adding it twice", () => {
+    const result = addBlocked(work, ["Tue", "Wed"], 840, 960, "Work");
+    expect(result).toEqual([
+      { day: "Fri", start: 840, end: 960 },
+      { day: "Tue", start: 840, end: 960, label: "Work" },
+      { day: "Wed", start: 840, end: 960, label: "Work" },
+    ]);
   });
 
   it("keeps an overlapping but different range", () => {
@@ -64,5 +86,11 @@ describe("removeGroup", () => {
     const lunch = { day: "Mon" as const, start: 720, end: 780 };
     const [workGroup] = groupBlocked(work);
     expect(removeGroup([...work, lunch], workGroup)).toEqual([lunch]);
+  });
+
+  it("leaves a group with the same range but another name", () => {
+    const gym = { day: "Thu" as const, start: 840, end: 960, label: "Gym" };
+    const [workGroup] = groupBlocked(named("Work", work));
+    expect(removeGroup([...named("Work", work), gym], workGroup)).toEqual([gym]);
   });
 });
