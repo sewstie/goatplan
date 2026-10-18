@@ -17,7 +17,8 @@ type SameTimeChooserProps = {
 /** The inside of ChooseAlternativeSheet: the other same-time sections and a Pick button. */
 export function SameTimeChooser({ course, choices, onPicked }: SameTimeChooserProps) {
   const chooseAlternative = usePlanner((state) => state.chooseAlternative);
-  const [selected, setSelected] = useState(choices.suggested.label);
+  // As in div.app-16, nothing is checked at first and the button suggests the one with the most open seats.
+  const [selected, setSelected] = useState<string | null>(null);
   const name = useId();
   const pick = choices.others.find((choice) => choice.label === selected) ?? choices.suggested;
 
@@ -25,8 +26,8 @@ export function SameTimeChooser({ course, choices, onPicked }: SameTimeChooserPr
     <div className="flex flex-col">
       <p className="text-11 leading-17-6 font-510 text-ink">{course.title}</p>
       <p className="mt-8 text-10 leading-17-5 text-ink-muted">
-        These meet at the same time as your {choices.kind} {choices.current.label} ({choices.times.join(", ")}), so
-        your calendar stays the same.
+        These meet at the same time as your {choices.kind} {choices.current.label} (
+        <span className="whitespace-nowrap">{choices.times.join(", ")}</span>), so your calendar stays the same.
       </p>
       <fieldset className="mt-12 flex flex-col gap-4">
         <legend className="mb-5 text-10 leading-14-5 font-650 text-ink">Other {choices.kind} choices</legend>
@@ -35,7 +36,7 @@ export function SameTimeChooser({ course, choices, onPicked }: SameTimeChooserPr
             key={choice.label}
             name={name}
             choice={choice}
-            checked={choice.label === pick.label}
+            checked={choice.label === selected}
             onSelect={() => setSelected(choice.label)}
           />
         ))}
