@@ -122,7 +122,11 @@ export function CourseSearchPanel() {
               code={missingCode}
               termName={termName}
               runsIn={runsIn}
-              onSwitch={(termId) => void setTerm(termId)}
+              onSwitch={(termId) => {
+                // The card goes away while the term loads, so focus moves to the search box first.
+                searchRef.current?.focus();
+                void setTerm(termId);
+              }}
             />
           ) : waiting ? null : (
             <NoMatchMessage query={search} suggestion={suggestCourseCode(search, term.courses)} />

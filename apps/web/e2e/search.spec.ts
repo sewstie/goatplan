@@ -128,6 +128,7 @@ test("a course from another term offers to switch, keeping the search", async ({
 
   await sidebar(page).getByRole("button", { name: "Switch to C Term" }).click();
   await expect(page.getByRole("combobox", { name: "Term" })).toHaveValue("2027-C");
+  await expect(searchBox(page)).toBeFocused();
   await expect(searchBox(page)).toHaveValue("AE 2320");
   await expect(results(page).getByRole("heading", { level: 3 })).toHaveText(["AE 2320"]);
 });
