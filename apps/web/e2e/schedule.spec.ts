@@ -48,13 +48,21 @@ async function openPlan(page: Page, plan: Plan | null) {
 
 const calendar = (page: Page) => page.getByRole("region", { name: "Weekly schedule" });
 
+/** Saves the state at 1440 (the current size) and again at the 834 tablet width. */
+async function screenshotBoth(page: Page, name: string) {
+  await page.screenshot({ path: `${screenshotDir}/schedule-${name}-1440.png` });
+  await page.setViewportSize({ width: 834, height: 1194 });
+  await page.screenshot({ path: `${screenshotDir}/schedule-${name}-834.png`, fullPage: true });
+  await page.setViewportSize({ width: 1440, height: 900 });
+}
+
 test("first visit shows the empty week and the first-course message", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlan(page, null);
   await expect(calendar(page).getByRole("heading", { name: "Add your first course" })).toBeVisible();
   await expect(calendar(page).getByText("No timed courses yet")).toBeVisible();
   await expect(page.getByText("Add courses to start planning your term.")).toBeVisible();
-  await page.screenshot({ path: `${screenshotDir}/schedule-empty-1440.png` });
+  await screenshotBoth(page, "empty");
 });
 
 for (const viewport of [
@@ -135,7 +143,7 @@ test("the switcher pages through schedules with its arrows and the arrow keys, a
   await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
   await page.keyboard.press("ArrowLeft");
   await expect(pill).toHaveText("Schedule 2 of 200");
-  await page.screenshot({ path: `${screenshotDir}/schedule-many-1440.png` });
+  await screenshotBoth(page, "many");
 });
 
 test("sections with no set time are listed under the grid", async ({ page }) => {
@@ -145,7 +153,7 @@ test("sections with no set time are listed under the grid", async ({ page }) => 
   const strip = calendar(page).getByRole("region", { name: "No set time" });
   await expect(strip.getByText("AE 5131 · C01")).toBeVisible();
   await expect(strip.getByText("Incompressible Fluid Dynamics · Online, asynchronous")).toBeVisible();
-  await page.screenshot({ path: `${screenshotDir}/schedule-no-set-time-1440.png` });
+  await screenshotBoth(page, "no-set-time");
 });
 
 test("while the term loads the calendar shows placeholders, and a failed load offers Retry", async ({ page }) => {
@@ -161,7 +169,7 @@ test("while the term loads the calendar shows placeholders, and a failed load of
 
   await expect(page.getByText("Loading C Term sections…")).toBeVisible();
   await expect(calendar(page).getByText("Awaiting term data")).toBeVisible();
-  await page.screenshot({ path: `${screenshotDir}/schedule-loading-1440.png` });
+  await screenshotBoth(page, "loading");
   await expect.poll(() => data.release !== null).toBe(true);
   data.release?.();
   await expect(calendar(page).getByRole("heading", { name: "Add your first course" })).toBeVisible();
@@ -169,7 +177,7 @@ test("while the term loads the calendar shows placeholders, and a failed load of
   data.fail = true;
   await page.reload();
   await expect(calendar(page).getByRole("heading", { name: "Couldn’t load C Term sections." })).toBeVisible();
-  await page.screenshot({ path: `${screenshotDir}/schedule-error-1440.png` });
+  await screenshotBoth(page, "error");
 
   await page.unroute(`**/data/${TERM}.json`);
   await calendar(page).getByRole("button", { name: "Retry" }).click();
