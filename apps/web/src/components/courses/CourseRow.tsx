@@ -42,13 +42,15 @@ export function CourseRow({ code, title, sections, swatch, locked, selected, onS
           {sections && <span className="text-9 leading-14-4 text-ink-muted">{sections}</span>}
         </span>
       </button>
-      <IconButton
-        variant="ghost"
-        label={`Remove ${code}`}
-        icon={<X aria-hidden />}
-        onClick={onRemove}
-        className="absolute top-15 right-10 text-ink-muted opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
-      />
+      <span className="absolute top-15 right-10 flex opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 pointer-coarse:opacity-100">
+        <IconButton
+          variant="ghost"
+          label={`Remove ${code}`}
+          icon={<X aria-hidden />}
+          onClick={onRemove}
+          className="text-ink-muted"
+        />
+      </span>
     </li>
   );
 }
