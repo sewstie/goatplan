@@ -53,7 +53,7 @@ describe("ScheduleView", () => {
     expect(document.querySelector("[data-calendar-tooltip]")).toBeNull();
   });
 
-  it("selects a section's blocks on click", async () => {
+  it("selects a section's blocks on click, and a second click clears it", async () => {
     setPlanner();
     const user = userEvent.setup();
     renderInCard();
@@ -62,6 +62,8 @@ describe("ScheduleView", () => {
     await user.click(lab);
     expect(lab).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: /^AE 2320 CL01, .*Monday/ })).toHaveAttribute("aria-pressed", "false");
+    await user.click(lab);
+    expect(lab).toHaveAttribute("aria-pressed", "false");
   });
 
   it("lists sections with no set time under the grid", () => {
@@ -86,6 +88,7 @@ describe("ScheduleView", () => {
 
     setPlanner({ termStatus: "error", term: null, response: null });
     renderInCard();
+    expect(screen.getByRole("alert")).toHaveTextContent("Couldn’t load C Term sections.");
     expect(screen.getByRole("heading", { name: "Couldn’t load C Term sections." })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Retry" })).toBeInTheDocument();
   });

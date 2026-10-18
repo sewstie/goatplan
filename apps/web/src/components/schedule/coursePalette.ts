@@ -7,12 +7,12 @@ export function courseSlot(courses: readonly string[], code: string): CourseSlot
 }
 
 // Hover borders for slots 1, 3 and 4 and soft fills for slots 1–3 have no tokens yet (tokens.md), so they
-// are mixed from the slot's own colors until the lead adds them.
+// are mixed from existing tokens until the lead adds them. Slot 1 is dark, so its edge gets lighter.
 export const blockClasses: Readonly<Record<CourseSlot, string>> = {
-  1: "bg-course-1 text-on-accent hover:border-ink",
+  1: "bg-course-1 text-on-accent hover:border-ink-muted",
   2: "bg-course-2 text-ink hover:border-course-2-hover-line",
-  3: "bg-course-3 text-ink hover:border-[color-mix(in_srgb,var(--color-course-3-swatch)_75%,black)]",
-  4: "bg-course-4 text-ink hover:border-[color-mix(in_srgb,var(--color-course-4-swatch)_75%,black)]",
+  3: "bg-course-3 text-ink hover:border-[color-mix(in_srgb,var(--color-course-3-swatch)_70%,var(--color-ink))]",
+  4: "bg-course-4 text-ink hover:border-[color-mix(in_srgb,var(--color-course-4-swatch)_70%,var(--color-ink))]",
 };
 
 export const swatchClasses: Readonly<Record<CourseSlot, string>> = {

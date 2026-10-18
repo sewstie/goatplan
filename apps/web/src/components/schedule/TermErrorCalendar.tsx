@@ -22,10 +22,18 @@ export function TermErrorCalendar() {
       caption="No timed courses yet"
       overlay={
         <CalendarMessage
+          role="alert"
           icon={<Warning className="text-ink" />}
           title={termName ? `Couldn’t load ${termName} sections.` : "Couldn’t load course sections."}
           actions={
-            <Button icon={<ArrowClockwise aria-hidden />} onClick={() => void (termId ? setTerm(termId) : init())}>
+            <Button
+              icon={<ArrowClockwise aria-hidden />}
+              onClick={() => {
+                // The button goes away while the term reloads, so focus moves to the main content.
+                document.getElementById("main")?.focus();
+                void (termId ? setTerm(termId) : init());
+              }}
+            >
               Retry
             </Button>
           }

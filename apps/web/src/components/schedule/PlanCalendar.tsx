@@ -84,7 +84,9 @@ export function PlanCalendar() {
             density={density}
             style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN)}
             selected={item.sectionId === selectedSection}
-            onSelect={(clicked) => setSelectedSection(clicked.sectionId)}
+            onSelect={(clicked) =>
+              setSelectedSection((current) => (current === clicked.sectionId ? null : clicked.sectionId))
+            }
             onShowDetails={showDetails}
             onHideDetails={() => setDetails(null)}
           />
