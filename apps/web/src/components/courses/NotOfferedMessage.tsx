@@ -15,7 +15,7 @@ type NotOfferedMessageProps = {
 export function NotOfferedMessage({ code, termName, runsIn, onSwitch }: NotOfferedMessageProps) {
   const target = runsIn[0];
   return (
-    <SearchMessage title={`${code} isn’t offered in ${termName}.`}>
+    <SearchMessage title={`${code} isn’t offered in ${termName}.`} endsWithButton>
       <p className="text-10 leading-16-5 text-ink-muted">It runs in {joinTermNames(runsIn)}.</p>
       <Button
         size="sm"

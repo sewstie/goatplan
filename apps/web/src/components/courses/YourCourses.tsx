@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, useId, useRef, type RefObject } from "react";
 import { useShallow } from "zustand/react/shallow";
 import type { Course } from "@/lib/data/types";
 import { selectChosenSections, usePlanner } from "@/lib/store";
@@ -32,6 +32,7 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
   const select = useCourseSelection((state) => state.select);
   const listRef = useRef<HTMLUListElement>(null);
   const focusAfterRemove = useRef<string | null>(null);
+  const headingId = useId();
 
   const ready = termStatus === "ready" && term !== null;
   const courses = ready
@@ -61,9 +62,9 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
   }
 
   return (
-    <section aria-labelledby="your-courses-heading" className="flex shrink-0 flex-col">
+    <section aria-labelledby={headingId} className="flex shrink-0 flex-col">
       <div className="flex items-end justify-between gap-8 pb-10">
-        <h2 id="your-courses-heading" className="text-11 leading-15-95 font-650">
+        <h2 id={headingId} className="text-11 leading-15-95 font-650">
           Your courses
         </h2>
         <span className="text-9 leading-13 font-450 text-ink-muted">{count}</span>

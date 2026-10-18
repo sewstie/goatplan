@@ -67,6 +67,15 @@ test("“cs2102” finds CS 2102, and Enter adds it with its credits", async ({ 
   await expect(yourCourses(page).getByText("1 selected · 3 credits")).toBeVisible();
 });
 
+test("Enter on a course that's already planned says so and keeps the search", async ({ page }) => {
+  await open(page, { term: "2027-C", courses: ["AE 2320"] });
+  await searchBox(page).fill("ae2320");
+  await searchBox(page).press("Enter");
+  await expect(searchBox(page)).toHaveValue("ae2320");
+  await expect(sidebar(page).locator('[aria-live="polite"]')).toContainText("AE 2320 is already in your courses.");
+  await expect(yourCourses(page).getByText("1 selected · 3 credits")).toBeVisible();
+});
+
 test("search finds titles and instructors", async ({ page }) => {
   await open(page, { term: "2027-C" });
   await searchBox(page).fill("orbital mechanics");
@@ -167,6 +176,19 @@ test("removing courses keeps focus in the list, then returns to the search box",
   await row("AE 2210").click();
   await expect(row("AE 2210")).toHaveAttribute("aria-current", "true");
 
+  // The × hides at rest and shows on hover, inside its row.
+  await expect(yourCourses(page).getByRole("button", { name: "Remove AE 2320" }).locator("..")).toHaveCSS("opacity", "0");
+  const remove = yourCourses(page).getByRole("button", { name: "Remove AE 2210" });
+  await row("AE 2210").hover();
+  await expect(remove.locator("..")).toHaveCSS("opacity", "1");
+  const rowBox = (await row("AE 2210").boundingBox())!;
+  const removeBox = (await remove.boundingBox())!;
+  expect(removeBox.x).toBeGreaterThan(rowBox.x);
+  expect(removeBox.x + removeBox.width).toBeLessThan(rowBox.x + rowBox.width);
+  expect(removeBox.y).toBeGreaterThan(rowBox.y);
+  expect(removeBox.y + removeBox.height).toBeLessThan(rowBox.y + rowBox.height);
+  await page.mouse.move(0, 0);
+
   await row("AE 2320").focus();
   await page.keyboard.press("Tab");
   await expect(yourCourses(page).getByRole("button", { name: "Remove AE 2320" })).toBeFocused();
@@ -188,6 +210,22 @@ test("search waits for sections when the term file fails to load", async ({ page
   await expect(searchBox(page)).toBeDisabled();
   await expect(sidebar(page).getByText("Search works once sections load.")).toBeVisible();
   await expect(yourCourses(page)).toContainText("Your courses will appear hereonce sections load.");
+});
+
+test("the term field says when there are no terms", async ({ page }) => {
+  await page.route("**/data/index.json", (route) => route.abort());
+  await page.goto("/");
+  const term = page.getByRole("combobox", { name: "Term" });
+  await expect(term).toBeDisabled();
+  await expect(term.locator("option")).toHaveText(["No terms available"]);
+});
+
+test("the no-match card shows while other terms are still being checked", async ({ page }) => {
+  // C Term never answers, so the lookup from D Term can't finish.
+  await page.route("**/data/2027-C.json", () => {});
+  await open(page, { term: "2027-D" });
+  await searchBox(page).fill("AE 2320");
+  await expect(sidebar(page).getByRole("heading", { name: "No course matches ‘AE 2320’." })).toBeVisible();
 });
 
 test.describe("screenshots", () => {

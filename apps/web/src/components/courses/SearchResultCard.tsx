@@ -34,7 +34,7 @@ export function SearchResultCard({ course, fit, added, onAdd }: SearchResultCard
           aria-disabled={added || undefined}
           onClick={() => !added && onAdd(course.code)}
           data-result-action
-          className={cx(added && "cursor-default")}
+          className={cx(added && "cursor-default aria-disabled:enabled:hover:bg-accent-soft")}
         >
           {added ? "Added" : "Add"}
         </Button>
