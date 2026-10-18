@@ -1,7 +1,7 @@
 import { useId } from "react";
 import { Badge } from "@/components/ui/Badge";
+import { COURSE_COLORS } from "@/components/ui/courseColors";
 import { cx } from "@/components/ui/cx";
-import { softClasses, swatchClasses } from "./coursePalette";
 import { deliveryName } from "./scheduleCopy";
 import type { UntimedItem } from "./scheduleItems";
 
@@ -23,9 +23,9 @@ export function NoTimeStrip({ items }: { items: readonly UntimedItem[] }) {
         {items.map((item) => (
           <li
             key={item.sectionId}
-            className={cx("flex items-center gap-8 rounded-row px-10 py-9", softClasses[item.slot])}
+            className={cx("flex items-center gap-8 rounded-row px-10 py-9", COURSE_COLORS[item.slot].soft)}
           >
-            <span aria-hidden className={cx("size-8 shrink-0 rounded-swatch", swatchClasses[item.slot])} />
+            <span aria-hidden className={cx("size-8 shrink-0 rounded-swatch", COURSE_COLORS[item.slot].swatch)} />
             <span className="flex min-w-0 flex-1 flex-col gap-2.5">
               <span className="truncate text-10 leading-14-5 font-700">
                 {item.courseCode} · {item.sectionCode}

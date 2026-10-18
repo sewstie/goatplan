@@ -36,6 +36,7 @@ export default function PlannerPage() {
         toolbar={<PreferencesBar />}
         banner={<ScheduleBanner />}
         schedule={<ScheduleView />}
+        hideDetailsOnTermError
         details={
           <>
             <CourseDetailsPanel />

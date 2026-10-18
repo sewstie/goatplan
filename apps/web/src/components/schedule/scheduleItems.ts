@@ -1,5 +1,5 @@
 import type { Course, Day, Delivery, Section, TermFile } from "@/lib/data/types";
-import { courseSlot, type CourseSlot } from "./coursePalette";
+import { courseSlot, type CourseSlot } from "@/components/ui/courseColors";
 
 interface ItemBase {
   courseCode: string;

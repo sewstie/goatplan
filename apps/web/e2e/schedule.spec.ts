@@ -6,7 +6,7 @@ const TERM = "2027-C";
 type Plan = {
   courses: string[];
   startsAfter?: number;
-  blocked?: { day: string; start: number; end: number }[];
+  blocked?: { day: string; start: number; end: number; label?: string }[];
   locks?: Record<string, string[]>;
 };
 
@@ -14,8 +14,8 @@ type Plan = {
 const designPlan: Plan = {
   courses: ["AE 2320", "AE 2410", "AE 2210"],
   blocked: [
-    { day: "Tue", start: 840, end: 960 },
-    { day: "Fri", start: 840, end: 960 },
+    { day: "Tue", start: 840, end: 960, label: "Work" },
+    { day: "Fri", start: 840, end: 960, label: "Work" },
   ],
   locks: { "AE 2320": ["AE 2320-CX02"] },
 };
@@ -85,7 +85,9 @@ for (const viewport of [
     await expect(
       week.getByRole("button", { name: "AE 2320 CX02, Introduction to Orbital Mechanics, Thursday, 3:00 PM–3:50 PM, Higgins Labs 230 Geom Modeling Computer Lab, Ye Lu, locked" }),
     ).toBeVisible();
-    await expect(week.getByRole("group", { name: "Tuesday" }).getByText("Blocked time")).toBeVisible();
+    await expect(week.getByRole("group", { name: "Tuesday" }).getByText("Work")).toBeVisible();
+    await expect(week.getByRole("button", { name: /^AE 2320 CX02/ })).toContainText("Higgins Labs 230");
+    await expect(week.getByRole("button", { name: /^AE 2320 CX02/ })).not.toContainText("Computer Lab");
 
     // Nothing in the calendar spills past the card.
     const card = (await week.boundingBox())!;
@@ -96,7 +98,7 @@ for (const viewport of [
     }
 
     await week.getByRole("button", { name: /^AE 2410 C01, .*Tuesday/ }).hover();
-    await expect(page.locator("[data-calendar-tooltip]")).toBeVisible();
+    await expect(page.locator("[role=tooltip]")).toBeVisible();
     await page.screenshot({ path: `${screenshotDir}/schedule-${viewport.width}.png`, fullPage: true });
   });
 }
@@ -107,11 +109,12 @@ test("block tooltips render outside the calendar card, so a late block's tooltip
   const lab = calendar(page).getByRole("button", { name: /^AE 2320 CX02/ });
 
   await lab.focus();
-  const tooltip = page.locator("[data-calendar-tooltip]");
+  const tooltip = page.locator("[role=tooltip]");
   await expect(tooltip).toContainText("AE 2320 · CX02");
   await expect(tooltip).toContainText("Thu · 3:00–3:50 PM");
-  await expect(calendar(page).locator("[data-calendar-tooltip]")).toHaveCount(0);
-  await expect(page.locator("body > [data-calendar-tooltip]")).toHaveCount(1);
+  await expect(tooltip).toContainText("Higgins Labs 230 Geom Modeling Computer Lab");
+  await expect(calendar(page).locator("[role=tooltip]")).toHaveCount(0);
+  await expect(page.locator("body > [role=tooltip]")).toHaveCount(1);
 
   const box = (await tooltip.boundingBox())!;
   expect(box.y).toBeGreaterThanOrEqual(0);
@@ -123,6 +126,12 @@ test("block tooltips render outside the calendar card, so a late block's tooltip
 
   await lab.click();
   await expect(lab).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: /^AE 2410 C01, .*Monday/ }).click();
+  await expect(lab).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: /^AE 2410/ })).toHaveAttribute(
+    "aria-current",
+    "true",
+  );
 });
 
 test("the switcher pages through schedules with its arrows and the arrow keys, and notes the cap", async ({ page }) => {
@@ -177,6 +186,8 @@ test("while the term loads the calendar shows placeholders, and a failed load of
   data.fail = true;
   await page.reload();
   await expect(calendar(page).getByRole("heading", { name: "Couldn’t load C Term sections." })).toBeVisible();
+  // As in div.app-2, the calendar takes the width the details panel would have had.
+  await expect(page.getByRole("complementary", { name: "Course details" })).toHaveCount(0);
   await screenshotBoth(page, "error");
 
   await page.unroute(`**/data/${TERM}.json`);

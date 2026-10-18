@@ -6,13 +6,17 @@ import type { Density } from "./density";
 type BlockedTimeBlockProps = {
   start: number;
   end: number;
+  /** The name the student gave it, like "Work". */
+  label?: string;
   density: Density;
   style: CSSProperties;
 };
 
-/** A time the student blocked, hatched like the early band (div.app-3.md). */
-export function BlockedTimeBlock({ start, end, density, style }: BlockedTimeBlockProps) {
+/** A time the student blocked, hatched like the early band (div.app-3.md): its name, or else its time, then "blocked". */
+export function BlockedTimeBlock({ start, end, label, density, style }: BlockedTimeBlockProps) {
   const dense = density === "dense";
+  const time = formatTimeRange(start, end);
+  const small = cx("truncate", dense ? "text-7 leading-10-5" : "text-8 leading-12");
   return (
     <div
       className={cx(
@@ -21,10 +25,9 @@ export function BlockedTimeBlock({ start, end, density, style }: BlockedTimeBloc
       )}
       style={style}
     >
-      <p className="truncate text-9 leading-13 font-600">Blocked time</p>
-      <p className={cx("truncate", dense ? "text-7 leading-10-5" : "text-8 leading-12")}>
-        {formatTimeRange(start, end)}
-      </p>
+      <p className="truncate text-9 leading-13 font-600">{label ?? time}</p>
+      {label && <p className={cx(small, "mt-4")}>{time}</p>}
+      <p className={small}>blocked</p>
     </div>
   );
 }

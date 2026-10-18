@@ -23,7 +23,7 @@ function section(id: string, changes: Partial<Section> = {}): Section {
 const lab = (code: string, start: number): Section =>
   section(`AE 2320-${code}`, {
     type: "lab",
-    meetings: [{ days: ["Thu"], start, end: start + 50, location: "Higgins Labs 230" }],
+    meetings: [{ days: ["Thu"], start, end: start + 50, location: "Higgins Labs 230 Geom Modeling Computer Lab" }],
   });
 
 export const term: TermFile = {

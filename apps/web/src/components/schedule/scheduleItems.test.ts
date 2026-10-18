@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Section, TermFile } from "@/lib/data/types";
-import { courseSlot } from "./coursePalette";
+import { courseSlot } from "@/components/ui/courseColors";
 import { scheduleItems } from "./scheduleItems";
 import { visibleDays } from "./weekDays";
 
