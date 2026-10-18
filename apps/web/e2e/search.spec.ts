@@ -47,7 +47,7 @@ test("the term picker switches terms and the breadcrumbs follow", async ({ page 
   await expect(term.locator("option")).toContainText(["C Term · Spring 2027", "D Term · Spring 2027"]);
   await expect(sidebar(page).getByText("All courses and sections in C Term")).toBeVisible();
   const header = page.locator("header");
-  await expect(header.getByText("Spring 2027")).toBeVisible();
+  await expect(header.getByText("Spring 2027", { exact: true })).toBeVisible();
   await expect(header.getByText("C Term", { exact: true })).toBeVisible();
 
   await term.selectOption("2027-D");
