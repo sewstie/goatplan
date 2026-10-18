@@ -45,6 +45,22 @@ describe("PreferencesBar", () => {
     expect(screen.queryByText("Tue, Fri")).not.toBeInTheDocument();
   });
 
+  it("moves focus to the next pill, then to Block a time, as pills are removed", async () => {
+    await startTestPlanner({
+      courses: ["AE 2320"],
+      preferences: { startsAfter: 540, blocked: [...work, { day: "Mon", start: 720, end: 780 }], onlyOpen: true },
+    });
+    render(<PreferencesBar />);
+
+    screen.getByRole("button", { name: "Remove blocked time Tue, Fri 2 PM–4 PM" }).focus();
+    await userEvent.keyboard("{Enter}");
+    const lunch = screen.getByRole("button", { name: "Remove blocked time Mon 12 PM–1 PM" });
+    expect(lunch).toHaveFocus();
+
+    await userEvent.keyboard("{Enter}");
+    expect(screen.getByRole("button", { name: "Block a time" })).toHaveFocus();
+  });
+
   it("adds a blocked time from the form", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
     render(<PreferencesBar />);

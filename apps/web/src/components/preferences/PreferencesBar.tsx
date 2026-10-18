@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { useCallback, useId, useRef } from "react";
 import { Toggle } from "@/components/ui/Toggle";
 import { usePlanner } from "@/lib/store";
 import { BlockedTimeChips } from "./BlockedTimeChips";
@@ -13,6 +13,8 @@ export function PreferencesBar() {
   const labelId = useId();
   const onlyOpen = usePlanner((state) => state.preferences.onlyOpen);
   const setPreferences = usePlanner((state) => state.setPreferences);
+  const blockAddRef = useRef<HTMLSpanElement>(null);
+  const focusBlockAdd = useCallback(() => blockAddRef.current?.querySelector("button")?.focus(), []);
 
   return (
     <div
@@ -24,8 +26,10 @@ export function PreferencesBar() {
         Preferences
       </span>
       <StartTimeSelect />
-      <BlockedTimeChips />
-      <BlockTimeButton />
+      <BlockedTimeChips onAllRemoved={focusBlockAdd} />
+      <span ref={blockAddRef} className="contents">
+        <BlockTimeButton />
+      </span>
       <Toggle
         checked={onlyOpen}
         onCheckedChange={(checked) => setPreferences({ onlyOpen: checked })}
