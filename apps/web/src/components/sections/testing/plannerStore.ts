@@ -24,7 +24,11 @@ export function useTestPlanner<T>(selector: (state: PlannerStore) => T): T {
 
 type Options = {
   term?: TermFile;
+  /** Replaces the term download, e.g. to keep it loading or make it fail. */
+  loadTerm?: () => Promise<TermFile>;
   solve?: (request: SolveRequest) => SolveResponse;
+  /** false starts the store without waiting for the term or an answer. */
+  wait?: boolean;
 };
 
 /** Opens term 2027-C with this draft and waits for the first answer. */
@@ -41,13 +45,17 @@ export async function startTestPlanner(draft: Partial<Draft> = {}, options: Opti
       },
     },
     loadTermIndex: async () => ({ terms: [termSummary("2027-C")] }),
-    loadTerm: async () => options.term ?? termFile("2027-C"),
+    loadTerm: options.loadTerm ?? (async () => options.term ?? termFile("2027-C")),
     takeTermBuffer: () => null,
     storage,
     solveDelayMs: 0,
     now: () => new Date("2026-10-17T12:00:00Z"),
   });
   current = store;
+  if (options.wait === false) {
+    void store.getState().init();
+    return { store, requests };
+  }
   await store.getState().init();
   await waitForSolve(store);
   return { store, requests };
