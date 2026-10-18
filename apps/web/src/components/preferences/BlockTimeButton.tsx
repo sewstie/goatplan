@@ -21,8 +21,8 @@ export function BlockTimeButton() {
   const formId = useId();
   const errorId = useId();
 
-  function handleSubmit(days: Day[], start: number, end: number) {
-    setPreferences({ blocked: addBlocked(blocked, days, start, end) });
+  function handleSubmit(days: Day[], start: number, end: number, label: string) {
+    setPreferences({ blocked: addBlocked(blocked, days, start, end, label) });
     setOpen(false);
   }
 

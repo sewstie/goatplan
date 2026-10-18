@@ -82,6 +82,30 @@ describe("PreferencesBar", () => {
     expect(screen.getByText("10 AM–11:30 AM")).toBeInTheDocument();
   });
 
+  it("names a blocked time when asked, like the design's Work pill", async () => {
+    const { store } = await startTestPlanner({ courses: ["AE 2320"] });
+    render(<PreferencesBar />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
+    const dialog = screen.getByRole("dialog", { name: "Block a time" });
+    const name = within(dialog).getByRole("textbox", { name: "Name (optional)" });
+    expect(name).toHaveValue("");
+    await userEvent.type(name, "Work");
+    await userEvent.click(within(dialog).getByRole("checkbox", { name: "Tuesday" }));
+    await userEvent.click(within(dialog).getByRole("checkbox", { name: "Friday" }));
+    await userEvent.selectOptions(within(dialog).getByRole("combobox", { name: "From" }), "2:00 PM");
+    await userEvent.selectOptions(within(dialog).getByRole("combobox", { name: "To" }), "4:00 PM");
+    await userEvent.click(within(dialog).getByRole("button", { name: "Block time" }));
+
+    expect(store.getState().preferences.blocked).toEqual([
+      { day: "Tue", start: 840, end: 960, label: "Work" },
+      { day: "Fri", start: 840, end: 960, label: "Work" },
+    ]);
+    expect(screen.getByText("Work")).toBeInTheDocument();
+    expect(screen.getByText("· Tue, Fri 2 PM–4 PM")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Remove blocked time Work, Tue, Fri 2 PM–4 PM" })).toBeInTheDocument();
+  });
+
   it("asks for a day before blocking a time", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
     render(<PreferencesBar />);

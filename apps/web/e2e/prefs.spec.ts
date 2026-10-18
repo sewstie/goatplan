@@ -5,7 +5,11 @@ const DRAFT_KEY = "goatplan:draft:v1:2027-C";
 
 type Draft = {
   courses: string[];
-  preferences: { startsAfter: number; blocked: { day: string; start: number; end: number }[]; onlyOpen: boolean };
+  preferences: {
+    startsAfter: number;
+    blocked: { day: string; start: number; end: number; label?: string }[];
+    onlyOpen: boolean;
+  };
   locks: Record<string, string[]>;
 };
 
@@ -79,13 +83,15 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
 
   await row.getByRole("button", { name: "Block a time" }).click();
   const dialog = page.getByRole("dialog", { name: "Block a time" });
+  await dialog.getByRole("textbox", { name: "Name (optional)" }).fill("Lunch");
   await dialog.getByRole("checkbox", { name: "Monday" }).check();
   await dialog.getByRole("checkbox", { name: "Wednesday" }).check();
   await dialog.getByRole("combobox", { name: "From" }).selectOption({ label: "12:00 PM" });
   await dialog.getByRole("combobox", { name: "To" }).selectOption({ label: "1:00 PM" });
   await dialog.getByRole("button", { name: "Block time" }).click();
   await expect(dialog).toBeHidden();
-  await expect(row.getByText("Mon, Wed")).toBeVisible();
+  await expect(row.getByText("Lunch")).toBeVisible();
+  await expect(row.getByText("· Mon, Wed 12 PM–1 PM")).toBeVisible();
 
   await row.getByRole("button", { name: "Remove blocked time Tue, Fri 2 PM–4 PM" }).click();
   await row.getByRole("switch", { name: "Only open sections" }).click();
@@ -94,8 +100,8 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   expect((await savedDraft(page)).preferences).toEqual({
     startsAfter: 600,
     blocked: [
-      { day: "Mon", start: 720, end: 780 },
-      { day: "Wed", start: 720, end: 780 },
+      { day: "Mon", start: 720, end: 780, label: "Lunch" },
+      { day: "Wed", start: 720, end: 780, label: "Lunch" },
     ],
     onlyOpen: false,
   });
@@ -103,6 +109,7 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   await page.reload();
   await waitForSchedules(page);
   await expect(row.getByRole("combobox", { name: "Starts after" })).toHaveValue("600");
+  await expect(row.getByText("Lunch")).toBeVisible();
   await expect(row.getByRole("switch", { name: "Only open sections" })).toHaveAttribute("aria-checked", "false");
 });
 

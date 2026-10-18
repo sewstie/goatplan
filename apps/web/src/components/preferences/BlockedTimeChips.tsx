@@ -38,15 +38,16 @@ export function BlockedTimeChips({ onAllRemoved }: BlockedTimeChipsProps) {
         const times = groupTimes(group);
         return (
           <Chip
-            key={`${group.start}-${group.end}`}
+            key={`${group.label}-${group.start}-${group.end}`}
             label="Blocked"
-            value={days}
-            detail={times}
+            // With a name, as in the design: "Blocked Work · Tue, Fri 2 PM–4 PM".
+            value={group.label ?? days}
+            detail={group.label ? `· ${days} ${times}` : times}
             onRemove={() => {
               if (ready) removedIndex.current = index;
               setPreferences({ blocked: removeGroup(blocked, group) });
             }}
-            removeLabel={`Remove blocked time ${days} ${times}`}
+            removeLabel={`Remove blocked time ${group.label ? `${group.label}, ` : ""}${days} ${times}`}
           />
         );
       })}
