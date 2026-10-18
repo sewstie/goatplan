@@ -7,7 +7,7 @@ export function EarlyBand({ range, startsAfter }: { range: TimeRange; startsAfte
   const height = percentOf(range, Math.min(startsAfter, range.end));
   return (
     <div
-      className="absolute inset-x-3 top-0 overflow-hidden rounded-block border border-line-disabled bg-hatch pt-6 text-center text-8 leading-11-6 text-ink-hatch"
+      className="absolute inset-x-3 top-0 overflow-hidden rounded-block border border-line-disabled bg-hatch pt-6 text-center text-8 leading-11-6 text-ink-hatch motion-safe:transition-[height] motion-safe:duration-180"
       style={{ height: `${height}%` }}
     >
       No classes before {formatTime(startsAfter)}

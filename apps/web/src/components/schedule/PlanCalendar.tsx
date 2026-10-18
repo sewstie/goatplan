@@ -3,32 +3,36 @@
 import { useMemo } from "react";
 import { formatTimeRange } from "@/lib/data/time";
 import type { Day } from "@/lib/data/types";
-import { usePlanner } from "@/lib/store";
+import { selectSchedules, usePlanner } from "@/lib/store";
 import { blockPosition } from "./blockStyles";
 import { BlockedTimeBlock } from "./BlockedTimeBlock";
 import { ClassBlock } from "./ClassBlock";
+import { calendarBounds } from "./calendarBounds";
 import type { Density } from "./density";
 import { EarlyBand } from "./EarlyBand";
 import { assignLanes } from "./lanes";
 import { NoTimeStrip } from "./NoTimeStrip";
 import type { ClassItem } from "./scheduleItems";
-import { fitRange } from "./timeRange";
 import { useScheduleItems } from "./useScheduleItems";
-import { visibleDays } from "./weekDays";
 import { WeekCalendar } from "./WeekCalendar";
 
 const FULL_COLUMN = { lane: 0, lanes: 1 };
+const NO_PREVIEWS: readonly ClassItem[] = [];
 
-/** The shown schedule on a calendar fitted to it, with the student's blocked times and start time. */
-export function PlanCalendar() {
+export function PlanCalendar({ previews = NO_PREVIEWS }: { previews?: readonly ClassItem[] }) {
+  const term = usePlanner((state) => state.term);
+  const schedules = usePlanner(selectSchedules);
   const preferences = usePlanner((state) => state.preferences);
   const selectedCourse = usePlanner((state) => state.selectedCourse);
   const selectedSection = usePlanner((state) => state.selectedSection);
   const selectCourse = usePlanner((state) => state.selectCourse);
-  const { classes, untimed } = useScheduleItems();
+  const { classes: scheduled, untimed } = useScheduleItems();
+  const classes = useMemo(() => [...scheduled, ...previews], [scheduled, previews]);
 
-  const range = fitRange([...classes, ...preferences.blocked], preferences.startsAfter);
-  const days = visibleDays([...classes, ...preferences.blocked]);
+  const { range, days } = useMemo(
+    () => calendarBounds(term, schedules, preferences.blocked, previews),
+    [term, schedules, preferences.blocked, previews],
+  );
   // Each day's blocks in time order, so screen readers and Tab go through the day as it happens.
   const byDay = useMemo(() => {
     const groups = new Map<Day, ClassItem[]>();

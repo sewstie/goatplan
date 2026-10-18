@@ -23,7 +23,7 @@ export function BlockedTimeBlock({ start, end, label, density, style }: BlockedT
   return (
     <div
       className={cx(
-        "absolute overflow-hidden rounded-block border border-line-disabled bg-hatch text-ink-hatch",
+        "absolute overflow-hidden rounded-block border border-line-disabled bg-hatch text-ink-hatch motion-safe:transition-[top,height] motion-safe:duration-180",
         dense ? "px-4 pt-9.5" : "px-7 pt-12.5",
       )}
       style={style}

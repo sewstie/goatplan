@@ -96,7 +96,7 @@ async function seed(page: Page, entries: Record<string, unknown>) {
 }
 
 async function plannerSettled(page: Page) {
-  await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute("data-planner-solve-status", "done", {
+  await expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", {
     timeout: 30_000,
   });
 }
@@ -306,6 +306,48 @@ test.describe("Sections to register", () => {
     await plannerSettled(page);
     await expect(header(page).getByRole("status")).toHaveText("Unsaved changes");
     await expect(header(page).getByRole("button", { name: "Save schedule" })).toBeEnabled();
+    await expect(page.getByRole("group", { name: "Preferences" }).getByRole("button", { name: "Block a time" })).toBeEnabled();
+    await expect(page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: "Remove AE 2320" })).toBeEnabled();
+  });
+
+  test("another plan shows its own courses and preferences without changing the planner", async ({ page }) => {
+    const viewed = {
+      ...changedPlan,
+      courses: ["AE 2410"],
+      schedule: [changedPlan.schedule[1]],
+      locks: {},
+      preferences: { startsAfter: 660, blocked: [{ day: "Sat", start: 1080, end: 1200, label: "Job" }], onlyOpen: false },
+      sortPreset: "fewestGaps",
+    };
+    await seed(page, { ...twoPlansStorage, "goatplan:plans:v1:plan:plan-changed": viewed });
+    await page.goto("/plans?plan=plan-changed");
+    await plannerSettled(page);
+    const courses = page.getByRole("region", { name: "Your courses" });
+    await expect(courses.getByRole("listitem")).toHaveCount(1);
+    await expect(courses).toContainText("AE 2410");
+    await expect(courses).toContainText("C09");
+    await expect(courses.getByRole("button")).toHaveCount(0);
+    const prefs = page.getByRole("group", { name: "Preferences" });
+    await expect(prefs).toContainText("11:00 AM");
+    await expect(prefs).toContainText("Job");
+    await expect(prefs).toContainText("Sat 6 PM–8 PM");
+    await expect(prefs).toContainText("Fewest gaps");
+    await expect(prefs.getByRole("switch", { name: "Only open sections" })).not.toBeChecked();
+    await expect(prefs.getByRole("switch", { name: "Only open sections" })).toBeDisabled();
+    await expect(prefs.getByRole("combobox")).toHaveCount(0);
+    await expect(prefs.getByRole("button", { name: /Block a time|Remove/ })).toHaveCount(0);
+    const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("goatplan:draft:v1:2027-C")!));
+    expect(stored.courses).toEqual(draft.courses);
+    expect(stored.preferences).toEqual(preferences);
+    for (const width of [1440, 834]) {
+      await page.setViewportSize({ width, height: width === 834 ? 1194 : 900 });
+      await screenshot(page, `plans-read-only-${width}`, true);
+    }
+    await page.getByRole("button", { name: "Open in planner to edit" }).click();
+    await expect(page).toHaveURL(/\/$/);
+    await plannerSettled(page);
+    await expect(page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: "Remove AE 2410" })).toBeEnabled();
+    await expect(page.getByRole("group", { name: "Preferences" })).toContainText("Job");
   });
 
   test("a long plan makes the page longer on a tablet instead of scrolling inside a box", async ({ page }) => {

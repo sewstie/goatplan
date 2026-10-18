@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
-import { TermBreadcrumbs } from "@/components/courses/TermBreadcrumbs";
-import { TermPicker } from "@/components/courses/TermPicker";
 import { PlanActions } from "@/components/plans/PlanActions";
+import { PlansBreadcrumbs } from "@/components/plans/PlansBreadcrumbs";
 import { PlansPageActions } from "@/components/plans/PlansPageActions";
+import { PlansPreferences } from "@/components/plans/PlansPreferences";
+import { PlansSidebar } from "@/components/plans/PlansSidebar";
 import { PlansSubtitle } from "@/components/plans/PlansSubtitle";
 import { PlansTitle } from "@/components/plans/PlansTitle";
 import { RegistrationPrint } from "@/components/plans/RegistrationPrint";
 import { RegistrationSheet } from "@/components/plans/RegistrationSheet";
 import { RegistrationSummary } from "@/components/plans/RegistrationSummary";
 import { SavedPlanPill } from "@/components/plans/SavedPlanPill";
-import { PreferencesBar } from "@/components/preferences/PreferencesBar";
 import { AppShell } from "@/components/shell/AppShell";
 import { PlannerBootstrap } from "@/components/shell/PlannerBootstrap";
 import { Sidebar } from "@/components/shell/Sidebar";
@@ -33,8 +32,9 @@ export default function PlansPage() {
         <AppShell
           sidebar={
             <Sidebar>
-              <TermPicker />
-              <CourseSearchPanel />
+              <Suspense>
+                <PlansSidebar />
+              </Suspense>
             </Sidebar>
           }
           header={
@@ -44,7 +44,11 @@ export default function PlansPage() {
                   <PlansTitle />
                 </Suspense>
               }
-              breadcrumbs={<TermBreadcrumbs />}
+              breadcrumbs={
+                <Suspense>
+                  <PlansBreadcrumbs />
+                </Suspense>
+              }
               titleAside={
                 <Suspense>
                   <SavedPlanPill />
@@ -62,7 +66,11 @@ export default function PlansPage() {
               }
             />
           }
-          toolbar={<PreferencesBar />}
+          toolbar={
+            <Suspense>
+              <PlansPreferences />
+            </Suspense>
+          }
           scheduleLabel="Sections to register"
           detailsLabel="Plan summary"
           scheduleFit="content"

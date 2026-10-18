@@ -56,7 +56,7 @@ export function ClassBlock({ item, density, style, selected, onSelect }: ClassBl
         data-block={item.key}
         onClick={() => onSelect(item)}
         className={cx(
-          "absolute flex cursor-pointer flex-col overflow-hidden rounded-block border text-left transition-[border-color,box-shadow]",
+          "absolute flex cursor-pointer flex-col overflow-hidden rounded-block border text-left transition-[border-color,box-shadow,top,height] duration-180 motion-reduce:transition-none motion-reduce:duration-0",
           text.box,
           selected
             ? "border-accent bg-surface-raised text-ink shadow-selected"
