@@ -8,13 +8,16 @@ import { termFieldLabel } from "./courseSummary";
 export function TermPicker() {
   const terms = usePlanner((state) => state.terms);
   const termId = usePlanner((state) => state.termId);
+  const termStatus = usePlanner((state) => state.termStatus);
   const setTerm = usePlanner((state) => state.setTerm);
   const current = terms.find((term) => term.id === termId);
+  // Without a term list, an error means the list itself couldn't load or no term is open.
+  const noTerms = terms.length === 0 && termStatus === "error";
 
   const options =
     terms.length > 0
       ? terms.map((term) => ({ value: term.id, label: termFieldLabel(term) }))
-      : [{ value: "", label: "Loading terms…" }];
+      : [{ value: "", label: noTerms ? "No terms available" : "Loading terms…" }];
 
   return (
     <div className="flex shrink-0 flex-col pb-15">

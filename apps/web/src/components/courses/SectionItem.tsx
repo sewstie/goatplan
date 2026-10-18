@@ -32,7 +32,7 @@ export function SectionItem({ section }: { section: Section }) {
           {section.status === "waitlist" && ` · ${formatWaitlist(section)}`}
         </MetaRow>
         <MetaRow icon={<GraduationCap />}>
-          {section.instructors.length > 0 ? section.instructors.join(", ") : "Instructor not assigned yet."}
+          {section.instructors.length > 0 ? section.instructors.join(", ") : "Instructor not assigned yet"}
         </MetaRow>
       </ul>
     </li>

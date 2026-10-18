@@ -1,6 +1,6 @@
 "use client";
 
-import type { KeyboardEvent, Ref } from "react";
+import { useId, type KeyboardEvent, type Ref } from "react";
 import type { Course } from "@/lib/data/types";
 import type { CourseFit } from "./courseFit";
 import { courseCount } from "./courseSummary";
@@ -19,6 +19,8 @@ type SearchResultsProps = {
 
 /** "Search results" and the result cards. Up and down arrows move between the Add buttons. */
 export function SearchResults({ results, total, onAdd, onLeave, listRef }: SearchResultsProps) {
+  const headingId = useId();
+
   function onKeyDown(event: KeyboardEvent<HTMLUListElement>) {
     if (event.key === "Escape") {
       event.preventDefault();
@@ -36,9 +38,9 @@ export function SearchResults({ results, total, onAdd, onLeave, listRef }: Searc
   }
 
   return (
-    <section aria-labelledby="search-results-heading" className="flex shrink-0 flex-col pb-18">
+    <section aria-labelledby={headingId} className="flex shrink-0 flex-col pb-18">
       <div className="flex items-end justify-between gap-8 pb-10">
-        <h2 id="search-results-heading" className="text-11 leading-15-95 font-650">
+        <h2 id={headingId} className="text-11 leading-15-95 font-650">
           Search results
         </h2>
         <span className="text-9 leading-13 font-450 text-ink-muted">{courseCount(total)}</span>

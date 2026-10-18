@@ -22,7 +22,8 @@ const MAX_RESULTS = 50;
 /** The search box, search results and "Your courses" (div.app-3.md, div.app-4.md, div.app-5.md). */
 export function CourseSearchPanel() {
   const [query, setQuery] = useState("");
-  const [added, setAdded] = useState<string | null>(null);
+  /** Said to screen readers after an add, like "AE 2320 added." */
+  const [notice, setNotice] = useState("");
   const search = useDeferredValue(query).trim();
 
   const termStatus = usePlanner((state) => state.termStatus);
@@ -68,13 +69,13 @@ export function CourseSearchPanel() {
 
   function changeQuery(value: string) {
     setQuery(value);
-    setAdded(null);
+    setNotice("");
   }
 
   function add(courseCode: string) {
     addCourse(courseCode);
     select(courseCode);
-    setAdded(courseCode);
+    setNotice(`${courseCode} added.`);
   }
 
   function onSearchKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -82,8 +83,12 @@ export function CourseSearchPanel() {
       const exact = normalizeCourseCode(query);
       if (event.key === "Enter" && ready && exact && term.courses.some((course) => course.code === exact)) {
         event.preventDefault();
-        if (!planned.includes(exact)) add(exact);
-        setQuery("");
+        if (planned.includes(exact)) {
+          setNotice(`${exact} is already in your courses.`);
+        } else {
+          add(exact);
+          setQuery("");
+        }
         return;
       }
       const first = listRef.current?.querySelector<HTMLElement>("[data-result-action]");
@@ -128,13 +133,12 @@ export function CourseSearchPanel() {
                 void setTerm(termId);
               }}
             />
-          ) : waiting ? null : (
+          ) : (
             <NoMatchMessage query={search} suggestion={suggestCourseCode(search, term.courses)} />
           ))}
       </div>
       <p className="sr-only" aria-live="polite">
-        {added ? `${added} added. ` : ""}
-        {status}
+        {notice} {status}
       </p>
       <YourCourses searchRef={searchRef} />
     </>
