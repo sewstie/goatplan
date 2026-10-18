@@ -16,7 +16,7 @@ export function DayCheckbox({ day, checked, onChange }: DayCheckboxProps) {
         aria-label={DAY_NAMES[day]}
         checked={checked}
         onChange={(event) => onChange(event.target.checked)}
-        className="peer sr-only"
+        className="peer absolute inset-0 z-1 cursor-pointer appearance-none opacity-0"
       />
       <span
         aria-hidden
