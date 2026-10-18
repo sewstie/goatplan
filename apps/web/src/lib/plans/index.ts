@@ -5,6 +5,7 @@ export * from "./storage";
 export * from "./changes";
 export * from "./compare";
 export * from "./createPlan";
+export * from "./groups";
 export * from "./registration";
 export * from "./saveState";
 export { openPlanInPlanner, settled, showSavedSchedule } from "./openPlan";

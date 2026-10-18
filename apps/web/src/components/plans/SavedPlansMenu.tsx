@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { CaretDown, Check } from "@phosphor-icons/react/ssr";
 import { cx } from "@/components/ui/cx";
 import { countLabel, sectionCount, type SavedPlan } from "@/lib/plans";
+import { SavedPlansMenuItem } from "./SavedPlansMenuItem";
 
 type SavedPlansMenuProps = {
   /** This term's plans, or null before they're read. */
@@ -17,9 +17,6 @@ type SavedPlansMenuProps = {
   onOpenPlan: (plan: SavedPlan) => void;
   onSaveAsNew: () => void;
 };
-
-const itemClasses =
-  "flex w-full cursor-pointer items-center gap-8 rounded-row px-8 py-7 text-left text-10 leading-14-5 text-ink hover:bg-surface-selected";
 
 /** "Saved plans ⌄": this term's plans and the ways to the plans page. A disclosure, not an ARIA menu. */
 export function SavedPlansMenu({
@@ -48,32 +45,10 @@ export function SavedPlansMenu({
 
   if (disabled && open) setOpen(false);
 
-  function close(returnFocus: boolean) {
+  /** Closes and puts focus on the trigger, so a dialog opened next gives focus back to it. */
+  function closeToTrigger() {
     setOpen(false);
-    if (returnFocus) triggerRef.current?.focus();
-  }
-
-  function item(key: string, content: ReactNode, action: { href: string } | { onClick: () => void }) {
-    return (
-      <li key={key}>
-        {"href" in action ? (
-          <Link href={action.href} className={itemClasses} onClick={() => setOpen(false)}>
-            {content}
-          </Link>
-        ) : (
-          <button
-            type="button"
-            className={itemClasses}
-            onClick={() => {
-              setOpen(false);
-              action.onClick();
-            }}
-          >
-            {content}
-          </button>
-        )}
-      </li>
-    );
+    triggerRef.current?.focus();
   }
 
   return (
@@ -83,7 +58,7 @@ export function SavedPlansMenu({
       onKeyDown={(event) => {
         if (event.key === "Escape" && open) {
           event.stopPropagation();
-          close(true);
+          closeToTrigger();
         }
       }}
       onBlur={(event) => {
@@ -108,31 +83,31 @@ export function SavedPlansMenu({
         hidden={!open}
         className="absolute top-[calc(100%+6px)] right-0 z-30 w-260 rounded-card border border-line-popover bg-surface p-6 shadow-popover"
       >
-        {termName && (
-          <p className="px-8 pt-4 pb-4 text-9 leading-13 font-600 text-ink-muted">{termName}</p>
-        )}
+        {termName && <p className="px-8 pt-4 pb-4 text-9 leading-13 font-600 text-ink-muted">{termName}</p>}
         {plans && plans.length > 0 ? (
           <ul aria-label={termName ? `Saved plans for ${termName}` : "Saved plans"}>
-            {plans.map((plan) =>
-              item(
-                plan.id,
-                <>
-                  <span className="flex min-w-0 flex-1 flex-col">
-                    <span className="truncate font-650">{plan.name}</span>
-                    <span className="text-9 leading-13 text-ink-muted">
-                      {countLabel(plan.schedule.length, "course")} · {countLabel(sectionCount(plan), "section")}
-                    </span>
+            {plans.map((plan) => (
+              <SavedPlansMenuItem
+                key={plan.id}
+                onSelect={() => {
+                  closeToTrigger();
+                  onOpenPlan(plan);
+                }}
+              >
+                <span className="flex min-w-0 flex-1 flex-col">
+                  <span className="truncate font-650">{plan.name}</span>
+                  <span className="text-9 leading-13 text-ink-muted">
+                    {countLabel(plan.schedule.length, "course")} · {countLabel(sectionCount(plan), "section")}
                   </span>
-                  {plan.id === currentPlan?.id && (
-                    <>
-                      <Check aria-hidden className="size-12 shrink-0 text-accent" />
-                      <span className="sr-only">(open now)</span>
-                    </>
-                  )}
-                </>,
-                { onClick: () => onOpenPlan(plan) },
-              ),
-            )}
+                </span>
+                {plan.id === currentPlan?.id && (
+                  <>
+                    <Check aria-hidden className="size-12 shrink-0 text-accent" />
+                    <span className="sr-only">(open now)</span>
+                  </>
+                )}
+              </SavedPlansMenuItem>
+            ))}
           </ul>
         ) : (
           <p className="px-8 py-6 text-9 leading-13 text-ink-muted">
@@ -140,11 +115,32 @@ export function SavedPlansMenu({
           </p>
         )}
         <ul aria-label="Plan actions" className="mt-6 border-t border-line pt-6">
-          {currentPlan &&
-            item("register", "Sections to register", { href: `/plans?plan=${encodeURIComponent(currentPlan.id)}` })}
-          {canSaveAsNew && item("save-new", "Save as a new plan", { onClick: onSaveAsNew })}
-          {item("all", "All saved plans", { href: "/plans" })}
-          {pathname !== "/" && item("planner", "Back to planner", { href: "/" })}
+          {currentPlan && (
+            <SavedPlansMenuItem
+              href={`/plans?plan=${encodeURIComponent(currentPlan.id)}`}
+              onSelect={() => setOpen(false)}
+            >
+              Sections to register
+            </SavedPlansMenuItem>
+          )}
+          {canSaveAsNew && (
+            <SavedPlansMenuItem
+              onSelect={() => {
+                closeToTrigger();
+                onSaveAsNew();
+              }}
+            >
+              Save as a new plan
+            </SavedPlansMenuItem>
+          )}
+          <SavedPlansMenuItem href="/plans" onSelect={() => setOpen(false)}>
+            All saved plans
+          </SavedPlansMenuItem>
+          {pathname !== "/" && (
+            <SavedPlansMenuItem href="/" onSelect={() => setOpen(false)}>
+              Back to planner
+            </SavedPlansMenuItem>
+          )}
         </ul>
       </div>
     </div>

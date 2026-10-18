@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { describeChange, findPlanChanges, isSeriousChange, termLabel, type SavedPlan } from "@/lib/plans";
 import { useTermFile } from "@/lib/plans/useTermFile";
+import { usePlanner } from "@/lib/store";
 import { ButtonLink } from "./ButtonLink";
 import { useOpenPlan } from "./useOpenPlan";
 
@@ -17,9 +18,10 @@ const CHECKS = ["Lecture and lab choices included", "No overlapping meeting time
  * filled up, changed time or was removed, it says so and offers to open the plan instead.
  */
 export function PlanSummary({ plan }: { plan: SavedPlan }) {
-  const { term } = useTermFile(plan.termId);
+  const data = useTermFile(plan.termId);
+  const termStatus = usePlanner((state) => state.termStatus);
   const { requestOpen, dialog } = useOpenPlan();
-  const problems = term ? findPlanChanges(plan, term).filter(isSeriousChange) : [];
+  const problems = data.term ? findPlanChanges(plan, data.term).filter(isSeriousChange) : [];
   const workday = (
     <ButtonLink
       href={WORKDAY_URL}
@@ -34,7 +36,9 @@ export function PlanSummary({ plan }: { plan: SavedPlan }) {
 
   return (
     <div className="flex flex-col gap-4">
-      {problems.length > 0 ? (
+      {data.status === "loading" ? (
+        <p className="min-h-13 text-9 leading-13 text-ink-muted">Checking the latest course data…</p>
+      ) : problems.length > 0 ? (
         <p className="text-9 leading-13 font-650 text-attention">Saved plan needs attention</p>
       ) : (
         <p className="text-9 leading-13 font-650 text-ready">Plan ready</p>
@@ -57,7 +61,11 @@ export function PlanSummary({ plan }: { plan: SavedPlan }) {
             </p>
           </Card>
           <div className="mt-8 flex flex-col gap-8">
-            <Button fullWidth onClick={() => requestOpen(plan, "/")}>
+            <Button
+              fullWidth
+              disabled={termStatus === "idle" || termStatus === "loading"}
+              onClick={() => requestOpen(plan, "/")}
+            >
               Open in planner
             </Button>
             {workday}
@@ -66,15 +74,18 @@ export function PlanSummary({ plan }: { plan: SavedPlan }) {
         </>
       ) : (
         <>
-          <ul className="mt-20 flex flex-col gap-15">
-            {CHECKS.map((check) => (
-              <li key={check} className="flex items-center gap-8 text-10 leading-14-5 text-ink">
-                <CheckCircle aria-hidden className="size-15 shrink-0" />
-                {check}
-              </li>
-            ))}
-          </ul>
+          {data.status !== "loading" && (
+            <ul className="mt-20 flex flex-col gap-15">
+              {CHECKS.map((check) => (
+                <li key={check} className="flex items-center gap-8 text-10 leading-14-5 text-ink">
+                  <CheckCircle aria-hidden className="size-15 shrink-0" />
+                  {check}
+                </li>
+              ))}
+            </ul>
+          )}
           <p className="pt-11 pb-13 text-10 leading-17-5 text-ink-muted">
+            {data.status === "error" && "Couldn’t check the latest course data. "}
             Copy these section codes into Workday. Check availability there before registering.
           </p>
           {workday}

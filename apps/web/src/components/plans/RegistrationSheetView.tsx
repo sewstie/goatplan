@@ -23,7 +23,12 @@ export function RegistrationSheetView({ plan }: { plan: SavedPlan }) {
             {countLabel(sectionCount(plan), "section")} across {countLabel(plan.schedule.length, "course")}
           </p>
         </div>
-        <CopySectionListButton text={text} previewRef={previewRef} onFallback={() => setCopyFailed(true)} />
+        <CopySectionListButton
+          text={text}
+          previewRef={previewRef}
+          onCopied={() => setCopyFailed(false)}
+          onFallback={() => setCopyFailed(true)}
+        />
       </div>
       <RegistrationTable rows={registrationRows(plan, term)} className="mt-15" />
       <SectionListPreview ref={previewRef} text={text} className="mt-6" />

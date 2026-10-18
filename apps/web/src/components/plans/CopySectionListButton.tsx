@@ -10,6 +10,7 @@ type CopySectionListButtonProps = {
   text: string;
   /** The preview to select when the clipboard can't be used, so the student can copy it by hand. */
   previewRef: RefObject<HTMLElement | null>;
+  onCopied: () => void;
   onFallback: () => void;
 };
 
@@ -22,7 +23,7 @@ function selectContents(element: HTMLElement) {
 }
 
 /** "Copy section list". After copying it reads "Copied" with a check for a moment, like "Saved". */
-export function CopySectionListButton({ text, previewRef, onFallback }: CopySectionListButtonProps) {
+export function CopySectionListButton({ text, previewRef, onCopied, onFallback }: CopySectionListButtonProps) {
   const [copied, setCopied] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -34,6 +35,7 @@ export function CopySectionListButton({ text, previewRef, onFallback }: CopySect
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
+      onCopied();
       if (timer.current) clearTimeout(timer.current);
       timer.current = setTimeout(() => setCopied(false), COPIED_FOR_MS);
     } catch {

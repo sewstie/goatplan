@@ -68,6 +68,7 @@ describe("SavedPlansMenu", () => {
     await userEvent.click(screen.getByRole("button", { name: /Mornings free/ }));
     expect(onOpenPlan).toHaveBeenCalledWith(expect.objectContaining({ id: "plan-2" }));
     expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(trigger).toHaveFocus();
     await userEvent.click(trigger);
     await userEvent.click(screen.getByRole("button", { name: "Save as a new plan" }));
     expect(onSaveAsNew).toHaveBeenCalled();
