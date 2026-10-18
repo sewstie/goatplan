@@ -1,6 +1,13 @@
-import { Placeholder } from "@/components/shell/Placeholder";
+"use client";
 
-/** Plans agent: the "Plan ready" panel next to the registration sheet (div.app-22.md). */
+import { PlanSummary } from "./PlanSummary";
+import { SavedPlansInfo } from "./SavedPlansInfo";
+import { useSelectedPlan } from "./useSelectedPlan";
+
+/** The panel next to the registration sheet: "Plan ready" (div.app-22.md), or how saved plans work. */
 export function RegistrationSummary() {
-  return <Placeholder name="registration-summary" className="flex-1" />;
+  const { planId, plan, snapshot } = useSelectedPlan();
+  if (!snapshot) return null;
+  if (plan) return <PlanSummary plan={plan} />;
+  return planId ? null : <SavedPlansInfo />;
 }
