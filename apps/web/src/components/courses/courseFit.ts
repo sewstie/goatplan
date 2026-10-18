@@ -1,5 +1,5 @@
-import { sectionTypeName } from "@/lib/data";
-import type { Course, Day, Section, SectionType } from "@/lib/data/types";
+import { meetingSpans, meetsRules, sectionTypeName, spansOverlap, type Span } from "@/lib/data";
+import type { Course, Section, SectionType } from "@/lib/data/types";
 import type { PlanPreferences } from "@/lib/store/types";
 
 export type CourseFit =
@@ -16,50 +16,16 @@ export interface FitPlan {
   preferences: PlanPreferences;
 }
 
-// The engine compares times in 5-minute slots, so these checks do too.
-const SLOT = 5;
-
-type Span = { day: Day; first: number; pastLast: number };
-
-function spans(sections: readonly Section[]): Span[] {
-  return sections.flatMap((section) =>
-    section.meetings.flatMap((meeting) =>
-      meeting.days.map((day) => ({
-        day,
-        first: Math.floor(meeting.start / SLOT),
-        pastLast: Math.ceil(meeting.end / SLOT),
-      })),
-    ),
-  );
-}
-
-function overlaps(a: readonly Span[], b: readonly Span[]): boolean {
-  return a.some((x) => b.some((y) => x.day === y.day && x.first < y.pastLast && y.first < x.pastLast));
-}
-
 function sectionsOf(course: Course, ids: readonly string[]): Section[] {
   return ids.flatMap((id) => course.sections.find((section) => section.id === id) ?? []);
 }
 
 /** The options the engine would keep for this course, with the same rules as its filters. */
 function keptOptions(course: Course, preferences: PlanPreferences, locked: readonly string[]): Section[][] {
-  const blocked: Span[] = preferences.blocked.map((time) => ({
-    day: time.day,
-    first: Math.floor(time.start / SLOT),
-    pastLast: Math.ceil(time.end / SLOT),
-  }));
   return course.options
     .filter((option) => locked.every((id) => option.includes(id)))
     .map((option) => sectionsOf(course, option))
-    .filter(
-      (sections) =>
-        !(preferences.onlyOpen && sections.some((section) => section.status !== "open")) &&
-        !(
-          preferences.startsAfter !== 0 &&
-          sections.some((section) => section.meetings.some((meeting) => meeting.start < preferences.startsAfter))
-        ) &&
-        !overlaps(spans(sections), blocked),
-    );
+    .filter((sections) => meetsRules(sections, preferences));
 }
 
 /** The type of the planned section that most of the new course's options run into. */
@@ -67,8 +33,8 @@ function clashingType(ours: readonly Span[][], theirs: readonly Section[]): Sect
   let best = theirs[0];
   let bestCount = -1;
   for (const section of theirs) {
-    const own = spans([section]);
-    const count = ours.filter((option) => overlaps(option, own)).length;
+    const own = meetingSpans([section]);
+    const count = ours.filter((option) => spansOverlap(option, own)).length;
     if (count > bestCount) {
       best = section;
       bestCount = count;
@@ -95,18 +61,18 @@ export function courseFit(course: Course, plan: FitPlan): CourseFit | null {
   }
   if (plan.courses.length === 0) return { kind: "fits" };
 
-  const ours = kept.map(spans);
+  const ours = kept.map(meetingSpans);
   const scheduled = plan.courses.every((planned) => (plan.chosen[planned.code]?.length ?? 0) > 0);
   if (scheduled) {
-    const busy = spans(plan.courses.flatMap((planned) => sectionsOf(planned, plan.chosen[planned.code])));
-    if (ours.some((option) => !overlaps(option, busy))) return { kind: "fits" };
+    const busy = meetingSpans(plan.courses.flatMap((planned) => sectionsOf(planned, plan.chosen[planned.code])));
+    if (ours.some((option) => !spansOverlap(option, busy))) return { kind: "fits" };
   }
 
   for (const planned of plan.courses) {
     const theirOptions = keptOptions(planned, plan.preferences, plan.locks[planned.code] ?? []);
     if (theirOptions.length === 0) continue;
-    const theirs = theirOptions.map(spans);
-    if (ours.every((option) => theirs.every((other) => overlaps(option, other)))) {
+    const theirs = theirOptions.map(meetingSpans);
+    if (ours.every((option) => theirs.every((other) => spansOverlap(option, other)))) {
       const shown = sectionsOf(planned, plan.chosen[planned.code] ?? []);
       const candidates = shown.length > 0 ? shown : [...new Set(theirOptions.flat())];
       return { kind: "clash", course: planned.code, sectionType: clashingType(ours, candidates) };

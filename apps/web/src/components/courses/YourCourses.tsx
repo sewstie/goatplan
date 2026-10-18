@@ -2,13 +2,12 @@
 
 import { useEffect, useId, useRef, type RefObject } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { COURSE_COLORS, courseSlot } from "@/components/ui/courseColors";
 import type { Course } from "@/lib/data/types";
 import { selectChosenSections, usePlanner } from "@/lib/store";
 import { CourseListSkeleton } from "./CourseListSkeleton";
 import { CourseRow } from "./CourseRow";
-import { selectedCourse, useCourseSelection } from "./courseSelection";
 import { courseCredits, formatCredits, rowSections, sectionsLine } from "./courseSummary";
-import { courseSwatch } from "./courseSwatch";
 
 function EmptyText({ lines }: { lines: [string, string] }) {
   return (
@@ -28,8 +27,8 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
   const locks = usePlanner((state) => state.locks);
   const removeCourse = usePlanner((state) => state.removeCourse);
   const chosen = usePlanner(useShallow(selectChosenSections));
-  const picked = useCourseSelection((state) => state.selected);
-  const select = useCourseSelection((state) => state.select);
+  const selected = usePlanner((state) => state.selectedCourse);
+  const selectCourse = usePlanner((state) => state.selectCourse);
   const listRef = useRef<HTMLUListElement>(null);
   const focusAfterRemove = useRef<string | null>(null);
   const headingId = useId();
@@ -38,11 +37,10 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
   const courses = ready
     ? codes.flatMap((code) => term.courses.find((course) => course.code === code) ?? [])
     : [];
-  const selected = selectedCourse(picked, codes);
 
-  const rows = courses.map((course: Course, position) => {
+  const rows = courses.map((course: Course) => {
     const sections = rowSections(course, chosen[course.code], locks[course.code]);
-    return { course, position, sections, credits: courseCredits(course, sections) };
+    return { course, sections, credits: courseCredits(course, sections) };
   });
   const counted = rows.flatMap((row) => row.credits ?? []);
   const count = `${codes.length} selected${counted.length > 0 ? ` · ${formatCredits(counted.reduce((a, b) => a + b, 0))}` : ""}`;
@@ -77,16 +75,16 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
         <EmptyText lines={["Your courses will appear here.", "Search above to get started."]} />
       ) : (
         <ul ref={listRef} className="flex flex-col gap-5">
-          {rows.map(({ course, position, sections }) => (
+          {rows.map(({ course, sections }) => (
             <CourseRow
               key={course.code}
               code={course.code}
               title={course.title}
               sections={sectionsLine(sections)}
-              swatch={courseSwatch(position)}
+              swatch={COURSE_COLORS[courseSlot(codes, course.code)].swatch}
               locked={(locks[course.code]?.length ?? 0) > 0}
               selected={course.code === selected}
-              onSelect={() => select(course.code)}
+              onSelect={() => selectCourse(course.code)}
               onRemove={() => remove(course.code)}
             />
           ))}
