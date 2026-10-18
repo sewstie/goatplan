@@ -106,6 +106,16 @@ describe("PreferencesBar", () => {
     expect(screen.getByRole("button", { name: "Remove blocked time Work, Tue, Fri 2 PM–4 PM" })).toBeInTheDocument();
   });
 
+  it("opens the block form with focus in the name field, not on Close", async () => {
+    await startTestPlanner({ courses: ["AE 2320"] });
+    render(<PreferencesBar />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
+    const dialog = screen.getByRole("dialog", { name: "Block a time" });
+    expect(within(dialog).getByRole("textbox", { name: "Name (optional)" })).toHaveFocus();
+    expect(within(dialog).getByRole("button", { name: "Close" })).not.toHaveFocus();
+  });
+
   it("asks for a day before blocking a time", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
     render(<PreferencesBar />);
