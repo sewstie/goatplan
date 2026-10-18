@@ -5,7 +5,6 @@ import { useShallow } from "zustand/react/shallow";
 import { selectChosenSections, usePlanner } from "@/lib/store";
 import { normalizeCourseCode } from "./courseCode";
 import { courseFit } from "./courseFit";
-import { useCourseSelection } from "./courseSelection";
 import { courseCount } from "./courseSummary";
 import { NoMatchMessage } from "./NoMatchMessage";
 import { NotOfferedMessage } from "./NotOfferedMessage";
@@ -35,7 +34,6 @@ export function CourseSearchPanel() {
   const chosen = usePlanner(useShallow(selectChosenSections));
   const addCourse = usePlanner((state) => state.addCourse);
   const setTerm = usePlanner((state) => state.setTerm);
-  const select = useCourseSelection((state) => state.select);
 
   const searchRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -74,7 +72,6 @@ export function CourseSearchPanel() {
 
   function add(courseCode: string) {
     addCourse(courseCode);
-    select(courseCode);
     setNotice(`${courseCode} added.`);
   }
 

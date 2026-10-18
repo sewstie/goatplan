@@ -64,6 +64,7 @@ test("“cs2102” finds CS 2102, and Enter adds it with its credits", async ({ 
   await expect(searchBox(page)).toHaveValue("");
   await expect(searchBox(page)).toBeFocused();
   await expect(courseRow(page, "CS 2102")).toBeVisible();
+  await expect(courseRow(page, "CS 2102")).toHaveAttribute("aria-current", "true");
   await expect(yourCourses(page).getByText("1 selected · 3 credits")).toBeVisible();
 });
 

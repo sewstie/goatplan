@@ -1,11 +1,12 @@
 import { Clock, GraduationCap, MapPin, Users } from "@phosphor-icons/react/ssr";
+import { RoomName } from "@/components/ui/RoomName";
 import { formatDays, formatOpenSeats, formatTimeRange, formatWaitlist, sectionTypeName } from "@/lib/data";
 import type { Section } from "@/lib/data/types";
 import { MetaRow } from "./MetaRow";
 
 /** One section of a course: times, room, seats and instructors. */
 export function SectionItem({ section }: { section: Section }) {
-  const rooms = [...new Set(section.meetings.map((meeting) => meeting.location).filter(Boolean))];
+  const rooms = [...new Set(section.meetings.map((meeting) => meeting.location.trim()).filter(Boolean))];
 
   return (
     <li className="flex flex-col gap-4">
@@ -24,7 +25,7 @@ export function SectionItem({ section }: { section: Section }) {
         )}
         {rooms.map((room) => (
           <MetaRow key={room} icon={<MapPin />}>
-            {room}
+            <RoomName location={room} />
           </MetaRow>
         ))}
         <MetaRow icon={<Users />}>
