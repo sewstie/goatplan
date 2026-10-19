@@ -34,7 +34,7 @@ export function settled(store: StoreApi<PlannerStore>, timeoutMs = 15_000): Prom
  * term no longer has are left out. Resolves to false if the term couldn't load.
  */
 export function openPlanInPlanner(store: StoreApi<PlannerStore>, plan: SavedPlan): Promise<boolean> {
-  const { courses, preferences, locks, sortPreset } = plan;
+  const { courses, preferences, locks, professorByCourse, sortPreset } = plan;
   const chosen = Object.fromEntries(plan.schedule.map((course) => [course.code, course.sections.map((section) => section.id)]));
-  return store.getState().openPlan(plan.termId, { courses, preferences, locks, sortPreset }, chosen);
+  return store.getState().openPlan(plan.termId, { courses, preferences, locks, professorByCourse, sortPreset }, chosen);
 }

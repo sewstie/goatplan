@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { uniqueInstructors } from "@/lib/data";
 import type { Course } from "@/lib/data/types";
@@ -20,13 +20,12 @@ export function CourseDetails({ course }: { course: Course }) {
   const locked = usePlanner((state) => state.locks[code] ?? NONE);
   const selectedSection = usePlanner((state) => (state.selectedCourse === code ? state.selectedSection : null));
   // Only a real answer can say nothing fits: an engine error or a crashed worker says nothing about the plan.
-  const answered = usePlanner((state) => state.solveStatus === "done" && state.response?.ok === true);
+  const answered = usePlanner((state) => state.solveStatus === "done" && state.response?.ok === true && !state.response.diagnosis?.unsure);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   // With no schedule for this course, locked sections stay visible so they can be unlocked.
   const sections = sectionsById(course, chosen.length > 0 ? chosen : locked);
   const choices = useSectionChoices(course);
-  const instructors = useMemo(() => uniqueInstructors(course.sections), [course]);
   const shownInstructors = uniqueInstructors(sections);
   // Cards shown only because they're locked disappear on Unlock, so focus goes to the heading.
   const focusHeading = chosen.length === 0 ? () => headingRef.current?.focus() : undefined;
@@ -79,9 +78,7 @@ export function CourseDetails({ course }: { course: Course }) {
         </div>
       )}
 
-      {shownInstructors.length > 0 && (
-        <ProfessorPicker key={`${code}:${shownInstructors[0]}`} instructors={instructors} initial={shownInstructors[0]} />
-      )}
+      <ProfessorPicker course={course} />
     </div>
   );
 }

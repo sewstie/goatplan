@@ -37,6 +37,15 @@ describe("plan storage", () => {
     expect(readPlans(storage).map((plan) => plan.id)).toEqual(["new", "mid", "old"]);
   });
 
+  it("round-trips professor choices and reads plans saved before the picker filtered schedules", () => {
+    const storage = new MemoryPlanStorage();
+    const plan = designPlan({ professorByCourse: { "AE 2320": "Ye Lu", "AE 2410": null } });
+    writePlan(storage, plan);
+    expect(readPlans(storage)[0].professorByCourse).toEqual(plan.professorByCourse);
+    expect(parsePlan({ version: 1, ...plan, professorByCourse: undefined })?.professorByCourse).toEqual({});
+    expect(parsePlan({ version: 1, ...plan, professorByCourse: { "AE 2320": false } })).toBeNull();
+  });
+
   it("skips broken, old and unrelated entries without losing the good ones", () => {
     const storage = new MemoryPlanStorage();
     writePlan(storage, designPlan());

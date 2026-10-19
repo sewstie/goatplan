@@ -1,18 +1,20 @@
 "use client";
 
-import { useState } from "react";
 import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
 import { Select } from "@/components/ui/Select";
-import { rateMyProfessorsUrl } from "@/lib/data";
+import { rateMyProfessorsUrl, uniqueInstructors, type Course } from "@/lib/data";
+import { usePlanner } from "@/lib/store";
 
-type ProfessorPickerProps = {
-  instructors: string[];
-  initial: string;
-};
-
-/** The course's instructors and a Rate My Professors search for the one picked. */
-export function ProfessorPicker({ instructors, initial }: ProfessorPickerProps) {
-  const [name, setName] = useState(initial);
+export function ProfessorPicker({ course }: { course: Course }) {
+  const name = usePlanner((state) => state.professorByCourse[course.code] ?? null);
+  const setProfessor = usePlanner((state) => state.setProfessor);
+  const notice = usePlanner((state) => state.professorNotice?.course === course.code ? state.professorNotice : null);
+  const ready = usePlanner((state) => state.termStatus === "ready");
+  const instructors = uniqueInstructors(course.sections);
+  if (instructors.length === 0 && !name) return null;
+  const options = [...instructors];
+  if (name && !options.some((instructor) => instructor.toLowerCase() === name.toLowerCase())) options.push(name);
+  const value = options.find((instructor) => instructor.toLowerCase() === name?.toLowerCase()) ?? "";
 
   return (
     <div className="mt-12 flex flex-col gap-4">
@@ -20,11 +22,13 @@ export function ProfessorPicker({ instructors, initial }: ProfessorPickerProps) 
         variant="box"
         label="Professor"
         hideLabel={false}
-        options={instructors.map((instructor) => ({ value: instructor, label: instructor }))}
-        value={name}
-        onChange={(event) => setName(event.target.value)}
+        options={[{ value: "", label: "Any professor" }, ...options.map((instructor) => ({ value: instructor, label: instructor }))]}
+        value={value}
+        disabled={!ready}
+        onChange={(event) => setProfessor(course.code, event.target.value || null)}
       />
-      <a
+      {notice && <p role="status" className="text-10 leading-17-5 text-ink-muted">Unlocked {notice.sections.join(", ")} for this professor.</p>}
+      {name && <a
         href={rateMyProfessorsUrl(name)}
         target="_blank"
         rel="noreferrer"
@@ -33,7 +37,7 @@ export function ProfessorPicker({ instructors, initial }: ProfessorPickerProps) 
         Rate My Professors
         <span className="sr-only">: {name} (opens in a new tab)</span>
         <ArrowSquareOut aria-hidden className="size-12" />
-      </a>
+      </a>}
     </div>
   );
 }

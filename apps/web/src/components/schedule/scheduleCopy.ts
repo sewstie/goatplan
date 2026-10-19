@@ -48,6 +48,7 @@ export interface SummaryInput {
   response: SolveResponse | null;
   untimedCourses: number;
   hasWaitlist: boolean;
+  solveStatus?: SolveStatus;
 }
 
 /** The line under the title (div.app-1.md, div.app-4.md, div.app-13.md, div.app-15.md). */
@@ -56,6 +57,7 @@ export function summaryText(input: SummaryInput): string | null {
   if (termStatus === "loading") return termName ? `Loading ${termName} sections…` : null;
   if (termStatus !== "ready") return null;
   if (courseCount === 0) return "Add courses to start planning your term.";
+  if (input.solveStatus && input.solveStatus !== "done") return count("course", courseCount);
 
   const parts = [count("course", courseCount)];
   if (response?.ok && response.patterns > 0) {
@@ -65,6 +67,7 @@ export function summaryText(input: SummaryInput): string | null {
     }
     if (input.hasWaitlist) parts.push("includes a waitlist section");
   } else if (response?.ok) {
+    if (response.diagnosis?.unsure) return `${count("course", courseCount)} · Search incomplete`;
     const pair = response.diagnosis?.clashingPairs[0];
     parts.push(pair ? `${pair[0]} and ${pair[1]} overlap` : "no schedule fits");
   }
@@ -105,8 +108,8 @@ export function bannerMessage(input: BannerInput): BannerMessage | null {
       detail: "Something went wrong. Change a preference to try again.",
     };
   }
-  if (input.slow && (input.solveStatus === "waiting" || input.solveStatus === "solving")) {
-    return { tone: "loading", title: "Finding schedules…", detail: "This can take a few seconds with many courses." };
+  if (input.solveStatus === "waiting" || input.solveStatus === "solving") {
+    return input.slow ? { tone: "loading", title: "Finding schedules…", detail: "This can take a few seconds with many courses." } : null;
   }
   if (!response) return null;
   if (!response.ok) {
@@ -132,6 +135,16 @@ export function bannerMessage(input: BannerInput): BannerMessage | null {
     return { tone: "warning", title: "No schedule fits.", detail };
   }
 
+  if (response.capped) {
+    const waitlist = input.waitlisted.length > 0
+      ? ` ${listNames(input.waitlisted.map((section) => `${section.courseCode} ${section.sectionCode}`))} ${input.waitlisted.length === 1 ? "is" : "are"} waitlist only. Registration is not guaranteed.`
+      : "";
+    return {
+      tone: "info",
+      title: "There are too many combinations to check them all.",
+      detail: `Showing the best ${count("schedule", input.shownSchedules)} found. ${NARROW_DOWN}${waitlist}`,
+    };
+  }
   if (input.waitlisted.length > 0) {
     const names = input.waitlisted.map((section) => `${section.courseCode} ${section.sectionCode}`);
     return {
@@ -141,13 +154,6 @@ export function bannerMessage(input: BannerInput): BannerMessage | null {
     };
   }
 
-  if (response.capped) {
-    return {
-      tone: "info",
-      title: "There are too many combinations to check them all.",
-      detail: `Showing the best ${count("schedule", input.shownSchedules)} found. ${NARROW_DOWN}`,
-    };
-  }
   if (response.patterns > input.shownSchedules) {
     return {
       tone: "info",

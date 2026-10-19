@@ -18,8 +18,9 @@ export function usePlanSaveState(): PlanSaveState {
   const termStatus = usePlanner((state) => state.termStatus);
   const courses = usePlanner((state) => state.courses);
   const locks = usePlanner((state) => state.locks);
+  const professorByCourse = usePlanner((state) => state.professorByCourse);
   const preferences = usePlanner((state) => state.preferences);
-  const hasSchedule = usePlanner((state) => selectCurrentSchedule(state) !== null);
+  const hasSchedule = usePlanner((state) => state.solveStatus !== "error" && selectCurrentSchedule(state) !== null);
   const chosen = usePlanner(useShallow(selectChosenSections));
   const snapshot = usePlans();
 
@@ -31,7 +32,7 @@ export function usePlanSaveState(): PlanSaveState {
     termStatus,
     hasSchedule,
     currentPlan,
-    working: { courses, locks, preferences, chosen: hasSchedule ? chosen : null },
+    working: { courses, locks, professorByCourse, preferences, chosen: hasSchedule ? chosen : null },
   });
   return { ...state, termId, termPlans, allPlans };
 }

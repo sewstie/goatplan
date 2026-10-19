@@ -11,6 +11,13 @@ const busyThursday = (start: number, end: number) =>
   makeSection("AE 2410-C01", { meetings: [{ days: ["Thu"], start, end, location: "Higgins Labs 116" }] });
 
 describe("sectionChoices", () => {
+  it("keeps other choices within the selected professor's sections", () => {
+    const course = structuredClone(orbitalMechanics);
+    for (const section of course.sections) section.instructors = ["Someone Else"];
+    course.sections.find((section) => section.code === "CX02")!.instructors = ["Chosen Professor"];
+    course.sections.find((section) => section.code === "CX04")!.instructors = ["Chosen Professor"];
+    expect(sectionChoices(course, chosen, [], { ...rules, professor: "chosen professor" })?.others.map((choice) => choice.label)).toEqual(["CX04"]);
+  });
   it("lists the course's other labs that fit, with their times, rooms and seats", () => {
     const choices = sectionChoices(orbitalMechanics, chosen, [], rules)!;
     expect(choices.kind).toBe("lab");

@@ -98,6 +98,7 @@ export function designPlan(overrides: Partial<SavedPlan> = {}): SavedPlan {
       },
     ],
     locks: { "AE 2320": ["AE 2320-CX02"] },
+    professorByCourse: {},
     preferences: { startsAfter: 540, blocked: [{ day: "Tue", start: 840, end: 960 }], onlyOpen: true },
     sortPreset: "fewestEarly",
     ...overrides,

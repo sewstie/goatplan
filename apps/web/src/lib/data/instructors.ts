@@ -8,6 +8,11 @@ export function rateMyProfessorsUrl(name: string): string {
   return `https://www.ratemyprofessors.com/search/professors/${RATE_MY_PROFESSORS_SCHOOL_ID}?q=${query}`;
 }
 
+export function hasInstructor(section: Pick<Section, "instructors">, name: string): boolean {
+  const key = name.trim().toLowerCase();
+  return section.instructors.some((instructor) => instructor.trim().toLowerCase() === key);
+}
+
 /** Every instructor once, in the order they first appear, ignoring blanks and case. */
 export function uniqueInstructors(sections: readonly Pick<Section, "instructors">[]): string[] {
   const seen = new Set<string>();

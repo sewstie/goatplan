@@ -14,6 +14,8 @@ interface ItemBase {
 
 /** One meeting of a chosen section on one day: one block on the calendar. */
 export interface ClassItem extends ItemBase {
+  preview?: boolean;
+  problem?: boolean;
   key: string;
   day: Day;
   start: number;

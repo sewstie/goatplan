@@ -4,6 +4,7 @@ import { openTerms, pickDefaultTerm } from "@/lib/data/terms";
 import type { TermFile, TermIndex } from "@/lib/data/types";
 import { EngineSupersededError, type EngineClient } from "@/lib/engine/EngineClient";
 import type { Fix } from "@/lib/engine/types";
+import { hasInstructor, uniqueInstructors } from "@/lib/data/instructors";
 import { buildRequest } from "./buildRequest";
 import {
   emptyDraft,
@@ -41,19 +42,21 @@ const initialState: PlannerState = {
   scheduleIndex: 0,
   solveStatus: "idle",
   solveError: null,
+  lastChosenSections: {},
+  professorNotice: null,
   selectedCourse: null,
   selectedSection: null,
 };
 
-type Selection = Pick<PlannerState, "selectedCourse" | "selectedSection">;
+type Selection = Pick<PlannerState, "selectedCourse" | "selectedSection" | "professorNotice">;
 
 function describe(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
 function draftOf(state: PlannerState): Draft {
-  const { courses, preferences, locks, sortPreset, alternatives } = state;
-  return { courses, preferences, locks, sortPreset, alternatives };
+  const { courses, preferences, locks, professorByCourse, sortPreset, alternatives } = state;
+  return { courses, preferences, locks, professorByCourse, sortPreset, alternatives };
 }
 
 const sameSet = (a: readonly string[], b: readonly string[]) => a.length === b.length && a.every((id) => b.includes(id));
@@ -128,7 +131,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       if (get().termStatus !== "ready") return;
       if (!buildRequest(get())) {
         solveToken += 1;
-        set({ response: null, scheduleIndex: 0, solveStatus: "idle", solveError: null });
+        set({ response: null, scheduleIndex: 0, solveStatus: "idle", solveError: null, lastChosenSections: {} });
         return;
       }
       set({ solveStatus: "waiting" });
@@ -148,7 +151,8 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       const update = changes(state);
       if (!update) return;
       showNext = null;
-      set(update);
+      const lastChosenSections = selectCurrentSchedule(state) ? selectChosenSections(state) : state.lastChosenSections;
+      set({ ...update, lastChosenSections });
       writeDraft(deps.storage, state.termId, draftOf(get()));
       if (options.solve) scheduleSolve();
     }
@@ -165,6 +169,8 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         ...selection,
         courses: state.courses.filter((course) => course !== code),
         locks: withoutKey(state.locks, code),
+        professorByCourse: withoutKey(state.professorByCourse, code),
+        professorNotice: state.professorNotice?.course === code ? null : state.professorNotice,
         alternatives: Object.fromEntries(
           Object.entries(state.alternatives).map(([key, choice]) => [key, withoutKey(choice, code)]),
         ),
@@ -193,6 +199,8 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         scheduleIndex: 0,
         solveStatus: "idle",
         solveError: null,
+        lastChosenSections: {},
+        professorNotice: null,
         selectedCourse: null,
         selectedSection: null,
       });
@@ -248,6 +256,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
           courses: [...plan.courses],
           preferences: structuredClone(plan.preferences),
           locks: structuredClone(plan.locks),
+          professorByCourse: { ...plan.professorByCourse },
           sortPreset: plan.sortPreset,
           alternatives: {},
         };
@@ -262,6 +271,8 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
             scheduleIndex: 0,
             solveStatus: "idle",
             solveError: null,
+            lastChosenSections: {},
+            professorNotice: null,
             selectedCourse: sanitized.courses[0] ?? null,
             selectedSection: null,
           });
@@ -296,6 +307,24 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
 
       setPreferences(changes) {
         changeDraft((state) => ({ preferences: { ...state.preferences, ...changes } }));
+      },
+
+      setProfessor(courseCode, name) {
+        changeDraft((state) => {
+          const course = state.term?.courses.find((item) => item.code === courseCode);
+          if (!course || !state.courses.includes(courseCode)) return null;
+          const chosen = name === null ? null : uniqueInstructors(course.sections).find((instructor) => instructor.toLowerCase() === name.trim().toLowerCase());
+          if (chosen === undefined || (state.professorByCourse[courseCode] ?? null) === chosen) return null;
+          const locked = state.locks[courseCode] ?? [];
+          const removed = chosen === null ? [] : course.sections.filter((section) => locked.includes(section.id) && section.instructors.length > 0 && !hasInstructor(section, chosen));
+          const kept = locked.filter((id) => !removed.some((section) => section.id === id));
+          return {
+            professorByCourse: { ...state.professorByCourse, [courseCode]: chosen },
+            locks: kept.length > 0 ? { ...state.locks, [courseCode]: kept } : withoutKey(state.locks, courseCode),
+            professorNotice: removed.length > 0 ? { course: courseCode, sections: removed.map((section) => section.code) } : null,
+            selectedSection: state.selectedCourse === courseCode ? null : state.selectedSection,
+          };
+        });
       },
 
       lockSection(courseCode, sectionId) {
@@ -349,6 +378,8 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         const course = state.term?.courses.find((item) => item.code === courseCode);
         if (!current || !course || !state.termId || !state.courses.includes(courseCode)) return;
         if (!course.options.some((option) => sameSet(option, sectionIds))) return;
+        const professor = state.professorByCourse[courseCode];
+        if (professor && !course.sections.some((section) => sectionIds.includes(section.id) && hasInstructor(section, professor))) return;
 
         const chosen = selectChosenSections(state);
         const shown = chosen[courseCode] ?? [];
@@ -391,6 +422,11 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         setScheduleIndex(get().scheduleIndex - 1);
       },
 
+      async retrySolve() {
+        clearSolveTimer();
+        await runSolve();
+      },
+
       applyFix(fix: Fix) {
         switch (fix.kind) {
           case "relaxStartsAfter":
@@ -404,6 +440,9 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
             break;
           case "unlock":
             changeDraft((state) => ({ locks: withoutKey(state.locks, fix.course) }));
+            break;
+          case "clearAnyOf":
+            get().setProfessor(fix.course, null);
             break;
           case "dropCourse":
             get().removeCourse(fix.course);

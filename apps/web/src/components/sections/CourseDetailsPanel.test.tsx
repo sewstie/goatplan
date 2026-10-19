@@ -189,10 +189,35 @@ describe("CourseDetailsPanel", () => {
     await startTestPlanner({ courses: ["AE 2320"] });
     render(<CourseDetailsPanel />);
 
-    expect(screen.getByRole("combobox", { name: "Professor" })).toHaveDisplayValue("Ye Lu");
+    const picker = screen.getByRole("combobox", { name: "Professor" });
+    expect(picker).toHaveDisplayValue("Any professor");
+    expect(screen.queryByRole("link", { name: /Rate My Professors/ })).not.toBeInTheDocument();
+    await userEvent.selectOptions(picker, "Ye Lu");
     const link = screen.getByRole("link", { name: /Rate My Professors/ });
     expect(link).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
     expect(link).toHaveAttribute("target", "_blank");
+  });
+
+  it("re-solves on professor changes and reports an incompatible lock being removed", async () => {
+    const term = termFile("2027-C");
+    term.courses[0].sections[1].instructors = ["Other Professor"];
+    const { store, requests } = await startTestPlanner({ courses: ["AE 2320"], locks: { "AE 2320": ["AE 2320-CX01"] } }, { term });
+    render(<CourseDetailsPanel />);
+    const picker = screen.getByRole("combobox", { name: "Professor" });
+    expect(within(picker).getAllByRole("option")[0]).toHaveTextContent("Any professor");
+    await userEvent.selectOptions(picker, "Ye Lu");
+    await waitForSolve(store);
+    expect(requests.at(-1)?.preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"] });
+    expect(store.getState().locks).toEqual({});
+    expect(screen.getByRole("status")).toHaveTextContent("Unlocked CX01 for this professor.");
+    expect(screen.getByRole("link", { name: /Rate My Professors/ })).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
+    await userEvent.selectOptions(picker, "Other Professor");
+    await waitForSolve(store);
+    expect(screen.getByRole("link", { name: /Rate My Professors/ })).toHaveAttribute("href", rateMyProfessorsUrl("Other Professor"));
+    await userEvent.selectOptions(picker, "");
+    await waitForSolve(store);
+    expect(requests.at(-1)?.preferences?.anyOf).toEqual({});
+    expect(screen.queryByRole("link", { name: /Rate My Professors/ })).not.toBeInTheDocument();
   });
 
   it("follows the selected course, and says so after a click on its calendar block", async () => {

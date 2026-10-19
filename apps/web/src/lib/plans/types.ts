@@ -21,6 +21,7 @@ export interface SavedPlan {
   schedule: SavedCourse[];
   /** course code → locked section ids. */
   locks: Record<string, string[]>;
+  professorByCourse: Record<string, string | null>;
   preferences: PlanPreferences;
   sortPreset: SortPresetId;
 }

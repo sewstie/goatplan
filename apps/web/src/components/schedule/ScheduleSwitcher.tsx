@@ -21,7 +21,7 @@ export function ScheduleSwitcher() {
   const index = usePlanner((state) => state.scheduleIndex);
   const previousSchedule = usePlanner((state) => state.previousSchedule);
   const nextSchedule = usePlanner((state) => state.nextSchedule);
-  const canBrowse = count > 1;
+  const canBrowse = count > 1 && solveStatus === "done";
 
   const move = (direction: "previous" | "next") => (direction === "next" ? nextSchedule() : previousSchedule());
 
@@ -43,10 +43,15 @@ export function ScheduleSwitcher() {
     return <span aria-hidden className="h-26 w-130 rounded-badge bg-skeleton" />;
   }
   if (termStatus !== "ready" || !hasCourses) return null;
+  if (solveStatus === "error") return null;
+  if (solveStatus === "waiting" || solveStatus === "solving") {
+    return <span aria-hidden className="h-26 w-130 rounded-badge bg-skeleton" />;
+  }
   if (!response) {
     return solveStatus === "idle" ? null : <span aria-hidden className="h-26 w-130 rounded-badge bg-skeleton" />;
   }
   if (!response.ok) return null;
+  if (response.diagnosis?.unsure) return <CountPill tone="alert">Search incomplete</CountPill>;
   if (response.total === 0) return <CountPill tone="alert">0 schedules fit</CountPill>;
   if (!canBrowse) return <CountPill>Schedule 1 of 1</CountPill>;
 

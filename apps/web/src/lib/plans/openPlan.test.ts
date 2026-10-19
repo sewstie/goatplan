@@ -58,6 +58,7 @@ afterEach(() => {
 describe("openPlanInPlanner", () => {
   it("switches term and replaces the working draft with the plan", async () => {
     const plan = await savedPlanForTermD();
+    plan.professorByCourse = { "AE 2320": "Ye Lu", "AE 2410": null };
     const { store, engine } = setup();
     await store.getState().init();
     store.getState().addCourse("AB 1533");
@@ -73,6 +74,7 @@ describe("openPlanInPlanner", () => {
       termId: "2027-D",
       courses: ["AE 2410", "AE 2320"],
       locks: { "AE 2320": ["AE 2320-CX02"] },
+      professorByCourse: plan.professorByCourse,
       preferences: { startsAfter: 600, blocked: [{ day: "Fri", start: 840, end: 960 }], onlyOpen: true },
       solveStatus: "done",
     });
@@ -80,6 +82,7 @@ describe("openPlanInPlanner", () => {
       "AE 2410": ["AE 2410-C01"],
       "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"],
     });
+    expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01", "AE 2320-CX01", "AE 2320-CX02"] });
   });
 
   it("pages to the saved schedule when it isn't the first one", async () => {

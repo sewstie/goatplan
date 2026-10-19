@@ -12,6 +12,7 @@ function plannerState(changes: Partial<PlannerState> = {}): PlanSource {
     term: termFile("2027-C"),
     courses: ["AE 2320", "AE 2410"],
     locks: { "AE 2320": ["AE 2320-CX02"] },
+    professorByCourse: {},
     preferences: { startsAfter: 540, blocked: [], onlyOpen: true },
     sortPreset: "fewestEarly",
     response: null,
@@ -43,12 +44,14 @@ describe("createPlan", () => {
   });
 
   it("keeps its own copy, so later changes to the term data don't touch it", () => {
-    const state = plannerState();
+    const state = plannerState({ professorByCourse: { "AE 2320": "Ye Lu", "AB 1533": "Someone Else", "AE 2410": null } });
     const plan = createPlan(state, { id: "p1", name: "Plan 1", savedAt: SAVED_AT })!;
     state.term!.courses[0].sections[0].enrolled = 999;
     state.preferences.blocked.push({ day: "Mon", start: 600, end: 660 });
+    state.professorByCourse["AE 2320"] = null;
     expect(plan.schedule[0].sections[0].enrolled).toBe(10);
     expect(plan.preferences.blocked).toEqual([]);
+    expect(plan.professorByCourse).toEqual({ "AE 2320": "Ye Lu", "AE 2410": null });
   });
 
   it("saves the same-time alternative the student picked", () => {

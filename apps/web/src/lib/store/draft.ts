@@ -20,6 +20,7 @@ export function emptyDraft(): Draft {
     courses: [],
     preferences: { ...DEFAULT_PREFERENCES, blocked: [] },
     locks: {},
+    professorByCourse: {},
     sortPreset: "fewestEarly",
     alternatives: {},
   };
@@ -64,10 +65,18 @@ function copyBlockedTime({ day, start, end, label }: PlanBlockedTime): PlanBlock
 
 const isChoice = (value: unknown): value is Record<string, string[]> => isRecordOf(value, isStringArray);
 
+export function parseProfessors(value: unknown): Draft["professorByCourse"] | null {
+  if (value === undefined) return {};
+  if (!isRecordOf(value, (name): name is string | null => name === null || (typeof name === "string" && name.trim().length > 0))) return null;
+  return Object.fromEntries(Object.entries(value).map(([code, name]) => [code, name?.trim() ?? null]));
+}
+
 /** A saved draft, or null if the data is broken or from another version. Never throws. */
 export function parseDraft(value: unknown): Draft | null {
   if (!isObject(value) || value.version !== DRAFT_VERSION) return null;
   const { courses, preferences, locks, sortPreset, alternatives } = value;
+  const professorByCourse = parseProfessors(value.professorByCourse);
+  if (!professorByCourse) return null;
   if (!isStringArray(courses) || !isRecordOf(locks, isStringArray) || !isSortPresetId(sortPreset)) return null;
   if (!isRecordOf(alternatives, isChoice) || !isObject(preferences)) return null;
   const { startsAfter, blocked, onlyOpen } = preferences;
@@ -82,6 +91,7 @@ export function parseDraft(value: unknown): Draft | null {
       onlyOpen,
     },
     locks: { ...locks },
+    professorByCourse,
     sortPreset,
     alternatives: { ...alternatives },
   };
@@ -138,5 +148,6 @@ export function sanitizeDraft(draft: Draft, term: TermFile): Draft {
     if (Object.keys(kept).length > 0) alternatives[scheduleKey] = kept;
   }
 
-  return { ...draft, courses, locks, alternatives };
+  const professorByCourse = Object.fromEntries(Object.entries(draft.professorByCourse).filter(([code]) => courses.includes(code)));
+  return { ...draft, courses, locks, professorByCourse, alternatives };
 }

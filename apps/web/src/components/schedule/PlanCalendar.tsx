@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { formatTimeRange } from "@/lib/data/time";
 import type { Day } from "@/lib/data/types";
 import { selectSchedules, usePlanner } from "@/lib/store";
@@ -14,24 +14,28 @@ import { assignLanes } from "./lanes";
 import { NoTimeStrip } from "./NoTimeStrip";
 import type { ClassItem } from "./scheduleItems";
 import { useScheduleItems } from "./useScheduleItems";
+import { useDiagnosticPreview } from "./useDiagnosticPreview";
 import { WeekCalendar } from "./WeekCalendar";
 
 const FULL_COLUMN = { lane: 0, lanes: 1 };
 const NO_PREVIEWS: readonly ClassItem[] = [];
 
-export function PlanCalendar({ previews = NO_PREVIEWS }: { previews?: readonly ClassItem[] }) {
+export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: readonly ClassItem[]; overlay?: ReactNode }) {
   const term = usePlanner((state) => state.term);
   const schedules = usePlanner(selectSchedules);
+  const pending = usePlanner((state) => state.solveStatus === "waiting" || state.solveStatus === "solving");
   const preferences = usePlanner((state) => state.preferences);
   const selectedCourse = usePlanner((state) => state.selectedCourse);
   const selectedSection = usePlanner((state) => state.selectedSection);
   const selectCourse = usePlanner((state) => state.selectCourse);
   const { classes: scheduled, untimed } = useScheduleItems();
-  const classes = useMemo(() => [...scheduled, ...previews], [scheduled, previews]);
+  const diagnostic = useDiagnosticPreview();
+  const previewItems = useMemo(() => [...previews, ...diagnostic.classes], [previews, diagnostic.classes]);
+  const classes = useMemo(() => [...scheduled, ...previewItems], [scheduled, previewItems]);
 
   const { range, days } = useMemo(
-    () => calendarBounds(term, schedules, preferences.blocked, previews),
-    [term, schedules, preferences.blocked, previews],
+    () => calendarBounds(term, schedules, preferences.blocked, previewItems),
+    [term, schedules, preferences.blocked, previewItems],
   );
   // Each day's blocks in time order, so screen readers and Tab go through the day as it happens.
   const byDay = useMemo(() => {
@@ -40,7 +44,16 @@ export function PlanCalendar({ previews = NO_PREVIEWS }: { previews?: readonly C
     for (const items of groups.values()) items.sort((a, b) => a.start - b.start || a.end - b.end);
     return groups;
   }, [classes]);
-  const lanes = useMemo(() => new Map([...byDay.values()].flatMap((items) => [...assignLanes(items)])), [byDay]);
+  const lanes = useMemo(() => {
+    const result = new Map([...byDay.values()].flatMap((items) => [...assignLanes(items)]));
+    const problemLanes = new Map(classes.filter((item) => item.problem && (result.get(item)?.lanes ?? 0) > 1)
+      .map((item) => [item.sectionId, result.get(item)!]));
+    for (const item of classes) {
+      const lane = problemLanes.get(item.sectionId);
+      if (item.problem && lane) result.set(item, lane);
+    }
+    return result;
+  }, [byDay, classes]);
 
   const renderDay = (day: Day, density: Density) => (
     <>
@@ -77,12 +90,14 @@ export function PlanCalendar({ previews = NO_PREVIEWS }: { previews?: readonly C
 
   return (
     <WeekCalendar
+      busy={pending}
       days={days}
       range={range}
-      caption={hasTimes ? `Auto-fit · ${formatTimeRange(range.start, range.end)}` : "No timed courses yet"}
+      caption={hasTimes ? `${diagnostic.hasDiagnosis ? "Preview" : "Auto-fit"} · ${formatTimeRange(range.start, range.end)}` : diagnostic.hasDiagnosis ? "No schedule fits" : "No timed courses yet"}
       renderDay={renderDay}
       background={hasTimes && <EarlyBand range={range} startsAfter={preferences.startsAfter} />}
-      footer={<NoTimeStrip items={untimed} />}
+      footer={<NoTimeStrip items={untimed.length > 0 ? untimed : diagnostic.untimed} />}
+      overlay={overlay}
     />
   );
 }
