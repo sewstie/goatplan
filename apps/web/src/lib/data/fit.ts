@@ -1,4 +1,5 @@
 import type { Day, Section } from "./types";
+import { hasInstructor } from "./instructors";
 
 // The engine compares times in 5-minute slots, so these checks do too.
 const SLOT = 5;
@@ -15,6 +16,7 @@ export interface FitRules {
   startsAfter: number;
   blocked: readonly { day: Day; start: number; end: number }[];
   onlyOpen: boolean;
+  professor?: string | null;
 }
 
 function span(day: Day, start: number, end: number): Span {
@@ -33,6 +35,8 @@ export function spansOverlap(a: readonly Span[], b: readonly Span[]): boolean {
 
 /** Whether the engine keeps an option with these sections under the rules. */
 export function meetsRules(sections: readonly Section[], rules: FitRules): boolean {
+  const professor = rules.professor;
+  if (professor && !sections.some((section) => hasInstructor(section, professor))) return false;
   if (rules.onlyOpen && sections.some((section) => section.status !== "open")) return false;
   const early =
     rules.startsAfter !== 0 &&

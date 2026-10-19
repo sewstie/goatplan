@@ -2,7 +2,7 @@ import type { Draft, PlanBlockedTime } from "@/lib/store";
 import type { SavedPlan } from "./types";
 
 /** The parts of the working plan that "Unsaved changes" looks at. */
-export interface WorkingPlan extends Pick<Draft, "courses" | "locks" | "preferences"> {
+export interface WorkingPlan extends Pick<Draft, "courses" | "locks" | "professorByCourse" | "preferences"> {
   /** course code → section ids in the shown schedule, or null when no schedule is shown. */
   chosen: Record<string, string[]> | null;
 }
@@ -34,6 +34,7 @@ export function wouldDiscardWork(currentPlan: SavedPlan | null, working: Working
 export function hasUnsavedChanges(plan: SavedPlan, working: WorkingPlan): boolean {
   if (!sameSet(plan.courses, working.courses)) return true;
   if (!sameGroups(plan.locks, working.locks)) return true;
+  if (working.courses.some((code) => (plan.professorByCourse[code]?.toLowerCase() ?? null) !== (working.professorByCourse[code]?.toLowerCase() ?? null))) return true;
   const saved = plan.preferences;
   const current = working.preferences;
   if (saved.startsAfter !== current.startsAfter || saved.onlyOpen !== current.onlyOpen) return true;

@@ -15,6 +15,7 @@ import type { Draft } from "./types";
 
 const saved: Draft = {
   courses: ["AE 2320"],
+  professorByCourse: {},
   preferences: { startsAfter: 600, blocked: [{ day: "Fri", start: 840, end: 960 }], onlyOpen: false },
   locks: { "AE 2320": ["AE 2320-CX02"] },
   sortPreset: "fewestGaps",
@@ -41,6 +42,14 @@ describe("draft storage", () => {
     expect(JSON.parse(storage.getItem("goatplan:draft:v1:2027-C")!)).toMatchObject({ version: 1 });
     expect(readDraft(storage, "2027-C")).toEqual(saved);
     expect(readDraft(storage, "2027-D")).toBeNull();
+  });
+
+  it("keeps professor choices, accepts old drafts and rejects malformed choices", () => {
+    const value = { version: 1, ...saved, professorByCourse: { "AE 2320": " Ye Lu ", "AE 2410": null } };
+    expect(parseDraft(value)?.professorByCourse).toEqual({ "AE 2320": "Ye Lu", "AE 2410": null });
+    expect(parseDraft({ ...value, professorByCourse: undefined })?.professorByCourse).toEqual({});
+    expect(parseDraft({ ...value, professorByCourse: { "AE 2320": 42 } })).toBeNull();
+    expect(parseDraft({ ...value, professorByCourse: { "AE 2320": "  " } })).toBeNull();
   });
 
   it("keeps the names of blocked times and drops empty ones", () => {
@@ -116,6 +125,7 @@ describe("sanitizeDraft", () => {
       ...emptyDraft(),
       courses: ["AE 2320", "ZZ 9999", "AE 2320"],
       locks: { "AE 2320": ["AE 2320-CX02", "AE 2320-ZZ99"], "ZZ 9999": ["ZZ 9999-A01"] },
+      professorByCourse: { "AE 2320": "Ye Lu", "ZZ 9999": "Someone Else" },
       alternatives: {
         a: { "AE 2320": ["AE 2320-CL01"], "ZZ 9999": ["x"] },
         b: { "ZZ 9999": ["x"] },
@@ -125,6 +135,7 @@ describe("sanitizeDraft", () => {
       ...emptyDraft(),
       courses: ["AE 2320"],
       locks: { "AE 2320": ["AE 2320-CX02"] },
+      professorByCourse: { "AE 2320": "Ye Lu" },
       alternatives: { a: { "AE 2320": ["AE 2320-CL01"] } },
     });
   });

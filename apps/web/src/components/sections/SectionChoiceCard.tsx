@@ -20,15 +20,21 @@ type SectionChoiceCardProps = {
   section: Section;
   locked: boolean;
   onUnlocked?: () => void;
+  problem?: boolean;
+  readOnly?: boolean;
 };
 
 /** One chosen section: its heading, Lock / Unlock (or why it can't be locked) and its facts. */
-export function SectionChoiceCard({ course, section, locked, onUnlocked }: SectionChoiceCardProps) {
+export function SectionChoiceCard({ course, section, locked, onUnlocked, problem = false, readOnly = false }: SectionChoiceCardProps) {
   const heading = sectionHeading(section);
   const place = placeLine(section);
 
   let control;
-  if (locked || (hasSetTime(section) && !isOnlyChoice(course, section.id))) {
+  if (readOnly && locked) {
+    control = <Badge tone="accent">Locked</Badge>;
+  } else if (readOnly) {
+    control = isOnlyChoice(course, section.id) ? <Badge size="sm">Only {typeWord(section.type)}</Badge> : null;
+  } else if (locked || (hasSetTime(section) && !isOnlyChoice(course, section.id))) {
     control = (
       <LockButton
         courseCode={course.code}
@@ -43,7 +49,7 @@ export function SectionChoiceCard({ course, section, locked, onUnlocked }: Secti
   }
 
   return (
-    <Card as="article" className="flex flex-col gap-8 px-10 pt-15 pb-10">
+    <Card as="article" variant={problem ? "problem" : "outlined"} className="flex flex-col gap-8 px-10 pt-15 pb-10">
       <div className="flex items-center justify-between gap-8">
         <h4 className="text-10 leading-14-5 font-700 text-ink">{heading}</h4>
         {/* As in the design, the control is taller than the heading and doesn't push the rows down. */}

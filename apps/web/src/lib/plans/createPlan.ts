@@ -3,7 +3,7 @@ import type { SavedPlan } from "./types";
 
 export type PlanSource = Pick<
   PlannerState,
-  "termId" | "term" | "courses" | "locks" | "preferences" | "sortPreset" | "response" | "scheduleIndex" | "alternatives"
+  "termId" | "term" | "courses" | "locks" | "professorByCourse" | "preferences" | "sortPreset" | "response" | "scheduleIndex" | "alternatives"
 >;
 
 export const MAX_PLAN_NAME_LENGTH = 60;
@@ -46,6 +46,7 @@ export function createPlan(
     courses: [...state.courses],
     schedule,
     locks,
+    professorByCourse: Object.fromEntries(Object.entries(state.professorByCourse).filter(([code]) => kept.has(code))),
     preferences: structuredClone(state.preferences),
     sortPreset: state.sortPreset,
   };

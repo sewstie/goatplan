@@ -19,6 +19,7 @@ export interface Preferences {
   onlyOpen?: boolean | null;
   /** Course code → section ids that every kept option must include. */
   locked?: Record<string, string[]> | null;
+  anyOf?: Record<string, string[]> | null;
 }
 
 export interface SortWeights {
@@ -65,6 +66,7 @@ export interface Schedule {
 
 export interface RemovedCounts {
   notLocked: number;
+  notAnyOf: number;
   notOpen: number;
   startsTooEarly: number;
   blocked: number;
@@ -82,6 +84,7 @@ export type Fix = { schedules: number; capped: boolean } & (
   | { kind: "clearBlocked" }
   | { kind: "allowFull" }
   | { kind: "unlock"; course: string }
+  | { kind: "clearAnyOf"; course: string }
   | { kind: "dropCourse"; course: string }
 );
 

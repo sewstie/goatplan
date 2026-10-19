@@ -69,6 +69,13 @@ describe("ScheduleSwitcher", () => {
     expect(screen.getByText("0 schedules fit")).toBeInTheDocument();
   });
 
+  it("doesn't call an unfinished search a proven no-fit result", () => {
+    setPlanner({ response: solved([], { total: 0, patterns: 0, capped: true, diagnosis: { unsure: true, emptyCourses: [], clashingPairs: [], minimalClash: [], fixes: [] } }) });
+    render(<ScheduleSwitcher />);
+    expect(screen.getByText("Search incomplete")).toBeInTheDocument();
+    expect(screen.queryByText("0 schedules fit")).not.toBeInTheDocument();
+  });
+
   it("holds the place with a skeleton while the term loads, and shows nothing without courses", () => {
     setPlanner({ termStatus: "loading", term: null, response: null });
     const { container, rerender } = render(<ScheduleSwitcher />);

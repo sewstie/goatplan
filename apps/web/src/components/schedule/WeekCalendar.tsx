@@ -22,10 +22,11 @@ type WeekCalendarProps = {
   overlay?: ReactNode;
   /** Between the grid and the caption (the "No set time" strip). */
   footer?: ReactNode;
+  busy?: boolean;
 };
 
 /** The calendar card's content: day names, the time grid and the caption (div.app.md). */
-export function WeekCalendar({ days, range, caption, renderDay, background, overlay, footer }: WeekCalendarProps) {
+export function WeekCalendar({ days, range, caption, renderDay, background, overlay, footer, busy }: WeekCalendarProps) {
   const [viewportRef, viewportHeight] = useElementHeight<HTMLDivElement>();
   const hours = (range.end - range.start) / 60;
   const gridHeight = viewportHeight === null ? null : Math.max(viewportHeight - 17, hours * 36);
@@ -33,7 +34,7 @@ export function WeekCalendar({ days, range, caption, renderDay, background, over
   const marks = hourMarks(range);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div aria-busy={busy} className="flex min-h-0 flex-1 flex-col">
       <DayHeader days={days} />
       <div
         ref={viewportRef}

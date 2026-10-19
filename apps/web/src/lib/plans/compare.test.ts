@@ -7,12 +7,22 @@ function workingFrom(plan = designPlan()): WorkingPlan {
   return {
     courses: [...plan.courses],
     locks: structuredClone(plan.locks),
+    professorByCourse: { ...plan.professorByCourse },
     preferences: structuredClone(plan.preferences),
     chosen: Object.fromEntries(plan.schedule.map((course) => [course.code, course.sections.map((item) => item.id)])),
   };
 }
 
 describe("hasUnsavedChanges", () => {
+  it("notices a professor choice even when the shown sections are unchanged", () => {
+    const plan = designPlan();
+    const working = workingFrom(plan);
+    working.professorByCourse["AE 2320"] = "Ye Lu";
+    expect(hasUnsavedChanges(plan, working)).toBe(true);
+    expect(hasUnsavedChanges({ ...plan, professorByCourse: { "AE 2320": "ye lu" } }, working)).toBe(false);
+    working.professorByCourse["AE 2320"] = null;
+    expect(hasUnsavedChanges(plan, working)).toBe(false);
+  });
   it("is false for the plan as saved, whatever the order", () => {
     const working = workingFrom();
     working.courses.reverse();

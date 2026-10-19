@@ -5,6 +5,7 @@ import { Banner } from "./Banner";
 import { bannerMessage } from "./scheduleCopy";
 import { useDelayedFlag } from "./useDelayedFlag";
 import { useScheduleItems } from "./useScheduleItems";
+import { useDiagnosis } from "./useDiagnosis";
 
 /** How long the engine may work before the banner says it's still looking. */
 const SLOW_SOLVE_MS = 600;
@@ -18,9 +19,11 @@ export function ScheduleBanner() {
   const response = usePlanner((state) => state.response);
   const shownSchedules = usePlanner((state) => selectSchedules(state).length);
   const { waitlisted } = useScheduleItems();
+  const diagnosis = useDiagnosis();
   const slow = useDelayedFlag(solveStatus === "waiting" || solveStatus === "solving", SLOW_SOLVE_MS);
 
   if (termStatus !== "ready") return null;
   const message = bannerMessage({ courseCount, solveStatus, slow, solveError, response, shownSchedules, waitlisted });
+  if (diagnosis?.issues[0]) return <Banner message={{ tone: "warning", ...diagnosis.issues[0].banner }} />;
   return message && <Banner message={message} />;
 }

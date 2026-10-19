@@ -12,6 +12,7 @@ export function useSectionChoices(course: Course | undefined): SectionChoices | 
   const term = usePlanner((state) => state.term);
   const chosen = usePlanner(useShallow(selectChosenSections));
   const preferences = usePlanner((state) => state.preferences);
+  const professor = usePlanner((state) => course ? state.professorByCourse[course.code] : null);
 
   return useMemo(() => {
     const own = course && chosen[course.code];
@@ -20,6 +21,6 @@ export function useSectionChoices(course: Course | undefined): SectionChoices | 
       const other = code === course.code ? undefined : term.courses.find((item) => item.code === code);
       return other ? sectionsById(other, ids) : [];
     });
-    return sectionChoices(course, own, rest, preferences);
-  }, [course, chosen, term, preferences]);
+    return sectionChoices(course, own, rest, { ...preferences, professor });
+  }, [course, chosen, term, preferences, professor]);
 }

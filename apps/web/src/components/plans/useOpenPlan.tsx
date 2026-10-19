@@ -14,6 +14,7 @@ function workingDraft(termId: string): WorkingPlan | null {
     return {
       courses: state.courses,
       locks: state.locks,
+      professorByCourse: state.professorByCourse,
       preferences: state.preferences,
       chosen: hasSchedule ? selectChosenSections(state) : null,
     };

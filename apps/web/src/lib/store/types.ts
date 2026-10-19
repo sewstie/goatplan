@@ -25,6 +25,7 @@ export interface Draft {
   preferences: PlanPreferences;
   /** course code → locked section ids. */
   locks: Record<string, string[]>;
+  professorByCourse: Record<string, string | null>;
   sortPreset: SortPresetId;
   alternatives: AlternativeChoices;
 }
@@ -47,6 +48,8 @@ export interface PlannerState extends Draft {
   scheduleIndex: number;
   solveStatus: SolveStatus;
   solveError: string | null;
+  lastChosenSections: Record<string, string[]>;
+  professorNotice: { course: string; sections: string[] } | null;
   /** The course the details panel shows. Not saved with the draft. */
   selectedCourse: string | null;
   /** The section whose calendar blocks are selected, a section of selectedCourse. */
@@ -66,6 +69,7 @@ export interface PlannerActions {
   removeCourse(code: string): void;
   selectCourse(code: string | null, sectionId?: string | null): void;
   setPreferences(changes: Partial<PlanPreferences>): void;
+  setProfessor(courseCode: string, name: string | null): void;
   lockSection(courseCode: string, sectionId: string): void;
   unlockSection(courseCode: string, sectionId: string): void;
   setSortPreset(preset: SortPresetId): void;
@@ -79,6 +83,7 @@ export interface PlannerActions {
   nextSchedule(): void;
   previousSchedule(): void;
   applyFix(fix: Fix): void;
+  retrySolve(): Promise<void>;
 }
 
 export type PlannerStore = PlannerState & PlannerActions;

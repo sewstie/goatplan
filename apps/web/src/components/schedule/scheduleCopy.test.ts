@@ -96,6 +96,12 @@ describe("summaryText", () => {
     );
   });
 
+  it("doesn't describe stale schedules as fitting while solving or after an engine crash", () => {
+    expect(summaryText({ ...base, solveStatus: "solving" })).toBe("3 courses");
+    expect(summaryText({ ...base, solveStatus: "error" })).toBe("3 courses");
+    expect(summaryText({ ...base, response: noFit({ unsure: true }) })).toBe("3 courses · Search incomplete");
+  });
+
   it("says nothing while there is no term", () => {
     expect(summaryText({ ...base, termStatus: "idle" })).toBeNull();
     expect(summaryText({ ...base, termStatus: "error" })).toBeNull();
@@ -176,5 +182,8 @@ describe("bannerMessage", () => {
       title: "AE 2410 C01 is waitlist only.",
       detail: "It fits your times, but registration is not guaranteed.",
     });
+    const capped = bannerMessage({ ...base, response: solved({ capped: true }), waitlisted: [{ courseCode: "AE 2410", sectionCode: "C01" }] });
+    expect(capped?.title).toBe("There are too many combinations to check them all.");
+    expect(capped?.detail).toContain("AE 2410 C01 is waitlist only. Registration is not guaranteed.");
   });
 });

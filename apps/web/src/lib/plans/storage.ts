@@ -1,6 +1,7 @@
 import { WEEK, type Day, type Meeting, type Section } from "@/lib/data";
 import { SORT_PRESET_IDS, type PlanBlockedTime, type SortPresetId } from "@/lib/store";
 import type { SavedCourse, SavedPlan } from "./types";
+import { parseProfessors } from "@/lib/store/draft";
 
 // Saved plans have their own keys, apart from the planner store's drafts ("goatplan:draft:").
 export const PLANS_STORAGE_PREFIX = "goatplan:plans:";
@@ -104,6 +105,8 @@ const isLocks = (value: unknown): value is Record<string, string[]> =>
 export function parsePlan(value: unknown): SavedPlan | null {
   if (!isObject(value) || value.version !== PLANS_VERSION) return null;
   const { id, name, termId, term, savedAt, courses, schedule, locks, preferences, sortPreset } = value;
+  const professorByCourse = parseProfessors(value.professorByCourse);
+  if (!professorByCourse) return null;
   if (!isString(id) || !isString(name) || !isString(termId) || !isString(savedAt)) return null;
   if (!isObject(term) || !isString(term.name) || !isString(term.season) || !Number.isInteger(term.year)) return null;
   if (!isStringArray(courses) || !Array.isArray(schedule) || !schedule.every(isSavedCourse)) return null;
@@ -120,6 +123,7 @@ export function parsePlan(value: unknown): SavedPlan | null {
     courses: [...courses],
     schedule,
     locks: { ...locks },
+    professorByCourse,
     preferences: {
       startsAfter: preferences.startsAfter,
       blocked: preferences.blocked.map(copyBlockedTime),
