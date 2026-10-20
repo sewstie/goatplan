@@ -66,4 +66,27 @@ describe.each(index.terms.map((term) => term.id))("%s.json", (termId) => {
       }
     }
   });
+
+  it("has no option with overlapping sections", () => {
+    for (const course of file.courses) {
+      const sections = new Map(course.sections.map((section) => [section.id, section]));
+      for (const option of course.options) {
+        const meetings = option.flatMap((id) =>
+          sections.get(id)!.meetings.map((meeting) => ({ ...meeting, section: id })),
+        );
+        for (let i = 0; i < meetings.length; i++) {
+          for (const b of meetings.slice(i + 1)) {
+            const a = meetings[i];
+            if (a.section === b.section) continue;
+            const sharedDays = a.days.filter((day) => b.days.includes(day));
+            if (sharedDays.length === 0) continue;
+            expect(
+              Math.min(a.end, b.end),
+              `${a.section} and ${b.section} overlap on ${sharedDays.join(", ")}`,
+            ).toBeLessThanOrEqual(Math.max(a.start, b.start));
+          }
+        }
+      }
+    }
+  });
 });

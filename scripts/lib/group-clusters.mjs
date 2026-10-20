@@ -23,7 +23,22 @@ function combinations(groups) {
   );
 }
 
-export function buildOptions(sections) {
+function hasOverlap(sections) {
+  return sections.some((section, index) =>
+    sections.slice(index + 1).some((other) =>
+      (section.meetings ?? []).some((a) =>
+        (other.meetings ?? []).some(
+          (b) =>
+            a.start < b.end &&
+            b.start < a.end &&
+            a.days.some((day) => b.days.includes(day)),
+        ),
+      ),
+    ),
+  );
+}
+
+export function buildOptions(sections, { onDrop } = {}) {
   const clusters = groupBy(
     sections.filter((s) => s.cluster),
     (s) => s.cluster,
@@ -55,6 +70,11 @@ export function buildOptions(sections) {
   }
 
   return options
+    .filter((option) => {
+      if (!hasOverlap(option)) return true;
+      onDrop?.();
+      return false;
+    })
     .map((option) => option.map((s) => s.id).sort(compare))
     .sort((a, b) => compare(a.join("\n"), b.join("\n")));
 }

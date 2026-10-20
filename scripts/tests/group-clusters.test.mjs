@@ -18,6 +18,20 @@ describe("groupBy", () => {
 });
 
 describe("buildOptions", () => {
+  it("drops an option when an unclustered lab overlaps its lecture", () => {
+    const options = buildOptions([
+      {
+        ...section("MA 1024-BL04", "lecture", "lecture-cluster"),
+        meetings: [{ days: ["Mon"], start: 900, end: 950 }],
+      },
+      {
+        ...section("MA 1024-BX08", "lab"),
+        meetings: [{ days: ["Mon"], start: 900, end: 950 }],
+      },
+    ]);
+    assert.deepEqual(options, []);
+  });
+
   it("pairs a clustered lecture with each of its labs (AE 3010: 1 x 6 = 6)", () => {
     const options = buildOptions([
       section("AE 3010-AL01", "lecture", "5074"),

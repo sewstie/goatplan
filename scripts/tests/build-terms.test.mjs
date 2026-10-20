@@ -276,6 +276,30 @@ describe("buildCourse", () => {
     assert.equal(course.sections.length, 2);
     assert.equal(unparsed.entries()[0].value, "listed more than once");
   });
+
+  it("checks overlaps using only the meetings in the requested term", () => {
+    const course = buildCourse(
+      [
+        row("MA 1024", "FL04", {
+          ...FALL_SEMESTER,
+          Meeting_Patterns:
+            "M | 9:00 AM - 9:50 AM | 08/20/2026 - 10/09/2026; " +
+            "T | 10:00 AM - 10:50 AM | 10/19/2026 - 12/11/2026",
+          Section_Details:
+            "Fuller Labs 311 | M | 9:00 AM - 9:50 AM | 08/20/2026 - 10/09/2026; " +
+            "Fuller Labs 311 | T | 10:00 AM - 10:50 AM | 10/19/2026 - 12/11/2026",
+        }),
+        row("MA 1024", "FX08", {
+          ...FALL_SEMESTER,
+          Instructional_Format: "Laboratory",
+          Meeting_Patterns: "M | 9:00 AM - 9:50 AM",
+          Section_Details: "Fuller Labs 311 | M | 9:00 AM - 9:50 AM",
+        }),
+      ],
+      { term: { id: "2026-B", start: "2026-10-19", end: "2026-12-11" } },
+    );
+    assert.deepEqual(course.options, [["MA 1024-FL04", "MA 1024-FX08"]]);
+  });
 });
 
 describe("buildTerms", () => {
@@ -314,7 +338,7 @@ describe("buildTerms", () => {
       termById(terms, "2027-C").courses.map((c) => c.code),
       ["AE 2320", "AE 4310"],
     );
-    assert.deepEqual(report, { skipped: {}, placed: [], unplaced: [] });
+    assert.deepEqual(report, { skipped: {}, placed: [], unplaced: [], droppedOptions: [] });
   });
 
   it("leaves out interest lists and cancelled sections", () => {
@@ -392,7 +416,11 @@ describe("buildTerms", () => {
   it("never pairs a semester-long lecture with a one-term lab", () => {
     const { terms } = buildTerms([
       row("RBE 595", "AL01"),
-      row("RBE 595", "AX01", { Instructional_Format: "Laboratory" }),
+      row("RBE 595", "AX01", {
+        Instructional_Format: "Laboratory",
+        Meeting_Patterns: "W | 10:00 AM - 10:50 AM",
+        Section_Details: "Fuller Labs 311 | W | 10:00 AM - 10:50 AM",
+      }),
       row("RBE 595", "F02", FALL_SEMESTER),
     ]);
     const course = termById(terms, "2026-A").courses[0];
@@ -457,7 +485,12 @@ describe("unscheduledSections", () => {
   it("lists sections that are in no option", () => {
     const { terms } = buildTerms([
       row("IMGD 2030", "AL01", { CF_LRV_Cluster_Ref_ID: "5372" }),
-      row("IMGD 2030", "AX01", { CF_LRV_Cluster_Ref_ID: "5372", Instructional_Format: "Laboratory" }),
+      row("IMGD 2030", "AX01", {
+        CF_LRV_Cluster_Ref_ID: "5372",
+        Instructional_Format: "Laboratory",
+        Meeting_Patterns: "W | 10:00 AM - 10:50 AM",
+        Section_Details: "Fuller Labs 311 | W | 10:00 AM - 10:50 AM",
+      }),
       row("IMGD 2030", "AX02", { Instructional_Format: "Laboratory" }),
     ]);
     assert.deepEqual(unscheduledSections(terms[0]), ["IMGD 2030-AX02"]);
