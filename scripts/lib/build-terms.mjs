@@ -123,10 +123,11 @@ function meetingsInTerm(meetings, term) {
   return mergeMeetings(inTerm.map(({ dates, ...meeting }) => meeting));
 }
 
-export function buildCourse(rows, { term = null, onUnparsed } = {}) {
+export function buildCourse(rows, { term = null, onUnparsed, onDroppedOptions } = {}) {
   const built = rows
     .map((row) => buildSection(row, { onUnparsed }))
     .filter(Boolean)
+    .map((section) => ({ ...section, meetings: meetingsInTerm(section.meetings, term) }))
     .sort((a, b) => compare(a.id, b.id));
 
   const sections = [];
@@ -152,9 +153,11 @@ export function buildCourse(rows, { term = null, onUnparsed } = {}) {
     ) ?? "";
 
   // A semester-long lecture never pairs with a one-term lab.
+  let droppedOptions = 0;
   const options = [...groupBy(sections, (s) => s.period).values()]
-    .flatMap(buildOptions)
+    .flatMap((group) => buildOptions(group, { onDrop: () => droppedOptions++ }))
     .sort((a, b) => compare(a.join("\n"), b.join("\n")));
+  if (droppedOptions > 0) onDroppedOptions?.(first.course, droppedOptions);
 
   return {
     code: first.course,
@@ -178,7 +181,7 @@ export function buildCourse(rows, { term = null, onUnparsed } = {}) {
         delivery: s.delivery,
         ...(s.credits !== null && s.credits !== credits ? { credits: s.credits } : {}),
         ...(ownDates ? { dates: s.dates } : {}),
-        meetings: meetingsInTerm(s.meetings, term),
+        meetings: s.meetings,
         ...(s.description && !sameText(s.description, description)
           ? { description: s.description }
           : {}),
@@ -222,7 +225,7 @@ export function buildTerms(rows, { onUnparsed } = {}) {
     (a, b) => compare(a.term.start ?? "", b.term.start ?? "") || compare(a.term.id, b.term.id),
   );
 
-  const report = { skipped, placed: [], unplaced: [] };
+  const report = { skipped, placed: [], unplaced: [], droppedOptions: [] };
   for (const { period, rows: periodRows } of spanning) {
     const into = new Set();
     let unplaced = 0;
@@ -247,7 +250,14 @@ export function buildTerms(rows, { onUnparsed } = {}) {
   const terms = lettered.map(({ term, rows: termRows }) => ({
     term,
     courses: [...groupBy(termRows, (r) => parseCourseTitle(r.Course_Title).code).values()]
-      .map((courseRows) => buildCourse(courseRows, { term, onUnparsed }))
+      .map((courseRows) =>
+        buildCourse(courseRows, {
+          term,
+          onUnparsed,
+          onDroppedOptions: (course, count) =>
+            report.droppedOptions.push({ term: term.id, course, count }),
+        }),
+      )
       .filter(Boolean)
       .sort((a, b) => compare(a.code, b.code)),
   }));

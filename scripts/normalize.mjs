@@ -118,6 +118,14 @@ function printSummary({ terms, dropped, report, unparsed, today }) {
     );
   }
 
+  const droppedOptions = report.droppedOptions
+    .filter(({ term }) => published.has(term))
+    .sort((a, b) => a.term.localeCompare(b.term) || a.course.localeCompare(b.course));
+  console.log(`Overlapping options dropped: ${droppedOptions.length === 0 ? "none" : ""}`);
+  for (const { term, course, count } of droppedOptions) {
+    console.log(`  ${term} ${course}: dropped ${plural(count, "overlapping option")}`);
+  }
+
   const entries = unparsed.entries();
   console.log(`Values the parsers couldn't read: ${entries.length === 0 ? "none" : entries.length}`);
   for (const { field, value, count, examples } of entries) {
