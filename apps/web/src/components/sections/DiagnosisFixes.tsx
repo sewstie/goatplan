@@ -27,7 +27,7 @@ export function DiagnosisFixes({ fixes }: { fixes: readonly DiagnosisFix[] }) {
           variant={index === 0 ? "primary" : "secondary"}
           size="md"
           fullWidth
-          icon={icons[fix.kind]}
+          icon={fix.kind === "relaxStartsAfter" && fix.startsAfter === 0 ? <X aria-hidden /> : icons[fix.kind]}
           disabled={!ready}
           onClick={() => {
             document.getElementById("main")?.focus();

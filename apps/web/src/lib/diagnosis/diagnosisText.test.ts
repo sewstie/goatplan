@@ -31,15 +31,35 @@ describe("diagnosisText", () => {
     expect(result.fixes[0].fix).toBe(fix);
   });
 
-  it("matches the start-time frame when the only lecture proves the reason", () => {
+  it("uses state 35 wording when the start time excludes the only lecture", () => {
     const result = diagnosisText(diagnosis({ emptyCourses: [empty()] }), context());
     expect(result.issues[0]).toMatchObject({
-      title: "Your start time is too late",
-      detail: "AE 2320’s only lecture starts at 9:00, so nothing works with “Starts after 10:00 AM”.",
+      title: "Your start time excludes this lecture",
+      detail: "AE 2320’s only lecture starts at 9:00 AM, but Starts after is set to 10:00 AM.",
       summary: "Your start-time preference excludes AE 2320.",
       banner: { title: "Starts after 10:00 AM", detail: "excludes AE 2320’s only lecture at 9:00 AM." },
       sectionIds: ["AE 2320-CL01"], excludedSectionIds: ["AE 2320-CL01"],
     });
+  });
+
+  it("offers clearing the start restriction separately from removing the course", () => {
+    const change: Fix = { kind: "relaxStartsAfter", startsAfter: 540, schedules: 2, capped: false };
+    const remove: Fix = { kind: "dropCourse", course: "AE 2320", schedules: 3, capped: false };
+    const result = diagnosisText(diagnosis({ emptyCourses: [empty()], fixes: [change, remove] }), context());
+    expect(result.fixes).toEqual([
+      { fix: change, label: "Change to 9:00 AM", count: "2 schedules fit" },
+      {
+        fix: { kind: "relaxStartsAfter", startsAfter: 0, schedules: 2, capped: true },
+        label: "Clear start restriction", count: "At least 2 schedules fit",
+      },
+      { fix: remove, label: "Remove AE 2320", count: "3 schedules fit" },
+    ]);
+  });
+
+  it("keeps an engine-counted clear-start fix without duplicating it", () => {
+    const clear: Fix = { kind: "relaxStartsAfter", startsAfter: 0, schedules: 4, capped: false };
+    const result = diagnosisText(diagnosis({ emptyCourses: [empty()], fixes: [clear] }), context());
+    expect(result.fixes).toEqual([{ fix: clear, label: "Clear start restriction", count: "4 schedules fit" }]);
   });
 
   it("explains a locked full lab and names available replacements", () => {
@@ -132,7 +152,7 @@ describe("diagnosisText", () => {
 describe("fixText", () => {
   it.each([
     [{ kind: "relaxStartsAfter", startsAfter: 540 }, "Change to 9:00 AM"],
-    [{ kind: "relaxStartsAfter", startsAfter: 0 }, "Allow any start time"],
+    [{ kind: "relaxStartsAfter", startsAfter: 0 }, "Clear start restriction"],
     [{ kind: "clearBlocked" }, "Clear blocked times"],
     [{ kind: "allowFull" }, "Show full sections"],
     [{ kind: "dropCourse", course: "AE 2320" }, "Remove AE 2320"],

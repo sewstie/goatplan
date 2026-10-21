@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { TermFile, TermSummary } from "@/lib/data/types";
 import { EngineFailureError } from "@/lib/engine/EngineClient";
 import type { LoadTermResponse, SolveRequest, SolveResponse } from "@/lib/engine/types";
+import { diagnosisText } from "@/lib/diagnosis/diagnosisText";
 import { createPlannerStore, SOLVE_DELAY_MS } from "./createPlannerStore";
 import { draftKey, emptyDraft, LAST_TERM_KEY, readDraft } from "./draft";
 import { selectChosenSections } from "./selectors";
@@ -415,6 +416,37 @@ describe("actions", () => {
     expect(state().locks).toEqual({});
     state().applyFix({ kind: "dropCourse", course: "AB 1533", schedules: 2, capped: false });
     expect(state().courses).toEqual(["AE 2320"]);
+  });
+
+  it("clears the start restriction, keeps the plan and solves again", async () => {
+    const { state, engine, storage } = await ready();
+    state().addCourse("AE 2320");
+    state().addCourse("AE 2410");
+    state().lockSection("AE 2320", "AE 2320-CX02");
+    state().setPreferences({ startsAfter: 600, blocked: [{ day: "Tue", start: 840, end: 960, label: "Work" }] });
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    const before = readDraft(storage, "2027-C")!;
+    const { fixes } = diagnosisText({
+      unsure: false,
+      emptyCourses: [{ code: "AE 2320", optionsInData: 2, latestStartsAfter: 540, removed: { notLocked: 1, notAnyOf: 0, notOpen: 0, startsTooEarly: 1, blocked: 0 } }],
+      clashingPairs: [], minimalClash: [],
+      fixes: [{ kind: "relaxStartsAfter", startsAfter: 540, schedules: 2, capped: false }],
+    }, state());
+    const clear = fixes.find((fix) => fix.label === "Clear start restriction")!;
+
+    state().applyFix(clear.fix);
+
+    expect(state()).toMatchObject({
+      courses: before.courses, locks: before.locks,
+      preferences: { ...before.preferences, startsAfter: 0 }, solveStatus: "waiting",
+    });
+    expect(readDraft(storage, "2027-C")).toEqual({ ...before, preferences: { ...before.preferences, startsAfter: 0 } });
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).toHaveBeenLastCalledWith(expect.objectContaining({
+      courses: ["AE 2320", "AE 2410"],
+      preferences: expect.objectContaining({ startsAfter: 0, locked: { "AE 2320": ["AE 2320-CX02"] }, blocked: [{ day: "Tue", start: 840, end: 960 }] }),
+    }));
+    expect(state()).toMatchObject({ solveStatus: "done", response: { ok: true, total: 2 } });
   });
 
   it("retains the last displayed choices for diagnosis previews without saving them in the draft", async () => {
