@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "courses": ["PH 1120", "MA 1022", "CS 2102"],
+  "preferences": {
+    "anyOf": { "PH 1120": ["PH 1120-BX03", "PH 1120-BX07"] }
+  },
+  "limits": { "maxSchedules": 5 }
+}

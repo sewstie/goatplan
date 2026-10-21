@@ -8,6 +8,9 @@ copy it, so change this page first and the code second.
 This is version 1, and it's frozen. Nothing in it gets renamed, removed or
 changes meaning. A change like that becomes version 2.
 
+`preferences.anyOf`, the `notAnyOf` diagnosis count and the `clearAnyOf` fix
+are additive fields in version 1. Existing fields and requests keep their meaning.
+
 ```cpp
 goatplan::Engine engine;
 std::string loaded = engine.loadTermJson(termJson);
@@ -54,7 +57,8 @@ term that was loaded before, if any, stays loaded.
     "startsAfter": 600,
     "blocked": [{ "day": "Mon", "start": 720, "end": 780 }],
     "onlyOpen": true,
-    "locked": { "PH 1120": ["PH 1120-BL01"] }
+    "locked": { "PH 1120": ["PH 1120-BL01"] },
+    "anyOf": { "PH 1120": ["PH 1120-BX03", "PH 1120-BX07"] }
   },
   "sort": { "earlyCutoff": 600, "perEarlyMinute": 3, "perGapMinute": 1, "perDay": 60 },
   "limits": { "maxSchedules": 50, "stepBudget": 5000000 }
@@ -72,6 +76,7 @@ to `null`, to get the default. Fields the engine doesn't know are ignored.
 | `preferences.blocked`     | list of `{day, start, end}`| `[]`      | Skip options that touch these times. `day` is `Mon` … `Sun`, and `0 <= start < end <= 1440`. |
 | `preferences.onlyOpen`    | true or false              | `false`   | Skip options with a full or waitlisted section. |
 | `preferences.locked`      | course code → section IDs  | `{}`      | For that course, only keep options that include every one of these sections. |
+| `preferences.anyOf`       | course code → section IDs  | `{}`      | For that course, only keep options that include at least one listed section. A missing or empty list adds no rule. |
 | `sort.earlyCutoff`        | 0 to 1440                  | `600`     | Class time before this counts as early. |
 | `sort.perEarlyMinute`     | 0 to 10000                 | `3`       | Cost of each early minute. |
 | `sort.perGapMinute`       | 0 to 10000                 | `1`       | Cost of each minute between classes. |
@@ -79,8 +84,10 @@ to `null`, to get the default. Fields the engine doesn't know are ignored.
 | `limits.maxSchedules`     | whole number               | `200`     | How many schedules to send back. At most 500. |
 | `limits.stepBudget`       | whole number               | `5000000` | How long the search may run. At most 50,000,000. |
 
-Every course code, both in `courses` and in `locked`, has to exist in the
-loaded term. Every locked section has to belong to the course it's listed under.
+Every course code in `courses`, `locked` or `anyOf` has to exist in the
+loaded term. Every section listed in `locked` or `anyOf` has to belong to the
+course it's listed under. When both preferences apply, an option must include
+all locked sections and at least one section from the nonempty `anyOf` list.
 
 ## Response
 
@@ -132,7 +139,7 @@ request, with repeats removed. For each course:
 "diagnosis": {
   "unsure": false,
   "emptyCourses": [{ "code": "PH 1120", "optionsInData": 363,
-    "removed": { "notLocked": 0, "notOpen": 4, "startsTooEarly": 359, "blocked": 0 },
+    "removed": { "notLocked": 0, "notAnyOf": 0, "notOpen": 4, "startsTooEarly": 359, "blocked": 0 },
     "latestStartsAfter": 780 }],
   "clashingPairs": [],
   "minimalClash": [],
@@ -146,7 +153,9 @@ something:
 
 1. `emptyCourses`: courses with no options left. `removed` says how many options
    each preference took out. Each option is counted once, under the first rule
-   that removed it, in the order shown. `optionsInData: 0` means the course has
+   that removed it, in this order: `notLocked`, `notAnyOf`, `notOpen`,
+   `startsTooEarly`, `blocked`. `notAnyOf` counts options that contain none of
+   that course's listed sections. `optionsInData: 0` means the course has
    no options at all, maybe because it has no set meeting times.
    `latestStartsAfter` is the latest `startsAfter` that would keep at least one
    option for this course, or `null` when `startsAfter` wasn't the problem.
@@ -201,6 +210,7 @@ is only a lower bound.
 | `clearBlocked`     |               | Remove all `preferences.blocked` times. |
 | `allowFull`        |               | Set `preferences.onlyOpen` to false. |
 | `unlock`           | `course`      | Remove that course from `preferences.locked`. |
+| `clearAnyOf`       | `course`      | Remove that course from `preferences.anyOf`. Tried like `unlock`, and suggested only when it gives schedules. |
 | `dropCourse`       | `course`      | Remove that course from `courses`. |
 
 `unsure: true` means the search ran out of steps before finding anything, so the
@@ -228,5 +238,5 @@ string or `null`; the version comes back as JSON text, so version 2 gives
 | `badRequest`         | Broken JSON, a missing field, a wrong type or a value out of range. The message names the field. | The field, like `preferences.blocked[0].end`, or `null` for broken JSON. |
 | `unsupportedVersion` | `version` isn't 1.                                           | The version sent. |
 | `unknownCourse`      | A course code isn't in the loaded term.                      | The code. |
-| `unknownSection`     | A locked section ID isn't one of that course's sections.     | The section ID. |
+| `unknownSection`     | A section ID in `locked` or `anyOf` isn't one of that course's sections. | The section ID. |
 | `internal`           | A bug in the engine.                                         | `null` |

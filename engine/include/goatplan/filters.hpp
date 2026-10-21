@@ -15,10 +15,12 @@ namespace goatplan{
         WeekMask blocked;
         bool onlyOpen =false;
         std::unordered_map<std::string, std::vector<std::string>> locked;
+        std::unordered_map<std::string, std::vector<std::string>> anyOf;
     };
 
     enum class FilterReason : std::size_t {
     NotLocked,
+    NotAnyOf,
     NotOpen,
     StartsTooEarly,
     Blocked,
