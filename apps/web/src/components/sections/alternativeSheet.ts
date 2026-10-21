@@ -7,7 +7,6 @@ interface AlternativeSheetState {
   close(): void;
 }
 
-/** Lets the details panel open ChooseAlternativeSheet, which the page renders next to it. */
 export const useAlternativeSheet = create<AlternativeSheetState>()((set) => ({
   course: null,
   open: (course) => set({ course }),

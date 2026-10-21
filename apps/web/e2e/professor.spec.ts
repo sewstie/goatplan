@@ -5,6 +5,7 @@ import type { TermFile } from "../src/lib/data/types";
 import type { Draft } from "../src/lib/store/types";
 import { lectureProfessorTerm } from "../src/lib/store/testing/lectureProfessors";
 import { coursePanelTerm } from "./fixtures/coursePanel";
+import { openCalendarChoices } from "./fixtures/openCalendarChoices";
 
 const source: TermFile = JSON.parse(readFileSync(path.join(__dirname, "../public/data/2027-C.json"), "utf8"));
 const key = "goatplan:draft:v1:2027-C";
@@ -139,7 +140,7 @@ test("lecture filtering keeps linked labs and discussions, supports alternatives
   await expect(details(page).getByRole("heading", { name: "Lecture CL01", exact: true })).toBeVisible();
   const currentLab = await details(page).getByRole("heading", { name: /^Lab CX/ }).innerText();
   const otherLab = currentLab === "Lab CX01" ? "CX02" : "CX01";
-  await details(page).getByRole("button", { name: "View other section choices" }).click();
+  await openCalendarChoices(page, /^AE 2320 CX/);
   const sheet = page.getByRole("dialog", { name: "Choose a section" });
   await expect(sheet.getByRole("radio", { name: /CL03|CL04|CL05|CL06|CX03/ })).toHaveCount(0);
   await screenshots(page, "lecture-choices");
@@ -151,7 +152,7 @@ test("lecture filtering keeps linked labs and discussions, supports alternatives
   await expect(details(page).getByRole("heading", { name: `Lab ${otherLab}`, exact: true })).toBeVisible();
   await expect(details(page).getByRole("heading", { name: "Lecture CL01", exact: true })).toBeVisible();
 
-  await details(page).getByRole("button", { name: "View other section choices" }).click();
+  await openCalendarChoices(page, /^AE 2320 CX/);
   await sheet.getByRole("radio", { name: /CL02.*CX04/ }).focus();
   await page.keyboard.press("Space");
   await sheet.getByRole("button", { name: "Pick CL02 · CX04", exact: true }).click();
@@ -179,7 +180,7 @@ test("a course without lectures omits the professor filter and retains individua
   await open(page, { courses: ["AE 2410"] }, lectureProfessorTerm());
   await expect(picker(page)).toHaveCount(0);
   await expect(details(page).getByRole("heading", { name: "Seminar S01", exact: true })).toBeVisible();
-  await details(page).getByRole("button", { name: "View other seminar choices" }).click();
+  await openCalendarChoices(page, /^AE 2410 S01,/);
   const sheet = page.getByRole("dialog", { name: "Choose a seminar" });
   await sheet.getByRole("button", { name: "Pick S02", exact: true }).focus();
   await page.keyboard.press("Enter");

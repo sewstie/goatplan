@@ -10,6 +10,7 @@ import { ChooseAlternativeSheet } from "./ChooseAlternativeSheet";
 import { CourseDetailsPanel } from "./CourseDetailsPanel";
 import { polyfillDialog, startTestPlanner, waitForSolve } from "./testing/plannerStore";
 import { orbitalMechanics } from "./testing/sections";
+import { ScheduleView } from "@/components/schedule/ScheduleView";
 
 vi.mock("@/lib/store", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/store")>()),
@@ -100,8 +101,16 @@ function renderPanelAndSheet() {
     <>
       <CourseDetailsPanel />
       <ChooseAlternativeSheet />
+      <ScheduleView />
     </>,
   );
+}
+
+async function openCalendarChoices() {
+  const block = screen.getByRole("button", { name: /^AE 2320 CX01,/ });
+  await userEvent.click(block);
+  await userEvent.click(block);
+  return block;
 }
 
 describe("CourseDetailsPanel", () => {
@@ -303,8 +312,7 @@ describe("ChooseAlternativeSheet", () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] }, { term: termWithSameTimeLabs() });
     renderPanelAndSheet();
 
-    const opener = screen.getByRole("button", { name: "View other lab choices" });
-    await userEvent.click(opener);
+    await openCalendarChoices();
     const sheet = screen.getByRole("dialog", { name: "Choose a lab" });
     expect(within(sheet).getByText(/fit around the rest of your schedule/)).toHaveFocus();
     expect(within(sheet).getByRole("button", { name: "Close" })).not.toHaveFocus();
@@ -320,14 +328,14 @@ describe("ChooseAlternativeSheet", () => {
     expect(store.getState().solveStatus).toBe("done");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Lab CX02" })).toBeInTheDocument();
-    expect(opener).toHaveFocus();
+    expect(screen.getByRole("button", { name: /^AE 2320 CX02,/ })).toHaveFocus();
   });
 
   it("suggests the most open seats, and picks the row chosen instead", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] }, { term: termWithThreeLabs(), solve: threeSameTimeLabs });
     renderPanelAndSheet();
 
-    await userEvent.click(screen.getByRole("button", { name: "View other lab choices" }));
+    await openCalendarChoices();
     const sheet = screen.getByRole("dialog", { name: "Choose a lab" });
     expect(within(sheet).getByRole("button", { name: "Pick CX03" })).toBeInTheDocument();
 
@@ -346,7 +354,7 @@ describe("ChooseAlternativeSheet", () => {
     );
     renderPanelAndSheet();
 
-    await userEvent.click(screen.getByRole("button", { name: "View other lab choices" }));
+    await openCalendarChoices();
     const sheet = screen.getByRole("dialog", { name: "Choose a lab" });
     expect(within(sheet).getByText(/your lab now/).parentElement?.nextElementSibling).toHaveTextContent(
       /^Thu · 2:00 PM–2:50 PM$/,
@@ -370,7 +378,7 @@ describe("ChooseAlternativeSheet", () => {
     );
     renderPanelAndSheet();
 
-    await userEvent.click(screen.getByRole("button", { name: "View other lab choices" }));
+    await openCalendarChoices();
     await userEvent.click(within(screen.getByRole("dialog")).getByRole("radio", { name: /CX02/ }));
     await userEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Pick CX02" }));
 
@@ -383,7 +391,7 @@ describe("ChooseAlternativeSheet", () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] }, { term: termWithSameTimeLabs() });
     renderPanelAndSheet();
 
-    await userEvent.click(screen.getByRole("button", { name: "View other lab choices" }));
+    await openCalendarChoices();
     await userEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Close" }));
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();

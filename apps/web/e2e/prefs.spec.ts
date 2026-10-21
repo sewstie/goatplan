@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { openCalendarChoices } from "./fixtures/openCalendarChoices";
 
 const screenshotDir = "e2e/screenshots";
 const DRAFT_KEY = "goatplan:draft:v1:2027-C";
@@ -188,7 +189,7 @@ test("the sheet swaps a lab for one at the same time", async ({ page }) => {
   const before = (await shownLab.textContent())!.replace("Lab ", "");
   const other = before === "CX02" ? "CX10" : "CX02";
 
-  await panel.getByRole("button", { name: "View other lab choices" }).click();
+  await openCalendarChoices(page, /^CH 1010 CX/);
   const sheet = page.getByRole("dialog", { name: "Choose a lab" });
   const group = sheet.getByRole("group", { name: "Other lab choices" });
   await expect(group.getByText(`${before}, your lab now`)).toBeAttached();
@@ -199,7 +200,7 @@ test("the sheet swaps a lab for one at the same time", async ({ page }) => {
   await sheet.getByRole("button", { name: `Pick ${other}` }).click();
   await expect(sheet).toBeHidden();
   await expect(panel.getByRole("heading", { name: `Lab ${other}` })).toBeVisible();
-  await expect(panel.getByRole("button", { name: "View other lab choices" })).toBeFocused();
+  await expect(page.getByRole("button", { name: new RegExp(`^CH 1010 ${other},`) }).first()).toBeFocused();
 });
 
 test("choosing a lab at another time switches schedules, or locks it when no schedule has it", async ({ page }) => {
@@ -207,7 +208,7 @@ test("choosing a lab at another time switches schedules, or locks it when no sch
   const panel = details(page);
   const lab = () => panel.getByRole("heading", { name: /^Lab CX0\d$/ });
 
-  await panel.getByRole("button", { name: "View other lab choices" }).click();
+  await openCalendarChoices(page, /^AE 2320 CX/);
   const sheet = page.getByRole("dialog", { name: "Choose a lab" });
   await expect(sheet.getByText("These labs fit around the rest of your schedule", { exact: false })).toBeFocused();
   const pick = sheet.getByRole("button", { name: /^Pick CX0\d$/ });
@@ -220,7 +221,7 @@ test("choosing a lab at another time switches schedules, or locks it when no sch
 
   await panel.getByRole("button", { name: `Lock Lab ${first}` }).click();
   await waitForSchedules(page);
-  await panel.getByRole("button", { name: "View other lab choices" }).click();
+  await openCalendarChoices(page, /^AE 2320 CX/);
   const second = (await pick.textContent())!.replace("Pick ", "");
   await pick.click();
   await waitForSchedules(page);
@@ -270,7 +271,7 @@ for (const [width, height] of [
   test(`lab sheet screenshot at ${width}`, async ({ page }) => {
     await page.setViewportSize({ width, height });
     await openPlanner(page, regular);
-    await details(page).getByRole("button", { name: "View other lab choices" }).click();
+    await openCalendarChoices(page, /^AE 2320 CX/);
     await expect(page.getByRole("dialog", { name: "Choose a lab" })).toBeVisible();
     await page.screenshot({ path: `${screenshotDir}/prefs-sheet-${width}.png`, animations: "disabled" });
   });

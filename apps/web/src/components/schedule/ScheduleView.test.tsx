@@ -76,7 +76,7 @@ describe("ScheduleView", () => {
     expect(document.querySelector("[role=tooltip]")).toBeNull();
   });
 
-  it("selects a section's blocks and its course on click, and a second click clears the blocks", async () => {
+  it("selects a section's blocks and keeps them selected when opening its calendar choices", async () => {
     setPlanner();
     const user = userEvent.setup();
     renderInCard();
@@ -87,7 +87,7 @@ describe("ScheduleView", () => {
     expect(getPlannerStore().getState()).toMatchObject({ selectedCourse: "AE 2320", selectedSection: "AE 2320-CX01" });
     expect(screen.getByRole("button", { name: /^AE 2320 CL01, .*Monday/ })).toHaveAttribute("aria-pressed", "false");
     await user.click(lab);
-    expect(lab).toHaveAttribute("aria-pressed", "false");
+    expect(lab).toHaveAttribute("aria-pressed", "true");
     expect(getPlannerStore().getState().selectedCourse).toBe("AE 2320");
 
     await user.click(screen.getByRole("button", { name: /^AE 2410 C01, .*Monday/ }));

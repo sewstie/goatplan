@@ -7,11 +7,10 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { uniqueInstructors } from "@/lib/data";
 import type { Course } from "@/lib/data/types";
 import { selectChosenSections, usePlanner } from "@/lib/store";
-import { OtherChoicesButton } from "./OtherChoicesButton";
 import { ProfessorPicker } from "./ProfessorPicker";
 import { SectionsInSchedule } from "./SectionsInSchedule";
 import { hasSetTime, sectionsById } from "./sectionDetails";
-import { useSectionChoices } from "./useSectionChoices";
+import { useSectionSteps } from "./useSectionSteps";
 
 const NONE: string[] = [];
 
@@ -27,7 +26,7 @@ export function CourseDetails({ course }: { course: Course }) {
 
   // With no schedule for this course, locked sections stay visible so they can be unlocked.
   const sections = sectionsById(course, chosen.length > 0 ? chosen : locked);
-  const choices = useSectionChoices(course);
+  const steps = useSectionSteps(course);
   const shownInstructors = uniqueInstructors(sections);
   // Cards shown only because they're locked disappear on Unlock, so focus goes to the heading.
   const focusHeading = chosen.length === 0 ? () => headingRef.current?.focus() : undefined;
@@ -57,9 +56,7 @@ export function CourseDetails({ course }: { course: Course }) {
         <p className="pt-7 text-10 leading-17-5 text-ink-muted">No schedule fits with this course right now.</p>
       )}
 
-      <SectionsInSchedule course={course} sections={sections} locked={locked} waitlist={waitlist} onUnlocked={focusHeading} />
-
-      {choices && <OtherChoicesButton courseCode={code} kind={choices.kind} />}
+      <SectionsInSchedule course={course} sections={sections} locked={locked} waitlist={waitlist} onUnlocked={focusHeading} labs={steps.labs} />
 
       {waitlist && (
         <>
