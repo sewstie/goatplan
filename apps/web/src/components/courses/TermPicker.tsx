@@ -22,6 +22,7 @@ export function TermPicker() {
   return (
     <div className="flex shrink-0 flex-col pb-15">
       <Select
+        id="tutorial-term"
         label="Term"
         options={options}
         value={current?.id ?? ""}

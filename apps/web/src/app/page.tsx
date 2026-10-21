@@ -13,10 +13,12 @@ import { AppShell } from "@/components/shell/AppShell";
 import { PlannerBootstrap } from "@/components/shell/PlannerBootstrap";
 import { Sidebar } from "@/components/shell/Sidebar";
 import { WorkspaceHeader } from "@/components/shell/WorkspaceHeader";
+import { FirstPlanTutorial } from "@/components/tutorial/FirstPlanTutorial";
 
 export default function PlannerPage() {
   return (
     <>
+      <FirstPlanTutorial />
       <AppShell
         sidebar={
           <Sidebar>
@@ -28,7 +30,11 @@ export default function PlannerPage() {
           <WorkspaceHeader
             title="Schedule planner"
             breadcrumbs={<TermBreadcrumbs />}
-            titleAside={<ScheduleSwitcher />}
+            titleAside={
+              <div id="tutorial-schedules" role="region" aria-label="Schedule browser" tabIndex={-1} className="rounded-control">
+                <ScheduleSwitcher />
+              </div>
+            }
             subtitle={<ScheduleSummary />}
             actions={<PlanActions />}
           />

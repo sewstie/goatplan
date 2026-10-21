@@ -16,6 +16,7 @@ type SearchBoxProps = {
 export function SearchBox({ value, onChange, onKeyDown, disabled, resultsId, inputRef }: SearchBoxProps) {
   return (
     <TextInput
+      id="tutorial-search"
       ref={inputRef}
       type="search"
       label="Search courses"
