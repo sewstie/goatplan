@@ -169,7 +169,12 @@ schedule that can show given sections), `scheduleKey`, `storedDraft(termId)`
 - The planner page mounts a four-step guide on the first visit, after client
   initialization. It uses the same term, course search, preferences, and schedule
   browser. Availability is optional. Its summary reflects the current settings,
-  and guidance only focuses the existing controls. A no-match handoff keeps
+  and guidance uses the existing controls. The optional professor tip selects
+  a planned course with a lecture picker without changing its professor.
+  Results guidance follows the selected course's displayed sections, including
+  picked alternatives, and focuses their real details. It explains saving and
+  the existing Sections to register copy and browser-print path. No section
+  targets appear while solving or without a usable schedule. A no-match handoff keeps
   restrictions until the student explicitly changes them.
   Tutorial status uses `goatplan:tutorial:v1`, outside drafts and saved plans.
   A restored plan with courses bypasses the guide. Skip, Close, and Finish keep

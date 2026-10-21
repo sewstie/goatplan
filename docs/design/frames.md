@@ -6,7 +6,9 @@
 
 The guide follows [tutorial.md](screens/tutorial.md). It has four steps:
 choose a term, add courses, optionally set availability, and browse schedules.
-Professor guidance is reserved for a later slice.
+The course step includes optional lecture professor guidance. The results step
+points to the displayed course's section identifiers and explains the existing
+saved-plan path to Sections to register.
 
 ## New plans
 

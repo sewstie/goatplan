@@ -51,7 +51,7 @@ export function SectionChoiceCard({ course, section, locked, onUnlocked, problem
   return (
     <Card as="article" variant={problem ? "problem" : "outlined"} className="flex flex-col gap-8 px-10 pt-15 pb-10">
       <div className="flex items-center justify-between gap-8">
-        <h4 className="text-10 leading-14-5 font-700 text-ink">{heading}</h4>
+        <h4 id={`tutorial-section-${encodeURIComponent(section.id)}`} tabIndex={-1} className="rounded-badge text-10 leading-14-5 font-700 text-ink">{heading}</h4>
         {/* As in the design, the control is taller than the heading and doesn't push the rows down. */}
         <div className="-my-3 flex">{control}</div>
       </div>
