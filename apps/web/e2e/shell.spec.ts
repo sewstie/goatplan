@@ -2,6 +2,10 @@ import { expect, test, type Locator } from "@playwright/test";
 
 const screenshotDir = "e2e/screenshots";
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("goatplan:tutorial:v1", "dismissed"));
+});
+
 // Boxes of the shell regions in the Figma frame "div.app" (1680 × 800), see docs/design/screens/div.app.md.
 const figma = {
   sidebar: { x: 14, y: 14, width: 224, height: 772 },

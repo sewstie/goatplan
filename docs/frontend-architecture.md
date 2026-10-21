@@ -24,6 +24,7 @@ app/
   plans/                plans    /plans, "Sections to register"
   dev/                  lead     /dev/ui and /dev/engine; 404 in production
 components/
+  tutorial/             lead     first-visit guide and its browser-local persistence
   ui/                   lead     primitives: Button, ButtonLink, IconButton, Badge, Chip, Toggle,
                                  Select, TextInput, Card, Dialog, Sheet, Tooltip; course colors
   shell/                lead     AppShell, Sidebar, WorkspaceHeader, Placeholder, PlannerBootstrap
@@ -159,6 +160,13 @@ schedule that can show given sections), `scheduleKey`, `storedDraft(termId)`
 `DEFAULT_PREFERENCES`, `MAX_SCHEDULES`.
 
 ### How it behaves
+
+- The planner page mounts a three-step guide on the first visit, after client
+  initialization. It uses the same term, course search, and schedule browser.
+  Tutorial status uses `goatplan:tutorial:v1`, outside drafts and saved plans.
+  A restored plan with courses bypasses the guide. Skip, Close, and Finish keep
+  the draft. Failed storage writes leave a visible reminder that the guide may
+  return on a later visit. See [the guide reference](design/screens/tutorial.md).
 
 - **Solving.** Every change to the plan waits 200 ms (`SOLVE_DELAY_MS`) for
   more changes, then sends one request built by the pure `buildRequest(state)`.

@@ -2,6 +2,12 @@
 
 [GoatPlan in Figma](https://www.figma.com/design/wKCRpXUKVwygCL5vn7F05W/GoatPlan?node-id=0-1&p=f&t=oGsmlalhHmS6qorE-0)
 
+## First plan guide
+
+The initial guide follows [tutorial.md](screens/tutorial.md). It has three steps:
+choose a term, add courses, and browse schedules. Availability and professor
+guidance are reserved for later slices.
+
 ## New plans
 
 A new draft shows Any time in the Starts after control, no blocked times, and
