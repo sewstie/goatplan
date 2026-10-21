@@ -8,6 +8,8 @@ import { usePlanner, usePlannerStore } from "@/lib/store";
 import { browserStorage, type DraftStorage } from "@/lib/store/draft";
 import { TUTORIAL_STEPS } from "./tutorialSteps";
 import { TutorialAvailability } from "./TutorialAvailability";
+import { TutorialProfessor } from "./TutorialProfessor";
+import { TutorialSections } from "./TutorialSections";
 import { focusTutorialTarget } from "./focusTutorialTarget";
 import { rememberTutorial, tutorialFinished, type TutorialOutcome } from "./tutorialStorage";
 
@@ -70,8 +72,10 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
         <div className="max-w-630">
           <h2 ref={heading} tabIndex={-1} className="w-fit rounded-badge text-17 font-700">{current.title}</h2>
           <p className="pt-5 text-12 text-ink-soft">{current.description}</p>
+          {current.id === "courses" && <TutorialProfessor />}
           {current.id === "availability" && <TutorialAvailability />}
           {current.id === "schedules" && noMatches && <p role="status" className="pt-8 text-12 text-warning-ink">No schedule fits your current choices. Your restrictions are still in place. Use the explanation below and change a setting when you’re ready.</p>}
+          {current.id === "schedules" && <TutorialSections />}
           {!canAdvance && <p id="tutorial-validation" role="status" className="pt-5 text-11 text-ink-muted">{validation}</p>}
         </div>
         <div className="flex flex-wrap items-center gap-8">

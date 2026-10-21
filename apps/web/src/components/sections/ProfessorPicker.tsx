@@ -18,6 +18,7 @@ export function ProfessorPicker({ course }: { course: Course }) {
   return (
     <div className="mt-12 flex flex-col gap-4">
       <Select
+        id="tutorial-professor"
         variant="box"
         label="Professor"
         hideLabel={false}

@@ -77,3 +77,47 @@ validation copy, alongside the existing loading placeholders.
 `tutorial-availability-{fresh,configured,optional,no-match,completed}-1440.png`
 and the corresponding `-834.png` references show the defaults, actual settings,
 unchanged advancement, no-match handoff, and completion with retained choices.
+
+## Professor and section guidance
+
+Keep four steps. Add professor guidance below the course explanation, in the
+same column and text sizes as the availability guidance. Use the selected
+course if it has lectures with named instructors. Otherwise use the first
+planned course with that control. Omit the tip when no planned course has it.
+
+Show “Choose a lecture professor if you want” as a 12 px heading. Under it,
+show “For {course}, Any professor is the default. Choosing a name keeps their
+lectures; labs and discussions can have other instructors. This is optional.”
+The soft button reads “Find Professor for {course}”. It selects that existing
+planned course and focuses its real Professor selector. It never adds a course
+or chooses a professor. Back, Next, Skip, and Close keep all choices.
+
+On the results step, below the explanation and any no-match note, show
+“Section details for {course}” as a 12 px heading when the displayed schedule
+has sections for the selected course. Show “These are the sections in your
+displayed schedule. Select another class or browse schedules to compare.”
+Add soft buttons labelled “Find {section heading}”, for example
+“Find Lecture CL01”, “Find Discussion CD01”, and “Find Lab CX02”. Use the
+actual section headings from the existing details panel. Each button focuses
+and scrolls to that section's heading in the real panel. Never show a button
+for a missing component. Hide these targets while solving, on errors, during
+an incomplete search, and when no schedule or selected course is available.
+Finish stays enabled in all of these states.
+
+Always show this results handoff copy: “To keep a schedule, use Save schedule.
+Then open Saved plans → Sections to register for its section identifiers and
+Copy section list. Use your browser’s Print command to print the list. Register
+in Workday. You can finish this guide without saving.” Keep the existing
+result-limit and incomplete-search messages visible. The guide describes only
+the returned schedules.
+
+Extra guidance uses an 8 px top gap and wrapping buttons with an 8 px gap.
+At 834 px it remains in normal document flow. Focusing a target scrolls the
+page to reveal it, including the details panel below the timetable. Section
+headings have visible keyboard focus. Finish returns focus to the schedule
+browser as before.
+
+References are `tutorial-professor-{default,chosen,no-lectures}-1440.png` and
+the corresponding `-834.png` files, plus `tutorial-details-1440.png` and
+`tutorial-details-834.png`. Compare the real picker and section cards against
+`div.app-3.png`; the new guide follows the layout above.
