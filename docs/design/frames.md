@@ -16,3 +16,14 @@ configured plans.
 
 Reloading a draft, opening a saved plan, saving, or saving as a new plan keeps
 the current settings. A term without a stored draft uses the new defaults.
+
+## Lecture professors
+
+Keep the Professor label, select styling, and Rate My Professors link from
+`screens/div.app-3.png`. Any professor is the default. List instructors from
+lecture sections only, including co-teachers. Hide the filter when the course
+has no lectures. Individual section choices stay available.
+
+Selecting a professor keeps all lectures they teach. Labs and discussions can
+have other instructors. The same rule applies to the section-choice sheet and
+diagnosis previews. Clearing the choice keeps the current availability settings.

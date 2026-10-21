@@ -13,6 +13,14 @@ export function hasInstructor(section: Pick<Section, "instructors">, name: strin
   return section.instructors.some((instructor) => instructor.trim().toLowerCase() === key);
 }
 
+export function lecturesByProfessor(sections: readonly Section[], name: string): Section[] {
+  return sections.filter((section) => section.type === "lecture" && hasInstructor(section, name));
+}
+
+export function lectureInstructors(sections: readonly Section[]): string[] {
+  return uniqueInstructors(sections.filter((section) => section.type === "lecture"));
+}
+
 /** Every instructor once, in the order they first appear, ignoring blanks and case. */
 export function uniqueInstructors(sections: readonly Pick<Section, "instructors">[]): string[] {
   const seen = new Set<string>();

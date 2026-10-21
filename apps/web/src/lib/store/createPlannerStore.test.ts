@@ -7,6 +7,7 @@ import { draftKey, LAST_TERM_KEY, readDraft } from "./draft";
 import { selectChosenSections } from "./selectors";
 import { SORT_PRESETS } from "./sortPresets";
 import { loaded, MemoryStorage, solved, termFile, termSummary } from "./testing/fixtures";
+import { lectureProfessorTerm } from "./testing/lectureProfessors";
 
 const NOW = new Date("2026-10-17T12:00:00Z");
 
@@ -248,7 +249,7 @@ describe("drafts", () => {
       ...preferences,
       blocked: [{ day: "Fri", start: 840, end: 960 }],
       locked: { "AE 2320": ["AE 2320-CX02"] },
-      anyOf: { "AE 2320": ["AE 2320-CL01", "AE 2320-CX01", "AE 2320-CX02"] },
+      anyOf: { "AE 2320": ["AE 2320-CL01"] },
     });
   });
 
@@ -543,6 +544,48 @@ describe("selected course", () => {
 });
 
 describe("professor preferences", () => {
+  it("ignores instructors assigned only to labs, discussions, or a course without lectures", async () => {
+    const { state, deps } = setup();
+    deps.loadTerm.mockResolvedValue(lectureProfessorTerm());
+    await state().init();
+    state().addCourse("AE 2320");
+    state().addCourse("AE 2410");
+    state().setProfessor("AE 2320", "Lab Tutor");
+    state().setProfessor("AE 2320", "Discussion Tutor");
+    state().setProfessor("AE 2410", "Seminar Tutor");
+    expect(state().professorByCourse).toEqual({});
+  });
+
+  it.each(["chooseAlternative", "pickOption"] as const)("%s cannot bypass the lecture professor through an old same-time alternative", async (action) => {
+    const { state, engine, deps } = setup();
+    const term = lectureProfessorTerm();
+    const course = term.courses[0];
+    course.sections.find((section) => section.code === "CL03")!.meetings = course.sections[0].meetings;
+    course.sections.find((section) => section.code === "CX03")!.meetings = course.sections.find((section) => section.code === "CX01")!.meetings;
+    deps.loadTerm.mockResolvedValue(term);
+    const current = ["AE 2320-CL01", "AE 2320-CX01", "AE 2320-CD01"];
+    const trap = ["AE 2320-CL03", "AE 2320-CX03", "AE 2320-CD01"];
+    const otherLab = ["AE 2320-CL01", "AE 2320-CX02", "AE 2320-CD01"];
+    engine.solve.mockImplementation(async (request) => {
+      const answer = solved(request);
+      if (!answer.ok) return answer;
+      return { ...answer, schedules: [{ ...answer.schedules[0], courses: [{
+        code: "AE 2320", sections: current, alternatives: [current, trap, otherLab], openSeats: 30,
+      }] }] };
+    });
+    await state().init();
+    state().addCourse("AE 2320");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    state().setProfessor("AE 2320", "Ye Lu");
+
+    state()[action]("AE 2320", trap);
+    expect(selectChosenSections(state())).toEqual({ "AE 2320": current });
+    expect(state().locks).toEqual({});
+
+    state()[action]("AE 2320", otherLab);
+    expect(selectChosenSections(state())).toEqual({ "AE 2320": otherLab });
+  });
+
   it("re-solves, keeps matching locks and removes only locks taught by someone else", async () => {
     const { state, engine, storage } = setup();
     await state().init();
@@ -563,7 +606,7 @@ describe("professor preferences", () => {
     expect(JSON.parse(storage.getItem(draftKey("2027-C"))!)).not.toHaveProperty("professorNotice");
     await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
     expect(engine.solve).toHaveBeenCalledOnce();
-    expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"] });
+    expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01"] });
   });
 
   it("restores each term's choice, clears it through the diagnosis fix and removes it with the course", async () => {
@@ -627,7 +670,7 @@ describe("openPlan", () => {
       ...plan.preferences,
       blocked: [{ day: "Fri", start: 840, end: 960 }],
       locked: plan.locks,
-      anyOf: { "AE 2320": ["AE 2320-CL01", "AE 2320-CX01", "AE 2320-CX02"] },
+      anyOf: { "AE 2320": ["AE 2320-CL01"] },
     });
     expect(readDraft(storage, "2027-D")).toMatchObject(plan);
     expect(readDraft(storage, "2027-C")?.courses).toEqual(["AB 1533"]);

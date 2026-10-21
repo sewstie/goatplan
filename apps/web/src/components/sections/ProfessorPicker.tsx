@@ -2,7 +2,7 @@
 
 import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
 import { Select } from "@/components/ui/Select";
-import { rateMyProfessorsUrl, uniqueInstructors, type Course } from "@/lib/data";
+import { lectureInstructors, rateMyProfessorsUrl, type Course } from "@/lib/data";
 import { usePlanner } from "@/lib/store";
 
 export function ProfessorPicker({ course }: { course: Course }) {
@@ -10,8 +10,8 @@ export function ProfessorPicker({ course }: { course: Course }) {
   const setProfessor = usePlanner((state) => state.setProfessor);
   const notice = usePlanner((state) => state.professorNotice?.course === course.code ? state.professorNotice : null);
   const ready = usePlanner((state) => state.termStatus === "ready");
-  const instructors = uniqueInstructors(course.sections);
-  if (instructors.length === 0 && !name) return null;
+  const instructors = lectureInstructors(course.sections);
+  if (!course.sections.some((section) => section.type === "lecture") || (instructors.length === 0 && !name)) return null;
   const options = [...instructors];
   if (name && !options.some((instructor) => instructor.toLowerCase() === name.toLowerCase())) options.push(name);
   const value = options.find((instructor) => instructor.toLowerCase() === name?.toLowerCase()) ?? "";

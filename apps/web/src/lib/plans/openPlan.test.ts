@@ -82,7 +82,7 @@ describe("openPlanInPlanner", () => {
       "AE 2410": ["AE 2410-C01"],
       "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"],
     });
-    expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01", "AE 2320-CX01", "AE 2320-CX02"] });
+    expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01"] });
   });
 
   it("pages to the saved schedule when it isn't the first one", async () => {

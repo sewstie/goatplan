@@ -1,6 +1,6 @@
 import { ENGINE_API_VERSION, type SolveRequest } from "@/lib/engine/types";
 import type { TermFile } from "@/lib/data/types";
-import { hasInstructor } from "@/lib/data/instructors";
+import { lecturesByProfessor } from "@/lib/data/instructors";
 import { SORT_PRESETS } from "./sortPresets";
 import type { Draft } from "./types";
 
@@ -26,7 +26,7 @@ export function buildRequest(plan: Pick<Draft, "courses" | "preferences" | "lock
     const name = plan.professorByCourse?.[code];
     if (name) {
       const sections = plan.term?.courses.find((course) => course.code === code)?.sections ?? [];
-      anyOf[code] = [...new Set(sections.filter((section) => hasInstructor(section, name)).map((section) => section.id))];
+      anyOf[code] = [...new Set(lecturesByProfessor(sections, name).map((section) => section.id))];
     }
   }
 

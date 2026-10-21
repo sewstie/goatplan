@@ -8,18 +8,20 @@ import { termFile } from "./testing/fixtures";
 const plan = (changes: Partial<Draft>): Draft => ({ ...emptyDraft(), ...changes });
 
 describe("buildRequest", () => {
-  it("allows every section taught by the professor, including two lectures and co-teaching", () => {
+  it("allows every matching lecture and co-taught lecture without allowing a matching lab", () => {
     const term = termFile("2027-C");
     const course = term.courses[0];
     course.sections[0].instructors = ["Ye Lu"];
     course.sections[1].instructors = ["Someone Else"];
     course.sections[2].instructors = ["Alex Smith", "YE LU"];
     course.sections.push({ ...course.sections[0], id: "AE 2320-CL02", code: "CL02", instructors: [" ye lu "] });
+    course.sections.push({ ...course.sections[0], id: "AE 2320-CL03", code: "CL03", instructors: ["Alex Smith", " YE LU "] });
+    course.sections.push({ ...course.sections[0], id: "AE 2320-CL04", code: "CL04", instructors: ["Someone Else"] });
     const request = buildRequest({
       ...plan({ courses: ["AE 2320", "AE 2410"], professorByCourse: { "AE 2320": "yE lU", "AE 2410": null, "AB 1533": "Ye Lu" } }),
       term,
     });
-    expect(request?.preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01", "AE 2320-CX02", "AE 2320-CL02"] });
+    expect(request?.preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01", "AE 2320-CL02", "AE 2320-CL03"] });
   });
 
   it("does not treat partial names as matches or silently drop an unavailable professor", () => {
