@@ -140,16 +140,16 @@ namespace goatplan {
             }
         }
 
-        void readLocked(const json& locked, const Term& term,
-                        std::unordered_map<std::string, std::vector<std::string>>& target) {
-            expectObject(locked, "preferences.locked");
-            for (const auto& entry : locked.items()) {
+        void readSectionRules(const json& rules, const Term& term, const std::string& parent,
+                              std::unordered_map<std::string, std::vector<std::string>>& target) {
+            expectObject(rules, parent);
+            for (const auto& entry : rules.items()) {
                 const std::string& code = entry.key();
                 const Course* course = term.findCourse(code);
                 if (course == nullptr) {
                     throw unknownCourse(code, term);
                 }
-                const std::string field = "preferences.locked[\"" + code + "\"]";
+                const std::string field = parent + "[\"" + code + "\"]";
                 const json& ids = expectList(entry.value(), field);
                 std::vector<std::string>& kept = target[code];
                 for (std::size_t i = 0; i < ids.size(); ++i) {
@@ -178,7 +178,10 @@ namespace goatplan {
                 readBlocked(*blocked, prefs.blocked);
             }
             if (const json* locked = find(value, "locked")) {
-                readLocked(*locked, term, prefs.locked);
+                readSectionRules(*locked, term, "preferences.locked", prefs.locked);
+            }
+            if (const json* anyOf = find(value, "anyOf")) {
+                readSectionRules(*anyOf, term, "preferences.anyOf", prefs.anyOf);
             }
             return prefs;
         }
@@ -284,6 +287,7 @@ namespace goatplan {
                 case FixKind::ClearBlocked: return "clearBlocked";
                 case FixKind::AllowFull: return "allowFull";
                 case FixKind::Unlock: return "unlock";
+                case FixKind::ClearAnyOf: return "clearAnyOf";
                 case FixKind::DropCourse: return "dropCourse";
             }
             return "";
@@ -300,6 +304,7 @@ namespace goatplan {
                     {"optionsInData", empty.optionsInData},
                     {"removed", {
                         {"notLocked", removed(FilterReason::NotLocked)},
+                        {"notAnyOf", removed(FilterReason::NotAnyOf)},
                         {"notOpen", removed(FilterReason::NotOpen)},
                         {"startsTooEarly", removed(FilterReason::StartsTooEarly)},
                         {"blocked", removed(FilterReason::Blocked)},
@@ -321,7 +326,8 @@ namespace goatplan {
                 if (fix.kind == FixKind::RelaxStartsAfter) {
                     item["startsAfter"] = std::max(fix.startsAfter, 0);
                 }
-                if (fix.kind == FixKind::Unlock || fix.kind == FixKind::DropCourse) {
+                if (fix.kind == FixKind::Unlock || fix.kind == FixKind::ClearAnyOf ||
+                    fix.kind == FixKind::DropCourse) {
                     item["course"] = codes.at(fix.course);
                 }
                 item["schedules"] = fix.schedules;

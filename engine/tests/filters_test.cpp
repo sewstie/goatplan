@@ -209,6 +209,48 @@ TEST(Filters, KeepsOnlyOptionsWithEveryLockedSection) {
     EXPECT_EQ(incompatible.removed[reasonIndex(FilterReason::NotLocked)], 3);
 }
 
+TEST(Filters, KeepsOptionsWithAnySelectedSection) {
+    const Term term = sampleTerm();
+    Preferences prefs;
+    prefs.anyOf["TEST 100"] = {"TEST-LAB-A", "TEST-LAB-C"};
+    EXPECT_EQ(choicesFor(term, prefs).options, std::vector<std::size_t>({0, 2}));
+}
+
+TEST(Filters, EmptyAnyOfListKeepsEveryOption) {
+    const Term term = sampleTerm();
+    Preferences prefs;
+    prefs.anyOf["TEST 100"] = {};
+    const CourseChoices choice = choicesFor(term, prefs);
+    EXPECT_EQ(choice.options, std::vector<std::size_t>({0, 1, 2}));
+    EXPECT_EQ(removedTotal(choice), 0);
+}
+
+TEST(Filters, UnknownAnyOfCoursesAndSectionsThrow) {
+    const Term term = sampleTerm();
+    Preferences prefs;
+    prefs.anyOf["TEST 100"] = {"TEST-LAB-A", "MISSING-SECTION"};
+    EXPECT_THROW((void)choicesFor(term, prefs), std::invalid_argument);
+
+    prefs.anyOf.clear();
+    prefs.anyOf["MISSING"] = {};
+    EXPECT_THROW((void)choicesFor(term, prefs), std::invalid_argument);
+}
+
+TEST(Filters, CountsAnyOfRejectionsAfterLocksAndBeforeOtherRules) {
+    const Term term = sampleTerm();
+    Preferences prefs;
+    prefs.locked["TEST 100"] = {"TEST-LAB-B"};
+    prefs.anyOf["TEST 100"] = {"TEST-LAB-A"};
+    prefs.onlyOpen = true;
+    prefs.startsAfter = 600;
+    prefs.blocked.addRange(0, 540, 590);
+    const CourseChoices choice = choicesFor(term, prefs);
+    EXPECT_TRUE(choice.options.empty());
+    EXPECT_EQ(choice.removed[reasonIndex(FilterReason::NotLocked)], 2);
+    EXPECT_EQ(choice.removed[reasonIndex(FilterReason::NotAnyOf)], 1);
+    EXPECT_EQ(removedTotal(choice), 3);
+}
+
 TEST(Filters, CountsOnlyTheFirstReasonAnOptionFails) {
     const Term term = sampleTerm();
     Preferences prefs;

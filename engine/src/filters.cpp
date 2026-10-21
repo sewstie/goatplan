@@ -14,6 +14,11 @@ namespace {
       }
       return true;
   }
+  bool containsAnyOf(const CourseOption& option, const std::vector<std::size_t>& selected) {
+      return selected.empty() || std::any_of(selected.begin(), selected.end(), [&](std::size_t index) {
+          return std::find(option.begin(), option.end(), index) != option.end();
+      });
+  }
   bool allSectionsOpen(const Course& course, const CourseOption& option) {
       for (std::size_t index : option) {
           if (course.sections.at(index).status != SectionStatus::Open) {
@@ -48,8 +53,8 @@ namespace {
       }
       return foundNumber ? smallest : -1;
   }
-  std::vector<std::size_t> resolveLocks(
-      const Course& course, const std::vector<std::string>& ids) {
+  std::vector<std::size_t> resolveSections(
+      const Course& course, const std::vector<std::string>& ids, const std::string& rule) {
       std::vector<std::size_t> positions;
       positions.reserve(ids.size());
       for (const std::string& id : ids) {
@@ -57,7 +62,7 @@ namespace {
               course.sections.begin(), course.sections.end(),
               [&](const Section& candidate) { return candidate.id == id; });
           if (section == course.sections.end()) {
-              throw std::invalid_argument(course.code + ": unknown locked section " + id);
+              throw std::invalid_argument(course.code + ": unknown " + rule + " section " + id);
           }
           positions.push_back(static_cast<std::size_t>(section - course.sections.begin()));
       }
@@ -75,11 +80,19 @@ std::vector<CourseChoices> filterOptions(
         if (course == nullptr) {
             throw std::invalid_argument("Unknown course code in locks: " + code);
         }
-        lockPositions.emplace(code, resolveLocks(*course, ids));
+        lockPositions.emplace(code, resolveSections(*course, ids, "locked"));
+    }
+    std::unordered_map<std::string, std::vector<std::size_t>> anyOfPositions;
+    for (const auto& [code, ids] : prefs.anyOf) {
+        const Course* course = term.findCourse(code);
+        if (course == nullptr) {
+            throw std::invalid_argument("Unknown course code in anyOf: " + code);
+        }
+        anyOfPositions.emplace(code, resolveSections(*course, ids, "anyOf"));
     }
     std::vector<CourseChoices> result;
     result.reserve(courseCodes.size());
-    const std::vector<std::size_t> noLocks;
+    const std::vector<std::size_t> noSections;
     for (const std::string& code : courseCodes) {
         const Course* course = term.findCourse(code);
         if (course == nullptr) {
@@ -87,7 +100,10 @@ std::vector<CourseChoices> filterOptions(
         }
         const auto foundLocks = lockPositions.find(code);
         const auto& locked = foundLocks == lockPositions.end()
-            ? noLocks : foundLocks->second;
+            ? noSections : foundLocks->second;
+        const auto foundAnyOf = anyOfPositions.find(code);
+        const auto& anyOf = foundAnyOf == anyOfPositions.end()
+            ? noSections : foundAnyOf->second;
         CourseChoices choices;
         choices.course = course;
         choices.options.reserve(course->options.size());
@@ -97,6 +113,10 @@ std::vector<CourseChoices> filterOptions(
             const CourseOption& option = course->options[i];
             if (!containsAllLocked(option, locked)) {
                 ++choices.removed[static_cast<std::size_t>(FilterReason::NotLocked)];
+                continue;
+            }
+            if (!containsAnyOf(option, anyOf)) {
+                ++choices.removed[static_cast<std::size_t>(FilterReason::NotAnyOf)];
                 continue;
             }
             if (prefs.onlyOpen && !allSectionsOpen(*course, option)) {

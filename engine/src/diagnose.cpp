@@ -114,6 +114,9 @@ namespace goatplan {
                 case FixKind::Unlock:
                     prefs.locked.erase(codes.at(fix.course));
                     break;
+                case FixKind::ClearAnyOf:
+                    prefs.anyOf.erase(codes.at(fix.course));
+                    break;
                 case FixKind::DropCourse:
                     codes.erase(std::next(codes.begin(), static_cast<std::ptrdiff_t>(fix.course)));
                     break;
@@ -175,6 +178,10 @@ namespace goatplan {
                 const auto lock = prefs.locked.find(courseCodes[c]);
                 if (lock != prefs.locked.end() && !lock->second.empty()) {
                     attempt(Fix{FixKind::Unlock, c});
+                }
+                const auto anyOf = prefs.anyOf.find(courseCodes[c]);
+                if (anyOf != prefs.anyOf.end() && !anyOf->second.empty()) {
+                    attempt(Fix{FixKind::ClearAnyOf, c});
                 }
             }
             for (std::size_t c : problemCourses(diagnosis)) {

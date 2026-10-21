@@ -18,7 +18,7 @@ struct EmptyCourse {
     bool operator==(const EmptyCourse&) const = default;
 };
 
-enum class FixKind { RelaxStartsAfter, ClearBlocked, AllowFull, Unlock, DropCourse };
+enum class FixKind { RelaxStartsAfter, ClearBlocked, AllowFull, Unlock, ClearAnyOf, DropCourse };
 
 struct Fix {
     FixKind kind;

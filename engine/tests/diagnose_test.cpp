@@ -32,6 +32,7 @@ std::uint64_t totalWith(const Term& term, std::vector<std::string> codes, Prefer
         case FixKind::ClearBlocked: prefs.blocked = WeekMask{}; break;
         case FixKind::AllowFull: prefs.onlyOpen = false; break;
         case FixKind::Unlock: prefs.locked.erase(codes.at(fix.course)); break;
+        case FixKind::ClearAnyOf: prefs.anyOf.erase(codes.at(fix.course)); break;
         case FixKind::DropCourse: codes.erase(codes.begin() + static_cast<std::ptrdiff_t>(fix.course)); break;
     }
     return solve(filterOptions(term, codes, prefs)).total;
@@ -187,6 +188,34 @@ TEST(Diagnose, SuggestsUnlockingALockedCourse) {
     EXPECT_EQ(diagnosis.clashingPairs, (Pairs{{0, 1}}));
     ASSERT_FALSE(diagnosis.fixes.empty());
     EXPECT_EQ(diagnosis.fixes[0], (Fix{FixKind::Unlock, 0, -1, 1}));
+}
+
+TEST(Diagnose, SuggestsClearingEachAnyOfRuleThatRestoresSchedules) {
+    const Term term = makeTerm({{"A", {at(Monday, 9), at(Tuesday, 9)}},
+                                {"B", {at(Monday, 9), at(Wednesday, 9)}}});
+    Preferences prefs;
+    prefs.anyOf["A"] = {"A-0"};
+    prefs.anyOf["B"] = {"B-0"};
+    const std::vector<std::string> codes{"B", "A"};
+    const Diagnosis diagnosis = diagnose(term, codes, prefs);
+    EXPECT_EQ(diagnosis.clashingPairs, (Pairs{{0, 1}}));
+    EXPECT_EQ(diagnosis.fixes, (Fixes{{FixKind::ClearAnyOf, 0, -1, 1},
+                                     {FixKind::ClearAnyOf, 1, -1, 1},
+                                     {FixKind::DropCourse, 0, -1, 1},
+                                     {FixKind::DropCourse, 1, -1, 1}}));
+    for (const Fix& fix : diagnosis.fixes) {
+        EXPECT_EQ(totalWith(term, codes, prefs, fix), fix.schedules);
+    }
+}
+
+TEST(Diagnose, ClearingEmptyOrIneffectiveAnyOfRulesIsNotSuggested) {
+    const Term term = makeTerm({{"A", {at(Monday, 9)}}, {"B", {at(Monday, 9)}}});
+    Preferences prefs;
+    prefs.anyOf["A"] = {};
+    prefs.anyOf["B"] = {"B-0"};
+    const Diagnosis diagnosis = diagnose(term, {"A", "B"}, prefs);
+    EXPECT_EQ(diagnosis.fixes, (Fixes{{FixKind::DropCourse, 0, -1, 1},
+                                     {FixKind::DropCourse, 1, -1, 1}}));
 }
 
 TEST(Diagnose, TinyBudgetMakesNoClaims) {

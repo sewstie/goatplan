@@ -15,6 +15,7 @@
         "optionsInData": 3,
         "removed": {
           "notLocked": 0,
+          "notAnyOf": 0,
           "notOpen": 1,
           "startsTooEarly": 2,
           "blocked": 0

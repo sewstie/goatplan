@@ -160,6 +160,12 @@ TEST(EngineApi, BadFieldsAreNamed) {
          "preferences.blocked[0]"},
         {R"({"version": 1, "courses": ["AE 2320"], "preferences": {"locked": {"AE 2320": "AE 2320-CL01"}}})",
          R"(preferences.locked["AE 2320"])"},
+        {R"({"version": 1, "courses": ["AE 2320"], "preferences": {"anyOf": []}})",
+         "preferences.anyOf"},
+        {R"({"version": 1, "courses": ["AE 2320"], "preferences": {"anyOf": {"AE 2320": "AE 2320-CL01"}}})",
+         R"(preferences.anyOf["AE 2320"])"},
+        {R"({"version": 1, "courses": ["AE 2320"], "preferences": {"anyOf": {"AE 2320": [7]}}})",
+         R"(preferences.anyOf["AE 2320"][0])"},
         {R"({"version": 1, "courses": ["AE 2320"], "sort": {"perDay": 20000}})", "sort.perDay"},
         {R"({"version": 1, "courses": ["AE 2320"], "limits": {"maxSchedules": -1}})", "limits.maxSchedules"},
         {R"({"version": 1, "courses": ["AE 2320"], "limits": {"stepBudget": 2.5}})", "limits.stepBudget"},
@@ -201,6 +207,23 @@ TEST(EngineApi, UnknownLockedSectionIsReported) {
         expectError(response, "unknownSection");
         EXPECT_EQ(response["error"]["detail"], id);
     }
+}
+
+TEST(EngineApi, AnyOfRejectsUnknownCoursesAndSections) {
+    const Engine engine = fixtureEngine();
+    for (const std::string id : {"AE 2320-ZZ99", "AE 4310-C01"}) {
+        SCOPED_TRACE(id);
+        const json response = call(engine, R"({"version": 1, "courses": ["AE 2320"],
+            "preferences": {"anyOf": {"AE 2320": [")" + id + R"("]}}})");
+        ASSERT_EQ(response["ok"], false) << response.dump();
+        expectError(response, "unknownSection");
+        EXPECT_EQ(response["error"]["detail"], id);
+    }
+    const json response = call(engine, R"({"version": 1, "courses": ["AE 2320"],
+        "preferences": {"anyOf": {"PH 9999": []}}})");
+    ASSERT_EQ(response["ok"], false) << response.dump();
+    expectError(response, "unknownCourse");
+    EXPECT_EQ(response["error"]["detail"], "PH 9999");
 }
 
 TEST(EngineApi, MatchesCallingTheSolverDirectly) {
@@ -275,6 +298,63 @@ TEST(EngineApi, BlockedTimesMatchPreferences) {
                       json(idsOf(choices[c], direct.schedules[s].picks[c])));
         }
     }
+}
+
+TEST(EngineApi, AnyOfKeepsOptionsWithAtLeastOneListedSection) {
+    const json response = call(fixtureEngine(), R"({"version": 1, "courses": ["AE 2320"],
+        "preferences": {"anyOf": {"AE 2320": ["AE 2320-CX01", "AE 2320-CX03"]}}})");
+    ASSERT_EQ(response["ok"], true) << response.dump();
+    EXPECT_EQ(response["version"], 1);
+    EXPECT_EQ(response["total"], 2);
+    EXPECT_TRUE(response["diagnosis"].is_null());
+    std::vector<std::vector<std::string>> alternatives;
+    for (const json& schedule : response["schedules"]) {
+        for (const json& option : schedule["courses"][0]["alternatives"]) {
+            alternatives.push_back(option.get<std::vector<std::string>>());
+        }
+    }
+    std::sort(alternatives.begin(), alternatives.end());
+    EXPECT_EQ(alternatives, (std::vector<std::vector<std::string>>{
+        {"AE 2320-CL01", "AE 2320-CX01"}, {"AE 2320-CL01", "AE 2320-CX03"}}));
+}
+
+TEST(EngineApi, EmptyOrNullAnyOfKeepsTheDefaultBehavior) {
+    const Engine engine = fixtureEngine();
+    json expected = call(engine, kBoth);
+    expected.erase("elapsedMs");
+    for (const std::string request : {
+        R"({"version": 1, "courses": ["AE 2320", "AE 4310"], "preferences": {"anyOf": {}}})",
+        R"({"version": 1, "courses": ["AE 2320", "AE 4310"], "preferences": {"anyOf": {"AE 2320": []}}})",
+        R"({"version": 1, "courses": ["AE 2320", "AE 4310"], "preferences": {"anyOf": null}})"}) {
+        SCOPED_TRACE(request);
+        json response = call(engine, request);
+        response.erase("elapsedMs");
+        EXPECT_EQ(response, expected);
+    }
+}
+
+TEST(EngineApi, DiagnosisCountsAnyOfRejectionsAfterLocks) {
+    const json response = call(fixtureEngine(), R"({"version": 1, "courses": ["AE 2320"],
+        "preferences": {"locked": {"AE 2320": ["AE 2320-CX01"]},
+                        "anyOf": {"AE 2320": ["AE 2320-CX02"]}, "onlyOpen": true}})");
+    ASSERT_EQ(response["ok"], true) << response.dump();
+    EXPECT_EQ(response["total"], 0);
+    ASSERT_EQ(response["diagnosis"]["emptyCourses"].size(), 1u);
+    EXPECT_EQ(response["diagnosis"]["emptyCourses"][0]["removed"], json::parse(R"({
+        "notLocked": 2, "notAnyOf": 1, "notOpen": 0, "startsTooEarly": 0, "blocked": 0})"));
+}
+
+TEST(EngineApi, DiagnosisSuggestsClearingAnyOfWithTheCourseCode) {
+    const Engine engine = engineFor(termJson({
+        {"A", {{Monday, 540, 590}, {Tuesday, 540, 590}}},
+        {"B", {{Monday, 540, 590}}}}));
+    const json response = call(engine, R"({"version": 1, "courses": ["B", "A"],
+        "preferences": {"anyOf": {"A": ["A-0"]}}})");
+    ASSERT_EQ(response["ok"], true) << response.dump();
+    EXPECT_EQ(response["total"], 0);
+    ASSERT_FALSE(response["diagnosis"]["fixes"].empty());
+    EXPECT_EQ(response["diagnosis"]["fixes"][0], json::parse(R"({
+        "kind": "clearAnyOf", "course": "A", "schedules": 1, "capped": false})"));
 }
 
 TEST(EngineApi, DiagnosisOnlyWhenNothingFits) {
