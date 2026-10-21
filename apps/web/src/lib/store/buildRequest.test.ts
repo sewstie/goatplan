@@ -24,7 +24,7 @@ describe("buildRequest", () => {
     expect(request?.preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01", "AE 2320-CL02", "AE 2320-CL03"] });
   });
 
-  it("does not treat partial names as matches or silently drop an unavailable professor", () => {
+  it("keeps unmatched full names identifiable for frontend validation", () => {
     const term = termFile("2027-C");
     expect(buildRequest({ ...plan({ courses: ["AE 2320"], professorByCourse: { "AE 2320": "Lu" } }), term })?.preferences?.anyOf)
       .toEqual({ "AE 2320": [] });

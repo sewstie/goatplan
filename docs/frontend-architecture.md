@@ -186,6 +186,11 @@ schedule that can show given sections), `scheduleKey`, `storedDraft(termId)`
     request generation, local choices, and diagnosis previews consistent.
     Requests send matching lecture IDs in `preferences.anyOf`; published course
     options still determine the linked labs and discussions.
+    Professor changes preserve all section locks. If a restored professor has no
+    matching lectures, the store reports no matches without sending the request
+    to the engine. An empty `anyOf` list would leave that course unrestricted.
+    The student can clear the professor in the picker, including when the course
+    no longer has lectures. Conflicting locks stay visible with Unlock controls.
   - `roomName(location)` shortens a room to its building and number
     ("Higgins Labs 230"). Show the full location as a `title` where it's cut.
   - `meetingSpans`, `spansOverlap` and `meetsRules` check whether sections

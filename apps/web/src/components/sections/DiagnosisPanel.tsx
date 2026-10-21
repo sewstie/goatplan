@@ -15,7 +15,7 @@ export function DiagnosisPanel({ course, diagnosis, locks }: {
 }) {
   const ordered = [...diagnosis.issues].sort((a, b) => Number(b.courses.includes(course?.code ?? "")) - Number(a.courses.includes(course?.code ?? "")));
   const primary = ordered[0];
-  const ids = primary?.sectionIds ?? [];
+  const ids = [...(primary?.sectionIds ?? []), ...(course ? locks[course.code] ?? [] : [])];
   const sections = course?.sections.filter((section) => ids.includes(section.id)) ?? [];
   const waitlist = sections.some((section) => section.status === "waitlist") || primary?.kind === "full";
   return (
@@ -32,8 +32,9 @@ export function DiagnosisPanel({ course, diagnosis, locks }: {
           course={course}
           section={section}
           locked={locks[course.code]?.includes(section.id) ?? false}
-          problem={primary.problemSectionIds.includes(section.id)}
-          readOnly
+          problem={primary?.problemSectionIds.includes(section.id) ?? false}
+          readOnly={!locks[course.code]?.includes(section.id)}
+          onUnlocked={() => document.getElementById("main")?.focus()}
         />
       ))}
       <DiagnosisFixes fixes={diagnosis.fixes} />

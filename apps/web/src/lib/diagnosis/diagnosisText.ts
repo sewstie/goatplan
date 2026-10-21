@@ -1,4 +1,5 @@
 import { formatDays, formatTime, formatTimeRange } from "@/lib/data";
+import { lectureInstructors, lecturesByProfessor } from "@/lib/data/instructors";
 import type { Day, Section, TermFile } from "@/lib/data/types";
 import type { Diagnosis, EmptyCourse, Fix } from "@/lib/engine/types";
 import type { PlanPreferences } from "@/lib/store/types";
@@ -56,6 +57,37 @@ function emptyIssue(empty: EmptyCourse, context: DiagnosisContext): DiagnosisIss
     problemSectionIds: [],
     excludedSectionIds: [],
   };
+  if (course && professor) {
+    const eligible = lecturesByProfessor(course.sections, professor);
+    if (eligible.length === 0) {
+      const recovery = lectureInstructors(course.sections).length > 0 ? "Choose Any professor or select another professor." : "Choose Any professor.";
+      const detail = `${professor} has no lecture sections for ${code} this term. ${recovery}`;
+      return {
+        ...base,
+        kind: "professor",
+        title: "Your selected professor is unavailable",
+        detail,
+        summary: `${code}’s selected professor is unavailable.`,
+        banner: { title: "No schedule fits.", detail },
+        sectionIds: [...locked],
+      };
+    }
+    const options = lockedOptions(course, locked);
+    if (locked.length > 0 && options.length > 0 && !options.some((sections) => sections.some((section) => eligible.some((lecture) => lecture.id === section.id)))) {
+      const labels = optionSections(course, locked).map((section) => section.code);
+      const detail = `${code} cannot include ${names(labels)} with a lecture taught by ${professor}. Choose Any professor or unlock a section.`;
+      return {
+        ...base,
+        kind: "professor",
+        title: "Your professor choice conflicts with your locks",
+        detail,
+        summary: `${code}’s professor choice conflicts with your locks.`,
+        banner: { title: "No schedule fits.", detail },
+        sectionIds: [...locked],
+        problemSectionIds: [...locked],
+      };
+    }
+  }
   if (empty.optionsInData === 0) {
     return { ...base, kind: "missing", title: "No sections to choose from", detail: `${code} has no section choices in this term.` };
   }

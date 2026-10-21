@@ -27,3 +27,13 @@ has no lectures. Individual section choices stay available.
 Selecting a professor keeps all lectures they teach. Labs and discussions can
 have other instructors. The same rule applies to the section-choice sheet and
 diagnosis previews. Clearing the choice keeps the current availability settings.
+
+Professor changes keep every section lock. When a professor and a lock conflict,
+use the existing warning banner and Needs attention panel. Show the locked
+sections with their Unlock controls and keep the Professor picker available.
+Explain that the student can choose Any professor or unlock a section.
+
+A restored professor without lecture sections shows “Your selected professor is
+unavailable”. Keep that name in the picker until the student changes it. Show
+the picker for this recovery even if the course no longer has lectures. Clearing
+the professor keeps the locks and availability settings.

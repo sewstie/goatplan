@@ -4,8 +4,9 @@ import { openTerms, pickDefaultTerm } from "@/lib/data/terms";
 import type { TermFile, TermIndex } from "@/lib/data/types";
 import { EngineSupersededError, type EngineClient } from "@/lib/engine/EngineClient";
 import type { Fix } from "@/lib/engine/types";
-import { hasInstructor, lectureInstructors, lecturesByProfessor } from "@/lib/data/instructors";
+import { lectureInstructors, lecturesByProfessor } from "@/lib/data/instructors";
 import { buildRequest } from "./buildRequest";
+import { unavailableProfessorResponse } from "./unavailableProfessorResponse";
 import {
   emptyDraft,
   readDraft,
@@ -43,12 +44,11 @@ const initialState: PlannerState = {
   solveStatus: "idle",
   solveError: null,
   lastChosenSections: {},
-  professorNotice: null,
   selectedCourse: null,
   selectedSection: null,
 };
 
-type Selection = Pick<PlannerState, "selectedCourse" | "selectedSection" | "professorNotice">;
+type Selection = Pick<PlannerState, "selectedCourse" | "selectedSection">;
 
 function describe(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
@@ -95,10 +95,16 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       const state = get();
       const request = buildRequest(state);
       const termId = state.termId;
-      if (!request || !termId || state.termStatus !== "ready") return false;
+      if (!request || !termId || !state.term || state.termStatus !== "ready") return false;
 
       const token = ++solveToken;
       set({ solveStatus: "solving", solveError: null });
+      const invalid = unavailableProfessorResponse(request, state.term);
+      if (invalid) {
+        showNext = null;
+        set({ response: invalid, scheduleIndex: 0, solveStatus: "done" });
+        return true;
+      }
       try {
         let response = await deps.engine.solve(request);
         if (!response.ok && response.error.code === "noTerm") {
@@ -129,12 +135,12 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
     function scheduleSolve() {
       clearSolveTimer();
       if (get().termStatus !== "ready") return;
+      solveToken += 1;
       if (!buildRequest(get())) {
-        solveToken += 1;
         set({ response: null, scheduleIndex: 0, solveStatus: "idle", solveError: null, lastChosenSections: {} });
         return;
       }
-      set({ solveStatus: "waiting" });
+      set({ response: null, scheduleIndex: 0, solveStatus: "waiting", solveError: null });
       solveTimer = setTimeout(() => {
         solveTimer = null;
         void runSolve();
@@ -170,7 +176,6 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         courses: state.courses.filter((course) => course !== code),
         locks: withoutKey(state.locks, code),
         professorByCourse: withoutKey(state.professorByCourse, code),
-        professorNotice: state.professorNotice?.course === code ? null : state.professorNotice,
         alternatives: Object.fromEntries(
           Object.entries(state.alternatives).map(([key, choice]) => [key, withoutKey(choice, code)]),
         ),
@@ -200,7 +205,6 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         solveStatus: "idle",
         solveError: null,
         lastChosenSections: {},
-        professorNotice: null,
         selectedCourse: null,
         selectedSection: null,
       });
@@ -272,7 +276,6 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
             solveStatus: "idle",
             solveError: null,
             lastChosenSections: {},
-            professorNotice: null,
             selectedCourse: sanitized.courses[0] ?? null,
             selectedSection: null,
           });
@@ -315,13 +318,8 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
           if (!course || !state.courses.includes(courseCode)) return null;
           const chosen = name === null ? null : lectureInstructors(course.sections).find((instructor) => instructor.toLowerCase() === name.trim().toLowerCase());
           if (chosen === undefined || (state.professorByCourse[courseCode] ?? null) === chosen) return null;
-          const locked = state.locks[courseCode] ?? [];
-          const removed = chosen === null ? [] : course.sections.filter((section) => locked.includes(section.id) && section.instructors.length > 0 && !hasInstructor(section, chosen));
-          const kept = locked.filter((id) => !removed.some((section) => section.id === id));
           return {
             professorByCourse: { ...state.professorByCourse, [courseCode]: chosen },
-            locks: kept.length > 0 ? { ...state.locks, [courseCode]: kept } : withoutKey(state.locks, courseCode),
-            professorNotice: removed.length > 0 ? { course: courseCode, sections: removed.map((section) => section.code) } : null,
             selectedSection: state.selectedCourse === courseCode ? null : state.selectedSection,
           };
         });
