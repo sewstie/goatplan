@@ -129,4 +129,4 @@ plus (Add, 11) · chevron left / right (switcher, 12) · close × (blocked pill,
 - Switcher: "Schedule {i} of {n}". Subtitle: "{courses} course(s) · {n} schedules fit".
 - Calendar blocks: one per meeting per day of the shown schedule's sections. Room = `meetings[].location`.
 - Details panel: the selected course's chosen sections. "Mon–Fri" collapses consecutive days; "Thu" is a single day. Seats = `capacity − enrolled` "of" `capacity` "seats open". "Only lecture" when the course has one lecture section.
-- Professor select lists the instructors of the course; Rate My Professors links to a search for the selected one.
+- Professor select lists lecture instructors only, including co-teachers. Any professor clears the filter. Courses without lectures omit it. Rate My Professors links to a search for the selected instructor.

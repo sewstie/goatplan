@@ -120,6 +120,7 @@ page) starts the store in the browser by calling `init()`.
 | `courses` | The chosen course codes, in the order they were added. |
 | `preferences` | `{ startsAfter, blocked, onlyOpen }`. New drafts start at Any time (`startsAfter: 0`), with no blocked times and only open sections. Stored drafts and saved plans keep their settings, including a chosen 9:00 AM start. A blocked time can have a `label`, the name the student gave it ("Work"); it is saved with the draft but never sent to the engine. |
 | `locks` | Course code → the section ids locked for that course. |
+| `professorByCourse` | Course code → the selected lecture professor, or `null` for Any professor. All matching lectures remain eligible, including co-taught lectures. Labs and discussions can have other instructors. |
 | `sortPreset` | The Sort choice: `fewestEarly`, `fewestGaps` or `fewestDays` (labels and weights in `SORT_PRESETS`). The menu shows only the options in the design PNGs. |
 | `alternatives` | Per schedule (by `scheduleKey`) and per course, the same-time alternative the student picked. |
 | `response` | The engine's last answer, success or engine error; `null` when there are no courses. |
@@ -140,6 +141,7 @@ page) starts the store in the browser by calling `init()`.
 | `removeCourse(code)` | Removes a course with its locks and picked alternatives. If it was selected, the next course (or the one before) is selected. |
 | `selectCourse(code, sectionId?)` | Selects a planned course, and optionally one of its sections; `null` clears the selection. |
 | `setPreferences(changes)` | Changes any of `startsAfter`, `blocked` and `onlyOpen`. |
+| `setProfessor(course, name)` | Selects a lecture professor, or `null` for Any professor, and regenerates schedules. |
 | `lockSection(course, sectionId)` | Keeps only schedules that use that section (the course must be in the plan). |
 | `unlockSection(course, sectionId)` | Removes that lock. |
 | `setSortPreset(preset)` | Changes the Sort order. |
@@ -179,6 +181,11 @@ schedule that can show given sections), `scheduleKey`, `storedDraft(termId)`
   `data-format.md`, and formatting helpers for times, days, seats, section
   labels, instructors and the Rate My Professors link. Use them instead of
   formatting by hand. Search, section display and seat math are TypeScript.
+  - `lectureInstructors` supplies the professor picker and validates selections.
+    `lecturesByProfessor` uses trimmed, case-insensitive full names to keep
+    request generation, local choices, and diagnosis previews consistent.
+    Requests send matching lecture IDs in `preferences.anyOf`; published course
+    options still determine the linked labs and discussions.
   - `roomName(location)` shortens a room to its building and number
     ("Higgins Labs 230"). Show the full location as a `title` where it's cut.
   - `meetingSpans`, `spansOverlap` and `meetsRules` check whether sections

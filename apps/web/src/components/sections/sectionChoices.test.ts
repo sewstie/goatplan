@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Course } from "@/lib/data/types";
+import { lectureProfessorTerm } from "@/lib/store/testing/lectureProfessors";
 import { choiceDetail, sectionChoices } from "./sectionChoices";
 import { makeSection, orbitalMechanics } from "./testing/sections";
 
@@ -11,6 +12,17 @@ const busyThursday = (start: number, end: number) =>
   makeSection("AE 2410-C01", { meetings: [{ days: ["Thu"], start, end, location: "Higgins Labs 116" }] });
 
 describe("sectionChoices", () => {
+  it("offers matching lectures with other lab instructors and excludes the lab-instructor trap", () => {
+    const course = lectureProfessorTerm().courses[0];
+    const choices = sectionChoices(course, ["AE 2320-CL01", "AE 2320-CX01", "AE 2320-CD01"], [], {
+      ...rules, startsAfter: 540, professor: " YE LU ",
+    });
+    expect(choices?.others.map((choice) => choice.sectionIds)).toEqual([
+      ["AE 2320-CL01", "AE 2320-CX02", "AE 2320-CD01"],
+      ["AE 2320-CL02", "AE 2320-CX01", "AE 2320-CD01"],
+      ["AE 2320-CL02", "AE 2320-CX04", "AE 2320-CD01"],
+    ]);
+  });
   it.each(["lecture", "discussion"] as const)("never offers a lab that overlaps its own %s", (type) => {
     const main = makeSection(`AE 2320-${type === "lecture" ? "CL01" : "CD01"}`, {
       type,
@@ -30,12 +42,12 @@ describe("sectionChoices", () => {
     expect(sectionChoices(course, currentIds, [], rules)).toBeNull();
   });
 
-  it("keeps other choices within the selected professor's sections", () => {
+  it("cannot qualify an option through a professor who teaches only labs", () => {
     const course = structuredClone(orbitalMechanics);
     for (const section of course.sections) section.instructors = ["Someone Else"];
     course.sections.find((section) => section.code === "CX02")!.instructors = ["Chosen Professor"];
     course.sections.find((section) => section.code === "CX04")!.instructors = ["Chosen Professor"];
-    expect(sectionChoices(course, chosen, [], { ...rules, professor: "chosen professor" })?.others.map((choice) => choice.label)).toEqual(["CX04"]);
+    expect(sectionChoices(course, chosen, [], { ...rules, professor: "chosen professor" })).toBeNull();
   });
   it("lists the course's other labs that fit, with their times, rooms and seats", () => {
     const choices = sectionChoices(orbitalMechanics, chosen, [], rules)!;

@@ -1,7 +1,7 @@
 import type { TermFile } from "@/lib/data/types";
 import type { DiagnosisContext, DiagnosisIssue } from "./diagnosisText";
 import { availableOptions, commonSections, lockedOptions } from "./sectionOptions";
-import { hasInstructor } from "@/lib/data/instructors";
+import { lecturesByProfessor } from "@/lib/data/instructors";
 
 export function diagnosticPreview(
   term: TermFile | null,
@@ -18,7 +18,7 @@ export function diagnosticPreview(
     const locks = context.locks[code] ?? [];
     const last = lastChosen[code];
     const professor = context.professorByCourse?.[code];
-    const taughtByProfessor = (ids: readonly string[]) => !professor || course.sections.some((section) => ids.includes(section.id) && hasInstructor(section, professor));
+    const taughtByProfessor = (ids: readonly string[]) => !professor || lecturesByProfessor(course.sections, professor).some((section) => ids.includes(section.id));
     const kept = availableOptions(course, locks, context.preferences, professor);
     const options = kept.length > 0 ? kept : lockedOptions(course, locks).filter((sections) => taughtByProfessor(sections.map((section) => section.id)));
     const ids = last?.length && locks.every((id) => last.includes(id)) && taughtByProfessor(last)
