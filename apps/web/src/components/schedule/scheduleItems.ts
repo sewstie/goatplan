@@ -1,4 +1,4 @@
-import type { Course, Day, Delivery, Section, TermFile } from "@/lib/data/types";
+import type { Course, Day, Delivery, Section, SectionType, TermFile } from "@/lib/data/types";
 import { courseSlot, type CourseSlot } from "@/components/ui/courseColors";
 
 interface ItemBase {
@@ -7,6 +7,7 @@ interface ItemBase {
   title: string;
   sectionId: string;
   sectionCode: string;
+  sectionType: SectionType;
   instructors: string[];
   slot: CourseSlot;
   locked: boolean;
@@ -67,6 +68,7 @@ export function scheduleItems(
         title: section.title ?? course.title,
         sectionId,
         sectionCode: section.code,
+        sectionType: section.type,
         instructors: section.instructors,
         slot: courseSlot(courses, code),
         locked: locks[code]?.includes(sectionId) ?? false,

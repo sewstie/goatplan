@@ -1,4 +1,5 @@
 import { formatTimeRange } from "@/lib/data/time";
+import { InstructorRating } from "@/components/sections/InstructorRating";
 import type { ClassItem } from "./scheduleItems";
 
 /** What the block's tooltip says (div.app-19.md), with the room's full name. */
@@ -14,6 +15,9 @@ export function BlockDetails({ item }: { item: ClassItem }) {
         {item.day} · {formatTimeRange(item.start, item.end, "shared")}
       </p>
       {place && <p className="text-9 leading-15-3 text-ink-muted">{place}</p>}
+      {item.sectionType === "lecture" && item.instructors.map((name) => (
+        <InstructorRating key={name} name={name} dense showLink={false} />
+      ))}
     </>
   );
 }

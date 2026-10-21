@@ -38,12 +38,9 @@ export function blockLabel(item: ClassItem): string {
 
 export function ClassBlock({ item, density, style, selected, onSelect }: ClassBlockProps) {
   const text = densityClasses[density];
-  // The tooltip sits in a portal, under the block and a little to its left, so the calendar card can't
-  // clip it (div.app-19.md). The block's label already says everything in it.
   return (
     <Tooltip
       portal
-      describes={false}
       offsetX={-8}
       gap={24}
       className="flex flex-col gap-2.8"
