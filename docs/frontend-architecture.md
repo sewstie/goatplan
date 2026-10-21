@@ -118,7 +118,7 @@ page) starts the store in the browser by calling `init()`.
 | `termStatus` | `idle`, `loading`, `ready` or `error`. Plan actions do nothing until `ready`. |
 | `termError` | Why the term couldn't load, in plain English. |
 | `courses` | The chosen course codes, in the order they were added. |
-| `preferences` | `{ startsAfter, blocked, onlyOpen }`. The defaults follow the first-visit design: 9:00 AM, no blocked times, only open sections. A blocked time can have a `label`, the name the student gave it ("Work"); it is saved with the draft but never sent to the engine. |
+| `preferences` | `{ startsAfter, blocked, onlyOpen }`. New drafts start at Any time (`startsAfter: 0`), with no blocked times and only open sections. Stored drafts and saved plans keep their settings, including a chosen 9:00 AM start. A blocked time can have a `label`, the name the student gave it ("Work"); it is saved with the draft but never sent to the engine. |
 | `locks` | Course code → the section ids locked for that course. |
 | `sortPreset` | The Sort choice: `fewestEarly`, `fewestGaps` or `fewestDays` (labels and weights in `SORT_PRESETS`). The menu shows only the options in the design PNGs. |
 | `alternatives` | Per schedule (by `scheduleKey`) and per course, the same-time alternative the student picked. |

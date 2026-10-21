@@ -23,7 +23,7 @@ describe("PreferencesBar", () => {
     render(<PreferencesBar />);
 
     const select = screen.getByRole("combobox", { name: "Starts after" });
-    expect(select).toHaveDisplayValue("9:00 AM");
+    expect(select).toHaveDisplayValue("Any time");
     await userEvent.selectOptions(select, "10:00 AM");
 
     expect(store.getState().preferences.startsAfter).toBe(600);

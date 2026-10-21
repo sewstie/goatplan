@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  DEFAULT_PREFERENCES,
   draftKey,
   emptyDraft,
   parseDraft,
@@ -113,9 +112,8 @@ describe("draft storage", () => {
 });
 
 describe("emptyDraft", () => {
-  it("starts at 9:00 AM with only open sections, as in the first-visit design", () => {
-    expect(emptyDraft().preferences).toEqual(DEFAULT_PREFERENCES);
-    expect(DEFAULT_PREFERENCES).toEqual({ startsAfter: 540, blocked: [], onlyOpen: true });
+  it("starts at Any time with no blocked time and only open sections", () => {
+    expect(emptyDraft().preferences).toEqual({ startsAfter: 0, blocked: [], onlyOpen: true });
   });
 });
 
