@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import type { Day, TermFile } from "../src/lib/data/types";
 
 const screenshotDir = "e2e/screenshots";
 
@@ -10,6 +11,22 @@ function parseMs(text: string): number {
 async function valueOf(page: Page, label: string): Promise<string> {
   const term = page.getByRole("region", { name: "Response" }).getByText(label, { exact: true });
   return (await term.locator("xpath=following-sibling::dd[1]").textContent()) ?? "";
+}
+
+function stressTerm(term: TermFile): TermFile {
+  const days: Day[] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const template = term.courses[0];
+  const courses = days.map((day, index) => {
+    const code = `TEST ${index + 1}`;
+    const sections = Array.from({ length: 10 }, (_, option) => ({
+      ...template.sections[0],
+      id: `${code}-C${option + 1}`,
+      code: `C${option + 1}`,
+      meetings: [{ days: [day], start: 480 + option * 60, end: 530 + option * 60, location: "Test room" }],
+    }));
+    return { ...template, code, sections, options: sections.map((section) => [section.id]) };
+  });
+  return { ...term, courses };
 }
 
 let requested: string[] = [];
@@ -43,6 +60,13 @@ test("latest wins: of five requests sent at once, only the last is answered", as
 });
 
 test("ten large requests don't freeze the page", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.route(/\/data\/\d{4}-[A-Z]\.json$/, async (route) => {
+    const response = await route.fetch();
+    await route.fulfill({ json: stressTerm(await response.json() as TermFile) });
+  });
+  await page.reload();
+  await expect(page.getByText(/^Loaded \d{4}-[A-Z] · 7 courses/)).toBeVisible();
   const runButton = page.getByRole("button", { name: "Run 10 large requests" });
   const counter = page.getByRole("button", { name: /^Clicks: \d+$/ });
 

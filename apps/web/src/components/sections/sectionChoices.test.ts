@@ -11,6 +11,25 @@ const busyThursday = (start: number, end: number) =>
   makeSection("AE 2410-C01", { meetings: [{ days: ["Thu"], start, end, location: "Higgins Labs 116" }] });
 
 describe("sectionChoices", () => {
+  it.each(["lecture", "discussion"] as const)("never offers a lab that overlaps its own %s", (type) => {
+    const main = makeSection(`AE 2320-${type === "lecture" ? "CL01" : "CD01"}`, {
+      type,
+      meetings: [{ days: ["Mon"], start: 540, end: 590, location: "Unity Hall 400" }],
+    });
+    const current = makeSection("AE 2320-CX02", {
+      type: "lab",
+      meetings: [{ days: ["Mon"], start: 600, end: 650, location: "Higgins Labs 230" }],
+    });
+    const clashing = makeSection("AE 2320-CX01", { type: "lab", meetings: main.meetings });
+    const currentIds = [main.id, current.id];
+    const course: Course = {
+      ...orbitalMechanics,
+      sections: [main, current, clashing],
+      options: [currentIds, [main.id, clashing.id]],
+    };
+    expect(sectionChoices(course, currentIds, [], rules)).toBeNull();
+  });
+
   it("keeps other choices within the selected professor's sections", () => {
     const course = structuredClone(orbitalMechanics);
     for (const section of course.sections) section.instructors = ["Someone Else"];
