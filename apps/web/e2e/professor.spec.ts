@@ -172,14 +172,128 @@ test("a professor filters both lecture choices, survives reload and Any professo
   expect((await draft(page)).professorByCourse[code]).toBeNull();
 });
 
-test("choosing another professor removes an incompatible lock and says which section was unlocked", async ({ page }) => {
-  await open(page, { locks: { [code]: [`${code}-C03`] } });
-  await expect(details(page).getByRole("heading", { name: "Lecture C03" })).toBeVisible();
+for (const recovery of ["clear professor", "unlock lecture"] as const) {
+  test(`an incompatible lecture lock survives reload and recovers through ${recovery}`, async ({ page }) => {
+    const preferences = { startsAfter: 540, blocked: [{ day: "Fri" as const, start: 840, end: 960, label: "Work" }], onlyOpen: true };
+    await open(page, { preferences });
+    await picker(page).selectOption("Mark Richman");
+    await settled(page);
+    await details(page).getByRole("button", { name: "Lock Lecture C03", exact: true }).click();
+    await settled(page);
+    await picker(page).selectOption("Ye Lu");
+    await settled(page);
+    await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
+    await expect(details(page).getByRole("heading", { name: "Your professor choice conflicts with your locks" })).toBeVisible();
+    await expect(details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true })).toBeVisible();
+    await expect(picker(page)).toHaveValue("Ye Lu");
+    expect((await draft(page)).locks).toEqual({ [code]: [`${code}-C03`] });
+    await screenshots(page, `lock-conflict-${recovery}`);
+
+    await page.reload();
+    await settled(page);
+    await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
+    await expect(picker(page)).toHaveValue("Ye Lu");
+    await expect(details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true })).toBeVisible();
+    if (recovery === "clear professor") {
+      await picker(page).focus();
+      await picker(page).selectOption("");
+    } else {
+      await details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true }).focus();
+      await page.keyboard.press("Enter");
+    }
+    await settled(page);
+    const stored = await draft(page);
+    expect(stored.preferences).toEqual(preferences);
+    expect(stored.locks).toEqual(recovery === "clear professor" ? { [code]: [`${code}-C03`] } : {});
+    expect(stored.professorByCourse[code]).toBe(recovery === "clear professor" ? null : "Ye Lu");
+    await expect(page.getByText(recovery === "clear professor" ? "Schedule 1 of 1" : "Schedule 1 of 2", { exact: true })).toBeVisible();
+    const lectures = recovery === "clear professor" ? ["C03"] : ["C01", "C02"];
+    const shown: string[] = [];
+    for (let index = 0; index < lectures.length; index++) {
+      shown.push(await details(page).getByRole("heading", { name: /^Lecture C/ }).innerText());
+      if (index + 1 < lectures.length) await page.getByRole("button", { name: "Next schedule" }).click();
+    }
+    expect(shown.sort()).toEqual(lectures.map((lecture) => `Lecture ${lecture}`));
+    await screenshots(page, `lock-recovered-${recovery}`);
+  });
+}
+
+for (const hasLectures of [true, false]) {
+  test(`opening a saved plan with an unavailable professor stays restricted, with lectures: ${hasLectures}`, async ({ page }) => {
+    const data = termData();
+    const course = data.courses.find((course) => course.code === code)!;
+    if (!hasLectures) for (const section of course.sections) section.type = "seminar";
+    const preferences = { startsAfter: 600, blocked: [{ day: "Fri" as const, start: 840, end: 960, label: "Work" }], onlyOpen: false };
+    const locks = { [code]: [`${code}-C03`] };
+    const saved = {
+      version: 1, id: "unavailable-professor", name: "Unavailable professor", termId: "2027-C", term: data.term,
+      savedAt: "2026-10-21T12:00:00Z", courses: [code], locks, preferences,
+      professorByCourse: { [code]: "Former Professor" }, sortPreset: "fewestGaps",
+      schedule: [{ code, title: course.title, sections: [{ ...course.sections[2], instructors: ["Former Professor"] }] }],
+    };
+    await page.addInitScript((saved) => {
+      localStorage.setItem("goatplan:plans:v1:plan:unavailable-professor", JSON.stringify(saved));
+    }, saved);
+    await open(page, {}, data);
+    await expect(page.getByText("Schedule 1 of 3", { exact: true })).toBeVisible();
+    await page.goto("/plans");
+    await page.getByRole("button", { name: "Open in planner Unavailable professor" }).click();
+    await page.getByRole("dialog", { name: "Open “Unavailable professor”?" }).getByRole("button", { name: "Open plan" }).click();
+    await expect(page).toHaveURL(/\/$/);
+    await settled(page);
+    await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
+    await expect(details(page).getByRole("heading", { name: "Your selected professor is unavailable" })).toBeVisible();
+    await expect(picker(page)).toHaveValue("Former Professor");
+    await expect(page.locator("[data-block]")).toHaveCount(0);
+    expect(await draft(page)).toMatchObject({ locks, preferences, professorByCourse: saved.professorByCourse, sortPreset: "fewestGaps" });
+    await screenshots(page, `unavailable-${hasLectures}`);
+    await page.reload();
+    await settled(page);
+    await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
+    await expect(picker(page)).toHaveValue("Former Professor");
+    await picker(page).focus();
+    await picker(page).selectOption("");
+    await settled(page);
+    await expect(page.getByText("Schedule 1 of 1", { exact: true })).toBeVisible();
+    await expect(details(page).getByRole("heading", { name: `${hasLectures ? "Lecture" : "Seminar"} C03`, exact: true })).toBeVisible();
+    await expect(page.locator("[data-block]")).toHaveCount(1);
+    expect(await draft(page)).toMatchObject({ locks, preferences, professorByCourse: { [code]: null }, sortPreset: "fewestGaps" });
+    await screenshots(page, `unavailable-recovered-${hasLectures}`);
+  });
+}
+
+test("compatible lab and discussion locks keep other instructors and only an explicit unlock changes them", async ({ page }) => {
+  const courseCode = "AE 2320";
+  const preferences = { startsAfter: 540, blocked: [{ day: "Fri" as const, start: 840, end: 960 }], onlyOpen: true };
+  const locks = { [courseCode]: [`${courseCode}-CX01`, `${courseCode}-CD01`] };
+  await open(page, { courses: [courseCode], preferences, locks }, lectureProfessorTerm());
   await picker(page).selectOption("Ye Lu");
   await settled(page);
-  expect((await draft(page)).locks).toEqual({});
-  await expect(details(page).getByRole("status")).toHaveText("Unlocked C03 for this professor.");
   await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
+  for (let index = 0; index < 2; index++) {
+    await expect(details(page).getByRole("button", { name: "Unlock Lab CX01", exact: true })).toBeVisible();
+    await expect(details(page).getByRole("article").filter({ hasText: "Lab CX01" })).toContainText("Lab Tutor");
+    await expect(details(page).getByRole("button", { name: "Unlock Discussion CD01", exact: true })).toBeVisible();
+    await expect(details(page).getByRole("article").filter({ hasText: "Discussion CD01" })).toContainText("Discussion Tutor");
+    if (index === 0) await page.getByRole("button", { name: "Next schedule" }).click();
+  }
+  expect((await draft(page)).locks).toEqual(locks);
+  await picker(page).selectOption("Mark Richman");
+  await settled(page);
+  await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
+  expect((await draft(page)).locks).toEqual(locks);
+  await details(page).getByRole("button", { name: "Unlock Lab CX01", exact: true }).focus();
+  await page.keyboard.press("Enter");
+  await settled(page);
+  await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
+  for (let index = 0; index < 2; index++) {
+    await expect(details(page).getByRole("heading", { name: "Lab CX03", exact: true })).toBeVisible();
+    await expect(details(page).getByRole("button", { name: "Unlock Discussion CD01", exact: true })).toBeVisible();
+    await expect(details(page).getByRole("article").filter({ hasText: /Lecture CL0[34]/ })).toContainText("Mark Richman");
+    if (index === 0) await page.getByRole("button", { name: "Next schedule" }).click();
+  }
+  expect(await draft(page)).toMatchObject({ preferences, locks: { [courseCode]: [`${courseCode}-CD01`] }, professorByCourse: { [courseCode]: "Mark Richman" } });
+  await screenshots(page, "lab-recovered");
 });
 
 test("when both of a professor's lectures clash, clearAnyOf offers a counted fix and restores the schedule", async ({ page }) => {

@@ -8,10 +8,9 @@ import { usePlanner } from "@/lib/store";
 export function ProfessorPicker({ course }: { course: Course }) {
   const name = usePlanner((state) => state.professorByCourse[course.code] ?? null);
   const setProfessor = usePlanner((state) => state.setProfessor);
-  const notice = usePlanner((state) => state.professorNotice?.course === course.code ? state.professorNotice : null);
   const ready = usePlanner((state) => state.termStatus === "ready");
   const instructors = lectureInstructors(course.sections);
-  if (!course.sections.some((section) => section.type === "lecture") || (instructors.length === 0 && !name)) return null;
+  if (!name && (!course.sections.some((section) => section.type === "lecture") || instructors.length === 0)) return null;
   const options = [...instructors];
   if (name && !options.some((instructor) => instructor.toLowerCase() === name.toLowerCase())) options.push(name);
   const value = options.find((instructor) => instructor.toLowerCase() === name?.toLowerCase()) ?? "";
@@ -27,7 +26,6 @@ export function ProfessorPicker({ course }: { course: Course }) {
         disabled={!ready}
         onChange={(event) => setProfessor(course.code, event.target.value || null)}
       />
-      {notice && <p role="status" className="text-10 leading-17-5 text-ink-muted">Unlocked {notice.sections.join(", ")} for this professor.</p>}
       {name && <a
         href={rateMyProfessorsUrl(name)}
         target="_blank"

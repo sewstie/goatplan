@@ -230,10 +230,10 @@ describe("CourseDetailsPanel", () => {
     expect(picker).toHaveDisplayValue("Any professor");
   });
 
-  it.each([null, "Ye Lu"])("omits the professor filter without lectures and keeps section locking with stored professor %s", async (professor) => {
+  it("omits the professor filter without lectures and keeps section locking", async () => {
     const term = termFile("2027-C");
     term.courses[0].sections[0].type = "seminar";
-    const { store, requests } = await startTestPlanner({ courses: ["AE 2320"], professorByCourse: { "AE 2320": professor } }, { term });
+    const { store, requests } = await startTestPlanner({ courses: ["AE 2320"] }, { term });
     render(<CourseDetailsPanel />);
     expect(screen.queryByRole("combobox", { name: "Professor" })).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Lock Lab CX01" }));
@@ -241,7 +241,7 @@ describe("CourseDetailsPanel", () => {
     expect(requests.at(-1)?.preferences?.locked).toEqual({ "AE 2320": ["AE 2320-CX01"] });
   });
 
-  it("re-solves on professor changes and reports an incompatible lock being removed", async () => {
+  it("re-solves on professor changes while keeping the locked section", async () => {
     const term = termFile("2027-C");
     term.courses[0].sections[1].instructors = ["Other Professor"];
     term.courses[0].sections[1].type = "lecture";
@@ -252,8 +252,8 @@ describe("CourseDetailsPanel", () => {
     await userEvent.selectOptions(picker, "Ye Lu");
     await waitForSolve(store);
     expect(requests.at(-1)?.preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01"] });
-    expect(store.getState().locks).toEqual({});
-    expect(screen.getByRole("status")).toHaveTextContent("Unlocked CX01 for this professor.");
+    expect(store.getState().locks).toEqual({ "AE 2320": ["AE 2320-CX01"] });
+    expect(screen.queryByText(/Unlocked .* for this professor/)).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Rate My Professors/ })).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
     await userEvent.selectOptions(picker, "Other Professor");
     await waitForSolve(store);

@@ -49,7 +49,6 @@ export interface PlannerState extends Draft {
   solveStatus: SolveStatus;
   solveError: string | null;
   lastChosenSections: Record<string, string[]>;
-  professorNotice: { course: string; sections: string[] } | null;
   /** The course the details panel shows. Not saved with the draft. */
   selectedCourse: string | null;
   /** The section whose calendar blocks are selected, a section of selectedCourse. */
