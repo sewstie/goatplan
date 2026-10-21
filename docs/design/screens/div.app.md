@@ -1,5 +1,8 @@
 # 01 · First visit · Empty
 
+Fresh drafts now show Any time, no blocked times, and Only open sections on.
+The PNG's 9:00 AM value is a configured state; see [the current defaults](../frames.md#new-plans).
+
 - PNG: `div.app.png` · Figma node `30:9804` (inside `section#state-01`) · frame 1680 × 800
 - Figma caption: "No courses selected; the search box is the single entry point." · Static screen, no interactions shown.
 - This file also describes the **app shell** (sidebar, header, preferences row, calendar card, details panel). Other screen docs only list what changes.

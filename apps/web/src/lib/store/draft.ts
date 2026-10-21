@@ -12,8 +12,7 @@ export function draftKey(termId: string): string {
 
 export type DraftStorage = Pick<Storage, "getItem" | "setItem">;
 
-/** The first-visit design starts at 9:00 AM with only open sections. */
-export const DEFAULT_PREFERENCES: Readonly<PlanPreferences> = { startsAfter: 540, blocked: [], onlyOpen: true };
+export const DEFAULT_PREFERENCES: Readonly<PlanPreferences> = { startsAfter: 0, blocked: [], onlyOpen: true };
 
 export function emptyDraft(): Draft {
   return {

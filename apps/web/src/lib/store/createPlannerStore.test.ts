@@ -199,16 +199,39 @@ describe("solving", () => {
 });
 
 describe("drafts", () => {
+  it("starts a fresh draft at Any time with no blocked time and only open sections", async () => {
+    const { state, engine } = setup();
+    await state().init();
+    expect(state().preferences).toEqual({ startsAfter: 0, blocked: [], onlyOpen: true });
+
+    state().addCourse("AE 2320");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve.mock.calls.at(-1)?.[0].preferences).toEqual({
+      startsAfter: 0,
+      blocked: [],
+      onlyOpen: true,
+      locked: {},
+      anyOf: {},
+    });
+  });
+
   it("saves the draft per term and restores it on the next visit", async () => {
     const storage = new MemoryStorage();
     const first = setup({ storage });
     await first.state().init();
     first.state().addCourse("AE 2320");
-    first.state().setPreferences({ onlyOpen: false });
+    const preferences = {
+      startsAfter: 540,
+      blocked: [{ day: "Fri" as const, start: 840, end: 960, label: "Work" }],
+      onlyOpen: false,
+    };
+    first.state().setPreferences(preferences);
+    first.state().setProfessor("AE 2320", "Ye Lu");
     first.state().lockSection("AE 2320", "AE 2320-CX02");
     expect(readDraft(storage, "2027-C")).toMatchObject({
       courses: ["AE 2320"],
-      preferences: { onlyOpen: false },
+      preferences,
+      professorByCourse: { "AE 2320": "Ye Lu" },
       locks: { "AE 2320": ["AE 2320-CX02"] },
     });
 
@@ -216,25 +239,36 @@ describe("drafts", () => {
     await second.state().init();
     expect(second.state()).toMatchObject({
       courses: ["AE 2320"],
-      preferences: { startsAfter: 540, onlyOpen: false },
+      preferences,
+      professorByCourse: { "AE 2320": "Ye Lu" },
       locks: { "AE 2320": ["AE 2320-CX02"] },
     });
     expect(second.engine.solve).toHaveBeenCalledTimes(1);
+    expect(second.engine.solve.mock.calls[0][0].preferences).toEqual({
+      ...preferences,
+      blocked: [{ day: "Fri", start: 840, end: 960 }],
+      locked: { "AE 2320": ["AE 2320-CX02"] },
+      anyOf: { "AE 2320": ["AE 2320-CL01", "AE 2320-CX01", "AE 2320-CX02"] },
+    });
   });
 
   it("keeps each term's own draft when switching terms", async () => {
     const { state, storage } = setup();
     await state().init();
     state().addCourse("AE 2320");
+    state().setPreferences({ startsAfter: 600, onlyOpen: false });
 
     await state().setTerm("2027-D");
     expect(state().courses).toEqual([]);
+    expect(state().preferences).toEqual({ startsAfter: 0, blocked: [], onlyOpen: true });
     state().addCourse("AB 1533");
 
     await state().setTerm("2027-C");
     expect(state().courses).toEqual(["AE 2320"]);
+    expect(state().preferences).toEqual({ startsAfter: 600, blocked: [], onlyOpen: false });
     await state().setTerm("2027-D");
     expect(state().courses).toEqual(["AB 1533"]);
+    expect(state().preferences).toEqual({ startsAfter: 0, blocked: [], onlyOpen: true });
     expect(storage.getItem(LAST_TERM_KEY)).toBe("2027-D");
   });
 
@@ -589,6 +623,12 @@ describe("openPlan", () => {
     expect(await opened).toBe(true);
     expect(engine.solve).toHaveBeenCalledTimes(1);
     expect(state()).toMatchObject({ termId: "2027-D", ...plan, selectedCourse: "AE 2410", solveStatus: "done" });
+    expect(engine.solve.mock.calls[0][0].preferences).toEqual({
+      ...plan.preferences,
+      blocked: [{ day: "Fri", start: 840, end: 960 }],
+      locked: plan.locks,
+      anyOf: { "AE 2320": ["AE 2320-CL01", "AE 2320-CX01", "AE 2320-CX02"] },
+    });
     expect(readDraft(storage, "2027-D")).toMatchObject(plan);
     expect(readDraft(storage, "2027-C")?.courses).toEqual(["AB 1533"]);
   });
