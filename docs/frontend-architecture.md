@@ -109,6 +109,11 @@ call (like `selectChosenSections`) needs `useShallow` from
 `zustand/react/shallow`, or it re-renders forever. `PlannerBootstrap` (in the
 page) starts the store in the browser by calling `init()`.
 
+Component tests can pass a real `createPlannerStore` instance through
+`PlannerProvider`. `usePlanner` and `usePlannerStore` read that instance, so
+tests can supply data, engine, and storage boundaries without replacing store
+modules. Without a provider, both hooks use the app's shared store.
+
 ### State
 
 | Field | What it is |

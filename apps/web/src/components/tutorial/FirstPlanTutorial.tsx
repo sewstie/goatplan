@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { X } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
-import { getPlannerStore, usePlanner } from "@/lib/store";
+import { usePlanner, usePlannerStore } from "@/lib/store";
 import { browserStorage, type DraftStorage } from "@/lib/store/draft";
 import { TUTORIAL_STEPS } from "./tutorialSteps";
 import { rememberTutorial, tutorialFinished, type TutorialOutcome } from "./tutorialStorage";
 
 export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }) {
+  const planner = usePlannerStore();
   const [step, setStep] = useState<number | null>(null);
   const [storageFailed, setStorageFailed] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -21,18 +22,18 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
 
   useEffect(() => {
     let cancelled = false;
-    void getPlannerStore().getState().init().then(() => {
+    void planner.getState().init().then(() => {
       if (cancelled) return;
       persistence.current = storage === undefined ? browserStorage() : storage;
       if (tutorialFinished(persistence.current)) return;
-      if (getPlannerStore().getState().courses.length > 0) {
+      if (planner.getState().courses.length > 0) {
         rememberTutorial(persistence.current, "dismissed");
         return;
       }
       setStep(0);
     });
     return () => { cancelled = true; };
-  }, [storage]);
+  }, [planner, storage]);
 
   useEffect(() => { heading.current?.focus(); }, [step]);
 
