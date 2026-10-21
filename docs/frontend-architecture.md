@@ -166,8 +166,11 @@ schedule that can show given sections), `scheduleKey`, `storedDraft(termId)`
 
 ### How it behaves
 
-- The planner page mounts a three-step guide on the first visit, after client
-  initialization. It uses the same term, course search, and schedule browser.
+- The planner page mounts a four-step guide on the first visit, after client
+  initialization. It uses the same term, course search, preferences, and schedule
+  browser. Availability is optional. Its summary reflects the current settings,
+  and guidance only focuses the existing controls. A no-match handoff keeps
+  restrictions until the student explicitly changes them.
   Tutorial status uses `goatplan:tutorial:v1`, outside drafts and saved plans.
   A restored plan with courses bypasses the guide. Skip, Close, and Finish keep
   the draft. Failed storage writes leave a visible reminder that the guide may

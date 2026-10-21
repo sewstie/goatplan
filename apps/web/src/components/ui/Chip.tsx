@@ -4,6 +4,7 @@ import { cx } from "./cx";
 import { IconButton } from "./IconButton";
 
 type ChipProps = {
+  id?: string;
   variant?: "solid" | "dashed";
   icon?: ReactNode;
   label?: ReactNode;
@@ -22,6 +23,7 @@ const variantClasses = {
 };
 
 export function Chip({
+  id,
   variant = "solid",
   icon,
   label,
@@ -54,7 +56,7 @@ export function Chip({
 
   if (onRemove) {
     return (
-      <span className={pill}>
+      <span id={id} className={pill}>
         {onClick ? (
           <button
             type="button"
@@ -80,6 +82,7 @@ export function Chip({
   if (onClick) {
     return (
       <button
+        id={id}
         type="button"
         onClick={onClick}
         className={cx(pill, "cursor-pointer transition-[color,background-color,border-color] hover:bg-surface-selected")}
@@ -89,5 +92,5 @@ export function Chip({
     );
   }
 
-  return <span className={pill}>{content}</span>;
+  return <span id={id} className={pill}>{content}</span>;
 }

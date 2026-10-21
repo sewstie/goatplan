@@ -31,6 +31,7 @@ export function PreferencesBar() {
         <BlockTimeButton />
       </span>
       <Toggle
+        id="tutorial-only-open"
         checked={onlyOpen}
         onCheckedChange={(checked) => setPreferences({ onlyOpen: checked })}
         label="Only open sections"

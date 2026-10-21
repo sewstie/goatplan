@@ -62,6 +62,8 @@ for (const width of [1440, 834]) {
     await page.keyboard.press("Enter");
     await settled(page);
     await next(page).press("Enter");
+    await expect(guide(page).getByRole("heading", { name: "Set availability if you want" })).toBeFocused();
+    await next(page).press("Enter");
     await expect(guide(page).getByRole("heading", { name: "Browse your schedules" })).toBeFocused();
     await capture(page, "browse", width);
     await guide(page).getByRole("button", { name: "Back", exact: true }).press("Enter");
@@ -140,6 +142,7 @@ for (const width of [1440, 834]) {
     await settled(page);
     await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
     await next(page).click();
+    await next(page).click();
     await guide(page).getByRole("button", { name: "Finish tutorial" }).click();
     await expect(guide(page)).toBeHidden();
     await expect(page.getByRole("region", { name: "Schedule browser" })).toBeFocused();
@@ -174,6 +177,7 @@ for (const width of [1440, 834]) {
     await next(page).click();
     await page.getByRole("searchbox").fill(course);
     await page.getByRole("searchbox").press("Enter");
+    await next(page).click();
     await next(page).click();
     await guide(page).getByRole("button", { name: "Finish tutorial" }).click();
     await settled(page);
