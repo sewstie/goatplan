@@ -1,7 +1,7 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderToString } from "react-dom/server";
-import { expect, it, vi } from "vitest";
+import { beforeAll, expect, it, vi } from "vitest";
 import { TermPicker } from "@/components/courses/TermPicker";
 import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
 import { ScheduleSwitcher } from "@/components/schedule/ScheduleSwitcher";
@@ -12,6 +12,10 @@ import { createPlannerStore } from "@/lib/store/createPlannerStore";
 import { emptyDraft, writeDraft, type DraftStorage } from "@/lib/store/draft";
 import { loaded, MemoryStorage, solved, termFile, termSummary } from "@/lib/store/testing/fixtures";
 import { FirstPlanTutorial } from "./FirstPlanTutorial";
+import { PreferencesBar } from "@/components/preferences/PreferencesBar";
+import { polyfillDialog } from "@/components/sections/testing/plannerStore";
+
+beforeAll(polyfillDialog);
 
 let planner: ReturnType<typeof createPlannerStore>;
 
@@ -38,6 +42,7 @@ function view(storage: DraftStorage | null = new MemoryStorage()) {
       <FirstPlanTutorial storage={storage} />
       <TermPicker />
       <CourseSearchPanel />
+      <PreferencesBar />
       <div id="tutorial-schedules" tabIndex={-1} aria-label="Schedule browser" role="region">
         <ScheduleSwitcher />
       </div>
@@ -62,6 +67,59 @@ it("waits for a valid loaded term before allowing course selection", async () =>
   expect(screen.getByRole("heading", { name: "Add your courses" })).toHaveFocus();
 });
 
+it("offers availability after courses without requiring any preference changes", async () => {
+  start();
+  view();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.type(screen.getByRole("searchbox"), "AE 2410{Enter}");
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  expect(screen.getByRole("heading", { name: "Set availability if you want" })).toHaveFocus();
+  const summary = screen.getByRole("group", { name: "Current availability" });
+  expect(within(summary).getByText("Any time")).toBeVisible();
+  expect(within(summary).getByText("None")).toBeVisible();
+  expect(within(summary).getByText("Only open sections")).toBeVisible();
+  expect(screen.getByRole("button", { name: "Next" })).toBeEnabled();
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  expect(screen.getByRole("heading", { name: "Browse your schedules" })).toHaveFocus();
+  expect(planner.getState().preferences).toEqual({ startsAfter: 0, blocked: [], onlyOpen: true });
+});
+
+it("shows real availability and keeps edits when going back or skipping", async () => {
+  start();
+  view();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.type(screen.getByRole("searchbox"), "AE 2410{Enter}");
+  await user.selectOptions(screen.getByRole("combobox", { name: "Starts after" }), "600");
+  await user.click(screen.getByRole("switch", { name: "Only open sections" }));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  const summary = screen.getByRole("group", { name: "Current availability" });
+  expect(within(summary).getByText("10:00 AM")).toBeVisible();
+  expect(within(summary).getByText("Open and full sections")).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Find Starts after" }));
+  expect(screen.getByRole("combobox", { name: "Starts after" })).toHaveFocus();
+  await user.selectOptions(screen.getByRole("combobox", { name: "Starts after" }), "660");
+  await user.click(screen.getByRole("button", { name: "Find Block a time" }));
+  const block = screen.getByRole("button", { name: "Block a time" });
+  expect(block).toHaveFocus();
+  await user.keyboard("{Enter}");
+  const dialog = screen.getByRole("dialog", { name: "Block a time" });
+  await user.click(within(dialog).getByRole("checkbox", { name: "Tuesday" }));
+  await user.click(within(dialog).getByRole("button", { name: "Block time" }));
+  expect(within(summary).getByText("Tue 12 PM–1 PM")).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Find Only open sections" }));
+  expect(screen.getByRole("switch", { name: "Only open sections" })).toHaveFocus();
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.click(screen.getByRole("button", { name: "Back" }));
+  expect(within(screen.getByRole("group", { name: "Current availability" })).getByText("11:00 AM")).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Skip tutorial" }));
+  expect(screen.getByRole("combobox", { name: "Starts after" })).toHaveFocus();
+  expect(planner.getState().preferences).toEqual({ startsAfter: 660, blocked: [{ day: "Tue", start: 720, end: 780 }], onlyOpen: false });
+});
+
 it("requires one real course and keeps it when going back and skipping", async () => {
   start();
   view();
@@ -75,7 +133,10 @@ it("requires one real course and keeps it when going back and skipping", async (
   expect(search).toHaveFocus();
   await user.type(search, "AE 2410{Enter}");
   await user.click(screen.getByRole("button", { name: "Next" }));
+  expect(screen.getByRole("heading", { name: "Set availability if you want" })).toHaveFocus();
+  await user.click(screen.getByRole("button", { name: "Next" }));
   expect(screen.getByRole("heading", { name: "Browse your schedules" })).toHaveFocus();
+  await user.click(screen.getByRole("button", { name: "Back" }));
   await user.click(screen.getByRole("button", { name: "Back" }));
   expect(screen.getByRole("heading", { name: "Add your courses" })).toHaveFocus();
   await user.click(screen.getByRole("button", { name: "Skip tutorial" }));
@@ -146,6 +207,7 @@ it("remembers completion without relying on a restored course selection", async 
   await user.click(screen.getByRole("button", { name: "Next" }));
   await user.type(screen.getByRole("searchbox"), "AE 2410{Enter}");
   await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.click(screen.getByRole("button", { name: "Next" }));
   await user.click(screen.getByRole("button", { name: "Finish tutorial" }));
   expect(screen.getByRole("region", { name: "Schedule browser" })).toHaveFocus();
   await user.click(screen.getByRole("button", { name: "Remove AE 2410" }));
@@ -172,6 +234,9 @@ it.each(["no matches", "incomplete search", "engine error", "worker error", "loa
   await user.click(screen.getByRole("button", { name: "Next" }));
   await user.type(screen.getByRole("searchbox"), "AE 2410{Enter}");
   await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  if (outcome === "no matches") expect(await screen.findByText("No schedule fits your current choices. Your restrictions are still in place. Use the explanation below and change a setting when you’re ready.")).toBeVisible();
+  else expect(screen.queryByText(/^No schedule fits your current choices/)).not.toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "Finish tutorial" }));
   expect(screen.getByRole("region", { name: "Schedule browser" })).toHaveFocus();
   expect(screen.getByRole("button", { name: "Remove AE 2410" })).toBeVisible();

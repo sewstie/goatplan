@@ -13,6 +13,7 @@ export function StartTimeSelect() {
 
   return (
     <Select
+      id="tutorial-start-time"
       variant="pill"
       label="Starts after"
       options={options}

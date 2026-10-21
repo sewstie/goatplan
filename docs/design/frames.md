@@ -4,9 +4,9 @@
 
 ## First plan guide
 
-The initial guide follows [tutorial.md](screens/tutorial.md). It has three steps:
-choose a term, add courses, and browse schedules. Availability and professor
-guidance are reserved for later slices.
+The guide follows [tutorial.md](screens/tutorial.md). It has four steps:
+choose a term, add courses, optionally set availability, and browse schedules.
+Professor guidance is reserved for a later slice.
 
 ## New plans
 

@@ -36,6 +36,7 @@ export function BlockTimeButton() {
   return (
     <>
       <Chip
+        id="tutorial-block-time"
         variant="dashed"
         icon={<Plus />}
         onClick={() => {
