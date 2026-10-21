@@ -3,6 +3,7 @@
 import { LockSimple, LockSimpleOpen } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
 import { usePlanner } from "@/lib/store";
+import type { Ref } from "react";
 
 type LockButtonProps = {
   courseCode: string;
@@ -11,16 +12,18 @@ type LockButtonProps = {
   sectionName: string;
   locked: boolean;
   onUnlocked?: () => void;
+  buttonRef?: Ref<HTMLButtonElement>;
 };
 
 /** "Lock" keeps only schedules with this section; "Unlock" lets the planner pick again. */
-export function LockButton({ courseCode, sectionId, sectionName, locked, onUnlocked }: LockButtonProps) {
+export function LockButton({ courseCode, sectionId, sectionName, locked, onUnlocked, buttonRef }: LockButtonProps) {
   const lockSection = usePlanner((state) => state.lockSection);
   const unlockSection = usePlanner((state) => state.unlockSection);
   const action = locked ? "Unlock" : "Lock";
 
   return (
     <Button
+      ref={buttonRef}
       variant="soft"
       size="xs"
       icon={locked ? <LockSimpleOpen aria-hidden /> : <LockSimple aria-hidden />}

@@ -7,23 +7,32 @@ import { useAlternativeSheet } from "./alternativeSheet";
 import { SectionChooser } from "./SectionChooser";
 import { useSectionChoices } from "./useSectionChoices";
 
-/**
- * "Choose a lab": the course's other labs (or sections) that fit around the rest of the schedule,
- * same-time ones included. Opened from "View other … choices" in the details panel.
- */
 export function ChooseAlternativeSheet() {
   const code = useAlternativeSheet((state) => state.course);
   const close = useAlternativeSheet((state) => state.close);
   const course = usePlanner((state) => (code ? state.term?.courses.find((item) => item.code === code) : undefined));
   const choices = useSectionChoices(course);
+  const selectedSection = usePlanner((state) => state.selectedSection);
+  const solveStatus = usePlanner((state) => state.solveStatus);
   const open = choices !== null;
   const introRef = useRef<HTMLParagraphElement>(null);
+  const returnToPicked = useRef(false);
 
   // The sheet would focus its close button, which Safari outlines; start at the explanation instead.
   // This runs after the sheet's own effect has opened it.
   useEffect(() => {
     if (open) introRef.current?.focus();
   }, [open]);
+
+  useEffect(() => {
+    if (open || !returnToPicked.current || !selectedSection || solveStatus !== "done") return;
+    const block = [...document.querySelectorAll<HTMLButtonElement>("button[data-block]")]
+      .find((button) => button.dataset.block?.startsWith(`${selectedSection}|`));
+    if (block) {
+      block.focus();
+      returnToPicked.current = false;
+    }
+  }, [open, selectedSection, solveStatus]);
 
   return (
     <Sheet open={open} onClose={close} title={choices ? `Choose a ${choices.kind}` : ""}>
@@ -32,7 +41,10 @@ export function ChooseAlternativeSheet() {
           key={`${course.code}:${choices.current.label}`}
           course={course}
           choices={choices}
-          onPicked={close}
+          onPicked={() => {
+            returnToPicked.current = true;
+            close();
+          }}
           introRef={introRef}
         />
       )}

@@ -15,6 +15,9 @@ import { NoTimeStrip } from "./NoTimeStrip";
 import type { ClassItem } from "./scheduleItems";
 import { useScheduleItems } from "./useScheduleItems";
 import { useDiagnosticPreview } from "./useDiagnosticPreview";
+import { useSectionPreviewItems } from "./useSectionPreviewItems";
+import { useAlternativeSheet } from "@/components/sections/alternativeSheet";
+import { useSectionChoices } from "@/components/sections/useSectionChoices";
 import { WeekCalendar } from "./WeekCalendar";
 
 const FULL_COLUMN = { lane: 0, lanes: 1 };
@@ -28,9 +31,13 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
   const selectedCourse = usePlanner((state) => state.selectedCourse);
   const selectedSection = usePlanner((state) => state.selectedSection);
   const selectCourse = usePlanner((state) => state.selectCourse);
+  const course = term?.courses.find((item) => item.code === selectedCourse);
+  const choices = useSectionChoices(course);
+  const openChoices = useAlternativeSheet((state) => state.open);
   const { classes: scheduled, untimed } = useScheduleItems();
   const diagnostic = useDiagnosticPreview();
-  const previewItems = useMemo(() => [...previews, ...diagnostic.classes], [previews, diagnostic.classes]);
+  const sectionPreviews = useSectionPreviewItems();
+  const previewItems = useMemo(() => [...previews, ...diagnostic.classes, ...sectionPreviews], [previews, diagnostic.classes, sectionPreviews]);
   const classes = useMemo(() => [...scheduled, ...previewItems], [scheduled, previewItems]);
 
   const { range, days } = useMemo(
@@ -45,7 +52,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
     return groups;
   }, [classes]);
   const lanes = useMemo(() => {
-    const result = new Map([...byDay.values()].flatMap((items) => [...assignLanes(items)]));
+    const result = new Map([...byDay.values()].flatMap((items) => [...assignLanes(items.filter((item) => !item.choicePreview))]));
     const problemLanes = new Map(classes.filter((item) => item.problem && (result.get(item)?.lanes ?? 0) > 1)
       .map((item) => [item.sectionId, result.get(item)!]));
     for (const item of classes) {
@@ -78,8 +85,13 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             density={density}
             style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN)}
             selected={selected}
-            // The course opens in the details panel; a second click clears the block but keeps the course.
-            onSelect={(clicked) => selectCourse(clicked.courseCode, selected ? null : clicked.sectionId)}
+            onSelect={(clicked) => {
+              if (selected && choices && !clicked.preview) {
+                openChoices(clicked.courseCode);
+                return;
+              }
+              selectCourse(clicked.courseCode, selected ? null : clicked.sectionId);
+            }}
           />
         );
       })}
