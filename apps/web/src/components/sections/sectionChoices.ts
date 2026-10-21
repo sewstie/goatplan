@@ -49,7 +49,10 @@ export function sectionChoices(
   const fitting = course.options.filter((option) => {
     if (option === currentIds) return false;
     const sections = sectionsById(course, option);
-    return meetsRules(sections, rules) && !spansOverlap(meetingSpans(sections), busy);
+    const overlapsOwnSection = sections.some((section, index) =>
+      spansOverlap(meetingSpans([section]), meetingSpans(sections.slice(index + 1))),
+    );
+    return !overlapsOwnSection && meetsRules(sections, rules) && !spansOverlap(meetingSpans(sections), busy);
   });
   if (fitting.length === 0) return null;
 

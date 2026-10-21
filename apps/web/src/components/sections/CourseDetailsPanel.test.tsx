@@ -30,9 +30,19 @@ const nothingFits = (): SolveResponse => ({
   diagnosis: { unsure: false, emptyCourses: [], clashingPairs: [], minimalClash: [], fixes: [] },
 });
 
+function termWithSameTimeLabs(): TermFile {
+  const term = termFile("2027-C");
+  for (const section of term.courses[0].sections) {
+    if (section.type === "lab") {
+      section.meetings = [{ days: ["Thu"], start: 840, end: 890, location: "Higgins Labs 230" }];
+    }
+  }
+  return term;
+}
+
 /** The fixture term with a third AE 2320 lab, CX03, with more open seats than the others. */
 function termWithThreeLabs(): TermFile {
-  const term = termFile("2027-C");
+  const term = termWithSameTimeLabs();
   const course = term.courses[0];
   const cx02 = course.sections[2];
   course.sections.push({ ...cx02, id: "AE 2320-CX03", code: "CX03", enrolled: 5 });
@@ -256,7 +266,7 @@ describe("CourseDetailsPanel", () => {
 
 describe("ChooseAlternativeSheet", () => {
   it("lists the same-time labs and applies the suggested one through the store", async () => {
-    const { store } = await startTestPlanner({ courses: ["AE 2320"] });
+    const { store } = await startTestPlanner({ courses: ["AE 2320"] }, { term: termWithSameTimeLabs() });
     renderPanelAndSheet();
 
     const opener = screen.getByRole("button", { name: "View other lab choices" });
@@ -336,7 +346,7 @@ describe("ChooseAlternativeSheet", () => {
   });
 
   it("closes without changing anything", async () => {
-    const { store } = await startTestPlanner({ courses: ["AE 2320"] });
+    const { store } = await startTestPlanner({ courses: ["AE 2320"] }, { term: termWithSameTimeLabs() });
     renderPanelAndSheet();
 
     await userEvent.click(screen.getByRole("button", { name: "View other lab choices" }));

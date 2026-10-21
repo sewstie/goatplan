@@ -70,9 +70,9 @@ describe("real engine", () => {
     expect(response.diagnosis).toMatchObject({ unsure: false, clashingPairs: [], minimalClash: [] });
     const [empty] = response.diagnosis!.emptyCourses;
     expect(empty.code).toBe(timed[0].code);
-    expect(Object.keys(empty.removed).sort()).toEqual(["blocked", "notLocked", "notOpen", "startsTooEarly"]);
+    expect(Object.keys(empty.removed).sort()).toEqual(["blocked", "notAnyOf", "notLocked", "notOpen", "startsTooEarly"]);
     for (const fix of response.diagnosis!.fixes) {
-      expect(["relaxStartsAfter", "clearBlocked", "allowFull", "unlock", "dropCourse"]).toContain(fix.kind);
+      expect(["relaxStartsAfter", "clearBlocked", "allowFull", "unlock", "clearAnyOf", "dropCourse"]).toContain(fix.kind);
     }
   });
 
