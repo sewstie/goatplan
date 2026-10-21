@@ -37,9 +37,9 @@ async function open(page: Page, plan: Draft = regular, term = data(), route = tr
   if (wait) await expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", /done|error/, { timeout: 30_000 });
 }
 
-async function screenshots(page: Page, name: string) {
+async function screenshots(page: Page, name: string, widths = [1440, 834]) {
   await page.mouse.move(0, 0);
-  for (const width of [1440, 834]) {
+  for (const width of widths) {
     await page.setViewportSize({ width, height: width === 834 ? 1194 : 900 });
     await page.screenshot({ path: `e2e/screenshots/diagnosis-${name}-${width}.png`, fullPage: true, animations: "disabled" });
   }
@@ -69,23 +69,27 @@ async function firstSolve(page: Page, reply: MockReply | null, delay = 0) {
   }, { reply, delay });
 }
 
-test("start-time diagnosis matches its frame and the keyboard fix restores schedules", async ({ page }) => {
-  await open(page, { ...regular, preferences: { ...regular.preferences, startsAfter: 600 } });
-  await expect(details(page).getByRole("heading", { name: "Your start time is too late" })).toBeVisible();
-  await expect(details(page)).toContainText("AE 2320’s only lecture starts at 9:00, so nothing works with “Starts after 10:00 AM”.");
-  await expect(page.getByText("Your start-time preference excludes AE 2320.", { exact: true })).toBeVisible();
-  await expect(calendar(page).locator('[data-preview="true"]').filter({ hasText: "CL01" })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Save schedule" })).toBeDisabled();
-  const fix = details(page).getByRole("button", { name: /^Change to 9:00 AM/ });
-  await expect(fix).toContainText(/\d+ schedule/);
-  await screenshots(page, "start-time");
-  await fix.focus();
-  await page.keyboard.press("Enter");
-  await settled(page);
-  expect((await draft(page)).preferences.startsAfter).toBe(540);
-  await expect(page.getByText("Schedule 1 of 1", { exact: true })).toBeVisible();
-  await expect(details(page).getByText("Needs attention")).toHaveCount(0);
-});
+for (const [label, start] of [["Change to 9:00 AM", 540], ["Clear start restriction", 0]] as const) {
+  test(`start-time diagnosis uses state 35 wording and ${label} works by keyboard`, async ({ page }) => {
+    await open(page, { ...regular, preferences: { ...regular.preferences, startsAfter: 600 } });
+    await expect(details(page).getByRole("heading", { name: "Your start time excludes this lecture" })).toBeVisible();
+    await expect(details(page)).toContainText("AE 2320’s only lecture starts at 9:00 AM, but Starts after is set to 10:00 AM.");
+    await expect(page.getByText("Your start-time preference excludes AE 2320.", { exact: true })).toBeVisible();
+    await expect(calendar(page).locator('[data-preview="true"]').filter({ hasText: "CL01" })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Save schedule" })).toBeDisabled();
+    await expect(details(page).getByRole("button", { name: /^Remove AE 2320/ })).toBeVisible();
+    const fix = details(page).getByRole("button", { name: new RegExp(`^${label}`) });
+    await expect(fix).toContainText(/\d+ schedule/);
+    if (start === 540) await screenshots(page, "start-time", [1440]);
+    await fix.focus();
+    await page.keyboard.press("Enter");
+    await settled(page);
+    expect(await draft(page)).toMatchObject({ ...regular, preferences: { ...regular.preferences, startsAfter: start } });
+    await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue(String(start));
+    await expect(page.getByText("Schedule 1 of 1", { exact: true })).toBeVisible();
+    await expect(details(page).getByText("Needs attention")).toHaveCount(0);
+  });
+}
 
 test("a full locked lab is explained, previewed, and unlocked through a fix", async ({ page }) => {
   const term = data();

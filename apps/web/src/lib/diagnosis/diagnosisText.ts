@@ -119,12 +119,11 @@ function emptyIssue(empty: EmptyCourse, context: DiagnosisContext): DiagnosisIss
       const start = Math.min(...lecture.meetings.map((meeting) => meeting.start));
       const time = formatTime(start);
       const preference = formatTime(context.preferences.startsAfter);
-      const clock = time.split(" ").at(-1) === preference.split(" ").at(-1) ? time.replace(/ (AM|PM)$/, "") : time;
       return {
         ...base,
         kind: "startTime",
-        title: "Your start time is too late",
-        detail: `${code}’s only lecture starts at ${clock}, so nothing works with “Starts after ${preference}”.`,
+        title: "Your start time excludes this lecture",
+        detail: `${code}’s only lecture starts at ${time}, but Starts after is set to ${preference}.`,
         summary: `Your start-time preference excludes ${code}.`,
         banner: { title: `Starts after ${preference}`, detail: `excludes ${code}’s only lecture at ${time}.` },
         sectionIds: [lecture.id],
@@ -206,7 +205,7 @@ function pairIssue(pair: [string, string], context: DiagnosisContext): Diagnosis
 export function fixText(fix: Fix, context: DiagnosisContext): DiagnosisFix {
   let label: string;
   switch (fix.kind) {
-    case "relaxStartsAfter": label = fix.startsAfter === 0 ? "Allow any start time" : `Change to ${formatTime(fix.startsAfter)}`; break;
+    case "relaxStartsAfter": label = fix.startsAfter === 0 ? "Clear start restriction" : `Change to ${formatTime(fix.startsAfter)}`; break;
     case "clearBlocked": label = "Clear blocked times"; break;
     case "allowFull": label = "Show full sections"; break;
     case "clearAnyOf": label = `Allow any professor for ${fix.course}`; break;
@@ -241,5 +240,14 @@ export function diagnosisText(diagnosis: Diagnosis, context: DiagnosisContext) {
       sectionIds: [], problemSectionIds: [], excludedSectionIds: [],
     });
   }
-  return { issues, fixes: diagnosis.fixes.map((fix) => fixText(fix, context)) };
+  const hasExcludedLecture = issues.some((issue) => issue.kind === "startTime" && issue.excludedSectionIds.length > 0);
+  const hasClearStart = diagnosis.fixes.some((fix) => fix.kind === "relaxStartsAfter" && fix.startsAfter === 0);
+  const fixes = diagnosis.fixes.flatMap((fix) => {
+    const text = fixText(fix, context);
+    if (hasExcludedLecture && !hasClearStart && fix.kind === "relaxStartsAfter" && fix.startsAfter > 0) {
+      return [text, fixText({ ...fix, startsAfter: 0, capped: true }, context)];
+    }
+    return [text];
+  });
+  return { issues, fixes };
 }
