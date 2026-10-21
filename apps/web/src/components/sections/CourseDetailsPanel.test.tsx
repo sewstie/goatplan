@@ -196,13 +196,13 @@ describe("CourseDetailsPanel", () => {
     expect(screen.queryByText(/No schedule fits/)).not.toBeInTheDocument();
   });
 
-  it("links the picked professor to Rate My Professors", async () => {
+  it("links the shown lecture instructor to Rate My Professors", async () => {
     await startTestPlanner({ courses: ["AE 2320"] });
     render(<CourseDetailsPanel />);
 
-    const picker = screen.getByRole("combobox", { name: "Professor" });
+    const picker = screen.getByRole("combobox", { name: "Lecture professor" });
     expect(picker).toHaveDisplayValue("Any professor");
-    expect(screen.queryByRole("link", { name: /Rate My Professors/ })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Rate My Professors/ })).toBeInTheDocument();
     await userEvent.selectOptions(picker, "Ye Lu");
     const link = screen.getByRole("link", { name: /Rate My Professors/ });
     expect(link).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
@@ -213,7 +213,7 @@ describe("CourseDetailsPanel", () => {
     const preferences = { startsAfter: 540, blocked: [{ day: "Mon" as const, start: 660, end: 710 }], onlyOpen: true };
     const { store, requests } = await startTestPlanner({ courses: ["AE 2320"], preferences }, { term: lectureProfessorTerm() });
     render(<CourseDetailsPanel />);
-    const picker = screen.getByRole("combobox", { name: "Professor" });
+    const picker = screen.getByRole("combobox", { name: "Lecture professor" });
     expect(within(picker).getAllByRole("option").map((option) => option.textContent)).toEqual([
       "Any professor", "Ye Lu", "Alex Smith", "Mark Richman",
     ]);
@@ -235,7 +235,7 @@ describe("CourseDetailsPanel", () => {
     term.courses[0].sections[0].type = "seminar";
     const { store, requests } = await startTestPlanner({ courses: ["AE 2320"] }, { term });
     render(<CourseDetailsPanel />);
-    expect(screen.queryByRole("combobox", { name: "Professor" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("combobox", { name: "Lecture professor" })).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: "Lock Lab CX01" }));
     await waitForSolve(store);
     expect(requests.at(-1)?.preferences?.locked).toEqual({ "AE 2320": ["AE 2320-CX01"] });
@@ -247,21 +247,21 @@ describe("CourseDetailsPanel", () => {
     term.courses[0].sections[1].type = "lecture";
     const { store, requests } = await startTestPlanner({ courses: ["AE 2320"], locks: { "AE 2320": ["AE 2320-CX01"] } }, { term });
     render(<CourseDetailsPanel />);
-    const picker = screen.getByRole("combobox", { name: "Professor" });
+    const picker = screen.getByRole("combobox", { name: "Lecture professor" });
     expect(within(picker).getAllByRole("option")[0]).toHaveTextContent("Any professor");
     await userEvent.selectOptions(picker, "Ye Lu");
     await waitForSolve(store);
     expect(requests.at(-1)?.preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01"] });
     expect(store.getState().locks).toEqual({ "AE 2320": ["AE 2320-CX01"] });
     expect(screen.queryByText(/Unlocked .* for this professor/)).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Rate My Professors/ })).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
+    expect(screen.getByRole("link", { name: /Rate My Professors: Ye Lu/ })).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
     await userEvent.selectOptions(picker, "Other Professor");
     await waitForSolve(store);
-    expect(screen.getByRole("link", { name: /Rate My Professors/ })).toHaveAttribute("href", rateMyProfessorsUrl("Other Professor"));
+    expect(screen.getByRole("link", { name: /Rate My Professors: Other Professor/ })).toHaveAttribute("href", rateMyProfessorsUrl("Other Professor"));
     await userEvent.selectOptions(picker, "");
     await waitForSolve(store);
     expect(requests.at(-1)?.preferences?.anyOf).toEqual({});
-    expect(screen.queryByRole("link", { name: /Rate My Professors/ })).not.toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: /Rate My Professors/ })).toHaveLength(2);
   });
 
   it("follows the selected course, and says so after a click on its calendar block", async () => {
@@ -293,7 +293,7 @@ describe("CourseDetailsPanel", () => {
 
     expect(within(card("Lecture C01")).getByText("Instructor not assigned yet")).toBeInTheDocument();
     expect(screen.getByText("Professor reviews appear when an instructor is available.")).toBeInTheDocument();
-    expect(screen.queryByRole("combobox", { name: "Professor" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("combobox", { name: "Lecture professor" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 });

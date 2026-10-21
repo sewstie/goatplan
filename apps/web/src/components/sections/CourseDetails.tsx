@@ -2,12 +2,14 @@
 
 import { useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { uniqueInstructors } from "@/lib/data";
 import type { Course } from "@/lib/data/types";
 import { selectChosenSections, usePlanner } from "@/lib/store";
 import { OtherChoicesButton } from "./OtherChoicesButton";
 import { ProfessorPicker } from "./ProfessorPicker";
-import { SectionChoiceCard } from "./SectionChoiceCard";
+import { SectionsInSchedule } from "./SectionsInSchedule";
 import { hasSetTime, sectionsById } from "./sectionDetails";
 import { useSectionChoices } from "./useSectionChoices";
 
@@ -30,6 +32,8 @@ export function CourseDetails({ course }: { course: Course }) {
   // Cards shown only because they're locked disappear on Unlock, so focus goes to the heading.
   const focusHeading = chosen.length === 0 ? () => headingRef.current?.focus() : undefined;
   const untimed = sections.some((section) => !hasSetTime(section));
+  const hasLectures = course.sections.some((section) => section.type === "lecture");
+  const waitlist = sections.some((section) => section.status === "waitlist");
 
   return (
     <div className="flex flex-col gap-4">
@@ -42,27 +46,28 @@ export function CourseDetails({ course }: { course: Course }) {
       </h2>
       <p className="text-11 leading-17-6 font-510 text-ink">{course.title}</p>
 
+      {!waitlist && <ProfessorPicker course={course} />}
+      {!hasLectures && (
+        <p className="mt-12 text-10 leading-17-5 text-ink-muted">
+          {course.sections.some((section) => section.type === "lab") ? "This course has no lecture. Choose a lab section directly." : "This course has no lecture. Choose a section directly."}
+        </p>
+      )}
+
       {chosen.length === 0 && answered && (
         <p className="pt-7 text-10 leading-17-5 text-ink-muted">No schedule fits with this course right now.</p>
       )}
 
-      {sections.length > 0 && (
-        <>
-          <h3 className="mt-12 text-10 leading-14-5 font-650 text-ink">Your choices</h3>
-          {sections.map((section, index) => (
-            // Keyed by position: when the engine swaps the lab, focus stays on the same Lock / Unlock button.
-            <SectionChoiceCard
-              key={index}
-              course={course}
-              section={section}
-              locked={locked.includes(section.id)}
-              onUnlocked={focusHeading}
-            />
-          ))}
-        </>
-      )}
+      <SectionsInSchedule course={course} sections={sections} locked={locked} waitlist={waitlist} onUnlocked={focusHeading} />
 
       {choices && <OtherChoicesButton courseCode={code} kind={choices.kind} />}
+
+      {waitlist && (
+        <>
+          <p className="pt-11 pb-13 text-10 leading-17-5 text-ink-muted">This schedule includes a full section because Only open sections is off.</p>
+          <ButtonLink href="https://workday.wpi.edu" external fullWidth icon={<ArrowSquareOut aria-hidden />}>Join waitlist in Workday</ButtonLink>
+          <ProfessorPicker course={course} />
+        </>
+      )}
 
       {untimed && (
         <p className="pt-7 text-10 leading-17-5 text-ink-muted">
@@ -77,8 +82,6 @@ export function CourseDetails({ course }: { course: Course }) {
           <p>Professor reviews appear when an instructor is available.</p>
         </div>
       )}
-
-      <ProfessorPicker course={course} />
     </div>
   );
 }

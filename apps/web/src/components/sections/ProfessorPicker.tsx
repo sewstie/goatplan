@@ -1,8 +1,7 @@
 "use client";
 
-import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
 import { Select } from "@/components/ui/Select";
-import { lectureInstructors, rateMyProfessorsUrl, type Course } from "@/lib/data";
+import { lectureInstructors, type Course } from "@/lib/data";
 import { usePlanner } from "@/lib/store";
 
 export function ProfessorPicker({ course }: { course: Course }) {
@@ -14,29 +13,29 @@ export function ProfessorPicker({ course }: { course: Course }) {
   const options = [...instructors];
   if (name && !options.some((instructor) => instructor.toLowerCase() === name.toLowerCase())) options.push(name);
   const value = options.find((instructor) => instructor.toLowerCase() === name?.toLowerCase()) ?? "";
+  const compatible = course.sections.some((section) => section.type === "lab") && course.sections.some((section) => section.type === "discussion");
 
   return (
-    <div className="mt-12 flex flex-col gap-4">
+    <div className="mt-7 flex flex-col gap-5">
+      <div className="flex items-end justify-between">
+        <label id="lecture-professor-label" htmlFor="tutorial-professor" className="text-10 leading-14-5 font-650 text-ink">Lecture professor</label>
+        {instructors.length > 1 && <span className="text-8 leading-11-6 text-ink-muted">Optional</span>}
+      </div>
       <Select
         id="tutorial-professor"
         variant="box"
-        label="Professor"
-        hideLabel={false}
+        className="min-h-36.5"
+        label="Lecture professor"
+        aria-labelledby="lecture-professor-label"
         options={[{ value: "", label: "Any professor" }, ...options.map((instructor) => ({ value: instructor, label: instructor }))]}
         value={value}
+        aria-describedby="lecture-professor-hint"
         disabled={!ready}
         onChange={(event) => setProfessor(course.code, event.target.value || null)}
       />
-      {name && <a
-        href={rateMyProfessorsUrl(name)}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-7.5 inline-flex items-center gap-5 self-start rounded-badge text-10 leading-14-5 text-accent hover:underline"
-      >
-        Rate My Professors
-        <span className="sr-only">: {name} (opens in a new tab)</span>
-        <ArrowSquareOut aria-hidden className="size-12" />
-      </a>}
+      <p id="lecture-professor-hint" className="text-9 leading-13-95 text-ink-muted">
+        {compatible ? "Filters lectures only. Compatible labs and discussions can have other instructors." : "Filters lectures only. Labs and discussions can have other instructors."}
+      </p>
     </div>
   );
 }

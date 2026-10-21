@@ -4,14 +4,60 @@ import { expect, test, type Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft } from "../src/lib/store/types";
 import { lectureProfessorTerm } from "../src/lib/store/testing/lectureProfessors";
+import { coursePanelTerm } from "./fixtures/coursePanel";
 
 const source: TermFile = JSON.parse(readFileSync(path.join(__dirname, "../public/data/2027-C.json"), "utf8"));
 const key = "goatplan:draft:v1:2027-C";
 const code = "AE 2410";
 const details = (page: Page) => page.getByRole("complementary", { name: "Course details" });
-const picker = (page: Page) => details(page).getByRole("combobox", { name: "Professor" });
+const picker = (page: Page) => details(page).getByRole("combobox", { name: "Lecture professor" });
 const settled = (page: Page) => expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
 const draft = (page: Page): Promise<Draft> => page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), key);
+
+for (const state of ["04", "07", "24", "29"] as const) {
+  test(`v2 course panel state ${state} at 1440`, async ({ page }) => {
+    const data = coursePanelTerm(state);
+    const code = data.courses[0].code;
+    await page.addInitScript(() => localStorage.setItem("goatplan:tutorial:v1", "completed"));
+    await open(page, {
+      courses: state === "07" ? [code, "AE 2410", "AE 2210"] : [code],
+      locks: state === "29" ? { [code]: ["DEMO 2001-B01"] } : {},
+      professorByCourse: state === "07" ? { [code]: "Ye Lu" } : {},
+      preferences: { startsAfter: state === "04" || state === "07" ? 540 : 0, onlyOpen: true,
+        blocked: state === "04" || state === "07" ? [
+          { day: "Tue", start: 840, end: 960, label: "Work" },
+          { day: "Fri", start: 840, end: 960, label: "Work" },
+        ] : [],
+      },
+    }, data);
+    await page.setViewportSize({ width: 1440, height: 800 });
+    if (state === "04") {
+      await page.getByRole("searchbox").fill("a");
+      await expect(page.getByRole("region", { name: "Search results" })).toBeVisible();
+      await page.getByRole("searchbox").blur();
+    }
+    await expect(details(page).getByRole("heading", { level: 2, name: code })).toBeVisible();
+    expect((await details(page).boundingBox())!.width).toBe(284);
+    if (state === "29") {
+      await expect(picker(page)).toHaveCount(0);
+      await expect(details(page).getByRole("button", { name: "Unlock Lab B01", exact: true })).toBeVisible();
+    } else {
+      await expect(picker(page)).toBeVisible();
+      const field = await picker(page).boundingBox();
+      const sections = await details(page).getByRole("heading", { name: "Sections in this schedule" }).boundingBox();
+      expect(field!.y + field!.height).toBeLessThan(sections!.y);
+    }
+    if (state === "24") {
+      while (await details(page).getByRole("heading", { name: "Lecture L01", exact: true }).count() === 0) {
+        await page.getByRole("button", { name: "Next schedule" }).click();
+      }
+      await expect(details(page).getByText("4.4 / 5")).toBeVisible();
+      await expect(details(page).getByText("Compatible", { exact: true })).toHaveCount(2);
+    }
+    await page.evaluate(() => document.fonts.ready);
+    await expect(page).toHaveScreenshot(`course-panel-v2-${state}-1440.png`, { animations: "disabled" });
+  });
+}
 
 function termData() {
   const term = structuredClone(source);
@@ -110,7 +156,9 @@ test("lecture filtering keeps linked labs and discussions, supports alternatives
   await page.keyboard.press("Space");
   await sheet.getByRole("button", { name: "Pick CL02 · CX04", exact: true }).click();
   await expect(details(page).getByRole("heading", { name: "Lab CX04", exact: true })).toBeVisible();
-  await expect(details(page).getByRole("article").filter({ hasText: "Lecture CL02" })).toContainText("Alex Smith, ye lu");
+  const coTeachers = details(page).getByRole("article").filter({ hasText: "Lecture CL02" });
+  await expect(coTeachers.getByRole("group", { name: "Alex Smith", exact: true })).toBeVisible();
+  await expect(coTeachers.getByRole("group", { name: "ye lu", exact: true })).toBeVisible();
 
   await picker(page).selectOption("");
   await settled(page);
@@ -155,7 +203,7 @@ test("a professor filters both lecture choices, survives reload and Any professo
   const shown: string[] = [];
   for (let index = 0; index < 2; index++) {
     shown.push(await details(page).getByRole("heading", { name: /^Lecture C0/ }).innerText());
-    await expect(details(page).getByText("Ye Lu", { exact: true }).first()).toBeVisible();
+    await expect(details(page).getByRole("group", { name: "Ye Lu", exact: true })).toBeVisible();
     await expect(details(page).getByRole("heading", { name: "Lecture C03" })).toHaveCount(0);
     if (index === 0) await page.getByRole("button", { name: "Next schedule" }).click();
   }

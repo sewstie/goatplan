@@ -118,7 +118,7 @@ test("reload, saving, and saving a copy preserve configured preferences, profess
   await startsAfter(page).selectOption("540");
   await blockTime(page, "Tuesday", "720", "780");
   await onlyOpen(page).click();
-  await details(page).getByRole("combobox", { name: "Professor" }).selectOption("Ye Lu");
+  await details(page).getByRole("combobox", { name: "Lecture professor" }).selectOption("Ye Lu");
   await expectSchedules(page, ["C02", "C03"]);
   await details(page).getByRole("button", { name: "Lock Lecture C03", exact: true }).click();
   await settled(page);
@@ -128,7 +128,7 @@ test("reload, saving, and saving a copy preserve configured preferences, profess
     await expect(startsAfter(page)).toHaveValue("540");
     await expect(onlyOpen(page)).not.toBeChecked();
     await expect(preferences(page).getByRole("button", { name: "Remove blocked time Tue 12 PM–1 PM" })).toBeVisible();
-    await expect(details(page).getByRole("combobox", { name: "Professor" })).toHaveValue("Ye Lu");
+    await expect(details(page).getByRole("combobox", { name: "Lecture professor" })).toHaveValue("Ye Lu");
     await expect(details(page).getByRole("heading", { name: "Lecture C03", exact: true })).toBeVisible();
     await expect(details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true })).toBeVisible();
     await expect(page.getByText("Schedule 1 of 1", { exact: true })).toBeVisible();
@@ -153,7 +153,7 @@ test("reload, saving, and saving a copy preserve configured preferences, profess
     await startsAfter(page).selectOption("0");
     await preferences(page).getByRole("button", { name: "Remove blocked time Tue 12 PM–1 PM" }).click();
     await details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true }).click();
-    await details(page).getByRole("combobox", { name: "Professor" }).selectOption("");
+    await details(page).getByRole("combobox", { name: "Lecture professor" }).selectOption("");
     await onlyOpen(page).click();
     await expectSchedules(page, ["C01", "C02"]);
 
