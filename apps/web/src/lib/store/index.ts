@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useStore } from "zustand";
 import type { StoreApi } from "zustand/vanilla";
 import { loadTerm, loadTermIndex, takeTermBuffer } from "@/lib/data/load";
@@ -5,8 +6,10 @@ import { getEngineClient } from "@/lib/engine";
 import { createPlannerStore } from "./createPlannerStore";
 import { browserStorage, readDraft } from "./draft";
 import type { Draft, PlannerStore } from "./types";
+import { PlannerContext } from "./PlannerProvider";
 
 export * from "./types";
+export { PlannerProvider } from "./PlannerProvider";
 export { buildRequest, MAX_SCHEDULES } from "./buildRequest";
 export { SORT_PRESETS, SORT_PRESET_IDS } from "./sortPresets";
 export { DEFAULT_PREFERENCES } from "./draft";
@@ -32,10 +35,14 @@ export function storedDraft(termId: string): Draft | null {
   return readDraft(browserStorage(), termId);
 }
 
+export function usePlannerStore(): StoreApi<PlannerStore> {
+  return useContext(PlannerContext) ?? getPlannerStore();
+}
+
 /**
  * Reads from the planner store and re-renders when the selected value changes. Select single values,
  * or wrap selectors that build objects in useShallow (zustand/react/shallow).
  */
 export function usePlanner<T>(selector: (state: PlannerStore) => T): T {
-  return useStore(getPlannerStore(), selector);
+  return useStore(usePlannerStore(), selector);
 }

@@ -1,28 +1,19 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderToString } from "react-dom/server";
-import { afterEach, expect, it, vi } from "vitest";
-import { useStore } from "zustand";
+import { expect, it, vi } from "vitest";
 import { TermPicker } from "@/components/courses/TermPicker";
 import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
 import { ScheduleSwitcher } from "@/components/schedule/ScheduleSwitcher";
 import { ScheduleView } from "@/components/schedule/ScheduleView";
 import type { SolveRequest, SolveResponse } from "@/lib/engine/types";
+import { PlannerProvider } from "@/lib/store";
 import { createPlannerStore } from "@/lib/store/createPlannerStore";
 import { emptyDraft, writeDraft, type DraftStorage } from "@/lib/store/draft";
 import { loaded, MemoryStorage, solved, termFile, termSummary } from "@/lib/store/testing/fixtures";
-import type { PlannerStore } from "@/lib/store/types";
 import { FirstPlanTutorial } from "./FirstPlanTutorial";
 
 let planner: ReturnType<typeof createPlannerStore>;
-
-vi.mock("@/lib/store", async (importOriginal) => ({
-  ...(await importOriginal<typeof import("@/lib/store")>()),
-  getPlannerStore: () => planner,
-  usePlanner: <T,>(selector: (state: PlannerStore) => T) => useStore(planner, selector),
-}));
-
-afterEach(() => vi.restoreAllMocks());
 
 function start(
   loadTerm = async (id: string) => termFile(id),
@@ -43,14 +34,14 @@ function start(
 
 function view(storage: DraftStorage | null = new MemoryStorage()) {
   return render(
-    <>
+    <PlannerProvider store={planner}>
       <FirstPlanTutorial storage={storage} />
       <TermPicker />
       <CourseSearchPanel />
       <div id="tutorial-schedules" tabIndex={-1} aria-label="Schedule browser" role="region">
         <ScheduleSwitcher />
       </div>
-    </>,
+    </PlannerProvider>,
   );
 }
 
@@ -141,7 +132,7 @@ it.each([null, {
 it("does not read tutorial storage during server rendering", () => {
   start();
   const storage = { getItem: vi.fn(), setItem: vi.fn() };
-  expect(renderToString(<FirstPlanTutorial storage={storage} />)).toBe("");
+  expect(renderToString(<PlannerProvider store={planner}><FirstPlanTutorial storage={storage} /></PlannerProvider>)).toBe("");
   expect(storage.getItem).not.toHaveBeenCalled();
   expect(storage.setItem).not.toHaveBeenCalled();
 });
@@ -175,7 +166,7 @@ it.each(["no matches", "incomplete search", "engine error", "worker error", "loa
     } };
   });
   view();
-  render(<ScheduleView />);
+  render(<PlannerProvider store={planner}><ScheduleView /></PlannerProvider>);
   const user = userEvent.setup();
   await screen.findByRole("heading", { name: "Choose your term" });
   await user.click(screen.getByRole("button", { name: "Next" }));
