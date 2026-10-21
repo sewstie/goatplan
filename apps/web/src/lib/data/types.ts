@@ -75,6 +75,17 @@ export interface TermFile {
   term: Term;
   generatedAt: string;
   courses: Course[];
+  instructors?: Record<string, Instructor>;
+}
+
+export interface InstructorRating {
+  score: number;
+  count: number;
+}
+
+export interface Instructor {
+  rating?: InstructorRating | null;
+  ratingSource?: string;
 }
 
 export type TermStatus = "upcoming" | "in-progress";

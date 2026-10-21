@@ -104,6 +104,22 @@ this term. If nothing changed, it stays the same.
 | `sections`    |                                       | Sorted by `id`.                                       |
 | `options`     |                                       | See [Options](#options).                              |
 
+### Instructor ratings
+
+Term files may include an `instructors` object keyed by instructor name. The
+section's `instructors` array stays an array of names. Name matching ignores
+case and leading or trailing spaces.
+
+Each entry may have `rating: { score: number, count: number } | null`.
+The score is between 0 and 5. The count is a nonnegative integer. A missing
+entry, a missing rating, or `null` means the rating is unknown. Zero is a score,
+not missing data. Co-teachers each have their own entry.
+
+An optional `ratingSource` string identifies the source beside the count.
+Test fixtures use `"Example data"` for synthetic ratings. Published data must
+name its actual source. The frontend displays this metadata without fetching
+ratings. The engine does not use it.
+
 ### Section
 
 | Field         | Example                          | Notes                                                             |

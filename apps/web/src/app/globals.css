@@ -153,9 +153,11 @@
   --leading-12: 12px;
   --leading-12-33: 12.33px;
   --leading-12-6: 12.6px;
+  --leading-12-8: 12.8px;
   --leading-13: 13px;
   --leading-13-2: 13.2px;
   --leading-13-5: 13.5px;
+  --leading-13-95: 13.95px;
   --leading-14-4: 14.4px;
   --leading-14-5: 14.5px;
   --leading-14-85: 14.85px;
@@ -220,7 +222,7 @@
   --size-app-padding: 14px;
   --size-gutter: 12px;
   --size-sidebar: 224px;
-  --size-details: 270px;
+  --size-details: 284px;
   --size-header: 76px;
   --size-control: 36px;
   --size-control-sm: 32px;

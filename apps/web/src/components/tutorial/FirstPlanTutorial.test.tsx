@@ -68,9 +68,9 @@ it.each([null, "Ye Lu"])("reveals a planned lecture course's real Professor cont
     planner.getState().setPreferences({ startsAfter: 600 });
     planner.getState().lockSection("AE 2320", "AE 2320-CX01");
   });
-  expect(screen.queryByRole("combobox", { name: "Professor" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("combobox", { name: "Lecture professor" })).not.toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "Find Professor for AE 2320" }));
-  const professor = screen.getByRole("combobox", { name: "Professor" });
+  const professor = screen.getByRole("combobox", { name: "Lecture professor" });
   expect(professor).toHaveFocus();
   expect(professor).toHaveValue("");
   expect(planner.getState().courses).toEqual(["AE 2320", "AE 2410"]);
@@ -98,7 +98,7 @@ it.each(["lab", "discussion", "unnamed lecture"])("omits an unavailable professo
   await user.click(screen.getByRole("button", { name: "Next" }));
   await user.type(screen.getByRole("searchbox"), "AE 2410{Enter}");
   expect(screen.queryByRole("button", { name: /^Find Professor/ })).not.toBeInTheDocument();
-  expect(screen.queryByRole("combobox", { name: "Professor" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("combobox", { name: "Lecture professor" })).not.toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "Next" }));
   await user.click(screen.getByRole("button", { name: "Next" }));
   await user.click(screen.getByRole("button", { name: "Finish tutorial" }));

@@ -4,7 +4,7 @@ import { lectureProfessorTerm } from "../src/lib/store/testing/lectureProfessors
 const code = "AE 2320";
 const guide = (page: Page) => page.getByRole("region", { name: "First plan tutorial" });
 const details = (page: Page) => page.getByRole("complementary", { name: "Course details" });
-const professor = (page: Page) => details(page).getByRole("combobox", { name: "Professor" });
+const professor = (page: Page) => details(page).getByRole("combobox", { name: "Lecture professor" });
 const next = (page: Page) => guide(page).getByRole("button", { name: "Next", exact: true });
 const settled = (page: Page) => expect(page.locator("[data-planner-solve-status]")).toHaveAttribute("data-planner-solve-status", "done");
 

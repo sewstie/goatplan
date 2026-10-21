@@ -174,7 +174,7 @@ Font family: `--font-sans` = **DM Sans** (Figma: `font family/Font 1` = Inter).
 
 Each is a px value from Figma (`line height/…`). CSS variable `--leading-<value>`, with the dot written as `-`:
 
-8.4 · 8.45 · 8.84 · 9 · 9.6 · 9.75 · 10.4 · 10.5 · 10.8 · 11.2 · 11.6 · 11.9 · 12 · 12.33 · 12.6 · 13 · 13.2 · 13.5 · 14.4 · 14.5 · 14.85 · 15 · 15.3 · 15.5 · 15.95 · 16 · 16.5 · 16.65 · 17 · 17.4 · 17.5 · 17.6 · 18 · 18.7 · 19.2 · 19.8 · 20.35 · 22 · 23.8 · 24.7 · 25.2 · 27.55 · 30 · 30.45
+8.4 · 8.45 · 8.84 · 9 · 9.6 · 9.75 · 10.4 · 10.5 · 10.8 · 11.2 · 11.6 · 11.9 · 12 · 12.33 · 12.6 · 12.8 · 13 · 13.2 · 13.5 · 13.95 · 14.4 · 14.5 · 14.85 · 15 · 15.3 · 15.5 · 15.95 · 16 · 16.5 · 16.65 · 17 · 17.4 · 17.5 · 17.6 · 18 · 18.7 · 19.2 · 19.8 · 20.35 · 22 · 23.8 · 24.7 · 25.2 · 27.55 · 30 · 30.45
 
 (e.g. `--leading-14-5: 14.5px`). Prefer the text styles below over picking line heights by hand.
 
@@ -278,7 +278,7 @@ Spacing values in the frames are plain px. In code, Tailwind's spacing unit is `
 | `--size-app-padding` | 14px | — | Padding around the panels |
 | `--size-gutter` | 12px | item spacing/12 | Gap between sidebar, workspace and panels; workspace row gap |
 | `--size-sidebar` | 224px | — | Sidebar width |
-| `--size-details` | 270px | — | Details panel width |
+| `--size-details` | 284px | — | Details panel width (270 in Prototype v1) |
 | `--size-header` | 76px | height/76 | Header min-height |
 | `--size-control` | 36px | — | Regular button height |
 | `--size-control-sm` | 32px | height/32 | Small button, preference chip min-height |
