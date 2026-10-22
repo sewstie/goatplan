@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { countLabel, registrationRows, sectionCount, sectionListText, type SavedPlan } from "@/lib/plans";
 import { useTermFile } from "@/lib/plans/useTermFile";
 import { CopySectionListButton } from "./CopySectionListButton";
+import { PrintSectionListButton } from "./PrintSectionListButton";
 import { RegistrationTable } from "./RegistrationTable";
 import { SectionListPreview } from "./SectionListPreview";
 
@@ -23,12 +24,15 @@ export function RegistrationSheetView({ plan }: { plan: SavedPlan }) {
             {countLabel(sectionCount(plan), "section")} across {countLabel(plan.schedule.length, "course")}
           </p>
         </div>
-        <CopySectionListButton
-          text={text}
-          previewRef={previewRef}
-          onCopied={() => setCopyFailed(false)}
-          onFallback={() => setCopyFailed(true)}
-        />
+        <div className="flex items-center gap-7">
+          <PrintSectionListButton />
+          <CopySectionListButton
+            text={text}
+            previewRef={previewRef}
+            onCopied={() => setCopyFailed(false)}
+            onFallback={() => setCopyFailed(true)}
+          />
+        </div>
       </div>
       <RegistrationTable rows={registrationRows(plan, term)} className="mt-15" />
       <SectionListPreview ref={previewRef} text={text} className="mt-6" />
