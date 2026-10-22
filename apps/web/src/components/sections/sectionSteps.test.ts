@@ -1,9 +1,46 @@
 import { expect, it } from "vitest";
 import { sectionSteps } from "./sectionSteps";
 import { makeSection, orbitalMechanics } from "./testing/sections";
+import { lectureProfessorTerm } from "@/lib/store/testing/lectureProfessors";
 
 const rules = { startsAfter: 0, blocked: [], onlyOpen: true };
 const chosen = ["AE 2320-CL01", "AE 2320-CX01"];
+
+it("lists eligible lecture times after the professor filter and labels the lecture lock", () => {
+  const course = lectureProfessorTerm().courses[0];
+  const result = sectionSteps(course, [...chosen, "AE 2320-CD01"], [], [], { ...rules, startsAfter: 540, professor: "Ye Lu" });
+  expect(result.lectures?.choices.map(({ section, reason }) => [section.code, reason])).toEqual([["CL02", null]]);
+  expect(result.lectures?.label).toBe("1 other lecture time · Unlocked");
+  expect(sectionSteps(course, chosen, [chosen[0]], [], { ...rules, startsAfter: 540 }).lectures?.label).toBe("3 other lecture times · Locked");
+});
+
+it("keeps incompatible lectures visible with the locked lab's reason and allows a compatible switch", () => {
+  const course = lectureProfessorTerm().courses[0];
+  const locks = [chosen[0], "AE 2320-CX02", "AE 2320-CD01"];
+  const result = sectionSteps(course, [chosen[0], "AE 2320-CX02", "AE 2320-CD01"], locks, [], { ...rules, startsAfter: 540 });
+  expect(result.lectures?.choices.map(({ section, reason }) => [section.code, reason])).toEqual([
+    ["CL02", "Doesn't fit locked lab CX02"], ["CL03", "Doesn't fit locked lab CX02"], ["CL04", "Doesn't fit locked lab CX02"],
+  ]);
+  expect(sectionSteps(course, [...chosen, "AE 2320-CD01"], [...chosen, "AE 2320-CD01"], [], { ...rules, startsAfter: 540 }).lectures?.choices[0].reason).toBeNull();
+  expect(locks).toEqual([chosen[0], "AE 2320-CX02", "AE 2320-CD01"]);
+});
+
+it("counts a single eligible lecture as done, labels it Only lecture, and hides step 1 without lectures", () => {
+  const course = lectureProfessorTerm().courses[0];
+  const filtered = sectionSteps(course, ["AE 2320-CL02", "AE 2320-CX01", "AE 2320-CD01"], [], [], { ...rules, professor: "Alex Smith" });
+  expect(filtered.lectures?.label).toBe("Only lecture");
+  expect(filtered.currentStep).toBe(2);
+  expect(sectionSteps(orbitalMechanics, chosen, [], [], rules).lectures?.label).toBe("Only lecture");
+  const lab = orbitalMechanics.sections[1];
+  expect(sectionSteps({ ...course, sections: [lab], options: [[lab.id]] }, [lab.id], [], [], rules).lectures).toBeNull();
+});
+
+it("keeps the sole eligible replacement reachable when a different lecture is locked", () => {
+  const course = lectureProfessorTerm().courses[0];
+  const result = sectionSteps(course, [...chosen, "AE 2320-CD01"], [chosen[0]], [], { ...rules, professor: "Alex Smith" });
+  expect(result.lectures?.label).toBe("1 other lecture time · Locked");
+  expect(result.lectures?.choices.map(({ section }) => section.code)).toEqual(["CL02"]);
+});
 
 it("offers only other labs that fit the current lecture and the rest of the schedule", () => {
   const course = structuredClone(orbitalMechanics);
@@ -60,7 +97,7 @@ it("offers replacements of the same kind without adding another component", () =
 
 it("hides step 2 without labs or discussions and supports courses without lectures", () => {
   const lectureOnly = { ...orbitalMechanics, sections: [orbitalMechanics.sections[0]], options: [[chosen[0]]] };
-  expect(sectionSteps(lectureOnly, [chosen[0]], [], [], rules)).toEqual({ currentStep: null, labs: [] });
+  expect(sectionSteps(lectureOnly, [chosen[0]], [], [], rules)).toMatchObject({ currentStep: null, labs: [] });
   const labOnly = { ...orbitalMechanics, sections: orbitalMechanics.sections.slice(1), options: orbitalMechanics.sections.slice(1).map((section) => [section.id]) };
   const result = sectionSteps(labOnly, [chosen[1]], [], [], rules);
   expect(result.currentStep).toBe(2);

@@ -19,14 +19,20 @@ export function CourseDetails({ course }: { course: Course }) {
   const code = course.code;
   const chosen = usePlanner(useShallow((state) => selectChosenSections(state)[code] ?? NONE));
   const locked = usePlanner((state) => state.locks[code] ?? NONE);
+  const busy = usePlanner((state) => state.solveStatus === "waiting" || state.solveStatus === "solving");
+  const previous = usePlanner((state) => state.lastChosenSections[code] ?? NONE);
   const selectedSection = usePlanner((state) => (state.selectedCourse === code ? state.selectedSection : null));
   // Only a real answer can say nothing fits: an engine error or a crashed worker says nothing about the plan.
   const answered = usePlanner((state) => state.solveStatus === "done" && state.response?.ok === true && !state.response.diagnosis?.unsure);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   // With no schedule for this course, locked sections stay visible so they can be unlocked.
-  const sections = sectionsById(course, chosen.length > 0 ? chosen : locked);
-  const steps = useSectionSteps(course);
+  const displayed = busy ? [...new Set([...previous.map((id) => {
+    const type = course.sections.find((section) => section.id === id)?.type;
+    return locked.find((lock) => course.sections.some((section) => section.id === lock && section.type === type)) ?? id;
+  }), ...locked])] : chosen.length > 0 ? chosen : locked;
+  const sections = sectionsById(course, displayed);
+  const steps = useSectionSteps(course, displayed);
   const shownInstructors = uniqueInstructors(sections);
   // Cards shown only because they're locked disappear on Unlock, so focus goes to the heading.
   const focusHeading = chosen.length === 0 ? () => headingRef.current?.focus() : undefined;
@@ -56,7 +62,7 @@ export function CourseDetails({ course }: { course: Course }) {
         <p className="pt-7 text-10 leading-17-5 text-ink-muted">No schedule fits with this course right now.</p>
       )}
 
-      <SectionsInSchedule course={course} sections={sections} locked={locked} waitlist={waitlist} onUnlocked={focusHeading} labs={steps.labs} />
+      <SectionsInSchedule course={course} sections={sections} locked={locked} waitlist={waitlist} onUnlocked={focusHeading} labs={steps.labs} lectures={steps.lectures} busy={busy} />
 
       {waitlist && (
         <>

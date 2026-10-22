@@ -9,7 +9,7 @@ import { sectionSteps } from "./sectionSteps";
 
 const NONE: string[] = [];
 
-export function useSectionSteps(course: Course) {
+export function useSectionSteps(course: Course, displayed?: readonly string[]) {
   const term = usePlanner((state) => state.term);
   const chosen = usePlanner(useShallow(selectChosenSections));
   const locked = usePlanner((state) => state.locks[course.code] ?? NONE);
@@ -21,6 +21,6 @@ export function useSectionSteps(course: Course) {
       const other = code === course.code ? undefined : term?.courses.find((item) => item.code === code);
       return other ? sectionsById(other, ids) : [];
     });
-    return sectionSteps(course, chosen[course.code] ?? NONE, locked, rest, { ...preferences, professor });
-  }, [course, term, chosen, locked, preferences, professor]);
+    return sectionSteps(course, displayed ?? chosen[course.code] ?? NONE, locked, rest, { ...preferences, professor });
+  }, [course, term, chosen, displayed, locked, preferences, professor]);
 }

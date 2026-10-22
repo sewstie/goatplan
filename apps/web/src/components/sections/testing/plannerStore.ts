@@ -26,7 +26,7 @@ type Options = {
   term?: TermFile;
   /** Replaces the term download, e.g. to keep it loading or make it fail. */
   loadTerm?: () => Promise<TermFile>;
-  solve?: (request: SolveRequest) => SolveResponse;
+  solve?: (request: SolveRequest) => SolveResponse | Promise<SolveResponse>;
   /** false starts the store without waiting for the term or an answer. */
   wait?: boolean;
 };
