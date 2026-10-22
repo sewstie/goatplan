@@ -9,12 +9,9 @@ import {
   settled,
   termLabel,
   updatePlan,
-  type SavedPlan,
 } from "@/lib/plans";
 import { getPlannerStore, selectSavedPlan, usePlanner } from "@/lib/store";
-import { ButtonLink } from "@/components/ui/ButtonLink";
 import { PlanNameDialog } from "./PlanNameDialog";
-import { PlanStatus } from "./PlanStatus";
 import { SavedPlansMenu } from "./SavedPlansMenu";
 import { SaveScheduleButton } from "./SaveScheduleButton";
 import { useOpenPlan } from "./useOpenPlan";
@@ -22,19 +19,11 @@ import { usePlanSaveState } from "./usePlanSaveState";
 
 const COULDNT_SAVE = "Couldn’t save. Browser storage is full or blocked.";
 
-type PlanActionsProps = {
-  /**
-   * The saved plan on screen (/plans?plan=…). When it isn't the plan open in the planner, the status
-   * describes it: a saved plan, with nothing to save.
-   */
-  shownPlan?: SavedPlan | null;
-};
-
 /** "Saved plans" and the Save schedule button in the header (div.app-12.md). */
-export function PlanActions({ shownPlan = null }: PlanActionsProps) {
+export function PlanActions() {
   const viewed = usePlanner(selectSavedPlan);
   const save = usePlanSaveState();
-  const status = shownPlan && shownPlan.id !== save.currentPlan?.id ? "saved" : save.status;
+  const status = viewed ? "saved" : save.status;
   const term = usePlanner((state) => state.term?.term ?? null);
   const { requestOpen, dialog } = useOpenPlan();
   const [naming, setNaming] = useState<"first" | "copy" | null>(null);
@@ -58,29 +47,30 @@ export function PlanActions({ shownPlan = null }: PlanActionsProps) {
 
   async function saveAsNew(name: string): Promise<string | null> {
     const store = getPlannerStore();
-    await settled(store);
-    const plan = createPlan(store.getState(), { id: newPlanId(), name, savedAt: new Date() });
+    if (!viewed) await settled(store);
+    const details = { id: newPlanId(), name, savedAt: new Date() };
+    const plan = viewed
+      ? { ...structuredClone(viewed), ...details, savedAt: details.savedAt.toISOString() }
+      : createPlan(store.getState(), details);
     if (!plan) return "There’s no schedule to save right now.";
     const source = getPlansSource();
     if (!source.save(plan)) return COULDNT_SAVE;
-    source.setCurrent(plan.termId, plan.id);
+    if (viewed) store.getState().showSaved(plan.id);
+    else source.setCurrent(plan.termId, plan.id);
     setError(null);
     setNaming(null);
     return null;
   }
 
-  if (viewed) return <ButtonLink href={`/plans?plan=${encodeURIComponent(viewed.id)}`} variant="secondary">Sections to register</ButtonLink>;
-
   return (
     <>
       <div className="flex items-center gap-10">
-        <PlanStatus status={status} error={error} />
         <SavedPlansMenu
           plans={save.termPlans}
           termName={term ? termLabel(term) : null}
-          currentPlan={save.currentPlan}
-          disabled={save.busy}
-          canSaveAsNew={save.canSave || save.status === "saved"}
+          currentPlan={viewed ?? save.currentPlan}
+          disabled={!viewed && save.busy}
+          canSaveAsNew={viewed !== null || save.canSave || save.status === "saved"}
           onOpenPlan={(plan) => requestOpen(plan, "/")}
           onSaveAsNew={() => setNaming("copy")}
         />
@@ -90,6 +80,7 @@ export function PlanActions({ shownPlan = null }: PlanActionsProps) {
         disabled={!save.canSave || save.busy || saving}
         onSave={saveChanges}
       />
+      {error && <p role="alert" className="text-9 leading-13 text-warning">{error}</p>}
       <PlanNameDialog
         open={naming !== null}
         title={naming === "copy" ? "Save as a new plan" : "Save schedule"}

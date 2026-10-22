@@ -31,13 +31,15 @@ async function tabTo(page: Page, target: Locator) {
   throw new Error("Could not reach the control with Tab");
 }
 
-test("saved browsing survives reload and back, and Found restores the draft", async ({ page }) => {
+test("saved URLs survive reload and back without changing the working draft", async ({ page }) => {
   await page.goto("/?share=reserved");
   await ready(page);
   const before = await page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"));
   const foundLabel = await page.getByRole("group", { name: "Schedules", exact: true }).innerText();
   await page.locator("header").screenshot({ path: "e2e/screenshots/found-header-1440.png" });
-  await page.getByRole("button", { name: "Saved", exact: true }).click();
+  await expect(page.getByRole("group", { name: "Schedule source" })).toHaveCount(0);
+  await page.goto("/?share=reserved&view=saved&plan=plan-1");
+  await ready(page);
   await expect(page).toHaveURL(/view=saved&plan=plan-1/);
   await expect(page.getByRole("button", { name: "Previous saved plan" })).toHaveAttribute("aria-disabled", "true");
   await page.locator("header").screenshot({ path: "e2e/screenshots/saved-header-1440.png" });
@@ -54,19 +56,15 @@ test("saved browsing survives reload and back, and Found restores the draft", as
   await expect(page.getByRole("status", { name: /Saved plan 2 of 2/ })).toBeVisible();
   await page.goBack();
   await expect(page.getByRole("status", { name: /Saved plan 1 of 2/ })).toBeVisible();
-  await page.getByRole("button", { name: "Found", exact: true }).click();
+  await page.goBack();
   await expect(page).toHaveURL("/?share=reserved");
   await expect(page.getByRole("group", { name: "Schedules", exact: true })).toHaveText(foundLabel);
   expect(await page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"))).toBe(before);
 });
 
-test("the saved browser works entirely with the keyboard", async ({ page }) => {
-  await page.goto("/");
+test("saved paging and the simplified menu work entirely with the keyboard", async ({ page }) => {
+  await page.goto("/?view=saved&plan=plan-1");
   await ready(page);
-  const saved = page.getByRole("button", { name: "Saved", exact: true });
-  await tabTo(page, saved);
-  await page.keyboard.press("Enter");
-  await expect(saved).toBeFocused();
   const next = page.getByRole("button", { name: "Next saved plan" });
   await tabTo(page, next);
   await page.keyboard.press("Enter");
@@ -74,16 +72,78 @@ test("the saved browser works entirely with the keyboard", async ({ page }) => {
   await expect(page.getByRole("status", { name: /Saved plan 2 of 2/ })).toBeVisible();
   await page.keyboard.press("ArrowLeft");
   await expect(page.getByRole("status", { name: /Saved plan 1 of 2/ })).toBeVisible();
-  await tabTo(page, page.getByRole("button", { name: "Found", exact: true }));
-  await page.keyboard.press("Space");
+  await tabTo(page, page.getByRole("button", { name: "Saved plans", exact: true }));
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("list", { name: "Plan actions" }).getByRole("listitem")).toHaveCount(2);
+  await expect(page.getByRole("link", { name: "Sections to register", exact: true })).toHaveCount(0);
+  await tabTo(page, page.getByRole("link", { name: "All saved plans" }));
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL("/plans");
+  await tabTo(page, page.getByRole("link", { name: "Back to planner" }));
+  await page.keyboard.press("Enter");
   await expect(page).toHaveURL("/");
 });
 
-test("leaving Saved for the registration page restores the editable working draft", async ({ page }) => {
+test("the saved-plans page offers Back to planner instead of save controls", async ({ page }) => {
   await page.goto("/?view=saved&plan=plan-1");
   await ready(page);
-  await page.getByRole("link", { name: "Sections to register" }).click();
-  await expect(page).toHaveURL("/plans?plan=plan-1");
+  await page.getByRole("button", { name: "Saved plans", exact: true }).click();
+  await page.getByRole("link", { name: "All saved plans" }).click();
+  await expect(page).toHaveURL("/plans");
+  await expect(page.locator("header").getByRole("button")).toHaveCount(0);
+  await page.locator("header:visible").screenshot({ path: "e2e/screenshots/all-saved-header-1440.png" });
+  await page.getByRole("link", { name: "Back to planner" }).click();
+  await expect(page).toHaveURL("/");
   await expect(page.getByRole("button", { name: "Remove AE 2320" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Block a time", exact: true })).toBeVisible();
+});
+
+test("save states are shown by the button and the dropdown keeps only the requested actions", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  const header = page.locator("header");
+  await expect(header.getByText("Unsaved changes", { exact: true })).toHaveCount(0);
+  for (const width of [1440, 834]) {
+    await page.setViewportSize({ width, height: 900 });
+    await header.screenshot({ path: `e2e/screenshots/planner-unsaved-header-${width}.png` });
+  }
+  await header.getByRole("button", { name: "Save schedule", exact: true }).click();
+  await expect(header.getByRole("button", { name: "Schedule saved", exact: true })).toHaveAttribute("aria-disabled", "true");
+  await expect(header.getByText("Schedule saved", { exact: true })).toHaveCount(0);
+  for (const width of [1440, 834]) {
+    await page.setViewportSize({ width, height: 900 });
+    await header.screenshot({ path: `e2e/screenshots/planner-saved-header-${width}.png` });
+  }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await header.getByRole("button", { name: "Saved plans", exact: true }).click();
+  await expect(page.getByRole("list", { name: "Plan actions" }).getByRole("listitem")).toHaveText(["Save as a new plan", "All saved plans"]);
+  await page.screenshot({ path: "e2e/screenshots/planner-saved-menu-1440.png", fullPage: true });
+});
+
+test("opening the current saved plan from its dropdown returns to the editable planner", async ({ page }) => {
+  await page.goto("/");
+  await ready(page);
+  await page.getByRole("button", { name: "Save schedule", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Schedule saved", exact: true })).toBeVisible();
+  const before = await page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"));
+  await page.goto("/?view=saved&plan=plan-1");
+  await ready(page);
+  await page.getByRole("button", { name: "Saved plans", exact: true }).click();
+  await page.getByRole("button", { name: /Morning classes.*open now/ }).click();
+  await expect(page).toHaveURL("/");
+  await expect(page.getByRole("button", { name: "Remove AE 2320" })).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"))).toBe(before);
+});
+
+test("Save as a new plan copies a viewed snapshot without changing the draft", async ({ page }) => {
+  await page.goto("/?view=saved&plan=plan-1");
+  await ready(page);
+  const before = await page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"));
+  await page.getByRole("button", { name: "Saved plans", exact: true }).click();
+  await page.getByRole("button", { name: "Save as a new plan", exact: true }).click();
+  const dialog = page.getByRole("dialog", { name: "Save as a new plan" });
+  await dialog.getByRole("textbox", { name: "Plan name" }).fill("Morning copy");
+  await dialog.getByRole("button", { name: "Save", exact: true }).click();
+  await expect(page.getByRole("status", { name: /Morning copy/ })).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"))).toBe(before);
 });

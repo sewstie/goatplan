@@ -89,7 +89,8 @@ for (const width of [1440, 834]) {
     await expect(dialog).toBeHidden();
     await expect(page.getByRole("button", { name: "Schedule saved", exact: true })).toBeFocused();
     await page.getByRole("button", { name: "Saved plans", exact: true }).click();
-    await page.getByRole("link", { name: "Sections to register", exact: true }).click();
+    await page.getByRole("link", { name: "All saved plans", exact: true }).click();
+    await page.getByRole("link", { name: "Sections to register My section choices", exact: true }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sections to register · My section choices");
     const rows = page.getByRole("table").getByRole("row");
     await expect(rows).toHaveCount(4);

@@ -42,7 +42,10 @@ export function useOpenPlan(): { requestOpen: (plan: SavedPlan, destination?: st
       state.termId === plan.termId &&
       state.termStatus === "ready" &&
       !wouldDiscardWork(plan, workingDraft(plan.termId));
-    if (alreadyOpen) return;
+    if (alreadyOpen) {
+      state.showFound();
+      return;
+    }
     source.setCurrent(plan.termId, plan.id);
     void openPlanInPlanner(getPlannerStore(), plan);
   }

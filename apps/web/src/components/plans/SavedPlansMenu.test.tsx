@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { designPlan } from "@/lib/plans/testing";
@@ -38,9 +38,12 @@ describe("SavedPlansMenu", () => {
     expect(trigger).toHaveAttribute("aria-expanded", "true");
     const list = screen.getByRole("list", { name: "Saved plans for C Term · Spring 2027" });
     expect(list).toHaveTextContent("Plan 13 courses · 4 sections(open now)");
-    expect(screen.getByRole("link", { name: "Sections to register" })).toHaveAttribute("href", "/plans?plan=plan-1");
+    const actions = screen.getByRole("list", { name: "Plan actions" });
+    expect(within(actions).getAllByRole("listitem")).toHaveLength(2);
+    expect(within(actions).getByRole("button", { name: "Save as a new plan" })).toBeVisible();
+    expect(screen.queryByRole("link", { name: "Sections to register" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "All saved plans" })).toHaveAttribute("href", "/plans");
-    expect(screen.getByRole("link", { name: "Back to planner" })).toHaveAttribute("href", "/");
+    expect(screen.queryByRole("link", { name: "Back to planner" })).not.toBeInTheDocument();
     await userEvent.click(trigger);
     expect(screen.queryByRole("list", { name: /Saved plans for/ })).not.toBeInTheDocument();
   });

@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { CaretDown, Check } from "@phosphor-icons/react/ssr";
 import { cx } from "@/components/ui/cx";
@@ -32,7 +31,6 @@ export function SavedPlansMenu({
   const panelId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const pathname = usePathname();
 
   useEffect(() => {
     if (!open) return;
@@ -115,14 +113,6 @@ export function SavedPlansMenu({
           </p>
         )}
         <ul aria-label="Plan actions" className="mt-6 border-t border-line pt-6">
-          {currentPlan && (
-            <SavedPlansMenuItem
-              href={`/plans?plan=${encodeURIComponent(currentPlan.id)}`}
-              onSelect={() => setOpen(false)}
-            >
-              Sections to register
-            </SavedPlansMenuItem>
-          )}
           {canSaveAsNew && (
             <SavedPlansMenuItem
               onSelect={() => {
@@ -136,11 +126,6 @@ export function SavedPlansMenu({
           <SavedPlansMenuItem href="/plans" onSelect={() => setOpen(false)}>
             All saved plans
           </SavedPlansMenuItem>
-          {pathname !== "/" && (
-            <SavedPlansMenuItem href="/" onSelect={() => setOpen(false)}>
-              Back to planner
-            </SavedPlansMenuItem>
-          )}
         </ul>
       </div>
     </div>

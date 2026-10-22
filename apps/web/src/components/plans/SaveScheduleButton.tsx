@@ -12,15 +12,14 @@ type SaveScheduleButtonProps = {
 /** "Save schedule", or "Saved" with a check while the plan is saved as it is (div.app-12). */
 export function SaveScheduleButton({ saved, disabled, onSave }: SaveScheduleButtonProps) {
   if (saved) {
-    // Stays accent filled and focusable, but there is nothing to save.
     return (
-      <Button aria-label="Schedule saved" aria-disabled="true" icon={<Check aria-hidden />} className="min-w-112">
+      <Button variant="soft" aria-label="Schedule saved" aria-disabled="true" icon={<Check aria-hidden />} className="min-w-112" aria-live="polite">
         Saved
       </Button>
     );
   }
   return (
-    <Button icon={<BookmarkSimple aria-hidden />} disabled={disabled} onClick={onSave}>
+    <Button icon={<BookmarkSimple aria-hidden />} disabled={disabled} onClick={onSave} className="min-w-112" aria-live="polite">
       Save schedule
     </Button>
   );

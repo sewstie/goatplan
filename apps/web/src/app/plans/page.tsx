@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { PlanActions } from "@/components/plans/PlanActions";
 import { PlansBreadcrumbs } from "@/components/plans/PlansBreadcrumbs";
 import { PlansPageActions } from "@/components/plans/PlansPageActions";
 import { PlansPreferences } from "@/components/plans/PlansPreferences";
@@ -59,11 +58,7 @@ export default function PlansPage() {
                   <PlansSubtitle />
                 </Suspense>
               }
-              actions={
-                <Suspense fallback={<PlanActions />}>
-                  <PlansPageActions />
-                </Suspense>
-              }
+              actions={<PlansPageActions />}
             />
           }
           toolbar={
