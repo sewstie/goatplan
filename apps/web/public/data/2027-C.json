@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05"},
-  "generatedAt": "2026-10-21T14:26:12Z",
+  "generatedAt": "2026-10-22T14:27:44Z",
   "courses": [
     {
       "code": "AB 1533",
@@ -24,7 +24,7 @@
       "level": "Undergraduate",
       "description": "AE 2210: Introduction to Thermal Engineering (1/3 units; Cat. I) Thermal engineering encompasses a broad range of topics that include the behavior of matter and energy and their interaction as part of a system with the surrounding environment. This course covers topics from the fields of thermodynamics and heat transfer. You will learn how to identify systems and to use thermodynamic analysis to describe the behavior of the system in terms of properties and processes. Heat transfer between systems is a fundamental part of many engineering disciplines. While thermodynamics provides the foundation for understanding the energy distribution in a system in equilibrium, heat transfer provides a means for determining the rates of energy transfer under a variety of conditions. Understanding how to apply these concepts is a powerful tool for the engineer, enabling the evaluation of material states (phases) under different conditions and the maximum efficiency achievable with various power cycles. After completing this course, you should be able to define and describe properties and processes used in thermodynamic analysis and the governing laws. You should also be able to define and describe the phenomena of conduction, convection, and radiation and apply the heat diffusion equation to determine the temperature distribution in objects subject to different thermal boundary conditions. Finally, you should be able to calculate the heat transfer rates for objects subject to different (and combined) modes of heat transfer. Recommended background: basic physics, (PH 1110, PH 1111) elementary differential and integral calculus (MA 1021, MA 1022), ordinary differential equations (MA2051) or equivalent.",
       "sections": [
-        {"id":"AE 2210-C01","code":"C01","type":"lecture","status":"open","enrolled":64,"capacity":70,"waitlist":{"taken":0,"capacity":15},"instructors":["David Olinger"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Salisbury Labs 104"}]}
+        {"id":"AE 2210-C01","code":"C01","type":"lecture","status":"open","enrolled":63,"capacity":70,"waitlist":{"taken":0,"capacity":15},"instructors":["David Olinger"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Salisbury Labs 104"}]}
       ],
       "options": [
         ["AE 2210-C01"]
@@ -38,10 +38,10 @@
       "level": "Undergraduate",
       "description": "An introductory course that covers the fundamentals of space flight. Topics studied include: two-body orbital dynamics, classification of orbits, and time of flight analysis; geocentric orbits and impulsive maneuvers: orbit shaping, escape trajectories, Hohmann and non-Hohmann transfers; orbital elements in 3D; interplanetary Hohmann and generalized transfers, intercepts, flybys. Recommended background: multivariable calculus (MA 1024 or equivalent), differential equations (MA 2051 or equivalent), dynamics (ES 2503, PH 2201 or equivalent). Students may not receive credit for both AE 2320 and AE 2713.",
       "sections": [
-        {"id":"AE 2320-CL01","code":"CL01","type":"lecture","status":"open","enrolled":87,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Ye Lu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":540,"end":590,"location":"Unity Hall 400"}]},
+        {"id":"AE 2320-CL01","code":"CL01","type":"lecture","status":"open","enrolled":88,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Ye Lu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":540,"end":590,"location":"Unity Hall 400"}]},
         {"id":"AE 2320-CX01","code":"CX01","type":"lab","status":"open","enrolled":38,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Ye Lu"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":840,"end":890,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
         {"id":"AE 2320-CX02","code":"CX02","type":"lab","status":"closed","enrolled":40,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Ye Lu"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":900,"end":950,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
-        {"id":"AE 2320-CX03","code":"CX03","type":"lab","status":"open","enrolled":9,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Ye Lu"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":960,"end":1010,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]}
+        {"id":"AE 2320-CX03","code":"CX03","type":"lab","status":"open","enrolled":10,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Ye Lu"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":960,"end":1010,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]}
       ],
       "options": [
         ["AE 2320-CL01","AE 2320-CX01"],
@@ -57,7 +57,7 @@
       "level": "Undergraduate",
       "description": "This course provides a concise overview of statics and then focuses on basic stress analysis applied to simple aerospace structures. Topics in stress analysis include: concepts of stress and strain; basic constitutive relations; one-dimensional response to axial loading; thermal stresses; statically determinate and indeterminate problems; shear forces, bending moments, bending stresses and deflections in beams with symmetric cross sections; two-dimensional stress transformation and Mohr’s circle; and an introduction to energy methods in structural analysis. Recommended background: differential, integral, multivariable calculus (MA 1021, MA 1022, MA 1024 or equivalent), mechanics (PH 1110, PH 1111, or equivalent). Students may not receive credit for both AE 2410 and AE 2712.",
       "sections": [
-        {"id":"AE 2410-C01","code":"C01","type":"lecture","status":"open","enrolled":32,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Mark Richman"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":600,"end":650,"location":"Higgins Labs 116"}]}
+        {"id":"AE 2410-C01","code":"C01","type":"lecture","status":"open","enrolled":31,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Mark Richman"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":600,"end":650,"location":"Higgins Labs 116"}]}
       ],
       "options": [
         ["AE 2410-C01"]
@@ -138,8 +138,8 @@
       "level": "Graduate",
       "description": "The Seminar is a degree requirement for all graduate students and is offered during A, B, C, and D term. The Seminar consists of presentations by experts on technical and broader professional topics. Presentations are also offered by graduate students on topics related to their directed research, dissertation, or industrial experiences. The Seminar is offered in pass/fail mode based on attendance.",
       "sections": [
-        {"id":"AE 5032-C01","code":"C01","type":"seminar","status":"open","enrolled":26,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Michael Demetriou"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Goddard Hall 227 Classroom"}]},
-        {"id":"AE 5032-C02","code":"C02","type":"seminar","status":"open","enrolled":17,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Demetriou"],"delivery":"online-sync","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Online-synchronous"}]}
+        {"id":"AE 5032-C01","code":"C01","type":"seminar","status":"open","enrolled":25,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Michael Demetriou"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Goddard Hall 227 Classroom"}]},
+        {"id":"AE 5032-C02","code":"C02","type":"seminar","status":"open","enrolled":18,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Demetriou"],"delivery":"online-sync","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Online-synchronous"}]}
       ],
       "options": [
         ["AE 5032-C01"],
@@ -185,7 +185,7 @@
       "description": "This is an introductory graduate level course that covers principles of operation, design, and performance analysis of air-breathing propulsion engines. Topics will be chosen from: jet propulsion theory; cycle analysis of turbojets, turbofans, and ram compression engines; gas dynamics of inlet and nozzle flows; thermochemistry and chemical equilibrium; combustor modeling; hypersonic propulsion; and operation of detonation engines. Students cannot receive credit for this course if they have taken AE 5106 “Air Breathing Propulsion”.",
       "sections": [
         {"id":"AE 5231-C01","code":"C01","type":"lecture","status":"open","enrolled":33,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Jagannath Jayachandran"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Higgins Labs 202"}]},
-        {"id":"AE 5231-C02","code":"C02","type":"lecture","status":"open","enrolled":5,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"online-sync","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Online-synchronous"}]}
+        {"id":"AE 5231-C02","code":"C02","type":"lecture","status":"open","enrolled":4,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"online-sync","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Online-synchronous"}]}
       ],
       "options": [
         ["AE 5231-C01"],
@@ -200,7 +200,7 @@
       "level": "Graduate",
       "description": "This course discusses the foundations of autonomy of aerial vehicles including fixed-wing aircraft and quadrotor aircraft. Topics covered include: localization using inertial sensors, GPS, and computer vision; extended Kalman filtering for localization; trajectory planning; feedback guidance for trajectory tracking; and low-level autopilot control design. Whereas this course will review aircraft dynamics, familiarity with this topic at an undergraduate level is beneficial. Prerequisites: dynamics and control of linear systems (AE 5331 or similar); fluency with MATLAB or Python programming. Students cannot receive credit for this course if they have taken AE 5224 “Air Vehicle Dynamics and Control”.",
       "sections": [
-        {"id":"AE 5335-C01","code":"C01","type":"lecture","status":"open","enrolled":26,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Raghvendra Cowlagi"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 311"}]}
+        {"id":"AE 5335-C01","code":"C01","type":"lecture","status":"open","enrolled":25,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Raghvendra Cowlagi"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 311"}]}
       ],
       "options": [
         ["AE 5335-C01"]
@@ -478,7 +478,7 @@
       "level": "Undergraduate",
       "description": "BB 1001. Introduction to Biology (Cat. I; 1/3 unit) This course is designed for students seeking a broad overview of biologic concepts, especially at the cell and organism level. It is conducted in an active style including the use of case studies, class discussion/participation, and classroom polling systems. The major goal of this course is to help students become more informed citizens, skeptical when presented with data in the media, and knowledgeable enough to question and make informed decisions about scientific advances and science policy. It will primarily focus on current topics which may include genetic engineering, viruses and vaccines, antibiotic resistant bacteria, the evolution of infectious diseases. This course is intended for non-life science majors. Recommended background: High School Biology",
       "sections": [
-        {"id":"BB 1001-C01","code":"C01","type":"lecture","status":"open","enrolled":64,"capacity":120,"waitlist":{"taken":0,"capacity":25},"instructors":["Benjamin Nephew"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Unity Hall 400"}]}
+        {"id":"BB 1001-C01","code":"C01","type":"lecture","status":"open","enrolled":65,"capacity":120,"waitlist":{"taken":0,"capacity":25},"instructors":["Benjamin Nephew"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Unity Hall 400"}]}
       ],
       "options": [
         ["BB 1001-C01"]
@@ -492,7 +492,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is designed for students seeking a broad overview of ecological systems and the effect of humans on the ecosystems. It provides an introduction to natural ecosystems, population growth, and the interaction between human populations and our environment. It is conducted in an active style including the use of case studies, class discussion/participation, and classroom polling systems. The major goal of this course is to help students become more informed environmental citizens, skeptical when presented with data in the media, and knowledgeable enough to question and make informed decisions about the environment. It will primarily focus on current topics but areas of discussion likely to be covered include ecosystems, populations, biodiversity, pollution, environmental economics and climate change. This course is intended for non- life science majors. Recommended background: High School Biology",
       "sections": [
-        {"id":"BB 1002-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":100,"capacity":100,"waitlist":{"taken":11,"capacity":20},"instructors":["Michael Buckholt"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 500"}]}
+        {"id":"BB 1002-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":100,"capacity":100,"waitlist":{"taken":12,"capacity":20},"instructors":["Michael Buckholt"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 500"}]}
       ],
       "options": [
         ["BB 1002-C01"]
@@ -698,7 +698,7 @@
       "level": "Graduate",
       "description": "",
       "sections": [
-        {"id":"BB 501-S01","code":"S01","type":"lecture","status":"open","enrolled":27,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Jeff Bourgeois"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":720,"end":800,"location":"Gateway Park 1 Room 1002"}]}
+        {"id":"BB 501-S01","code":"S01","type":"lecture","status":"open","enrolled":26,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Jeff Bourgeois"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":720,"end":800,"location":"Gateway Park 1 Room 1002"}]}
       ],
       "options": [
         ["BB 501-S01"]
@@ -870,7 +870,7 @@
       "level": "Graduate",
       "description": "(0 credits; pass/fail grading) This seminar provides an opportunity for students in the BCB program to present their research work, as well as hear research talks from guest speakers.",
       "sections": [
-        {"id":"BCB 510-S01","code":"S01","type":"lecture","status":"open","enrolled":27,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Jeff Bourgeois"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":720,"end":800,"location":"Gateway Park 1 Room 1002"}]}
+        {"id":"BCB 510-S01","code":"S01","type":"lecture","status":"open","enrolled":26,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Jeff Bourgeois"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":720,"end":800,"location":"Gateway Park 1 Room 1002"}]}
       ],
       "options": [
         ["BCB 510-S01"]
@@ -1322,7 +1322,7 @@
       "level": "Undergraduate",
       "description": "This course covers educational and professional opportunities in Civil Engineering and Environmental Engineering, including professional skills necessary for success, as both a student in the program and as a future practicing engineer. Topics include pathways of study; career options; ethics and professional responsibilities; professional licensure; networking and professional societies; communication; teamwork; and software skills. The role of engineers in addressing contemporary issues through innovation, and the importance of life-long learning, are explored.",
       "sections": [
-        {"id":"CE 2030-C01","code":"C01","type":"lecture","status":"open","enrolled":9,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["Jeanine Dudle"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 420"}]}
+        {"id":"CE 2030-C01","code":"C01","type":"lecture","status":"open","enrolled":10,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["Jeanine Dudle"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 420"}]}
       ],
       "options": [
         ["CE 2030-C01"]
@@ -1659,7 +1659,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course presents the structure and function of DNA. Precursors and biomolecules that give rise to DNA, the mechanism of DNA replication, RNA synthesis, and protein synthesis are described in detail. In addition to mechanistic studies, regulation of these processes is covered as well as those of genetic mutation, DNA repair, and epigenetics. Recommended background: Knowledge of organic chemistry fundamentals as well as concepts including protein structure and folding, catalytic mechanics, enzyme kinetics, and ATP synthesis and hydrolysis mechanisms. See CH 2310, CH 2320, CH 2330, BB 2550, and CH 4110 or equivalent.",
       "sections": [
-        {"id":"CH 4130-C01","code":"C01","type":"lecture","status":"open","enrolled":36,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Robert Dempski"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":780,"end":830,"location":"Atwater Kent 219"}]}
+        {"id":"CH 4130-C01","code":"C01","type":"lecture","status":"open","enrolled":35,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Robert Dempski"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":780,"end":830,"location":"Atwater Kent 219"}]}
       ],
       "options": [
         ["CH 4130-C01"]
@@ -2027,7 +2027,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides the student with an understanding of the basic components of a general-purpose operating system. Topics include processes, process management, synchronization, input/output devices and their programming, interrupts, memory management, resource allocation, and an introduction to file systems. Students will be expected to design and implement a large piece ofsystem software in the C programming language.Undergraduate credit may not be earned both for this course and for CS 502.Recommended background: CS 2303 or CS 2301, and CS 2011.",
       "sections": [
-        {"id":"CS 3013-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":53,"capacity":53,"waitlist":{"taken":2,"capacity":20},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Washburn 229"}]},
+        {"id":"CS 3013-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":53,"capacity":53,"waitlist":{"taken":3,"capacity":20},"instructors":["Taylor Andrews"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Washburn 229"}]},
         {"id":"CS 3013-C02","code":"C02","type":"lecture","status":"open","enrolled":28,"capacity":75,"waitlist":{"taken":0,"capacity":20},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Washburn 229"}]}
       ],
       "options": [
@@ -2061,7 +2061,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces the theoretical foundations of computer science. These form the basis for a more complete understanding of the proficiency in computer science.Topics include computational models, formal languages, and an introduction to compatibility and complexity theory, including NP-completeness.Students will be expected to complete a variety of exercises and proofs.Undergraduate credit may not be earned both for this course and for CS 5003.Recommended Background: Discrete mathematics (CS 2022 or equivalent) and algorithms (CS 2223 or equivalent).Students who have credit for CS 4121 may not receive credit for CS 3133.",
       "sections": [
-        {"id":"CS 3133-C01","code":"C01","type":"lecture","status":"open","enrolled":76,"capacity":100,"waitlist":{"taken":0,"capacity":20},"instructors":["Michael Engling"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]}
+        {"id":"CS 3133-C01","code":"C01","type":"lecture","status":"open","enrolled":75,"capacity":100,"waitlist":{"taken":0,"capacity":20},"instructors":["Michael Engling"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]}
       ],
       "options": [
         ["CS 3133-C01"]
@@ -2219,7 +2219,7 @@
       "level": "Undergraduate",
       "description": "This course provides a comprehensive introduction to the principles and techniques of digital forensics. Topics include an overview of legal frameworks and formal procedures that guide digital forensic investigations, digital evidence collection and data recovery, forensic analysis across different operating systems and file systems, data hiding, and mobile forensics. Students will gain practical experience with forensic tools through a sequence of hands-on labs. Recommended Background: This course assumes a basic understanding of operating systems (CS 3013). Cat II",
       "sections": [
-        {"id":"CS 4405-C01","code":"C01","type":"lecture","status":"open","enrolled":59,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Xiaoyan Sun"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 320"}]}
+        {"id":"CS 4405-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":60,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Xiaoyan Sun"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 320"}]}
       ],
       "options": [
         ["CS 4405-C01"]
@@ -2418,7 +2418,7 @@
       "description": "This course gives a broad survey of artificial intelligence. The course will cover methods from search, probabilistic reasoning, and learning, among other topics. Selected topics involving the applications of these tools are investigated. Such topics might include natural language understanding, scene understanding, game playing, and planning. (Prerequisites: familiarity with data structures and a high-level programming language.)",
       "sections": [
         {"id":"CS 534-S01","code":"S01","type":"lecture","status":"open","enrolled":8,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Dachun Sun"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
-        {"id":"CS 534-S03","code":"S03","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Chun-Kit Ngan"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 534-S03","code":"S03","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Chun-Kit Ngan"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 534-S01"],
@@ -3012,9 +3012,9 @@
       "level": "Undergraduate",
       "description": "Cat. I This course investigates commonly used sensors such as resistive temperature sensors, capacitive touch sensors, and inductive motion sensors and actuators. Numerous applications are presented to motivate coverage of fundamental operating principles of circuit elements such as resistors, capacitors, and inductors; model the signals produced by these sensors; and analyze the circuits and systems used to amplify and process these signals. After a review of Kirchhoff ‘s current and voltage laws, fundamental analysis techniques such as Thevenin and Norton’s theorems and the superposition principle are used to model and analyze sensors, circuits, and systems. Concepts from analysis of linear, time-invariant continuous-time signals and systems are introduced as necessary, including Fourier series and characterization of systems such as filters in both the frequency domain (bandwidth, transfer function) and time domain (rise time, step response). Capacitance, inductance and mutual inductance are explored as energy storage elements, including consideration of resonance and energy losses in power systems. Concepts will be reinforced with the use of laboratory exercises and computer simulation. Recommended background: ECE 2010, MA 1024 (or equivalent), PH 1120/21 and MA 2051 (concurrent). Note: Students who have received credit for ECE 2111 may not receive credit for ECE 2019.",
       "sections": [
-        {"id":"ECE 2019-CL01","code":"CL01","type":"lecture","status":"open","enrolled":55,"capacity":66,"waitlist":{"taken":0,"capacity":15},"instructors":["Gregory Noetscher"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Atwater Kent 233"}]},
-        {"id":"ECE 2019-CX01","code":"CX01","type":"lab","status":"closed","enrolled":24,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Gregory Noetscher"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":830,"location":"Atwater Kent 317 ECE Lab"}]},
-        {"id":"ECE 2019-CX02","code":"CX02","type":"lab","status":"open","enrolled":20,"capacity":21,"waitlist":{"taken":0,"capacity":0},"instructors":["Gregory Noetscher"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]},
+        {"id":"ECE 2019-CL01","code":"CL01","type":"lecture","status":"open","enrolled":53,"capacity":66,"waitlist":{"taken":0,"capacity":15},"instructors":["Gregory Noetscher"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Atwater Kent 233"}]},
+        {"id":"ECE 2019-CX01","code":"CX01","type":"lab","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Gregory Noetscher"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":830,"location":"Atwater Kent 317 ECE Lab"}]},
+        {"id":"ECE 2019-CX02","code":"CX02","type":"lab","status":"open","enrolled":19,"capacity":21,"waitlist":{"taken":0,"capacity":0},"instructors":["Gregory Noetscher"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]},
         {"id":"ECE 2019-CX03","code":"CX03","type":"lab","status":"open","enrolled":11,"capacity":21,"waitlist":{"taken":0,"capacity":0},"instructors":["Gregory Noetscher"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]}
       ],
       "options": [
@@ -3062,8 +3062,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is the first of a two-course sequence in electronic circuit design. It begins with a substantive treatment of the fundamental behavior of semiconductor materials and moves on to the semiconductor diode, the bipolar transistor, and the field-effect transistor. Laboratory exercises are provided to reinforce the theory of operation of these devices. Numerous circuit applications are considered, including: power supplies, transistor amplifiers, and FET switches. Topics include: the pn junction, diode operation, transducers, rectification, voltage regulation, limiting and clamping circuits, transistor operation, biasing, small-signal and large-signal models, transistors amplifiers, and switching applications. Recommended background: ECE 2019.",
       "sections": [
-        {"id":"ECE 2201-CL01","code":"CL01","type":"lecture","status":"open","enrolled":76,"capacity":80,"waitlist":{"taken":0,"capacity":15},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Atwater Kent 219"}]},
-        {"id":"ECE 2201-CX01","code":"CX01","type":"lab","status":"open","enrolled":26,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":650,"location":"Atwater Kent 227 ECE Lab"}]},
+        {"id":"ECE 2201-CL01","code":"CL01","type":"lecture","status":"open","enrolled":77,"capacity":80,"waitlist":{"taken":0,"capacity":15},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Atwater Kent 219"}]},
+        {"id":"ECE 2201-CX01","code":"CX01","type":"lab","status":"open","enrolled":27,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":650,"location":"Atwater Kent 227 ECE Lab"}]},
         {"id":"ECE 2201-CX02","code":"CX02","type":"lab","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":830,"location":"Atwater Kent 227 ECE Lab"}]},
         {"id":"ECE 2201-CX03","code":"CX03","type":"lab","status":"closed","enrolled":20,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Suat Ay"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":1010,"location":"Atwater Kent 227 ECE Lab"}]}
       ],
@@ -3128,7 +3128,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course focuses on the computer organization and architectural design of standalone embedded and high-performance microprocessor systems. This course covers performance metrics, machine level representation of information, the assembly level interface, memory system organization and architecture, computer input/output, instruction set architecture (ISA) design, single cycle and multicycle CPU datapath and controlpath design as well as more advanced level topics such as pipelining, interrupts, cache and memory system design. Special attention will be paid into measuring architectural performance and into improving computer architectures at various levels of the design hierarchy to reach optimal performance. The course will include several hands-on projects and laboratory components where students will be required to perform simulations of CPU designs using architectural simulation tools such as MIPS Simulators and SimpleScalar. Recommended Background: ECE 3849 Suggested Background: ECE 3829",
       "sections": [
-        {"id":"ECE 4801-C01","code":"C01","type":"lecture","status":"open","enrolled":39,"capacity":65,"waitlist":{"taken":0,"capacity":20},"instructors":["Berk Sunar"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Atwater Kent 233"}]}
+        {"id":"ECE 4801-C01","code":"C01","type":"lecture","status":"open","enrolled":40,"capacity":65,"waitlist":{"taken":0,"capacity":20},"instructors":["Berk Sunar"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Atwater Kent 233"}]}
       ],
       "options": [
         ["ECE 4801-C01"]
@@ -3170,7 +3170,7 @@
       "level": "Graduate",
       "description": "This course is intended for graduate and seniorlevel undergraduate students. Modern numerical methods and major software packages are reviewed in application to modeling electrical and biomedical sensors, bioelectromagnetics, wireless communications (including wireless body area networks), and power electronics. The course begins with an introduction to computational mesh generation. Triangular surface meshes, volumetric tetrahedral meshes, voxel meshes, and computational human phantoms are studied. The boundary element method or the methodof-moments is introduced and detailed, followed by a review of the finite element method for electromagnetic problems. The finite-difference time-domain method is another major topic of the course. The course also covers ray tracing algorithms in application to wireless networks. Prerequisites: college MATLAB, differential and integral calculus.",
       "sections": [
-        {"id":"ECE 5106-S01","code":"S01","type":"lecture","status":"closed","enrolled":15,"capacity":15,"waitlist":{"taken":5,"capacity":5},"instructors":["William Wartman"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":1080,"end":1250,"location":"Kaven Hall 115"}]}
+        {"id":"ECE 5106-S01","code":"S01","type":"lecture","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":4,"capacity":5},"instructors":["William Wartman"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":1080,"end":1250,"location":"Kaven Hall 115"}]}
       ],
       "options": [
         ["ECE 5106-S01"]
@@ -3184,7 +3184,7 @@
       "level": "Graduate",
       "description": "This course is an advanced introduction to the design of analog and mixed analog-digital integrated circuits for communication and instrumentation applications. An overview of bipolar and CMOS fabrication processes shows the differences between discrete and integrated circuit design. The bipolar and MOS transistors are reviewed with basic device physics and the development of circuit models in various operating regions. The use of SPICE simulation in the design process will be covered. Integrated amplifier circuits are developed with an emphasis on understanding performance advantages and limitation in such areas as speed, noise and power dissipation. Simple circuits are combined to form the basic functional building blocks such as the op-amp, comparator, voltage reference, etc. These circuit principles will be explored in an IC design project, which may be fabricated in a commercial analog process. Examples of possible topics include sample-and-hold (S/H) amplifier, analogto-digital (A/D) and digital-to-analog (D/A) converters, phase-locked loop (PLL), voltagecontrolled oscillator, phase detector, switched capacitor and continuous-time filters, and sampled current techniques. Prerequisite: Background in analog circuits both at the transistor and functional block [op-amp, comparator, etc.] level. Also familiarity with techniques such as small-signal modeling and analysis in the s-plane using Laplace transforms. Undergraduate course equivalent background ECE 3204; ECE 4902 helpful but not essential.",
       "sections": [
-        {"id":"ECE 524-S01","code":"S01","type":"lecture","status":"open","enrolled":33,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Ulkuhan Guler"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Atwater Kent 233"}]}
+        {"id":"ECE 524-S01","code":"S01","type":"lecture","status":"open","enrolled":32,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Ulkuhan Guler"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1080,"end":1250,"location":"Atwater Kent 233"}]}
       ],
       "options": [
         ["ECE 524-S01"]
@@ -3620,7 +3620,7 @@
       "level": "Undergraduate",
       "description": "Cat. II Resilience is the capacity to adapt to changing conditions and to bounce back after a disaster. Through resilience we can live, and even thrive, in the face of natural disasters. Resilience involves adaptation to the wide range of regional and localized impacts that are expected with a warming planet: more intense storms, greater precipitation, coastal and valley flooding, longer and more severe droughts in some areas, wildfires, melting permafrost, warmer temperatures, and power outages. Resilient design is the intentional design of buildings, landscapes, communities, and regions in response to these vulnerabilities. In this course, we will work to better understand what is at risk in a changing climate with more extreme and frequent disasters, the role people/companies and policies play in these disasters, who is most at risk and why, and develop resilient designs focused on practical, innovative, on-the-ground, and just solutions. Students may not receive credit for both ENV 271X and ENV 2710 Recommended background: None",
       "sections": [
-        {"id":"ENV 2710-C01","code":"C01","type":"lecture","status":"open","enrolled":19,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Elisabeth Stoddard"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Washburn 229"}]}
+        {"id":"ENV 2710-C01","code":"C01","type":"lecture","status":"open","enrolled":20,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Elisabeth Stoddard"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Washburn 229"}]}
       ],
       "options": [
         ["ENV 2710-C01"]
@@ -3665,11 +3665,14 @@
       "level": "Undergraduate",
       "description": "Cat. I This beginning course provides important background for all science and engineering disciplines regarding the capabilities and limitations of materials in our everyday lives. Students are introduced to the fundamental theme of materials science-- structure-property-processing relationships—in metals, ceramics, and plastics. Aspects of material structure range from the atomic to microstructural and macroscopic scales. In turn, these structural features determine the properties of materials. In particular, this course investigates connections between structure and mechanical properties, and how working and thermal treatments may transform structure and thus alter material properties. This knowledge is then applied to material selection decisions. Recommended background: prior knowledge of college-level chemistry.",
       "sections": [
-        {"id":"ES 2001-CD01","code":"CD01","type":"discussion","status":"open","enrolled":69,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Diana Lados"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Higgins Labs 116"}]},
-        {"id":"ES 2001-CL01","code":"CL01","type":"lecture","status":"open","enrolled":69,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Diana Lados"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Higgins Labs 116"}]}
+        {"id":"ES 2001-CD01","code":"CD01","type":"discussion","status":"open","enrolled":68,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Diana Lados"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Higgins Labs 116"}]},
+        {"id":"ES 2001-CD02","code":"CD02","type":"discussion","status":"open","enrolled":0,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Joyce Hyde"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Unity Hall 400"}]},
+        {"id":"ES 2001-CL01","code":"CL01","type":"lecture","status":"open","enrolled":68,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Diana Lados"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Higgins Labs 116"}]},
+        {"id":"ES 2001-CL02","code":"CL02","type":"lecture","status":"open","enrolled":0,"capacity":90,"waitlist":{"taken":0,"capacity":15},"instructors":["Joyce Hyde"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Unity Hall 400"}]}
       ],
       "options": [
-        ["ES 2001-CD01","ES 2001-CL01"]
+        ["ES 2001-CD01","ES 2001-CL01"],
+        ["ES 2001-CD02","ES 2001-CL02"]
       ]
     },
     {
@@ -3755,7 +3758,7 @@
       "description": "Cat. I This course presents the fundamentals of heat transfer in the three modes of conduction, convection, and radiation. Topics include steady-state and transient heat conduction, forced external and internal convection, natural convection, heat exchanger analysis, radiation properties, and radiative exchange between surfaces. Recommended background: knowledge of thermodynamics, fluid mechanics, and ordinary differential equations (ES 3001, ES 3004, and MA 2051) or equivalents.",
       "sections": [
         {"id":"ES 3003-CD01","code":"CD01","type":"discussion","status":"closed","enrolled":100,"capacity":100,"waitlist":{"taken":0,"capacity":0},"instructors":["Alireza Nejad"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
-        {"id":"ES 3003-CL01","code":"CL01","type":"lecture","status":"waitlist","enrolled":100,"capacity":100,"waitlist":{"taken":3,"capacity":20},"instructors":["Alireza Nejad"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Olin Hall 107"}]}
+        {"id":"ES 3003-CL01","code":"CL01","type":"lecture","status":"waitlist","enrolled":100,"capacity":100,"waitlist":{"taken":4,"capacity":20},"instructors":["Alireza Nejad"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Olin Hall 107"}]}
       ],
       "options": [
         ["ES 3003-CD01","ES 3003-CL01"]
@@ -3783,8 +3786,8 @@
       "level": "Undergraduate",
       "description": "Cat. I Characteristics of control systems. Mathematical representation of control components and systems. Laplace transforms, transfer functions, block and signal flow diagrams. Transient response analysis. Introduction to the root-locus method and stability analysis. Frequency response techniques including Bode, polar, and Nichols plots. This sequence of courses in the field of control engineering (ES 3011) is generally available to all juniors and seniors regardless of department. A good background in mathematics is required; familiarity with Laplace transforms, complex variables and matrices is desirable but not mandatory. All students taking Control Engineering I should have an understanding of ordinary differential equations (MA 2051 or equivalent) and basic physics through electricity and magnetism (PH 1120/1121). Control Engineering I may be considered a terminal course, or it may be the first course for those students wishing to do extensive work in this field. Students taking the sequence of two courses will be prepared for graduate work in the field. Recommended background: Ordinary Differential Equations (MA 2051) and Electricity and Magnestism (PH 1120, PH 1121). Students may not receive credit for both ES 3011 and ECE 3012",
       "sections": [
-        {"id":"ES 3011-CL01","code":"CL01","type":"lecture","status":"open","enrolled":59,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Hunter Zhang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Salisbury Labs 411"}]},
-        {"id":"ES 3011-CX01","code":"CX01","type":"lab","status":"open","enrolled":29,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Hunter Zhang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":590,"location":"Higgins Labs 031 ME Computer Lab"}]},
+        {"id":"ES 3011-CL01","code":"CL01","type":"lecture","status":"waitlist","enrolled":60,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Hunter Zhang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Salisbury Labs 411"}]},
+        {"id":"ES 3011-CX01","code":"CX01","type":"lab","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Hunter Zhang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":590,"location":"Higgins Labs 031 ME Computer Lab"}]},
         {"id":"ES 3011-CX02","code":"CX02","type":"lab","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Hunter Zhang"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Higgins Labs 031 ME Computer Lab"}]}
       ],
       "options": [
@@ -3874,7 +3877,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is designed to help the student make well-informed judgments whenfaced with personal financial decisions. Such decisions are growing in numberand complexity, and both individuals and families need a considerable degree offinancial expertise in order to utilize optimally their limited incomes. Principaltopics include: insurance (medical, life, automobile and disability), consumercredit, estate planning, taxation, personal investments (real estate, securities,etc.), social security legislation and personal financial planning.",
       "sections": [
-        {"id":"FIN 1250-C01","code":"C01","type":"lecture","status":"open","enrolled":23,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Karen Murray"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":480,"end":590,"location":"Innovation Studio 105 Active Learning Classroom"}]}
+        {"id":"FIN 1250-C01","code":"C01","type":"lecture","status":"open","enrolled":26,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Karen Murray"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":480,"end":590,"location":"Innovation Studio 105 Active Learning Classroom"}]}
       ],
       "options": [
         ["FIN 1250-C01"]
@@ -4018,7 +4021,7 @@
       "level": "Graduate",
       "description": "This course covers practical applications of fire protection engineering principles to the design of buildings. Both compartmented and non-compartmented buildings will be designed for criteria of life safety, property protection, continuity of operations, operational management and cost. Modern analytical tools as well as traditional codes and standards are utilized. Interaction with architects and code officials, and an awareness of other factors in the building design process are incorporated through design exercises and a design studio. (Prerequisites: FPE 553, FPE 521 and FPE 570 or special permission of the instructor.)",
       "sections": [
-        {"id":"FP 571-S01","code":"S01","type":"lecture","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Morgan Hurley","Keith Calder"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"FP 571-S01","code":"S01","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Morgan Hurley","Keith Calder"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["FP 571-S01"]
@@ -4162,7 +4165,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course surveys the transformation of the United States into an urban and industrial nation. Topics will include changes in the organization of business and labor, immigration and the development of cities, the peripheral role of theSouth and West in the industrial economy, politics and government in the age of \"laissez-faire,\" and the diverse sources and nature of late 19th- and early 20th century reform movements.",
       "sections": [
-        {"id":"HI 2314-C01","code":"C01","type":"lecture","status":"open","enrolled":17,"capacity":35,"waitlist":{"taken":0,"capacity":15},"instructors":["Joseph Cullon"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Stratton Hall 201"}]},
+        {"id":"HI 2314-C01","code":"C01","type":"lecture","status":"open","enrolled":18,"capacity":35,"waitlist":{"taken":0,"capacity":15},"instructors":["Joseph Cullon"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Stratton Hall 201"}]},
         {"id":"HI 2314-C02","code":"C02","type":"lecture","status":"open","enrolled":19,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Holger Droessler"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Stratton Hall 201"}]}
       ],
       "options": [
@@ -4206,7 +4209,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course surveys the major developments, research enterprise, controversies and cultural contexts of particular scientific fields while also engaging students in examining the questions, methods and sources that inform the history of science. Sections will vary in topic, focusing on the history of a subset selected from among the following fields: astronomy, cosmology, mathematics, biology, medicine, ecology, evolutionary ideas, the earth sciences, chemistry, physics, or the human sciences. This course may be repeated for different topics. No prior coursework or background in the history of science is required.",
       "sections": [
-        {"id":"HI 2350-C01","code":"C01","type":"lecture","title":"Topics in the History of Science: Geology and Natural History","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["David Spanagel"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Salisbury Labs 406"}]}
+        {"id":"HI 2350-C01","code":"C01","type":"lecture","title":"Topics in the History of Science: Geology and Natural History","status":"open","enrolled":15,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["David Spanagel"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Salisbury Labs 406"}]}
       ],
       "options": [
         ["HI 2350-C01"]
@@ -4341,11 +4344,11 @@
         {"id":"HU 3910-C01","code":"C01","type":"seminar","title":"PRAC IN HUA: Sense of Place: Memory, History, and Imagination in Visual Media","status":"closed","enrolled":14,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Roshanak Bigonah"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":720,"end":830,"location":"Salisbury Labs 123 Computer Lab"}],"description":"Cat. I In this practicum, students create spaces inspired by memory, history, or imagination. Working in a medium of their choice—such as 3D modeling, digital painting, photography, animation, or mixed media—students explore how environments communicate stories, emotions, and identities."},
         {"id":"HU 3910-C02","code":"C02","type":"seminar","title":"PRAC IN HUA: Visual Persuasion","status":"closed","enrolled":13,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Roshanak Bigonah"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":720,"end":830,"location":"Salisbury Labs 123 Computer Lab"}]},
         {"id":"HU 3910-C03","code":"C03","type":"seminar","title":"PRAC IN HUA: Music and Science Lab","status":"closed","enrolled":13,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["David Ibbett"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":710,"location":"Alden Hall B30 Music Technology Lab"}]},
-        {"id":"HU 3910-C04","code":"C04","type":"seminar","title":"PRAC IN HUA: Arranging","status":"closed","enrolled":14,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Matthew Scinto"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":830,"location":"Alden Hall B30 Music Technology Lab"}]},
+        {"id":"HU 3910-C04","code":"C04","type":"seminar","title":"PRAC IN HUA: Arranging","status":"closed","enrolled":13,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Matthew Scinto"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":830,"location":"Alden Hall B30 Music Technology Lab"}]},
         {"id":"HU 3910-C05","code":"C05","type":"seminar","title":"PRAC IN HUA: Adapt/Modded Musical Instruments","status":"open","enrolled":10,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Scott Burton"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":720,"end":830,"location":"Alden Hall B30 Music Technology Lab"}]},
         {"id":"HU 3910-C07","code":"C07","type":"seminar","title":"PRAC IN HUA: Writing a Web Series","status":"open","enrolled":11,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Kevin Lewis"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":720,"end":830,"location":"Kaven Hall 202 Stats Computer Lab"}]},
         {"id":"HU 3910-C08","code":"C08","type":"seminar","title":"PRAC IN HUA: 2D Design to 3D Sculpture","status":"closed","enrolled":12,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Edward Gutierrez"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":830,"location":"Fuller Labs 222 IMGD Computer Lab"}]},
-        {"id":"HU 3910-C30","code":"C30","type":"seminar","title":"PRAC IN HUA: Nature, Design and Art","status":"open","enrolled":11,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Marie Keller"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":600,"end":710,"location":"Salisbury Labs 124 Conference Room"}]}
+        {"id":"HU 3910-C30","code":"C30","type":"seminar","title":"PRAC IN HUA: Nature, Design and Art","status":"open","enrolled":10,"capacity":12,"waitlist":{"taken":0,"capacity":0},"instructors":["Marie Keller"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":600,"end":710,"location":"Salisbury Labs 124 Conference Room"}]}
       ],
       "options": [
         ["HU 3910-C01"],
@@ -4398,7 +4401,7 @@
         {"id":"ID 2050-C17","code":"C17","type":"lecture","title":"SOC SCI RES-IQP- Armenia (WI)","status":"open","enrolled":26,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Unity Hall 420"}]},
         {"id":"ID 2050-C18","code":"C18","type":"lecture","title":"SOC SCI RES-IQP- Rabat-Morocco (WI)","status":"open","enrolled":23,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Unity Hall 500"}]},
         {"id":"ID 2050-C19","code":"C19","type":"lecture","title":"SOC SCI RES-IQP-Worcester Teacher Preparation Project Center","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Jillian DiBonaventura"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Stratton Hall 301"}]},
-        {"id":"ID 2050-C20","code":"C20","type":"lecture","title":"SOC SCI RES-IQP- Worcester Ma (WI)","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Higgins Labs 202"}]},
+        {"id":"ID 2050-C20","code":"C20","type":"lecture","title":"SOC SCI RES-IQP- Worcester Ma (WI)","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Higgins Labs 202"}]},
         {"id":"ID 2050-C21","code":"C21","type":"lecture","title":"SOC SCI RES-IQP- Lausanne (WI)","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Stratton Hall 311"}]},
         {"id":"ID 2050-C22","code":"C22","type":"lecture","title":"SOC SCI RES-IQP- Victoria BC (WI)","status":"open","enrolled":0,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Olin Hall 223"}]},
         {"id":"ID 2050-C23","code":"C23","type":"lecture","title":"SOC SCI RES-IQP- New Zealand (WI)","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Olin Hall 109"}]},
@@ -4482,7 +4485,7 @@
       "level": "Undergraduate",
       "description": "During this course, students will build on the foundational knowledge they gained in Environmental Leadership Foundations I (IGS210X). Through guest lectures, in-class activities, and discussions, students will learn how professionals have applied environmental literacy in their fields. Students will evaluate their growing environmental literacy skills, knowledge, and behaviors as they progress in their professional path. Environmental Leadership Foundations II is an action-oriented class that enables students to develop an environmental stewardship and social responsibility lens they can apply to their discipline. During this class, students will refine their Individualized Environmental Leadership Plan (IELP). Additionally, students will be introduced to methods for applying environmental literacy content to specific issues, with the issue changing annually. For example, we may use the Massachusetts Municipal Vulnerability Preparedness Program (MVP I.0 and MVP 2.0) to connect advocacy, ecology, policy, and leadership concepts across classes. The MVP program supports Massachusetts communities in identifying and addressing climate-related vulnerabilities. In Foundations II (IGS220X), students will learn from professional guest speakers who specialize in environmental governance, regulatory frameworks, and the integration of sustainability principles across engineering, conservation, and related fields. Throughout the course, students will have opportunities to participate in hands-on experiential nature immersion and visit sites. Required Background: Environmental Leadership Foundations I (IGS210X). NOTE: This course is part of the Leaders in Environmental Action for the Future (LEAF) Initiativ",
       "sections": [
-        {"id":"IGS 220X-C01","code":"C01","type":"lecture","status":"open","enrolled":6,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Corey Dehner","Marja Bakermans"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":600,"end":710,"location":"Kaven Hall 204"}]}
+        {"id":"IGS 220X-C01","code":"C01","type":"lecture","status":"open","enrolled":5,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Corey Dehner","Marja Bakermans"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":600,"end":710,"location":"Kaven Hall 204"}]}
       ],
       "options": [
         ["IGS 220X-C01"]
@@ -5076,14 +5079,14 @@
         {"id":"MA 2051-CD02","code":"CD02","type":"discussion","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Bogdan Doytchinov"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":600,"end":650,"location":"Stratton Hall 205"}]},
         {"id":"MA 2051-CD04","code":"CD04","type":"discussion","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Bogdan Doytchinov"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":720,"end":770,"location":"Stratton Hall 205"}]},
         {"id":"MA 2051-CD05","code":"CD05","type":"discussion","status":"open","enrolled":11,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Kenji Kozai"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":780,"end":830,"location":"Stratton Hall 205"}]},
-        {"id":"MA 2051-CD06","code":"CD06","type":"discussion","status":"open","enrolled":13,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Mayer Humi"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":840,"end":890,"location":"Stratton Hall 205"}]},
+        {"id":"MA 2051-CD06","code":"CD06","type":"discussion","status":"open","enrolled":14,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Mayer Humi"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":840,"end":890,"location":"Stratton Hall 205"}]},
         {"id":"MA 2051-CD07","code":"CD07","type":"discussion","status":"open","enrolled":8,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Kenji Kozai"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":900,"end":950,"location":"Stratton Hall 205"}]},
         {"id":"MA 2051-CD08","code":"CD08","type":"discussion","status":"open","enrolled":8,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Mayer Humi"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Stratton Hall 313"}]},
         {"id":"MA 2051-CD11","code":"CD11","type":"discussion","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Kenji Kozai"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":720,"end":770,"location":"Stratton Hall 205"}]},
         {"id":"MA 2051-CD12","code":"CD12","type":"discussion","status":"open","enrolled":1,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Kenji Kozai"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":960,"end":1010,"location":"Stratton Hall 313"}]},
         {"id":"MA 2051-CD13","code":"CD13","type":"discussion","status":"open","enrolled":3,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Kenji Kozai"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":840,"end":890,"location":"Olin Hall 109"}]},
         {"id":"MA 2051-CL01","code":"CL01","type":"lecture","status":"open","enrolled":28,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Bogdan Doytchinov"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Atwater Kent 116 Newell Hall"}]},
-        {"id":"MA 2051-CL02","code":"CL02","type":"lecture","status":"open","enrolled":21,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Mayer Humi"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Olin Hall 107"}]},
+        {"id":"MA 2051-CL02","code":"CL02","type":"lecture","status":"open","enrolled":22,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Mayer Humi"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Olin Hall 107"}]},
         {"id":"MA 2051-CL03","code":"CL03","type":"lecture","status":"open","enrolled":10,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Kenji Kozai"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
         {"id":"MA 2051-CL04","code":"CL04","type":"lecture","status":"open","enrolled":19,"capacity":70,"waitlist":{"taken":0,"capacity":15},"instructors":["Kenji Kozai"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Higgins Labs 218 Discovery Classroom"}]}
       ],
@@ -5111,13 +5114,13 @@
         {"id":"MA 2071-CD01","code":"CD01","type":"discussion","status":"open","enrolled":27,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Gu Wang"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":890,"location":"Stratton Hall 205"}]},
         {"id":"MA 2071-CD02","code":"CD02","type":"discussion","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Gu Wang"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":900,"end":950,"location":"Stratton Hall 205"}]},
         {"id":"MA 2071-CD03","code":"CD03","type":"discussion","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Gu Wang"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":960,"end":1010,"location":"Stratton Hall 313"}]},
-        {"id":"MA 2071-CD06","code":"CD06","type":"discussion","status":"open","enrolled":32,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Joseph Fehribach"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":960,"end":1010,"location":"Stratton Hall 313"}]},
+        {"id":"MA 2071-CD06","code":"CD06","type":"discussion","status":"open","enrolled":31,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Joseph Fehribach"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":960,"end":1010,"location":"Stratton Hall 313"}]},
         {"id":"MA 2071-CD07","code":"CD07","type":"discussion","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Joseph Fehribach"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":900,"end":950,"location":"Stratton Hall 205"}]},
         {"id":"MA 2071-CD08","code":"CD08","type":"discussion","status":"open","enrolled":9,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Joseph Fehribach"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":660,"end":710,"location":"Stratton Hall 205"}]},
         {"id":"MA 2071-CD09","code":"CD09","type":"discussion","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["William Martin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Kaven Hall 116"}]},
         {"id":"MA 2071-CD10","code":"CD10","type":"discussion","status":"open","enrolled":8,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["William Martin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Kaven Hall 116"}]},
         {"id":"MA 2071-CL01","code":"CL01","type":"lecture","status":"open","enrolled":44,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Gu Wang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Olin Hall 107"}]},
-        {"id":"MA 2071-CL02","code":"CL02","type":"lecture","status":"open","enrolled":57,"capacity":105,"waitlist":{"taken":0,"capacity":0},"instructors":["Joseph Fehribach"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Olin Hall 107"}]},
+        {"id":"MA 2071-CL02","code":"CL02","type":"lecture","status":"open","enrolled":56,"capacity":105,"waitlist":{"taken":0,"capacity":0},"instructors":["Joseph Fehribach"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Olin Hall 107"}]},
         {"id":"MA 2071-CL03","code":"CL03","type":"lecture","status":"open","enrolled":24,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["William Martin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Kaven Hall 116"}]}
       ],
       "options": [
@@ -5247,11 +5250,11 @@
         {"id":"MA 2621-CD01","code":"CD01","type":"discussion","status":"open","enrolled":23,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Oren Mangoubi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Olin Hall 218"}]},
         {"id":"MA 2621-CD02","code":"CD02","type":"discussion","status":"open","enrolled":18,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Oren Mangoubi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":590,"location":"Olin Hall 218"}]},
         {"id":"MA 2621-CD04","code":"CD04","type":"discussion","status":"open","enrolled":6,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Oren Mangoubi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Stratton Hall 301"}]},
-        {"id":"MA 2621-CD05","code":"CD05","type":"discussion","status":"open","enrolled":8,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Stratton Hall 301"}]},
+        {"id":"MA 2621-CD05","code":"CD05","type":"discussion","status":"open","enrolled":7,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Stratton Hall 301"}]},
         {"id":"MA 2621-CD06","code":"CD06","type":"discussion","status":"open","enrolled":29,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Stratton Hall 301"}]},
         {"id":"MA 2621-CD08","code":"CD08","type":"discussion","status":"open","enrolled":6,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 207"}]},
         {"id":"MA 2621-CL01","code":"CL01","type":"lecture","status":"open","enrolled":47,"capacity":75,"waitlist":{"taken":0,"capacity":0},"instructors":["Oren Mangoubi"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
-        {"id":"MA 2621-CL02","code":"CL02","type":"lecture","status":"open","enrolled":43,"capacity":105,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Atwater Kent 116 Newell Hall"}]}
+        {"id":"MA 2621-CL02","code":"CL02","type":"lecture","status":"open","enrolled":42,"capacity":105,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Atwater Kent 116 Newell Hall"}]}
       ],
       "options": [
         ["MA 2621-CD01","MA 2621-CL01"],
@@ -5341,7 +5344,7 @@
       "level": "Undergraduate",
       "description": "This course provides an introduction to a foundational area of modern mathematics. Topics covered include: general topological spaces, continuity, connectedness, compactness, the separation axioms, and homotopy. Modern applications will be chosen according to class interest and will be discussed as time permits. Offered in Academic Years ending in odd numbers. Recommended background: at least one course focused on proof-based mathematics (e.g. MA 1971 Bridge to Higher Mathematics, MA 1033 Theoretical Calculus III, or a transition course). Suggested background: MA 3831 Principles of Real Analysis I.",
       "sections": [
-        {"id":"MA 3843-C01","code":"C01","type":"lecture","status":"open","enrolled":16,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Higgins Labs 114"}]}
+        {"id":"MA 3843-C01","code":"C01","type":"lecture","status":"open","enrolled":17,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Higgins Labs 114"}]}
       ],
       "options": [
         ["MA 3843-C01"]
@@ -5582,7 +5585,7 @@
       "level": "Undergraduate",
       "description": "Cat. II This course explores science and engineering issues associated with equipment andtechnique for alpine skiing, particularly racing. A diverse group of technical subjectsrelated to engineering mechanics are discussed: tribology, beams, rigid body motion,material science, machining and biomechanics. Specifically we will examine:ski-snow interactions, technique for gliding, turning and stepping, selection of linein racing; equipment design, testing and performance; and ski injuries. We will alsoaddress issues in the epidemiology of skiing injuries, the calculation of the cost of skiinjuries to society, the impact of ski equipment technology on litigation and theimpact of litigation on equipment and trail design.This course will be offered in 2020-21, and in alternating years thereafter.",
       "sections": [
-        {"id":"ME 1520-C01","code":"C01","type":"lecture","status":"open","enrolled":24,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Christopher Brown"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Kaven Hall 115"},{"days":["Wed"],"start":600,"end":710,"location":"Kaven Hall 115"}]}
+        {"id":"ME 1520-C01","code":"C01","type":"lecture","status":"open","enrolled":23,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Christopher Brown"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Kaven Hall 115"},{"days":["Wed"],"start":600,"end":710,"location":"Kaven Hall 115"}]}
       ],
       "options": [
         ["ME 1520-C01"]
@@ -5632,7 +5635,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This is an introductory course in mechanical design analysis, and it examines stress and fatigue in many machine elements. Common machine elements are studied and methods of selection and design are related to the associated hardware. Topics covered include: combined stresses, fatigue analysis, design of shafts, springs, gears, bearings and miscellaneous machine elements. Recommended background: mechanics (ES 2501, ES 2502, ES 2503), materials (ME 1800, ME 2820), computer programming (CS 1101 or CS 1102).",
       "sections": [
-        {"id":"ME 3320-CL01","code":"CL01","type":"lecture","status":"waitlist","enrolled":35,"capacity":35,"waitlist":{"taken":6,"capacity":10},"instructors":["Yihao Zheng"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu"],"start":660,"end":710,"location":"Higgins Labs 154"}]},
+        {"id":"ME 3320-CL01","code":"CL01","type":"lecture","status":"waitlist","enrolled":35,"capacity":35,"waitlist":{"taken":5,"capacity":10},"instructors":["Yihao Zheng"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu"],"start":660,"end":710,"location":"Higgins Labs 154"}]},
         {"id":"ME 3320-CX01","code":"CX01","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Yihao Zheng"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":770,"location":"Olin Hall 223"}]}
       ],
       "options": [
@@ -5663,8 +5666,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to the modeling and analysis of mechatronic systems. Creation of dynamic models and analysis of model response using the bond graph modeling language are emphasized. Lecture topics include energy storage and dissipation elements, transducers, transformers, formulation of equations for dynamic systems, time response of linear systems, and system control through open and closed feedback loops. Computers are used extensively for system modeling, analysis, and control. Hands-on projects will include the reverse engineering and modeling of various physical systems. Physical models may sometimes also be built and tested. Recommended background: mathematics (MA 2051, MA 2071), fluids (ES 3004), thermodynamics (ES 3001), mechanics (ES 2501, ES 2503).",
       "sections": [
-        {"id":"ME 4322-CL01","code":"CL01","type":"lecture","status":"open","enrolled":48,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Pradeep Radhakrishnan"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Higgins Labs 218 Discovery Classroom"}]},
-        {"id":"ME 4322-CX01","code":"CX01","type":"lab","status":"open","enrolled":48,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Pradeep Radhakrishnan"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":960,"end":1070,"location":"Higgins Labs 218 Discovery Classroom"}]}
+        {"id":"ME 4322-CL01","code":"CL01","type":"lecture","status":"open","enrolled":50,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Pradeep Radhakrishnan"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Higgins Labs 218 Discovery Classroom"}]},
+        {"id":"ME 4322-CX01","code":"CX01","type":"lab","status":"open","enrolled":50,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Pradeep Radhakrishnan"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":960,"end":1070,"location":"Higgins Labs 218 Discovery Classroom"}]}
       ],
       "options": [
         ["ME 4322-CL01","ME 4322-CX01"]
@@ -5779,7 +5782,7 @@
       "level": "Graduate",
       "description": "ME 528/RBE 501 Robot Dynamics (3 Credits) Foundations and principles of robot dynamics. Topics include system modeling including dynamical modeling of serial arm robots using Newton and Lagrange’s techniques, dynamical modeling of mobile robots, introduction to dynamics-based robot control, as well as advanced techniques for serial arm forward kinematics, trajectory planning, singularity and manipulability, and vision-based control. In addition, dynamic simulation techniques will be covered to apply the concepts learned using realistic simulators. An end of term team project would allow students to apply mastery of the subject to real-world robotic platforms. Prerequisites: RBE 500 or equivalent",
       "sections": [
-        {"id":"ME 528-S02","code":"S02","type":"lecture","status":"open","enrolled":21,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Gregory Fischer"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":960,"end":1130,"location":"Fuller Labs 311"}]}
+        {"id":"ME 528-S02","code":"S02","type":"lecture","status":"open","enrolled":20,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Gregory Fischer"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":960,"end":1130,"location":"Fuller Labs 311"}]}
       ],
       "options": [
         ["ME 528-S02"]
@@ -5851,7 +5854,7 @@
       "level": "Graduate",
       "description": "(2 credits) The failure and wear-out mechanisms for a variety of materials (metals, ceramics, polymers, composites and microelectronics) and applications will be presented and discussed. Multi-axial failure theories and fracture mechanics will be discussed. The methodology and techniques for reliability analysis will also be presented and discussed. A materials systems approach will be used. (Prerequisites: ES 2502 and ME 3023 or equivalent, and senior or graduate standing in engineering or science.) Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 593C/MTE 594C).",
       "sections": [
-        {"id":"ME 5361-C01","code":"C01","type":"lecture","status":"open","enrolled":24,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Diana Lados"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Higgins Labs 202"}]}
+        {"id":"ME 5361-C01","code":"C01","type":"lecture","status":"open","enrolled":23,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Diana Lados"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Higgins Labs 202"}]}
       ],
       "options": [
         ["ME 5361-C01"]
@@ -5949,7 +5952,7 @@
       "level": "Graduate",
       "description": "Seminars on current issues related to various areas of mechanical engineering are presented by authorities in their fields. All full-time mechanical engineering students are required to register and attend.",
       "sections": [
-        {"id":"ME 591-C01","code":"C01","type":"seminar","status":"open","enrolled":46,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Kedar Prashant Shete"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"ME 591-C01","code":"C01","type":"seminar","status":"open","enrolled":47,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Kedar Prashant Shete"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["ME 591-C01"]
@@ -6064,7 +6067,7 @@
       "level": "Undergraduate",
       "description": "MIS 2300 Business Applications of Blockchain (Cat. I) This course introduces the fundamental concepts and functionality of blockchain technology. It explores how that technology records, organizes, and verifies information and how it implements smart contracts. The various financial and non-financial applications of blockchain technology are reviewed. Students will demonstrate their knowledge through exercises, exams, and a final project that designs and develops a basic blockchain application for a business problem. The course concludes by examining the legal and regulatory framework, along with potential risks and hurdles faced by those implementing and using blockchain technologies for financial and other business contexts. Recommended background: Basic knowledge of programming (Equivalent to CS 1004 or other introductory programming courses)",
       "sections": [
-        {"id":"MIS 2300-C01","code":"C01","type":"lecture","status":"open","enrolled":17,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Daniel Treku"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Stratton Hall 202"}]}
+        {"id":"MIS 2300-C01","code":"C01","type":"lecture","status":"open","enrolled":18,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Daniel Treku"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Stratton Hall 202"}]}
       ],
       "options": [
         ["MIS 2300-C01"]
@@ -6484,7 +6487,7 @@
       "level": "Graduate",
       "description": "(2 credits) The failure and wear-out mechanisms for a variety of materials (metals, ceramics, polymers, composites and microelectronics) and applications will be presented and discussed. Multi-axial failure theories and fracture mechanics will be discussed. The methodology and techniques for reliability analysis will also be presented and discussed. A materials systems approach will be used. (Prerequisites: ES 2502 and ME 3023 or equivalent, and senior or graduate standing in engineering or science.) Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 593C/MTE 594C).",
       "sections": [
-        {"id":"MTE 561-C01","code":"C01","type":"lecture","status":"open","enrolled":24,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Diana Lados"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Higgins Labs 202"}]}
+        {"id":"MTE 561-C01","code":"C01","type":"lecture","status":"open","enrolled":23,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Diana Lados"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Higgins Labs 202"}]}
       ],
       "options": [
         ["MTE 561-C01"]
@@ -6788,8 +6791,8 @@
       "level": "Undergraduate",
       "description": "Cat. I The Percussion Ensemble is an audition-based, select ensemble. The Percussion Ensemble performs a wide stylistic range of music from opera overtures to twentieth century minimalist compositions, to Caribbean songs. The ensemble meets weekly and performs on campus during the school year. Students must know how to read music. Permission of the instructor is necessary to register.",
       "sections": [
-        {"id":"MU 2440-S01","code":"S01","type":"lecture","status":"open","enrolled":0,"capacity":999,"waitlist":{"taken":0,"capacity":0},"instructors":["Pieter Struyk"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":1140,"end":1200,"location":"Alden Hall GH Great Hall"}]},
-        {"id":"MU 2440-S02","code":"S02","type":"lecture","status":"open","enrolled":0,"capacity":999,"waitlist":{"taken":0,"capacity":0},"instructors":["Pieter Struyk"],"delivery":"in-person","credits":0,"dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":1140,"end":1200,"location":"Alden Hall GH Great Hall"}]}
+        {"id":"MU 2440-S01","code":"S01","type":"lecture","status":"open","enrolled":0,"capacity":999,"waitlist":{"taken":0,"capacity":0},"instructors":["Piero Guimaraes"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":1140,"end":1200,"location":"Alden Hall GH Great Hall"}]},
+        {"id":"MU 2440-S02","code":"S02","type":"lecture","status":"open","enrolled":0,"capacity":999,"waitlist":{"taken":0,"capacity":0},"instructors":["Piero Guimaraes"],"delivery":"in-person","credits":0,"dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":1140,"end":1200,"location":"Alden Hall GH Great Hall"}]}
       ],
       "options": [
         ["MU 2440-S01"],
@@ -7204,11 +7207,11 @@
       "level": "Undergraduate",
       "description": "Cat. I An introduction to oscillating systems and waves. Topics include: free, clamped forced, and coupled oscillations of physical systems, traveling waves and wave packets, reflection, and interference phenomena. Recommended background: working knowledge of the material covered in PH 1110 and PH 1120 (or PH 1111 and PH 1121) and completion of MA 1021, MA 1022 and MA 1023.",
       "sections": [
-        {"id":"PH 1140-CD01","code":"CD01","type":"discussion","status":"open","enrolled":42,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Unity Hall 500"}]},
-        {"id":"PH 1140-CL01","code":"CL01","type":"lecture","status":"open","enrolled":42,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 500"}]},
+        {"id":"PH 1140-CD01","code":"CD01","type":"discussion","status":"open","enrolled":41,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Unity Hall 500"}]},
+        {"id":"PH 1140-CL01","code":"CL01","type":"lecture","status":"open","enrolled":41,"capacity":80,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 500"}]},
         {"id":"PH 1140-CX01","code":"CX01","type":"lab","status":"open","enrolled":10,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":650,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1140-CX02","code":"CX02","type":"lab","status":"open","enrolled":13,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":770,"location":"Olin Hall 117 Physics Lab"}]},
-        {"id":"PH 1140-CX03","code":"CX03","type":"lab","status":"open","enrolled":16,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":890,"location":"Olin Hall 117 Physics Lab"}]},
+        {"id":"PH 1140-CX03","code":"CX03","type":"lab","status":"open","enrolled":15,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":890,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1140-CX04","code":"CX04","type":"lab","status":"open","enrolled":3,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":660,"end":770,"location":"Olin Hall 117 Physics Lab"}]}
       ],
       "options": [
@@ -7589,10 +7592,10 @@
       "level": "Undergraduate",
       "description": "RBE 2001: Unified Robotics I: Mechanical Applications in Robotics (Units: 1/3, Cat. I) This course focuses on mechanical concepts in the design, construction, and actuation of a robot. Topics include the effective conversion of electrical power to mechanical power, power transmission and control for locomotion and payload manipulation, and the application of kinematic principles for the design of planar manipulators. The course will present the physical operation and common robotic applications of different types of actuators, including solenoids, electrical motors, and pneumatic, hydraulic, and soft actuators. The course will address the design of mechanical systems for a robot to meet requirements including chassis strength, durability, reliability, and robustness. gripper Laboratory sessions consist of hands-on exercises and team projects where students design and test mechanical systems for specific tasks. Recommended background: Knowledge of Embedded Systems, such as covered in ECE 2049. Knowledge of statics, such as covered in ES 2501. Ability to use CAD to design parts, such as found in ES 1310.",
       "sections": [
-        {"id":"RBE 2001-CL01","code":"CL01","type":"lecture","status":"open","enrolled":97,"capacity":100,"waitlist":{"taken":0,"capacity":30},"instructors":["Andre Rosendo"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Olin Hall 107"}]},
+        {"id":"RBE 2001-CL01","code":"CL01","type":"lecture","status":"open","enrolled":96,"capacity":100,"waitlist":{"taken":0,"capacity":30},"instructors":["Andre Rosendo"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Olin Hall 107"}]},
         {"id":"RBE 2001-CX01","code":"CX01","type":"lab","status":"open","enrolled":35,"capacity":36,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Rosendo"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":890,"location":"Innovation Studio 103 Robotics Lab"}]},
         {"id":"RBE 2001-CX02","code":"CX02","type":"lab","status":"closed","enrolled":36,"capacity":36,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Rosendo"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Innovation Studio 103 Robotics Lab"}]},
-        {"id":"RBE 2001-CX03","code":"CX03","type":"lab","status":"open","enrolled":26,"capacity":36,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Rosendo"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":1080,"end":1190,"location":"Innovation Studio 103 Robotics Lab"}]}
+        {"id":"RBE 2001-CX03","code":"CX03","type":"lab","status":"open","enrolled":25,"capacity":36,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Rosendo"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":1080,"end":1190,"location":"Innovation Studio 103 Robotics Lab"}]}
       ],
       "options": [
         ["RBE 2001-CL01","RBE 2001-CX01"],
@@ -7689,8 +7692,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to the modeling and analysis of mechatronic systems. Creation of dynamic models and analysis of model response using the bond graph modeling language are emphasized. Lecture topics include energy storage and dissipation elements, transducers, transformers, formulation of equations for dynamic systems, time response of linear systems, and system control through open and closed feedback loops. Computers are used extensively for system modeling, analysis, and control. Hands-on projects will include the reverse engineering and modeling of various physical systems. Physical models may sometimes also be built and tested. Recommended background: mathematics (MA 2051, MA 2071), fluids (ES 3004), thermodynamics (ES 3001), mechanics (ES 2501, ES 2503).",
       "sections": [
-        {"id":"RBE 4322-CL01","code":"CL01","type":"lecture","status":"open","enrolled":48,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Pradeep Radhakrishnan"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Higgins Labs 218 Discovery Classroom"}]},
-        {"id":"RBE 4322-CX01","code":"CX01","type":"lab","status":"open","enrolled":48,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Pradeep Radhakrishnan"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":960,"end":1070,"location":"Higgins Labs 218 Discovery Classroom"}]}
+        {"id":"RBE 4322-CL01","code":"CL01","type":"lecture","status":"open","enrolled":50,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Pradeep Radhakrishnan"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Higgins Labs 218 Discovery Classroom"}]},
+        {"id":"RBE 4322-CX01","code":"CX01","type":"lab","status":"open","enrolled":50,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Pradeep Radhakrishnan"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":960,"end":1070,"location":"Higgins Labs 218 Discovery Classroom"}]}
       ],
       "options": [
         ["RBE 4322-CL01","RBE 4322-CX01"]
@@ -7746,7 +7749,7 @@
       "level": "Graduate",
       "description": "ME 528/RBE 501 Robot Dynamics (3 Credits) Foundations and principles of robot dynamics. Topics include system modeling including dynamical modeling of serial arm robots using Newton and Lagrange’s techniques, dynamical modeling of mobile robots, introduction to dynamics-based robot control, as well as advanced techniques for serial arm forward kinematics, trajectory planning, singularity and manipulability, and vision-based control. In addition, dynamic simulation techniques will be covered to apply the concepts learned using realistic simulators. An end of term team project would allow students to apply mastery of the subject to real-world robotic platforms. Prerequisites: RBE 500 or equivalent",
       "sections": [
-        {"id":"RBE 501-S02","code":"S02","type":"lecture","status":"open","enrolled":21,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Gregory Fischer"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":960,"end":1130,"location":"Fuller Labs 311"}]}
+        {"id":"RBE 501-S02","code":"S02","type":"lecture","status":"open","enrolled":20,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Gregory Fischer"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":960,"end":1130,"location":"Fuller Labs 311"}]}
       ],
       "options": [
         ["RBE 501-S02"]
@@ -8060,7 +8063,7 @@
       "level": "Graduate",
       "description": "Systems Engineering is a multifaceted discipline, involving human, organizational, and various technical variables that work together to create complex systems. This course is an introduction and overview of the methods and disciplines that systems engineers use to define, develop, and deploy systems. It includes specific integrated examples, projects, and team building exercises to aid in understanding and appreciating fundamental principles. Topics covered include; Introduction to Systems Engineering; Requirements Development; Functional Analysis and Requirements Allocation; System Architecture and System Design; Integration, Verification and Validation; Trade Studies; Systems Analysis, Modeling and Simulation; Specialty Engineering; Risk Management; and Technical Planning and Management. (Prerequisite: an undergraduate degree in engineering or science, or permission of the instructor.)",
       "sections": [
-        {"id":"SYS 501-S01","code":"S01","type":"lecture","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":10,"capacity":20},"instructors":["Christopher Piccirillo"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"SYS 501-S01","code":"S01","type":"lecture","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":11,"capacity":20},"instructors":["Christopher Piccirillo"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["SYS 501-S01"]
@@ -8102,7 +8105,7 @@
       "level": "Graduate",
       "description": "Model-based systems engineering (MBSE) formalizes the practice of systems engineering through the use of models. This course is intended to answer the why, what and how of MBSE. The course provides background and motivation for transitioning to MBSE from a document centric approach to systems engineering. The course provides a foundation for MBSE by first introducing SysML as a descriptive language for modeling systems in terms of their requirements, structure, behavior, and parametric constraints. The course then introduces the Object-Oriented Systems Engineering Method (OOSEM) as a method for applying SysML to support the specification, architecture design, analysis, and verification of complex systems. A systems modeling tool is also introduced and used throughout the course. Applying MBSE on class projects help the student to grasp the fundamentals. This course is expected to provide the foundations of the systems modeling language, method, and tool to enable the student to get started with MBSE on real projects. (Prerequisite: SYS 501 Concepts of Systems Engineering)",
       "sections": [
-        {"id":"SYS 521-S01","code":"S01","type":"lecture","status":"open","enrolled":3,"capacity":20,"waitlist":{"taken":0,"capacity":20},"instructors":["Daniel Durkin"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"SYS 521-S01","code":"S01","type":"lecture","status":"open","enrolled":4,"capacity":20,"waitlist":{"taken":0,"capacity":20},"instructors":["Daniel Durkin"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["SYS 521-S01"]
@@ -8172,7 +8175,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is designed to give students fundamental tools and techniques for acting in the theatre. These include concentration, relaxation, imagination, observation, communication, sensory awareness, and basic script analysis. Drawing on the “Stanislavski Method,” and using character analysis and scene study, it will include exploration of objectives, tactics, obstacles, action, conflict, subtext, and characterization. It will do this through in-class exercises, as well as monologue and scene work from a variety of plays. Beyond acting skills, the student will learn valuable skills in public speaking and in conveying clear, complex ideas. Recommended background: Some theatre or acting experience is desirable but the course is suitable for anyone with interest in the subject. Students may not receive credit for TH 2100 and TH 1100.",
       "sections": [
-        {"id":"TH 2100-C01","code":"C01","type":"lecture","status":"open","enrolled":7,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Olivia Scanlon"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Little Theatre"}]}
+        {"id":"TH 2100-C01","code":"C01","type":"lecture","status":"open","enrolled":6,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Olivia Scanlon"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Little Theatre"}]}
       ],
       "options": [
         ["TH 2100-C01"]
@@ -8277,7 +8280,7 @@
       "description": "Cat. I (1/12 unit) Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
         {"id":"WPE 1012-C01","code":"C01","type":"workshop","status":"open","enrolled":25,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["Armando Dunn"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":840,"end":890,"location":"Recreation Center Courts 1-2"}]},
-        {"id":"WPE 1012-C02","code":"C02","type":"workshop","status":"open","enrolled":25,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["John Salivonchik"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]},
+        {"id":"WPE 1012-C02","code":"C02","type":"workshop","status":"open","enrolled":26,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["John Salivonchik"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]},
         {"id":"WPE 1012-C03","code":"C03","type":"workshop","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["Christopher Bartley"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":540,"end":590,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
@@ -8295,7 +8298,7 @@
       "description": "Cat. I (1/12 unit) Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
         {"id":"WPE 1018-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":28,"capacity":28,"waitlist":{"taken":6,"capacity":10},"instructors":["Mickey Cahoon"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Recreation Center Courts 1-2"}]},
-        {"id":"WPE 1018-C02","code":"C02","type":"workshop","status":"waitlist","enrolled":29,"capacity":28,"waitlist":{"taken":7,"capacity":10},"instructors":["Cherise Galasso"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]}
+        {"id":"WPE 1018-C02","code":"C02","type":"workshop","status":"waitlist","enrolled":28,"capacity":28,"waitlist":{"taken":7,"capacity":10},"instructors":["Cherise Galasso"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
         ["WPE 1018-C01"],
@@ -8711,7 +8714,7 @@
         {"id":"WPE 1611-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":1,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1611-C02","code":"C02","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Diana Fiorentino"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":830,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1611-C03","code":"C03","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":1,"capacity":10},"instructors":["Robin Benoit"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":890,"location":"Daniels Hall 102E CWB Programming Room"}]},
-        {"id":"WPE 1611-C04","code":"C04","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":2,"capacity":10},"instructors":["Shavaun Cloran"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]}
+        {"id":"WPE 1611-C04","code":"C04","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":3,"capacity":10},"instructors":["Shavaun Cloran"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]}
       ],
       "options": [
         ["WPE 1611-C01"],
@@ -8728,8 +8731,8 @@
       "level": "Undergraduate",
       "description": "WPE 1612 Introductory Yoga Cat. I (1/12 unit) This yoga class focuses on connecting the mind, body, and spirit through an awareness of breath. Participating in yoga can improve core strength, flexibility, balance, mindfulness, and relaxation and decrease stress. Those with any level of yoga experience (including first timers) are welcome.",
       "sections": [
-        {"id":"WPE 1612-C01","code":"C01","type":"workshop","status":"open","enrolled":24,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Meng Le"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":1080,"end":1130,"location":"Recreation Center Dance"}]},
-        {"id":"WPE 1612-C03","code":"C03","type":"workshop","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":4,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1020,"end":1070,"location":"Recreation Center Dance"}]}
+        {"id":"WPE 1612-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Meng Le"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":1080,"end":1130,"location":"Recreation Center Dance"}]},
+        {"id":"WPE 1612-C03","code":"C03","type":"workshop","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":5,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1020,"end":1070,"location":"Recreation Center Dance"}]}
       ],
       "options": [
         ["WPE 1612-C01"],
