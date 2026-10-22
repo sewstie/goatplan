@@ -1,6 +1,6 @@
 # 07 · One schedule / Many schedules (regular planner)
 
-- PNG: `div.app-6.png` · Figma node `30:11464` (inside `section#state-07`) · frame 1680 × 800
+- PNG: `div.app-6.png` · Figma node `68:1725` (inside `section#state-07` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "Regular planner anatomy with both switcher variants. The 24-combination count is illustrative." · Static screen, no interactions.
 - Shell: [`div.app.md`](div.app.md). Planner parts: [`div.app-3.md`](div.app-3.md). Course colors: [`div.app-4.md`](div.app-4.md).
 - This is the **regular planner**. Most later states start from it.
@@ -15,7 +15,7 @@ main.workspace (column, gap 12)
 ├── header                 title row: "Schedule planner" + switcher
 ├── Preferences row        … + Sort control pushed to the far right
 ├── div.variant-strip      1416 × 69   ← spec strip, see below
-└── div.content-grid       calendar (1134) + details panel (270), 546 high
+└── div.content-grid       calendar (1120) + details panel (284), 546 high
 ```
 
 ## Sidebar
@@ -64,7 +64,7 @@ Rule it documents: **hide the arrows when only one schedule fits.**
 - Blocks (same as state 05): AE 2320 CL01 Mon–Fri 9:00–9:50 (dark), AE 2410 C01 Mon–Fri 10:00–10:50 (peach), AE 2210 C01 Mon–Fri 11:00–11:50 (yellow), AE 2320 CX02 Thu 3:00–3:50 PM (**selected** style, no lock).
 
 ## Details panel (AE 2320)
-Same as state 04: "Your choices" → Lecture CL01 ("Only lecture" badge) and Lab CX02 (**"Lock"** button) → "View other lab choices" → Professor "Ye Lu" → "Rate My Professors".
+Same as state 04: Lecture professor **"Ye Lu"** with its hint → "Sections in this schedule" → Lecture CL01 ("Only lecture" badge, instructor block: "Ye Lu" with "— / 5", "Rating unavailable" and "Rate My Professors" (see [`div.app-3.md`](div.app-3.md))) and Lab CX02 (**"Lock"** button) → "View other lab choices".
 
 ## Interactive states shown
 - Switcher: both variants (see strip). In the header, both arrows are enabled.

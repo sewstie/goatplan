@@ -1,8 +1,8 @@
 # 13 · Saved vs. Unsaved
 
-- PNG: `div.app-12.png` · Figma node `30:14158` (inside `section#state-13`) · frame 1680 × 800
+- PNG: `div.app-12.png` · Figma node `68:4486` (inside `section#state-13` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "Both save states shown side by side; the regular view begins with unsaved changes." · Static screen, no interactions.
-- Regular planner ([`div.app-6.md`](div.app-6.md)) with the save states. One Figma call was made for the strip (node `30:14290`).
+- Regular planner ([`div.app-6.md`](div.app-6.md)) with the save states. One Figma call was made for the strip (v1 node `30:14290`).
 
 ## Scenario
 Three courses, one schedule fits, AE 2320's lab CX02 is locked. The plan has **unsaved changes**.
@@ -30,7 +30,7 @@ Rule it documents: after a save, the status becomes "Schedule saved" and the but
 ## Sidebar, calendar, details panel
 - Sidebar: AE 2320 (selected, lock icon), AE 2410, AE 2210, "3 selected".
 - Calendar: same blocks as state 07 (taller cards since the strip is 76 high: grid ≈ 449). CX02 block selected with lock icon.
-- Details panel: AE 2320 with Lecture CL01 ("Only lecture") and Lab CX02 (**"Unlock"** button), "View other lab choices", Professor "Ye Lu", "Rate My Professors".
+- Details panel: AE 2320 with Lecture professor "Ye Lu" and its hint, then "Sections in this schedule": Lecture CL01 ("Only lecture", instructor block: "Ye Lu" with "— / 5", "Rating unavailable" and "Rate My Professors" (see [`div.app-3.md`](div.app-3.md))) and Lab CX02 (**"Unlock"** button), "View other lab choices".
 
 ## Interactive states
 - Save schedule: enabled → after saving shows "Saved" with a check.

@@ -1,8 +1,8 @@
 # 15 · Instructor not assigned
 
-- PNG: `div.app-14.png` · Figma node `30:15083` (inside `section#state-15`) · frame 1680 × 800
+- PNG: `div.app-14.png` · Figma node `68:5426` (inside `section#state-15` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "AE 5231 C02 is a listed C Term example with no instructor; the professor link is omitted." · Static screen, no interactions.
-- Regular planner ([`div.app-6.md`](div.app-6.md)). One Figma call was made for the lavender block (node `30:15321`).
+- Regular planner ([`div.app-6.md`](div.app-6.md)). One Figma call was made for the lavender block (v1 node `30:15321`).
 
 ## Scenario
 Four courses: AE 2320 (lab CX02 locked), AE 2410, AE 2210, and **AE 5231 "Air Breathing Propulsion"**, whose section C02 has no instructor yet. AE 5231 is selected. **No blocked time** in this state.
@@ -27,7 +27,7 @@ Four courses: AE 2320 (lab CX02 locked), AE 2410, AE 2210, and **AE 5231 "Air Br
   - map pin — **"Online · synchronous"**
   - people — **"29 of 35 seats open"**
   - graduation cap — **"Instructor not assigned yet"**
-- **Quiet note** (238 × 64, ~10px, 400, `--color-ink-muted`), two paragraphs: **"Instructor not assigned yet."** / **"Professor reviews appear when an instructor is available."**
+- **Quiet note** (252 × 64, ~10px, 400, `--color-ink-muted`), two paragraphs: **"Instructor not assigned yet."** / **"Professor reviews appear when an instructor is available."**
 - **No** Professor select and **no** "Rate My Professors" link.
 
 ## Data

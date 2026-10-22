@@ -1,6 +1,6 @@
 # 16 · Waitlist-only section
 
-- PNG: `div.app-15.png` · Figma node `30:15515` (inside `section#state-16`) · frame 1680 × 800
+- PNG: `div.app-15.png` · Figma node `68:5859` (inside `section#state-16` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "Illustrative AE 2410 availability: no open seats, 7 of 15 waitlist places used." · Static screen, no interactions.
 - Regular planner ([`div.app-6.md`](div.app-6.md)). This file introduces the **info banner**, the **toggle off** state and the **waitlist badges**.
 
@@ -29,11 +29,11 @@ Same as the regular planner: AE 2320 CL01 (dark), AE 2410 C01 (normal peach), AE
 1. h2 **"AE 2410"**, title **"Introduction to Aerospace Structures"**, label "Your choices".
 2. Section choice card:
    - Heading **"Lecture C01"** + **"Waitlist only" badge**: bg `--color-warning-soft`, text `--color-warning`, 9px / 570 / line-height 12.6, padding 3 / 6, radius 5.
-   - Meta: "Mon–Fri · 10:00 AM–10:50 AM" · "Higgins Labs 116" · **"0 of 50 seats open"** · "Mark Richman".
+   - Meta: "Mon–Fri · 10:00 AM–10:50 AM" · "Higgins Labs 116" · **"0 of 50 seats open"** · instructor block: "Mark Richman" with "— / 5", "Rating unavailable" and "Rate My Professors" (see [`div.app-3.md`](div.app-3.md)).
    - **Waitlist line** (4 above, gap 7): people icon 12 + badge **"7 of 15 on waitlist"** (same warning badge style).
 3. **Quiet note** (10px, 400, line-height 17.5, `--color-ink-muted`, padding 11 top / 13 bottom): **"This schedule includes a full section because Only open sections is off."**
 4. **Primary button "Join waitlist in Workday"**, full width, regular size (padding 9 / 11, 11px label), external-link icon 16.
-5. Label "Professor", select **"Mark Richman"**, link "Rate My Professors".
+5. **Lecture professor** filter at the bottom of the panel (label, select **"Mark Richman"**, hint "Filters lectures only. Labs and discussions can have other instructors."). In this state it comes after the button, and the cards keep the label "Your choices".
 
 ## Interactive states
 - Toggle: **off** (×, grey track, knob left). Compare the on state in [`div.app.md`](div.app.md).

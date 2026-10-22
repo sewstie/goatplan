@@ -1,6 +1,6 @@
 # 08 · No schedule fits · Course clash
 
-- PNG: `div.app-7.png` · Figma node `30:11963` (inside `section#state-08`) · frame 1680 × 800
+- PNG: `div.app-7.png` · Figma node `68:2240` (inside `section#state-08` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "Exact overlapping lectures, with remove-course and other-term fixes." · Static screen, no interactions.
 - Starts from the regular planner [`div.app-6.md`](div.app-6.md). This file is the reference for the **"no schedule fits" parts**: warning pill, banner, clash blocks and the "Needs attention" panel. States 09–10 reuse them.
 
@@ -47,12 +47,12 @@ Full width under the preferences row (12 gap above and below).
 Padding 20 / 16, column.
 1. Kicker **"Needs attention"**: 9px, 650, line-height 13, `--color-attention`.
 2. h2 **"AB 1533"** (21px, 700, −0.55), 4 above. Title **"Elementary Arabic III"** (11px, 510), ~12 below.
-3. **Issue box** (`div.issue-box`): 238 × 106, bg `--color-issue-surface`, border 1px `--color-issue-line`, radius 10, padding 11, column gap 6.
+3. **Issue box** (`div.issue-box`): 252 × 106, bg `--color-issue-surface`, border 1px `--color-issue-line`, radius 10, padding 11, column gap 6.
    - Warning-triangle icon 18.
    - h3 **"Two lectures overlap"**: 12px, 700, line-height 18, `--color-ink`.
    - **"AB 1533 C01 and AE 2320 CL01 both meet Mon, Tue, Thu, Fri from 9:00–9:50 AM."**: 10px, 400, line-height 17, `--color-issue-ink`.
 4. Label **"Ways to fix it"** (10px, 650), 12 above.
-5. **Fix list** (`div.fix-list`): 5 above, column gap 8. Full-width buttons, 238 × 36 (min-height 34), radius 9, padding 9 / 11, gap 6, centered, label 10px / 570 / line-height 12:
+5. **Fix list** (`div.fix-list`): 5 above, column gap 8. Full-width buttons, 252 × 36 (min-height 34), radius 9, padding 9 / 11, gap 6, centered, label 10px / 570 / line-height 12:
    - Primary **"Remove AB 1533"** — `--color-accent` fill, × icon 16 (white).
    - Secondary **"Check another term"** — bg `--color-surface`, border 1px `--color-line-button`, calendar icon 16, label `--color-ink`.
 

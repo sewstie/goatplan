@@ -6,6 +6,7 @@ The PNG's 9:00 AM value is a configured state; see [the current defaults](../fra
 - PNG: `div.app.png` · Figma node `30:9804` (inside `section#state-01`) · frame 1680 × 800
 - Figma caption: "No courses selected; the search box is the single entry point." · Static screen, no interactions shown.
 - This file also describes the **app shell** (sidebar, header, preferences row, calendar card, details panel). Other screen docs only list what changes.
+- This frame is from Prototype v1. In Prototype v2 (states 04 onward) the calendar card is 1120 wide and the details panel 284; see [`../frames.md`](../frames.md#what-changed-in-v2).
 
 Colors and type are named by the CSS variables in [`../tokens.md`](../tokens.md). Sizes are Figma px at the 1680-wide frame.
 

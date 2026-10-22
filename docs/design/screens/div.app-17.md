@@ -1,8 +1,8 @@
 # 18 · Evening / Weekend · Calendar expands
 
-- PNG: `div.app-17.png` · Figma node `30:16413` (inside `section#state-18`) · frame 1680 × 800
+- PNG: `div.app-17.png` · Figma node `68:6772` (inside `section#state-18` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "Illustrative early, evening, and Saturday meetings expand the real base timetable." · Static screen, no interactions.
-- Regular planner ([`div.app-6.md`](div.app-6.md)). One Figma call was made for the Tuesday column (node `30:16624`).
+- Regular planner ([`div.app-6.md`](div.app-6.md)). One Figma call was made for the Tuesday column (v1 node `30:16624`).
 
 ## Scenario
 The real three-course timetable plus three example meetings: a Tuesday 8 AM seminar, a Friday evening seminar and a Saturday seminar. The calendar grows to 7 days and 7:30 AM–8:30 PM. No course is selected, so the details panel shows the info variant.
