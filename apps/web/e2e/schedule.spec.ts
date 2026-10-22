@@ -100,41 +100,10 @@ for (const viewport of [
     }
 
     await week.getByRole("button", { name: /^AE 2410 C01, .*Tuesday/ }).hover();
-    await expect(page.locator("[role=tooltip]")).toBeVisible();
+    await expect(page.getByRole("tooltip")).toHaveCount(0);
     await page.screenshot({ path: `${screenshotDir}/schedule-${viewport.width}.png`, fullPage: true });
   });
 }
-
-test("block tooltips render outside the calendar card, so a late block's tooltip isn't cut off", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await openPlan(page, designPlan);
-  const lab = calendar(page).getByRole("button", { name: /^AE 2320 CX02/ });
-
-  await lab.focus();
-  const tooltip = page.locator("[role=tooltip]");
-  await expect(tooltip).toContainText("AE 2320 · CX02");
-  await expect(tooltip).toContainText("Thu · 3:00–3:50 PM");
-  await expect(tooltip).toContainText("Higgins Labs 230 Geom Modeling Computer Lab");
-  await expect(calendar(page).locator("[role=tooltip]")).toHaveCount(0);
-  await expect(page.locator("body > [role=tooltip]")).toHaveCount(1);
-
-  const box = (await tooltip.boundingBox())!;
-  expect(box.y).toBeGreaterThanOrEqual(0);
-  expect(box.y + box.height).toBeLessThanOrEqual(900);
-  expect(box.x + box.width).toBeLessThanOrEqual(1440);
-
-  await page.keyboard.press("Escape");
-  await expect(tooltip).toHaveCount(0);
-
-  await lab.click();
-  await expect(lab).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: /^AE 2410 C01, .*Monday/ }).click();
-  await expect(lab).toHaveAttribute("aria-pressed", "false");
-  await expect(page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: /^AE 2410/ })).toHaveAttribute(
-    "aria-current",
-    "true",
-  );
-});
 
 test("clicking a block selects it and opens its course in the details panel", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });

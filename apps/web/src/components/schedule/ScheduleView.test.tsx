@@ -53,29 +53,6 @@ describe("ScheduleView", () => {
     expect(within(screen.getByRole("group", { name: "Tuesday" })).getByText("2 PM–4 PM")).toBeInTheDocument();
   });
 
-  it("shows details in a tooltip outside the clipped card on hover and focus, and Escape closes it", async () => {
-    setPlanner();
-    const user = userEvent.setup();
-    const { container } = renderInCard();
-    const block = screen.getByRole("button", { name: /^AE 2410 C01, .*Tuesday/ });
-
-    await user.hover(block);
-    const tooltip = document.querySelector("[role=tooltip]");
-    expect(tooltip).toHaveTextContent("AE 2410 · C01");
-    expect(tooltip).toHaveTextContent("Introduction to Aerospace Structures");
-    expect(tooltip).toHaveTextContent("Tue · 10:00–10:50 AM");
-    expect(tooltip).toHaveTextContent("Higgins Labs 116 · Mark Richman");
-    expect(container.contains(tooltip)).toBe(false);
-
-    await user.unhover(block);
-    expect(document.querySelector("[role=tooltip]")).toBeNull();
-
-    act(() => block.focus());
-    expect(document.querySelector("[role=tooltip]")).not.toBeNull();
-    await user.keyboard("{Escape}");
-    expect(document.querySelector("[role=tooltip]")).toBeNull();
-  });
-
   it("selects a section's blocks and keeps them selected when opening its calendar choices", async () => {
     setPlanner();
     const user = userEvent.setup();
@@ -94,11 +71,10 @@ describe("ScheduleView", () => {
     expect(getPlannerStore().getState()).toMatchObject({ selectedCourse: "AE 2410", selectedSection: "AE 2410-C01" });
   });
 
-  it("names blocked times, and shows short room names with the full name in the tooltip", async () => {
+  it("names blocked times, and shows short room names with the full name in the accessible label", () => {
     setPlanner({
       preferences: { startsAfter: 540, blocked: [{ day: "Tue", start: 840, end: 960, label: "Work" }], onlyOpen: true },
     });
-    const user = userEvent.setup();
     renderInCard();
     const tuesday = within(screen.getByRole("group", { name: "Tuesday" }));
     expect(tuesday.getByText("Work")).toBeInTheDocument();
@@ -109,8 +85,6 @@ describe("ScheduleView", () => {
     expect(lab).toHaveTextContent("Higgins Labs 230");
     expect(lab).not.toHaveTextContent("Computer Lab");
     expect(lab).toHaveAccessibleName(/Higgins Labs 230 Geom Modeling Computer Lab/);
-    await user.hover(lab);
-    expect(document.querySelector("[role=tooltip]")).toHaveTextContent("Higgins Labs 230 Geom Modeling Computer Lab");
   });
 
   it("lists sections with no set time under the grid", () => {
