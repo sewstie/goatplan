@@ -7,6 +7,37 @@ const key = "goatplan:draft:v1:2027-C";
 const details = (page: Page) => page.getByRole("complementary", { name: "Course details" });
 const settled = (page: Page) => expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
 
+test("locking the displayed lecture advances to lab choices with the real engine", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.route("**/data/2027-C.json", (route) => route.fulfill({ json: coursePanelTerm("24") }));
+  await page.addInitScript(({ key, code }) => {
+    localStorage.setItem("goatplan:tutorial:v1", "completed");
+    localStorage.setItem("goatplan:term:v1", "2027-C");
+    localStorage.setItem(key, JSON.stringify({ version: 1, courses: [code], preferences: { startsAfter: 0, blocked: [], onlyOpen: true },
+      locks: { [code]: [`${code}-D01`] }, professorByCourse: {}, sortPreset: "fewestEarly", alternatives: {},
+    }));
+  }, { key, code });
+  await page.goto("/");
+  await settled(page);
+  await expect(page.getByText("Schedule 1 of 4", { exact: true })).toBeVisible();
+  const lecture = await details(page).getByRole("heading", { name: /^Lecture L0/ }).innerText();
+  const disclosure = details(page).getByRole("button", { name: "1 other lecture time · Unlocked" });
+  await disclosure.focus();
+  await page.keyboard.press("Enter");
+  await expect(disclosure).toHaveAttribute("aria-expanded", "true");
+  await details(page).getByRole("button", { name: `Lock ${lecture}` }).focus();
+  await page.keyboard.press("Space");
+  await settled(page);
+  await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
+  await expect(details(page).getByRole("button", { name: "Other lab choices" })).toBeFocused();
+  await expect(details(page).getByRole("button", { name: "1 other lecture time · Locked" })).toHaveAttribute("aria-expanded", "false");
+  await expect(details(page).getByRole("list", { name: "Other lecture times" })).toHaveCount(0);
+  await expect(details(page).getByRole("status")).toHaveText(`${lecture} locked · 2 schedules fit`);
+  await expect(details(page).getByRole("button", { name: `Unlock ${lecture}` })).toBeVisible();
+  await expect(details(page).getByRole("button", { name: "Unlock Discussion D01" })).toBeVisible();
+  await page.screenshot({ path: "e2e/screenshots/lecture-step-current-locked-1440.png", fullPage: true, animations: "disabled" });
+});
+
 test("lecture-first choices narrow real-engine results and preserve a locked lab using only the keyboard", async ({ page }) => {
   const term = coursePanelTerm("24");
   const course = term.courses[0];

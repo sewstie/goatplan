@@ -31,13 +31,21 @@ export function SectionsInSchedule({ course, sections, locked, waitlist, onUnloc
       button.focus();
     }
   };
+  const chooseLecture = (lecture: Section) => {
+    const next = labs[0]?.current.type ?? null;
+    pendingFocus.current = next ?? lecture.id;
+    setOpenSection(next);
+    setChosenLecture(lecture);
+    course.sections.filter((item) => item.type === "lecture" && locked.includes(item.id)).forEach((item) => unlockSection(course.code, item.id));
+    lockSection(course.code, lecture.id);
+  };
   if (sections.length === 0) return null;
 
   return (
     <section aria-labelledby="sections-in-schedule" className={cx("flex flex-col gap-4", dense ? "mt-7" : "mt-11")}>
       <h3 id="sections-in-schedule" className="text-10 leading-14-5 font-650 text-ink">{waitlist ? "Your choices" : "Sections in this schedule"}</h3>
       {sections.map((section, index) => {
-        const card = <SectionChoiceCard course={course} section={section} locked={locked.includes(section.id)} onlyLecture={section.type === "lecture" && lectures?.label === "Only lecture"} readOnly={busy} onUnlocked={() => {
+        const card = <SectionChoiceCard course={course} section={section} locked={locked.includes(section.id)} onlyLecture={section.type === "lecture" && lectures?.label === "Only lecture"} readOnly={busy} onLock={section.type === "lecture" ? () => chooseLecture(section) : undefined} onUnlocked={() => {
           if (section.type === "lecture") {
             pendingFocus.current = "lecture";
             setOpenSection("lecture");
@@ -52,14 +60,7 @@ export function SectionsInSchedule({ course, sections, locked, waitlist, onUnloc
         if (section.type === "lecture" && lectures) return (
           <LectureSectionStep key={index} choices={lectures} open={openSection === "lecture"} busy={busy}
             onOpenChange={(open) => setOpenSection(open ? "lecture" : null)} buttonRef={(button) => focusDisclosure("lecture", button)}
-            onChoose={(lecture) => {
-              const next = labs[0]?.current.type ?? null;
-              pendingFocus.current = next ?? lecture.id;
-              setOpenSection(next);
-              setChosenLecture(lecture);
-              course.sections.filter((item) => item.type === "lecture" && locked.includes(item.id)).forEach((item) => unlockSection(course.code, item.id));
-              lockSection(course.code, lecture.id);
-            }}>{card}</LectureSectionStep>
+            onChoose={chooseLecture}>{card}</LectureSectionStep>
         );
         const choices = labs.find(({ current }) => current.id === section.id);
         return choices ? (

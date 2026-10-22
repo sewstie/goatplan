@@ -11,12 +11,13 @@ type LockButtonProps = {
   /** "Lab CX02", so screen readers hear what gets locked. */
   sectionName: string;
   locked: boolean;
+  onLock?: () => void;
   onUnlocked?: () => void;
   buttonRef?: Ref<HTMLButtonElement>;
 };
 
 /** "Lock" keeps only schedules with this section; "Unlock" lets the planner pick again. */
-export function LockButton({ courseCode, sectionId, sectionName, locked, onUnlocked, buttonRef }: LockButtonProps) {
+export function LockButton({ courseCode, sectionId, sectionName, locked, onLock, onUnlocked, buttonRef }: LockButtonProps) {
   const lockSection = usePlanner((state) => state.lockSection);
   const unlockSection = usePlanner((state) => state.unlockSection);
   const action = locked ? "Unlock" : "Lock";
@@ -30,7 +31,8 @@ export function LockButton({ courseCode, sectionId, sectionName, locked, onUnloc
       aria-label={`${action} ${sectionName}`}
       onClick={() => {
         if (!locked) {
-          lockSection(courseCode, sectionId);
+          if (onLock) onLock();
+          else lockSection(courseCode, sectionId);
           return;
         }
         unlockSection(courseCode, sectionId);
