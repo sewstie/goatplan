@@ -12,23 +12,33 @@ Parent: [00-spec](00-spec.md), user stories 19, 21–24, 28–31, 36, 37. Screen
 
 **Blocked by:** 12 (Step 2: choose a lab that fits).
 
-**Status:** ready-for-agent
+**Status:** implemented
 
 ## Needs from lead
 None. This uses the existing lock and option-swap actions, and no new store state.
 
 ## Acceptance criteria
-- [ ] **Step logic:** the helper from 12 gains eligible lectures (after the professor filter), the locked/unlocked label, the "Only lecture" case, and disabled lectures with their reason.
-- [ ] **Small components, one per file:** the lecture time list and the lecture time row, which reuses the rating row from 07.
-- [ ] **Focus while solving:** after choosing, focus waits on the step 2 disclosure, which is `aria-disabled` until solving finishes.
-- [ ] **Disabled rows:** use `aria-disabled` and `aria-describedby` pointing at the reason.
-- [ ] **Look:** the open list copies state 21's layout with lecture cards. You approve it from a screenshot because it isn't in Figma.
-- [ ] **Vitest:** the helper's rules; choosing locks and moves focus; the live region text; switching moves the lock; disabled rows; unlocking returns to step 1; locks never dropped.
-- [ ] **Playwright at 1440 px:** an approval screenshot of step 1 open, and a real-engine flow:
+- [x] **Step logic:** the helper from 12 gains eligible lectures (after the professor filter), the locked/unlocked label, the "Only lecture" case, and disabled lectures with their reason.
+- [x] **Small components, one per file:** the lecture time list and the lecture time row, which reuses the rating row from 07.
+- [x] **Focus while solving:** after choosing, focus waits on the step 2 disclosure, which is `aria-disabled` until solving finishes.
+- [x] **Disabled rows:** use `aria-disabled` and `aria-describedby` pointing at the reason.
+- [x] **Look:** the open list copies state 21's layout with lecture cards. You approve it from a screenshot because it isn't in Figma.
+- [x] **Vitest:** the helper's rules; choosing locks and moves focus; the live region text; switching moves the lock; disabled rows; unlocking returns to step 1; locks never dropped.
+- [x] **Playwright at 1440 px:** an approval screenshot of step 1 open, and a real-engine flow:
   1. pick a lecture and check the count drops;
   2. pick a lab that fits in step 2;
   3. switch lecture with a locked lab and see the disabled rows;
 
   all with the keyboard only.
-- [ ] **834 px:** not covered, an agreed exception.
-- [ ] **Checks:** lint, test and build pass. ui-reviewer finds no blocking issues.
+- [x] **834 px:** not covered, an agreed exception.
+- [x] **Checks:** lint, test and build pass. ui-reviewer finds no blocking issues.
+
+## Validation
+
+Verified on October 22, 2026. Locking the displayed lecture and choosing an alternative now use the same flow. A new panel regression failed before the fix and passed afterward.
+
+`npm run lint`, `npm run test` (629 tests), and `npm run build` pass. Both real-engine tests in `e2e/lecture-step.spec.ts` pass. Standards and spec reviews found no issues. The UI reviewer found no blocking issues in the fresh 1440 px screenshots:
+
+- `apps/web/e2e/screenshots/lecture-step-open-1440.png`
+- `apps/web/e2e/screenshots/lecture-step-locked-lab-1440.png`
+- `apps/web/e2e/screenshots/lecture-step-current-locked-1440.png`

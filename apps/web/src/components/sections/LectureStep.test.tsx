@@ -57,6 +57,32 @@ it("chooses a lecture by keyboard, waits on the disabled lab disclosure, then op
   expect(screen.getByRole("status")).toHaveTextContent("Lecture CL02 locked · 2 schedules fit");
 });
 
+it("locks the displayed lecture by keyboard, closes step 1, and waits on step 2 before announcing the result", async () => {
+  const { store, pause, finish } = await panel({ locks: { "AE 2320": ["AE 2320-CD01"] } });
+  const user = userEvent.setup();
+  await user.click(screen.getByRole("button", { name: "3 other lecture times · Unlocked" }));
+  screen.getByRole("button", { name: "Lock Lecture CL01" }).focus();
+  pause();
+  await user.keyboard("{Enter}");
+  await waitFor(() => expect(store.getState().solveStatus).toBe("solving"));
+  const lab = screen.getByRole("button", { name: "Other lab choices" });
+  expect(lab).toHaveFocus();
+  expect(lab).toHaveAttribute("aria-disabled", "true");
+  expect(lab).toHaveAttribute("aria-expanded", "true");
+  expect(screen.queryByRole("list", { name: "Other lecture times" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: "Choose CX02" })).not.toBeInTheDocument();
+  expect(screen.getByRole("status")).toBeEmptyDOMElement();
+  await user.keyboard("{Enter} ");
+  expect(lab).toHaveAttribute("aria-expanded", "true");
+  await finish();
+  await waitFor(() => expect(lab).toHaveAttribute("aria-disabled", "false"));
+  expect(lab).toHaveFocus();
+  expect(screen.getByRole("button", { name: "Choose CX02" })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Unlock Lecture CL01" })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Unlock Discussion CD01" })).toBeInTheDocument();
+  expect(screen.getByRole("status")).toHaveTextContent("Lecture CL01 locked · 2 schedules fit");
+});
+
 it("shows Only lecture and skips the lecture chooser when the professor has one eligible lecture", async () => {
   await panel({ professorByCourse: { "AE 2320": "Alex Smith" } });
   expect(screen.getByText("Only lecture")).toBeInTheDocument();

@@ -17,6 +17,7 @@ type SectionChoiceCardProps = {
   course: Course;
   section: Section;
   locked: boolean;
+  onLock?: () => void;
   onUnlocked?: () => void;
   problem?: boolean;
   readOnly?: boolean;
@@ -26,7 +27,7 @@ type SectionChoiceCardProps = {
 };
 
 /** One chosen section: its heading, Lock / Unlock (or why it can't be locked) and its facts. */
-export function SectionChoiceCard({ course, section, locked, onUnlocked, problem = false, readOnly = false, lockButtonRef, dense = false, onlyLecture = false }: SectionChoiceCardProps) {
+export function SectionChoiceCard({ course, section, locked, onLock, onUnlocked, problem = false, readOnly = false, lockButtonRef, dense = false, onlyLecture = false }: SectionChoiceCardProps) {
   const heading = sectionHeading(section);
   const compact = section.type === "lab" || section.type === "discussion";
   const compatible = compact && course.sections.some((item) => item.type === "lab") && course.sections.some((item) => item.type === "discussion");
@@ -48,6 +49,7 @@ export function SectionChoiceCard({ course, section, locked, onUnlocked, problem
         sectionId={section.id}
         sectionName={heading}
         locked={locked}
+        onLock={onLock}
         onUnlocked={onUnlocked}
       />
     );
