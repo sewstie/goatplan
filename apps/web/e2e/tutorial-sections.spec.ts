@@ -87,7 +87,7 @@ for (const width of [1440, 834]) {
     await dialog.getByRole("textbox", { name: "Plan name" }).fill("My section choices");
     await dialog.getByRole("button", { name: "Save", exact: true }).press("Enter");
     await expect(dialog).toBeHidden();
-    await expect(page.getByRole("button", { name: "Saved", exact: true })).toBeFocused();
+    await expect(page.getByRole("button", { name: "Schedule saved", exact: true })).toBeFocused();
     await page.getByRole("button", { name: "Saved plans", exact: true }).click();
     await page.getByRole("link", { name: "Sections to register", exact: true }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sections to register · My section choices");

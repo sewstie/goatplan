@@ -14,12 +14,14 @@ import { buildSearchIndex, searchCourses, suggestCourseCode } from "./searchCour
 import { SearchResults } from "./SearchResults";
 import { useTermsWithCourse } from "./useTermsWithCourse";
 import { YourCourses } from "./YourCourses";
+import { ViewedSavedCourses } from "./ViewedSavedCourses";
 
 /** Results past this many are counted but not drawn; typing more narrows them down. */
 const MAX_RESULTS = 50;
 
 /** The search box, search results and "Your courses" (div.app-3.md, div.app-4.md, div.app-5.md). */
 export function CourseSearchPanel() {
+  const saved = usePlanner((state) => state.savedPlanId !== null);
   const [query, setQuery] = useState("");
   /** Said to screen readers after an add, like "AE 2320 added." */
   const [notice, setNotice] = useState("");
@@ -98,6 +100,8 @@ export function CourseSearchPanel() {
       changeQuery("");
     }
   }
+
+  if (saved) return <ViewedSavedCourses />;
 
   return (
     <>

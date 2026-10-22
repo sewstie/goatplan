@@ -8,13 +8,14 @@ import { SectionChooser } from "./SectionChooser";
 import { useSectionChoices } from "./useSectionChoices";
 
 export function ChooseAlternativeSheet() {
+  const saved = usePlanner((state) => state.savedPlanId !== null);
   const code = useAlternativeSheet((state) => state.course);
   const close = useAlternativeSheet((state) => state.close);
   const course = usePlanner((state) => (code ? state.term?.courses.find((item) => item.code === code) : undefined));
   const choices = useSectionChoices(course);
   const selectedSection = usePlanner((state) => state.selectedSection);
   const solveStatus = usePlanner((state) => state.solveStatus);
-  const open = choices !== null;
+  const open = !saved && choices !== null;
   const introRef = useRef<HTMLParagraphElement>(null);
   const returnToPicked = useRef(false);
 

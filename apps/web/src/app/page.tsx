@@ -5,7 +5,8 @@ import { PlanActions } from "@/components/plans/PlanActions";
 import { PreferencesBar } from "@/components/preferences/PreferencesBar";
 import { ScheduleBanner } from "@/components/schedule/ScheduleBanner";
 import { ScheduleSummary } from "@/components/schedule/ScheduleSummary";
-import { ScheduleSwitcher } from "@/components/schedule/ScheduleSwitcher";
+import { ScheduleBrowser } from "@/components/schedule/ScheduleBrowser";
+import { PlannerViewSync } from "@/components/shell/PlannerViewSync";
 import { ScheduleView } from "@/components/schedule/ScheduleView";
 import { ChooseAlternativeSheet } from "@/components/sections/ChooseAlternativeSheet";
 import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
@@ -18,6 +19,7 @@ import { FirstPlanTutorial } from "@/components/tutorial/FirstPlanTutorial";
 export default function PlannerPage() {
   return (
     <>
+      <PlannerViewSync />
       <FirstPlanTutorial />
       <AppShell
         sidebar={
@@ -32,7 +34,7 @@ export default function PlannerPage() {
             breadcrumbs={<TermBreadcrumbs />}
             titleAside={
               <div id="tutorial-schedules" role="region" aria-label="Schedule browser" tabIndex={-1} className="rounded-control">
-                <ScheduleSwitcher />
+                <ScheduleBrowser />
               </div>
             }
             subtitle={<ScheduleSummary />}

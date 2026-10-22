@@ -12,6 +12,7 @@ const SLOW_SOLVE_MS = 600;
 
 /** Schedule agent: the full-width warning or info banner (div.app-7.md, div.app-15.md). Renders nothing when there's no message. */
 export function ScheduleBanner() {
+  const saved = usePlanner((state) => state.savedPlanId !== null);
   const termStatus = usePlanner((state) => state.termStatus);
   const courseCount = usePlanner((state) => state.courses.length);
   const solveStatus = usePlanner((state) => state.solveStatus);
@@ -22,7 +23,7 @@ export function ScheduleBanner() {
   const diagnosis = useDiagnosis();
   const slow = useDelayedFlag(solveStatus === "waiting" || solveStatus === "solving", SLOW_SOLVE_MS);
 
-  if (termStatus !== "ready") return null;
+  if (saved || termStatus !== "ready") return null;
   const message = bannerMessage({ courseCount, solveStatus, slow, solveError, response, shownSchedules, waitlisted });
   if (diagnosis?.issues[0]) return <Banner message={{ tone: "warning", ...diagnosis.issues[0].banner }} />;
   return message && <Banner message={message} />;

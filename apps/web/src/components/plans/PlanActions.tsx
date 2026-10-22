@@ -11,7 +11,8 @@ import {
   updatePlan,
   type SavedPlan,
 } from "@/lib/plans";
-import { getPlannerStore, usePlanner } from "@/lib/store";
+import { getPlannerStore, selectSavedPlan, usePlanner } from "@/lib/store";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { PlanNameDialog } from "./PlanNameDialog";
 import { PlanStatus } from "./PlanStatus";
 import { SavedPlansMenu } from "./SavedPlansMenu";
@@ -31,6 +32,7 @@ type PlanActionsProps = {
 
 /** "Saved plans" and the Save schedule button in the header (div.app-12.md). */
 export function PlanActions({ shownPlan = null }: PlanActionsProps) {
+  const viewed = usePlanner(selectSavedPlan);
   const save = usePlanSaveState();
   const status = shownPlan && shownPlan.id !== save.currentPlan?.id ? "saved" : save.status;
   const term = usePlanner((state) => state.term?.term ?? null);
@@ -66,6 +68,8 @@ export function PlanActions({ shownPlan = null }: PlanActionsProps) {
     setNaming(null);
     return null;
   }
+
+  if (viewed) return <ButtonLink href={`/plans?plan=${encodeURIComponent(viewed.id)}`} variant="secondary">Sections to register</ButtonLink>;
 
   return (
     <>

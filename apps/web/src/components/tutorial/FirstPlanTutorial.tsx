@@ -24,6 +24,7 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
   const hasCourses = usePlanner((state) => state.courses.length > 0);
   const noMatches = usePlanner((state) => state.solveStatus === "done" && state.response?.ok === true && state.response.total === 0 && !state.response.diagnosis?.unsure);
   const ready = termStatus === "ready" && term !== null;
+  const saved = usePlanner((state) => state.savedPlanId !== null);
 
   useEffect(() => {
     let cancelled = false;
@@ -31,6 +32,7 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
       if (cancelled) return;
       persistence.current = storage === undefined ? browserStorage() : storage;
       if (tutorialFinished(persistence.current)) return;
+      if (planner.getState().savedPlanId) return;
       if (planner.getState().courses.length > 0) {
         rememberTutorial(persistence.current, "dismissed");
         return;
@@ -42,6 +44,7 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
 
   useEffect(() => { heading.current?.focus(); }, [step]);
 
+  if (saved) return null;
   if (step === null) return storageFailed ? (
     <p role="status" className="mx-14 mt-14 rounded-control border border-warning-line bg-warning-soft p-16 text-12 text-warning-ink">
       This browser couldn’t remember that you closed the guide. It may appear on your next visit.

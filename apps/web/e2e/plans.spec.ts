@@ -115,7 +115,7 @@ test.describe("Save schedule", () => {
     await seed(page, baseStorage);
     await page.goto("/");
     await plannerSettled(page);
-    await expect(header(page).getByRole("status")).toHaveText("");
+    await expect(header(page).getByRole("status", { name: "Save status" })).toHaveText("");
 
     await header(page).getByRole("button", { name: "Save schedule" }).click();
     const dialog = page.getByRole("dialog", { name: "Save schedule" });
@@ -126,8 +126,8 @@ test.describe("Save schedule", () => {
     await page.keyboard.press("Enter");
 
     await expect(dialog).toBeHidden();
-    await expect(header(page).getByRole("status")).toHaveText("Schedule saved");
-    await expect(header(page).getByRole("button", { name: "Saved", exact: true })).toHaveAttribute("aria-disabled", "true");
+    await expect(header(page).getByRole("status", { name: "Save status" })).toHaveText("Schedule saved");
+    await expect(header(page).getByRole("button", { name: "Schedule saved", exact: true })).toHaveAttribute("aria-disabled", "true");
 
     const stored = await page.evaluate(() =>
       Object.keys(localStorage)
@@ -145,14 +145,14 @@ test.describe("Save schedule", () => {
 
     await page.reload();
     await plannerSettled(page);
-    await expect(header(page).getByRole("status")).toHaveText("Schedule saved");
+    await expect(header(page).getByRole("status", { name: "Save status" })).toHaveText("Schedule saved");
   });
 
   test("shows Unsaved changes and saves them into the same plan", async ({ page }) => {
     await seed(page, unsavedStorage);
     await page.goto("/");
     await plannerSettled(page);
-    await expect(header(page).getByRole("status")).toHaveText("Unsaved changes");
+    await expect(header(page).getByRole("status", { name: "Save status" })).toHaveText("Unsaved changes");
     await expect(header(page).getByRole("button", { name: "Save schedule" })).toBeEnabled();
     for (const width of [1440, 834]) {
       await page.setViewportSize({ width, height: width === 1440 ? 900 : 1194 });
@@ -161,7 +161,7 @@ test.describe("Save schedule", () => {
 
     await header(page).getByRole("button", { name: "Save schedule" }).click();
     await expect(page.getByRole("dialog")).toBeHidden();
-    await expect(header(page).getByRole("status")).toHaveText("Schedule saved");
+    await expect(header(page).getByRole("status", { name: "Save status" })).toHaveText("Schedule saved");
     const locks = await page.evaluate(
       () => JSON.parse(localStorage.getItem("goatplan:plans:v1:plan:plan-design")!).locks,
     );
@@ -188,7 +188,7 @@ test.describe("Save schedule", () => {
     release();
     await plannerSettled(page);
     await expect(header(page).getByRole("button", { name: "Saved plans" })).toBeEnabled();
-    await expect(header(page).getByRole("button", { name: "Saved", exact: true })).toBeVisible();
+    await expect(header(page).getByRole("button", { name: "Schedule saved", exact: true })).toBeVisible();
   });
 
   test("the Saved plans menu works with the keyboard", async ({ page }) => {
@@ -291,8 +291,8 @@ test.describe("Sections to register", () => {
     await expect(summary.getByRole("button", { name: "Open in planner" })).toBeVisible();
     // The planner has Plan 1 open; the header describes the plan on screen, which is saved.
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sections to register · Mornings free");
-    await expect(header(page).getByRole("status")).toHaveText("Schedule saved");
-    await expect(header(page).getByRole("button", { name: "Saved", exact: true })).toHaveAttribute("aria-disabled", "true");
+    await expect(header(page).getByRole("status", { name: "Save status" })).toHaveText("Schedule saved");
+    await expect(header(page).getByRole("button", { name: "Schedule saved", exact: true })).toHaveAttribute("aria-disabled", "true");
     const rows = page.getByRole("table").getByRole("row");
     await expect(rows.nth(2)).toContainText(/Was \d+ open/);
     await expect(rows.nth(3)).toContainText("No longer offered");
@@ -304,7 +304,7 @@ test.describe("Sections to register", () => {
     await seed(page, unsavedStorage);
     await page.goto("/plans?plan=plan-design");
     await plannerSettled(page);
-    await expect(header(page).getByRole("status")).toHaveText("Unsaved changes");
+    await expect(header(page).getByRole("status", { name: "Save status" })).toHaveText("Unsaved changes");
     await expect(header(page).getByRole("button", { name: "Save schedule" })).toBeEnabled();
     await expect(page.getByRole("group", { name: "Preferences" }).getByRole("button", { name: "Block a time" })).toBeEnabled();
     await expect(page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: "Remove AE 2320" })).toBeEnabled();
@@ -418,7 +418,7 @@ test.describe("Saved plans list", () => {
     await page.getByRole("button", { name: "Delete Plan 1" }).click();
     await page.getByRole("button", { name: "Delete plan", exact: true }).click();
     await expect(page.getByRole("heading", { name: "No saved plans yet" })).toBeFocused();
-    await expect(header(page).getByRole("status")).toHaveText("");
+    await expect(header(page).getByRole("status", { name: "Save status" })).toHaveText("");
   });
 
   test("opening a plan asks before discarding unsaved changes", async ({ page }) => {
@@ -434,7 +434,7 @@ test.describe("Saved plans list", () => {
     await page.getByRole("button", { name: "Open in planner Plan 1" }).click();
     await confirm.getByRole("button", { name: "Open plan" }).click();
     await expect(page).toHaveURL(/\/$/);
-    await expect(header(page).getByRole("status")).toHaveText("Schedule saved", { timeout: 30_000 });
+    await expect(header(page).getByRole("status", { name: "Save status" })).toHaveText("Schedule saved", { timeout: 30_000 });
     const locks = await page.evaluate(() => JSON.parse(localStorage.getItem("goatplan:draft:v1:2027-C")!).locks);
     expect(locks).toEqual({ "AE 2320": ["AE 2320-CX02"] });
   });
@@ -450,7 +450,7 @@ test.describe("Saved plans list", () => {
     // The planner's draft has the same times without a name, which counts as an unsaved change.
     await page.getByRole("button", { name: "Open in planner Plan 1" }).click();
     await page.getByRole("dialog", { name: "Open “Plan 1”?" }).getByRole("button", { name: "Open plan" }).click();
-    await expect(header(page).getByRole("status")).toHaveText("Schedule saved", { timeout: 30_000 });
+    await expect(header(page).getByRole("status", { name: "Save status" })).toHaveText("Schedule saved", { timeout: 30_000 });
     await expect(page.getByRole("group", { name: "Preferences" }).getByText("Work")).toBeVisible();
     await expect(page.getByRole("group", { name: "Tuesday" }).getByText("Work")).toBeVisible();
   });

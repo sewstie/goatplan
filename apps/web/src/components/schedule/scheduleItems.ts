@@ -1,4 +1,4 @@
-import type { Course, Day, Delivery, Section, TermFile } from "@/lib/data/types";
+import type { Course, Day, Delivery, Section } from "@/lib/data/types";
 import { courseSlot, type CourseSlot } from "@/components/ui/courseColors";
 
 interface ItemBase {
@@ -44,13 +44,13 @@ const EMPTY: ScheduleItems = { classes: [], untimed: [], waitlisted: [] };
  * engine answers again.
  */
 export function scheduleItems(
-  term: TermFile | null,
+  term: { courses: readonly Pick<Course, "code" | "title" | "sections">[] } | null,
   courses: readonly string[],
   chosen: Readonly<Record<string, readonly string[]>>,
   locks: Readonly<Record<string, readonly string[]>>,
 ): ScheduleItems {
   if (!term) return EMPTY;
-  const courseByCode = new Map<string, Course>(term.courses.map((course) => [course.code, course]));
+  const courseByCode = new Map(term.courses.map((course) => [course.code, course]));
   const result: ScheduleItems = { classes: [], untimed: [], waitlisted: [] };
 
   for (const code of courses) {
