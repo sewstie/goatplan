@@ -34,6 +34,10 @@ export interface PlannerDeps {
 
 const initialState: PlannerState = {
   ...emptyDraft(),
+  savedPlans: [],
+  savedPlanId: null,
+  savedSelectedCourse: null,
+  savedSelectedSection: null,
   terms: [],
   termId: null,
   term: null,
@@ -153,7 +157,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       options = { solve: true },
     ) {
       const state = get();
-      if (state.termStatus !== "ready" || !state.termId) return;
+      if (state.savedPlanId || state.termStatus !== "ready" || !state.termId) return;
       const update = changes(state);
       if (!update) return;
       showNext = null;
@@ -183,6 +187,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
     }
 
     function setScheduleIndex(index: number) {
+      if (get().savedPlanId) return;
       const count = selectSchedules(get()).length;
       if (count === 0) return;
       set({ scheduleIndex: Math.min(count - 1, Math.max(0, Math.trunc(index))) });
@@ -196,6 +201,9 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       showNext = null;
       set({
         ...emptyDraft(),
+        savedPlanId: null,
+        savedSelectedCourse: null,
+        savedSelectedSection: null,
         termId,
         term: null,
         termStatus: "loading",
@@ -231,6 +239,36 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
     return {
       ...initialState,
 
+      setSavedPlans(savedPlans) {
+        set({ savedPlans });
+        const state = get();
+        if (state.savedPlanId && !savedPlans.some((plan) => plan.id === state.savedPlanId && plan.termId === state.termId)) state.showFound();
+      },
+
+      showFound() {
+        set({ savedPlanId: null, savedSelectedCourse: null, savedSelectedSection: null });
+      },
+
+      showSaved(id) {
+        const state = get();
+        const plan = state.savedPlans.find((plan) => plan.termId === state.termId && (id === undefined || plan.id === id));
+        if (plan) set({ savedPlanId: plan.id, savedSelectedCourse: plan.courses[0] ?? null, savedSelectedSection: null });
+      },
+
+      nextSavedPlan() {
+        const state = get();
+        const plans = state.savedPlans.filter((plan) => plan.termId === state.termId);
+        const index = plans.findIndex((plan) => plan.id === state.savedPlanId);
+        if (index >= 0 && index < plans.length - 1) state.showSaved(plans[index + 1].id);
+      },
+
+      previousSavedPlan() {
+        const state = get();
+        const plans = state.savedPlans.filter((plan) => plan.termId === state.termId);
+        const index = plans.findIndex((plan) => plan.id === state.savedPlanId);
+        if (index > 0) state.showSaved(plans[index - 1].id);
+      },
+
       init() {
         initialized ??= (async () => {
           try {
@@ -256,6 +294,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       },
 
       async openPlan(termId, plan, chosen = {}) {
+        get().showFound();
         const draft: Draft = {
           courses: [...plan.courses],
           preferences: structuredClone(plan.preferences),
@@ -301,6 +340,12 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       },
 
       selectCourse(code, sectionId = null) {
+        const state = get();
+        if (state.savedPlanId) {
+          const plan = state.savedPlans.find((plan) => plan.id === state.savedPlanId);
+          if (code === null || plan?.courses.includes(code)) set({ savedSelectedCourse: code, savedSelectedSection: sectionId });
+          return;
+        }
         if (code === null) {
           set({ selectedCourse: null, selectedSection: null });
           return;
@@ -374,6 +419,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
 
       pickOption(courseCode, sectionIds) {
         const state = get();
+        if (state.savedPlanId) return;
         const schedules = selectSchedules(state);
         const current = selectCurrentSchedule(state);
         const course = state.term?.courses.find((item) => item.code === courseCode);
@@ -424,6 +470,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       },
 
       async retrySolve() {
+        if (get().savedPlanId) return;
         clearSolveTimer();
         await runSolve();
       },

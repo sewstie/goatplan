@@ -12,6 +12,7 @@ export function PlanStatus({ status, error }: PlanStatusProps) {
   return (
     <span
       role="status"
+      aria-label="Save status"
       className={cx(
         "text-9 leading-13",
         error ? "text-warning" : status === "saved" ? "text-saved" : "text-ink-muted",

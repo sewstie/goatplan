@@ -2,7 +2,8 @@
 
 import { useCallback, useId, useRef } from "react";
 import { Toggle } from "@/components/ui/Toggle";
-import { usePlanner } from "@/lib/store";
+import { selectSavedPlan, usePlanner } from "@/lib/store";
+import { ReadOnlyPreferences } from "./ReadOnlyPreferences";
 import { BlockedTimeChips } from "./BlockedTimeChips";
 import { BlockTimeButton } from "./BlockTimeButton";
 import { SortSelect } from "./SortSelect";
@@ -10,11 +11,14 @@ import { StartTimeSelect } from "./StartTimeSelect";
 
 /** The Preferences row: start time, blocked times, Only open sections and Sort (div.app.md, div.app-6.md). */
 export function PreferencesBar() {
+  const saved = usePlanner(selectSavedPlan);
   const labelId = useId();
   const onlyOpen = usePlanner((state) => state.preferences.onlyOpen);
   const setPreferences = usePlanner((state) => state.setPreferences);
   const blockAddRef = useRef<HTMLSpanElement>(null);
   const focusBlockAdd = useCallback(() => blockAddRef.current?.querySelector("button")?.focus(), []);
+
+  if (saved) return <ReadOnlyPreferences plan={saved} />;
 
   return (
     <div

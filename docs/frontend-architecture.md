@@ -135,12 +135,18 @@ modules. Without a provider, both hooks use the app's shared store.
 | `solveError` | Why the engine gave no answer at all (for example, the worker crashed). Engine errors are in `response`. |
 | `selectedCourse` | The course the details panel shows and "Your courses" marks. The first course once a term loads; not saved in the draft. |
 | `selectedSection` | The section whose calendar blocks are selected, after a click on a block; `null` otherwise. |
+| `savedPlans` | A read-only mirror of the plans source. Saved plans keep their own storage. |
+| `savedPlanId` | The saved plan being viewed, or `null` for Found. `PlannerViewSync` follows `/?view=saved&plan={id}` and browser history. Never persisted with the draft. |
+| `savedSelectedCourse`, `savedSelectedSection` | Selection within Saved. Found keeps its own selection. |
 
 ### Actions
 
 | Action | What it does |
 |---|---|
 | `init()` | Loads the term list and opens the term used last time, or else the first upcoming one. |
+| `setSavedPlans(plans)` | Refreshes the mirror from the plans source. Returns to Found if the viewed plan was removed. |
+| `showFound()` / `showSaved(id?)` | Changes the viewed source without changing the draft. Saved defaults to the first saved plan of this term. |
+| `nextSavedPlan()` / `previousSavedPlan()` | Pages through this term's saved plans, stopping at the ends. |
 | `setTerm(termId)` | Switches term: downloads the file once (page and engine), restores that term's draft and solves. |
 | `openPlan(termId, plan, chosen?)` | Opens a saved plan in one step: switches term if needed, replaces the draft (courses, preferences, locks, sort), solves once and shows the schedule with the `chosen` sections. Resolves to `false` if the term couldn't load. |
 | `addCourse(code)` | Adds a course from the current term (ignored if unknown or already added) and selects it. |
@@ -163,6 +169,14 @@ in the current schedule, with picked alternatives), `findSchedule` (the first
 schedule that can show given sections), `scheduleKey`, `storedDraft(termId)`
 (the draft this browser keeps for a term), `buildRequest`, `SORT_PRESETS`,
 `DEFAULT_PREFERENCES`, `MAX_SCHEDULES`.
+
+`selectViewedSchedule` supplies the calendar and saved course panel with the
+chosen section snapshots. Found applies the draft's alternatives; Saved uses
+the stored sections, even when current course data has changed. `selectSavedPlan`,
+`selectViewedCourse` and `selectViewedSection` supply the rest of the read-only
+view. Draft edits and Found paging do nothing in Saved. Leaving the planner
+clears Saved mode without changing the URL or draft. `share` is reserved and
+left untouched by view navigation.
 
 ### How it behaves
 

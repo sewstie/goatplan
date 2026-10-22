@@ -1,5 +1,6 @@
 import type { TermFile, TermSummary } from "@/lib/data/types";
 import type { BlockedTime, Fix, SolveResponse } from "@/lib/engine/types";
+import type { SavedPlan } from "@/lib/plans/types";
 
 export type SortPresetId = "fewestEarly" | "fewestGaps" | "fewestDays";
 
@@ -39,6 +40,10 @@ export type SolveStatus = "idle" | "waiting" | "solving" | "done" | "error";
 export type OpenedPlan = Omit<Draft, "alternatives">;
 
 export interface PlannerState extends Draft {
+  savedPlans: SavedPlan[];
+  savedPlanId: string | null;
+  savedSelectedCourse: string | null;
+  savedSelectedSection: string | null;
   terms: TermSummary[];
   termId: string | null;
   term: TermFile | null;
@@ -56,6 +61,11 @@ export interface PlannerState extends Draft {
 }
 
 export interface PlannerActions {
+  setSavedPlans(plans: SavedPlan[]): void;
+  showFound(): void;
+  showSaved(id?: string): void;
+  nextSavedPlan(): void;
+  previousSavedPlan(): void;
   init(): Promise<void>;
   setTerm(termId: string): Promise<void>;
   /**

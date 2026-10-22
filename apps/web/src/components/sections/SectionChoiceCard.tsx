@@ -14,7 +14,7 @@ import {
 } from "./sectionDetails";
 
 type SectionChoiceCardProps = {
-  course: Course;
+  course: Pick<Course, "code" | "sections" | "options">;
   section: Section;
   locked: boolean;
   onLock?: () => void;

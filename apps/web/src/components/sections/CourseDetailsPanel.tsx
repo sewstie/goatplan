@@ -7,9 +7,11 @@ import { CourseDetails } from "./CourseDetails";
 import { DiagnosisPanel } from "./DiagnosisPanel";
 import { PanelIntro } from "./PanelIntro";
 import { PanelSkeleton } from "./PanelSkeleton";
+import { SavedCourseDetails } from "./SavedCourseDetails";
 
 /** The details panel: section choices, Lock / Unlock and the professor, or the intro when no course is picked. */
 export function CourseDetailsPanel() {
+  const saved = usePlanner((state) => state.savedPlanId !== null);
   const code = usePlanner((state) => state.selectedCourse);
   const termStatus = usePlanner((state) => state.termStatus);
   const course = usePlanner((state) => (code ? state.term?.courses.find((item) => item.code === code) : undefined));
@@ -28,6 +30,7 @@ export function CourseDetailsPanel() {
   }, [busy]);
 
   // A term that failed to load has no details panel in the design (div.app-2.md).
+  if (saved) return <SavedCourseDetails />;
   if (termStatus === "error") return null;
   let content;
   if (termStatus === "idle" || termStatus === "loading") content = <PanelSkeleton />;

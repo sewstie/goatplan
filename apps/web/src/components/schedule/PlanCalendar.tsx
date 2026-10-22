@@ -3,7 +3,7 @@
 import { useMemo, type ReactNode } from "react";
 import { formatTimeRange } from "@/lib/data/time";
 import type { Day } from "@/lib/data/types";
-import { selectSchedules, usePlanner } from "@/lib/store";
+import { selectSavedPlan, selectSchedules, selectViewedCourse, selectViewedSection, usePlanner } from "@/lib/store";
 import { blockPosition } from "./blockStyles";
 import { BlockedTimeBlock } from "./BlockedTimeBlock";
 import { ClassBlock } from "./ClassBlock";
@@ -24,12 +24,13 @@ const FULL_COLUMN = { lane: 0, lanes: 1 };
 const NO_PREVIEWS: readonly ClassItem[] = [];
 
 export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: readonly ClassItem[]; overlay?: ReactNode }) {
+  const saved = usePlanner(selectSavedPlan);
   const term = usePlanner((state) => state.term);
   const schedules = usePlanner(selectSchedules);
   const pending = usePlanner((state) => state.solveStatus === "waiting" || state.solveStatus === "solving");
-  const preferences = usePlanner((state) => state.preferences);
-  const selectedCourse = usePlanner((state) => state.selectedCourse);
-  const selectedSection = usePlanner((state) => state.selectedSection);
+  const preferences = usePlanner((state) => selectSavedPlan(state)?.preferences ?? state.preferences);
+  const selectedCourse = usePlanner(selectViewedCourse);
+  const selectedSection = usePlanner(selectViewedSection);
   const selectCourse = usePlanner((state) => state.selectCourse);
   const course = term?.courses.find((item) => item.code === selectedCourse);
   const choices = useSectionChoices(course);
@@ -37,12 +38,12 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
   const { classes: scheduled, untimed } = useScheduleItems();
   const diagnostic = useDiagnosticPreview();
   const sectionPreviews = useSectionPreviewItems();
-  const previewItems = useMemo(() => [...previews, ...diagnostic.classes, ...sectionPreviews], [previews, diagnostic.classes, sectionPreviews]);
+  const previewItems = useMemo(() => saved ? [] : [...previews, ...diagnostic.classes, ...sectionPreviews], [saved, previews, diagnostic.classes, sectionPreviews]);
   const classes = useMemo(() => [...scheduled, ...previewItems], [scheduled, previewItems]);
 
   const { range, days } = useMemo(
-    () => calendarBounds(term, schedules, preferences.blocked, previewItems),
-    [term, schedules, preferences.blocked, previewItems],
+    () => saved ? calendarBounds(null, [], preferences.blocked, scheduled) : calendarBounds(term, schedules, preferences.blocked, previewItems),
+    [saved, scheduled, term, schedules, preferences.blocked, previewItems],
   );
   // Each day's blocks in time order, so screen readers and Tab go through the day as it happens.
   const byDay = useMemo(() => {
@@ -86,7 +87,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN)}
             selected={selected}
             onSelect={(clicked) => {
-              if (selected && choices && !clicked.preview) {
+              if (!saved && selected && choices && !clicked.preview) {
                 openChoices(clicked.courseCode);
                 return;
               }
@@ -102,13 +103,13 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
 
   return (
     <WeekCalendar
-      busy={pending}
+      busy={!saved && pending}
       days={days}
       range={range}
-      caption={hasTimes ? `${diagnostic.hasDiagnosis ? "Preview" : "Auto-fit"} · ${formatTimeRange(range.start, range.end)}` : diagnostic.hasDiagnosis ? "No schedule fits" : "No timed courses yet"}
+      caption={hasTimes ? `${saved ? "Saved plan" : diagnostic.hasDiagnosis ? "Preview" : "Auto-fit"} · ${formatTimeRange(range.start, range.end)}` : diagnostic.hasDiagnosis && !saved ? "No schedule fits" : "No timed courses yet"}
       renderDay={renderDay}
       background={hasTimes && <EarlyBand range={range} startsAfter={preferences.startsAfter} />}
-      footer={<NoTimeStrip items={untimed.length > 0 ? untimed : diagnostic.untimed} />}
+      footer={<NoTimeStrip items={saved || untimed.length > 0 ? untimed : diagnostic.untimed} />}
       overlay={overlay}
     />
   );

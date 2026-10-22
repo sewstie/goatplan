@@ -9,6 +9,7 @@ import type { Draft, PlannerStore } from "./types";
 import { PlannerContext } from "./PlannerProvider";
 
 export * from "./types";
+export * from "./viewSelectors";
 export { PlannerProvider } from "./PlannerProvider";
 export { buildRequest, MAX_SCHEDULES } from "./buildRequest";
 export { SORT_PRESETS, SORT_PRESET_IDS } from "./sortPresets";
