@@ -22,10 +22,11 @@ type SectionChoiceCardProps = {
   readOnly?: boolean;
   lockButtonRef?: Ref<HTMLButtonElement>;
   dense?: boolean;
+  onlyLecture?: boolean;
 };
 
 /** One chosen section: its heading, Lock / Unlock (or why it can't be locked) and its facts. */
-export function SectionChoiceCard({ course, section, locked, onUnlocked, problem = false, readOnly = false, lockButtonRef, dense = false }: SectionChoiceCardProps) {
+export function SectionChoiceCard({ course, section, locked, onUnlocked, problem = false, readOnly = false, lockButtonRef, dense = false, onlyLecture = false }: SectionChoiceCardProps) {
   const heading = sectionHeading(section);
   const compact = section.type === "lab" || section.type === "discussion";
   const compatible = compact && course.sections.some((item) => item.type === "lab") && course.sections.some((item) => item.type === "discussion");
@@ -39,7 +40,7 @@ export function SectionChoiceCard({ course, section, locked, onUnlocked, problem
     control = <CompatibleBadge />;
   } else if (readOnly) {
     control = isOnlyChoice(course, section.id) ? <Badge size="sm">Only {typeWord(section.type)}</Badge> : null;
-  } else if (locked || (hasSetTime(section) && !isOnlyChoice(course, section.id))) {
+  } else if (locked || (!onlyLecture && hasSetTime(section) && !isOnlyChoice(course, section.id))) {
     control = (
       <LockButton
         buttonRef={lockButtonRef}

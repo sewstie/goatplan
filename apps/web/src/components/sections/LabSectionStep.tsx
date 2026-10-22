@@ -1,19 +1,21 @@
 "use client";
 
-import { useId, useRef, type ReactNode } from "react";
+import { useId, useRef, type ReactNode, type RefCallback } from "react";
 import type { LabChoices } from "./sectionSteps";
 import { LabChoiceList } from "./LabChoiceList";
 import { SectionStepDisclosure } from "./SectionStepDisclosure";
 import { usePlanner } from "@/lib/store";
 import type { Section } from "@/lib/data/types";
 
-export function LabSectionStep({ courseCode, choices, children, onChoosing, open, onOpenChange }: {
+export function LabSectionStep({ courseCode, choices, children, onChoosing, open, onOpenChange, busy = false, buttonRef }: {
   courseCode: string;
   choices: LabChoices;
   children: ReactNode;
   onChoosing: (id: string) => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  busy?: boolean;
+  buttonRef?: RefCallback<HTMLButtonElement>;
 }) {
   const lockSection = usePlanner((state) => state.lockSection);
   const unlockSection = usePlanner((state) => state.unlockSection);
@@ -35,9 +37,9 @@ export function LabSectionStep({ courseCode, choices, children, onChoosing, open
       disclosure.current?.focus();
     }}>
       {children}
-      {choices.choices.length > 0 && <>
-        <SectionStepDisclosure kind={kind} open={open} listId={listId} onToggle={() => onOpenChange(!open)} buttonRef={disclosure} />
-        {open && <LabChoiceList id={listId} courseCode={courseCode} kind={kind} choices={choices.choices} onChoose={choose} />}
+      {(choices.choices.length > 0 || open) && <>
+        <SectionStepDisclosure kind={kind} open={open} listId={listId} busy={busy} onToggle={() => onOpenChange(!open)} buttonRef={(button) => { disclosure.current = button; buttonRef?.(button); }} />
+        {open && !busy && <LabChoiceList id={listId} courseCode={courseCode} kind={kind} choices={choices.choices} onChoose={choose} />}
       </>}
     </div>
   );
