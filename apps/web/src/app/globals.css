@@ -31,6 +31,7 @@
   --color-line-control: #e2e4ed;
   --color-line-button: #e1e5ed;
   --color-line-popover: #dfe3ed;
+  --color-listbox-line: #dcd9f5;
   --color-line-strong: #b9c0ce;
 
   --color-accent: #3432c7;
@@ -212,6 +213,7 @@
   --shadow-selected: 0 0 0 0.5px var(--color-accent);
   --shadow-block-hover: 0 2px 5px 0 rgb(76 51 35 / 0.07);
   --shadow-popover: 0 4px 7px 0 rgb(36 41 65 / 0.09);
+  --shadow-listbox: 0 8px 24px 0 rgb(41 49 82 / 0.1);
   /* Proposed, not in Figma yet: the soft focus ring of form fields (text inputs, selects, checkbox pills). */
   --shadow-field-focus: 0 0 0 1px var(--color-choice-line), 0 0 0 4px color-mix(in srgb, var(--color-choice-line) 40%, transparent);
 

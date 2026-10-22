@@ -108,7 +108,7 @@ it("marks the lecture professor as Optional only when more than one lecture inst
   render(<PlannerProvider store={store}><CourseDetailsPanel /></PlannerProvider>);
 
   expect(screen.getByText("Optional")).toBeInTheDocument();
-  expect(screen.getByRole("combobox", { name: "Lecture professor" })).toHaveDisplayValue("Any professor");
+  expect(screen.getByRole("combobox", { name: "Lecture professor" })).toHaveTextContent("Any professor");
 });
 
 it("shows a lecture instructor's score, count and review link before a professor is selected", async () => {

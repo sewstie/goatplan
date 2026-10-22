@@ -21,6 +21,17 @@ export function lectureInstructors(sections: readonly Section[]): string[] {
   return uniqueInstructors(sections.filter((section) => section.type === "lecture"));
 }
 
+export function lectureInstructorChoices(sections: readonly Section[]) {
+  return lectureInstructors(sections).map((name) => {
+    const lectures = lecturesByProfessor(sections, name);
+    return {
+      name,
+      lectureCount: lectures.length,
+      coTaughtCount: lectures.filter((section) => uniqueInstructors([section]).length > 1).length,
+    };
+  });
+}
+
 /** Every instructor once, in the order they first appear, ignoring blanks and case. */
 export function uniqueInstructors(sections: readonly Pick<Section, "instructors">[]): string[] {
   const seen = new Set<string>();

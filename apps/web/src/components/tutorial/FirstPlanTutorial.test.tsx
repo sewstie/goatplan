@@ -72,10 +72,13 @@ it.each([null, "Ye Lu"])("reveals a planned lecture course's real Professor cont
   await user.click(screen.getByRole("button", { name: "Find Professor for AE 2320" }));
   const professor = screen.getByRole("combobox", { name: "Lecture professor" });
   expect(professor).toHaveFocus();
-  expect(professor).toHaveValue("");
+  expect(professor).toHaveTextContent("Any professor");
   expect(planner.getState().courses).toEqual(["AE 2320", "AE 2410"]);
   expect(planner.getState().selectedCourse).toBe("AE 2320");
-  if (name) await user.selectOptions(professor, name);
+  if (name) {
+    await user.click(professor);
+    await user.click(screen.getByRole("option", { name }));
+  }
   await user.click(screen.getByRole("button", { name: "Next" }));
   await user.click(screen.getByRole("button", { name: "Back" }));
   await user.click(screen.getByRole("button", { name: "Skip tutorial" }));

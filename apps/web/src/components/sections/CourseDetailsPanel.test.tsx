@@ -113,6 +113,11 @@ async function openCalendarChoices() {
   return block;
 }
 
+async function chooseProfessor(picker: HTMLElement, name: string) {
+  await userEvent.click(picker);
+  await userEvent.click(screen.getByRole("option", { name: name || "Any professor" }));
+}
+
 describe("CourseDetailsPanel", () => {
   it("shows a loading state while the term loads", async () => {
     await startTestPlanner({}, { loadTerm: () => new Promise(() => {}), wait: false });
@@ -210,9 +215,9 @@ describe("CourseDetailsPanel", () => {
     render(<CourseDetailsPanel />);
 
     const picker = screen.getByRole("combobox", { name: "Lecture professor" });
-    expect(picker).toHaveDisplayValue("Any professor");
+    expect(picker).toHaveTextContent("Any professor");
     expect(screen.getByRole("link", { name: /Rate My Professors/ })).toBeInTheDocument();
-    await userEvent.selectOptions(picker, "Ye Lu");
+    await chooseProfessor(picker, "Ye Lu");
     const link = screen.getByRole("link", { name: /Rate My Professors/ });
     expect(link).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
     expect(link).toHaveAttribute("target", "_blank");
@@ -223,20 +228,22 @@ describe("CourseDetailsPanel", () => {
     const { store, requests } = await startTestPlanner({ courses: ["AE 2320"], preferences }, { term: lectureProfessorTerm() });
     render(<CourseDetailsPanel />);
     const picker = screen.getByRole("combobox", { name: "Lecture professor" });
-    expect(within(picker).getAllByRole("option").map((option) => option.textContent)).toEqual([
-      "Any professor", "Ye Lu", "Alex Smith", "Mark Richman",
+    await userEvent.click(picker);
+    expect(screen.getAllByRole("option").map((option) => option.textContent)).toEqual([
+      "Any professorAll 6 lecture times", "Ye Lu4 lecture times · includes co-teaching", "Alex Smith1 co-taught lecture", "Mark Richman2 lecture times",
     ]);
+    await userEvent.keyboard("{Escape}");
     picker.focus();
     expect(picker).toHaveFocus();
-    await userEvent.selectOptions(picker, "Ye Lu");
+    await chooseProfessor(picker, "Ye Lu");
     await waitForSolve(store);
     expect(requests.at(-1)?.preferences?.anyOf).toEqual({ "AE 2320": [
       "AE 2320-CL01", "AE 2320-CL02", "AE 2320-CL05", "AE 2320-CL06",
     ] });
-    await userEvent.selectOptions(picker, "");
+    await chooseProfessor(picker, "");
     await waitForSolve(store);
     expect(requests.at(-1)?.preferences).toMatchObject({ ...preferences, anyOf: {} });
-    expect(picker).toHaveDisplayValue("Any professor");
+    expect(picker).toHaveTextContent("Any professor");
   });
 
   it("omits the professor filter without lectures and keeps section locking", async () => {
@@ -257,17 +264,19 @@ describe("CourseDetailsPanel", () => {
     const { store, requests } = await startTestPlanner({ courses: ["AE 2320"], locks: { "AE 2320": ["AE 2320-CX01"] } }, { term });
     render(<CourseDetailsPanel />);
     const picker = screen.getByRole("combobox", { name: "Lecture professor" });
-    expect(within(picker).getAllByRole("option")[0]).toHaveTextContent("Any professor");
-    await userEvent.selectOptions(picker, "Ye Lu");
+    await userEvent.click(picker);
+    expect(screen.getAllByRole("option")[0]).toHaveTextContent("Any professor");
+    await userEvent.keyboard("{Escape}");
+    await chooseProfessor(picker, "Ye Lu");
     await waitForSolve(store);
     expect(requests.at(-1)?.preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01"] });
     expect(store.getState().locks).toEqual({ "AE 2320": ["AE 2320-CX01"] });
     expect(screen.queryByText(/Unlocked .* for this professor/)).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Rate My Professors: Ye Lu/ })).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
-    await userEvent.selectOptions(picker, "Other Professor");
+    await chooseProfessor(picker, "Other Professor");
     await waitForSolve(store);
     expect(screen.getByRole("link", { name: /Rate My Professors: Other Professor/ })).toHaveAttribute("href", rateMyProfessorsUrl("Other Professor"));
-    await userEvent.selectOptions(picker, "");
+    await chooseProfessor(picker, "");
     await waitForSolve(store);
     expect(requests.at(-1)?.preferences?.anyOf).toEqual({});
     expect(screen.getAllByRole("link", { name: /Rate My Professors/ })).toHaveLength(2);
