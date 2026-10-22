@@ -96,6 +96,11 @@ async function open(page: Page, changes: Partial<Draft> = {}, data = termData())
   await settled(page);
 }
 
+async function chooseProfessor(page: Page, name: string) {
+  await picker(page).click();
+  await page.getByRole("option", { name: name || "Any professor", exact: true }).click();
+}
+
 async function screenshots(page: Page, name: string) {
   for (const width of [1440, 834]) {
     await page.setViewportSize({ width, height: width === 834 ? 1194 : 900 });
@@ -109,12 +114,14 @@ test("lecture filtering keeps linked labs and discussions, supports alternatives
     courses: ["AE 2320"],
     preferences: { startsAfter: 540, blocked: [{ day: "Mon", start: 660, end: 710 }], onlyOpen: true },
   }, lectureProfessorTerm());
-  await expect(picker(page)).toHaveValue("");
-  await expect(picker(page).getByRole("option")).toHaveText(["Any professor", "Ye Lu", "Alex Smith", "Mark Richman"]);
+  await expect(picker(page)).toHaveText("Any professor");
+  await picker(page).click();
+  await expect(page.getByRole("listbox").getByRole("option")).toHaveText(["Any professorAll 6 lecture times", "Ye Lu4 lecture times · includes co-teaching", "Alex Smith1 co-taught lecture", "Mark Richman2 lecture times"]);
+  await page.keyboard.press("Escape");
   await expect(page.getByText("Schedule 1 of 4", { exact: true })).toBeVisible();
   await picker(page).focus();
   await expect(picker(page)).toBeFocused();
-  await picker(page).selectOption("Ye Lu");
+  await chooseProfessor(page, "Ye Lu");
   await settled(page);
   await expect(page.getByText("Schedule 1 of 3", { exact: true })).toBeVisible();
   const lectures: string[] = [];
@@ -161,7 +168,7 @@ test("lecture filtering keeps linked labs and discussions, supports alternatives
   await expect(coTeachers.getByRole("group", { name: "Alex Smith", exact: true })).toBeVisible();
   await expect(coTeachers.getByRole("group", { name: "ye lu", exact: true })).toBeVisible();
 
-  await picker(page).selectOption("");
+  await chooseProfessor(page, "");
   await settled(page);
   await expect(page.getByText("Schedule 1 of 4", { exact: true })).toBeVisible();
   const cleared: string[] = [];
@@ -194,10 +201,12 @@ test("a course without lectures omits the professor filter and retains individua
 
 test("a professor filters both lecture choices, survives reload and Any professor restores all results", async ({ page }) => {
   await open(page);
-  await expect(picker(page)).toHaveValue("");
-  await expect(picker(page).getByRole("option").first()).toHaveText("Any professor");
+  await expect(picker(page)).toHaveText("Any professor");
+  await picker(page).click();
+  await expect(page.getByRole("listbox").getByRole("option").first()).toHaveText("Any professorAll 3 lecture times");
+  await page.keyboard.press("Escape");
   await expect(page.getByText("Schedule 1 of 3", { exact: true })).toBeVisible();
-  await picker(page).selectOption("Ye Lu");
+  await chooseProfessor(page, "Ye Lu");
   await settled(page);
   await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
   await expect(details(page).getByRole("link", { name: /Rate My Professors/ })).toHaveAttribute("href", /q=Ye%20Lu$/);
@@ -213,9 +222,9 @@ test("a professor filters both lecture choices, survives reload and Any professo
   await screenshots(page, "chosen");
   await page.reload();
   await settled(page);
-  await expect(picker(page)).toHaveValue("Ye Lu");
+  await expect(picker(page)).toHaveText("Ye Lu");
   await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
-  await picker(page).selectOption("");
+  await chooseProfessor(page, "");
   await settled(page);
   await expect(page.getByText("Schedule 1 of 3", { exact: true })).toBeVisible();
   expect((await draft(page)).professorByCourse[code]).toBeNull();
@@ -225,27 +234,28 @@ for (const recovery of ["clear professor", "unlock lecture"] as const) {
   test(`an incompatible lecture lock survives reload and recovers through ${recovery}`, async ({ page }) => {
     const preferences = { startsAfter: 540, blocked: [{ day: "Fri" as const, start: 840, end: 960, label: "Work" }], onlyOpen: true };
     await open(page, { preferences });
-    await picker(page).selectOption("Mark Richman");
-    await settled(page);
+    for (let index = 0; index < 3 && await details(page).getByRole("heading", { name: "Lecture C03", exact: true }).count() === 0; index++) {
+      await page.getByRole("button", { name: "Next schedule" }).click();
+    }
     await details(page).getByRole("button", { name: "Lock Lecture C03", exact: true }).click();
     await settled(page);
-    await picker(page).selectOption("Ye Lu");
+    await chooseProfessor(page, "Ye Lu");
     await settled(page);
     await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
     await expect(details(page).getByRole("heading", { name: "Your professor choice conflicts with your locks" })).toBeVisible();
     await expect(details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true })).toBeVisible();
-    await expect(picker(page)).toHaveValue("Ye Lu");
+    await expect(picker(page)).toHaveText("Ye Lu");
     expect((await draft(page)).locks).toEqual({ [code]: [`${code}-C03`] });
     await screenshots(page, `lock-conflict-${recovery}`);
 
     await page.reload();
     await settled(page);
     await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
-    await expect(picker(page)).toHaveValue("Ye Lu");
+    await expect(picker(page)).toHaveText("Ye Lu");
     await expect(details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true })).toBeVisible();
     if (recovery === "clear professor") {
       await picker(page).focus();
-      await picker(page).selectOption("");
+      await chooseProfessor(page, "");
     } else {
       await details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true }).focus();
       await page.keyboard.press("Enter");
@@ -292,16 +302,16 @@ for (const hasLectures of [true, false]) {
     await settled(page);
     await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
     await expect(details(page).getByRole("heading", { name: "Your selected professor is unavailable" })).toBeVisible();
-    await expect(picker(page)).toHaveValue("Former Professor");
+    await expect(picker(page)).toHaveText("Former Professor");
     await expect(page.locator("[data-block]")).toHaveCount(0);
     expect(await draft(page)).toMatchObject({ locks, preferences, professorByCourse: saved.professorByCourse, sortPreset: "fewestGaps" });
     await screenshots(page, `unavailable-${hasLectures}`);
     await page.reload();
     await settled(page);
     await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
-    await expect(picker(page)).toHaveValue("Former Professor");
+    await expect(picker(page)).toHaveText("Former Professor");
     await picker(page).focus();
-    await picker(page).selectOption("");
+    await chooseProfessor(page, "");
     await settled(page);
     await expect(page.getByText("Schedule 1 of 1", { exact: true })).toBeVisible();
     await expect(details(page).getByRole("heading", { name: `${hasLectures ? "Lecture" : "Seminar"} C03`, exact: true })).toBeVisible();
@@ -316,7 +326,7 @@ test("compatible lab and discussion locks keep other instructors and only an exp
   const preferences = { startsAfter: 540, blocked: [{ day: "Fri" as const, start: 840, end: 960 }], onlyOpen: true };
   const locks = { [courseCode]: [`${courseCode}-CX01`, `${courseCode}-CD01`] };
   await open(page, { courses: [courseCode], preferences, locks }, lectureProfessorTerm());
-  await picker(page).selectOption("Ye Lu");
+  await chooseProfessor(page, "Ye Lu");
   await settled(page);
   await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
   for (let index = 0; index < 2; index++) {
@@ -327,7 +337,7 @@ test("compatible lab and discussion locks keep other instructors and only an exp
     if (index === 0) await page.getByRole("button", { name: "Next schedule" }).click();
   }
   expect((await draft(page)).locks).toEqual(locks);
-  await picker(page).selectOption("Mark Richman");
+  await chooseProfessor(page, "Mark Richman");
   await settled(page);
   await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
   expect((await draft(page)).locks).toEqual(locks);
@@ -348,12 +358,12 @@ test("compatible lab and discussion locks keep other instructors and only an exp
 test("when both of a professor's lectures clash, clearAnyOf offers a counted fix and restores the schedule", async ({ page }) => {
   await open(page, { courses: [code, "AE 2210"] });
   await expect(page.getByText("Schedule 1 of 1", { exact: true })).toBeVisible();
-  await picker(page).selectOption("Ye Lu");
+  await chooseProfessor(page, "Ye Lu");
   await settled(page);
   await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
   const fix = details(page).getByRole("button", { name: /^Allow any professor for AE 2410/ });
   await expect(fix).toContainText("1 schedule fits");
-  await expect(picker(page)).toHaveValue("Ye Lu");
+  await expect(picker(page)).toHaveText("Ye Lu");
   await screenshots(page, "clash");
   await fix.focus();
   await page.keyboard.press("Enter");

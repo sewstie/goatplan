@@ -1,5 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { rateMyProfessorsUrl, uniqueInstructors } from "./instructors";
+import { lectureInstructorChoices, rateMyProfessorsUrl, uniqueInstructors } from "./instructors";
+import { lectureProfessorTerm } from "../store/testing/lectureProfessors";
+
+it("counts all lecture times for each co-teacher, ignoring other sections and duplicate names", () => {
+  const sections = lectureProfessorTerm().courses[0].sections;
+  sections[1].instructors.push("Alex Smith", " ");
+  expect(lectureInstructorChoices(sections)).toEqual([
+    { name: "Ye Lu", lectureCount: 4, coTaughtCount: 1 },
+    { name: "Alex Smith", lectureCount: 1, coTaughtCount: 1 },
+    { name: "Mark Richman", lectureCount: 2, coTaughtCount: 0 },
+  ]);
+});
 
 describe("rateMyProfessorsUrl", () => {
   it("searches WPI professors by name", () => {
