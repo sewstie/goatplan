@@ -27,7 +27,7 @@ export function TutorialSections() {
           </div>
         </>
       )}
-      <p className="pt-8 text-12 text-ink-soft">To keep a schedule, use Save schedule. Then open Saved plans → Sections to register for its section identifiers and Copy section list. Use your browser’s Print command to print the list. Register in Workday. You can finish this guide without saving.</p>
+      <p className="pt-8 text-12 text-ink-soft">To keep a schedule, use Save schedule. Then open Saved plans → All saved plans and choose Sections to register for its section identifiers and Copy section list. Use your browser’s Print command to print the list. Register in Workday. You can finish this guide without saving.</p>
     </div>
   );
 }

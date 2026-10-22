@@ -1,10 +1,6 @@
-"use client";
+import { ArrowLeft } from "@phosphor-icons/react/ssr";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 
-import { PlanActions } from "./PlanActions";
-import { useSelectedPlan } from "./useSelectedPlan";
-
-/** The header actions on /plans, describing the plan on screen. Needs a Suspense boundary above it. */
 export function PlansPageActions() {
-  const { plan } = useSelectedPlan();
-  return <PlanActions shownPlan={plan} />;
+  return <ButtonLink href="/" variant="secondary" icon={<ArrowLeft aria-hidden />}>Back to planner</ButtonLink>;
 }

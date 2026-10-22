@@ -331,7 +331,7 @@ it.each(["no matches", "incomplete search", "engine error", "worker error", "loa
   else expect(screen.queryByText(/^No schedule fits your current choices/)).not.toBeInTheDocument();
   const guide = within(screen.getByRole("region", { name: "First plan tutorial" }));
   expect(guide.queryByRole("button", { name: /^Find (Lecture|Lab|Discussion)/ })).not.toBeInTheDocument();
-  expect(guide.getByText(/Then open Saved plans → Sections to register/)).toBeVisible();
+  expect(guide.getByText(/Then open Saved plans → All saved plans/)).toBeVisible();
   await user.click(screen.getByRole("button", { name: "Finish tutorial" }));
   expect(screen.getByRole("region", { name: "Schedule browser" })).toHaveFocus();
   expect(screen.getByRole("button", { name: "Remove AE 2410" })).toBeVisible();
