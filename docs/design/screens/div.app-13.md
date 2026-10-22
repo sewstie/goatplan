@@ -1,8 +1,8 @@
 # 14 · Online / No set time
 
-- PNG: `div.app-13.png` · Figma node `30:14648` (inside `section#state-14`) · frame 1680 × 800
+- PNG: `div.app-13.png` · Figma node `68:4989` (inside `section#state-14` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "An illustrative asynchronous elective stays below the grid rather than occupying a time slot." · Static screen, no interactions.
-- Regular planner ([`div.app-6.md`](div.app-6.md)). One Figma call was made for the strip (node `30:14801`).
+- Regular planner ([`div.app-6.md`](div.app-6.md)). One Figma call was made for the strip (v1 node `30:14801`).
 
 ## Scenario
 Four courses; one is an online, asynchronous elective with no meeting time (illustrative). One schedule fits. The elective is selected.
@@ -19,7 +19,7 @@ Four courses; one is an online, asynchronous elective with no meeting time (illu
 - Grid is shorter (body 456.6 high) to make room for the strip. Range 8:30 AM–4:30 PM. Blocks as in state 07 (CX02 selected, lock icon).
 - **No set time strip** (`div.no-time-strip`) at the bottom of the calendar card, above the caption: full width, border-top 1px `--color-line`, padding 13.5 top / 13 right / 9 bottom / **47 left** (lines up with the day columns), column gap 9.35.
   - Heading **"No set time"**: 10px, 700, line-height 14.5, `--color-ink`.
-  - **Untimed item** (`div.untimed-item`): full width (1074 × 48.5), bg `--color-course-4-soft`, radius 8, padding 9 / 10, row gap 8, centered.
+  - **Untimed item** (`div.untimed-item`): full width (1060 × 48.5), bg `--color-course-4-soft`, radius 8, padding 9 / 10, row gap 8, centered.
     - Swatch 8 × 8, radius 3, `--color-course-4-swatch`.
     - Text column (gap 2.5): **"Online elective · ON01"** (10px, 700, line-height 14.5, `--color-ink`) / **"Independent study · Online, asynchronous"** (9px, 400, line-height 13, `--color-ink-muted`).
     - Right-aligned **neutral badge "No set time"** (bg `--color-neutral-soft`, text `--color-neutral-ink`, 8px / 570 / line-height 11.2, padding 2 / 6, radius 5).
@@ -32,7 +32,7 @@ Four courses; one is an online, asynchronous elective with no meeting time (illu
   - map pin — **"Online · asynchronous"**
   - people — **"12 of 30 seats open"**
   - graduation cap — **"Instructor not assigned yet"**
-- **Quiet note** below the card (238 × 47): **"This section appears in the No set time strip. It does not block calendar time."** ~10px, 400, line-height ~17, `--color-ink-muted`.
+- **Quiet note** below the card (252 × 47): **"This section appears in the No set time strip. It does not block calendar time."** ~10px, 400, line-height ~17, `--color-ink-muted`.
 - No professor select and no "Rate My Professors" (no instructor).
 
 ## Data

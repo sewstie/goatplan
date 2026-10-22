@@ -1,6 +1,6 @@
 # 10 · No schedule fits · Full section locked
 
-- PNG: `div.app-9.png` · Figma node `30:12832` (inside `section#state-10`) · frame 1680 × 800
+- PNG: `div.app-9.png` · Figma node `68:3127` (inside `section#state-10` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "Hypothetical CX01 fill-up; unlocking removes the constraint." · Static screen, no interactions.
 - Same layout as [`div.app-7.md`](div.app-7.md) (state 08). Only the differences are listed.
 

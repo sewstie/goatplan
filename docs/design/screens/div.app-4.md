@@ -1,6 +1,6 @@
 # 05 · Search · No results
 
-- PNG: `div.app-4.png` · Figma node `30:10797` (inside `section#state-05`) · frame 1680 × 800
+- PNG: `div.app-4.png` · Figma node `68:1033` (inside `section#state-05` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "A helpful code example and professor-name suggestion." · Static screen, no interactions.
 - Shell: [`div.app.md`](div.app.md). Planner parts: [`div.app-3.md`](div.app-3.md). Only the differences are listed.
 

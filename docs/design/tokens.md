@@ -1,6 +1,6 @@
 # Design tokens
 
-Every value comes from the Figma file (`GoatPlan`, section "Prototype v1."), from its variables and from the styles used in the 23 frames. The left column is the **CSS variable to use in code**. The Figma name is there so you can find the value in Figma.
+Every value comes from the Figma file (`GoatPlan`), from its variables and from the styles used in the frames. Most were taken from "Prototype v1."; values that are new in "Prototype v2." are listed under [Added in Prototype v2](#added-in-prototype-v2). The left column is the **CSS variable to use in code**. The Figma name is there so you can find the value in Figma.
 
 Things to know first:
 
@@ -341,6 +341,64 @@ Blocked time and the early band use diagonal stripes at 135°, 4px each:
 ```css
 background-image: repeating-linear-gradient(135deg, var(--color-hatch-a) 0 4px, var(--color-hatch-b) 4px 8px);
 ```
+
+## Added in Prototype v2
+
+New Figma values used by states 24–37. The CSS names are **proposed**: they aren't in `globals.css` yet.
+
+### Colors
+
+| CSS variable | Value | Figma | Used for |
+|---|---|---|---|
+| `--color-guide-line` | `#d8d5f3` | color/blue/89 2 | Guide popover border |
+| `--color-guide-hint` | `#766138` | color/orange/34 3 | Guide hint line ("Add at least one course to continue.") |
+| `--color-listbox-line` | `#dcd9f5` | color/grey/91 7 | Lecture professor options list border |
+| `--color-unavailable-surface` | `#fffaf2` | color/grey/97 6 | Select showing an unavailable saved professor |
+| `--color-unavailable-line` | `#e8cda7` | color/orange/78 | Its border |
+| `--color-success-surface` | `#edf6f0` | color/grey/95 10 | Success banner ("Plan restored …") |
+| `--color-success-ink` | `#2f6d4a` | color/spring green/31 2 | Success banner text and icon |
+
+Guide body text uses color/azure/44 (`#626d80`); use `--color-ink-muted`, as in the table of colors without a token.
+
+### Shadows
+
+| CSS variable | Value | Used for |
+|---|---|---|
+| `--shadow-guide` | `0 8px 30px 0 rgb(50 48 81 / 0.08)` | Guide popover |
+| `--shadow-listbox` | `0 8px 24px 0 rgb(41 49 82 / 0.1)` | Lecture professor options list |
+
+### Radius
+
+| Value | Used for |
+|---|---|
+| 7px | Option row in the professor list (same as `--radius-loading`) |
+| 11px | Professor options list |
+| 15px | Guide popover |
+
+Target highlight in the guide: 2px `--color-accent` outline, 4px outside the control (`outline-offset: 4px`), radius = control radius + 4. Focused guide buttons: 2px outline, 3px offset, radius 12.
+
+### Text styles
+
+| Style | Spec | Examples |
+|---|---|---|
+| Guide heading | 17 / 700 / 22.1 / −0.4 (`--tracking-tight`) | "Choose your term" |
+| Guide body | 11 / 400 / 19.3 | Step explanation |
+| Guide hint | 10 / 400 / 16 | "Wait for C Term sections to load." |
+| Guide progress | 9 / 600 / 13 | "Getting started · 1 of 5" |
+| Option name | 10 / 700 / 14.5 | "Alex Rivera" in the professor list |
+| Rating | 10 / 650 / 14.5 | "4.4 / 5" |
+
+New line heights: 12.8, 13.95, 16.5, 19.3, 22.1.
+
+### Icons (assumed from Phosphor, not matched against Figma paths)
+
+| Where | Phosphor icon | Size |
+|---|---|---|
+| Lecture rating | `Star` | 12 |
+| Print | `Printer` | 16 |
+| Guide Back / Next | `CaretLeft` / `CaretRight` | 16 |
+| Close guide | `X` | 13 |
+| Selected professor option | `Check` | 13 |
 
 ## Don't use
 

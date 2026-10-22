@@ -179,7 +179,7 @@ schedule that can show given sections), `scheduleKey`, `storedDraft(termId)`
   Tutorial status uses `goatplan:tutorial:v1`, outside drafts and saved plans.
   A restored plan with courses bypasses the guide. Skip, Close, and Finish keep
   the draft. Failed storage writes leave a visible reminder that the guide may
-  return on a later visit. See [the guide reference](design/screens/tutorial.md).
+  return on a later visit. See [the guide reference](design/screens/div.app-29.md).
 
 - **Solving.** Every change to the plan waits 200 ms (`SOLVE_DELAY_MS`) for
   more changes, then sends one request built by the pure `buildRequest(state)`.

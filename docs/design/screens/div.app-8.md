@@ -1,6 +1,6 @@
 # 09 · No schedule fits · Start-time preference
 
-- PNG: `div.app-8.png` · Figma node `30:12404` (inside `section#state-09`) · frame 1680 × 800
+- PNG: `div.app-8.png` · Figma node `68:2685` (inside `section#state-09` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "The only AE 2320 lecture starts at 9 AM; changing the preference restores a fit." · Static screen, no interactions.
 - Same layout and components as [`div.app-7.md`](div.app-7.md) (state 08). No Figma call was made for this frame: it only changes text, data and the early band.
 
@@ -35,7 +35,7 @@ Three courses. "Starts after" is set to **10:00 AM**, but AE 2320's only lecture
 3. Issue box:
    - h3 **"Your start time is too late"**
    - Body **"AE 2320’s only lecture starts at 9:00, so nothing works with “Starts after 10:00 AM”."** (curly double quotes around the preference; the period sits outside the quotes).
-4. **Section choice card** for the blocking section (same card as state 04): "Lecture CL01" · "Only lecture" badge · "Mon–Fri · 9:00 AM–9:50 AM" · "Unity Hall 400" · "36 of 120 seats open" · "Ye Lu".
+4. **Section choice card** for the blocking section (same card as state 04): "Lecture CL01" · "Only lecture" badge · "Mon–Fri · 9:00 AM–9:50 AM" · "Unity Hall 400" · "36 of 120 seats open" · instructor block: "Ye Lu" with "— / 5", "Rating unavailable" and "Rate My Professors" (see [`div.app-3.md`](div.app-3.md)).
 5. "Ways to fix it":
    - Primary **"Change to 9:00 AM"** with a clock icon 16.
    - Secondary **"Remove AE 2320"** with a × icon 16.

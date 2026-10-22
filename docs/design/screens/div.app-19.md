@@ -1,8 +1,8 @@
 # 20 · Hover / Selected block
 
-- PNG: `div.app-19.png` · Figma node `30:17289` (inside `section#state-20`) · frame 1680 × 800
+- PNG: `div.app-19.png` · Figma node `68:7665` (inside `section#state-20` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "A hovered Tuesday lecture and an indigo-selected Thursday lab with its panel open." · Static screen, no interactions.
-- Regular planner ([`div.app-6.md`](div.app-6.md)). Two Figma calls: the tooltip (node `30:17649`) and the hovered block (node `30:17506`). This file is the reference for **block hover**, **block selected** and the **tooltip**.
+- Regular planner ([`div.app-6.md`](div.app-6.md)). Two Figma calls: the tooltip (v1 node `30:17649`) and the hovered block (v1 node `30:17506`). This file is the reference for **block hover**, **block selected** and the **tooltip**.
 
 ## Scenario
 Three courses, one schedule. The pointer is over AE 2410's Tuesday block. AE 2320's lab CX02 (Thursday) is selected, and its course is open in the panel. CX02 is locked.
@@ -34,7 +34,7 @@ Shown under the hovered block, overlapping the next block (top-left ~8px left of
 
 ## Details panel
 - New neutral kicker **"Selected course"** above the h2 (9px, 650, `--color-ink-muted`; same position as "Needs attention").
-- h2 "AE 2320", title "Introduction to Orbital Mechanics", "Your choices": Lecture CL01 ("Only lecture") and Lab CX02 ("Unlock"), "View other lab choices", Professor "Ye Lu", "Rate My Professors".
+- h2 "AE 2320", title "Introduction to Orbital Mechanics", Lecture professor "Ye Lu" with its hint, "Sections in this schedule": Lecture CL01 ("Only lecture", instructor block: "Ye Lu" with "— / 5", "Rating unavailable" and "Rate My Professors" (see [`div.app-3.md`](div.app-3.md))) and Lab CX02 ("Unlock"), "View other lab choices".
 
 ## Interaction notes
 - Hover and keyboard focus should both show the tooltip (focus on a block = same as hover). Escape closes it.

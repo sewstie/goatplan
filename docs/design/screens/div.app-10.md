@@ -1,8 +1,8 @@
 # 11 · One course can't fit · Others still schedule
 
-- PNG: `div.app-10.png` · Figma node `30:13262` (inside `section#state-11`) · frame 1680 × 800
+- PNG: `div.app-10.png` · Figma node `68:3559` (inside `section#state-11` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "AB 1533 warning returns; the three compatible courses remain on the calendar." · Static screen, no interactions.
-- Mix of the regular planner ([`div.app-6.md`](div.app-6.md)) and the "needs attention" parts ([`div.app-7.md`](div.app-7.md)). Only the course row below is new; one Figma call was made for it (node `30:13324`).
+- Mix of the regular planner ([`div.app-6.md`](div.app-6.md)) and the "needs attention" parts ([`div.app-7.md`](div.app-7.md)). Only the course row below is new; one Figma call was made for it (v1 node `30:13324`).
 
 ## Scenario
 Four courses added. AB 1533 clashes with AE 2320's lecture, but instead of "no schedule", GoatPlan schedules the other three (1 schedule fits) and flags AB 1533. AE 2320's lab CX02 is locked.
@@ -31,10 +31,10 @@ Same as state 07 (compact blocks, 8:30 AM–4:30 PM, early band, Work Tue/Fri). 
 
 ## Details panel — "Needs attention" (AB 1533)
 1. Kicker "Needs attention", h2 **"AB 1533"**, title "Elementary Arabic III".
-2. Issue box (238 × 134):
+2. Issue box (252 × 134):
    - h3 **"Doesn’t fit this schedule"**
    - Body **"AB 1533 C01 clashes with AE 2320 CL01 on Mon, Tue, Thu, Fri, 9:00–9:50 AM. The other courses remain scheduled."**
-3. Section choice card (normal white style): "Lecture C01" · "Only lecture" · **"Mon, Tue, Thu, Fri · 9:00 AM–9:50 AM"** · **"Olin Hall 126"** · **"17 of 18 seats open"** · **"Mohammed El Hamzaoui"**.
+3. Section choice card (normal white style): "Lecture C01" · "Only lecture" · **"Mon, Tue, Thu, Fri · 9:00 AM–9:50 AM"** · **"Olin Hall 126"** · **"17 of 18 seats open"** · instructor block: "Mohammed El Hamzaoui" with "— / 5", "Rating unavailable" and "Rate My Professors" (see [`div.app-3.md`](div.app-3.md)).
 4. "Ways to fix it": primary **"Remove AB 1533"** (× icon), secondary **"Check another term"** (calendar icon).
 
 ## Interactive states

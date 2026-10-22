@@ -1,8 +1,8 @@
 # 23 · Sections to register
 
-- PNG: `div.app-22.png` · Figma node `30:18720` (inside `section#state-23`) · frame 1680 × 800
+- PNG: `div.app-22.png` · Figma node `68:9134` (inside `section#state-23` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "Final section list for Workday. The copy control is a static visual, like every control in this file." · Static screen, no interactions.
-- Same shell and sidebar as the planner ([`div.app.md`](div.app.md), [`div.app-6.md`](div.app-6.md)). The calendar card is replaced by a **registration sheet**. One Figma call was made for the content area (node `30:18852`).
+- Same shell and sidebar as the planner ([`div.app.md`](div.app.md), [`div.app-6.md`](div.app-6.md)). The calendar card is replaced by a **registration sheet**. One Figma call was made for the content area (v1 node `30:18852`).
 
 ## Scenario
 A saved plan with three courses / four sections (AE 2320 lab CX02 locked). The student opens the list of sections to type into Workday.
@@ -17,13 +17,15 @@ A saved plan with three courses / four sections (AE 2320 lab CX02 locked). The s
 - Preferences row unchanged: Starts after 9:00 AM · Blocked Work · Tue, Fri 2 PM–4 PM · Block a time · Only open sections (on).
 
 ## Registration sheet (`section.registration-sheet`)
-Replaces the calendar card: 1134 wide, bg `--color-surface`, radius 18, padding 23 / 20, column gap 10.
+Replaces the calendar card: 1120 wide, bg `--color-surface`, radius 18, padding 23 / 20, column gap 10.
 
 1. **Heading row** (space-between, centered):
    - h2 **"Ready for Workday"**: 19px, 700, letter-spacing −0.5, line-height 27.55, `--color-ink`.
    - **"4 sections across 3 courses"**: 10px, 400, line-height 14.5, `--color-ink-muted`, 5 below the h2.
-   - Primary button **"Copy section list"** with a copy icon 16: padding 9 / 11, label 10px / 570 / line-height 12 (127 × 36).
-2. **Table** (15 above), full width (1094). Columns: Course 306 · Section 175 · Meeting time 306 · Room / instructor 306.
+   - Actions (`div.registration-actions`), row gap 7:
+     - **"Print"** button with a printer icon 16 (70 × 36): bg `--color-surface`, border 1px `--color-warning-line`, padding 9 / 11, gap 6, radius 9, label 10px / 570 / line-height 12, `--color-ink`. New in v2. The border is the warm `--color-warning-line`, not the usual `--color-line-button`; confirm before building.
+     - Primary **"Copy section list"** with a copy icon 16: padding 9 / 11, label 10px / 570 / line-height 12 (127 × 36).
+2. **Table** (15 above), full width (1080). Columns, about: Course 302 · Section 173 · Meeting time 302 · Room / instructor 302.
    - Header cells: **"Course"**, **"Section"**, **"Meeting time"**, **"Room / instructor"**. 9px, 600, line-height 13, `--color-ink-muted`. Padding 9.5 / 5, border-bottom 1px `--color-line`.
    - Body rows: 67.4 high, border-bottom 1px `--color-line`, cell padding 14.5 / 5, top-aligned.
      - Course cell: code (11px, 700, line-height 17.6, `--color-ink`) + title (9px, 400, line-height 14.85, `--color-ink-muted`), gap 3.6.
@@ -62,6 +64,7 @@ Padding 20 / 16, column gap 4.
 ## Interactive states
 - "Copy section list" copies the preview text to the clipboard. After copying, show a short confirmation (not in the design; e.g. the label changes to "Copied" with a check, like "Saved").
 - "Open Workday" opens Workday in a new tab.
+- "Print" opens the browser's print dialog for this list (`window.print()`).
 - Use a real `<table>` with `<th scope="col">` headers.
 
 ## Data (TypeScript only, no engine)

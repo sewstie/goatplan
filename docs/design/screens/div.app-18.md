@@ -1,8 +1,8 @@
 # 19 · Long course titles
 
-- PNG: `div.app-18.png` · Figma node `30:16826` (inside `section#state-19`) · frame 1680 × 800
+- PNG: `div.app-18.png` · Figma node `68:7190` (inside `section#state-19` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "Calendar titles truncate with an ellipsis; the selected course panel retains the full title." · Static screen, no interactions.
-- Regular planner ([`div.app-6.md`](div.app-6.md)). One Figma call was made for a block (node `30:17008`).
+- Regular planner ([`div.app-6.md`](div.app-6.md)). One Figma call was made for a block (v1 node `30:17008`).
 
 ## Scenario
 Three courses, one schedule, AE 2320 selected with lab CX02 locked. Blocks show the course title.
@@ -24,8 +24,8 @@ Three courses, one schedule, AE 2320 selected with lab CX02 locked. Blocks show 
 
 ## Details panel (AE 2320)
 - h2 "AE 2320", full title **"Introduction to Orbital Mechanics"** (never truncated here).
-- **Quiet note** under the title (238 × 47, ~10px, `--color-ink-muted`): **"Full course title shown here. Calendar labels use an ellipsis when space is limited."**
-- Then the usual: "Your choices" → Lecture CL01 ("Only lecture") and Lab CX02 (**"Unlock"**) → "View other lab choices" → Professor "Ye Lu" → "Rate My Professors".
+- **Quiet note** under the title (252 × 47, ~10px, `--color-ink-muted`): **"Full course title shown here. Calendar labels use an ellipsis when space is limited."**
+- Then the usual: Lecture professor "Ye Lu" with its hint → "Sections in this schedule" → Lecture CL01 ("Only lecture", instructor block: "Ye Lu" with "— / 5", "Rating unavailable" and "Rate My Professors" (see [`div.app-3.md`](div.app-3.md))) and Lab CX02 (**"Unlock"**) → "View other lab choices".
 
 ## Notes for building
 - Each block keeps its full text in its accessible label ("AE 2320 CL01, Monday, 9:00 AM–9:50 AM, Unity Hall 400"), so truncation never hides information from screen readers. Add the full title to that label too.

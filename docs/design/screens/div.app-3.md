@@ -1,6 +1,6 @@
 # 04 · Search results · Fit before adding
 
-- PNG: `div.app-3.png` · Figma node `30:10396` (inside `section#state-04`) · frame 1680 × 800
+- PNG: `div.app-3.png` · Figma node `68:595` (inside `section#state-04` of "Prototype v2.") · frame 1680 × 800
 - Figma caption: "Fit, clash, and full badges. The full-section result is an illustrative availability change." · Static screen, no interactions.
 - Shell: [`div.app.md`](div.app.md). This file is the reference for the **planner parts**: search results, course rows, schedule switcher, enabled Save, blocked-time pill, calendar blocks, blocked time, early band and the course details panel. Later docs point here.
 
@@ -87,28 +87,36 @@ Layer name is the accessible label, e.g. "AE 2320 CL01, Monday, 9:00 AM–9:50 A
 - Centered text "No classes before 9:00 AM" (8px, 400, line-height 11.6, `--color-ink-hatch`), 6 from the top.
 
 ## Course details panel — course variant
-Column, gap 4, padding 20 / 16.
+284 wide (Prototype v1 was 270). Column, gap 4, padding 19 top / 16 sides. Content width 252.
+
+The v2 panel puts the **Lecture professor** filter first, then the sections, and moves the instructor's rating into the lecture card.
 
 1. h2 course code "AE 2320": 21px, 700, letter-spacing −0.55, line-height 25.2, `--color-ink`.
 2. Course title "Introduction to Orbital Mechanics": 11px, 510, line-height 17.6, `--color-ink`.
-3. Label "Your choices": 10px, 650, line-height 14.5, `--color-ink`, 12 above.
-4. **Section choice card** (`div.section-choice`), one per chosen section: border 1px `--color-line`, radius 10, padding 15 top / 10 sides / 10 bottom, column gap 8.
+3. **Lecture professor filter** (`div.professor-filter`): column, gap 5, 7 above.
+   - Label **"Lecture professor"**: 10px, 650, line-height 14.5, `--color-ink`.
+   - **Select** (`div.professor-field`): 252 × 36.5, border 1px `--color-line`, radius 8, padding 11 top / 9 sides / 9 bottom, space-between. Value **"Any professor"** (10px, 400, `--color-ink`) + chevron-down 11.
+   - **Hint** (`p.filter-hint`): **"Filters lectures only. Labs and discussions can have other instructors."** 9px, 400, line-height 13.95, `--color-ink-muted`. Wraps to two lines.
+4. Label **"Sections in this schedule"** (10px, 650, line-height 14.5, `--color-ink`), 11 above.
+5. **Section choice card** (`div.section-choice`), one per chosen section: border 1px `--color-line`, radius 10, padding 15 top / 10 sides / 10 bottom, column gap 8.
    - Heading row (space-between): "Lecture CL01" (10px, 700, `--color-ink`) and either
      - a **neutral badge** "Only lecture" (bg `--color-neutral-soft`, text `--color-neutral-ink`, 8px, 570, line-height 11.2, padding 2 / 6, radius 5) when there is no other choice, or
      - a small accent button **"Lock"** with a lock icon 11 (same style as "Add").
-   - Four meta rows, icon 12 + text, gap 8. Text 9px, 400, line-height 13.5, `--color-ink`:
+   - Three meta rows, icon 12 + text, gap 8. Text 9px, 400, line-height 13.5, `--color-ink`:
      - clock — "Mon–Fri · 9:00 AM–9:50 AM" (days · time)
      - map pin — "Unity Hall 400"
      - people — "36 of 120 seats open"
-     - graduation cap — "Ye Lu" (instructor)
-   - Second card: "Lab CX02" · "Thu · 3:00 PM–3:50 PM" · "Higgins Labs 230" · "4 of 40 seats open" · "Ye Lu".
-5. **Disclosure** "View other lab choices" (9px, 400, `--color-ink-muted`) with chevron-down 11 at the far right; 232 wide, 7.5 above. Expands the list of other lab sections.
-6. Label "Professor" (10px, 650), 12 above / 5 below.
-7. **Professor select** (`div.professor-field`): 238 × 35, border 1px `--color-line`, radius 8, padding 9. "Ye Lu" (10px, 400, `--color-ink`) + chevron-down 11.
-8. **Link** "Rate My Professors" (10px, 400, `--color-accent`) + external-link icon 12, gap 5, 7.5 above. Opens in a new tab.
+   - **Lecture instructor block** (`div.lecture-instructor`), lecture cards only: border-top 1px `--color-line`, padding-top 9, column gap 5.
+     - Row, space-between: graduation cap 12 + **"Ye Lu"** (10px, 400, `--color-ink`) on the left; **rating** on the right: star icon 12 + **"— / 5"** (10px, 650, `--color-accent`).
+     - Row, space-between: **"Rating unavailable"** (8px, 400, line-height 12, `--color-ink-muted`) and the link **"Rate My Professors"** (8px, 400, `--color-accent`) + external-link icon 9, gap 3. Opens in a new tab.
+     - With a rating, the number replaces the dash ("4.4 / 5") and the left text reads "{n} ratings · Example data" (see [`div.app-23.md`](div.app-23.md)).
+   - **Lab card** "Lab CX02": four meta rows, the lab instructor as a plain graduation-cap row ("Ye Lu", 9px) and no rating: "Thu · 3:00 PM–3:50 PM" · "Higgins Labs 230" · "4 of 40 seats open" · "Ye Lu".
+6. **Disclosure** "View other lab choices" (9px, 400, `--color-ink-muted`) with chevron-down 11 at the far right; 246 wide, 8 above. Expands the list of other lab sections.
+
+The old "Professor" label under the cards and the standalone "Rate My Professors" link are gone.
 
 ## Icons added in this state
-plus (Add, 11) · chevron left / right (switcher, 12) · close × (blocked pill, 10) · clock, map pin, people, graduation cap (meta rows, 12) · lock (11) · chevron down (disclosure / select, 11) · external link (12). Save button uses a white bookmark.
+plus (Add, 11) · chevron left / right (switcher, 12) · close × (blocked pill, 10) · clock, map pin, people, graduation cap (meta rows, 12) · star (rating, 12) · lock (11) · chevron down (disclosure / select, 11) · external link (9). Save button uses a white bookmark.
 
 ## Interactive states shown
 - Search result cards: rest state. Add buttons are enabled on all three (even the clash and full ones).
@@ -129,4 +137,5 @@ plus (Add, 11) · chevron left / right (switcher, 12) · close × (blocked pill,
 - Switcher: "Schedule {i} of {n}". Subtitle: "{courses} course(s) · {n} schedules fit".
 - Calendar blocks: one per meeting per day of the shown schedule's sections. Room = `meetings[].location`.
 - Details panel: the selected course's chosen sections. "Mon–Fri" collapses consecutive days; "Thu" is a single day. Seats = `capacity − enrolled` "of" `capacity` "seats open". "Only lecture" when the course has one lecture section.
-- Professor select lists lecture instructors only, including co-teachers. Any professor clears the filter. Courses without lectures omit it. Rate My Professors links to a search for the selected instructor.
+- Lecture professor lists lecture instructors only, including co-teachers. Any professor clears the filter. Courses without lectures omit it (see [`div.app-28.md`](div.app-28.md)).
+- Rating: the lecture instructor's Rate My Professors score. "— / 5" with "Rating unavailable" when there is none. Rate My Professors links to a search for that instructor.
