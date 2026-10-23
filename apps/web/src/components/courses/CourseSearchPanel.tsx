@@ -110,7 +110,7 @@ export function CourseSearchPanel() {
         value={query}
         onChange={changeQuery}
         onKeyDown={onSearchKeyDown}
-        disabled={termStatus === "error"}
+        disabled={!ready}
         resultsId={resultsId}
       />
       <div id={resultsId} className="flex shrink-0 flex-col">

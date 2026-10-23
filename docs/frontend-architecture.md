@@ -180,20 +180,22 @@ left untouched by view navigation.
 
 ### How it behaves
 
-- The planner page mounts a four-step guide on the first visit, after client
-  initialization. It uses the same term, course search, preferences, and schedule
-  browser. Availability is optional. Its summary reflects the current settings,
-  and guidance uses the existing controls. The optional professor tip selects
-  a planned course with a lecture picker without changing its professor.
-  Results guidance follows the selected course's displayed sections, including
-  picked alternatives, and focuses their real details. It explains saving and
-  the existing Sections to register copy and browser-print path. No section
-  targets appear while solving or without a usable schedule. A no-match handoff keeps
-  restrictions until the student explicitly changes them.
+- The planner page mounts a five-step guide popover on the first visit. It
+  points to the real term, search, lecture professor, preferences and schedule
+  controls. The popover stays beside its target and leaves it usable. Next
+  waits for a loaded term on step 1 and a course on step 2. The remaining
+  steps are optional. The professor step selects the current lecture course,
+  or the first planned course with lectures, without changing its professor.
+  With no lectures, navigation skips that step. Progress totals change only
+  when navigating. The availability text reflects the current settings.
+  Finish is always available on the last step. Only a completed engine answer
+  with zero schedules shows the no-match text. Saved mode hides the guide.
   Tutorial status uses `goatplan:tutorial:v1`, outside drafts and saved plans.
-  A restored plan with courses bypasses the guide. Skip, Close, and Finish keep
-  the draft. Failed storage writes leave a visible reminder that the guide may
-  return on a later visit. See [the guide reference](design/screens/div.app-29.md).
+  A restored plan with courses bypasses the guide. Skip, Close and Finish keep
+  every plan setting. Failed storage writes leave a visible reminder that the
+  guide may return on a later visit. Loading placeholders and the empty-calendar
+  prompt stay hidden while the guide is open. See [the guide reference](design/screens/div.app-29.md).
+  Issue 17 covers screenshots at 1440 px; 834 px is an agreed exception.
 
 - **Solving.** Every change to the plan waits 200 ms (`SOLVE_DELAY_MS`) for
   more changes, then sends one request built by the pure `buildRequest(state)`.

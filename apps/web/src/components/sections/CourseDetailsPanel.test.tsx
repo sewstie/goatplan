@@ -311,7 +311,7 @@ describe("CourseDetailsPanel", () => {
 
     expect(within(card("Lecture C01")).getByText("Instructor not assigned yet")).toBeInTheDocument();
     expect(screen.getByText("Professor reviews appear when an instructor is available.")).toBeInTheDocument();
-    expect(screen.queryByRole("combobox", { name: "Lecture professor" })).not.toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Lecture professor" })).toHaveTextContent("Any professor");
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 });

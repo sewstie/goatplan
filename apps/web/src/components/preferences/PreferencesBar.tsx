@@ -22,6 +22,7 @@ export function PreferencesBar() {
 
   return (
     <div
+      id="tutorial-preferences"
       role="group"
       aria-labelledby={labelId}
       className="flex min-h-35.5 shrink-0 flex-wrap items-center gap-7 px-2 py-1.5"
