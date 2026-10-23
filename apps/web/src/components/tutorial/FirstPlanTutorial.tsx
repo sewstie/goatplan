@@ -2,18 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePlanner, usePlannerStore } from "@/lib/store";
-import { browserStorage, type DraftStorage } from "@/lib/store/draft";
+import { browserStorage, readDraft, readLastTerm, type DraftStorage } from "@/lib/store/draft";
 import { advanceGuide, guideContent, guideProgress, professorCourse, type GuideVisit } from "./tutorialSteps";
 import { GuideButtons } from "./GuideButtons";
 import { GuidePopover } from "./GuidePopover";
 import { GuideTargetOutline } from "./GuideTargetOutline";
 import { focusTutorialTarget } from "./focusTutorialTarget";
-import { rememberTutorial, tutorialFinished, type TutorialOutcome } from "./tutorialStorage";
+import { rememberGuideProgress, rememberTutorial, tutorialFinished, type TutorialOutcome } from "./tutorialStorage";
+import { VisitBanner } from "./VisitBanner";
 
 export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }) {
   const planner = usePlannerStore();
   const [visit, setVisit] = useState<GuideVisit | null>(null);
   const [storageFailed, setStorageFailed] = useState(false);
+  const [storageWording, setStorageWording] = useState(false);
   const persistence = useRef<DraftStorage | null>(null);
   const finish = useRef<HTMLButtonElement>(null);
   const termStatus = usePlanner((state) => state.termStatus);
@@ -31,13 +33,18 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
   useEffect(() => {
     persistence.current = storage === undefined ? browserStorage() : storage;
     let cancelled = false;
-    if (!tutorialFinished(persistence.current) && !planner.getState().savedPlanId && !planner.getState().courses.length) {
+    const finished = tutorialFinished(persistence.current);
+    const lastTerm = readLastTerm(persistence.current);
+    const restoring = lastTerm !== null && (readDraft(persistence.current, lastTerm)?.courses.length ?? 0) > 0;
+    if (!finished && !restoring && !planner.getState().savedPlanId && !planner.getState().courses.length) {
       queueMicrotask(() => { if (!cancelled) setVisit({ step: "term", includesProfessor: true }); });
     }
     void planner.getState().init().then(() => {
       if (!cancelled && planner.getState().courses.length) {
-        rememberTutorial(persistence.current, "dismissed");
+        if (!finished && !rememberTutorial(persistence.current, "dismissed")) setStorageFailed(true);
         setVisit(null);
+      } else if (!cancelled && !finished && restoring && !planner.getState().savedPlanId) {
+        setVisit({ step: "term", includesProfessor: true });
       }
     });
     return () => { cancelled = true; };
@@ -53,7 +60,7 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
     if (step === "professor" && professor && !saved && selected !== professor) planner.getState().selectCourse(professor);
   }, [step, professor, selected, saved, planner]);
   function dismiss(outcome: TutorialOutcome = "dismissed") {
-    setStorageFailed(!rememberTutorial(persistence.current, outcome));
+    if (!rememberTutorial(persistence.current, outcome)) setStorageFailed(true);
     setVisit(null);
     focusTutorialTarget(targetId);
   }
@@ -64,18 +71,34 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
     return () => document.removeEventListener("keydown", close);
   });
 
-  if (saved) return null;
-  if (!visit) return storageFailed ? <p role="status" className="mx-14 mt-14 rounded-control border border-warning-line bg-warning-soft p-16 text-12 text-warning-ink">This browser couldn’t remember that you closed the guide. It may appear on your next visit.</p> : null;
+  if (saved) return <VisitBanner storageFailed={storageFailed} />;
+  if (!visit) return <VisitBanner storageFailed={storageFailed} />;
   const waiting = step === "term" ? !ready : step === "courses" && courses.length === 0;
   const termName = terms.find((item) => item.id === termId)?.name;
   const hint = step === "term" && !ready ? `Wait for ${termName ?? "your term’s"} sections to load.` : content?.hint;
   function move(direction: -1 | 1) {
+    if (!rememberGuideProgress(persistence.current) && !storageFailed) {
+      setStorageFailed(true);
+      setStorageWording(true);
+      return;
+    }
+    setStorageWording(false);
     setVisit(advanceGuide(visit!, direction, (step === "term" && courses.length === 0) || professor !== null));
   }
+  function next() {
+    if (step !== "schedules") return move(1);
+    if (!rememberTutorial(persistence.current, "completed") && !storageFailed) {
+      setStorageFailed(true);
+      setStorageWording(true);
+      return;
+    }
+    dismiss("completed");
+  }
   return <>
+    <VisitBanner storageFailed={storageFailed} />
     <GuideTargetOutline targetId={targetId} />
-    <GuidePopover step={visit.step} targetId={targetId} title={content!.title} body={content!.body} hint={hint} progress={guideProgress(visit)} onClose={() => dismiss()}>
-      <GuideButtons first={step === "term"} last={step === "schedules"} waiting={waiting} onBack={() => move(-1)} onSkip={() => dismiss()} onNext={() => step === "schedules" ? dismiss("completed") : move(1)} finishRef={finish} />
+    <GuidePopover step={visit.step} targetId={targetId} title={storageWording ? "Keep planning in this visit" : content!.title} body={storageWording ? "You can continue or skip the guide. Your course and choices stay in the open plan." : content!.body} hint={storageWording ? undefined : hint} progress={guideProgress(visit)} onClose={() => dismiss()}>
+      <GuideButtons first={step === "term"} last={step === "schedules"} waiting={waiting} onBack={() => move(-1)} onSkip={() => dismiss()} onNext={next} finishRef={finish} />
     </GuidePopover>
   </>;
 }

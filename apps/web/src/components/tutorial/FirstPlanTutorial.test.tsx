@@ -11,11 +11,12 @@ import { createPlannerStore } from "@/lib/store/createPlannerStore";
 import { loaded, MemoryStorage, solved, termFile, termSummary } from "@/lib/store/testing/fixtures";
 import type { SolveRequest, SolveResponse } from "@/lib/engine/types";
 import { FirstPlanTutorial } from "./FirstPlanTutorial";
+import { draftKey, emptyDraft } from "@/lib/store/draft";
+import { designPlan } from "@/lib/plans/testing";
 
 beforeAll(() => { vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} }); });
 
-function start(loadTerm = async (id: string) => termFile(id), solve: (request: SolveRequest) => Promise<SolveResponse> = async (request) => solved(request)) {
-  const storage = new MemoryStorage();
+function start(loadTerm = async (id: string) => termFile(id), solve: (request: SolveRequest) => Promise<SolveResponse> = async (request) => solved(request), storage = new MemoryStorage()) {
   const planner = createPlannerStore({
     engine: { loadTerm: async (id) => loaded(id), solve },
     loadTermIndex: async () => ({ terms: [termSummary("2027-C")] }),
@@ -223,6 +224,87 @@ it("warns if the browser cannot remember dismissal and leaves the planner usable
   const user = userEvent.setup();
   await screen.findByRole("dialog");
   await user.click(screen.getByRole("button", { name: "Skip guide" }));
-  expect(screen.getByRole("status")).toHaveTextContent("This browser couldn’t remember that you closed the guide. It may appear on your next visit.");
+  expect(screen.getByRole("status")).toHaveTextContent("Guide progress can’t be remembered in this browser. You may see the guide again next visit.");
   expect(screen.getByRole("combobox", { name: "Term" })).toBeEnabled();
+});
+
+it("shows a restored-plan status without opening the guide", async () => {
+  const { planner, storage, unmount } = start();
+  unmount();
+  storage.setItem(draftKey("2027-C"), JSON.stringify({ version: 1, ...emptyDraft(), courses: ["AE 2320"], preferences: { startsAfter: 540, blocked: [], onlyOpen: true } }));
+  await act(async () => { await planner.getState().init(); await planner.getState().setTerm("2027-C"); });
+  render(<PlannerProvider store={planner}><FirstPlanTutorial storage={storage} /></PlannerProvider>);
+  expect(await screen.findByRole("status")).toHaveTextContent("Plan restored · 9 AM start is kept.");
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(screen.getByRole("status").querySelector("svg")?.closest('[aria-hidden="true"]')).not.toBeNull();
+});
+
+it("changes only the open step once after a storage write fails and keeps planning usable", async () => {
+  const { planner, storage } = start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toHaveAttribute("aria-disabled", "false"));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.type(screen.getByRole("searchbox"), "AE 2320{Enter}");
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  vi.spyOn(storage, "setItem").mockImplementation(() => { throw new Error("Storage blocked"); });
+  const before = plan(planner);
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  expect(screen.getByRole("heading", { name: "Keep planning in this visit" })).toBeVisible();
+  expect(screen.getByRole("dialog")).toHaveAccessibleDescription("You can continue or skip the guide. Your course and choices stay in the open plan.");
+  const banner = screen.getByText("Guide progress can’t be remembered in this browser. You may see the guide again next visit.").closest('[role="status"]')!;
+  expect(banner).toBeVisible();
+  expect(banner.querySelector("svg")?.closest('[aria-hidden="true"]')).not.toBeNull();
+  expect(plan(planner)).toEqual(before);
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  expect(screen.getByRole("heading", { name: "Make room for your day" })).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Back" }));
+  expect(screen.getByRole("heading", { name: "A professor preference is optional" })).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Skip guide" }));
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(banner).toBeVisible();
+  await act(async () => planner.getState().setPreferences({ startsAfter: 600 }));
+  expect(planner.getState().preferences.startsAfter).toBe(600);
+  expect(banner).toBeVisible();
+});
+
+it("shows the saved snapshot’s kept choices even when the working draft is empty", async () => {
+  const { planner } = start();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await act(async () => {
+    await planner.getState().init();
+    planner.getState().setSavedPlans([designPlan({ professorByCourse: { "AE 2320": "Ye Lu" } })]);
+    planner.getState().showSaved("plan-1");
+  });
+  expect(screen.getByRole("status")).toHaveTextContent("Plan restored · 9 AM start, Ye Lu and lab CX02 are kept.");
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+});
+
+it("keeps the guide hidden while a returning draft loads, even without a tutorial flag", async () => {
+  const storage = new MemoryStorage();
+  storage.setItem("goatplan:term:v1", "2027-C");
+  storage.setItem(draftKey("2027-C"), JSON.stringify({ version: 1, ...emptyDraft(), courses: ["AE 2320"] }));
+  let release!: (term: ReturnType<typeof termFile>) => void;
+  start(() => new Promise((resolve) => { release = resolve; }), undefined, storage);
+  await act(async () => {});
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  await act(async () => release(termFile("2027-C")));
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(screen.getByText("Plan restored.").closest('[role="status"]')).toBeVisible();
+});
+
+it("shows the storage wording once if the first failed write is Finish guide", async () => {
+  const { storage } = start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toHaveAttribute("aria-disabled", "false"));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.type(screen.getByRole("searchbox"), "AE 2320{Enter}");
+  for (let i = 0; i < 3; i++) await user.click(screen.getByRole("button", { name: "Next" }));
+  vi.spyOn(storage, "setItem").mockImplementation(() => { throw new Error("Storage full"); });
+  await user.click(screen.getByRole("button", { name: "Finish guide" }));
+  expect(screen.getByRole("heading", { name: "Keep planning in this visit" })).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Finish guide" }));
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(screen.getByText("Guide progress can’t be remembered in this browser. You may see the guide again next visit.")).toBeVisible();
 });

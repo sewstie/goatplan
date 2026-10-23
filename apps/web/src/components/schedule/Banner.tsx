@@ -1,14 +1,16 @@
-import { CircleNotch, Info, Warning } from "@phosphor-icons/react/ssr";
+import { CheckCircle, CircleNotch, Info, Warning } from "@phosphor-icons/react/ssr";
 import { cx } from "@/components/ui/cx";
 import type { BannerMessage } from "./scheduleCopy";
 
 const toneClasses = {
+  success: "bg-success-surface text-success-ink",
   info: "bg-accent-soft text-info-ink",
   loading: "bg-accent-soft text-info-ink",
   warning: "bg-warning-surface text-warning-ink",
 };
 
 const icons = {
+  success: <CheckCircle />,
   info: <Info />,
   loading: <CircleNotch className="motion-safe:animate-spin" />,
   warning: <Warning className="text-ink" />,
