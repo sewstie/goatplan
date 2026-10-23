@@ -74,7 +74,7 @@ export function summaryText(input: SummaryInput): string | null {
   return parts.join(" · ");
 }
 
-export type BannerTone = "info" | "warning" | "loading";
+export type BannerTone = "info" | "warning" | "loading" | "success";
 
 export interface BannerMessage {
   tone: BannerTone;

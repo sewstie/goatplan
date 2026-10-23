@@ -40,6 +40,7 @@ export type SolveStatus = "idle" | "waiting" | "solving" | "done" | "error";
 export type OpenedPlan = Omit<Draft, "alternatives">;
 
 export interface PlannerState extends Draft {
+  restoredPlanSummary: string | null;
   savedPlans: SavedPlan[];
   savedPlanId: string | null;
   savedSelectedCourse: string | null;

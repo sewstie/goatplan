@@ -13,9 +13,17 @@ export function tutorialFinished(storage: DraftStorage | null): boolean {
 }
 
 export function rememberTutorial(storage: DraftStorage | null, outcome: TutorialOutcome): boolean {
+  return writeProgress(storage, outcome);
+}
+
+export function rememberGuideProgress(storage: DraftStorage | null): boolean {
+  return writeProgress(storage, "started");
+}
+
+function writeProgress(storage: DraftStorage | null, status: string): boolean {
   try {
     if (!storage) return false;
-    storage.setItem(KEY, outcome);
+    storage.setItem(KEY, status);
     return true;
   } catch {
     return false;
