@@ -123,6 +123,7 @@ modules. Without a provider, both hooks use the app's shared store.
 | `term` | The chosen term's parsed file (courses and sections); `null` while it loads. |
 | `termStatus` | `idle`, `loading`, `ready` or `error`. Plan actions do nothing until `ready`. |
 | `termError` | Why the term couldn't load, in plain English. |
+| `restoredPlanSummary` | The choices kept when a draft or plan opened, or `null` when nothing was restored. Later edits do not change this summary. |
 | `courses` | The chosen course codes, in the order they were added. |
 | `preferences` | `{ startsAfter, blocked, onlyOpen }`. New drafts start at Any time (`startsAfter: 0`), with no blocked times and only open sections. Stored drafts and saved plans keep their settings, including a chosen 9:00 AM start. A blocked time can have a `label`, the name the student gave it ("Work"); it is saved with the draft but never sent to the engine. |
 | `locks` | Course code → the section ids locked for that course. |
@@ -192,8 +193,11 @@ left untouched by view navigation.
   with zero schedules shows the no-match text. Saved mode hides the guide.
   Tutorial status uses `goatplan:tutorial:v1`, outside drafts and saved plans.
   A restored plan with courses bypasses the guide. Skip, Close and Finish keep
-  every plan setting. Failed storage writes leave a visible reminder that the
-  guide may return on a later visit. Loading placeholders and the empty-calendar
+  every plan setting. Navigation checks whether guide progress can be stored.
+  The first failed write replaces the open step’s copy once. Later steps use
+  their usual copy. An info banner stays visible for the visit, including after
+  the guide closes. Restored drafts and saved snapshots show a success banner
+  listing the settings they kept. Loading placeholders and the empty-calendar
   prompt stay hidden while the guide is open. See [the guide reference](design/screens/div.app-29.md).
   Issue 17 covers screenshots at 1440 px; 834 px is an agreed exception.
 

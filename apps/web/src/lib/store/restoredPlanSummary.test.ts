@@ -24,7 +24,7 @@ it.each([
   expect(restoredPlanSummary({ ...emptyDraft(), courses: ["AE 2320"], preferences: { startsAfter, blocked, onlyOpen: true } }, termFile("2027-C"))).toBe(expected);
 });
 
-it("does not claim missing sections or unavailable professors were kept", () => {
-  expect(restoredPlanSummary({ ...emptyDraft(), courses: ["AE 2320"], professorByCourse: { "AE 2320": "Ada Morgan" }, locks: { "AE 2320": ["missing"] } }, termFile("2027-C"))).toBe("Plan restored.");
+it("includes a retained unavailable professor and does not claim missing sections were kept", () => {
+  expect(restoredPlanSummary({ ...emptyDraft(), courses: ["AE 2320"], professorByCourse: { "AE 2320": "Ada Morgan" }, locks: { "AE 2320": ["missing"] } }, termFile("2027-C"))).toBe("Plan restored · Ada Morgan is kept.");
   expect(restoredPlanSummary(emptyDraft(), termFile("2027-C"))).toBeNull();
 });

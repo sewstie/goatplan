@@ -71,8 +71,7 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
     return () => document.removeEventListener("keydown", close);
   });
 
-  if (saved) return <VisitBanner storageFailed={storageFailed} />;
-  if (!visit) return <VisitBanner storageFailed={storageFailed} />;
+  if (saved || !visit) return <VisitBanner storageFailed={storageFailed} />;
   const waiting = step === "term" ? !ready : step === "courses" && courses.length === 0;
   const termName = terms.find((item) => item.id === termId)?.name;
   const hint = step === "term" && !ready ? `Wait for ${termName ?? "your term’s"} sections to load.` : content?.hint;

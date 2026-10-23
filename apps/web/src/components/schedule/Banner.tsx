@@ -16,7 +16,6 @@ const icons = {
   warning: <Warning className="text-ink" />,
 };
 
-/** The full-width line above the calendar, in the warning or info style (div.app-7.md, div.app-15.md). */
 export function Banner({ message }: { message: BannerMessage }) {
   return (
     <div
@@ -27,7 +26,7 @@ export function Banner({ message }: { message: BannerMessage }) {
         {icons[message.tone]}
       </span>
       <p>
-        <b className="font-700">{message.title}</b> {message.detail}
+        {message.title && <><b className="font-700">{message.title}</b>{" "}</>}{message.detail}
       </p>
     </div>
   );
