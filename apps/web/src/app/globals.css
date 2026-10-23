@@ -31,6 +31,8 @@
   --color-line-control: #e2e4ed;
   --color-line-button: #e1e5ed;
   --color-line-popover: #dfe3ed;
+  --color-guide-line: #d8d5f3;
+  --color-guide-hint: #766138;
   --color-listbox-line: #dcd9f5;
   --color-line-strong: #b9c0ce;
 
@@ -203,6 +205,7 @@
   --radius-control: 9px;
   --radius-card: 10px;
   --radius-tile: 12px;
+  --radius-guide: 15px;
   --radius-message: 16px;
   --radius-panel: 18px;
   --radius-toggle: 20px;
@@ -213,6 +216,7 @@
   --shadow-selected: 0 0 0 0.5px var(--color-accent);
   --shadow-block-hover: 0 2px 5px 0 rgb(76 51 35 / 0.07);
   --shadow-popover: 0 4px 7px 0 rgb(36 41 65 / 0.09);
+  --shadow-guide: 0 8px 30px 0 rgb(50 48 81 / 0.08);
   --shadow-listbox: 0 8px 24px 0 rgb(41 49 82 / 0.1);
   /* Proposed, not in Figma yet: the soft focus ring of form fields (text inputs, selects, checkbox pills). */
   --shadow-field-focus: 0 0 0 1px var(--color-choice-line), 0 0 0 4px color-mix(in srgb, var(--color-choice-line) 40%, transparent);
@@ -266,4 +270,13 @@
   html:has(dialog[open]:modal) {
     overflow: hidden;
   }
+}
+
+.guide-popover button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+body:has(.guide-popover) [data-guide-hide] {
+  display: none;
 }

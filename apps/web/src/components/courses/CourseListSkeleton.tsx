@@ -1,7 +1,7 @@
 /** Three gray course cards while the term's sections load (div.app-1.md). */
 export function CourseListSkeleton() {
   return (
-    <>
+    <div data-guide-hide className="contents">
       <p className="sr-only">Loading your courses…</p>
       <ul aria-hidden className="flex flex-col gap-5">
         {[0, 1, 2].map((key) => (
@@ -12,6 +12,6 @@ export function CourseListSkeleton() {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }

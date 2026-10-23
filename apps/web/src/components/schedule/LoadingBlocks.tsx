@@ -20,6 +20,7 @@ export function LoadingBlocks({ day }: { day: Day }) {
     return (
       <span
         key={start}
+        data-guide-hide
         aria-hidden
         className="absolute inset-x-4 rounded-loading bg-skeleton-block"
         style={{ top: `${top}%`, height: `${percentOf(DEFAULT_RANGE, end) - top}%` }}

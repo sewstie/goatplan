@@ -9,7 +9,7 @@ export function ProfessorPicker({ course }: { course: Course }) {
   const setProfessor = usePlanner((state) => state.setProfessor);
   const ready = usePlanner((state) => state.termStatus === "ready");
   const instructors = lectureInstructorChoices(course.sections);
-  if (!name && (!course.sections.some((section) => section.type === "lecture") || instructors.length === 0)) return null;
+  if (!name && !course.sections.some((section) => section.type === "lecture")) return null;
   const count = course.sections.filter((section) => section.type === "lecture").length;
   const options: ListboxOption[] = [
     { value: "", label: "Any professor", description: `All ${count} lecture times` },

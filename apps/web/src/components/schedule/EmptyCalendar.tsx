@@ -12,10 +12,12 @@ export function EmptyCalendar() {
       range={DEFAULT_RANGE}
       caption="No timed courses yet"
       overlay={
+        <div data-guide-hide>
         <CalendarMessage icon={<BookOpen className="text-accent" />} title="Add your first course">
           <p>Search by course code or professor in the sidebar.</p>
           <p className="font-600 text-ink">Try CS 2102</p>
         </CalendarMessage>
+        </div>
       }
     />
   );
