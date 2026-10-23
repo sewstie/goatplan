@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createPlan,
   defaultPlanName,
@@ -12,6 +12,7 @@ import {
 } from "@/lib/plans";
 import { getPlannerStore, selectSavedPlan, usePlanner } from "@/lib/store";
 import { PlanNameDialog } from "./PlanNameDialog";
+import { EditThisPlanButton } from "./EditThisPlanButton";
 import { SavedPlansMenu } from "./SavedPlansMenu";
 import { SaveScheduleButton } from "./SaveScheduleButton";
 import { useOpenPlan } from "./useOpenPlan";
@@ -23,12 +24,16 @@ const COULDNT_SAVE = "Couldn’t save. Browser storage is full or blocked.";
 export function PlanActions() {
   const viewed = usePlanner(selectSavedPlan);
   const save = usePlanSaveState();
-  const status = viewed ? "saved" : save.status;
   const term = usePlanner((state) => state.term?.term ?? null);
-  const { requestOpen, dialog } = useOpenPlan();
+  const [opened, setOpened] = useState<{ name: string; sequence: number } | null>(null);
+  const { requestOpen, dialog } = useOpenPlan((plan) => setOpened((previous) => ({ name: plan.name, sequence: (previous?.sequence ?? 0) + 1 })));
   const [naming, setNaming] = useState<"first" | "copy" | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (opened) document.getElementById("tutorial-schedules")?.focus();
+  }, [opened]);
 
   async function saveChanges() {
     const plan = save.currentPlan;
@@ -75,12 +80,19 @@ export function PlanActions() {
           onSaveAsNew={() => setNaming("copy")}
         />
       </div>
-      <SaveScheduleButton
-        saved={status === "saved"}
-        disabled={!save.canSave || save.busy || saving}
-        onSave={saveChanges}
-      />
+      {viewed ? (
+        <EditThisPlanButton onEdit={() => requestOpen(viewed)} />
+      ) : (
+        <SaveScheduleButton
+          saved={save.status === "saved"}
+          disabled={!save.canSave || save.busy || saving}
+          onSave={saveChanges}
+        />
+      )}
       {error && <p role="alert" className="text-9 leading-13 text-warning">{error}</p>}
+      <span role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+        {opened && <span key={opened.sequence}>Opened “{opened.name}” for editing.</span>}
+      </span>
       <PlanNameDialog
         open={naming !== null}
         title={naming === "copy" ? "Save as a new plan" : "Save schedule"}

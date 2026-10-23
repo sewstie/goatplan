@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { PlanNotFound } from "@/components/plans/PlanNotFound";
 import { getPlansSource } from "@/lib/plans";
 import { usePlannerStore } from "@/lib/store";
 
 export function PlannerViewSync() {
   const store = usePlannerStore();
+  const [missingPlan, setMissingPlan] = useState(false);
   useEffect(() => {
     const source = getPlansSource();
     let reading = true;
@@ -39,6 +41,7 @@ export function PlannerViewSync() {
       const plan = params.get("view") === "saved" ? source.getSnapshot().plans.find((plan) => plan.id === params.get("plan")) : null;
       if (plan && store.getState().termId !== plan.termId) await store.getState().setTerm(plan.termId);
       if (cancelled || token !== request) return;
+      setMissingPlan(params.get("view") === "saved" && !plan);
       if (plan && store.getState().termStatus === "ready") store.getState().showSaved(plan.id);
       else store.getState().showFound();
       reading = false;
@@ -48,7 +51,9 @@ export function PlannerViewSync() {
     syncPlans();
     const unsubscribePlans = source.subscribe(syncPlans);
     const unsubscribeStore = store.subscribe((state, previous) => {
-      if (!reading && state.savedPlanId !== previous.savedPlanId) writeLocation();
+      if (reading) return;
+      if (state.courses !== previous.courses || state.termId !== previous.termId || state.savedPlanId !== previous.savedPlanId) setMissingPlan(false);
+      if (state.savedPlanId !== previous.savedPlanId) writeLocation();
     });
     const onPopState = () => { void readLocation(); };
     window.addEventListener("popstate", onPopState);
@@ -61,5 +66,5 @@ export function PlannerViewSync() {
       store.getState().showFound();
     };
   }, [store]);
-  return null;
+  return missingPlan ? <div role="alert" className="rounded-panel bg-surface"><PlanNotFound /></div> : null;
 }

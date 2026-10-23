@@ -3,12 +3,11 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { getPlansSource, openPlanInPlanner, wouldDiscardWork, type SavedPlan, type WorkingPlan } from "@/lib/plans";
-import { getPlannerStore, selectChosenSections, selectCurrentSchedule, storedDraft } from "@/lib/store";
+import { selectChosenSections, selectCurrentSchedule, storedDraft, usePlannerStore, type PlannerState } from "@/lib/store";
 import { OpenPlanDialog } from "./OpenPlanDialog";
 
 /** The draft a plan of this term would replace: the live one, or the one stored for another term. */
-function workingDraft(termId: string): WorkingPlan | null {
-  const state = getPlannerStore().getState();
+function workingDraft(termId: string, state: PlannerState): WorkingPlan | null {
   if (state.termId === termId && state.termStatus === "ready") {
     const hasSchedule = selectCurrentSchedule(state) !== null;
     return {
@@ -27,33 +26,35 @@ function workingDraft(termId: string): WorkingPlan | null {
  * Opens a saved plan in the planner and goes to `destination`, asking first when that would
  * discard unsaved changes. Render `dialog` once in the component that uses it.
  */
-export function useOpenPlan(): { requestOpen: (plan: SavedPlan, destination?: string) => void; dialog: ReactNode } {
+export function useOpenPlan(onOpened?: (plan: SavedPlan) => void): { requestOpen: (plan: SavedPlan, destination?: string) => void; dialog: ReactNode } {
+  const store = usePlannerStore();
   const router = useRouter();
   const pathname = usePathname();
   const [pending, setPending] = useState<{ plan: SavedPlan; destination?: string } | null>(null);
 
-  function go(plan: SavedPlan, destination?: string) {
+  async function go(plan: SavedPlan, destination?: string) {
     if (destination && destination !== pathname) router.push(destination);
     const source = getPlansSource();
     const snapshot = source.getSnapshot();
-    const state = getPlannerStore().getState();
+    const state = store.getState();
     const alreadyOpen =
       snapshot.current[plan.termId] === plan.id &&
       state.termId === plan.termId &&
       state.termStatus === "ready" &&
-      !wouldDiscardWork(plan, workingDraft(plan.termId));
+      !wouldDiscardWork(plan, workingDraft(plan.termId, state));
     if (alreadyOpen) {
       state.showFound();
+      onOpened?.(plan);
       return;
     }
     source.setCurrent(plan.termId, plan.id);
-    void openPlanInPlanner(getPlannerStore(), plan);
+    if (await openPlanInPlanner(store, plan)) onOpened?.(plan);
   }
 
   function requestOpen(plan: SavedPlan, destination?: string) {
     const snapshot = getPlansSource().getSnapshot();
     const currentPlan = snapshot.plans.find((item) => item.id === snapshot.current[plan.termId]) ?? null;
-    if (wouldDiscardWork(currentPlan, workingDraft(plan.termId))) setPending({ plan, destination });
+    if (wouldDiscardWork(currentPlan, workingDraft(plan.termId, store.getState()))) setPending({ plan, destination });
     else go(plan, destination);
   }
 

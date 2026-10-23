@@ -19,7 +19,6 @@ import { FirstPlanTutorial } from "@/components/tutorial/FirstPlanTutorial";
 export default function PlannerPage() {
   return (
     <>
-      <PlannerViewSync />
       <FirstPlanTutorial />
       <AppShell
         sidebar={
@@ -42,7 +41,7 @@ export default function PlannerPage() {
           />
         }
         toolbar={<PreferencesBar />}
-        banner={<ScheduleBanner />}
+        banner={<><PlannerViewSync /><ScheduleBanner /></>}
         schedule={<ScheduleView />}
         hideDetailsOnTermError
         details={
