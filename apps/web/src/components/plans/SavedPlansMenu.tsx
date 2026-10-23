@@ -15,6 +15,7 @@ type SavedPlansMenuProps = {
   canSaveAsNew: boolean;
   onOpenPlan: (plan: SavedPlan) => void;
   onSaveAsNew: () => void;
+  onNewPlan: () => void;
 };
 
 /** "Saved plans ⌄": this term's plans and the ways to the plans page. A disclosure, not an ARIA menu. */
@@ -26,6 +27,7 @@ export function SavedPlansMenu({
   canSaveAsNew,
   onOpenPlan,
   onSaveAsNew,
+  onNewPlan,
 }: SavedPlansMenuProps) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
@@ -113,6 +115,12 @@ export function SavedPlansMenu({
           </p>
         )}
         <ul aria-label="Plan actions" className="mt-6 border-t border-line pt-6">
+          <SavedPlansMenuItem onSelect={() => {
+            closeToTrigger();
+            onNewPlan();
+          }}>
+            Start a new plan
+          </SavedPlansMenuItem>
           {canSaveAsNew && (
             <SavedPlansMenuItem
               onSelect={() => {

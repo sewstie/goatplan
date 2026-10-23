@@ -74,7 +74,7 @@ test("saved paging and the simplified menu work entirely with the keyboard", asy
   await expect(page.getByRole("status", { name: /Saved plan 1 of 2/ })).toBeVisible();
   await tabTo(page, page.getByRole("button", { name: "Saved plans", exact: true }));
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("list", { name: "Plan actions" }).getByRole("listitem")).toHaveCount(2);
+  await expect(page.getByRole("list", { name: "Plan actions" }).getByRole("listitem")).toHaveCount(3);
   await expect(page.getByRole("link", { name: "Sections to register", exact: true })).toHaveCount(0);
   await tabTo(page, page.getByRole("link", { name: "All saved plans" }));
   await page.keyboard.press("Enter");
@@ -116,7 +116,7 @@ test("save states are shown by the button and the dropdown keeps only the reques
   }
   await page.setViewportSize({ width: 1440, height: 900 });
   await header.getByRole("button", { name: "Saved plans", exact: true }).click();
-  await expect(page.getByRole("list", { name: "Plan actions" }).getByRole("listitem")).toHaveText(["Save as a new plan", "All saved plans"]);
+  await expect(page.getByRole("list", { name: "Plan actions" }).getByRole("listitem")).toHaveText(["Start a new plan", "Save as a new plan", "All saved plans"]);
   await page.screenshot({ path: "e2e/screenshots/planner-saved-menu-1440.png", fullPage: true });
 });
 

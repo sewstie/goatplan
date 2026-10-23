@@ -7,10 +7,13 @@ import { Button } from "@/components/ui/Button";
 import { SavedPlanCourses } from "./SavedPlanCourses";
 import { useOpenPlan } from "./useOpenPlan";
 import { useReadOnlyPlan } from "./useReadOnlyPlan";
+import { useSelectedPlan } from "./useSelectedPlan";
 
 export function PlansSidebar() {
+  const { plan: selectedPlan } = useSelectedPlan();
   const plan = useReadOnlyPlan();
   const { requestOpen, dialog } = useOpenPlan();
+  if (!selectedPlan) return null;
   if (!plan) return (
     <>
       <TermPicker />

@@ -2,9 +2,9 @@
 
 import { useSelectedPlan } from "./useSelectedPlan";
 
-/** "Sections to register · Plan 1": the page's heading names the plan on screen. */
 export function PlansTitle() {
-  const { plan } = useSelectedPlan();
+  const { plan, planId } = useSelectedPlan();
+  if (!planId) return <>All saved plans</>;
   return (
     <>
       Sections to register

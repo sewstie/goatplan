@@ -4,7 +4,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { getPlansSource, openPlanInPlanner, wouldDiscardWork, type SavedPlan, type WorkingPlan } from "@/lib/plans";
 import { selectChosenSections, selectCurrentSchedule, storedDraft, usePlannerStore, type PlannerState } from "@/lib/store";
+import { emptyDraft } from "@/lib/store/draft";
 import { OpenPlanDialog } from "./OpenPlanDialog";
+import { NewPlanDialog } from "./NewPlanDialog";
+
+type PlanRequest = { plan: SavedPlan; destination?: string } | { termId: string };
 
 /** The draft a plan of this term would replace: the live one, or the one stored for another term. */
 function workingDraft(termId: string, state: PlannerState): WorkingPlan | null {
@@ -22,21 +26,25 @@ function workingDraft(termId: string, state: PlannerState): WorkingPlan | null {
   return draft && { ...draft, chosen: null };
 }
 
-/**
- * Opens a saved plan in the planner and goes to `destination`, asking first when that would
- * discard unsaved changes. Render `dialog` once in the component that uses it.
- */
-export function useOpenPlan(onOpened?: (plan: SavedPlan) => void): { requestOpen: (plan: SavedPlan, destination?: string) => void; dialog: ReactNode } {
+export function useOpenPlan(onOpened?: (plan: SavedPlan | null) => void): { requestOpen: (plan: SavedPlan, destination?: string) => void; requestNewPlan: () => void; dialog: ReactNode } {
   const store = usePlannerStore();
   const router = useRouter();
   const pathname = usePathname();
-  const [pending, setPending] = useState<{ plan: SavedPlan; destination?: string } | null>(null);
+  const [pending, setPending] = useState<PlanRequest | null>(null);
 
-  async function go(plan: SavedPlan, destination?: string) {
-    if (destination && destination !== pathname) router.push(destination);
+  async function go(request: PlanRequest) {
     const source = getPlansSource();
-    const snapshot = source.getSnapshot();
     const state = store.getState();
+    if (!("plan" in request)) {
+      if (await state.openPlan(request.termId, emptyDraft())) {
+        source.setCurrent(request.termId, null);
+        onOpened?.(null);
+      }
+      return;
+    }
+    const { plan, destination } = request;
+    if (destination && destination !== pathname) router.push(destination);
+    const snapshot = source.getSnapshot();
     const alreadyOpen =
       snapshot.current[plan.termId] === plan.id &&
       state.termId === plan.termId &&
@@ -51,23 +59,34 @@ export function useOpenPlan(onOpened?: (plan: SavedPlan) => void): { requestOpen
     if (await openPlanInPlanner(store, plan)) onOpened?.(plan);
   }
 
-  function requestOpen(plan: SavedPlan, destination?: string) {
+  function request(request: PlanRequest) {
+    const termId = "plan" in request ? request.plan.termId : request.termId;
     const snapshot = getPlansSource().getSnapshot();
-    const currentPlan = snapshot.plans.find((item) => item.id === snapshot.current[plan.termId]) ?? null;
-    if (wouldDiscardWork(currentPlan, workingDraft(plan.termId, store.getState()))) setPending({ plan, destination });
-    else go(plan, destination);
+    const currentPlan = snapshot.plans.find((item) => item.id === snapshot.current[termId]) ?? null;
+    if (wouldDiscardWork(currentPlan, workingDraft(termId, store.getState()))) setPending(request);
+    else void go(request);
+  }
+
+  function requestOpen(plan: SavedPlan, destination?: string) {
+    request({ plan, destination });
+  }
+
+  function requestNewPlan() {
+    const state = store.getState();
+    if (state.termStatus === "ready" && state.termId) request({ termId: state.termId });
+  }
+
+  function confirm() {
+    if (pending) void go(pending);
+    setPending(null);
   }
 
   const dialog = (
-    <OpenPlanDialog
-      plan={pending?.plan ?? null}
-      onClose={() => setPending(null)}
-      onConfirm={() => {
-        if (pending) go(pending.plan, pending.destination);
-        setPending(null);
-      }}
-    />
+    <>
+      <OpenPlanDialog plan={pending && "plan" in pending ? pending.plan : null} onClose={() => setPending(null)} onConfirm={confirm} />
+      <NewPlanDialog open={pending !== null && !("plan" in pending)} onClose={() => setPending(null)} onConfirm={confirm} />
+    </>
   );
 
-  return { requestOpen, dialog };
+  return { requestOpen, requestNewPlan, dialog };
 }
