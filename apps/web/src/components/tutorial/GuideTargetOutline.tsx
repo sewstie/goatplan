@@ -14,8 +14,10 @@ export function GuideTargetOutline({ targetId }: { targetId: string }) {
     function update() {
       const next = guideTarget(targetId);
       if (target !== next) {
+        if (target) resize.unobserve(target);
         target?.removeAttribute("data-guide-target");
         target = next;
+        if (target) resize.observe(target);
         target?.setAttribute("data-guide-target", "");
       }
       const box = outline.current;
@@ -29,10 +31,10 @@ export function GuideTargetOutline({ targetId }: { targetId: string }) {
         borderRadius: `${parseFloat(getComputedStyle(target).borderTopLeftRadius || "0") + 4}px`,
       });
     }
+    const resize = new ResizeObserver(update);
     update();
     const observer = new MutationObserver(update);
     observer.observe(document.body, { childList: true, subtree: true });
-    const resize = new ResizeObserver(update);
     resize.observe(document.body);
     window.addEventListener("scroll", update, true);
     window.addEventListener("resize", update);
