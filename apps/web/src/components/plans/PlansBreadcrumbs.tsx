@@ -5,5 +5,5 @@ import { useSelectedPlan } from "./useSelectedPlan";
 
 export function PlansBreadcrumbs() {
   const { plan } = useSelectedPlan();
-  return <TermBreadcrumbs shownTerm={plan?.term} />;
+  return plan ? <TermBreadcrumbs shownTerm={plan.term} /> : null;
 }

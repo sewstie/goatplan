@@ -12,7 +12,7 @@ vi.mock("next/link", () => ({
 
 function renderMenu(props: Partial<ComponentProps<typeof SavedPlansMenu>> = {}) {
   const plans = [designPlan(), designPlan({ id: "plan-2", name: "Mornings free" })];
-  const handlers = { onOpenPlan: vi.fn(), onSaveAsNew: vi.fn() };
+  const handlers = { onOpenPlan: vi.fn(), onSaveAsNew: vi.fn(), onNewPlan: vi.fn() };
   render(
     <>
       <SavedPlansMenu
@@ -39,7 +39,7 @@ describe("SavedPlansMenu", () => {
     const list = screen.getByRole("list", { name: "Saved plans for C Term · Spring 2027" });
     expect(list).toHaveTextContent("Plan 13 courses · 4 sections(open now)");
     const actions = screen.getByRole("list", { name: "Plan actions" });
-    expect(within(actions).getAllByRole("listitem")).toHaveLength(2);
+    expect(within(actions).getAllByRole("listitem")).toHaveLength(3);
     expect(within(actions).getByRole("button", { name: "Save as a new plan" })).toBeVisible();
     expect(screen.queryByRole("link", { name: "Sections to register" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "All saved plans" })).toHaveAttribute("href", "/plans");

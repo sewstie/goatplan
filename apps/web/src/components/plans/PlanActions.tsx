@@ -10,9 +10,8 @@ import {
   termLabel,
   updatePlan,
 } from "@/lib/plans";
-import { getPlannerStore, selectSavedPlan, usePlanner } from "@/lib/store";
+import { selectSavedPlan, usePlanner, usePlannerStore } from "@/lib/store";
 import { PlanNameDialog } from "./PlanNameDialog";
-import { EditThisPlanButton } from "./EditThisPlanButton";
 import { SavedPlansMenu } from "./SavedPlansMenu";
 import { SaveScheduleButton } from "./SaveScheduleButton";
 import { useOpenPlan } from "./useOpenPlan";
@@ -22,17 +21,18 @@ const COULDNT_SAVE = "Couldn’t save. Browser storage is full or blocked.";
 
 /** "Saved plans" and the Save schedule button in the header (div.app-12.md). */
 export function PlanActions() {
+  const store = usePlannerStore();
   const viewed = usePlanner(selectSavedPlan);
   const save = usePlanSaveState();
   const term = usePlanner((state) => state.term?.term ?? null);
-  const [opened, setOpened] = useState<{ name: string; sequence: number } | null>(null);
-  const { requestOpen, dialog } = useOpenPlan((plan) => setOpened((previous) => ({ name: plan.name, sequence: (previous?.sequence ?? 0) + 1 })));
+  const [opened, setOpened] = useState<{ name: string | null; sequence: number } | null>(null);
+  const { requestOpen, requestNewPlan, dialog } = useOpenPlan((plan) => setOpened((previous) => ({ name: plan?.name ?? null, sequence: (previous?.sequence ?? 0) + 1 })));
   const [naming, setNaming] = useState<"first" | "copy" | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (opened) document.getElementById("tutorial-schedules")?.focus();
+    if (opened) document.getElementById(opened.name === null ? "tutorial-search" : "tutorial-schedules")?.focus();
   }, [opened]);
 
   async function saveChanges() {
@@ -43,7 +43,6 @@ export function PlanActions() {
     }
     setSaving(true);
     setError(null);
-    const store = getPlannerStore();
     await settled(store);
     const updated = updatePlan(plan, store.getState(), new Date());
     setSaving(false);
@@ -51,7 +50,6 @@ export function PlanActions() {
   }
 
   async function saveAsNew(name: string): Promise<string | null> {
-    const store = getPlannerStore();
     if (!viewed) await settled(store);
     const details = { id: newPlanId(), name, savedAt: new Date() };
     const plan = viewed
@@ -78,20 +76,17 @@ export function PlanActions() {
           canSaveAsNew={viewed !== null || save.canSave || save.status === "saved"}
           onOpenPlan={(plan) => requestOpen(plan, "/")}
           onSaveAsNew={() => setNaming("copy")}
+          onNewPlan={requestNewPlan}
         />
       </div>
-      {viewed ? (
-        <EditThisPlanButton onEdit={() => requestOpen(viewed)} />
-      ) : (
-        <SaveScheduleButton
-          saved={save.status === "saved"}
-          disabled={!save.canSave || save.busy || saving}
-          onSave={saveChanges}
-        />
-      )}
+      <SaveScheduleButton
+        saved={viewed !== null || save.status === "saved"}
+        disabled={viewed !== null || !save.canSave || save.busy || saving}
+        onSave={saveChanges}
+      />
       {error && <p role="alert" className="text-9 leading-13 text-warning">{error}</p>}
       <span role="status" aria-live="polite" aria-atomic="true" className="sr-only">
-        {opened && <span key={opened.sequence}>Opened “{opened.name}” for editing.</span>}
+        {opened && <span key={opened.sequence}>{opened.name === null ? "Started a new plan." : `Opened “${opened.name}” for editing.`}</span>}
       </span>
       <PlanNameDialog
         open={naming !== null}

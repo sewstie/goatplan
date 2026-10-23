@@ -12,6 +12,9 @@ const term: { courses: Course[] } = JSON.parse(
   readFileSync(path.join(__dirname, "../public/data/2027-C.json"), "utf8"),
 );
 const course = (code: string) => term.courses.find((item) => item.code === code)!;
+const designLab = course("AE 2320").sections.find((section) => section.id === "AE 2320-CX02")!;
+designLab.status = "open";
+designLab.enrolled = designLab.capacity - 4;
 const sections = (code: string, ids: string[]) =>
   ids.map((id) => structuredClone(course(code).sections.find((section) => section.id === id)!));
 
@@ -86,6 +89,7 @@ const twoPlansStorage = { ...savedStorage, "goatplan:plans:v1:plan:plan-changed"
 
 /** Fills localStorage before the app starts, once per tab, so reloads keep what the test saved. */
 async function seed(page: Page, entries: Record<string, unknown>) {
+  await page.route("**/data/2027-C.json", (route) => route.fulfill({ json: term }));
   await page.addInitScript((items) => {
     if (sessionStorage.getItem("plans-e2e-seeded")) return;
     sessionStorage.setItem("plans-e2e-seeded", "1");
@@ -177,7 +181,7 @@ test.describe("Save schedule", () => {
     const released = new Promise<void>((resolve) => (release = resolve));
     await page.route("**/data/2027-C.json", async (route) => {
       await released;
-      await route.continue();
+      await route.fallback();
     });
     await page.goto("/");
     await expect(page.locator("[data-planner-term-status]")).toHaveAttribute("data-planner-term-status", "loading");
@@ -384,7 +388,7 @@ test.describe("Saved plans list", () => {
   test("lists plans with their changes, renames and deletes them", async ({ page }) => {
     await seed(page, twoPlansStorage);
     await page.goto("/plans");
-    await expect(page.getByRole("heading", { level: 1, name: "Sections to register" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "All saved plans" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Your saved plans" })).toBeVisible();
     const group = page.getByRole("region", { name: "C Term · Spring 2027" });
     const items = group.getByRole("listitem").filter({ has: page.getByRole("heading", { level: 4 }) });

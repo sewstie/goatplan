@@ -179,6 +179,16 @@ view. Draft edits and Found paging do nothing in Saved. Leaving the planner
 clears Saved mode without changing the URL or draft. `share` is reserved and
 left untouched by view navigation.
 
+Choosing a saved plan from the menu opens it for editing. There is no separate
+Edit this plan button. Start a new plan in the same menu resets the current
+term's draft to empty courses and default preferences. It asks before replacing
+unsaved work and keeps every saved plan. Saving the fresh draft creates a
+separate plan.
+
+All saved plans leaves the course sidebar, preferences and summary panel empty.
+Viewing the list never changes the working draft. A selected registration sheet
+still shows that plan's courses, preferences and summary.
+
 ### How it behaves
 
 - The planner page mounts a five-step guide popover on the first visit. It
