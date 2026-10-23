@@ -6,6 +6,7 @@ export function useModalDialog(open: boolean, onClose: () => void) {
   const ref = useRef<HTMLDialogElement>(null);
   const returnFocusTo = useRef<HTMLElement | null>(null);
   const pressStartedOnBackdrop = useRef(false);
+  const closingFromState = useRef(false);
 
   useEffect(() => {
     const dialog = ref.current;
@@ -14,11 +15,18 @@ export function useModalDialog(open: boolean, onClose: () => void) {
       returnFocusTo.current = document.activeElement as HTMLElement | null;
       dialog.showModal();
     } else if (!open && dialog.open) {
+      closingFromState.current = true;
       dialog.close();
+      returnFocusTo.current?.focus();
+      returnFocusTo.current = null;
     }
   }, [open]);
 
   function handleClose() {
+    if (closingFromState.current) {
+      closingFromState.current = false;
+      return;
+    }
     returnFocusTo.current?.focus();
     returnFocusTo.current = null;
     onClose();
