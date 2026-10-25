@@ -70,6 +70,7 @@ namespace {
             const json& score = schedules[s]["score"];
             std::cout << "Schedule " << s + 1 << ": score " << score["total"]
                       << " (early " << score["earlyMinutes"] << ", gaps " << score["gapMinutes"]
+                      << ", late " << score["lateMinutes"]
                       << ", days " << score["days"] << ")\n";
             for (const json& course : schedules[s]["courses"]) {
                 const std::string code = course["code"];

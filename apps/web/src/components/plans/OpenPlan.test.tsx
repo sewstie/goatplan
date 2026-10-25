@@ -126,7 +126,7 @@ it("starts an empty plan with default preferences and preserves the saved plan",
   expect(store.getState().locks).toEqual({});
   expect(store.getState().professorByCourse).toEqual({});
   expect(store.getState().alternatives).toEqual({});
-  expect(store.getState().sortPreset).toBe("fewestEarly");
+  expect(store.getState().sortPreset).toBe("bestOverall");
   expect(store.getState().savedPlanId).toBeNull();
   expect(getPlansSource().getSnapshot().current[plan.termId]).toBeUndefined();
   expect(getPlansSource().getSnapshot().plans).toContainEqual(plan);

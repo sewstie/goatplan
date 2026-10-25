@@ -1,6 +1,7 @@
-import type { Delivery } from "@/lib/data/types";
-import type { Score, SolveResponse } from "@/lib/engine/types";
-import type { SolveStatus, TermStatus } from "@/lib/store/types";
+import type { Day, Delivery } from "@/lib/data/types";
+import { formatTimeShort } from "@/lib/data/time";
+import type { SolveResponse } from "@/lib/engine/types";
+import type { SolveStatus, SortPresetId, TermStatus } from "@/lib/store/types";
 
 const numberFormat = new Intl.NumberFormat("en-US");
 
@@ -23,16 +24,118 @@ export function formatDuration(minutes: number): string {
   return rest === 0 ? `${hours} h` : `${hours} h ${rest} min`;
 }
 
+// ── Schedule badges ──
+
+/** A single meeting on the calendar: one class block on one day. */
+export interface BadgeMeeting {
+  day: Day;
+  /** Minutes after midnight. */
+  start: number;
+  /** Minutes after midnight. */
+  end: number;
+}
+
+/** The weekdays in calendar order (Mon–Fri). */
+const WEEKDAYS: readonly Day[] = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
+/** Short day names for badge text: "Mon", "Tue", etc. are already short enough. */
+const SHORT_DAY: Readonly<Record<Day, string>> = {
+  Mon: "Mon",
+  Tue: "Tue",
+  Wed: "Wed",
+  Thu: "Thu",
+  Fri: "Fri",
+  Sat: "Sat",
+  Sun: "Sun",
+};
+
+/** Badge category keys, in the default display order (after any lead badge). */
+type BadgeKind = "DaysOff" | "Start" | "Gaps" | "Finish";
+
+const DEFAULT_ORDER: readonly BadgeKind[] = ["DaysOff", "Start", "Gaps", "Finish"];
+
+/** Which badge kind leads for each sort preset. bestOverall has no lead. */
+const LEAD_BADGE: Partial<Record<SortPresetId, BadgeKind>> = {
+  latestStart: "Start",
+  fewestEarly: "Start",
+  earliestFinish: "Finish",
+  fewestDays: "DaysOff",
+  fewestGaps: "Gaps",
+};
+
+const GAP_THRESHOLD = 30; // minutes
+const MAX_BADGES = 3;
+
 /**
- * The chips after the summary line: what the shown schedule is like, in the terms the Sort order uses.
- * "Early" is the Sort cutoff (10 AM), not the start-time preference, so the chips don't name a time.
+ * Up to three badge texts describing the shown schedule. Replaces the old scoreChips.
+ *
+ * Input: the schedule's meetings (day, start, end) and the current sort preset.
+ * Meetings with no set time (online/async courses) are excluded by the caller
+ * — they simply don't appear in the meetings array.
  */
-export function scoreChips(score: Score): string[] {
-  return [
-    `${count("day", score.days)} on campus`,
-    score.gapMinutes === 0 ? "No gaps between classes" : `${formatDuration(score.gapMinutes)} between classes`,
-    score.earlyMinutes === 0 ? "No early classes" : `${formatDuration(score.earlyMinutes)} of early classes`,
-  ];
+export function scheduleBadges(meetings: readonly BadgeMeeting[], preset: SortPresetId): string[] {
+  if (meetings.length === 0) return [];
+
+  // ── Week facts ──
+  let earliestStart = Infinity;
+  let latestEnd = -Infinity;
+  const meetingsByDay = new Map<Day, { start: number; end: number }[]>();
+
+  for (const meeting of meetings) {
+    if (meeting.start < earliestStart) earliestStart = meeting.start;
+    if (meeting.end > latestEnd) latestEnd = meeting.end;
+    let dayMeetings = meetingsByDay.get(meeting.day);
+    if (!dayMeetings) {
+      dayMeetings = [];
+      meetingsByDay.set(meeting.day, dayMeetings);
+    }
+    dayMeetings.push({ start: meeting.start, end: meeting.end });
+  }
+
+  // Free weekdays (Mon–Fri only).
+  const freeDays = WEEKDAYS.filter((day) => !meetingsByDay.has(day));
+
+  // Gaps: breaks ≥30 min between classes on the same day, summed over the week.
+  let gapCount = 0;
+  for (const [, dayMeetings] of meetingsByDay) {
+    const sorted = [...dayMeetings].sort((a, b) => a.start - b.start);
+    for (let i = 1; i < sorted.length; i++) {
+      if (sorted[i].start - sorted[i - 1].end >= GAP_THRESHOLD) gapCount++;
+    }
+  }
+
+  // ── Badge text per kind ──
+  function badgeText(kind: BadgeKind): string | null {
+    switch (kind) {
+      case "Start":
+        return `Starts ${formatTimeShort(earliestStart)}`;
+      case "Finish":
+        return `Done by ${formatTimeShort(latestEnd)}`;
+      case "DaysOff": {
+        if (freeDays.length === 0) return null;
+        if (freeDays.length === 1) return `${SHORT_DAY[freeDays[0]]} off`;
+        if (freeDays.length === 2) return `${SHORT_DAY[freeDays[0]]}, ${SHORT_DAY[freeDays[1]]} off`;
+        return `${freeDays.length} days off`;
+      }
+      case "Gaps":
+        return gapCount === 0 ? "No gaps" : `${gapCount} ${gapCount === 1 ? "gap" : "gaps"}`;
+    }
+  }
+
+  // ── Ordering: lead badge first, then default order, cap at 3 ──
+  const lead = LEAD_BADGE[preset];
+  const order: BadgeKind[] = lead
+    ? [lead, ...DEFAULT_ORDER.filter((kind) => kind !== lead)]
+    : [...DEFAULT_ORDER];
+
+  const badges: string[] = [];
+  for (const kind of order) {
+    if (badges.length >= MAX_BADGES) break;
+    const text = badgeText(kind);
+    if (text !== null) badges.push(text);
+  }
+
+  return badges;
 }
 
 /** "1,234 schedules fit", or "1,234+ schedules fit" when the engine stopped counting. */

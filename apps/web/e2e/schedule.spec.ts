@@ -78,7 +78,7 @@ for (const viewport of [
     await expect(page.getByText("Schedule 1 of 1")).toBeVisible();
     await expect(page.getByRole("button", { name: "Next schedule" })).toHaveCount(0);
     await expect(page.getByText("3 courses · 1 schedule fits")).toBeVisible();
-    await expect(page.getByRole("list", { name: "This schedule" })).toContainText("5 days on campus");
+    await expect(page.getByRole("list", { name: "This schedule" })).toContainText("Starts 9 AM");
 
     const week = calendar(page);
     await expect(week.getByText("Auto-fit · 8:00 AM–5:00 PM")).toBeVisible();

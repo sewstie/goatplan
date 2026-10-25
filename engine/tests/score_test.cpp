@@ -69,3 +69,57 @@ TEST(Score, TotalUsesTheGivenWeights) {
     EXPECT_EQ(score.days, 2);
     EXPECT_EQ(score.total, 120 * 2 + 70 * 5 + 2 * 100);
 }
+
+TEST(Score, DefaultLateCutoffGivesZeroLateMinutes) {
+    WeekMask week;
+    week.addRange(kMon, at(10, 0), at(17, 0));
+    const Score score = scoreOf(week);
+    EXPECT_EQ(score.lateMinutes, 0);
+}
+
+TEST(Score, ClassAfterCutoffCountsAsLate) {
+    WeekMask week;
+    week.addRange(kMon, at(10, 0), at(16, 0));
+    ScoreWeights weights;
+    weights.lateCutoff = at(15, 0);
+    weights.perLateMinute = 1;
+    const Score score = scoreOf(week, weights);
+    EXPECT_EQ(score.lateMinutes, 60);
+}
+
+TEST(Score, ClassEndingAtCutoffIsNotLate) {
+    WeekMask week;
+    week.addRange(kMon, at(10, 0), at(15, 0));
+    ScoreWeights weights;
+    weights.lateCutoff = at(15, 0);
+    weights.perLateMinute = 10;
+    const Score score = scoreOf(week, weights);
+    EXPECT_EQ(score.lateMinutes, 0);
+}
+
+TEST(Score, LateMinutesCountedPerDay) {
+    WeekMask week;
+    week.addRange(kMon, at(10, 0), at(16, 0));
+    week.addRange(kWed, at(10, 0), at(17, 0));
+    ScoreWeights weights;
+    weights.lateCutoff = at(15, 0);
+    weights.perLateMinute = 1;
+    const Score score = scoreOf(week, weights);
+    EXPECT_EQ(score.lateMinutes, 60 + 120);
+    EXPECT_EQ(score.days, 2);
+}
+
+TEST(Score, LateMinutesAddToTotal) {
+    WeekMask week;
+    week.addRange(kMon, at(10, 0), at(16, 0));
+    ScoreWeights weights;
+    weights.earlyCutoff = at(10, 0);
+    weights.perEarlyMinute = 0;
+    weights.lateCutoff = at(15, 0);
+    weights.perLateMinute = 7;
+    weights.perGapMinute = 0;
+    weights.perDay = 0;
+    const Score score = scoreOf(week, weights);
+    EXPECT_EQ(score.lateMinutes, 60);
+    EXPECT_EQ(score.total, 60 * 7);
+}

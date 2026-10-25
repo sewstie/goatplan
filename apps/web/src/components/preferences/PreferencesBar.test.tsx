@@ -1,6 +1,7 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, describe, expect, it, vi } from "vitest";
+import { SORT_PRESETS } from "@/lib/store";
 import { solved } from "@/lib/store/testing/fixtures";
 import { polyfillDialog, startTestPlanner, waitForSolve } from "@/components/sections/testing/plannerStore";
 import { PreferencesBar } from "./PreferencesBar";
@@ -153,12 +154,100 @@ describe("PreferencesBar", () => {
     expect(toggle).not.toBeChecked();
   });
 
-  it("offers only the sort order in the design when several schedules fit", async () => {
-    await startTestPlanner({ courses: ["AE 2320"] });
+  it("shows Sort with the current order and lists all six orders in table order", async () => {
+    await startTestPlanner({ courses: ["AE 2320"], sortPreset: "fewestEarly" });
     render(<PreferencesBar />);
 
     const sort = screen.getByRole("combobox", { name: "Sort" });
-    expect(within(sort).getAllByRole("option").map((option) => option.textContent)).toEqual(["Fewest early classes"]);
+    expect(sort).toHaveTextContent("SortFewest early classes");
+    expect(sort).toHaveAttribute("aria-expanded", "false");
+    await userEvent.click(sort);
+
+    const list = screen.getByRole("listbox", { name: "Sort" });
+    const labels = ["Best overall", "Fewest early classes", "Latest start", "Earliest finish", "Most days off", "Most compact"];
+    const options = within(list).getAllByRole("option");
+    expect(options).toHaveLength(labels.length);
+    options.forEach((option, index) => expect(option).toHaveAccessibleName(labels[index]));
+    expect(within(list).getByRole("option", { name: "Latest start" })).toHaveAccessibleDescription("Fewer classes before 1 PM");
+    expect(within(list).getByRole("option", { selected: true })).toHaveTextContent("Fewest early classes");
+  });
+
+  it("picks an order from the keyboard, solves with its weights, shows schedule 1 and keeps focus on Sort", async () => {
+    const { store, requests } = await startTestPlanner({ courses: ["AE 2320"], sortPreset: "fewestEarly" });
+    store.getState().setScheduleIndex(1);
+    render(<PreferencesBar />);
+
+    const sort = screen.getByRole("combobox", { name: "Sort" });
+    sort.focus();
+    await userEvent.keyboard("{Enter}");
+    await userEvent.keyboard("L");
+    expect(sort).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Latest start" }).id);
+    await userEvent.keyboard("{Enter}");
+
+    expect(store.getState().sortPreset).toBe("latestStart");
+    await waitForSolve(store);
+    expect(requests.at(-1)?.sort).toEqual(SORT_PRESETS.latestStart.weights);
+    expect(store.getState().scheduleIndex).toBe(0);
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Sort" })).toBe(sort);
+    expect(sort).toHaveFocus();
+    expect(sort).toHaveTextContent("SortLatest start");
+  });
+
+  it("picks an order with a click and keeps Sort on screen while it solves", async () => {
+    let release: (() => void) | null = null;
+    const { store } = await startTestPlanner(
+      { courses: ["AE 2320"], sortPreset: "bestOverall" },
+      {
+        solve: (request) =>
+          request.sort?.perGapMinute === SORT_PRESETS.fewestGaps.weights.perGapMinute
+            ? new Promise((resolve) => (release = () => resolve(solved(request))))
+            : solved(request),
+      },
+    );
+    render(<PreferencesBar />);
+
+    await userEvent.click(screen.getByRole("combobox", { name: "Sort" }));
+    await userEvent.click(screen.getByRole("option", { name: "Most compact" }));
+
+    expect(store.getState().sortPreset).toBe("fewestGaps");
+    await waitFor(() => expect(store.getState().solveStatus).toBe("solving"));
+    const sort = screen.getByRole("combobox", { name: "Sort" });
+    expect(sort).toHaveFocus();
+    expect(sort).toHaveTextContent("SortMost compact");
+    release!();
+    await waitForSolve(store);
+    expect(sort).toHaveFocus();
+  });
+
+  it("keeps the order on Escape", async () => {
+    const { store } = await startTestPlanner({ courses: ["AE 2320"], sortPreset: "bestOverall" });
+    render(<PreferencesBar />);
+
+    const sort = screen.getByRole("combobox", { name: "Sort" });
+    sort.focus();
+    await userEvent.keyboard("{ArrowDown}{End}{Escape}");
+
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+    expect(store.getState().sortPreset).toBe("bestOverall");
+    expect(sort).toHaveFocus();
+  });
+
+  it("makes Sort the last stop in the row, and Tab moves past it without opening it", async () => {
+    await startTestPlanner({ courses: ["AE 2320"] });
+    render(
+      <>
+        <PreferencesBar />
+        <button type="button">After the row</button>
+      </>,
+    );
+
+    screen.getByRole("switch", { name: "Only open sections" }).focus();
+    await userEvent.tab();
+    expect(screen.getByRole("combobox", { name: "Sort" })).toHaveFocus();
+    await userEvent.tab();
+    expect(screen.getByRole("button", { name: "After the row" })).toHaveFocus();
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
   });
 
   it("hides Sort when only one schedule fits", async () => {
@@ -174,5 +263,25 @@ describe("PreferencesBar", () => {
     render(<PreferencesBar />);
 
     expect(screen.queryByRole("combobox", { name: "Sort" })).not.toBeInTheDocument();
+  });
+
+  it("hides Sort once a change leaves only one schedule", async () => {
+    const { store } = await startTestPlanner(
+      { courses: ["AE 2320"] },
+      {
+        solve: (request) => {
+          const response = solved(request);
+          if (!response.ok || request.preferences?.startsAfter !== 600) return response;
+          return { ...response, total: 1, schedules: response.schedules.slice(0, 1) };
+        },
+      },
+    );
+    render(<PreferencesBar />);
+    expect(screen.getByRole("combobox", { name: "Sort" })).toBeInTheDocument();
+
+    store.getState().setPreferences({ startsAfter: 600 });
+    await waitForSolve(store);
+
+    await waitFor(() => expect(screen.queryByRole("combobox", { name: "Sort" })).not.toBeInTheDocument());
   });
 });

@@ -27,6 +27,8 @@ export interface SortWeights {
   perEarlyMinute?: number | null;
   perGapMinute?: number | null;
   perDay?: number | null;
+  lateCutoff?: number | null;
+  perLateMinute?: number | null;
 }
 
 export interface Limits {
@@ -49,6 +51,7 @@ export interface Score {
   earlyMinutes: number;
   gapMinutes: number;
   days: number;
+  lateMinutes?: number;
 }
 
 export interface ScheduleCourse {

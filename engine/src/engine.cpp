@@ -228,6 +228,8 @@ namespace goatplan {
                 expectObject(*sort, "sort");
                 readUpTo(*sort, "earlyCutoff", "sort", kMinutesPerDay, request.weights.earlyCutoff);
                 readUpTo(*sort, "perEarlyMinute", "sort", kMaxWeight, request.weights.perEarlyMinute);
+                readUpTo(*sort, "lateCutoff", "sort", kMinutesPerDay, request.weights.lateCutoff);
+                readUpTo(*sort, "perLateMinute", "sort", kMaxWeight, request.weights.perLateMinute);
                 readUpTo(*sort, "perGapMinute", "sort", kMaxWeight, request.weights.perGapMinute);
                 readUpTo(*sort, "perDay", "sort", kMaxWeight, request.weights.perDay);
             }
@@ -275,6 +277,7 @@ namespace goatplan {
                     {"total", score.total},
                     {"earlyMinutes", score.earlyMinutes},
                     {"gapMinutes", score.gapMinutes},
+                    {"lateMinutes", score.lateMinutes},
                     {"days", score.days},
                 }},
                 {"courses", std::move(courses)},
