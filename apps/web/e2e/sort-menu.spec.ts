@@ -2,18 +2,10 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft, SortPresetId } from "../src/lib/store/types";
 import { coursePanelTerm } from "./fixtures/coursePanel";
-import { SORT_MENU_COURSES, sortMenuTerm, sortMenuTops } from "./fixtures/sortMenu";
+import { pickSort, SORT_LABELS as LABELS, SORT_MENU_COURSES, sortControl, sortList, sortMenuTerm, sortMenuTops, sortOption } from "./fixtures/sortMenu";
 
 const screenshotDir = "e2e/screenshots";
 const DRAFT_KEY = "goatplan:draft:v1:2027-C";
-const LABELS: Record<SortPresetId, string> = {
-  bestOverall: "Best overall",
-  fewestEarly: "Fewest early classes",
-  latestStart: "Latest start",
-  earliestFinish: "Earliest finish",
-  fewestDays: "Most days off",
-  fewestGaps: "Most compact",
-};
 
 const designDraft: Draft = {
   courses: ["AE 2320", "AE 2410", "AE 2210"],
@@ -60,8 +52,6 @@ async function openPlanner(page: Page, data: TermFile, draft: Draft) {
 const settled = (page: Page) =>
   expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
 const preferencesRow = (page: Page) => page.getByRole("group", { name: "Preferences", exact: true });
-const sortControl = (page: Page) => preferencesRow(page).getByRole("combobox", { name: "Sort" });
-const sortList = (page: Page) => page.getByRole("listbox", { name: "Sort" });
 const firstBadge = (page: Page) => page.getByRole("list", { name: "This schedule" }).getByRole("listitem").first();
 const storedDraft = (page: Page): Promise<Draft> => page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), DRAFT_KEY);
 const header = (page: Page) => page.locator("header");
@@ -102,7 +92,10 @@ test("picking each order re-ranks the schedules in the engine and goes back to s
   await sortControl(page).click();
   const options = sortList(page).getByRole("option");
   await expect(options).toHaveCount(Object.values(LABELS).length);
-  for (const [index, label] of Object.values(LABELS).entries()) await expect(options.nth(index)).toHaveAccessibleName(label);
+  for (const [index, label] of Object.values(LABELS).entries()) {
+    await expect(options.nth(index)).toHaveAccessibleName(label);
+    await expect(sortOption(page, label)).toHaveCount(1);
+  }
   await expect(sortList(page).getByRole("option", { selected: true })).toHaveAccessibleName("Best overall");
   await page.keyboard.press("Escape");
 
@@ -112,9 +105,7 @@ test("picking each order re-ranks the schedules in the engine and goes back to s
     await page.getByRole("button", { name: "Next schedule" }).click();
     await expect(page.getByText("Schedule 2 of 48", { exact: true })).toBeVisible();
 
-    await sortControl(page).click();
-    await sortList(page).getByRole("option", { name: LABELS[preset], exact: true }).click();
-    await expect(sortList(page)).toBeHidden();
+    await pickSort(page, LABELS[preset]);
     await expect(sortControl(page)).toBeFocused();
 
     await expectTopOf(page, preset);
@@ -172,8 +163,7 @@ test("the order survives a reload and a save-and-open, and a saved plan shows it
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlanner(page, sortMenuTerm(), sortDraft("bestOverall"));
 
-  await sortControl(page).click();
-  await sortList(page).getByRole("option", { name: "Most days off" }).click();
+  await pickSort(page, "Most days off");
   await settled(page);
   await expectTopOf(page, "fewestDays");
 
