@@ -1,7 +1,7 @@
 "use client";
 
 import { selectCurrentSchedule, selectSavedPlan, usePlanner } from "@/lib/store";
-import { count, scoreChips, summaryText } from "./scheduleCopy";
+import { count, scheduleBadges, summaryText } from "./scheduleCopy";
 import { ScoreChips } from "./ScoreChips";
 import { useScheduleItems } from "./useScheduleItems";
 import { useDiagnosis } from "./useDiagnosis";
@@ -14,6 +14,7 @@ export function ScheduleSummary() {
   const courseCount = usePlanner((state) => state.courses.length);
   const response = usePlanner((state) => state.response);
   const solveStatus = usePlanner((state) => state.solveStatus);
+  const sortPreset = usePlanner((state) => state.sortPreset);
   const schedule = usePlanner(selectCurrentSchedule);
   const { classes, untimed, waitlisted } = useScheduleItems();
   const diagnosis = useDiagnosis();
@@ -37,10 +38,12 @@ export function ScheduleSummary() {
   if (!text) return null;
 
   const showChips = termStatus === "ready" && solveStatus === "done" && courseCount > 0 && schedule;
+  const badges = showChips ? scheduleBadges(classes, sortPreset) : [];
+
   return (
     <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
       <span>{text}</span>
-      {showChips && <ScoreChips chips={scoreChips(schedule.score)} />}
+      {badges.length > 0 && <ScoreChips chips={badges} />}
     </div>
   );
 }

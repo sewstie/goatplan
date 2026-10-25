@@ -7,14 +7,14 @@ import { resetPlanner, setPlanner, solved } from "./testing/plannerFixtures";
 afterEach(resetPlanner);
 
 describe("ScheduleSummary", () => {
-  it("counts courses and schedules, then describes the shown schedule in chips", () => {
+  it("counts courses and schedules, then describes the shown schedule in badges", () => {
     setPlanner();
     render(<ScheduleSummary />);
     expect(screen.getByText("2 courses · 3 schedules fit")).toBeInTheDocument();
     const chips = screen.getByRole("list", { name: "This schedule" });
-    expect(chips).toHaveTextContent("5 days on campus");
-    expect(chips).toHaveTextContent("1 h between classes");
-    expect(chips).toHaveTextContent("4 h 10 min of early classes");
+    expect(chips).toHaveTextContent("Starts 9 AM");
+    expect(chips).toHaveTextContent("1 gap");
+    expect(chips).toHaveTextContent("Done by 2:50 PM");
   });
 
   it("says which term is loading", () => {

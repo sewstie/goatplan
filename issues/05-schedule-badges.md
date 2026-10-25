@@ -13,7 +13,7 @@ The badge for the current Sort order comes first. The badges update as the stude
 
 **Blocked by:** 01 (preset IDs), 02 (engine before UI).
 
-**Status:** ready-for-agent
+**Status:** DONE
 
 - [ ] One deep function in the schedule copy module replaces the score-chips function at the same seam. Its input is the shown schedule's meetings (day, start, end) and the current preset ID. Its output is an ordered list of at most 3 badge texts.
 - [ ] Inside the function, out of its interface: the week facts (earliest start, latest end, free weekdays, breaks), the wording and the time format. No exported helper per badge.
