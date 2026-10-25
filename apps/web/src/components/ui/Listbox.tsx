@@ -23,7 +23,7 @@ const triggerClasses: Record<ListboxVariant, string> = {
   field:
     "flex min-h-36.5 w-full items-center justify-between gap-6 rounded-row border border-line bg-surface px-9 py-9 text-left text-10 leading-14-5 text-ink focus-visible:border-choice-line focus-visible:shadow-field-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint",
   menu:
-    "relative inline-flex min-w-146 items-center gap-6 rounded-row bg-surface px-9 py-7.5 text-left text-9 leading-13 text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-not-allowed disabled:text-ink-faint",
+    "relative inline-flex min-w-146 cursor-pointer items-center gap-6 rounded-row bg-surface px-9 py-7.5 text-left text-9 leading-13 text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-not-allowed disabled:text-ink-faint",
 };
 
 export function Listbox({ label, menuLabel, options, value, onChange, variant = "field", className, ...props }: ListboxProps) {
@@ -51,11 +51,14 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
     // List is at least as wide as the trigger, and wide enough for content
     popup.current.style.minWidth = `${anchor.width}px`;
     popup.current.style.width = "max-content";
-    const position = floatingPosition(anchor, popup.current.getBoundingClientRect(), { width: window.innerWidth, height: window.innerHeight }, { gap: 0 });
+    const size = popup.current.getBoundingClientRect();
+    // The menu sits at the end of a row, so its list lines up with the trigger's right edge.
+    const offsetX = variant === "menu" ? anchor.width - size.width : 0;
+    const position = floatingPosition(anchor, size, { width: window.innerWidth, height: window.innerHeight }, { gap: 0, offsetX });
     popup.current.style.left = `${position.left}px`;
     popup.current.style.top = `${position.top}px`;
     popup.current.style.visibility = "visible";
-  }, [open]);
+  }, [open, variant]);
 
   useLayoutEffect(() => {
     if (open) popup.current?.children.item(active)?.scrollIntoView?.({ block: "nearest" });
