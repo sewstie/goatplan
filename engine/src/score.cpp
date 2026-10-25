@@ -15,9 +15,14 @@ namespace goatplan {
             if (start < weights.earlyCutoff) {
                 score.earlyMinutes += weights.earlyCutoff - start;
             }
+            const int end = (span.last + 1) * kSlotMinutes;
+            if (end > weights.lateCutoff) {
+                score.lateMinutes += end - weights.lateCutoff;
+            }
             score.gapMinutes += (span.last - span.first + 1 - span.filled) * kSlotMinutes;
         }
         score.total = score.earlyMinutes * weights.perEarlyMinute +
+                      score.lateMinutes * weights.perLateMinute +
                       score.gapMinutes * weights.perGapMinute +
                       score.days * weights.perDay;
         return score;

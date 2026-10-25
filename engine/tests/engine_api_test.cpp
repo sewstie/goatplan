@@ -167,6 +167,10 @@ TEST(EngineApi, BadFieldsAreNamed) {
         {R"({"version": 1, "courses": ["AE 2320"], "preferences": {"anyOf": {"AE 2320": [7]}}})",
          R"(preferences.anyOf["AE 2320"][0])"},
         {R"({"version": 1, "courses": ["AE 2320"], "sort": {"perDay": 20000}})", "sort.perDay"},
+        {R"({"version": 1, "courses": ["AE 2320"], "sort": {"lateCutoff": 1441}})", "sort.lateCutoff"},
+        {R"({"version": 1, "courses": ["AE 2320"], "sort": {"lateCutoff": -1}})", "sort.lateCutoff"},
+        {R"({"version": 1, "courses": ["AE 2320"], "sort": {"perLateMinute": 10001}})", "sort.perLateMinute"},
+        {R"({"version": 1, "courses": ["AE 2320"], "sort": {"perLateMinute": -1}})", "sort.perLateMinute"},
         {R"({"version": 1, "courses": ["AE 2320"], "limits": {"maxSchedules": -1}})", "limits.maxSchedules"},
         {R"({"version": 1, "courses": ["AE 2320"], "limits": {"stepBudget": 2.5}})", "limits.stepBudget"},
     };
@@ -411,4 +415,44 @@ TEST(EngineApi, MatchesGoldenResponses) {
     expectGolden(engine, "basic", kBoth);
     expectGolden(engine, "impossible", R"({"version": 1, "courses": ["AE 2320", "AE 4310"],
         "preferences": {"startsAfter": 600, "onlyOpen": true}})");
+}
+
+TEST(EngineApi, LateMinutesInResponseWithDefaults) {
+    const json response = call(fixtureEngine(), kBoth);
+    ASSERT_EQ(response["ok"], true) << response.dump();
+    for (const json& schedule : response["schedules"]) {
+        EXPECT_TRUE(schedule["score"].contains("lateMinutes"));
+        EXPECT_EQ(schedule["score"]["lateMinutes"], 0);
+    }
+}
+
+TEST(EngineApi, HeavyLateWeightRanksEarlierEndingFirst) {
+    const std::vector<TestCourse> courses{
+        {"A", {{Monday, 540, 590}, {Monday, 540, 660}}},
+        {"B", {{Tuesday, 540, 590}}},
+    };
+    const Engine engine = engineFor(termJson(courses));
+    const json response = call(engine, R"({"version": 1, "courses": ["A", "B"],
+        "sort": {"earlyCutoff": 0, "perEarlyMinute": 0, "perGapMinute": 0, "perDay": 0,
+                 "lateCutoff": 600, "perLateMinute": 100}})");
+    ASSERT_EQ(response["ok"], true) << response.dump();
+    ASSERT_EQ(response["schedules"].size(), 2u);
+    EXPECT_EQ(response["schedules"][0]["score"]["lateMinutes"], 0);
+    EXPECT_LT(response["schedules"][0]["score"]["total"],
+              response["schedules"][1]["score"]["total"]);
+    EXPECT_GT(response["schedules"][1]["score"]["lateMinutes"], 0);
+}
+
+TEST(EngineApi, LateMinutesCountedPerDay) {
+    const std::vector<TestCourse> courses{
+        {"A", {{Monday | Wednesday, 900, 960}}},
+    };
+    const Engine engine = engineFor(termJson(courses));
+    const json response = call(engine, R"({"version": 1, "courses": ["A"],
+        "sort": {"earlyCutoff": 0, "perEarlyMinute": 0, "perGapMinute": 0, "perDay": 0,
+                 "lateCutoff": 900, "perLateMinute": 1}})");
+    ASSERT_EQ(response["ok"], true) << response.dump();
+    ASSERT_EQ(response["schedules"].size(), 1u);
+    EXPECT_EQ(response["schedules"][0]["score"]["lateMinutes"], 120);
+    EXPECT_EQ(response["schedules"][0]["score"]["total"], 120);
 }

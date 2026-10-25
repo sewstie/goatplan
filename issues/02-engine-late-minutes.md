@@ -6,7 +6,7 @@
 
 **Blocked by:** None (can start immediately). Every UI ticket waits for this one.
 
-**Status:** ready-for-agent
+**Status:** DONE
 
 - [ ] The engine API doc changes first:
   - `sort.lateCutoff` (0 to 1440, default 1440) and `sort.perLateMinute` (0 to 10000, default 0) go in the request table;
