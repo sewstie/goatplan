@@ -8,7 +8,8 @@ copy it, so change this page first and the code second.
 This is version 1, and it's frozen. Nothing in it gets renamed, removed or
 changes meaning. A change like that becomes version 2.
 
-`preferences.anyOf`, the `notAnyOf` diagnosis count and the `clearAnyOf` fix
+`preferences.anyOf`, the `notAnyOf` diagnosis count, the `clearAnyOf` fix,
+`sort.lateCutoff`, `sort.perLateMinute` and `score.lateMinutes`
 are additive fields in version 1. Existing fields and requests keep their meaning.
 
 ```cpp
@@ -60,7 +61,7 @@ term that was loaded before, if any, stays loaded.
     "locked": { "PH 1120": ["PH 1120-BL01"] },
     "anyOf": { "PH 1120": ["PH 1120-BX03", "PH 1120-BX07"] }
   },
-  "sort": { "earlyCutoff": 600, "perEarlyMinute": 3, "perGapMinute": 1, "perDay": 60 },
+  "sort": { "earlyCutoff": 600, "perEarlyMinute": 3, "lateCutoff": 1020, "perLateMinute": 5, "perGapMinute": 1, "perDay": 60 },
   "limits": { "maxSchedules": 50, "stepBudget": 5000000 }
 }
 ```
@@ -80,6 +81,8 @@ to `null`, to get the default. Fields the engine doesn't know are ignored.
 | `sort.earlyCutoff`        | 0 to 1440                  | `600`     | Class time before this counts as early. |
 | `sort.perEarlyMinute`     | 0 to 10000                 | `3`       | Cost of each early minute. |
 | `sort.perGapMinute`       | 0 to 10000                 | `1`       | Cost of each minute between classes. |
+| `sort.lateCutoff`         | 0 to 1440                  | `1440`    | Class time after this counts as late. |
+| `sort.perLateMinute`      | 0 to 10000                 | `0`       | Cost of each late minute. |
 | `sort.perDay`             | 0 to 10000                 | `60`      | Cost of each day on campus. |
 | `limits.maxSchedules`     | whole number               | `200`     | How many schedules to send back. At most 500. |
 | `limits.stepBudget`       | whole number               | `5000000` | How long the search may run. At most 50,000,000. |
@@ -97,7 +100,7 @@ all locked sections and at least one section from the nonempty `anyOf` list.
   "total": 1234, "patterns": 87, "capped": false, "steps": 4211, "elapsedMs": 3.2,
   "schedules": [
     {
-      "score": { "total": 240, "earlyMinutes": 60, "gapMinutes": 120, "days": 4 },
+      "score": { "total": 240, "earlyMinutes": 60, "gapMinutes": 120, "lateMinutes": 0, "days": 4 },
       "courses": [
         {
           "code": "PH 1120",
