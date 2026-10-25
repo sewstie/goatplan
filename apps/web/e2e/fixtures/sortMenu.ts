@@ -70,5 +70,5 @@ export const sortMenuTops: Record<SortPresetId, { sections: [string, string, str
   latestStart: { sections: ["L01", "L04", "L04"], firstBadge: "Starts 2 PM" },
   earliestFinish: { sections: ["L02", "L02", "L02"], firstBadge: "Done by 12:50 PM" },
   fewestDays: { sections: ["L01", "L02", "L02"], firstBadge: "4 days off" },
-  fewestGaps: { sections: ["L04", "L02", "L02"], firstBadge: "1 gap" },
+  fewestGaps: { sections: ["L04", "L02", "L02"], firstBadge: "1 h free between classes" },
 };
