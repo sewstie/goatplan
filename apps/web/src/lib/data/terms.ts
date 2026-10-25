@@ -36,3 +36,13 @@ export function pickDefaultTerm(
     null
   );
 }
+
+/**
+ * When a term's data was made (its `generatedAt`), as "Oct 25, 2026" in the student's time zone, or
+ * in `timeZone` when given. Null when the timestamp can't be read, so nothing is shown.
+ */
+export function formatDataDate(generatedAt: string, timeZone?: string): string | null {
+  const date = new Date(generatedAt);
+  if (Number.isNaN(date.getTime())) return null;
+  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone }).format(date);
+}
