@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-10-24T13:13:23Z",
+  "generatedAt": "2026-10-25T13:39:23Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -1435,7 +1435,7 @@
       "level": "Graduate",
       "description": "Professional practices in engineering and architecture. Legal issues of business organizations, contracts and liability; business practice of staffing, fee structures, accounts receivable, negotiation and dispute resolution, and loss prevention; marketing and proposal development; project management involving organizing and staffing, budgeting, scheduling, performance and monitoring, and presentation of deliverables; professionalism, ethics and responsibilities.",
       "sections": [
-        {"id":"CE 501-S01","code":"S01","type":"lecture","status":"open","enrolled":22,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Jessica Rosewitz"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
+        {"id":"CE 501-S01","code":"S01","type":"lecture","status":"open","enrolled":23,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Jessica Rosewitz"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
         {"id":"CE 501-S02","code":"S02","type":"lecture","status":"open","enrolled":9,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Jessica Rosewitz"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1020,"end":1190,"location":"Kaven Hall 116"}]}
       ],
       "options": [
@@ -2330,7 +2330,7 @@
       "level": "Graduate",
       "description": "This course introduces students to a methodology and specific design techniques for team-based development of a software system. Against the back-drop of the software engineering life-cycle, this course focuses on the object-oriented paradigm and its supporting processes and tools. Students will be exposed to industrial-accepted standards and tools, such as requirements elicitation, specification, modeling notations, design patterns, software architecture, integrated development environments and testing frameworks. Students will be expected to work together in teams in the complete specification, implementation and testing of a software application. Prerequisites: knowledge of a recursive high-level language and data structures. An undergraduate course in software engineering is desirable.",
       "sections": [
-        {"id":"CS 509-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":8,"capacity":20},"instructors":["Larz White"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 509-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":7,"capacity":20},"instructors":["Larz White"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 509-S01"]
@@ -2375,7 +2375,7 @@
       "description": "This course gives a broad survey of artificial intelligence. The course will cover methods from search, probabilistic reasoning, and learning, among other topics. Selected topics involving the applications of these tools are investigated. Such topics might include natural language understanding, scene understanding, game playing, and planning. (Prerequisites: familiarity with data structures and a high-level programming language.)",
       "sections": [
         {"id":"CS 534-S01","code":"S01","type":"lecture","status":"open","enrolled":8,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Dachun Sun"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
-        {"id":"CS 534-S03","code":"S03","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Chun-Kit Ngan"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 534-S03","code":"S03","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Chun-Kit Ngan"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 534-S01"],
@@ -3147,9 +3147,9 @@
       "level": "Undergraduate",
       "description": "Cat. I This course continues the embedded systems sequence by expanding on the topics of real-time software and embedded microprocessor system architecture. The software portion of this course focuses on solving real-world problems that require an embedded system to meet strict real-time constraints with limited resources. On the hardware side, this course reviews and expands upon all the major components of an embedded microprocessor system, including the CPU, buses, memory devices and peripheral interfaces. New IO standards and devices are introduced and emphasized as needed to meet system design, IO and performance goals in both the lecture and laboratory portion of the course. Topics: Cross-compiled software development, embedded system debugging, multitasking, real-time scheduling, inter-task communication, software design for deterministic execution time, software performance analysis and optimization, device drivers, CPU architecture and organization, bus interface, memory management unit, memory devices, memory controllers, peripheral interfaces, interrupts and interrupt controllers, direct memory access. Laboratory exercises: Programming real-time applications on an embedded platform running a real-time operating system (RTOS), configuring hardware interfaces to memory and peripherals, bus timing analysis, device drivers. Recommended background: ECE 2029 and ECE 2049.",
       "sections": [
-        {"id":"ECE 3849-DL01","code":"DL01","type":"lecture","status":"open","enrolled":35,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Xinming Huang"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Unity Hall 420"}]},
+        {"id":"ECE 3849-DL01","code":"DL01","type":"lecture","status":"open","enrolled":36,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Xinming Huang"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Unity Hall 420"}]},
         {"id":"ECE 3849-DX01","code":"DX01","type":"lab","status":"open","enrolled":11,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Xinming Huang"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]},
-        {"id":"ECE 3849-DX02","code":"DX02","type":"lab","status":"open","enrolled":24,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Xinming Huang"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":770,"location":"Atwater Kent 317 ECE Lab"}]}
+        {"id":"ECE 3849-DX02","code":"DX02","type":"lab","status":"closed","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Xinming Huang"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":770,"location":"Atwater Kent 317 ECE Lab"}]}
       ],
       "options": [
         ["ECE 3849-DL01","ECE 3849-DX01"],
@@ -5191,15 +5191,15 @@
       "description": "Cat. I This course is designed to introduce the student to data analytic and appliedstatistical methods commonly used in industrial and scientific applications aswell as in course and project work at WPI. Emphasis will be on the practicalaspects of statistics with students analyzing real data sets on an interactivecomputer package.Topics covered include analytic and graphical representation of data,exploratory data analysis, basic issues in the design and conduct of experimentaland observational studies, the central limit theorem, one and two sample pointand interval estimation and tests of hypotheses.Recommended background: MA 1022.",
       "sections": [
         {"id":"MA 2611-DL01","code":"DL01","type":"lecture","status":"open","enrolled":10,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Balgobin Nandram"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
-        {"id":"MA 2611-DL02","code":"DL02","type":"lecture","status":"open","enrolled":12,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Zheyang Wu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Unity Hall 520"}]},
-        {"id":"MA 2611-DL03","code":"DL03","type":"lecture","status":"open","enrolled":45,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Zheyang Wu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
+        {"id":"MA 2611-DL02","code":"DL02","type":"lecture","status":"open","enrolled":13,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Zheyang Wu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Unity Hall 520"}]},
+        {"id":"MA 2611-DL03","code":"DL03","type":"lecture","status":"open","enrolled":44,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Zheyang Wu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
         {"id":"MA 2611-DL04","code":"DL04","type":"lecture","status":"open","enrolled":5,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Charlotte Fowler"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Atwater Kent 233"}]},
         {"id":"MA 2611-DX01","code":"DX01","type":"lab","status":"open","enrolled":1,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Balgobin Nandram"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":480,"end":530,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 2611-DX02","code":"DX02","type":"lab","status":"open","enrolled":9,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Balgobin Nandram"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":540,"end":590,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 2611-DX03","code":"DX03","type":"lab","status":"open","enrolled":6,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Zheyang Wu"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":600,"end":650,"location":"Stratton Hall 116 Computer Lab"}]},
-        {"id":"MA 2611-DX04","code":"DX04","type":"lab","status":"open","enrolled":6,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Zheyang Wu"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":660,"end":710,"location":"Stratton Hall 116 Computer Lab"}]},
+        {"id":"MA 2611-DX04","code":"DX04","type":"lab","status":"open","enrolled":7,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Zheyang Wu"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":660,"end":710,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 2611-DX09","code":"DX09","type":"lab","status":"open","enrolled":19,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Zheyang Wu"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":840,"end":890,"location":"Stratton Hall 116 Computer Lab"}]},
-        {"id":"MA 2611-DX10","code":"DX10","type":"lab","status":"open","enrolled":26,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Zheyang Wu"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":780,"end":830,"location":"Stratton Hall 116 Computer Lab"}]},
+        {"id":"MA 2611-DX10","code":"DX10","type":"lab","status":"open","enrolled":25,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Zheyang Wu"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":780,"end":830,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 2611-DX11","code":"DX11","type":"lab","status":"open","enrolled":5,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Charlotte Fowler"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Stratton Hall 116 Computer Lab"}]}
       ],
       "options": [
@@ -5744,7 +5744,7 @@
       "level": "Undergraduate",
       "description": "Cat. I Fundamental relationships between the structure and properties of engineering materials are studied. Principles of diffusion and phase transformation are applied to the strengthening of commercial alloy systems. Role of crystal lattice defects on material properties and fracture are presented. Strongly recommended as a senior-graduate level course for students interested in pursuing a graduate program in materials or materials engineering at WPI, or other schools. Recommended background: materials (ES 2001, ME 2820).",
       "sections": [
-        {"id":"ME 4840-D01","code":"D01","type":"lecture","status":"open","enrolled":6,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Makhlouf Makhlouf"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Washburn 323"}]}
+        {"id":"ME 4840-D01","code":"D01","type":"lecture","status":"open","enrolled":5,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Makhlouf Makhlouf"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Washburn 323"}]}
       ],
       "options": [
         ["ME 4840-D01"]
@@ -6101,7 +6101,7 @@
       "level": "Graduate",
       "description": "This course presents the specific concepts, techniques and tools for managing projects effectively. The role of the project manager as team leader is examined, together with important techniques for controlling cost, schedules and performance parameters. Lectures, case studies and projects are combined to develop skills needed by project managers in today’s environment.",
       "sections": [
-        {"id":"MIS 576-S01","code":"S01","type":"lecture","status":"open","enrolled":59,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Paul Delvy"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"MIS 576-S01","code":"S01","type":"lecture","status":"closed","enrolled":60,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Paul Delvy"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["MIS 576-S01"]
@@ -7458,10 +7458,10 @@
       "level": "Undergraduate",
       "description": "RBE 2002: Unified Robotics II: Sensing and Perception in Robotics (Units: 1/3, Cat. I) This course focuses on how robot control and decision processes are informed through sensors. The course covers the operation and integration of simple and complex sensors, including signal transduction, interface circuitry, and physical integration. Themes include how functionality guides sensor selection; how decision-making is affected by uncertainty, and how performance can be improved through signal conditioning, digital filtering, calibration, parameter selection, and sensor fusion. The course will address how sensor inputs can be used to generate representations of the environment, and how a robot uses information to achieve goals within its environment. Laboratory sessions consist of hands-on exercises and team projects where students specify and test a variety of sensors to accomplish specific tasks. Recommended background: Knowledge of Embedded Systems, such as covered in ECE 2049.",
       "sections": [
-        {"id":"RBE 2002-DL01","code":"DL01","type":"lecture","status":"open","enrolled":90,"capacity":102,"waitlist":{"taken":0,"capacity":20},"instructors":["Greg Lewin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Olin Hall 107"}]},
+        {"id":"RBE 2002-DL01","code":"DL01","type":"lecture","status":"open","enrolled":91,"capacity":102,"waitlist":{"taken":0,"capacity":20},"instructors":["Greg Lewin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Olin Hall 107"}]},
         {"id":"RBE 2002-DX01","code":"DX01","type":"lab","status":"open","enrolled":33,"capacity":34,"waitlist":{"taken":0,"capacity":0},"instructors":["Greg Lewin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":890,"location":"Innovation Studio 103 Robotics Lab"}]},
         {"id":"RBE 2002-DX02","code":"DX02","type":"lab","status":"open","enrolled":33,"capacity":34,"waitlist":{"taken":0,"capacity":0},"instructors":["Greg Lewin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Innovation Studio 103 Robotics Lab"}]},
-        {"id":"RBE 2002-DX03","code":"DX03","type":"lab","status":"open","enrolled":24,"capacity":34,"waitlist":{"taken":0,"capacity":0},"instructors":["Greg Lewin"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":480,"end":590,"location":"Innovation Studio 103 Robotics Lab"}]}
+        {"id":"RBE 2002-DX03","code":"DX03","type":"lab","status":"open","enrolled":25,"capacity":34,"waitlist":{"taken":0,"capacity":0},"instructors":["Greg Lewin"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":480,"end":590,"location":"Innovation Studio 103 Robotics Lab"}]}
       ],
       "options": [
         ["RBE 2002-DL01","RBE 2002-DX01"],
@@ -7963,7 +7963,7 @@
       "level": "Graduate",
       "description": "Systems Thinking provides an arsenal of tools that enable program managers and systems engineers to better identify, understand, and control systems, and to improve their performance. In this course, we will study system identification and delineation, causal loops and feedback, system leverage points, delays and oscillations, mental models and unintended consequences, emergent properties, patterns, events, and self- organization, and use these tools to improve the performance of engineering, biological, business, and complex social systems. We will explore great system failures, how they might have been avoided, and how we can learn from them in developing and participating in current systems. Finally, we will learn how systems thinking explains the conflicting behavior of individuals, departments, businesses, and countries.",
       "sections": [
-        {"id":"SYS 540-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Fred Robinson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"SYS 540-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Fred Robinson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["SYS 540-S01"]
@@ -8509,7 +8509,7 @@
         {"id":"WPE 1611-D02","code":"D02","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":1,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1611-D03","code":"D03","type":"workshop","status":"open","enrolled":13,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Diana Fiorentino"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":830,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1611-D04","code":"D04","type":"workshop","status":"open","enrolled":13,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Robin Benoit"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":890,"location":"Daniels Hall 102E CWB Programming Room"}]},
-        {"id":"WPE 1611-D05","code":"D05","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":0,"capacity":5},"instructors":["Shavaun Cloran"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]}
+        {"id":"WPE 1611-D05","code":"D05","type":"workshop","status":"open","enrolled":14,"capacity":15,"waitlist":{"taken":0,"capacity":5},"instructors":["Shavaun Cloran"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]}
       ],
       "options": [
         ["WPE 1611-D01"],

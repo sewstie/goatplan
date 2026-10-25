@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05"},
-  "generatedAt": "2026-10-24T13:13:23Z",
+  "generatedAt": "2026-10-25T13:39:23Z",
   "courses": [
     {
       "code": "AB 1533",
@@ -534,7 +534,7 @@
       "level": "Undergraduate",
       "description": "BB 2550 Cell Biology (Cat. I; 1/3 unit) The goal of this course is to help students to develop a working understanding of the unifying concepts that define cell structure and function including replication, metabolism, regulation, communication, and transport. Applications in therapeutics, molecular medicine, and genetic engineering will be introduced. Classic and current research examples will provide practice in hypothesis generation and testing as well as making clear the importance of a working knowledge of cell biology to support advances in biotechnology and medicine. The course serves as the foundation of all fields of modern biology and is recommended for all BBT and other life science majors. Recommended background: Foundational knowledge of cell and molecular biotechnology (BB 1101 or equivalent).",
       "sections": [
-        {"id":"BB 2550-C01","code":"C01","type":"lecture","status":"open","enrolled":13,"capacity":82,"waitlist":{"taken":0,"capacity":20},"instructors":["Jill Rulfs"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":900,"end":950,"location":"Unity Hall 400"}]}
+        {"id":"BB 2550-C01","code":"C01","type":"lecture","status":"open","enrolled":12,"capacity":82,"waitlist":{"taken":0,"capacity":20},"instructors":["Jill Rulfs"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":900,"end":950,"location":"Unity Hall 400"}]}
       ],
       "options": [
         ["BB 2550-C01"]
@@ -670,7 +670,7 @@
       "level": "Undergraduate",
       "description": "Cat.II Do we yet have the technology to engineer life? Can we control gene expression to create organisms that function in useful ways? Do we understand the tenets of genetic regulation as well as we think we do? These important questions and more are investigated by the emerging field of Synthetic Biology. In this course, students will explore this exciting new realm of biology through in-depth analysis and discussion of primary literature. Topics to be covered include the design and construction of synthetic gene circuits, synthesis of new genes and genomes, logic gate regulation of gene expression, and the latest applications of synthetic biology to advances in medicine, information processing, and the environment. Recommended Background: Students should have a strong foundational knowledge of cell biology, molecular biology, and genetics, as would be obtained from BB2550, BB2920, and BB3950. This course will be offered in 2020-21, and in alternating years thereafter.",
       "sections": [
-        {"id":"BB 4260-C01","code":"C01","type":"lecture","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Natalie Farny"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Stratton Hall 207"}]}
+        {"id":"BB 4260-C01","code":"C01","type":"lecture","status":"open","enrolled":17,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Natalie Farny"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Stratton Hall 207"}]}
       ],
       "options": [
         ["BB 4260-C01"]
@@ -727,7 +727,7 @@
       "level": "Graduate",
       "description": "BB 526 Synthetic Biology Do we yet have the technology to engineer life? Can we control gene expression to create organisms that function in useful ways? Do we understand the tenets of genetic regulation as well as we think we do? These important questions and more are investigated by the emerging field of Synthetic Biology. In this course, students will explore this exciting new realm of biology through in-depth analysis and discussion of primary literature. Topics to be covered include the design and construction of synthetic gene circuits, synthesis of new genes and genomes, logic gate regulation of gene expression, and the latest applications of synthetic biology to advances in medicine, information processing, and the environment. Credits 2",
       "sections": [
-        {"id":"BB 526-C01","code":"C01","type":"lecture","status":"open","enrolled":16,"capacity":35,"waitlist":{"taken":0,"capacity":5},"instructors":["Natalie Farny"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Stratton Hall 207"}]}
+        {"id":"BB 526-C01","code":"C01","type":"lecture","status":"open","enrolled":17,"capacity":35,"waitlist":{"taken":0,"capacity":5},"instructors":["Natalie Farny"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Stratton Hall 207"}]}
       ],
       "options": [
         ["BB 526-C01"]
@@ -1442,7 +1442,7 @@
       "level": "Graduate",
       "description": "Professional practices in engineering and architecture. Legal issues of business organizations, contracts and liability; business practice of staffing, fee structures, accounts receivable, negotiation and dispute resolution, and loss prevention; marketing and proposal development; project management involving organizing and staffing, budgeting, scheduling, performance and monitoring, and presentation of deliverables; professionalism, ethics and responsibilities.",
       "sections": [
-        {"id":"CE 501-S01","code":"S01","type":"lecture","status":"open","enrolled":22,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Jessica Rosewitz"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
+        {"id":"CE 501-S01","code":"S01","type":"lecture","status":"open","enrolled":23,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Jessica Rosewitz"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
         {"id":"CE 501-S02","code":"S02","type":"lecture","status":"open","enrolled":9,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Jessica Rosewitz"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon"],"start":1020,"end":1190,"location":"Kaven Hall 116"}]}
       ],
       "options": [
@@ -2044,7 +2044,7 @@
       "description": "Cat. I This course makes the student aware of the social, moral, ethical, and philosophical impact of computers and computer-based systems on society, both now and in the future. Topics include major computer-based applications and their impact, human machine relationships, and the major problems of controlling the use of computers. Students will be expected to contribute to classroom discussions and to complete a number of significant writing assignments. This course is recommended for juniors and seniors. The Social Science Requirement cannot be satisfied by this course. Undergraduate credit may not be earned both for this course and for CS 505. Recommended background: a general knowledge of computers and computer systems",
       "sections": [
         {"id":"CS 3043-C01","code":"C01","type":"lecture","status":"open","enrolled":30,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Crystal Brown"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Innovation Studio 203 Active Learning Classroom South"}]},
-        {"id":"CS 3043-C02","code":"C02","type":"lecture","status":"open","enrolled":18,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 411"}]},
+        {"id":"CS 3043-C02","code":"C02","type":"lecture","status":"open","enrolled":19,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 411"}]},
         {"id":"CS 3043-C03","code":"C03","type":"lecture","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Olin Hall 109"}]}
       ],
       "options": [
@@ -2373,7 +2373,7 @@
       "level": "Graduate",
       "description": "This course introduces students to a methodology and specific design techniques for team-based development of a software system. Against the back-drop of the software engineering life-cycle, this course focuses on the object-oriented paradigm and its supporting processes and tools. Students will be exposed to industrial-accepted standards and tools, such as requirements elicitation, specification, modeling notations, design patterns, software architecture, integrated development environments and testing frameworks. Students will be expected to work together in teams in the complete specification, implementation and testing of a software application. Prerequisites: knowledge of a recursive high-level language and data structures. An undergraduate course in software engineering is desirable.",
       "sections": [
-        {"id":"CS 509-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":8,"capacity":20},"instructors":["Larz White"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 509-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":7,"capacity":20},"instructors":["Larz White"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 509-S01"]
@@ -2418,7 +2418,7 @@
       "description": "This course gives a broad survey of artificial intelligence. The course will cover methods from search, probabilistic reasoning, and learning, among other topics. Selected topics involving the applications of these tools are investigated. Such topics might include natural language understanding, scene understanding, game playing, and planning. (Prerequisites: familiarity with data structures and a high-level programming language.)",
       "sections": [
         {"id":"CS 534-S01","code":"S01","type":"lecture","status":"open","enrolled":8,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Dachun Sun"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
-        {"id":"CS 534-S03","code":"S03","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Chun-Kit Ngan"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 534-S03","code":"S03","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Chun-Kit Ngan"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 534-S01"],
@@ -5679,7 +5679,7 @@
       "description": "Cat. I This course is designed to develop experimental skills in engineering measurement methods, based on electronic instrumentation and computerbased data acquisition systems, such as the Raspberry Pi (a primarily digital microprocessor) and an Arduino (a primarily analog microcontroller). The lectures are concerned with the engineering design requirements as well as the principles of instrumentation, whereas the laboratory modules afford the student an opportunity to use these devices in actual experiments. Lecture topics include: discussions of standards, measurement and sensing devices, experiment planning, data acquisition, analysis of experimental data, and report writing. Laboratory experiments address mechanical (force/torque/strain measurements, motion/vibration measurements), energy (heat transfer, temperature, flow measurements), materials measurements (materials processing, measurement of strain and position in mechanical testing of materials), and instrumentation. The course culminates with an open-ended project of the students choosing. This open-ended project will illuminate the skills gained by the student to utilize multiple sensors and equipment to monitor and/or control physical situations. Recommended background: introductory heat transfer (ES3003 or equivalent), introductory stress and dynamic mechanics (ES 2502 & ES 2503 or equivalents), introductory electrical and computer engineering (ES2010 or equivalent) and introductory materials (such as ES 2001 or equivalent).",
       "sections": [
         {"id":"ME 3902-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":9,"capacity":10},"instructors":["Mehul Bhatia"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":770,"location":"Higgins Labs 031 ME Computer Lab"}]},
-        {"id":"ME 3902-C02","code":"C02","type":"lecture","status":"open","enrolled":28,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Mehul Bhatia"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":780,"end":950,"location":"Higgins Labs 031 ME Computer Lab"}]}
+        {"id":"ME 3902-C02","code":"C02","type":"lecture","status":"open","enrolled":27,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Mehul Bhatia"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":780,"end":950,"location":"Higgins Labs 031 ME Computer Lab"}]}
       ],
       "options": [
         ["ME 3902-C01"],
@@ -5709,7 +5709,7 @@
       "level": "Undergraduate",
       "description": "ME 4323. Fundamentals of Vehicle Drivetrain Systems. Cat I This product-oriented course focuses on engineering fundamentals of ground vehicle drivetrain systems with application to automobiles, commercial and off-road vehicles as well as autonomous and electrically driven ground vehicles. The course focuses on “theory and practice” aspects of engineering design of vehicle transmissions, transfer cases, open and limited slip differentials, etc. A term project integrates design principles with materials selection to improve a drivetrain component for a given vehicle. Project steps include: problem definition and analysis, development of design specifications, development and analysis of alternative designs, conceptual design and material analysis, and a CAE design. Recommended Background: materials science (ES 2001), stress analysis (ES 2502), dynamics (ES 2503) or equivalents.",
       "sections": [
-        {"id":"ME 4323-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":9,"capacity":10},"instructors":["Vladimir Vantsevich"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Unity Hall 405"}]}
+        {"id":"ME 4323-C01","code":"C01","type":"lecture","status":"closed","enrolled":25,"capacity":25,"waitlist":{"taken":10,"capacity":10},"instructors":["Vladimir Vantsevich"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Unity Hall 405"}]}
       ],
       "options": [
         ["ME 4323-C01"]
@@ -5782,7 +5782,7 @@
       "level": "Graduate",
       "description": "(2 credits) Overview of stability concepts and examination of various methods for assessing stability such as linearization and Lyapunov methods. Introduction to various design methods based on linearization, sliding modes, adaptive control, and feedback linearization. Demonstration and performance analysis on engineering systems such as flexible robotic manipulators, mobile robots, spacecraft attitude control and aircraft control systems. Control synthesis and analysis is performed using Matlab®/Simulink®. (Prerequisites: Familiarity with ordinary differential equations, introductory control theory at the undergraduate level, fundamentals of linear algebra. Familiarity with Matlab® is strongly recommended.)",
       "sections": [
-        {"id":"ME 5221-C01","code":"C01","type":"lecture","status":"open","enrolled":10,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Mustapha Fofana"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Washburn 229"}]}
+        {"id":"ME 5221-C01","code":"C01","type":"lecture","status":"open","enrolled":9,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Mustapha Fofana"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Washburn 229"}]}
       ],
       "options": [
         ["ME 5221-C01"]
@@ -5938,7 +5938,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"ME 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":3,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"ME 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":4,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["ME 5420-C01"]
@@ -6067,7 +6067,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"MFE 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":3,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"MFE 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":4,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MFE 5420-C01"]
@@ -6207,7 +6207,7 @@
       "level": "Graduate",
       "description": "This course presents the specific concepts, techniques and tools for managing projects effectively. The role of the project manager as team leader is examined, together with important techniques for controlling cost, schedules and performance parameters. Lectures, case studies and projects are combined to develop skills needed by project managers in today’s environment.",
       "sections": [
-        {"id":"MIS 576-S01","code":"S01","type":"lecture","status":"open","enrolled":59,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Paul Delvy"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"MIS 576-S01","code":"S01","type":"lecture","status":"closed","enrolled":60,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Paul Delvy"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["MIS 576-S01"]
@@ -6427,7 +6427,7 @@
       "level": "Graduate",
       "description": "(2 credits) Thermodynamics of solutions—phase equilibria— Ellingham diagrams, binary and ternary phase diagrams, reactions between gasses and condensed phases, reactions within condensed phases, thermodynamics of surfaces, defects and electrochemistry. Applications to materials processing and degradation will be presented and discussed. (Prerequisites: ES 3001, ES 2001) Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 594T).",
       "sections": [
-        {"id":"MTE 526-C01","code":"C01","type":"lecture","status":"open","enrolled":9,"capacity":35,"waitlist":{"taken":0,"capacity":5},"instructors":["Yu Zhong"],"delivery":"online-async","meetings":[]}
+        {"id":"MTE 526-C01","code":"C01","type":"lecture","status":"open","enrolled":10,"capacity":35,"waitlist":{"taken":0,"capacity":5},"instructors":["Yu Zhong"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MTE 526-C01"]
@@ -6441,7 +6441,7 @@
       "level": "Graduate",
       "description": "(2 credits) This course discusses the fundamentals of crystallography and X-ray diffraction (XRD) of metals, ceramics and polymers. It introduces graduate students to the main issues and techniques of diffraction analysis as they relate to materials. The techniques for the experimental phase identification and determination of phase fraction via XRD will be reviewed. Topics covered include: basic X-ray physics, basic crystallography, fundamentals of XRD, XRD instrumentation and analysis techniques. (Prerequisites: ES 2001 or equivalent, and senior or graduate standing in engineering or science.) Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 594C).",
       "sections": [
-        {"id":"MTE 532-C01","code":"C01","type":"lecture","status":"open","enrolled":1,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Jianyu Liang"],"delivery":"online-async","meetings":[]},
+        {"id":"MTE 532-C01","code":"C01","type":"lecture","status":"open","enrolled":2,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Jianyu Liang"],"delivery":"online-async","meetings":[]},
         {"id":"MTE 532-C02","code":"C02","type":"lecture","status":"open","enrolled":8,"capacity":35,"waitlist":{"taken":0,"capacity":5},"instructors":["Jianyu Liang"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Higgins Labs 154"}]}
       ],
       "options": [
@@ -6471,7 +6471,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"MTE 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":3,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"MTE 5420-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":12,"capacity":12,"waitlist":{"taken":4,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MTE 5420-C01"]
@@ -8060,7 +8060,7 @@
       "description": "Cat. I This course makes the student aware of the social, moral, ethical, and philosophical impact of computers and computer-based systems on society, both now and in the future. Topics include major computer-based applications and their impact, human machine relationships, and the major problems of controlling the use of computers. Students will be expected to contribute to classroom discussions and to complete a number of significant writing assignments. This course is recommended for juniors and seniors. The Social Science Requirement cannot be satisfied by this course. Undergraduate credit may not be earned both for this course and for CS 505. Recommended background: a general knowledge of computers and computer systems",
       "sections": [
         {"id":"SS 3043-C01","code":"C01","type":"lecture","status":"open","enrolled":30,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Crystal Brown"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Innovation Studio 203 Active Learning Classroom South"}]},
-        {"id":"SS 3043-C02","code":"C02","type":"lecture","status":"open","enrolled":18,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 411"}]},
+        {"id":"SS 3043-C02","code":"C02","type":"lecture","status":"open","enrolled":19,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 411"}]},
         {"id":"SS 3043-C03","code":"C03","type":"lecture","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Olin Hall 109"}]}
       ],
       "options": [
@@ -8147,7 +8147,7 @@
       "level": "Graduate",
       "description": "Systems Thinking provides an arsenal of tools that enable program managers and systems engineers to better identify, understand, and control systems, and to improve their performance. In this course, we will study system identification and delineation, causal loops and feedback, system leverage points, delays and oscillations, mental models and unintended consequences, emergent properties, patterns, events, and self- organization, and use these tools to improve the performance of engineering, biological, business, and complex social systems. We will explore great system failures, how they might have been avoided, and how we can learn from them in developing and participating in current systems. Finally, we will learn how systems thinking explains the conflicting behavior of individuals, departments, businesses, and countries.",
       "sections": [
-        {"id":"SYS 540-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Fred Robinson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"SYS 540-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Fred Robinson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["SYS 540-S01"]
