@@ -40,6 +40,7 @@ namespace goatplan {
             bool empty() const;
             std::size_t slotCount() const;
             DaySpan daySpan(int dayIndex) const;
+            int breakSlots(int dayIndex, int longerThan) const;
             auto operator<=>(const WeekMask&) const = default;
         private:
             std::array<std::uint64_t, kWordsPerWeek> words_{};

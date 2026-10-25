@@ -2,12 +2,32 @@
 
 #include <cstddef>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
 #include "goatplan/model.hpp"
+#include "goatplan/score.hpp"
 
 namespace goatplan::test {
+
+inline const std::vector<SortPrimary> kEveryPrimary{
+    SortPrimary::None, SortPrimary::EarlyMinutes, SortPrimary::FirstStart,
+    SortPrimary::LastEnd, SortPrimary::Days, SortPrimary::FreeMinutes};
+
+using RankKey = std::tuple<int, int, int, std::vector<std::size_t>>;
+
+inline RankKey rankKey(const Score& score, SortPrimary primary, const std::vector<std::size_t>& picks) {
+    switch (primary) {
+        case SortPrimary::EarlyMinutes: return {score.earlyMinutes, 0, score.total, picks};
+        case SortPrimary::FirstStart: return {-score.firstStart, -score.averageStart, score.total, picks};
+        case SortPrimary::LastEnd: return {score.lastEnd, score.averageEnd, score.total, picks};
+        case SortPrimary::Days: return {score.days, 0, score.total, picks};
+        case SortPrimary::FreeMinutes: return {score.freeMinutes, 0, score.total, picks};
+        case SortPrimary::None: break;
+    }
+    return {0, 0, score.total, picks};
+}
 
 struct TestSection {
     DayMask days = Monday;
