@@ -1,6 +1,8 @@
 # Dependencies
 node_modules/
 .agents
+.kiro
+
 
 # Next.js
 .next/
@@ -31,6 +33,10 @@ data/raw/*
 .cache/
 .DS_Store
 Thumbs.db
+AGENTS.md
+CLAUDE
+CLAUDE.local.md
+ralph
 
 # Logs
 npm-debug.log*
