@@ -2,7 +2,7 @@ import type { TermFile, TermSummary } from "@/lib/data/types";
 import type { BlockedTime, Fix, SolveResponse } from "@/lib/engine/types";
 import type { SavedPlan } from "@/lib/plans/types";
 
-export type SortPresetId = "fewestEarly" | "fewestGaps" | "fewestDays";
+export type SortPresetId = "bestOverall" | "fewestEarly" | "latestStart" | "earliestFinish" | "fewestDays" | "fewestGaps";
 
 /** A blocked time with the name the student gave it, like "Work". The name never goes to the engine. */
 export interface PlanBlockedTime extends BlockedTime {

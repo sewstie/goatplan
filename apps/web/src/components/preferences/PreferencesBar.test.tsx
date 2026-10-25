@@ -154,7 +154,7 @@ describe("PreferencesBar", () => {
   });
 
   it("offers only the sort order in the design when several schedules fit", async () => {
-    await startTestPlanner({ courses: ["AE 2320"] });
+    await startTestPlanner({ courses: ["AE 2320"], sortPreset: "fewestEarly" });
     render(<PreferencesBar />);
 
     const sort = screen.getByRole("combobox", { name: "Sort" });
