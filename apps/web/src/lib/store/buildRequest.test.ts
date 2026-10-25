@@ -7,6 +7,9 @@ import { termFile } from "./testing/fixtures";
 
 const plan = (changes: Partial<Draft>): Draft => ({ ...emptyDraft(), ...changes });
 
+/** Best overall's weights (docs/engine-api.md); every sort sends them, so score.total means the same everywhere. */
+const BEST_OVERALL_WEIGHTS = { earlyCutoff: 600, perEarlyMinute: 3, perGapMinute: 1, perDay: 60, lateCutoff: 1440, perLateMinute: 0 };
+
 describe("buildRequest", () => {
   it("allows every matching lecture and co-taught lecture without allowing a matching lab", () => {
     const term = termFile("2027-C");
@@ -54,7 +57,7 @@ describe("buildRequest", () => {
         locked: {},
         anyOf: {},
       },
-      sort: SORT_PRESETS.fewestDays.weights,
+      sort: { ...BEST_OVERALL_WEIGHTS, primary: "days" },
       limits: { maxSchedules: MAX_SCHEDULES },
     });
   });
@@ -93,41 +96,45 @@ describe("buildRequest", () => {
     request.preferences!.blocked![0].start = 99;
     request.sort!.perDay = 1;
     expect(draft.preferences.blocked[0].start).toBe(1);
-    expect(SORT_PRESETS.fewestEarly.weights.perDay).toBe(20);
+    expect(buildRequest(draft)?.sort).toEqual(BEST_OVERALL_WEIGHTS);
   });
 });
 
 describe("sort presets", () => {
-  it.each(SORT_PRESET_IDS)("preset %s sends its full weights including late fields", (id) => {
-    const request = buildRequest(plan({ courses: ["AE 2320"], sortPreset: id }));
-    const weights = SORT_PRESETS[id].weights;
-    expect(request?.sort).toEqual(weights);
-    expect(request?.sort).toHaveProperty("lateCutoff");
-    expect(request?.sort).toHaveProperty("perLateMinute");
-    expect(typeof request?.sort?.lateCutoff).toBe("number");
-    expect(typeof request?.sort?.perLateMinute).toBe("number");
+  it("names each preset's label, description and primary measure, in menu order", () => {
+    expect(SORT_PRESET_IDS).toEqual(["bestOverall", "fewestEarly", "latestStart", "earliestFinish", "fewestDays", "fewestGaps"]);
+    expect(SORT_PRESETS).toEqual({
+      bestOverall: { label: "Best overall", description: "A balance of start time, gaps and days", primary: null },
+      fewestEarly: { label: "Fewest early classes", description: "Fewer classes before 10 AM", primary: "earlyMinutes" },
+      latestStart: { label: "Latest start", description: "Classes start as late as possible each day", primary: "firstStart" },
+      earliestFinish: { label: "Earliest finish", description: "Classes end as early as possible each day", primary: "lastEnd" },
+      fewestDays: { label: "Most days off", description: "Fewer days on campus", primary: "days" },
+      fewestGaps: { label: "Most compact", description: "Less free time between classes", primary: "freeMinutes" },
+    });
   });
 
-  it("new drafts use bestOverall", () => {
+  it.each([
+    ["fewestEarly", "earlyMinutes"],
+    ["latestStart", "firstStart"],
+    ["earliestFinish", "lastEnd"],
+    ["fewestDays", "days"],
+    ["fewestGaps", "freeMinutes"],
+  ] as const)("%s sends the Best overall weights and ranks by %s first", (id, primary) => {
+    expect(buildRequest(plan({ courses: ["AE 2320"], sortPreset: id }))?.sort).toEqual({ ...BEST_OVERALL_WEIGHTS, primary });
+  });
+
+  it("Best overall sends its weights and no primary measure, and new drafts use it", () => {
     const draft = emptyDraft();
     expect(draft.sortPreset).toBe("bestOverall");
-    const request = buildRequest({ ...draft, courses: ["AE 2320"] });
-    expect(request?.sort).toEqual(SORT_PRESETS.bestOverall.weights);
+    const sort = buildRequest({ ...draft, courses: ["AE 2320"] })?.sort;
+    expect(sort).toEqual(BEST_OVERALL_WEIGHTS);
+    expect(sort).not.toHaveProperty("primary");
   });
 
-  it("a stored draft with an older preset ID is kept", () => {
-    const olderIds: SortPresetId[] = ["fewestEarly", "fewestGaps", "fewestDays"];
-    for (const id of olderIds) {
+  it("keeps a stored draft's preset ID as it is", () => {
+    for (const id of ["fewestEarly", "fewestGaps", "fewestDays", "latestStart", "earliestFinish", "bestOverall"] as SortPresetId[]) {
       expect(isSortPresetId(id)).toBe(true);
-      const request = buildRequest(plan({ courses: ["AE 2320"], sortPreset: id }));
-      expect(request?.sort).toEqual(SORT_PRESETS[id].weights);
-    }
-  });
-
-  it("new preset IDs pass the preset-ID check", () => {
-    const newIds: SortPresetId[] = ["bestOverall", "latestStart", "earliestFinish"];
-    for (const id of newIds) {
-      expect(isSortPresetId(id)).toBe(true);
+      expect(buildRequest(plan({ courses: ["AE 2320"], sortPreset: id }))?.sort?.primary ?? null).toBe(SORT_PRESETS[id].primary);
     }
   });
 
@@ -135,50 +142,5 @@ describe("sort presets", () => {
     expect(isSortPresetId("random")).toBe(false);
     expect(isSortPresetId("")).toBe(false);
     expect(isSortPresetId(null)).toBe(false);
-  });
-
-  it("has six presets in menu order", () => {
-    expect(SORT_PRESET_IDS).toEqual([
-      "bestOverall",
-      "fewestEarly",
-      "latestStart",
-      "earliestFinish",
-      "fewestDays",
-      "fewestGaps",
-    ]);
-  });
-
-  it("tie-break: every preset except bestOverall has every weight above 0 and its main term higher than in bestOverall", () => {
-    const overall = SORT_PRESETS.bestOverall.weights;
-
-    // The main term for each specialized preset
-    const mainTerm: Record<Exclude<SortPresetId, "bestOverall">, keyof typeof overall> = {
-      fewestEarly: "perEarlyMinute",
-      latestStart: "perEarlyMinute",
-      earliestFinish: "perLateMinute",
-      fewestDays: "perDay",
-      fewestGaps: "perGapMinute",
-    };
-
-    // The weight terms that contribute to the score (late pair only when lateCutoff < 1440)
-    const activeWeightKeys = (w: Required<typeof overall>) => {
-      const keys: (keyof typeof overall)[] = ["perEarlyMinute", "perGapMinute", "perDay"];
-      if ((w.lateCutoff ?? 1440) < 1440) keys.push("perLateMinute");
-      return keys;
-    };
-
-    for (const id of SORT_PRESET_IDS) {
-      if (id === "bestOverall") continue;
-      const weights = SORT_PRESETS[id].weights;
-
-      // Every active weight term is above 0
-      for (const key of activeWeightKeys(weights)) {
-        expect(weights[key], `${id}.${key} should be > 0`).toBeGreaterThan(0);
-      }
-
-      // Its main term weighs more than in Best overall
-      const key = mainTerm[id];
-      expect(weights[key], `${id}.${key} should be > bestOverall.${key} (${overall[key]})`).toBeGreaterThan(overall[key]!);
-    }
   });
 });

@@ -168,11 +168,11 @@ describe("PreferencesBar", () => {
     const options = within(list).getAllByRole("option");
     expect(options).toHaveLength(labels.length);
     options.forEach((option, index) => expect(option).toHaveAccessibleName(labels[index]));
-    expect(within(list).getByRole("option", { name: "Latest start" })).toHaveAccessibleDescription("Fewer classes before 1 PM");
+    expect(within(list).getByRole("option", { name: "Latest start" })).toHaveAccessibleDescription("Classes start as late as possible each day");
     expect(within(list).getByRole("option", { selected: true })).toHaveTextContent("Fewest early classes");
   });
 
-  it("picks an order from the keyboard, solves with its weights, shows schedule 1 and keeps focus on Sort", async () => {
+  it("picks an order from the keyboard, solves by its measure, shows schedule 1 and keeps focus on Sort", async () => {
     const { store, requests } = await startTestPlanner({ courses: ["AE 2320"], sortPreset: "fewestEarly" });
     store.getState().setScheduleIndex(1);
     render(<PreferencesBar />);
@@ -186,7 +186,7 @@ describe("PreferencesBar", () => {
 
     expect(store.getState().sortPreset).toBe("latestStart");
     await waitForSolve(store);
-    expect(requests.at(-1)?.sort).toEqual(SORT_PRESETS.latestStart.weights);
+    expect(requests.at(-1)?.sort?.primary).toBe(SORT_PRESETS.latestStart.primary);
     expect(store.getState().scheduleIndex).toBe(0);
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Sort" })).toBe(sort);
@@ -200,7 +200,7 @@ describe("PreferencesBar", () => {
       { courses: ["AE 2320"], sortPreset: "bestOverall" },
       {
         solve: (request) =>
-          request.sort?.perGapMinute === SORT_PRESETS.fewestGaps.weights.perGapMinute
+          request.sort?.primary === SORT_PRESETS.fewestGaps.primary
             ? new Promise((resolve) => (release = () => resolve(solved(request))))
             : solved(request),
       },
