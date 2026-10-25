@@ -9,6 +9,7 @@
 
 namespace goatplan {
     namespace {
+        constexpr std::size_t kNotAnyOf = static_cast<std::size_t>(FilterReason::NotAnyOf);
         constexpr std::size_t kStartsTooEarly = static_cast<std::size_t>(FilterReason::StartsTooEarly);
 
         SolveResult quickSolve(const std::vector<CourseChoices>& choices, SolveLimits limits) {
@@ -116,6 +117,9 @@ namespace goatplan {
                     break;
                 case FixKind::ClearAnyOf:
                     prefs.anyOf.erase(codes.at(fix.course));
+                    if (fix.startsAfter >= 0) {
+                        prefs.startsAfter = fix.startsAfter;
+                    }
                     break;
                 case FixKind::DropCourse:
                     codes.erase(std::next(codes.begin(), static_cast<std::ptrdiff_t>(fix.course)));
@@ -144,7 +148,7 @@ namespace goatplan {
 
         std::vector<Fix> findFixes(const Term& term, const std::vector<std::string>& courseCodes,
                                    const Preferences& prefs, const SolveLimits& limits,
-                                   const Diagnosis& diagnosis) {
+                                   const std::vector<CourseChoices>& choices, const Diagnosis& diagnosis) {
             SolveLimits counting = limits;
             counting.maxSchedules = 0;
             counting.stopAtFirst = false;
@@ -180,8 +184,13 @@ namespace goatplan {
                     attempt(Fix{FixKind::Unlock, c});
                 }
                 const auto anyOf = prefs.anyOf.find(courseCodes[c]);
-                if (anyOf != prefs.anyOf.end() && !anyOf->second.empty()) {
-                    attempt(Fix{FixKind::ClearAnyOf, c});
+                if (anyOf != prefs.anyOf.end() && !anyOf->second.empty() && !attempt(Fix{FixKind::ClearAnyOf, c}) &&
+                    prefs.startsAfter != 0 && choices[c].removed[kNotAnyOf] > 0) {
+                    Preferences cleared = prefs;
+                    cleared.anyOf.erase(anyOf->first);
+                    if (const auto startsAfter = latestStartsAfterThatFits(term, courseCodes, cleared, limits)) {
+                        attempt(Fix{FixKind::ClearAnyOf, c, *startsAfter});
+                    }
                 }
             }
             for (std::size_t c : problemCourses(diagnosis)) {
@@ -237,7 +246,7 @@ namespace goatplan {
                 diagnosis.minimalClash = findMinimalClash(choices, limits);
             }
         }
-        diagnosis.fixes = findFixes(term, courseCodes, prefs, limits, diagnosis);
+        diagnosis.fixes = findFixes(term, courseCodes, prefs, limits, choices, diagnosis);
         return diagnosis;
     }
 }

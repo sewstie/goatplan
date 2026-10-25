@@ -1,0 +1,50 @@
+{
+  "ok": true,
+  "version": 1,
+  "termId": "2027-C",
+  "total": 0,
+  "patterns": 0,
+  "capped": false,
+  "steps": 0,
+  "schedules": [],
+  "diagnosis": {
+    "unsure": false,
+    "emptyCourses": [
+      {
+        "code": "PH 1110",
+        "optionsInData": 58,
+        "removed": {
+          "notLocked": 0,
+          "notAnyOf": 55,
+          "notOpen": 0,
+          "startsTooEarly": 3,
+          "blocked": 0
+        },
+        "latestStartsAfter": 600
+      }
+    ],
+    "clashingPairs": [],
+    "minimalClash": [],
+    "fixes": [
+      {
+        "kind": "relaxStartsAfter",
+        "startsAfter": 600,
+        "schedules": 24,
+        "capped": false
+      },
+      {
+        "kind": "clearAnyOf",
+        "course": "PH 1110",
+        "startsAfter": 660,
+        "schedules": 10,
+        "capped": false
+      },
+      {
+        "kind": "dropCourse",
+        "course": "PH 1110",
+        "schedules": 2,
+        "capped": false
+      }
+    ]
+  }
+}

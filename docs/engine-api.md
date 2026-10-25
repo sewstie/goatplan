@@ -8,11 +8,12 @@ copy it, so change this page first and the code second.
 This is version 1, and it's frozen. Nothing in it gets renamed, removed or
 changes meaning. A change like that becomes version 2.
 
-`preferences.anyOf`, the `notAnyOf` diagnosis count, the `clearAnyOf` fix,
-`sort.lateCutoff`, `sort.perLateMinute`, `score.lateMinutes`, `sort.primary`
-and the score fields `firstStart`, `lastEnd`, `averageStart`, `averageEnd` and
-`freeMinutes` are additive fields in version 1. Existing fields and requests
-keep their meaning. A request without `sort.primary` ranks exactly as before.
+`preferences.anyOf`, the `notAnyOf` diagnosis count, the `clearAnyOf` fix and
+its `startsAfter`, `sort.lateCutoff`, `sort.perLateMinute`, `score.lateMinutes`,
+`sort.primary` and the score fields `firstStart`, `lastEnd`, `averageStart`,
+`averageEnd` and `freeMinutes` are additive fields in version 1. Existing fields
+and requests keep their meaning. A request without `sort.primary` ranks exactly
+as before.
 
 ```cpp
 goatplan::Engine engine;
@@ -260,8 +261,27 @@ is only a lower bound.
 | `clearBlocked`     |               | Remove all `preferences.blocked` times. |
 | `allowFull`        |               | Set `preferences.onlyOpen` to false. |
 | `unlock`           | `course`      | Remove that course from `preferences.locked`. |
-| `clearAnyOf`       | `course`      | Remove that course from `preferences.anyOf`. Tried like `unlock`, and suggested only when it gives schedules. |
+| `clearAnyOf`       | `course`, sometimes `startsAfter` | Remove that course from `preferences.anyOf`. When `startsAfter` is there, also set `preferences.startsAfter` to it, like `relaxStartsAfter`. Tried like `unlock`, and suggested only when it gives schedules. |
 | `dropCourse`       | `course`      | Remove that course from `courses`. |
+
+`clearAnyOf` is first tried on its own, for every course with a nonempty
+`anyOf` list. If that gives no schedules, `preferences.startsAfter` is set, and
+the course's `anyOf` took out some of its options (`removed.notAnyOf` above 0),
+the engine looks for the latest `startsAfter` that gives schedules once that
+course's `anyOf` is removed. If there is one, the fix carries it as
+`startsAfter`. Nothing else is combined with it: blocked times, `onlyOpen` and
+locks stay as they are. A `clearAnyOf` without `startsAfter` means the start
+time stays as it is. Like any preference change, it's sorted before dropping a
+course.
+
+From C Term 2027, `["MA 1024", "CS 2022", "PH 1110"]` with the PH 1110 lectures
+of one professor in `anyOf` and `startsAfter: 720` gives no schedules, and
+removing the `anyOf` alone still gives none, so the fix moves the start time
+too:
+
+```json
+{ "kind": "clearAnyOf", "course": "PH 1110", "startsAfter": 660, "schedules": 10, "capped": false }
+```
 
 `unsure: true` means the search ran out of steps before finding anything, so the
 engine doesn't actually know whether a schedule exists. Everything else is empty
