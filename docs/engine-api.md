@@ -9,8 +9,10 @@ This is version 1, and it's frozen. Nothing in it gets renamed, removed or
 changes meaning. A change like that becomes version 2.
 
 `preferences.anyOf`, the `notAnyOf` diagnosis count, the `clearAnyOf` fix,
-`sort.lateCutoff`, `sort.perLateMinute` and `score.lateMinutes`
-are additive fields in version 1. Existing fields and requests keep their meaning.
+`sort.lateCutoff`, `sort.perLateMinute`, `score.lateMinutes`, `sort.primary`
+and the score fields `firstStart`, `lastEnd`, `averageStart`, `averageEnd` and
+`freeMinutes` are additive fields in version 1. Existing fields and requests
+keep their meaning. A request without `sort.primary` ranks exactly as before.
 
 ```cpp
 goatplan::Engine engine;
@@ -61,7 +63,7 @@ term that was loaded before, if any, stays loaded.
     "locked": { "PH 1120": ["PH 1120-BL01"] },
     "anyOf": { "PH 1120": ["PH 1120-BX03", "PH 1120-BX07"] }
   },
-  "sort": { "earlyCutoff": 600, "perEarlyMinute": 3, "lateCutoff": 1020, "perLateMinute": 5, "perGapMinute": 1, "perDay": 60 },
+  "sort": { "primary": "days", "earlyCutoff": 600, "perEarlyMinute": 3, "lateCutoff": 1020, "perLateMinute": 5, "perGapMinute": 1, "perDay": 60 },
   "limits": { "maxSchedules": 50, "stepBudget": 5000000 }
 }
 ```
@@ -78,6 +80,7 @@ to `null`, to get the default. Fields the engine doesn't know are ignored.
 | `preferences.onlyOpen`    | true or false              | `false`   | Skip options with a full or waitlisted section. |
 | `preferences.locked`      | course code → section IDs  | `{}`      | For that course, only keep options that include every one of these sections. |
 | `preferences.anyOf`       | course code → section IDs  | `{}`      | For that course, only keep options that include at least one listed section. A missing or empty list adds no rule. |
+| `sort.primary`            | `earlyMinutes`, `firstStart`, `lastEnd`, `days` or `freeMinutes` | `null` | The measure to rank by first, see [Order of schedules](#order-of-schedules). `null` ranks by `score.total`. Any other value is a `badRequest`. |
 | `sort.earlyCutoff`        | 0 to 1440                  | `600`     | Class time before this counts as early. |
 | `sort.perEarlyMinute`     | 0 to 10000                 | `3`       | Cost of each early minute. |
 | `sort.perGapMinute`       | 0 to 10000                 | `1`       | Cost of each minute between classes. |
@@ -100,7 +103,8 @@ all locked sections and at least one section from the nonempty `anyOf` list.
   "total": 1234, "patterns": 87, "capped": false, "steps": 4211, "elapsedMs": 3.2,
   "schedules": [
     {
-      "score": { "total": 240, "earlyMinutes": 60, "gapMinutes": 120, "lateMinutes": 0, "days": 4 },
+      "score": { "total": 240, "earlyMinutes": 60, "gapMinutes": 120, "lateMinutes": 0, "days": 4,
+                 "firstStart": 540, "lastEnd": 950, "averageStart": 600, "averageEnd": 860, "freeMinutes": 100 },
       "courses": [
         {
           "code": "PH 1120",
@@ -123,9 +127,9 @@ timetables those make, and each entry in `schedules` is one of them.
 are only a lower bound. `steps` is how much searching it took. `elapsedMs` is
 the time spent filtering, searching and diagnosing, and changes from run to run.
 
-`schedules` comes best first (lowest `score.total`), at most
-`limits.maxSchedules` of them. In each one, `courses` follows the order of the
-request, with repeats removed. For each course:
+`schedules` comes best first, at most `limits.maxSchedules` of them, in the
+[order of schedules](#order-of-schedules) below. In each one, `courses` follows
+the order of the request, with repeats removed. For each course:
 
 - `sections` lists the section IDs of the option shown.
 - `openSeats` is the fewest open seats among those sections, or `null` when the
@@ -133,6 +137,49 @@ request, with repeats removed. For each course:
 - `alternatives` lists every option that meets at exactly the same times, as
   section ID lists, including the one shown. The shown one is the one with the
   most open seats.
+
+### Score
+
+Every number in `score` is in minutes, apart from `total` and `days`. Classes
+with no set time don't count toward any of them, and when no class in a
+schedule has a set time, they're all `0`.
+
+| Field          | Meaning |
+| -------------- | ------- |
+| `total`        | The cost from `sort`: early, late and gap minutes times their cost, plus `perDay` for each day. Lower is better. |
+| `earlyMinutes` | For each day that starts before `sort.earlyCutoff`, the time from its first start to the cutoff, added up. |
+| `lateMinutes`  | For each day that ends after `sort.lateCutoff`, the time from the cutoff to its last end, added up. |
+| `gapMinutes`   | The time without class between each day's first start and last end, added up. Every break counts, even the 10 minutes between back-to-back classes. |
+| `days`         | The days with class. |
+| `firstStart`   | The week's earliest class start. |
+| `lastEnd`      | The week's latest class end. |
+| `averageStart` | The average of each day's first start, over the days with class, rounded to the nearest minute (halves up). |
+| `averageEnd`   | The same for each day's last end. |
+| `freeMinutes`  | The breaks between two classes on the same day that are longer than 10 minutes, added up. |
+
+### Order of schedules
+
+The engine compares schedules one way, both to keep the best
+`limits.maxSchedules` while it searches and to order the ones it sends back.
+So the first schedule is the best of every schedule the search checked, not
+only of the ones returned. The first step that differs decides:
+
+1. `sort.primary`, when it's set. `firstStart` is better when it's higher;
+   `earlyMinutes`, `lastEnd`, `days` and `freeMinutes` are better when lower.
+2. Only for `firstStart`: then `averageStart`, higher is better. Only for
+   `lastEnd`: then `averageEnd`, lower is better. Because these are averages
+   over the days with class, a schedule with fewer days isn't helped or hurt
+   by its days off.
+3. `score.total`, lower is better.
+4. Section order: course by course in request order, the schedule whose
+   option comes earlier in the term file's `options` list comes first.
+
+Without `sort.primary`, or with `null`, the order starts at step 3, as it did
+before `sort.primary` existed.
+
+When `capped` is true, the search stopped before checking everything, so
+`sort.primary` ranks only the schedules it found. A schedule that's better on
+that measure may exist among the ones it didn't reach.
 
 ## Diagnosis
 

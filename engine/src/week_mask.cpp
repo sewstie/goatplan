@@ -69,6 +69,38 @@ namespace goatplan {
         return span;
     }
 
+    namespace {
+        int nextSlot(const std::uint64_t* day, int from, bool filled) {
+            for (int slot = from; slot < kSlotsPerDay;) {
+                const std::size_t word = static_cast<std::size_t>(slot / 64);
+                const std::uint64_t bits = (filled ? day[word] : ~day[word]) >> (slot % 64);
+                if (bits != 0) {
+                    return slot + std::countr_zero(bits);
+                }
+                slot = static_cast<int>(word + 1) * 64;
+            }
+            return kSlotsPerDay;
+        }
+    }
+
+    int WeekMask::breakSlots(int dayIndex, int longerThan) const {
+        const DaySpan span = daySpan(dayIndex);
+        const std::uint64_t* day = &words_[static_cast<std::size_t>(dayIndex) * kWordsPerDay];
+        int slots = 0;
+        int slot = span.first;
+        while (span.filled > 0) {
+            const int breakStart = nextSlot(day, slot, false);
+            if (breakStart > span.last) {
+                break;
+            }
+            slot = nextSlot(day, breakStart, true);
+            if (slot - breakStart > longerThan) {
+                slots += slot - breakStart;
+            }
+        }
+        return slots;
+    }
+
     WeekMask maskOf(const Section& section) {
         WeekMask mask;
         for (const Meeting& meeting : section.meetings) {

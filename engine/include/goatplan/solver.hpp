@@ -27,5 +27,6 @@ namespace goatplan {
     };
     SolveResult solve(const std::vector<CourseChoices>& choices,
                     const SolveLimits& limits = {},
-                    const ScoreWeights& weights = {});
+                    const ScoreWeights& weights = {},
+                    SortPrimary primary = SortPrimary::None);
 }

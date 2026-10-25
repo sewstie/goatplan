@@ -1,6 +1,7 @@
 #include "goatplan/solver.hpp"
 #include "goatplan/groups.hpp"
 #include <algorithm>
+#include <compare>
 #include <limits>
 #include <numeric>
 #include <queue>
@@ -13,15 +14,18 @@ namespace goatplan {
             std::vector<std::size_t> groups;
             Score score;
         };
-        bool better(int total, const std::vector<std::size_t>& groups, const Found& other) {
-            if (total != other.score.total) {
-                return total < other.score.total;
+        bool better(const Score& score, const std::vector<std::size_t>& groups, const Found& other,
+                    SortPrimary primary) {
+            const std::strong_ordering order = compareScores(score, other.score, primary);
+            if (order != 0) {
+                return order < 0;
             }
             return groups < other.groups;
         }
         struct Better {
+            SortPrimary primary;
             bool operator()(const Found& a, const Found& b) const {
-                return better(a.score.total, a.groups, b);
+                return better(a.score, a.groups, b, primary);
             }
         };
         using Kept = std::priority_queue<Found, std::vector<Found>, Better>;
@@ -30,6 +34,7 @@ namespace goatplan {
             const std::vector<CourseGroups>& courses;
             const SolveLimits& limits;
             const ScoreWeights& weights;
+            SortPrimary primary;
             const std::vector<std::size_t>& order;
             SolveResult& result;
             std::vector<std::size_t> picks;
@@ -40,7 +45,7 @@ namespace goatplan {
                 }
                 const Score score = scoreOf(week, weights);
                 if (kept.size() == limits.maxSchedules) {
-                    if (!better(score.total, picks, kept.top())) {
+                    if (!better(score, picks, kept.top(), primary)) {
                         return;
                     }
                     kept.pop();
@@ -96,7 +101,7 @@ namespace goatplan {
         }
     }
     SolveResult solve(const std::vector<CourseChoices>& choices, const SolveLimits& limits,
-                      const ScoreWeights& weights) {
+                      const ScoreWeights& weights, SortPrimary primary) {
         for (const CourseChoices& choice : choices) {
             if (choice.masks.size() != choice.options.size() ||
                 choice.openSeats.size() != choice.options.size()) {
@@ -119,8 +124,8 @@ namespace goatplan {
             [&](std::size_t a, std::size_t b) {
                 return courses[a].groups.size() < courses[b].groups.size();
             });
-        Search search{courses, limits, weights, order, result,
-                    std::vector<std::size_t>(courses.size()), Kept{}};
+        Search search{courses, limits, weights, primary, order, result,
+                    std::vector<std::size_t>(courses.size()), Kept{Better{primary}}};
         search.search(0, WeekMask{}, 1);
 
         std::vector<Found> found;
