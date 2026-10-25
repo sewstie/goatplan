@@ -26,7 +26,7 @@ describe("saved plan view", () => {
     const preferences = screen.getByRole("group", { name: "Preferences" });
     expect(preferences).toHaveTextContent("Any time");
     expect(preferences).toHaveTextContent("Job");
-    expect(preferences).toHaveTextContent("Fewest days on campus");
+    expect(preferences).toHaveTextContent("Most days off");
     expect(within(preferences).getByRole("switch")).toBeDisabled();
     expect(within(preferences).queryByRole("combobox")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Open in planner to edit" })).toBeEnabled();

@@ -25,6 +25,7 @@ import { ChipDemo } from "./ChipDemo";
 import { DemoRow } from "./DemoRow";
 import { DemoSection } from "./DemoSection";
 import { DialogDemo } from "./DialogDemo";
+import { SortDemo } from "./SortDemo";
 import { ToggleDemo } from "./ToggleDemo";
 import { TooltipDemo } from "./TooltipDemo";
 
@@ -40,12 +41,6 @@ const terms = [
 ];
 
 const times = ["8:00 AM", "9:00 AM", "10:00 AM"].map((time) => ({ value: time, label: time }));
-
-const sorts = [
-  { value: "early", label: "Fewest early classes" },
-  { value: "gaps", label: "Fewest gaps" },
-  { value: "days", label: "Fewest days" },
-];
 
 export default function UiPrimitivesPage() {
   return (
@@ -180,7 +175,7 @@ export default function UiPrimitivesPage() {
         </div>
         <div className="flex flex-wrap items-center gap-7 rounded-card bg-canvas px-12 py-12">
           <Select variant="pill" label="Starts after" options={times} defaultValue="9:00 AM" />
-          <Select variant="menu" label="Sort" options={sorts} defaultValue="early" />
+          <SortDemo />
         </div>
       </DemoSection>
 

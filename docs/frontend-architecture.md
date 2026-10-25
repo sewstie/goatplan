@@ -63,10 +63,9 @@ the lead (see [Asking for a shared-file change](#asking-for-a-shared-file-change
   draft.
 - `/plans` (`app/plans/page.tsx`) belongs to the plans agent and reuses the
   shared shell and the other agents' sidebar components.
-- Sort options: the store keeps three sort presets (`SORT_PRESETS`), but the
-  prefs agent shows only the sort options present in the design PNGs. Today
-  that's "Fewest early classes" (`div.app-6.png`). The others stay hidden until
-  a design shows them.
+- Sort options: the store keeps six sort presets (`SORT_PRESETS`), and the
+  prefs agent shows all six in the sort menu. Labels come from
+  `issues/product-brief.md`.
 - Tests: unit tests go next to the code, in your folders. Browser tests go in a
   new `e2e/<agent>.spec.ts`; they run against the production build.
 
@@ -128,7 +127,7 @@ modules. Without a provider, both hooks use the app's shared store.
 | `preferences` | `{ startsAfter, blocked, onlyOpen }`. New drafts start at Any time (`startsAfter: 0`), with no blocked times and only open sections. Stored drafts and saved plans keep their settings, including a chosen 9:00 AM start. A blocked time can have a `label`, the name the student gave it ("Work"); it is saved with the draft but never sent to the engine. |
 | `locks` | Course code → the section ids locked for that course. |
 | `professorByCourse` | Course code → the selected lecture professor, or `null` for Any professor. All matching lectures remain eligible, including co-taught lectures. Labs and discussions can have other instructors. |
-| `sortPreset` | The Sort choice: `fewestEarly`, `fewestGaps` or `fewestDays` (labels and weights in `SORT_PRESETS`). The menu shows only the options in the design PNGs. |
+| `sortPreset` | The Sort choice: `bestOverall`, `fewestEarly`, `latestStart`, `earliestFinish`, `fewestDays` or `fewestGaps` (labels and weights in `SORT_PRESETS`; labels from `issues/product-brief.md`). The menu shows all six sort orders. |
 | `alternatives` | Per schedule (by `scheduleKey`) and per course, the same-time alternative the student picked. |
 | `response` | The engine's last answer, success or engine error; `null` when there are no courses. |
 | `scheduleIndex` | Which schedule in `response.schedules` is shown. |

@@ -77,7 +77,7 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   const row = preferencesRow(page);
 
   await expect(row.getByText("Tue, Fri")).toBeVisible();
-  await expect(row.getByRole("combobox", { name: "Sort" })).toHaveValue("fewestEarly");
+  await expect(row.getByRole("combobox", { name: "Sort" })).toHaveText("SortFewest early classes");
 
   await row.getByRole("combobox", { name: "Starts after" }).selectOption({ label: "10:00 AM" });
   await waitForSchedules(page);
