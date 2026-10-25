@@ -46,9 +46,11 @@ const course = (code: string, title: string, lectures: [string, Day[], number][]
 });
 
 /**
- * Three courses with four lectures each: 48 schedules, and each of the six sort orders puts a
- * different one on top, with nothing tied for first. Found by running the real engine with the
- * preset weights, so a change to SORT_PRESETS can move these tops (see sortMenuTops).
+ * Three courses with four lectures each: 48 schedules. Each order ranks by its own measure first, and
+ * five of the six put a different schedule on top, with nothing tied for first. Fewest early classes
+ * keeps Best overall's top: it already has no class before 10 AM, so the tie falls back to Best
+ * overall. Found by running the real engine (sort.primary plus Best overall's weights), so a change
+ * to the ranking can move these tops (see sortMenuTops).
  */
 export function sortMenuTerm(): TermFile {
   const term = termFile("2027-C");
@@ -66,9 +68,9 @@ export const SORT_MENU_COURSES = ["DEMO 3101", "DEMO 3102", "DEMO 3103"];
 /** Each order's top schedule (DEMO 3101, 3102, 3103 lectures) and the first badge it gets. */
 export const sortMenuTops: Record<SortPresetId, { sections: [string, string, string]; firstBadge: string }> = {
   bestOverall: { sections: ["L01", "L02", "L04"], firstBadge: "Tue, Fri off" },
-  fewestEarly: { sections: ["L01", "L02", "L03"], firstBadge: "Starts 11 AM" },
-  latestStart: { sections: ["L01", "L04", "L04"], firstBadge: "Starts 2 PM" },
-  earliestFinish: { sections: ["L02", "L02", "L02"], firstBadge: "Done by 12:50 PM" },
+  fewestEarly: { sections: ["L01", "L02", "L04"], firstBadge: "Starts 11 AM" },
+  latestStart: { sections: ["L04", "L04", "L04"], firstBadge: "Starts 2 PM" },
+  earliestFinish: { sections: ["L03", "L03", "L02"], firstBadge: "Done by 11:50 AM" },
   fewestDays: { sections: ["L01", "L02", "L02"], firstBadge: "4 days off" },
-  fewestGaps: { sections: ["L04", "L02", "L02"], firstBadge: "1 gap" },
+  fewestGaps: { sections: ["L04", "L03", "L02"], firstBadge: "No gaps" },
 };
