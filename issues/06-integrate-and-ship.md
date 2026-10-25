@@ -6,7 +6,7 @@
 
 **Blocked by:** 04 (sort menu), 05 (badges).
 
-**Status:** ready-for-agent
+**Status:** DONE
 
 - [ ] Ticket branches 01–05 are merged into `feature/sorting` in wave order, with no conflicts left unresolved.
 - [ ] A cross-feature Playwright spec:

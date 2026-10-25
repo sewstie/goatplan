@@ -334,7 +334,8 @@ test.describe("Sections to register", () => {
     await expect(prefs).toContainText("11:00 AM");
     await expect(prefs).toContainText("Job");
     await expect(prefs).toContainText("Sat 6 PM–8 PM");
-    await expect(prefs).toContainText("Fewest gaps");
+    // A saved plan shows its order with the preset's current label ("Fewest gaps" was renamed).
+    await expect(prefs).toContainText("SortMost compact");
     await expect(prefs.getByRole("switch", { name: "Only open sections" })).not.toBeChecked();
     await expect(prefs.getByRole("switch", { name: "Only open sections" })).toBeDisabled();
     await expect(prefs.getByRole("combobox")).toHaveCount(0);
