@@ -100,8 +100,10 @@ test("picking each order re-ranks the schedules in the engine and goes back to s
   await expectTopOf(page, "bestOverall");
 
   await sortControl(page).click();
-  await expect(sortList(page).getByRole("option")).toHaveText(Object.values(LABELS));
-  await expect(sortList(page).getByRole("option", { selected: true })).toHaveText("Best overall");
+  const options = sortList(page).getByRole("option");
+  await expect(options).toHaveCount(Object.values(LABELS).length);
+  for (const [index, label] of Object.values(LABELS).entries()) await expect(options.nth(index)).toHaveAccessibleName(label);
+  await expect(sortList(page).getByRole("option", { selected: true })).toHaveAccessibleName("Best overall");
   await page.keyboard.press("Escape");
 
   // Ends on Best overall again, so every order is picked once while another one is on.
@@ -137,7 +139,7 @@ test("keyboard only: Tab to Sort, open with Enter, type L for Latest start, pick
   const list = sortList(page);
   await expect(list).toBeVisible();
   await expect(sort).toHaveAttribute("aria-expanded", "true");
-  const active = () => sort.getAttribute("aria-activedescendant").then((id) => page.locator(`[id="${id}"]`).innerText());
+  const active = () => sort.getAttribute("aria-activedescendant").then((id) => page.locator(`[id="${id}"] span`).first().innerText());
   await expect.poll(active).toBe("Best overall");
 
   await page.keyboard.press("L");
@@ -249,8 +251,8 @@ for (const [width, height] of [
       for (const item of items) expect(sortMiddle).toBeGreaterThanOrEqual(item.middle - 1);
     }
 
-    // The closed control keeps the div.app-6 look: surface fill, row radius, 7.5 / 9 padding, gap 6,
-    // "Sort" in muted ink and the order in ink at 9 px, a 10 px caret.
+    // The closed control looks like the professor field: surface fill, line border, row radius, 7 / 9 padding, gap 6,
+    // "Sort" in muted ink and the order in ink at 10 px, an 11 px caret.
     const look = await sort.evaluate((element) => {
       const probe = (property: string, value: string) => {
         const div = document.createElement("div");
@@ -265,6 +267,7 @@ for (const [width, height] of [
       const caret = element.querySelector("svg")!.getBoundingClientRect();
       return {
         background: style.backgroundColor === probe("background-color", "var(--color-surface)"),
+        border: style.borderTopColor === probe("color", "var(--color-line)") && style.borderTopWidth === "1px",
         radius: style.borderTopLeftRadius === probe("border-top-left-radius", "var(--radius-row)"),
         padding: style.padding,
         gap: style.columnGap,
@@ -279,16 +282,17 @@ for (const [width, height] of [
     });
     expect(look).toEqual({
       background: true,
+      border: true,
       radius: true,
-      padding: "7.5px 9px",
+      padding: "7px 9px",
       gap: "6px",
       minWidth: "146px",
       labelColor: true,
       valueColor: true,
-      fontSizes: ["9px", "9px"],
+      fontSizes: ["10px", "10px"],
       fontFamily: true,
       cursor: "pointer",
-      caret: [10, 10],
+      caret: [11, 11],
     });
     // The tap area reaches 44 px without changing the layout.
     const hitArea = await sort.evaluate((element) => element.querySelector("span[aria-hidden]:last-child")!.getBoundingClientRect().height);

@@ -1,55 +1,96 @@
-# GoatPlan: Product Brief (Sorting & Ranking)
+# GoatPlan: Feature Brief (MVP Fixes)
+
+Source: hands-on test of `localhost:3000` on Oct 25, 2026. Term C 2027 with MA 1024, CS 2022 and PH 1110 (plus CS 2303 and PH 1120 in an earlier run).
 
 ## Problem
 
-Adding 4–5 courses often produces dozens or hundreds of valid schedules. Students don't want to scroll through them. They want the one that fits **their** life at the top. Today the only sort option is "Fewest early classes". People care about different things (mornings, Fridays, gaps, walking, professors), so one sort option isn't enough.
+The core flow works: search → add courses → schedules → pick professor → rules and diagnosis → save → sections to register. Two things still block an MVP launch:
 
-## Who uses it
+1. **The sort menu doesn't do what its labels promise.** A student who picks "Most days off" can be shown a 5-day schedule first, even though a 4-day one exists.
+2. **The app is unusable on a phone,** and students often check their schedule there.
 
-- **Freshman:** has fixed required courses and wants the "least painful" schedule.
-- **Athlete or student with a job:** needs afternoons free, or classes packed into a few days.
-- **Night owl:** won't take 8 AM classes, whatever else changes.
-- **Commuter or off-campus student:** wants fewer days on campus and no long gaps.
-- **Planner:** wants a safe backup if a section fills.
+## Already working (don't break)
+
+- **Courses:** term picker, course search, adding courses, the 5-step guide, and the "best 200 of N" banner.
+- **Professor picker:** it filters schedules (PH 1110 went from 1,281 to 91 with Nancy Burnham), and online lectures show in "No set time".
+- **No clashes:** no lecture, lab or discussion overlap within a course (checked across all 91 results).
+- **Rules and diagnosis:** "Starts after" and "Block a time" remove schedules, and the diagnosis explains 0 results with one-click fixes.
+- **Saved plans:** save, reload and restore keep the sort, preferences and professor, with a "Plan restored" note.
+- **Sections to register:** copy, print and the Workday link.
+- No console errors.
 
 ## User cases
 
-1. **Sleep in:** "I sort by *Latest start* and the top schedule starts at 11 AM every day."
-2. **Free Fridays:** "I sort by *Most days off* and see schedules with no Friday classes first. A badge says 'Fri off'."
-3. **No dead time:** "I hate 2-hour gaps. *Most compact* puts back-to-back days at the top."
-4. **Lunch:** "I want at least 45 min free between 11 and 2 every day. *Lunch break* ranks those first."
-5. **Done early:** "I have practice at 4. *Earliest finish* shows schedules that end by 3."
-6. **Less walking:** "I don't want to run from Fuller to Higgins in 10 minutes. *Least walking* ranks schedules with fewer building changes or nearby buildings."
-7. **Mix:** "I care about mornings *and* Fridays. I pick *Best overall*, set 'mornings' to high and 'Fridays' to medium, and the ranking blends them."
-8. **Why is this first?** "Each result shows 2–3 badges ('Starts 10 AM', 'Fri off', '1 gap') so I can see why it ranks where it does without opening it."
-9. **Backup:** "Section BL04 is full. *Closest to my plan* ranks options by the fewest sections changed."
+1. **Most days off:** "I work on Fridays. I pick *Most days off* and expect the first schedule to have the fewest days on campus."
+2. **Latest start:** "I'm not a morning person. *Latest start* should put my latest-starting week first."
+3. **Sorts should differ:** "When I switch sorts, the top schedule should change if a better one exists for that sort. Otherwise the menu feels fake."
+4. **Ties:** "When two schedules are equal on what I sorted by, show the more balanced one first."
+5. **Phone:** "Between classes, I open GoatPlan on my phone to check where my next class is. The calendar has to be readable without scrolling sideways."
+6. **Phone editing:** "On my phone I can add a course, switch schedules and open a course's details."
+7. **Professor diagnosis:** "My chosen professor's sections all clash. The diagnosis should offer *Allow any professor for PH 1110*, not only a time change."
+8. **Undo remove:** "I removed the wrong course by accident and want it back in one click."
+9. **Readable gap badges:** "The '7 gaps' badge confuses me. I want to know how much free time is between my classes."
 
-## Feature list
+## Issues
 
-### Must have (next)
-- [ ] **Sort menu** with: Best overall (default), Fewest early classes, Latest start, Earliest finish, Most days off, Most compact (least gap time).
-- [ ] **Badges** on every result explaining its strengths (start time, days off, total gap hours).
-- [ ] **Sorting happens in the engine, not the UI.** The engine keeps only the best N results, so re-sorting those N in the browser by a different key gives the wrong top results. Each sort option has to be a scoring mode sent in the request.
-- [ ] **Remember the sort** in the draft and in saved plans.
-- [ ] **Tie-breaker:** when scores tie, fall back to Best overall so the order stays stable.
+### 1. Sorting picks the wrong top schedules (blocker)
+- **Seen:** 5 of the 6 sorts return the same #1. *Most days off* puts a 5-day schedule first while its own list contains a 4-day one. *Latest start*'s #1 isn't the best for its own metric.
+- **Cause:** each preset in `sortPresets.ts` is a blend of weights, so other terms can outweigh the chosen one. For example, a day off is worth 300 points, but 5 extra hours of gaps cost more. Ties are broken by section order, not by Best overall.
+- **Fix:** the engine compares schedules **by the chosen metric first**, then by the Best overall score, then by section order. The kept-best-N list and the final order must both use this comparison. This is an additive API change (e.g. `sort.primary`), and Best overall sends no primary.
+- **Done when:**
+  - Under *Most days off*, a 4-day schedule always beats a 5-day one.
+  - Each sort's #1 is the best on its own metric among all valid schedules, not just the returned ones.
+  - Ties fall back to Best overall.
+  - Tests cover each preset.
 
-### Should have
-- [ ] **Lunch break** sort, with a configurable window (default 11:00–14:00, at least 45 min free).
-- [ ] **Least walking** sort: fewer building changes between back-to-back classes. A distance table between buildings can come later.
-- [ ] **Closest to my plan:** rank by the fewest sections changed from a saved or locked plan (the backup case).
-- [ ] **Weighted "Best overall":** 3–4 sliders (mornings, Fridays/days off, gaps, finish time) that adjust the default score.
-- [ ] **Sort vs. rule:** make the difference clear. A *rule* removes schedules (e.g. "no classes before 9"). A *sort* only reorders them. Next to the sort menu, offer "Make this a rule".
+### 2. Phone layout is broken (MVP)
+- **Seen:** at 375 px the desktop three-column layout is squeezed, the page scrolls sideways, day names overlap and classes are slivers. At about 450 px the day headers already overlap.
+- **Fix:** a single column on narrow screens:
+  - courses list (collapsible)
+  - schedule switcher and badges
+  - calendar as a day-by-day view, or a compact week view with short day names (Mon, Tue…)
+  - course details in a bottom sheet
+- **Done when:**
+  - Nothing scrolls sideways at 375 px.
+  - Every class's time and room can be read.
+  - Adding a course, switching schedules and opening details all work by touch.
+  - There's an e2e test at the mobile viewport.
+
+### 3. Sort options have no accessible names
+- **Seen:** the Sort menu's options have empty accessible names, so screen readers and test selectors can't find them.
+- **Done when:** each option's name is its label, with its description attached, and e2e tests select sorts by name.
+
+### 4. Diagnosis misses "Allow any professor"
+- **Seen:** with Nancy Burnham chosen for PH 1110 and a late start time, the diagnosis names the professor but offers only "Change to 10:00 AM".
+- **Done when:** if a professor choice removes options, the fix "Allow any professor for <course>" is offered and works.
+
+### 5. Removing a course has no undo
+- **Done when:** after a course is removed, a toast says "Removed MA 1024 · Undo" for about 6 seconds, and Undo restores the course with its locks, professor and lab choices.
+
+### 6. Gap badge is unclear
+- **Seen:** "7 gaps" counts the 10-minute breaks between back-to-back classes.
+- **Done when:** the badge shows free time in a form people understand, e.g. "3 h free between classes", ignoring breaks of 10 minutes or less.
+
+### 7. Launch basics (MVP)
+- Deploy to Vercel, keep the daily data update running, and show "Course data updated <date>".
+- README: what it does, a screenshot or GIF, the architecture (C++ → WASM in a worker, Next.js, data pipeline), and how to run it.
+
+## Priority
+
+| # | Item | MVP? | Size |
+|---|---|---|---|
+| 1 | Sorting picks the wrong top | Must | M (engine + web) |
+| 2 | Phone layout | Must | L |
+| 7 | Deploy + README | Must | M |
+| 3 | Sort accessible names | Should | S |
+| 4 | "Allow any professor" fix | Should | S |
+| 6 | Gap badge wording | Should | S |
+| 5 | Undo remove | Could | S |
+
+## Out of scope (after launch)
+Lunch break sort, least walking, closest-to-my-plan backups, weighted sliders, .ics export, sharing links, multi-term planning.
 
 ## Open questions
-- Is "Best overall" a fixed formula or user-weighted from day one?
-- How big should N be, so that each sort still finds its true best schedules?
-- Which buildings count as "far apart" for Least walking? (Needs a small building table.)
-- Does the published data include seat counts?
-
-## Order of work (thin slices)
-1. Engine: scoring modes plus a `sort` field in the request (additive API change), with tests.
-2. UI: sort menu plus remembering the choice.
-3. Badges on results.
-4. Lunch break and Earliest finish.
-5. Closest to my plan.
-6. Weighted Best overall.
+- Phone calendar: a day-by-day view or a compact week view?
+- Should *Latest start* use the latest *earliest* start across the week, or the average start per day?
+- Which domain will the deployed site use?
