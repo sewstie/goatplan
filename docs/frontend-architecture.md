@@ -64,7 +64,9 @@ the lead (see [Asking for a shared-file change](#asking-for-a-shared-file-change
 - `/plans` (`app/plans/page.tsx`) belongs to the plans agent and reuses the
   shared shell and the other agents' sidebar components.
 - Sort options: the store keeps six sort presets (`SORT_PRESETS`), and the
-  prefs agent shows all six in the sort menu. Labels come from
+  prefs agent shows all six in the sort menu. Each preset is
+  `{ label, description, primary }`, where `primary` is the score field the
+  engine ranks by first (`null` for Best overall). Labels come from
   `issues/product-brief.md`.
 - Tests: unit tests go next to the code, in your folders. Browser tests go in a
   new `e2e/<agent>.spec.ts`; they run against the production build.
@@ -127,7 +129,7 @@ modules. Without a provider, both hooks use the app's shared store.
 | `preferences` | `{ startsAfter, blocked, onlyOpen }`. New drafts start at Any time (`startsAfter: 0`), with no blocked times and only open sections. Stored drafts and saved plans keep their settings, including a chosen 9:00 AM start. A blocked time can have a `label`, the name the student gave it ("Work"); it is saved with the draft but never sent to the engine. |
 | `locks` | Course code → the section ids locked for that course. |
 | `professorByCourse` | Course code → the selected lecture professor, or `null` for Any professor. All matching lectures remain eligible, including co-taught lectures. Labs and discussions can have other instructors. |
-| `sortPreset` | The Sort choice: `bestOverall`, `fewestEarly`, `latestStart`, `earliestFinish`, `fewestDays` or `fewestGaps` (labels and weights in `SORT_PRESETS`; labels from `issues/product-brief.md`). The menu shows all six sort orders. |
+| `sortPreset` | The Sort choice: `bestOverall`, `fewestEarly`, `latestStart`, `earliestFinish`, `fewestDays` or `fewestGaps` (labels, descriptions and primary measures in `SORT_PRESETS`; labels from `issues/product-brief.md`). The menu shows all six sort orders. Every preset sends the Best overall weights, so `score.total` means the same in each, plus its `primary`; Best overall sends none. Stored IDs are kept as they are. |
 | `alternatives` | Per schedule (by `scheduleKey`) and per course, the same-time alternative the student picked. |
 | `response` | The engine's last answer, success or engine error; `null` when there are no courses. |
 | `scheduleIndex` | Which schedule in `response.schedules` is shown. |
@@ -135,6 +137,7 @@ modules. Without a provider, both hooks use the app's shared store.
 | `solveError` | Why the engine gave no answer at all (for example, the worker crashed). Engine errors are in `response`. |
 | `selectedCourse` | The course the details panel shows and "Your courses" marks. The first course once a term loads; not saved in the draft. |
 | `selectedSection` | The section whose calendar blocks are selected, after a click on a block; `null` otherwise. |
+| `removedCourse` | The last removed course, so it can be undone: `{ code, index, locks, professor, alternatives, wasSelected }` (its position, its locks or `undefined`, its professor entry, its picked alternatives per schedule key, and whether it was selected); `null` otherwise. A second remove replaces it. Any other draft change clears it (adding a course, preferences, sort, lock or unlock, professor, alternative, applying a fix, switching term, opening a plan); selecting a course or section and paging schedules don't. Not saved with the draft or with plans, so a reload loses it. |
 | `savedPlans` | A read-only mirror of the plans source. Saved plans keep their own storage. |
 | `savedPlanId` | The saved plan being viewed, or `null` for Found. `PlannerViewSync` follows `/?view=saved&plan={id}` and browser history. Never persisted with the draft. |
 | `savedSelectedCourse`, `savedSelectedSection` | Selection within Saved. Found keeps its own selection. |
@@ -150,7 +153,9 @@ modules. Without a provider, both hooks use the app's shared store.
 | `setTerm(termId)` | Switches term: downloads the file once (page and engine), restores that term's draft and solves. |
 | `openPlan(termId, plan, chosen?)` | Opens a saved plan in one step: switches term if needed, replaces the draft (courses, preferences, locks, sort), solves once and shows the schedule with the `chosen` sections. Resolves to `false` if the term couldn't load. |
 | `addCourse(code)` | Adds a course from the current term (ignored if unknown or already added) and selects it. |
-| `removeCourse(code)` | Removes a course with its locks and picked alternatives. If it was selected, the next course (or the one before) is selected. |
+| `removeCourse(code)` | Removes a course with its locks, professor and picked alternatives, keeping them in `removedCourse` first. If it was selected, the next course (or the one before) is selected. |
+| `undoRemoveCourse()` | Puts `removedCourse` back at its position (clamped to the list length) with its locks, professor and alternatives, reselects it if it was selected, clears `removedCourse` and solves once. Does nothing without one. |
+| `dismissRemovedCourse()` | Clears `removedCourse` without changing the plan. |
 | `selectCourse(code, sectionId?)` | Selects a planned course, and optionally one of its sections; `null` clears the selection. |
 | `setPreferences(changes)` | Changes any of `startsAfter`, `blocked` and `onlyOpen`. |
 | `setProfessor(course, name)` | Selects a lecture professor, or `null` for Any professor, and regenerates schedules. |
@@ -161,7 +166,7 @@ modules. Without a provider, both hooks use the app's shared store.
 | `pickOption(course, sectionIds)` | Takes another option of a course and keeps the rest of the shown schedule: shows a schedule from the answer that has both, or else locks the option's new sections (in place of locks it drops) and solves again. |
 | `setScheduleIndex(index)` | Shows the schedule at that position, kept within the answer. |
 | `nextSchedule()` / `previousSchedule()` | Pages through the schedules, stopping at the ends. |
-| `applyFix(fix)` | Applies a fix from `response.diagnosis.fixes`: start later, clear blocked times, allow full sections, unlock or drop a course. |
+| `applyFix(fix)` | Applies a fix from `response.diagnosis.fixes`: start later, clear blocked times, allow full sections, unlock, allow any professor or drop a course. "Allow any professor" (`clearAnyOf`) clears the course's professor and, when the fix has `startsAfter`, sets the start time too, in one draft change and one solve. |
 
 Selectors and helpers that come with it: `selectSchedules`,
 `selectCurrentSchedule`, `selectChosenSections` (course → the section ids taken
@@ -237,10 +242,17 @@ still shows that plan's courses, preferences and summary.
     Requests send matching lecture IDs in `preferences.anyOf`; published course
     options still determine the linked labs and discussions.
     Professor changes preserve all section locks. If a restored professor has no
-    matching lectures, the store reports no matches without sending the request
-    to the engine. An empty `anyOf` list would leave that course unrestricted.
+    matching lectures, the store reports no matches itself, because an empty
+    `anyOf` list would leave that course unrestricted. It runs one extra solve
+    without those courses' professor rules; when that gives schedules, the
+    0-result answer offers `clearAnyOf` ("Allow any professor") for each such
+    course, in course order, with that solve's count. The extra solve's
+    schedules are never shown.
     The student can clear the professor in the picker, including when the course
     no longer has lectures. Conflicting locks stay visible with Unlock controls.
+  - `formatDataDate(generatedAt)` writes a term's `generatedAt` as
+    "Oct 25, 2026" in the student's time zone, for "Course data updated", or
+    `null` when it can't be read.
   - `roomName(location)` shortens a room to its building and number
     ("Higgins Labs 230"). Show the full location as a `title` where it's cut.
   - `meetingSpans`, `spansOverlap` and `meetsRules` check whether sections
