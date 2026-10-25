@@ -19,11 +19,13 @@ type ListboxProps = Omit<ComponentProps<"button">, "onChange" | "children" | "on
   variant?: ListboxVariant;
 };
 
+const triggerBase =
+  "rounded-row border border-line bg-surface px-9 text-left text-10 leading-14-5 text-ink focus-visible:border-choice-line focus-visible:shadow-field-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint";
+
+// The menu is the field look, sized to sit in the Preferences row.
 const triggerClasses: Record<ListboxVariant, string> = {
-  field:
-    "flex min-h-36.5 w-full items-center justify-between gap-6 rounded-row border border-line bg-surface px-9 py-9 text-left text-10 leading-14-5 text-ink focus-visible:border-choice-line focus-visible:shadow-field-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint",
-  menu:
-    "relative inline-flex min-w-146 cursor-pointer items-center gap-6 rounded-row bg-surface px-9 py-7.5 text-left text-9 leading-13 text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-not-allowed disabled:text-ink-faint",
+  field: "flex min-h-36.5 w-full items-center justify-between gap-6 py-9",
+  menu: "relative inline-flex min-h-32 min-w-146 cursor-pointer items-center gap-6 py-7",
 };
 
 export function Listbox({ label, menuLabel, options, value, onChange, variant = "field", className, ...props }: ListboxProps) {
@@ -76,7 +78,7 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
         aria-expanded={open}
         aria-controls={popupId}
         aria-activedescendant={open ? `${id}-option-${active}` : undefined}
-        className={cx(triggerClasses[variant], className)}
+        className={cx(triggerBase, triggerClasses[variant], className)}
         onClick={() => { setActive(selected); setOpen(!open); }}
         onBlur={() => setOpen(false)}
         onKeyDown={(event) => {
@@ -119,15 +121,10 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
         {variant === "menu" && menuLabel && (
           <span className="text-ink-muted">{menuLabel}</span>
         )}
-        <span className="truncate">{options[selected]?.label}</span>
+        <span className={cx("truncate", variant === "menu" && "flex-1")}>{options[selected]?.label}</span>
         <CaretDown
           aria-hidden
-          className={cx(
-            "shrink-0 transition-transform",
-            variant === "field" ? "size-11" : "size-10",
-            open && "rotate-180",
-            "motion-reduce:transition-none",
-          )}
+          className={cx("size-11 shrink-0 transition-transform motion-reduce:transition-none", open && "rotate-180")}
         />
         {/* Invisible extended hit area for 44px tap target on menu variant */}
         {variant === "menu" && (

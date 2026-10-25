@@ -164,14 +164,11 @@ describe("PreferencesBar", () => {
     await userEvent.click(sort);
 
     const list = screen.getByRole("listbox", { name: "Sort" });
-    expect(within(list).getAllByRole("option").map((option) => option.textContent)).toEqual([
-      "Best overall",
-      "Fewest early classes",
-      "Latest start",
-      "Earliest finish",
-      "Most days off",
-      "Most compact",
-    ]);
+    const labels = ["Best overall", "Fewest early classes", "Latest start", "Earliest finish", "Most days off", "Most compact"];
+    const options = within(list).getAllByRole("option");
+    expect(options).toHaveLength(labels.length);
+    options.forEach((option, index) => expect(option).toHaveAccessibleName(labels[index]));
+    expect(within(list).getByRole("option", { name: "Latest start" })).toHaveAccessibleDescription("Fewer classes before 1 PM");
     expect(within(list).getByRole("option", { selected: true })).toHaveTextContent("Fewest early classes");
   });
 

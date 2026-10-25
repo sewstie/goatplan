@@ -232,11 +232,10 @@ for (const [width, height] of [
     await expect(sort).toHaveText("SortFewest early classes");
     await expect(badges(page)).toHaveText(["Starts 9 AM", "1 gap", "Done by 2:50 PM"]);
 
-    // The closed control has div.app-6's size (146 × 28.5 in the frame).
+    // The closed control has the Preferences row's height.
     const sortBox = await box(sort);
     expect(sortBox.width).toBeGreaterThanOrEqual(146);
-    expect(sortBox.height).toBeGreaterThanOrEqual(28);
-    expect(sortBox.height).toBeLessThanOrEqual(30);
+    expect(sortBox.height).toBeCloseTo(32, 0);
 
     // Whole pills, inside the window, clear of the switcher, the plan actions and Sort.
     const listBox = await box(badgeList(page));
@@ -268,7 +267,7 @@ for (const [width, height] of [
     await sort.click();
     const list = sortList(page);
     await expect(list).toBeVisible();
-    await expect(list.getByRole("option", { selected: true })).toHaveText("Fewest early classes");
+    await expect(list.getByRole("option", { selected: true })).toHaveAccessibleName("Fewest early classes");
     await expect(badgeList(page)).toBeVisible();
     expect(overlaps(await box(list), listBox)).toBe(false);
     // The picked order keeps its soft accent fill while highlighted; the pointer moves the one highlight.
