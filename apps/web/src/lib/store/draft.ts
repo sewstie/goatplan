@@ -20,7 +20,7 @@ export function emptyDraft(): Draft {
     preferences: { ...DEFAULT_PREFERENCES, blocked: [] },
     locks: {},
     professorByCourse: {},
-    sortPreset: "fewestEarly",
+    sortPreset: "bestOverall",
     alternatives: {},
   };
 }

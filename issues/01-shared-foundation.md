@@ -6,7 +6,7 @@
 
 **Blocked by:** None (can start immediately). Runs in parallel with 02; nothing here touches the engine or any UI.
 
-**Status:** ready-for-agent
+**Status:** DONE
 
 - [ ] The engine types in the web app carry the optional `sort.lateCutoff` and `sort.perLateMinute` request fields and the `score.lateMinutes` response field, matching the contract in 02.
 - [ ] The sort presets table has six rows in this menu order, with these labels and weights:
