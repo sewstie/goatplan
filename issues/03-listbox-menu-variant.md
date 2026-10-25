@@ -6,7 +6,7 @@
 
 **Blocked by:** 02 (engine before UI).
 
-**Status:** ready-for-agent
+**Status:** DONE
 
 - [ ] The listbox takes one new prop, a trigger variant: `"field"` (today's look, the default) or `"menu"`. It uses the same names as the shared select's variants.
 - [ ] The menu trigger matches the closed Sort control in `div.app-6`:

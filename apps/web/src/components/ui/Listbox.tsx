@@ -7,15 +7,26 @@ import { cx } from "./cx";
 import { floatingPosition } from "./floatingPosition";
 
 export type ListboxOption = { value: string; label: string; description?: string };
+export type ListboxVariant = "field" | "menu";
 
 type ListboxProps = Omit<ComponentProps<"button">, "onChange" | "children" | "onClick" | "onBlur" | "onKeyDown"> & {
   label: string;
+  /** Visible label shown before the value in the menu variant. Ignored for field. */
+  menuLabel?: string;
   options: readonly ListboxOption[];
   value: string;
   onChange: (value: string) => void;
+  variant?: ListboxVariant;
 };
 
-export function Listbox({ label, options, value, onChange, className, ...props }: ListboxProps) {
+const triggerClasses: Record<ListboxVariant, string> = {
+  field:
+    "flex min-h-36.5 w-full items-center justify-between gap-6 rounded-row border border-line bg-surface px-9 py-9 text-left text-10 leading-14-5 text-ink focus-visible:border-choice-line focus-visible:shadow-field-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint",
+  menu:
+    "relative inline-flex min-w-146 items-center gap-6 rounded-row bg-surface px-9 py-7.5 text-left text-9 leading-13 text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-not-allowed disabled:text-ink-faint",
+};
+
+export function Listbox({ label, menuLabel, options, value, onChange, variant = "field", className, ...props }: ListboxProps) {
   const id = useId();
   const popupId = `${id}-listbox`;
   const button = useRef<HTMLButtonElement>(null);
@@ -37,7 +48,9 @@ export function Listbox({ label, options, value, onChange, className, ...props }
   useLayoutEffect(() => {
     if (!open || !button.current || !popup.current) return;
     const anchor = button.current.getBoundingClientRect();
-    popup.current.style.width = `${anchor.width}px`;
+    // List is at least as wide as the trigger, and wide enough for content
+    popup.current.style.minWidth = `${anchor.width}px`;
+    popup.current.style.width = "max-content";
     const position = floatingPosition(anchor, popup.current.getBoundingClientRect(), { width: window.innerWidth, height: window.innerHeight }, { gap: 0 });
     popup.current.style.left = `${position.left}px`;
     popup.current.style.top = `${position.top}px`;
@@ -60,7 +73,7 @@ export function Listbox({ label, options, value, onChange, className, ...props }
         aria-expanded={open}
         aria-controls={popupId}
         aria-activedescendant={open ? `${id}-option-${active}` : undefined}
-        className={cx("flex min-h-36.5 w-full items-center justify-between gap-6 rounded-row border border-line bg-surface px-9 py-9 text-left text-10 leading-14-5 text-ink focus-visible:border-choice-line focus-visible:shadow-field-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint", className)}
+        className={cx(triggerClasses[variant], className)}
         onClick={() => { setActive(selected); setOpen(!open); }}
         onBlur={() => setOpen(false)}
         onKeyDown={(event) => {
@@ -100,15 +113,31 @@ export function Listbox({ label, options, value, onChange, className, ...props }
           }
         }}
       >
+        {variant === "menu" && menuLabel && (
+          <span className="text-ink-muted">{menuLabel}</span>
+        )}
         <span className="truncate">{options[selected]?.label}</span>
-        <CaretDown aria-hidden className="size-11 shrink-0" />
+        <CaretDown
+          aria-hidden
+          className={cx(
+            "shrink-0 transition-transform",
+            variant === "field" ? "size-11" : "size-10",
+            open && "rotate-180",
+            "motion-reduce:transition-none",
+          )}
+        />
+        {/* Invisible extended hit area for 44px tap target on menu variant */}
+        {variant === "menu" && (
+          <span aria-hidden className="absolute inset-x-0 top-1/2 h-44 -translate-y-1/2" />
+        )}
       </button>
       {open && createPortal(
         <div ref={popup} id={popupId} role="listbox" aria-label={label} className="invisible fixed z-40 max-h-[min(400px,calc(100vh-16px))] overflow-y-auto rounded-[11px] border border-listbox-line bg-surface p-5 shadow-listbox">
           {options.map((option, index) => (
             <div key={option.value} id={`${id}-option-${index}`} role="option" aria-selected={option.value === value} aria-labelledby={`${id}-name-${index}`} aria-describedby={option.description ? `${id}-description-${index}` : undefined}
-              className={cx("relative flex min-h-49 cursor-pointer flex-col justify-center gap-2.5 rounded-[7px] px-9 py-9 pr-26", option.value === value ? "bg-accent-soft text-accent" : "text-ink", index === active && index !== selected && "bg-surface-selected")}
+              className={cx("relative flex min-h-49 cursor-pointer flex-col justify-center gap-2.5 rounded-[7px] px-9 py-9 pr-26", option.value === value ? "bg-accent-soft text-accent" : "text-ink", index === active && "bg-surface-selected", index === active && option.value === value && "bg-accent-soft")}
               onMouseDown={(event) => event.preventDefault()}
+              onMouseEnter={() => setActive(index)}
               onClick={() => { onChange(option.value); setOpen(false); button.current?.focus(); }}
             >
               <span id={`${id}-name-${index}`} className="text-10 leading-14-5 font-700">{option.label}</span>
