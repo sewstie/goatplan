@@ -1,6 +1,16 @@
 import { describe, expect, it } from "vitest";
+import type { Day } from "@/lib/data/types";
 import type { Diagnosis, SolveResponse } from "@/lib/engine/types";
-import { bannerMessage, count, formatDuration, listNames, scoreChips, summaryText, type BannerInput } from "./scheduleCopy";
+import type { SortPresetId } from "@/lib/store/types";
+import { bannerMessage, count, formatDuration, listNames, scheduleBadges, summaryText, type BannerInput } from "./scheduleCopy";
+
+// ── helpers ──
+
+interface Meeting {
+  day: Day;
+  start: number;
+  end: number;
+}
 
 function solved(changes: Partial<Extract<SolveResponse, { ok: true }>> = {}): SolveResponse {
   return {
@@ -26,6 +36,12 @@ function noFit(diagnosis: Partial<Diagnosis>): SolveResponse {
   });
 }
 
+function badges(meetings: Meeting[], preset: SortPresetId = "bestOverall"): string[] {
+  return scheduleBadges(meetings, preset);
+}
+
+// ── small helpers (unchanged) ──
+
 describe("small helpers", () => {
   it("counts with the right plural", () => {
     expect(count("course", 1)).toBe("1 course");
@@ -46,23 +62,191 @@ describe("small helpers", () => {
   });
 });
 
-describe("scoreChips", () => {
-  it("describes days, gaps and early classes", () => {
-    expect(scoreChips({ total: 1430, days: 5, gapMinutes: 230, earlyMinutes: 300 })).toEqual([
-      "5 days on campus",
-      "3 h 50 min between classes",
-      "5 h of early classes",
-    ]);
+// ── scheduleBadges ──
+
+describe("scheduleBadges", () => {
+  // A week with classes Mon–Fri, 9 AM–10 AM and 2 PM–3 PM every day.
+  // Start: 9 AM, Finish: 3 PM. Days off: none. Gaps: one ≥30 min per day (4 h gap), 5 gaps total.
+  const fullWeek: Meeting[] = [
+    { day: "Mon", start: 540, end: 600 },
+    { day: "Mon", start: 840, end: 900 },
+    { day: "Tue", start: 540, end: 600 },
+    { day: "Tue", start: 840, end: 900 },
+    { day: "Wed", start: 540, end: 600 },
+    { day: "Wed", start: 840, end: 900 },
+    { day: "Thu", start: 540, end: 600 },
+    { day: "Thu", start: 840, end: 900 },
+    { day: "Fri", start: 540, end: 600 },
+    { day: "Fri", start: 840, end: 900 },
+  ];
+
+  describe("each rule", () => {
+    it("formats Start as the earliest start of the week", () => {
+      // Single class at 10 AM.
+      const result = badges([{ day: "Mon", start: 600, end: 650 }]);
+      expect(result).toContain("Starts 10 AM");
+    });
+
+    it("formats Finish as the latest end of the week", () => {
+      // Full week so DaysOff is empty (skipped), which leaves room for Finish in top 3.
+      const result = badges([
+        { day: "Mon", start: 540, end: 600 },
+        { day: "Tue", start: 540, end: 600 },
+        { day: "Wed", start: 540, end: 600 },
+        { day: "Thu", start: 540, end: 600 },
+        { day: "Fri", start: 840, end: 900 },
+      ]);
+      expect(result).toContain("Done by 3 PM");
+    });
+
+    it("names one day off", () => {
+      // Classes Mon–Thu only → Fri off.
+      const meetings: Meeting[] = [
+        { day: "Mon", start: 540, end: 600 },
+        { day: "Tue", start: 540, end: 600 },
+        { day: "Wed", start: 540, end: 600 },
+        { day: "Thu", start: 540, end: 600 },
+      ];
+      expect(badges(meetings)).toContain("Fri off");
+    });
+
+    it("names two days off", () => {
+      // Classes Mon, Wed, Fri → Tue, Thu off.
+      const meetings: Meeting[] = [
+        { day: "Mon", start: 540, end: 600 },
+        { day: "Wed", start: 540, end: 600 },
+        { day: "Fri", start: 540, end: 600 },
+      ];
+      expect(badges(meetings)).toContain("Tue, Thu off");
+    });
+
+    it("counts three or more days off", () => {
+      // Only Mon and Tue → 3 days off.
+      const meetings: Meeting[] = [
+        { day: "Mon", start: 540, end: 600 },
+        { day: "Tue", start: 540, end: 600 },
+      ];
+      expect(badges(meetings)).toContain("3 days off");
+    });
+
+    it("counts gaps of 30+ minutes between classes on the same day", () => {
+      // Two classes with a 4-hour gap on Mon.
+      const meetings: Meeting[] = [
+        { day: "Mon", start: 540, end: 600 },
+        { day: "Mon", start: 840, end: 900 },
+      ];
+      const result = badges(meetings);
+      expect(result).toContain("1 gap");
+    });
+
+    it("says No gaps when there are none", () => {
+      // Back-to-back classes.
+      const meetings: Meeting[] = [
+        { day: "Mon", start: 540, end: 600 },
+        { day: "Mon", start: 600, end: 660 },
+      ];
+      expect(badges(meetings)).toContain("No gaps");
+    });
+
+    it("pluralizes gaps correctly", () => {
+      expect(badges(fullWeek)).toContain("5 gaps");
+    });
   });
 
-  it("says when there are no gaps or early classes", () => {
-    expect(scoreChips({ total: 0, days: 1, gapMinutes: 0, earlyMinutes: 0 })).toEqual([
-      "1 day on campus",
-      "No gaps between classes",
-      "No early classes",
-    ]);
+  describe("30-minute gap threshold", () => {
+    it("a 29-minute break is not a gap", () => {
+      const meetings: Meeting[] = [
+        { day: "Mon", start: 540, end: 600 },
+        { day: "Mon", start: 629, end: 680 },
+      ];
+      expect(badges(meetings)).toContain("No gaps");
+    });
+
+    it("a 30-minute break is a gap", () => {
+      const meetings: Meeting[] = [
+        { day: "Mon", start: 540, end: 600 },
+        { day: "Mon", start: 630, end: 680 },
+      ];
+      expect(badges(meetings)).toContain("1 gap");
+    });
+  });
+
+  describe("lead badge for each sort order", () => {
+    it("latestStart → Start first", () => {
+      expect(badges(fullWeek, "latestStart")[0]).toBe("Starts 9 AM");
+    });
+
+    it("fewestEarly → Start first", () => {
+      expect(badges(fullWeek, "fewestEarly")[0]).toBe("Starts 9 AM");
+    });
+
+    it("earliestFinish → Finish first", () => {
+      expect(badges(fullWeek, "earliestFinish")[0]).toBe("Done by 3 PM");
+    });
+
+    it("fewestDays → Days off first", () => {
+      // Need days off for it to show. Classes only Mon and Tue.
+      const meetings: Meeting[] = [
+        { day: "Mon", start: 540, end: 600 },
+        { day: "Tue", start: 540, end: 600 },
+      ];
+      expect(badges(meetings, "fewestDays")[0]).toBe("3 days off");
+    });
+
+    it("fewestGaps → Gaps first", () => {
+      expect(badges(fullWeek, "fewestGaps")[0]).toBe("5 gaps");
+    });
+
+    it("bestOverall has no lead badge, uses default order", () => {
+      // Full week: no days off, so default order DaysOff(skip), Start, Gaps, Finish → Start, Gaps, Finish.
+      const result = badges(fullWeek, "bestOverall");
+      expect(result[0]).toBe("Starts 9 AM");
+      expect(result[1]).toBe("5 gaps");
+      expect(result[2]).toBe("Done by 3 PM");
+    });
+  });
+
+  describe("cap of 3", () => {
+    it("returns at most 3 badges", () => {
+      // Classes only on Mon → 4 days off, with a gap.
+      // All four badge types apply: DaysOff, Start, Gaps, Finish.
+      const meetings: Meeting[] = [
+        { day: "Mon", start: 540, end: 600 },
+        { day: "Mon", start: 840, end: 900 },
+      ];
+      const result = badges(meetings, "bestOverall");
+      expect(result.length).toBeLessThanOrEqual(3);
+    });
+  });
+
+  describe("empty badges left out", () => {
+    it("skips Days off when all weekdays have a class", () => {
+      const result = badges(fullWeek, "bestOverall");
+      expect(result.every((badge) => !badge.includes("off"))).toBe(true);
+    });
+
+    it("skips Days off when fewestDays is lead but no day is free", () => {
+      const result = badges(fullWeek, "fewestDays");
+      // DaysOff is lead but empty, so it's skipped. Next in default order.
+      expect(result[0]).not.toContain("off");
+    });
+  });
+
+  describe("empty week", () => {
+    it("returns no badges for an empty meetings array", () => {
+      expect(badges([])).toEqual([]);
+    });
+  });
+
+  describe("classes with no set time", () => {
+    it("doesn't count meetings with undefined day/start/end", () => {
+      // We pass only valid meetings. An empty array means all courses are online/async.
+      expect(badges([])).toEqual([]);
+    });
   });
 });
+
+// ── summaryText (unchanged) ──
 
 describe("summaryText", () => {
   const base = {
@@ -113,6 +297,8 @@ describe("summaryText", () => {
   });
 });
 
+// ── bannerMessage (unchanged) ──
+
 describe("bannerMessage", () => {
   const base: BannerInput = {
     courseCount: 3,
@@ -153,7 +339,7 @@ describe("bannerMessage", () => {
   it("warns when the engine fails or nothing fits", () => {
     expect(bannerMessage({ ...base, solveStatus: "error", solveError: "The worker crashed." })).toMatchObject({
       tone: "warning",
-      title: "Couldn’t check your schedules.",
+      title: "Couldn\u2019t check your schedules.",
     });
     expect(
       bannerMessage({
@@ -162,8 +348,8 @@ describe("bannerMessage", () => {
       }),
     ).toEqual({
       tone: "warning",
-      title: "Couldn’t check your schedules.",
-      detail: "PH 9999 isn’t offered this term any more. Remove it to see your schedules.",
+      title: "Couldn\u2019t check your schedules.",
+      detail: "PH 9999 isn\u2019t offered this term any more. Remove it to see your schedules.",
     });
     expect(bannerMessage({ ...base, response: noFit({ clashingPairs: [["AB 1533", "AE 2320"]] }) })).toEqual({
       tone: "warning",
@@ -171,7 +357,7 @@ describe("bannerMessage", () => {
       detail: "AB 1533 and AE 2320 overlap.",
     });
     expect(bannerMessage({ ...base, response: noFit({ minimalClash: ["A", "B", "C"] }) })?.detail).toBe(
-      "A, B and C can’t all fit together.",
+      "A, B and C can\u2019t all fit together.",
     );
     expect(bannerMessage({ ...base, response: noFit({ unsure: true }) })?.title).toBe("Too many combinations to check.");
   });
