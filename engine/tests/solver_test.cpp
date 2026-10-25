@@ -13,8 +13,12 @@
 
 #include "goatplan/json_io.hpp"
 #include "goatplan/solver.hpp"
+#include "test_helpers.hpp"
 
 using namespace goatplan;
+using goatplan::test::kEveryPrimary;
+using goatplan::test::rankKey;
+using goatplan::test::RankKey;
 
 namespace {
 using Picks = std::vector<std::size_t>;
@@ -32,6 +36,16 @@ CourseChoices choicesFromTimes(std::initializer_list<Time> times) {
     for (const Time& time : times) {
         WeekMask mask;
         mask.addRange(time.day, time.start, time.end);
+        addOption(choice, mask);
+    }
+    return choice;
+}
+
+CourseChoices choicesFromWeeks(std::initializer_list<std::initializer_list<Time>> weeks) {
+    CourseChoices choice;
+    for (const auto& times : weeks) {
+        WeekMask mask;
+        for (const Time& time : times) mask.addRange(time.day, time.start, time.end);
         addOption(choice, mask);
     }
     return choice;
@@ -94,6 +108,57 @@ std::vector<std::pair<int, Picks>> ranked(const SolveResult& result) {
     std::vector<std::pair<int, Picks>> list;
     for (const Schedule& schedule : result.schedules) list.emplace_back(schedule.score.total, schedule.picks);
     return list;
+}
+
+std::vector<Picks> picksOf(const SolveResult& result) {
+    std::vector<Picks> list;
+    for (const Schedule& schedule : result.schedules) list.push_back(schedule.picks);
+    return list;
+}
+
+void expectScoresMatchWeeks(const std::vector<CourseChoices>& choices, const SolveResult& result) {
+    for (const Schedule& schedule : result.schedules) {
+        const Score expected = scoreOf(weekOf(choices, schedule.picks));
+        EXPECT_EQ(schedule.score.total, expected.total);
+        EXPECT_EQ(schedule.score.firstStart, expected.firstStart);
+        EXPECT_EQ(schedule.score.lastEnd, expected.lastEnd);
+        EXPECT_EQ(schedule.score.averageStart, expected.averageStart);
+        EXPECT_EQ(schedule.score.averageEnd, expected.averageEnd);
+        EXPECT_EQ(schedule.score.freeMinutes, expected.freeMinutes);
+    }
+}
+
+std::vector<Picks> patternPicks(const std::vector<CourseChoices>& choices) {
+    std::vector<Picks> patterns;
+    Picks picks(choices.size());
+    const auto visit = [&](const auto& self, std::size_t c, const WeekMask& used) -> void {
+        if (c == choices.size()) {
+            patterns.push_back(picks);
+            return;
+        }
+        const auto& masks = choices[c].masks;
+        for (std::size_t i = 0; i < masks.size(); ++i) {
+            if (std::find(masks.begin(), masks.end(), masks[i]) != masks.begin() + static_cast<std::ptrdiff_t>(i)) continue;
+            if (masks[i].intersects(used)) continue;
+            picks[c] = i;
+            WeekMask next = used;
+            next |= masks[i];
+            self(self, c + 1, next);
+        }
+    };
+    visit(visit, 0, WeekMask{});
+    return patterns;
+}
+
+std::vector<Picks> bruteForceOrder(const std::vector<CourseChoices>& choices, SortPrimary primary) {
+    std::vector<RankKey> keys;
+    for (const Picks& picks : patternPicks(choices)) {
+        keys.push_back(rankKey(scoreOf(weekOf(choices, picks)), primary, picks));
+    }
+    std::sort(keys.begin(), keys.end());
+    std::vector<Picks> order;
+    for (const RankKey& key : keys) order.push_back(std::get<3>(key));
+    return order;
 }
 
 void expectBestFirst(const std::vector<CourseChoices>& choices, const SolveResult& result) {
@@ -477,4 +542,112 @@ TEST(Solver, MatchesBruteForceOnFixture) {
         }
     }
     EXPECT_TRUE(foundCompatiblePair);
+}
+
+TEST(Solver, EveryPrimaryMatchesBruteForceOnRandomCourses) {
+    for (std::uint32_t seed = 0; seed < 20; ++seed) {
+        const std::vector<CourseChoices> choices = randomCourses(seed);
+        for (SortPrimary primary : kEveryPrimary) {
+            SCOPED_TRACE("seed " + std::to_string(seed) + ", primary " + std::to_string(static_cast<int>(primary)));
+            std::vector<Picks> expected = bruteForceOrder(choices, primary);
+            SolveLimits limits;
+            limits.maxSchedules = 512;
+            const SolveResult result = solve(choices, limits, ScoreWeights{}, primary);
+            EXPECT_EQ(picksOf(result), expected);
+            expectScoresMatchWeeks(choices, result);
+
+            limits.maxSchedules = 5;
+            const SolveResult top = solve(choices, limits, ScoreWeights{}, primary);
+            expected.resize(std::min<std::size_t>(expected.size(), 5));
+            EXPECT_EQ(picksOf(top), expected);
+            EXPECT_EQ(top.total, result.total);
+            EXPECT_EQ(top.steps, result.steps);
+        }
+    }
+}
+
+TEST(Solver, NoPrimaryRanksByTotalAsBefore) {
+    const std::vector<CourseChoices> choices = randomCourses(3);
+    SolveLimits limits;
+    limits.maxSchedules = 512;
+    EXPECT_EQ(ranked(solve(choices, limits, ScoreWeights{}, SortPrimary::None)), ranked(solve(choices, limits)));
+}
+
+TEST(Solver, AverageStartBreaksFirstStartTies) {
+    const std::vector<CourseChoices> choices{
+        choicesFromTimes({{0, 600, 650}}),
+        choicesFromTimes({{1, 660, 710}, {1, 780, 830}})
+    };
+    ScoreWeights weights;
+    weights.lateCutoff = 720;
+    weights.perLateMinute = 1;
+    EXPECT_EQ(picksOf(solve(choices, SolveLimits{}, weights)), (std::vector<Picks>{{0, 0}, {0, 1}}));
+    const SolveResult result = solve(choices, SolveLimits{}, weights, SortPrimary::FirstStart);
+    ASSERT_EQ(picksOf(result), (std::vector<Picks>{{0, 1}, {0, 0}}));
+    EXPECT_EQ(result.schedules[0].score.firstStart, result.schedules[1].score.firstStart);
+    EXPECT_GT(result.schedules[0].score.averageStart, result.schedules[1].score.averageStart);
+    EXPECT_GT(result.schedules[0].score.total, result.schedules[1].score.total);
+}
+
+TEST(Solver, AverageEndBreaksLastEndTies) {
+    const std::vector<CourseChoices> choices{
+        choicesFromTimes({{1, 780, 830}}),
+        choicesFromTimes({{0, 600, 650}, {0, 480, 530}})
+    };
+    EXPECT_EQ(picksOf(solve(choices)), (std::vector<Picks>{{0, 0}, {0, 1}}));
+    const SolveResult result = solve(choices, SolveLimits{}, ScoreWeights{}, SortPrimary::LastEnd);
+    ASSERT_EQ(picksOf(result), (std::vector<Picks>{{0, 1}, {0, 0}}));
+    EXPECT_EQ(result.schedules[0].score.lastEnd, result.schedules[1].score.lastEnd);
+    EXPECT_LT(result.schedules[0].score.averageEnd, result.schedules[1].score.averageEnd);
+    EXPECT_GT(result.schedules[0].score.total, result.schedules[1].score.total);
+}
+
+TEST(Solver, AveragesAreFairToFewerDays) {
+    const std::vector<std::pair<SortPrimary, std::vector<CourseChoices>>> cases{
+        {SortPrimary::FirstStart, {choicesFromTimes({{0, 660, 710}}), choicesFromTimes({{0, 720, 770}, {1, 660, 710}})}},
+        {SortPrimary::LastEnd, {choicesFromTimes({{0, 720, 770}}), choicesFromTimes({{0, 660, 710}, {1, 720, 770}})}},
+    };
+    for (const auto& [primary, choices] : cases) {
+        SCOPED_TRACE(static_cast<int>(primary));
+        ScoreWeights weights;
+        const SolveResult oneDayCheaper = solve(choices, SolveLimits{}, weights, primary);
+        ASSERT_EQ(picksOf(oneDayCheaper), (std::vector<Picks>{{0, 0}, {0, 1}}));
+        const Score& oneDay = oneDayCheaper.schedules[0].score;
+        const Score& twoDays = oneDayCheaper.schedules[1].score;
+        EXPECT_EQ(oneDay.days, 1);
+        EXPECT_EQ(twoDays.days, 2);
+        const RankKey oneDayKey = rankKey(oneDay, primary, {});
+        const RankKey twoDaysKey = rankKey(twoDays, primary, {});
+        EXPECT_EQ(std::get<0>(oneDayKey), std::get<0>(twoDaysKey));
+        EXPECT_EQ(std::get<1>(oneDayKey), std::get<1>(twoDaysKey));
+        EXPECT_LT(oneDay.total, twoDays.total);
+
+        weights.perDay = 0;
+        EXPECT_EQ(picksOf(solve(choices, SolveLimits{}, weights, primary)), (std::vector<Picks>{{0, 1}, {0, 0}}));
+    }
+}
+
+TEST(Solver, PrimaryTiesFallBackToTotalThenSectionOrder) {
+    const std::vector<CourseChoices> choices{choicesFromWeeks({
+        {{0, 600, 650}, {0, 660, 710}},
+        {{0, 600, 710}},
+        {{1, 600, 710}},
+    })};
+    for (SortPrimary primary : kEveryPrimary) {
+        SCOPED_TRACE(static_cast<int>(primary));
+        const SolveResult result = solve(choices, SolveLimits{}, ScoreWeights{}, primary);
+        EXPECT_EQ(ranked(result), (std::vector<std::pair<int, Picks>>{{60, {1}}, {60, {2}}, {70, {0}}}));
+    }
+}
+
+TEST(Solver, CappedSearchRanksOnlyTheSchedulesItFound) {
+    const std::vector<CourseChoices> choices{threeTimesOn(0), threeTimesOn(1), threeTimesOn(2)};
+    SolveLimits limits;
+    limits.stepBudget = 5;
+    const SolveResult result = solve(choices, limits, ScoreWeights{}, SortPrimary::FirstStart);
+    EXPECT_TRUE(result.capped);
+    EXPECT_EQ(picksOf(result), (std::vector<Picks>{{0, 0, 2}, {0, 0, 1}, {0, 0, 0}}));
+    const SolveResult full = solve(choices, SolveLimits{}, ScoreWeights{}, SortPrimary::FirstStart);
+    EXPECT_FALSE(full.capped);
+    EXPECT_EQ(full.schedules.front().picks, (Picks{2, 2, 2}));
 }

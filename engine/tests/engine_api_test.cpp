@@ -17,8 +17,10 @@
 #include "test_helpers.hpp"
 
 using namespace goatplan;
+using goatplan::test::RankKey;
 using goatplan::test::TestCourse;
 using goatplan::test::TestSection;
+using goatplan::test::rankKey;
 using json = nlohmann::json;
 
 namespace {
@@ -171,6 +173,11 @@ TEST(EngineApi, BadFieldsAreNamed) {
         {R"({"version": 1, "courses": ["AE 2320"], "sort": {"lateCutoff": -1}})", "sort.lateCutoff"},
         {R"({"version": 1, "courses": ["AE 2320"], "sort": {"perLateMinute": 10001}})", "sort.perLateMinute"},
         {R"({"version": 1, "courses": ["AE 2320"], "sort": {"perLateMinute": -1}})", "sort.perLateMinute"},
+        {R"({"version": 1, "courses": ["AE 2320"], "sort": {"primary": "total"}})", "sort.primary"},
+        {R"({"version": 1, "courses": ["AE 2320"], "sort": {"primary": "FirstStart"}})", "sort.primary"},
+        {R"({"version": 1, "courses": ["AE 2320"], "sort": {"primary": ""}})", "sort.primary"},
+        {R"({"version": 1, "courses": ["AE 2320"], "sort": {"primary": 3}})", "sort.primary"},
+        {R"({"version": 1, "courses": ["AE 2320"], "sort": {"primary": ["days"]}})", "sort.primary"},
         {R"({"version": 1, "courses": ["AE 2320"], "limits": {"maxSchedules": -1}})", "limits.maxSchedules"},
         {R"({"version": 1, "courses": ["AE 2320"], "limits": {"stepBudget": 2.5}})", "limits.stepBudget"},
     };
@@ -455,4 +462,107 @@ TEST(EngineApi, LateMinutesCountedPerDay) {
     ASSERT_EQ(response["schedules"].size(), 1u);
     EXPECT_EQ(response["schedules"][0]["score"]["lateMinutes"], 120);
     EXPECT_EQ(response["schedules"][0]["score"]["total"], 120);
+}
+
+TEST(EngineApi, ScoreHasTheTimeFields) {
+    const Engine engine = engineFor(termJson({
+        {"A", {{Monday | Wednesday, 540, 590}}},
+        {"B", {{Monday, 660, 710}}}}));
+    const json response = call(engine, R"({"version": 1, "courses": ["A", "B"]})");
+    ASSERT_EQ(response["ok"], true) << response.dump();
+    ASSERT_EQ(response["schedules"].size(), 1u);
+    EXPECT_EQ(response["schedules"][0]["score"], json::parse(R"({
+        "total": 550, "earlyMinutes": 120, "gapMinutes": 70, "lateMinutes": 0, "days": 2,
+        "firstStart": 540, "lastEnd": 710, "averageStart": 540, "averageEnd": 650, "freeMinutes": 70})"));
+}
+
+TEST(EngineApi, MissingOrNullPrimaryRanksAsBefore) {
+    const Engine engine = fixtureEngine();
+    json expected = call(engine, kBoth);
+    expected.erase("elapsedMs");
+    for (const std::string request : {
+        R"({"version": 1, "courses": ["AE 2320", "AE 4310"], "sort": {}})",
+        R"({"version": 1, "courses": ["AE 2320", "AE 4310"], "sort": {"primary": null}})",
+        R"({"version": 1, "courses": ["AE 2320", "AE 4310"], "sort": null})"}) {
+        SCOPED_TRACE(request);
+        json response = call(engine, request);
+        response.erase("elapsedMs");
+        EXPECT_EQ(response, expected);
+    }
+}
+
+TEST(EngineApi, EveryPrimaryPutsTheBestOfAllSchedulesFirst) {
+    const std::vector<TestCourse> courses{
+        {"A", {{Friday, 480, 590}, {Monday | Thursday, 900, 975}, {Thursday, 750, 860}, {Monday | Thursday, 660, 735}}},
+        {"B", {{Monday | Thursday, 660, 735}, {Thursday, 540, 650}, {Friday, 690, 800}, {Monday, 900, 1010}}},
+        {"C", {{Monday | Wednesday | Friday, 1080, 1130}, {Monday | Thursday, 600, 675}, {Thursday, 990, 1100},
+               {Wednesday, 510, 620}}},
+        {"D", {{Monday | Thursday, 510, 585}, {Monday | Wednesday | Friday, 540, 590}, {Monday | Thursday, 990, 1065},
+               {Wednesday, 540, 650}}},
+    };
+    const std::string text = termJson(courses);
+    const Term term = parseTerm(text);
+    const Engine engine = engineFor(text);
+
+    std::vector<std::pair<Score, std::vector<std::size_t>>> valid;
+    for (std::size_t n = 0; n < 256; ++n) {
+        const std::vector<std::size_t> picks{n % 4, n / 4 % 4, n / 16 % 4, n / 64};
+        WeekMask week;
+        bool clash = false;
+        for (std::size_t c = 0; c < picks.size(); ++c) {
+            const WeekMask mask = maskOf(term.courses[c], term.courses[c].options[picks[c]]);
+            clash = clash || mask.intersects(week);
+            week |= mask;
+        }
+        if (!clash) valid.emplace_back(scoreOf(week), picks);
+    }
+    const auto order = [&](SortPrimary primary) {
+        std::vector<RankKey> keys;
+        for (const auto& [score, picks] : valid) keys.push_back(rankKey(score, primary, picks));
+        std::sort(keys.begin(), keys.end());
+        return keys;
+    };
+    const std::vector<RankKey> byTotal = order(SortPrimary::None);
+
+    const std::vector<std::pair<std::string, SortPrimary>> primaries{
+        {"null", SortPrimary::None},
+        {R"("earlyMinutes")", SortPrimary::EarlyMinutes},
+        {R"("firstStart")", SortPrimary::FirstStart},
+        {R"("lastEnd")", SortPrimary::LastEnd},
+        {R"("days")", SortPrimary::Days},
+        {R"("freeMinutes")", SortPrimary::FreeMinutes},
+    };
+    for (const auto& [name, primary] : primaries) {
+        SCOPED_TRACE(name);
+        const json response = call(engine, R"({"version": 1, "courses": ["A", "B", "C", "D"],
+            "sort": {"primary": )" + name + R"(}, "limits": {"maxSchedules": 5}})");
+        ASSERT_EQ(response["ok"], true) << response.dump();
+        EXPECT_EQ(response["total"], valid.size());
+        ASSERT_EQ(response["schedules"].size(), 5u);
+
+        const std::vector<RankKey> expected = order(primary);
+        for (std::size_t s = 0; s < 5; ++s) {
+            const std::vector<std::size_t>& picks = std::get<3>(expected[s]);
+            for (std::size_t c = 0; c < courses.size(); ++c) {
+                EXPECT_EQ(response["schedules"][s]["courses"][c]["sections"],
+                          json::array({courses[c].first + "-" + std::to_string(picks[c])}));
+            }
+        }
+
+        const auto best = std::find_if(valid.begin(), valid.end(),
+            [&](const auto& entry) { return entry.second == std::get<3>(expected[0]); });
+        ASSERT_NE(best, valid.end());
+        const Score& score = best->first;
+        EXPECT_EQ(response["schedules"][0]["score"], json({
+            {"total", score.total}, {"earlyMinutes", score.earlyMinutes}, {"gapMinutes", score.gapMinutes},
+            {"lateMinutes", score.lateMinutes}, {"days", score.days}, {"firstStart", score.firstStart},
+            {"lastEnd", score.lastEnd}, {"averageStart", score.averageStart}, {"averageEnd", score.averageEnd},
+            {"freeMinutes", score.freeMinutes}}));
+
+        if (primary != SortPrimary::None) {
+            const auto rank = std::find_if(byTotal.begin(), byTotal.end(),
+                [&](const RankKey& key) { return std::get<3>(key) == std::get<3>(expected[0]); }) - byTotal.begin();
+            EXPECT_GE(rank, 5);
+        }
+    }
 }
