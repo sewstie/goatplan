@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isTermOver, newYorkDate, openTerms, pickDefaultTerm } from "./terms";
+import { formatDataDate, isTermOver, newYorkDate, openTerms, pickDefaultTerm } from "./terms";
 import type { TermSummary } from "./types";
 
 function term(id: string, start: string, end: string, status: TermSummary["status"]): TermSummary {
@@ -50,5 +50,25 @@ describe("pickDefaultTerm", () => {
     const inProgress = [term("2026-B", "2026-10-19", "2026-12-11", "in-progress")];
     expect(pickDefaultTerm(inProgress, null, new Date("2026-11-01T12:00:00Z"))?.id).toBe("2026-B");
     expect(pickDefaultTerm(inProgress, null, new Date("2027-01-01T12:00:00Z"))).toBeNull();
+  });
+});
+
+describe("formatDataDate", () => {
+  it("writes a term's generatedAt as a short date in the given time zone", () => {
+    expect(formatDataDate("2026-10-25T12:52:39Z", "America/New_York")).toBe("Oct 25, 2026");
+    expect(formatDataDate("2026-10-25T02:00:00Z", "America/New_York")).toBe("Oct 24, 2026");
+    expect(formatDataDate("2026-10-25T02:00:00Z", "UTC")).toBe("Oct 25, 2026");
+    expect(formatDataDate("2027-01-06T20:30:00Z", "Asia/Tokyo")).toBe("Jan 7, 2027");
+  });
+
+  it("uses the student's own time zone by default", () => {
+    const local = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    for (const generatedAt of ["2026-10-25T02:00:00Z", "2026-10-25T12:52:39Z", "2026-12-31T23:59:59Z"]) {
+      expect(formatDataDate(generatedAt)).toBe(formatDataDate(generatedAt, local));
+    }
+  });
+
+  it.each(["", "not a date"])("gives null for %j, so nothing is shown", (generatedAt) => {
+    expect(formatDataDate(generatedAt)).toBeNull();
   });
 });

@@ -6,8 +6,8 @@ import { diagnosisText } from "@/lib/diagnosis/diagnosisText";
 import { createPlannerStore, SOLVE_DELAY_MS } from "./createPlannerStore";
 import { draftKey, emptyDraft, LAST_TERM_KEY, readDraft } from "./draft";
 import { selectChosenSections } from "./selectors";
-import { SORT_PRESETS } from "./sortPresets";
 import { loaded, MemoryStorage, solved, termFile, termSummary } from "./testing/fixtures";
+import type { PlannerStore } from "./types";
 import { lectureProfessorTerm } from "./testing/lectureProfessors";
 
 const NOW = new Date("2026-10-17T12:00:00Z");
@@ -368,12 +368,25 @@ describe("actions", () => {
     expect(state().locks).toEqual({});
   });
 
-  it("sends the sort preset's weights", async () => {
+  it("sends the Best overall weights with the sort preset's primary measure", async () => {
     const { state, engine } = await ready();
     state().addCourse("AE 2320");
     state().setSortPreset("fewestGaps");
     await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
-    expect(engine.solve.mock.calls.at(-1)![0].sort).toEqual(SORT_PRESETS.fewestGaps.weights);
+    expect(engine.solve.mock.calls.at(-1)![0].sort).toEqual({
+      earlyCutoff: 600, perEarlyMinute: 3, perGapMinute: 1, perDay: 60, lateCutoff: 1440, perLateMinute: 0, primary: "freeMinutes",
+    });
+  });
+
+  it("keeps a stored draft's sort preset ID and ranks by its measure", async () => {
+    const storage = new MemoryStorage();
+    storage.setItem(draftKey("2027-C"), JSON.stringify({ version: 1, ...emptyDraft(), courses: ["AE 2320"], sortPreset: "fewestDays" }));
+    const { state, engine } = setup({ storage });
+    await state().init();
+    await flush();
+    expect(state().sortPreset).toBe("fewestDays");
+    expect(readDraft(storage, "2027-C")?.sortPreset).toBe("fewestDays");
+    expect(engine.solve.mock.calls[0][0].sort?.primary).toBe("days");
   });
 
   it("remembers the chosen alternative per schedule without solving again", async () => {
@@ -676,9 +689,14 @@ describe("professor preferences", () => {
     expect(state()).toMatchObject({ ...draft, solveStatus: "done", solveError: null });
     expect(state().response).toMatchObject({ ok: true, total: 0, schedules: [], diagnosis: { unsure: false } });
     expect(selectChosenSections(state())).toEqual({});
-    expect(engine.solve).not.toHaveBeenCalled();
+    // Only the extra solve that counts "Allow any professor" reaches the engine, without the professor rule.
+    expect(engine.solve).toHaveBeenCalledOnce();
+    expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({});
+    const response = state().response;
+    const fix = response?.ok ? response.diagnosis?.fixes[0] : undefined;
+    expect(fix).toEqual({ kind: "clearAnyOf", course: "AE 2320", schedules: 2, capped: false });
 
-    state().applyFix({ kind: "clearAnyOf", course: "AE 2320", schedules: 0, capped: false });
+    state().applyFix(fix!);
     await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
     expect(state()).toMatchObject({ locks: draft.locks, preferences: draft.preferences, professorByCourse: { "AE 2320": null } });
     expect(selectChosenSections(state())["AE 2320"]).toContain("AE 2320-CL01");
@@ -951,5 +969,304 @@ describe("setScheduleIndex", () => {
     expect(state().scheduleIndex).toBe(1);
     state().setScheduleIndex(-1);
     expect(state().scheduleIndex).toBe(0);
+  });
+});
+
+describe("undo remove", () => {
+  /** Three planned courses with a lock, a professor and a picked alternative on AE 2320, and a solved answer. */
+  async function planned() {
+    const context = setup();
+    await context.state().init();
+    for (const code of ["AE 2410", "AE 2320", "AB 1533"]) context.state().addCourse(code);
+    context.state().lockSection("AE 2320", "AE 2320-CL01");
+    context.state().setProfessor("AE 2320", "Ye Lu");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    context.state().chooseAlternative("AE 2320", ["AE 2320-CL01", "AE 2320-CX02"]);
+    context.state().selectCourse("AE 2320", "AE 2320-CX02");
+    context.engine.solve.mockClear();
+    return context;
+  }
+
+  it("starts without a removed course", async () => {
+    const { state } = setup();
+    expect(state().removedCourse).toBeNull();
+    await state().init();
+    expect(state().removedCourse).toBeNull();
+  });
+
+  it("keeps a snapshot of the removed course's place, locks, professor, alternatives and selection", async () => {
+    const { state } = await planned();
+    const key = Object.keys(state().alternatives)[0];
+    state().removeCourse("AE 2320");
+    expect(state().removedCourse).toEqual({
+      code: "AE 2320",
+      index: 1,
+      locks: ["AE 2320-CL01"],
+      professor: "Ye Lu",
+      alternatives: { [key]: ["AE 2320-CL01", "AE 2320-CX02"] },
+      wasSelected: true,
+    });
+    expect(state()).toMatchObject({ courses: ["AE 2410", "AB 1533"], locks: {}, professorByCourse: {}, selectedCourse: "AB 1533" });
+  });
+
+  it("puts the course back where it was with everything it had, reselects it and solves once", async () => {
+    const { state, engine, storage } = await planned();
+    const before = { courses: state().courses, locks: state().locks, professorByCourse: state().professorByCourse, alternatives: state().alternatives };
+    state().removeCourse("AE 2320");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    engine.solve.mockClear();
+
+    state().undoRemoveCourse();
+
+    expect(state()).toMatchObject({ ...before, removedCourse: null, selectedCourse: "AE 2320", selectedSection: null, solveStatus: "waiting" });
+    expect(readDraft(storage, "2027-C")).toMatchObject(before);
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).toHaveBeenCalledOnce();
+    expect(engine.solve.mock.calls[0][0]).toMatchObject({
+      courses: ["AE 2410", "AE 2320", "AB 1533"],
+      preferences: { locked: { "AE 2320": ["AE 2320-CL01"] }, anyOf: { "AE 2320": ["AE 2320-CL01"] } },
+    });
+    expect(selectChosenSections(state())["AE 2320"]).toEqual(["AE 2320-CL01", "AE 2320-CX02"]);
+  });
+
+  it("leaves the selection alone when the removed course wasn't selected, and keeps Any professor", async () => {
+    const { state } = await planned();
+    state().setProfessor("AE 2410", "Ye Lu");
+    state().setProfessor("AE 2410", null);
+    state().selectCourse("AB 1533");
+    state().removeCourse("AE 2410");
+    expect(state().removedCourse).toMatchObject({ code: "AE 2410", index: 0, locks: undefined, professor: null, alternatives: {}, wasSelected: false });
+
+    state().selectCourse("AE 2320");
+    state().undoRemoveCourse();
+    expect(state()).toMatchObject({ courses: ["AE 2410", "AE 2320", "AB 1533"], selectedCourse: "AE 2320", removedCourse: null });
+    expect(state().professorByCourse).toEqual({ "AE 2320": "Ye Lu", "AE 2410": null });
+    expect(state().locks).toEqual({ "AE 2320": ["AE 2320-CL01"] });
+  });
+
+  it("doesn't add a professor or lock entry the course never had", async () => {
+    const { state } = await planned();
+    state().removeCourse("AB 1533");
+    expect(state().removedCourse).toMatchObject({ code: "AB 1533", index: 2, locks: undefined, professor: undefined });
+    state().undoRemoveCourse();
+    expect(state().courses).toEqual(["AE 2410", "AE 2320", "AB 1533"]);
+    expect(state().professorByCourse).toEqual({ "AE 2320": "Ye Lu" });
+    expect(state().locks).toEqual({ "AE 2320": ["AE 2320-CL01"] });
+  });
+
+  it("replaces the snapshot on a second remove, so only the last course comes back", async () => {
+    const { state } = await planned();
+    state().removeCourse("AE 2410");
+    state().removeCourse("AE 2320");
+    expect(state().removedCourse).toMatchObject({ code: "AE 2320", index: 0 });
+    state().undoRemoveCourse();
+    expect(state().courses).toEqual(["AE 2320", "AB 1533"]);
+    expect(state().removedCourse).toBeNull();
+  });
+
+  it("does nothing on undo or remove without something to act on", async () => {
+    const { state } = await planned();
+    const before = state();
+    state().undoRemoveCourse();
+    state().removeCourse("ZZ 9999");
+    expect(state()).toBe(before);
+  });
+
+  it("dismisses the snapshot without changing the plan", async () => {
+    const { state, engine } = await planned();
+    state().removeCourse("AE 2320");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    engine.solve.mockClear();
+    const { courses, response } = state();
+    state().dismissRemovedCourse();
+    expect(state()).toMatchObject({ removedCourse: null, courses, response });
+    state().undoRemoveCourse();
+    expect(state().courses).toEqual(courses);
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).not.toHaveBeenCalled();
+  });
+
+  it.each<[string, (state: PlannerStore) => unknown]>([
+    ["adding a course", (state) => state.addCourse("AE 2320")],
+    ["changing preferences", (state) => state.setPreferences({ onlyOpen: false })],
+    ["changing the sort", (state) => state.setSortPreset("fewestDays")],
+    ["locking a section", (state) => state.lockSection("AE 2410", "AE 2410-C01")],
+    ["unlocking a section", (state) => state.unlockSection("AB 1533", "AB 1533-C01")],
+    ["choosing a professor", (state) => state.setProfessor("AE 2410", "Ye Lu")],
+    ["choosing an alternative", (state) => state.chooseAlternative("AE 2410", ["AE 2410-C01"])],
+    ["picking another option", (state) => state.pickOption("AE 2410", ["AE 2410-C01"])],
+    ["applying a fix", (state) => state.applyFix({ kind: "relaxStartsAfter", startsAfter: 480, schedules: 2, capped: false })],
+    ["applying a remove fix", (state) => state.applyFix({ kind: "dropCourse", course: "AB 1533", schedules: 2, capped: false })],
+    ["switching term", (state) => state.setTerm("2027-D")],
+    ["opening a plan", (state) => state.openPlan("2027-C", { ...emptyDraft(), courses: ["AE 2410"] })],
+  ])("is cleared by %s", async (_, change) => {
+    const { state, engine } = setup();
+    // AE 2410 shows another same-time section, so choosing or picking C01 still changes the plan.
+    engine.solve.mockImplementation(async (request) => {
+      const response = solved(request);
+      if (!response.ok) return response;
+      for (const course of response.schedules.flatMap((schedule) => schedule.courses)) {
+        if (course.code === "AE 2410") Object.assign(course, { sections: ["AE 2410-C02"], alternatives: [["AE 2410-C02"], ["AE 2410-C01"]] });
+      }
+      return response;
+    });
+    await state().init();
+    for (const code of ["AE 2320", "AE 2410", "AB 1533"]) state().addCourse(code);
+    state().lockSection("AB 1533", "AB 1533-C01");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+
+    state().removeCourse("AE 2320");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(state().removedCourse).not.toBeNull();
+    await change(state());
+    expect(state().removedCourse).toBeNull();
+  });
+
+  it("stays through selecting a course or section and moving between schedules", async () => {
+    const { state } = await planned();
+    state().removeCourse("AE 2410");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    const removed = state().removedCourse;
+    state().selectCourse("AB 1533");
+    state().selectCourse("AE 2320", "AE 2320-CX01");
+    state().selectCourse(null);
+    state().nextSchedule();
+    state().previousSchedule();
+    state().setScheduleIndex(1);
+    expect(state().removedCourse).toBe(removed);
+  });
+
+  it("isn't saved with the draft, so a reload loses it", async () => {
+    const { state, storage } = await planned();
+    state().removeCourse("AE 2320");
+    expect(storage.getItem(draftKey("2027-C"))).not.toContain("removed");
+    expect(storage.getItem(draftKey("2027-C"))).not.toContain("wasSelected");
+    const reloaded = setup({ storage });
+    await reloaded.state().init();
+    expect(reloaded.state()).toMatchObject({ courses: ["AE 2410", "AB 1533"], removedCourse: null });
+  });
+});
+
+describe("professor fixes", () => {
+  it("applies Allow any professor with a start time in one draft change and one solve", async () => {
+    const { store, state, engine, storage } = setup();
+    await state().init();
+    state().addCourse("AE 2320");
+    state().addCourse("AE 2410");
+    state().setProfessor("AE 2320", "Ye Lu");
+    state().setPreferences({ startsAfter: 780 });
+    state().selectCourse("AE 2320", "AE 2320-CX01");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    engine.solve.mockClear();
+    const seen: [string | null | undefined, number][] = [];
+    const unsubscribe = store.subscribe((next) => seen.push([next.professorByCourse["AE 2320"], next.preferences.startsAfter]));
+
+    state().applyFix({ kind: "clearAnyOf", course: "AE 2320", startsAfter: 660, schedules: 18, capped: false });
+    unsubscribe();
+
+    expect(seen.every(([professor, startsAfter]) => professor === null && startsAfter === 660)).toBe(true);
+    expect(state()).toMatchObject({ professorByCourse: { "AE 2320": null }, preferences: { startsAfter: 660 }, selectedSection: null, solveStatus: "waiting" });
+    expect(readDraft(storage, "2027-C")).toMatchObject({ professorByCourse: { "AE 2320": null }, preferences: { startsAfter: 660 } });
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).toHaveBeenCalledOnce();
+    expect(engine.solve.mock.calls[0][0].preferences).toMatchObject({ startsAfter: 660, anyOf: {} });
+  });
+
+  it("clears the start restriction with startsAfter 0, and keeps the start time without one", async () => {
+    const { state, engine } = setup();
+    await state().init();
+    state().addCourse("AE 2320");
+    state().setProfessor("AE 2320", "Ye Lu");
+    state().setPreferences({ startsAfter: 780 });
+    state().applyFix({ kind: "clearAnyOf", course: "AE 2320", startsAfter: 0, schedules: 2, capped: false });
+    expect(state()).toMatchObject({ professorByCourse: { "AE 2320": null }, preferences: { startsAfter: 0 } });
+
+    state().setProfessor("AE 2320", "Ye Lu");
+    state().setPreferences({ startsAfter: 600 });
+    state().applyFix({ kind: "clearAnyOf", course: "AE 2320", schedules: 2, capped: false });
+    expect(state()).toMatchObject({ professorByCourse: { "AE 2320": null }, preferences: { startsAfter: 600 } });
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).toHaveBeenCalledOnce();
+  });
+
+  /** A plan with professors no lecture of this term has, so the store answers itself with 0 schedules. */
+  async function unavailable(professorByCourse: Record<string, string>, courses = ["AE 2320", "AE 2410"]) {
+    const storage = new MemoryStorage();
+    storage.setItem(draftKey("2027-C"), JSON.stringify({ version: 1, ...emptyDraft(), courses, professorByCourse }));
+    return setup({ storage });
+  }
+
+  const fixesOf = (response: SolveResponse | null) => (response?.ok ? response.diagnosis?.fixes : undefined);
+
+  it("offers Allow any professor counted by one extra solve without that professor rule", async () => {
+    const { state, engine } = await unavailable({ "AE 2320": "Former Professor" });
+    await state().init();
+    await flush();
+    expect(engine.solve).toHaveBeenCalledOnce();
+    expect(engine.solve.mock.calls[0][0]).toMatchObject({ courses: ["AE 2320", "AE 2410"], preferences: { anyOf: {} } });
+    expect(state()).toMatchObject({ solveStatus: "done", scheduleIndex: 0, response: { ok: true, total: 0, patterns: 0, schedules: [] } });
+    expect(fixesOf(state().response)).toEqual([{ kind: "clearAnyOf", course: "AE 2320", schedules: 2, capped: false }]);
+    expect(diagnosisText((state().response as Extract<SolveResponse, { ok: true }>).diagnosis!, state()).fixes.map((fix) => [fix.label, fix.count]))
+      .toEqual([["Allow any professor for AE 2320", "2 schedules fit"]]);
+
+    state().applyFix(fixesOf(state().response)![0]);
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(state()).toMatchObject({ professorByCourse: { "AE 2320": null }, response: { ok: true, total: 2 } });
+  });
+
+  it("keeps other professor rules in the extra solve and gives each unavailable course a fix, in course order", async () => {
+    const { state, engine } = await unavailable(
+      { "AB 1533": "Gone Too", "AE 2320": "Ye Lu", "AE 2410": "Former Professor" },
+      ["AE 2410", "AE 2320", "AB 1533"],
+    );
+    engine.solve.mockImplementation(async (request) => ({ ...solved(request), total: 7, capped: true }));
+    await state().init();
+    await flush();
+    expect(engine.solve).toHaveBeenCalledOnce();
+    expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01"] });
+    expect(fixesOf(state().response)).toEqual([
+      { kind: "clearAnyOf", course: "AE 2410", schedules: 7, capped: true },
+      { kind: "clearAnyOf", course: "AB 1533", schedules: 7, capped: true },
+    ]);
+    expect(state().response).toMatchObject({ total: 0, schedules: [] });
+  });
+
+  it("offers no fix when the extra solve finds nothing or fails", async () => {
+    const empty = await unavailable({ "AE 2320": "Former Professor" });
+    empty.engine.solve.mockImplementation(async (request) => ({ ...solved(request), total: 0, patterns: 0, schedules: [] }));
+    await empty.state().init();
+    await flush();
+    expect(empty.state()).toMatchObject({ solveStatus: "done", response: { ok: true, total: 0 } });
+    expect(fixesOf(empty.state().response)).toEqual([]);
+
+    const failed = await unavailable({ "AE 2320": "Former Professor" });
+    failed.engine.solve.mockRejectedValue(new EngineFailureError("workerCrashed", "The engine worker crashed."));
+    await failed.state().init();
+    await flush();
+    expect(failed.state()).toMatchObject({ solveStatus: "done", solveError: null, response: { ok: true, total: 0 } });
+    expect(fixesOf(failed.state().response)).toEqual([]);
+
+    const error = await unavailable({ "AE 2320": "Former Professor" });
+    error.engine.solve.mockResolvedValue({ ok: false, version: 1, error: { code: "internal", message: "Bug", detail: null } });
+    await error.state().init();
+    await flush();
+    expect(error.state()).toMatchObject({ solveStatus: "done", response: { ok: true, total: 0 } });
+    expect(fixesOf(error.state().response)).toEqual([]);
+  });
+
+  it("drops the extra answer when the plan changed while it was solving", async () => {
+    const { state, engine } = await unavailable({ "AE 2320": "Former Professor" });
+    const slow = deferred<SolveResponse>();
+    engine.solve.mockImplementationOnce(() => slow.promise);
+    const loading = state().init();
+    await flush();
+    expect(state().solveStatus).toBe("solving");
+    state().setProfessor("AE 2320", null);
+    slow.resolve(solved({ version: 1, courses: ["AE 2320", "AE 2410"] }));
+    await loading;
+    await flush();
+    expect(state()).toMatchObject({ solveStatus: "waiting", response: null });
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(state()).toMatchObject({ solveStatus: "done", response: { ok: true, total: 2 } });
   });
 });

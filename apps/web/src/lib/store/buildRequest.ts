@@ -1,4 +1,4 @@
-import { ENGINE_API_VERSION, type SolveRequest } from "@/lib/engine/types";
+import { ENGINE_API_VERSION, type SolveRequest, type SortWeights } from "@/lib/engine/types";
 import type { TermFile } from "@/lib/data/types";
 import { lecturesByProfessor } from "@/lib/data/instructors";
 import { SORT_PRESETS } from "./sortPresets";
@@ -7,9 +7,20 @@ import type { Draft } from "./types";
 /** How many schedules the switcher can page through. The engine allows up to 500. */
 export const MAX_SCHEDULES = 200;
 
+/** Best overall's weights. Every sort sends them, so score.total means the same in every sort. */
+const SORT_WEIGHTS: Readonly<Required<SortWeights>> = {
+  earlyCutoff: 600,
+  perEarlyMinute: 3,
+  perGapMinute: 1,
+  perDay: 60,
+  lateCutoff: 1440,
+  perLateMinute: 0,
+};
+
 /**
  * The engine request for a plan, or null when there is nothing to solve (the engine needs at least
- * one course). Locks only go in for courses in the plan, and only when something is locked.
+ * one course). Locks only go in for courses in the plan, and only when something is locked. The sort
+ * sends Best overall's weights plus the preset's primary measure; Best overall sends no primary.
  */
 export function buildRequest(plan: Pick<Draft, "courses" | "preferences" | "locks" | "sortPreset"> & {
   professorByCourse?: Draft["professorByCourse"];
@@ -30,6 +41,7 @@ export function buildRequest(plan: Pick<Draft, "courses" | "preferences" | "lock
     }
   }
 
+  const primary = SORT_PRESETS[plan.sortPreset].primary;
   return {
     version: ENGINE_API_VERSION,
     courses,
@@ -40,7 +52,7 @@ export function buildRequest(plan: Pick<Draft, "courses" | "preferences" | "lock
       locked,
       anyOf,
     },
-    sort: { ...SORT_PRESETS[plan.sortPreset].weights },
+    sort: primary ? { ...SORT_WEIGHTS, primary } : { ...SORT_WEIGHTS },
     limits: { maxSchedules: MAX_SCHEDULES },
   };
 }
