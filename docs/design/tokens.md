@@ -287,6 +287,7 @@ Spacing values in the frames are plain px. In code, Tailwind's spacing unit is `
 | `--size-day-header` | 47px | — | Calendar day-header row |
 | `--size-message` | 420px | width/420 | Max width of the calendar message card |
 | `--size-actions` | 285px | width/285 | Max width of the header actions |
+| `--breakpoint-tablet` | 640px (40rem) | **proposed, not in Figma yet** | Below this width the phone layout (checked at 375 px); from it up, the tablet and desktop layout as designed |
 | `--breakpoint-wide` | 1100px (68.75rem) | **proposed, not in Figma yet** | From this width the details panel sits beside the calendar; below it, under the calendar (no tablet frame exists) |
 
 Frame widths in Figma: 1680 (`width/1680`, the design frame) and 1280 (`width/1280`, not used by any frame).
