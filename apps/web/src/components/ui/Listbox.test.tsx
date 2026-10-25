@@ -292,14 +292,27 @@ describe("hover highlight", () => {
     );
   });
 
-  it("highlight on selected option keeps its accent fill", async () => {
+  it.each([["field", Field], ["menu", MenuField]] as const)("the highlighted selected option keeps its accent fill (%s variant)", async (_, Component) => {
     const user = userEvent.setup();
-    render(<Field />);
-    await user.click(screen.getByRole("combobox"));
-    // The selected option (Any professor) should still be marked as selected when highlighted
-    const selected = screen.getByRole("option", { name: "Any professor", selected: true });
+    render(<Component />);
+    const field = screen.getByRole("combobox");
+    await user.click(field);
+    // Opening highlights the selected option: it keeps the soft accent fill, not the highlight fill.
+    const selected = screen.getByRole("option", { selected: true });
+    expect(field).toHaveAttribute("aria-activedescendant", selected.id);
+    expect(selected).toHaveClass("bg-accent-soft", "text-accent");
+    expect(selected).not.toHaveClass("bg-surface-selected");
+
+    const other = screen.getAllByRole("option", { selected: false })[0];
+    await user.hover(other);
+    expect(other).toHaveClass("bg-surface-selected");
+    expect(selected).toHaveClass("bg-accent-soft");
+
     await user.hover(selected);
     expect(selected).toHaveAttribute("aria-selected", "true");
+    expect(selected).toHaveClass("bg-accent-soft");
+    expect(selected).not.toHaveClass("bg-surface-selected");
+    expect(other).not.toHaveClass("bg-surface-selected");
   });
 });
 
