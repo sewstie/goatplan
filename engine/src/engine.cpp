@@ -360,6 +360,9 @@ namespace goatplan {
                     fix.kind == FixKind::DropCourse) {
                     item["course"] = codes.at(fix.course);
                 }
+                if (fix.kind == FixKind::ClearAnyOf && fix.startsAfter >= 0) {
+                    item["startsAfter"] = fix.startsAfter;
+                }
                 item["schedules"] = fix.schedules;
                 item["capped"] = fix.capped;
                 fixes.push_back(std::move(item));

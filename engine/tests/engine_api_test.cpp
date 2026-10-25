@@ -43,6 +43,24 @@ Engine fixtureEngine() { return engineFor(readText(GOATPLAN_FIXTURES "/2027-C.sm
 
 Term fixtureTerm() { return loadTermFile(GOATPLAN_FIXTURES "/2027-C.small.json"); }
 
+Engine physicsEngine() { return engineFor(readText(GOATPLAN_FIXTURES "/2027-C.ma-cs-ph.json")); }
+
+std::string physicsRequest(int startsAfter, bool withProfessor) {
+    json request = {{"version", 1}, {"courses", {"MA 1024", "CS 2022", "PH 1110"}},
+                    {"preferences", {{"startsAfter", startsAfter}}}};
+    if (withProfessor) {
+        request["preferences"]["anyOf"] = {{"PH 1110", {"PH 1110-CT01-Multipurpose"}}};
+    }
+    return request.dump();
+}
+
+json clearAnyOfFix(const json& response) {
+    for (const json& fix : response["diagnosis"]["fixes"]) {
+        if (fix["kind"] == "clearAnyOf") return fix;
+    }
+    return nullptr;
+}
+
 json call(const Engine& engine, const std::string& request) {
     return json::parse(engine.handle(request));
 }
@@ -368,6 +386,43 @@ TEST(EngineApi, DiagnosisSuggestsClearingAnyOfWithTheCourseCode) {
         "kind": "clearAnyOf", "course": "A", "schedules": 1, "capped": false})"));
 }
 
+TEST(EngineApi, ProfessorFixMovesTheStartTimeWhenClearingItAloneIsNotEnough) {
+    const Engine engine = physicsEngine();
+    for (const int startsAfter : {720, 780}) {
+        SCOPED_TRACE(startsAfter);
+        const json response = call(engine, physicsRequest(startsAfter, true));
+        ASSERT_EQ(response["ok"], true) << response.dump();
+        EXPECT_EQ(response["total"], 0);
+        EXPECT_EQ(call(engine, physicsRequest(startsAfter, false))["total"], 0);
+        const json fix = clearAnyOfFix(response);
+        EXPECT_EQ(fix, json::parse(R"({
+            "kind": "clearAnyOf", "course": "PH 1110", "startsAfter": 660, "schedules": 10, "capped": false})"))
+            << response["diagnosis"].dump();
+        ASSERT_TRUE(fix.is_object());
+        EXPECT_EQ(call(engine, physicsRequest(fix["startsAfter"], false))["total"], fix["schedules"]);
+        EXPECT_EQ(call(engine, physicsRequest(fix["startsAfter"].get<int>() + 1, false))["total"], 0);
+    }
+}
+
+TEST(EngineApi, ProfessorFixKeepsTheStartTimeWhenClearingItIsEnough) {
+    const Engine engine = physicsEngine();
+    const json response = call(engine, physicsRequest(660, true));
+    ASSERT_EQ(response["ok"], true) << response.dump();
+    EXPECT_EQ(response["total"], 0);
+    const json fix = clearAnyOfFix(response);
+    EXPECT_EQ(fix, json::parse(R"({"kind": "clearAnyOf", "course": "PH 1110", "schedules": 10, "capped": false})"))
+        << response["diagnosis"].dump();
+    EXPECT_EQ(call(engine, physicsRequest(660, false))["total"], 10);
+}
+
+TEST(EngineApi, CombinedProfessorFixIsAPreferenceChange) {
+    const json response = call(physicsEngine(), physicsRequest(720, true));
+    ASSERT_EQ(response["ok"], true) << response.dump();
+    std::vector<std::string> kinds;
+    for (const json& fix : response["diagnosis"]["fixes"]) kinds.push_back(fix["kind"]);
+    EXPECT_EQ(kinds, (std::vector<std::string>{"relaxStartsAfter", "clearAnyOf", "dropCourse"}));
+}
+
 TEST(EngineApi, DiagnosisOnlyWhenNothingFits) {
     const Engine engine = fixtureEngine();
     EXPECT_TRUE(call(engine, kBoth)["diagnosis"].is_null());
@@ -422,6 +477,7 @@ TEST(EngineApi, MatchesGoldenResponses) {
     expectGolden(engine, "basic", kBoth);
     expectGolden(engine, "impossible", R"({"version": 1, "courses": ["AE 2320", "AE 4310"],
         "preferences": {"startsAfter": 600, "onlyOpen": true}})");
+    expectGolden(physicsEngine(), "professor-start", physicsRequest(720, true));
 }
 
 TEST(EngineApi, LateMinutesInResponseWithDefaults) {
