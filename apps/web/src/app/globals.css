@@ -225,6 +225,8 @@
 
   --spacing: 1px;
 
+  /* Phone styles are written unprefixed; from 640 px up, `tablet:` keeps today's layout. */
+  --breakpoint-tablet: 40rem;
   --breakpoint-wide: 68.75rem;
 
   --size-app-padding: 14px;

@@ -1,7 +1,33 @@
+import { expect, type Page } from "@playwright/test";
 import type { Course, Day, TermFile } from "../../src/lib/data/types";
 import type { SortPresetId } from "../../src/lib/store/types";
 import { makeSection } from "../../src/components/sections/testing/sections";
 import { termFile } from "../../src/lib/store/testing/fixtures";
+
+/** Each order's name in the Sort menu, as a screen reader announces it. */
+export const SORT_LABELS: Record<SortPresetId, string> = {
+  bestOverall: "Best overall",
+  fewestEarly: "Fewest early classes",
+  latestStart: "Latest start",
+  earliestFinish: "Earliest finish",
+  fewestDays: "Most days off",
+  fewestGaps: "Most compact",
+};
+
+/** The Sort control at the end of the Preferences row. */
+export const sortControl = (page: Page) =>
+  page.getByRole("group", { name: "Preferences", exact: true }).getByRole("combobox", { name: "Sort" });
+/** Sort's open list. */
+export const sortList = (page: Page) => page.getByRole("listbox", { name: "Sort" });
+/** One order in the open list, found by its name (the label, without the description). */
+export const sortOption = (page: Page, label: string) => sortList(page).getByRole("option", { name: label, exact: true });
+
+/** Opens Sort and picks an order by its name with the pointer. Returns once the list has closed. */
+export async function pickSort(page: Page, label: string) {
+  await sortControl(page).click();
+  await sortOption(page, label).click();
+  await expect(sortList(page)).toBeHidden();
+}
 
 const MON_WED_THU: Day[] = ["Mon", "Wed", "Thu"];
 const MON_TUE_THU_FRI: Day[] = ["Mon", "Tue", "Thu", "Fri"];
