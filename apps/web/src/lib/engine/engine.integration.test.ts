@@ -52,7 +52,7 @@ describe("real engine", () => {
     expect(response.schedules.length).toBeGreaterThan(0);
     expect(response.schedules.length).toBeLessThanOrEqual(3);
     for (const schedule of response.schedules) {
-      expect(Object.keys(schedule.score).sort()).toEqual(["days", "earlyMinutes", "gapMinutes", "total"]);
+      expect(Object.keys(schedule.score).sort()).toEqual(["days", "earlyMinutes", "gapMinutes", "lateMinutes", "total"]);
       expect(schedule.courses.map((course) => course.code)).toEqual(courses);
       for (const course of schedule.courses) {
         expect(course.alternatives).toContainEqual(course.sections);

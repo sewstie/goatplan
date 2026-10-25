@@ -6,7 +6,7 @@
 
 **Blocked by:** 01 (presets), 02 (engine late minutes), 03 (listbox menu trigger).
 
-**Status:** ready-for-agent
+**Status:** DONE
 
 - [ ] The Sort control uses the shared listbox's menu trigger, labeled "Sort". It lists all six presets in table order, with labels exactly as in the brief.
 - [ ] The helper that filtered the menu to "orders a design shows" is deleted; nothing filters anymore.

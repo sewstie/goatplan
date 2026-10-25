@@ -16,7 +16,8 @@ export const SORT_PRESETS: Readonly<Record<SortPresetId, { label: string; weight
   },
   latestStart: {
     label: "Latest start",
-    weights: { earlyCutoff: 720, perEarlyMinute: 10, perGapMinute: 1, perDay: 20, lateCutoff: 1440, perLateMinute: 0 },
+    // 1:00 PM, not noon: on B-Term 2026 data a noon cutoff couldn't tell a 12 PM start from a 2 PM one.
+    weights: { earlyCutoff: 780, perEarlyMinute: 10, perGapMinute: 1, perDay: 20, lateCutoff: 1440, perLateMinute: 0 },
   },
   earliestFinish: {
     label: "Earliest finish",

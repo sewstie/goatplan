@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { Listbox, type ListboxVariant } from "./Listbox";
 
 const options = [
@@ -213,6 +213,48 @@ describe("menu variant", () => {
     await user.click(screen.getByRole("combobox", { name: "Sort" }));
     await user.click(screen.getByRole("button", { name: "Next field" }));
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+  });
+
+  describe("list position", () => {
+    // jsdom has no layout: the trigger and the list report these boxes, in a 1024 × 768 window.
+    let triggerBox: DOMRect;
+    const listWidth = 180;
+    beforeEach(() => {
+      triggerBox = new DOMRect(700, 100, 146, 28);
+      vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
+        if (this.getAttribute("role") === "combobox") return triggerBox;
+        if (this.getAttribute("role") === "listbox") return new DOMRect(0, 0, listWidth, 300);
+        return new DOMRect();
+      });
+    });
+    afterEach(() => vi.restoreAllMocks());
+
+    it("opens below the menu trigger, lined up with its right edge", async () => {
+      const user = userEvent.setup();
+      render(<MenuField />);
+      await user.click(screen.getByRole("combobox", { name: "Sort" }));
+      const list = screen.getByRole("listbox", { name: "Sort" });
+      expect(list.style.left).toBe(`${700 + 146 - listWidth}px`);
+      expect(list.style.top).toBe("128px");
+      expect(list.style.minWidth).toBe("146px");
+    });
+
+    it("shifts to stay 8 px inside the window and flips above when there's no room below", async () => {
+      triggerBox = new DOMRect(20, 700, 146, 28);
+      const user = userEvent.setup();
+      render(<MenuField />);
+      await user.click(screen.getByRole("combobox", { name: "Sort" }));
+      const list = screen.getByRole("listbox", { name: "Sort" });
+      expect(list.style.left).toBe("8px");
+      expect(list.style.top).toBe(`${700 - 300}px`);
+    });
+
+    it("keeps the field variant's list lined up with its left edge", async () => {
+      const user = userEvent.setup();
+      render(<Field />);
+      await user.click(screen.getByRole("combobox", { name: "Lecture professor" }));
+      expect(screen.getByRole("listbox", { name: "Lecture professor" }).style.left).toBe("700px");
+    });
   });
 });
 

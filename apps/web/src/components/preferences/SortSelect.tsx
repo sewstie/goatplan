@@ -1,30 +1,38 @@
 "use client";
 
-import { useMemo } from "react";
-import { Select } from "@/components/ui/Select";
-import { selectSchedules, SORT_PRESET_IDS, usePlanner } from "@/lib/store";
-import { sortOptions } from "./sortOptions";
+import { useState } from "react";
+import { Listbox, type ListboxOption } from "@/components/ui/Listbox";
+import { selectSchedules, SORT_PRESET_IDS, SORT_PRESETS, usePlanner } from "@/lib/store";
 
-/** "Sort Fewest early classes". Shown only when there is more than one schedule to order. */
+// Every preset, in table order. The engine does the ranking; the menu only picks the preset.
+const OPTIONS: readonly ListboxOption[] = SORT_PRESET_IDS.map((id) => ({ value: id, label: SORT_PRESETS[id].label }));
+
+/** "Sort Best overall ⌄" at the end of the Preferences row. Shown only when there is more than one schedule to order. */
 export function SortSelect() {
   const sortPreset = usePlanner((state) => state.sortPreset);
   const setSortPreset = usePlanner((state) => state.setSortPreset);
-  const manySchedules = usePlanner((state) => selectSchedules(state).length > 1);
-  const options = useMemo(() => sortOptions(sortPreset), [sortPreset]);
+  // null while a new answer is on its way: Sort keeps its last state then, so picking an order
+  // doesn't take the control (and keyboard focus) away while the engine re-ranks.
+  const many = usePlanner((state) =>
+    state.solveStatus === "waiting" || state.solveStatus === "solving" ? null : selectSchedules(state).length > 1,
+  );
+  const [shown, setShown] = useState(many === true);
+  if (many !== null && many !== shown) setShown(many);
 
-  if (!manySchedules) return null;
+  if (!shown) return null;
 
   return (
-    <Select
+    <Listbox
       variant="menu"
       label="Sort"
-      options={options}
+      menuLabel="Sort"
+      options={OPTIONS}
       value={sortPreset}
-      onChange={(event) => {
-        const preset = SORT_PRESET_IDS.find((id) => id === event.target.value);
+      onChange={(value) => {
+        const preset = SORT_PRESET_IDS.find((id) => id === value);
         if (preset) setSortPreset(preset);
       }}
-      className="ml-auto"
+      className="ml-auto shrink-0"
     />
   );
 }
