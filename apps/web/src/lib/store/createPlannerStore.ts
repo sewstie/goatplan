@@ -3,7 +3,7 @@ import { isTermId } from "@/lib/data/load";
 import { openTerms, pickDefaultTerm } from "@/lib/data/terms";
 import type { TermFile, TermIndex } from "@/lib/data/types";
 import { EngineSupersededError, type EngineClient } from "@/lib/engine/EngineClient";
-import type { Fix } from "@/lib/engine/types";
+import type { Fix, SolveRequest, SolveResponse } from "@/lib/engine/types";
 import { lectureInstructors, lecturesByProfessor } from "@/lib/data/instructors";
 import { buildRequest } from "./buildRequest";
 import { unavailableProfessorResponse } from "./unavailableProfessorResponse";
@@ -18,7 +18,7 @@ import {
   type DraftStorage,
 } from "./draft";
 import { findSchedule, scheduleKey, selectChosenSections, selectCurrentSchedule, selectSchedules } from "./selectors";
-import type { AlternativeChoices, Draft, PlannerState, PlannerStore } from "./types";
+import type { AlternativeChoices, Draft, PlannerState, PlannerStore, RemovedCourse } from "./types";
 
 /** How long the store waits after the last change before it asks the engine. */
 export const SOLVE_DELAY_MS = 200;
@@ -52,9 +52,13 @@ const initialState: PlannerState = {
   lastChosenSections: {},
   selectedCourse: null,
   selectedSection: null,
+  removedCourse: null,
 };
 
 type Selection = Pick<PlannerState, "selectedCourse" | "selectedSection">;
+
+/** A change to the draft, with the selection that goes with it. */
+type DraftChange = Partial<Draft> & Partial<Selection> & Partial<Pick<PlannerState, "removedCourse">>;
 
 function describe(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
@@ -96,6 +100,14 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       solveTimer = null;
     }
 
+    async function askEngine(request: SolveRequest, termId: string): Promise<SolveResponse> {
+      const response = await deps.engine.solve(request);
+      if (response.ok || response.error.code !== "noTerm") return response;
+      // A restarted worker lost the term: load it again (the worker fetches it) and retry once.
+      await deps.engine.loadTerm(termId);
+      return deps.engine.solve(request);
+    }
+
     /** Asks the engine now. Resolves to false when a newer change or term made the answer moot. */
     async function runSolve(): Promise<boolean> {
       const state = get();
@@ -105,19 +117,18 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
 
       const token = ++solveToken;
       set({ solveStatus: "solving", solveError: null });
-      const invalid = unavailableProfessorResponse(request, state.term);
-      if (invalid) {
-        showNext = null;
-        set({ response: invalid, scheduleIndex: 0, solveStatus: "done" });
-        return true;
-      }
       try {
-        let response = await deps.engine.solve(request);
-        if (!response.ok && response.error.code === "noTerm") {
-          // A restarted worker lost the term: load it again (the worker fetches it) and retry once.
-          await deps.engine.loadTerm(termId);
-          response = await deps.engine.solve(request);
+        // A chosen professor with no lectures this term: the answer is made here, and the engine only
+        // counts the "Allow any professor" fix.
+        const unavailable = unavailableProfessorResponse(request, state.term, (retry) => askEngine(retry, termId));
+        if (unavailable) {
+          const response = await unavailable;
+          if (token !== solveToken) return false;
+          showNext = null;
+          set({ response, scheduleIndex: 0, solveStatus: "done" });
+          return true;
         }
+        const response = await askEngine(request, termId);
         if (token !== solveToken) return false;
         const wanted = showNext;
         showNext = null;
@@ -153,23 +164,23 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       }, solveDelayMs);
     }
 
-    /** Changes the draft, saves it for this term and solves again. Ignored until the term is ready. */
-    function changeDraft(
-      changes: (state: PlannerState) => (Partial<Draft> & Partial<Selection>) | null,
-      options = { solve: true },
-    ) {
+    /**
+     * Changes the draft, saves it for this term and solves again. Ignored until the term is ready. Any
+     * change forgets the removed course, unless it sets one itself.
+     */
+    function changeDraft(changes: (state: PlannerState) => DraftChange | null, options = { solve: true }) {
       const state = get();
       if (state.savedPlanId || state.termStatus !== "ready" || !state.termId) return;
       const update = changes(state);
       if (!update) return;
       showNext = null;
       const lastChosenSections = selectCurrentSchedule(state) ? selectChosenSections(state) : state.lastChosenSections;
-      set({ ...update, lastChosenSections });
+      set({ removedCourse: null, ...update, lastChosenSections });
       writeDraft(deps.storage, state.termId, draftOf(get()));
       if (options.solve) scheduleSolve();
     }
 
-    function removeCourse(state: PlannerState, code: string): (Partial<Draft> & Partial<Selection>) | null {
+    function withoutCourse(state: PlannerState, code: string): DraftChange | null {
       const index = state.courses.indexOf(code);
       if (index < 0) return null;
       // A removed course hands the selection to its neighbour, like keyboard focus in "Your courses".
@@ -185,6 +196,21 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         alternatives: Object.fromEntries(
           Object.entries(state.alternatives).map(([key, choice]) => [key, withoutKey(choice, code)]),
         ),
+      };
+    }
+
+    /** The course as the draft has it, so undoRemoveCourse can put it back. */
+    function snapshot(state: PlannerState, code: string): RemovedCourse {
+      const locks = state.locks[code];
+      return {
+        code,
+        index: state.courses.indexOf(code),
+        locks: locks && [...locks],
+        professor: state.professorByCourse[code],
+        alternatives: Object.fromEntries(
+          Object.entries(state.alternatives).flatMap(([key, choice]) => (choice[code] ? [[key, [...choice[code]]]] : [])),
+        ),
+        wasSelected: state.selectedCourse === code,
       };
     }
 
@@ -209,6 +235,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         termId,
         term: null,
         termStatus: "loading",
+        removedCourse: null,
         restoredPlanSummary: null,
         termError: null,
         response: null,
@@ -321,6 +348,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
             lastChosenSections: {},
             selectedCourse: sanitized.courses[0] ?? null,
             selectedSection: null,
+            removedCourse: null,
           });
         } else if (!(await switchTerm(termId, () => draft))) {
           return false;
@@ -340,7 +368,32 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       },
 
       removeCourse(code) {
-        changeDraft((state) => removeCourse(state, code));
+        changeDraft((state) => {
+          const update = withoutCourse(state, code);
+          return update && { ...update, removedCourse: snapshot(state, code) };
+        });
+      },
+
+      undoRemoveCourse() {
+        changeDraft((state) => {
+          const removed = state.removedCourse;
+          if (!removed || state.courses.includes(removed.code)) return null;
+          const { code } = removed;
+          const alternatives = { ...state.alternatives };
+          for (const [key, ids] of Object.entries(removed.alternatives)) alternatives[key] = { ...alternatives[key], [code]: [...ids] };
+          return {
+            courses: state.courses.toSpliced(Math.min(removed.index, state.courses.length), 0, code),
+            locks: removed.locks ? { ...state.locks, [code]: [...removed.locks] } : state.locks,
+            professorByCourse:
+              removed.professor === undefined ? state.professorByCourse : { ...state.professorByCourse, [code]: removed.professor },
+            alternatives,
+            ...(removed.wasSelected ? { selectedCourse: code, selectedSection: null } : {}),
+          };
+        });
+      },
+
+      dismissRemovedCourse() {
+        if (get().removedCourse) set({ removedCourse: null });
       },
 
       selectCourse(code, sectionId = null) {
@@ -447,7 +500,12 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         const found = here ? { ...here, index: state.scheduleIndex } : findSchedule(schedules, wanted);
         if (found) {
           const key = scheduleKey(schedules[found.index]);
-          set({ ...selection, scheduleIndex: found.index, alternatives: withChoices(state.alternatives, key, found.choices) });
+          set({
+            ...selection,
+            scheduleIndex: found.index,
+            alternatives: withChoices(state.alternatives, key, found.choices),
+            removedCourse: null,
+          });
           writeDraft(deps.storage, state.termId, draftOf(get()));
           return;
         }
@@ -494,10 +552,26 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
             changeDraft((state) => ({ locks: withoutKey(state.locks, fix.course) }));
             break;
           case "clearAnyOf":
-            get().setProfessor(fix.course, null);
+            // Clears the professor and, for the combined fix, moves the start time, in one change.
+            changeDraft((state) => {
+              if (!state.courses.includes(fix.course)) return null;
+              const professor = state.professorByCourse[fix.course] ?? null;
+              const startsAfter = fix.startsAfter ?? state.preferences.startsAfter;
+              if (professor === null && startsAfter === state.preferences.startsAfter) return null;
+              return {
+                ...(professor === null
+                  ? {}
+                  : {
+                      professorByCourse: { ...state.professorByCourse, [fix.course]: null },
+                      selectedSection: state.selectedCourse === fix.course ? null : state.selectedSection,
+                    }),
+                ...(startsAfter === state.preferences.startsAfter ? {} : { preferences: { ...state.preferences, startsAfter } }),
+              };
+            });
             break;
           case "dropCourse":
-            get().removeCourse(fix.course);
+            // Removing through a fix isn't a remove the student can undo.
+            changeDraft((state) => withoutCourse(state, fix.course));
             break;
         }
       },
