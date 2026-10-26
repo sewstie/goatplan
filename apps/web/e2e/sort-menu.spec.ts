@@ -99,9 +99,11 @@ test("picking each order re-ranks the schedules in the engine and goes back to s
   await expect(sortList(page).getByRole("option", { selected: true })).toHaveAccessibleName("Best overall");
   await page.keyboard.press("Escape");
 
-  // Ends on Best overall again, so every order is picked once while another one is on.
+  // Ends on Best overall again, so every order is picked once while another one is on. The order of
+  // picks makes each one move the top: Fewest early classes keeps Best overall's top (see sortMenuTerm).
+  expect(sortMenuTops.fewestEarly.sections).toEqual(sortMenuTops.bestOverall.sections);
   let previous: SortPresetId = "bestOverall";
-  for (const preset of ["fewestEarly", "latestStart", "earliestFinish", "fewestDays", "fewestGaps", "bestOverall"] as const) {
+  for (const preset of ["latestStart", "fewestEarly", "earliestFinish", "fewestDays", "fewestGaps", "bestOverall"] as const) {
     await page.getByRole("button", { name: "Next schedule" }).click();
     await expect(page.getByText("Schedule 2 of 48", { exact: true })).toBeVisible();
 

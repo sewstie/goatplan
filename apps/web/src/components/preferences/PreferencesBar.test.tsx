@@ -164,11 +164,22 @@ describe("PreferencesBar", () => {
     await userEvent.click(sort);
 
     const list = screen.getByRole("listbox", { name: "Sort" });
-    const labels = ["Best overall", "Fewest early classes", "Latest start", "Earliest finish", "Most days off", "Most compact"];
+    // Each order's name and description, as a screen reader reads them (docs/design/copy.md).
+    const orders = [
+      ["Best overall", "A balance of start time, gaps and days"],
+      ["Fewest early classes", "Fewer classes before 10 AM"],
+      ["Latest start", "Classes start as late as possible each day"],
+      ["Earliest finish", "Classes end as early as possible each day"],
+      ["Most days off", "Fewer days on campus"],
+      ["Most compact", "Less free time between classes"],
+    ];
     const options = within(list).getAllByRole("option");
-    expect(options).toHaveLength(labels.length);
-    options.forEach((option, index) => expect(option).toHaveAccessibleName(labels[index]));
-    expect(within(list).getByRole("option", { name: "Latest start" })).toHaveAccessibleDescription("Classes start as late as possible each day");
+    expect(options).toHaveLength(orders.length);
+    options.forEach((option, index) => {
+      expect(option).toHaveAccessibleName(orders[index][0]);
+      expect(option).toHaveAccessibleDescription(orders[index][1]);
+      expect(option).toHaveTextContent(orders[index].join(""));
+    });
     expect(within(list).getByRole("option", { selected: true })).toHaveTextContent("Fewest early classes");
   });
 
