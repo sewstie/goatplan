@@ -31,6 +31,14 @@ export interface SortWeights {
   perLateMinute?: number | null;
 }
 
+/** The score field a sort ranks by first. `firstStart` is better when higher, the others when lower. */
+export type SortPrimary = "earlyMinutes" | "firstStart" | "lastEnd" | "days" | "freeMinutes";
+
+export interface Sort extends SortWeights {
+  /** Ranks by this measure first, then by `total`. Missing or null ranks by `total` only. */
+  primary?: SortPrimary | null;
+}
+
 export interface Limits {
   /** At most 500. */
   maxSchedules?: number | null;
@@ -42,16 +50,30 @@ export interface SolveRequest {
   version: typeof ENGINE_API_VERSION;
   courses: string[];
   preferences?: Preferences | null;
-  sort?: SortWeights | null;
+  sort?: Sort | null;
   limits?: Limits | null;
 }
 
+/**
+ * Minutes, except `total` and `days`. Classes with no set time don't count. The fields marked optional
+ * are additive to version 1, so an answer from an older engine build can lack them.
+ */
 export interface Score {
   total: number;
   earlyMinutes: number;
   gapMinutes: number;
   days: number;
   lateMinutes?: number;
+  /** The week's earliest class start. */
+  firstStart?: number;
+  /** The week's latest class end. */
+  lastEnd?: number;
+  /** The average of each day's first start, over days with class, rounded to the minute. */
+  averageStart?: number;
+  /** The average of each day's last end, over days with class, rounded to the minute. */
+  averageEnd?: number;
+  /** The sum of same-day breaks between classes that are longer than 10 minutes. */
+  freeMinutes?: number;
 }
 
 export interface ScheduleCourse {
@@ -87,7 +109,8 @@ export type Fix = { schedules: number; capped: boolean } & (
   | { kind: "clearBlocked" }
   | { kind: "allowFull" }
   | { kind: "unlock"; course: string }
-  | { kind: "clearAnyOf"; course: string }
+  /** With `startsAfter`, also set preferences.startsAfter to it (0 turns the rule off). */
+  | { kind: "clearAnyOf"; course: string; startsAfter?: number }
   | { kind: "dropCourse"; course: string }
 );
 
