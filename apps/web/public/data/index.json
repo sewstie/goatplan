@@ -1,7 +1,7 @@
 {
   "terms": [
-    {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11","status":"in-progress","courses":588,"sections":1146,"generatedAt":"2026-10-25T13:39:23Z"},
-    {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05","status":"upcoming","courses":583,"sections":1005,"generatedAt":"2026-10-25T13:39:23Z"},
-    {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05","status":"upcoming","courses":564,"sections":972,"generatedAt":"2026-10-25T13:39:23Z"}
+    {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11","status":"in-progress","courses":588,"sections":1146,"generatedAt":"2026-10-26T16:02:11Z"},
+    {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05","status":"upcoming","courses":583,"sections":1005,"generatedAt":"2026-10-26T16:02:11Z"},
+    {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05","status":"upcoming","courses":564,"sections":972,"generatedAt":"2026-10-26T16:02:11Z"}
   ]
 }
