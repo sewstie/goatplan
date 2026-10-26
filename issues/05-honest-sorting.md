@@ -2,7 +2,7 @@
 
 Ticket: 05
 Wave: 2
-Status: OPEN
+Status: DONE
 Blocked By: 01, 02, 04
 
 **Track:** sort (prefs owns the Sort control; the lead owns the copy doc)
