@@ -6,7 +6,7 @@ export function Sidebar({ children }: { children?: ReactNode }) {
   return (
     <aside
       aria-label="Term and courses"
-      className="flex w-(--size-sidebar) shrink-0 flex-col rounded-panel bg-surface px-16 pt-22 pb-15"
+      className="hidden w-(--size-sidebar) shrink-0 flex-col rounded-panel bg-surface px-16 pt-22 pb-15 tablet:flex"
     >
       <Brand />
       {/* The 4px padding, taken back by the negative margin, keeps focus rings from being cut off by the scroll edge. */}

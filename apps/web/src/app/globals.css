@@ -231,6 +231,8 @@
 
   --size-app-padding: 14px;
   --size-gutter: 12px;
+  /* The side gutter of the single-column phone layout, below the tablet breakpoint. */
+  --size-phone-gutter: 16px;
   --size-sidebar: 224px;
   --size-details: 284px;
   --size-header: 76px;
