@@ -364,3 +364,61 @@ describe("accessibility", () => {
     expect(trigger).not.toHaveAttribute("aria-activedescendant");
   });
 });
+
+// ── Option names and descriptions ─────────────────────────────────────
+
+describe("option names and descriptions", () => {
+  const sortOptions = [
+    { value: "bestOverall", label: "Best overall", description: "A balance of start time, gaps and days" },
+    { value: "latestStart", label: "Latest start", description: "Classes start as late as possible each day" },
+    { value: "fewestDays", label: "Most days off", description: "Fewer days on campus" },
+    { value: "plain", label: "No description" },
+  ];
+
+  function SortMenu() {
+    const [value, setValue] = useState("latestStart");
+    return <Listbox variant="menu" label="Sort" menuLabel="Sort" options={sortOptions} value={value} onChange={setValue} />;
+  }
+
+  it.each([["field", Field, options], ["menu", SortMenu, sortOptions]] as const)(
+    "names every option by its label only and describes it by its description (%s variant)",
+    async (_, Component, expected) => {
+      const user = userEvent.setup();
+      render(<Component />);
+      await user.click(screen.getByRole("combobox"));
+      const shown = screen.getAllByRole("option");
+      expect(shown).toHaveLength(expected.length);
+      expected.forEach((option, index) => {
+        expect(shown[index]).toHaveAccessibleName(option.label);
+        if ("description" in option && option.description) expect(shown[index]).toHaveAccessibleDescription(option.description);
+        else expect(shown[index]).not.toHaveAccessibleDescription();
+        // Found by name exactly as a person reads it, so tests can pick it by role and name.
+        expect(screen.getByRole("option", { name: option.label })).toBe(shown[index]);
+      });
+    },
+  );
+
+  it("keeps the selected option's check icon out of its name and description", async () => {
+    const user = userEvent.setup();
+    render(<SortMenu />);
+    await user.click(screen.getByRole("combobox", { name: "Sort" }));
+    const selected = screen.getByRole("option", { selected: true });
+    expect(selected).toHaveAccessibleName("Latest start");
+    expect(selected).toHaveAccessibleDescription("Classes start as late as possible each day");
+    const check = selected.querySelector("svg");
+    expect(check).toHaveAttribute("aria-hidden", "true");
+    for (const option of screen.getAllByRole("option", { selected: false })) expect(option.querySelector("svg")).toBeNull();
+  });
+
+  it("keeps the label and description visible as text, with no visual change", async () => {
+    const user = userEvent.setup();
+    render(<SortMenu />);
+    await user.click(screen.getByRole("combobox", { name: "Sort" }));
+    const option = screen.getByRole("option", { name: "Most days off" });
+    const [label, description] = [...option.querySelectorAll("span")];
+    expect(label).toHaveTextContent("Most days off");
+    expect(label).toHaveClass("text-10", "leading-14-5", "font-700");
+    expect(description).toHaveTextContent("Fewer days on campus");
+    expect(description).toHaveClass("text-8", "leading-12-8", "text-ink-muted");
+  });
+});

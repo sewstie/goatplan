@@ -26,7 +26,8 @@ app/
 components/
   tutorial/             lead     first-visit guide and its browser-local persistence
   ui/                   lead     primitives: Button, ButtonLink, IconButton, Badge, Chip, Toggle,
-                                 Select, TextInput, Card, Dialog, Sheet, Tooltip; course colors
+                                 Select, Listbox, TextInput, Card, Dialog, Sheet (right or bottom),
+                                 Toast, Tooltip; course colors
   shell/                lead     AppShell, Sidebar, WorkspaceHeader, Placeholder, PlannerBootstrap
   courses/              search   term picker, course search, "Your courses", breadcrumbs
   schedule/             schedule calendar, schedule switcher, summary line, banner

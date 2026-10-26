@@ -26,6 +26,7 @@ import { DemoRow } from "./DemoRow";
 import { DemoSection } from "./DemoSection";
 import { DialogDemo } from "./DialogDemo";
 import { SortDemo } from "./SortDemo";
+import { ToastDemo } from "./ToastDemo";
 import { ToggleDemo } from "./ToggleDemo";
 import { TooltipDemo } from "./TooltipDemo";
 
@@ -244,9 +245,15 @@ export default function UiPrimitivesPage() {
         </div>
       </DemoSection>
 
-      <DemoSection title="Dialog and sheet" note="Native modal dialog: focus moves in, Escape closes, focus returns.">
+      <DemoSection title="Dialog and sheet" note={'Native modal dialog: focus moves in, Escape closes, focus returns. Sheets open from the right (default) or across the bottom (side="bottom"), with focus on the heading and kept inside.'}>
         <DemoRow label="Open">
           <DialogDemo />
+        </DemoRow>
+      </DemoSection>
+
+      <DemoSection title="Toast" note="One message and one action, bottom centre (full width minus 16 px on phone). It goes away after 6 seconds, waits while the pointer or focus is on it, and never takes focus.">
+        <DemoRow label="Remove, then Undo">
+          <ToastDemo />
         </DemoRow>
       </DemoSection>
 
