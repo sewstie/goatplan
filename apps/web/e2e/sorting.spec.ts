@@ -2,7 +2,7 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft, SortPresetId } from "../src/lib/store/types";
 import { coursePanelTerm } from "./fixtures/coursePanel";
-import { SORT_MENU_COURSES, sortMenuTerm, sortMenuTops } from "./fixtures/sortMenu";
+import { pickSort, SORT_MENU_COURSES, sortControl, sortList, sortMenuTerm, sortMenuTops, sortOption } from "./fixtures/sortMenu";
 
 // Sorting and badges together: the order picked in the Sort menu re-ranks the schedules in the
 // engine, and the badge for that order leads every schedule it ranks.
@@ -58,8 +58,6 @@ async function openPlanner(page: Page, data: TermFile, draft: Draft) {
 const settled = (page: Page) =>
   expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
 const preferencesRow = (page: Page) => page.getByRole("group", { name: "Preferences", exact: true });
-const sortControl = (page: Page) => preferencesRow(page).getByRole("combobox", { name: "Sort" });
-const sortList = (page: Page) => page.getByRole("listbox", { name: "Sort" });
 const badgeList = (page: Page) => page.getByRole("list", { name: "This schedule" });
 const badges = (page: Page) => badgeList(page).getByRole("listitem");
 const header = (page: Page) => page.locator("header");
@@ -78,9 +76,7 @@ async function shownSchedule(page: Page) {
 
 /** Picks an order with the mouse and waits for the engine's new ranking. */
 async function pickWithMouse(page: Page, label: string) {
-  await sortControl(page).click();
-  await sortList(page).getByRole("option", { name: label, exact: true }).click();
-  await expect(sortList(page)).toBeHidden();
+  await pickSort(page, label);
   await settled(page);
 }
 
@@ -274,7 +270,7 @@ for (const [width, height] of [
     const picked = list.getByRole("option", { selected: true });
     await expect(sort).toHaveAttribute("aria-activedescendant", (await picked.getAttribute("id"))!);
     expect(await fill(picked)).toBe(await token(page, "--color-accent-soft"));
-    const hovered = list.getByRole("option", { name: "Most compact", exact: true });
+    const hovered = sortOption(page, "Most compact");
     await hovered.hover();
     expect(await fill(hovered)).toBe(await token(page, "--color-surface-selected"));
     expect(await fill(picked)).toBe(await token(page, "--color-accent-soft"));
@@ -285,7 +281,7 @@ for (const [width, height] of [
     await expect(list).toHaveScreenshot(`sorting-list-${width}.png`, { animations: "disabled" });
 
     // Picking Earliest finish ranks the 2:50 PM finish first, and its badge leads.
-    await list.getByRole("option", { name: "Earliest finish", exact: true }).click();
+    await sortOption(page, "Earliest finish").click();
     await expect(list).toBeHidden();
     await expect(sort).toBeFocused();
     await settled(page);
