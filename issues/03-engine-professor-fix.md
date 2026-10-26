@@ -2,7 +2,7 @@
 
 Ticket: 03
 Wave: 2
-Status: OPEN
+Status: DONE
 Blocked By: 02
 
 **Track:** ENGINE (allowed for this work; same structure and formatting, no comments, commits separate from the UI)
