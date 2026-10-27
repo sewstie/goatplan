@@ -40,3 +40,14 @@ Examples:
 - 180 → "3 h free between classes"
 
 The old 30-minute gap count badge ("No gaps", "2 gaps") is removed. The free-time badge keeps its place in the badge order and its pill look.
+
+## Undo remove
+
+When a course is removed, the toast reads:
+
+| Element | Text |
+|---|---|
+| Message | Removed {code} |
+| Action | Undo |
+
+Example: "Removed MA 1024 · Undo"

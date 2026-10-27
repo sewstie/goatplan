@@ -2,7 +2,7 @@
 
 Ticket: 08
 Wave: 3
-Status: OPEN
+Status: DONE
 Blocked By: 01, 04, 10
 
 **Track:** courses (search owns "Your courses"; the lead places the Toast in the app shell)
