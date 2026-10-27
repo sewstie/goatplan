@@ -90,3 +90,12 @@ Shows when the selected term's data was last generated, from `generatedAt` in th
 | Example | Course data updated Oct 25, 2026 |
 
 The date is formatted as "MMM D, YYYY" in the student's time zone (e.g. "Oct 25, 2026"). Nothing shows before the term list loads. The date changes when the selected term changes.
+
+## Phone day calendar
+
+Copy used in the mobile day view (below 640 px).
+
+| String | Context |
+|---|---|
+| `No classes on {day}` | Day panel when the selected day has no timed classes or blocked times. `{day}` is the full weekday name, e.g. "Friday". |
+| `{n} free` | Divider between consecutive classes with a break longer than 10 minutes. `{n}` is a formatted duration, e.g. "1 h", "30 min", "1 h 30 min". |
