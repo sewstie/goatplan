@@ -2,7 +2,7 @@
 
 Ticket: 09
 Wave: 3
-Status: OPEN
+Status: DONE
 Blocked By: 01, 10
 
 **Track:** shell (lead) and plans

@@ -17,6 +17,8 @@ type AppShellProps = {
   phoneDisclosure?: ReactNode;
   /** The phone-only bottom sheet for course details, hidden on tablet and wider screens. */
   phoneSheet?: ReactNode;
+  /** Phone-only content placed at the very bottom of the page (after the schedule area). */
+  phoneFooter?: ReactNode;
   /** The names screen readers give the two main regions. */
   scheduleLabel?: string;
   detailsLabel?: string;
@@ -38,6 +40,7 @@ export function AppShell({
   details,
   phoneDisclosure,
   phoneSheet,
+  phoneFooter,
   scheduleLabel = "Weekly schedule",
   detailsLabel = "Course details",
   scheduleFit = "fixed",
@@ -81,6 +84,7 @@ export function AppShell({
               </DetailsPanel>
             )}
           </div>
+          {phoneFooter}
         </main>
       </div>
       {phoneSheet}
