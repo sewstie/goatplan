@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "courses": ["MA 1024", "CS 2022", "PH 1110"],
+  "preferences": {
+    "startsAfter": 720,
+    "anyOf": { "PH 1110": ["PH 1110-CT01-Multipurpose"] }
+  },
+  "limits": { "maxSchedules": 5 }
+}

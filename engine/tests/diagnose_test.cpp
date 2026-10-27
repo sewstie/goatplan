@@ -32,10 +32,20 @@ std::uint64_t totalWith(const Term& term, std::vector<std::string> codes, Prefer
         case FixKind::ClearBlocked: prefs.blocked = WeekMask{}; break;
         case FixKind::AllowFull: prefs.onlyOpen = false; break;
         case FixKind::Unlock: prefs.locked.erase(codes.at(fix.course)); break;
-        case FixKind::ClearAnyOf: prefs.anyOf.erase(codes.at(fix.course)); break;
+        case FixKind::ClearAnyOf:
+            prefs.anyOf.erase(codes.at(fix.course));
+            if (fix.startsAfter >= 0) prefs.startsAfter = fix.startsAfter;
+            break;
         case FixKind::DropCourse: codes.erase(codes.begin() + static_cast<std::ptrdiff_t>(fix.course)); break;
     }
     return solve(filterOptions(term, codes, prefs)).total;
+}
+
+Term professorAtNine() {
+    return makeTerm({
+        {"A", {at(Monday, 9), at(Tuesday, 11), at(Thursday, 11), at(Wednesday, 13)}},
+        {"B", {at(Wednesday, 13)}}
+    });
 }
 
 Term threeWayClash() {
@@ -216,6 +226,61 @@ TEST(Diagnose, ClearingEmptyOrIneffectiveAnyOfRulesIsNotSuggested) {
     const Diagnosis diagnosis = diagnose(term, {"A", "B"}, prefs);
     EXPECT_EQ(diagnosis.fixes, (Fixes{{FixKind::DropCourse, 0, -1, 1},
                                      {FixKind::DropCourse, 1, -1, 1}}));
+}
+
+TEST(Diagnose, ClearingAnyOfAlsoMovesTheStartTimeWhenAloneItGivesNothing) {
+    const Term term = professorAtNine();
+    const std::vector<std::string> codes{"A", "B"};
+    Preferences prefs;
+    prefs.startsAfter = 12 * 60;
+    prefs.anyOf["A"] = {"A-0"};
+    const Diagnosis diagnosis = diagnose(term, codes, prefs);
+    ASSERT_EQ(diagnosis.emptyCourses.size(), 1u);
+    EXPECT_EQ(diagnosis.emptyCourses[0].removed[reasonIndex(FilterReason::NotAnyOf)], 3);
+    EXPECT_EQ(diagnosis.fixes, (Fixes{{FixKind::ClearAnyOf, 0, 11 * 60, 2},
+                                     {FixKind::RelaxStartsAfter, 0, 9 * 60, 1},
+                                     {FixKind::DropCourse, 0, -1, 1}}));
+    for (const Fix& fix : diagnosis.fixes) {
+        EXPECT_EQ(totalWith(term, codes, prefs, fix), fix.schedules);
+    }
+}
+
+TEST(Diagnose, ClearingAnyOfAloneKeepsTheStartTimeWhenThatIsEnough) {
+    const Term term = professorAtNine();
+    const std::vector<std::string> codes{"A", "B"};
+    Preferences prefs;
+    prefs.startsAfter = 11 * 60;
+    prefs.anyOf["A"] = {"A-0"};
+    const Diagnosis diagnosis = diagnose(term, codes, prefs);
+    EXPECT_EQ(diagnosis.fixes, (Fixes{{FixKind::ClearAnyOf, 0, -1, 2},
+                                     {FixKind::RelaxStartsAfter, 0, 9 * 60, 1},
+                                     {FixKind::DropCourse, 0, -1, 1}}));
+    for (const Fix& fix : diagnosis.fixes) {
+        EXPECT_EQ(totalWith(term, codes, prefs, fix), fix.schedules);
+    }
+}
+
+TEST(Diagnose, NoCombinedAnyOfFixWhenTheStartTimeIsNotTheProblem) {
+    const Term term = makeTerm({{"A", {at(Monday, 13), at(Tuesday, 13)}}, {"B", {at(Tuesday, 13)}}});
+    Preferences blocked;
+    blocked.startsAfter = 12 * 60;
+    blocked.anyOf["A"] = {"A-0"};
+    blocked.blocked.addRange(0, 13 * 60, 14 * 60);
+    EXPECT_EQ(diagnose(term, {"A", "B"}, blocked).fixes, (Fixes{{FixKind::ClearBlocked, 0, -1, 1},
+                                                              {FixKind::DropCourse, 0, -1, 1}}));
+
+    const Term early = makeTerm({{"A", {at(Monday, 9), at(Tuesday, 9)}}, {"B", {at(Monday, 13)}}});
+    Preferences everySection;
+    everySection.startsAfter = 10 * 60;
+    everySection.anyOf["A"] = {"A-0", "A-1"};
+    EXPECT_EQ(diagnose(early, {"A", "B"}, everySection).fixes, (Fixes{{FixKind::RelaxStartsAfter, 0, 9 * 60, 2},
+                                                                     {FixKind::DropCourse, 0, -1, 1}}));
+
+    Preferences noStartTime;
+    noStartTime.anyOf["A"] = {"A-0"};
+    noStartTime.blocked.addRange(0, 13 * 60, 14 * 60);
+    EXPECT_EQ(diagnose(term, {"A", "B"}, noStartTime).fixes, (Fixes{{FixKind::ClearBlocked, 0, -1, 1},
+                                                                  {FixKind::DropCourse, 0, -1, 1}}));
 }
 
 TEST(Diagnose, TinyBudgetMakesNoClaims) {

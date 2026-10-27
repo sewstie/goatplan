@@ -13,7 +13,12 @@
         "earlyMinutes": 300,
         "gapMinutes": 480,
         "lateMinutes": 0,
-        "days": 5
+        "days": 5,
+        "firstStart": 540,
+        "lastEnd": 890,
+        "averageStart": 540,
+        "averageEnd": 746,
+        "freeMinutes": 480
       },
       "courses": [
         {
@@ -50,7 +55,12 @@
         "earlyMinutes": 300,
         "gapMinutes": 540,
         "lateMinutes": 0,
-        "days": 5
+        "days": 5,
+        "firstStart": 540,
+        "lastEnd": 950,
+        "averageStart": 540,
+        "averageEnd": 758,
+        "freeMinutes": 540
       },
       "courses": [
         {
@@ -87,7 +97,12 @@
         "earlyMinutes": 300,
         "gapMinutes": 600,
         "lateMinutes": 0,
-        "days": 5
+        "days": 5,
+        "firstStart": 540,
+        "lastEnd": 1010,
+        "averageStart": 540,
+        "averageEnd": 770,
+        "freeMinutes": 600
       },
       "courses": [
         {
