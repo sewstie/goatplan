@@ -2,7 +2,7 @@
 
 Ticket: 11
 Wave: 3
-Status: OPEN
+Status: DONE
 Blocked By: 10
 
 **Track:** prefs (Preferences row), schedule (switcher, badges), plans (header actions)
