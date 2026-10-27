@@ -2,7 +2,7 @@
 
 Ticket: 07
 Wave: 3
-Status: OPEN
+Status: DONE
 Blocked By: 01, 03
 
 **Track:** prefs (the lead owns the diagnosis text module)

@@ -208,7 +208,13 @@ export function fixText(fix: Fix, context: DiagnosisContext): DiagnosisFix {
     case "relaxStartsAfter": label = fix.startsAfter === 0 ? "Clear start restriction" : `Change to ${formatTime(fix.startsAfter)}`; break;
     case "clearBlocked": label = "Clear blocked times"; break;
     case "allowFull": label = "Show full sections"; break;
-    case "clearAnyOf": label = `Allow any professor for ${fix.course}`; break;
+    case "clearAnyOf": {
+      const base = `Allow any professor for ${fix.course}`;
+      if (fix.startsAfter === 0) label = `${base} and clear start restriction`;
+      else if (fix.startsAfter != null) label = `${base} and change to ${formatTime(fix.startsAfter)}`;
+      else label = base;
+      break;
+    }
     case "dropCourse": label = `Remove ${fix.course}`; break;
     case "unlock": {
       const course = context.term?.courses.find((item) => item.code === fix.course);

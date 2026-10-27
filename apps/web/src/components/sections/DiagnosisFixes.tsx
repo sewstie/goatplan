@@ -23,7 +23,7 @@ export function DiagnosisFixes({ fixes }: { fixes: readonly DiagnosisFix[] }) {
       <h3 className="text-10 leading-14-5 font-650">Ways to fix it</h3>
       {fixes.map(({ fix, label, count }, index) => (
         <Button
-          key={`${fix.kind}:${"course" in fix ? fix.course : "startsAfter" in fix ? fix.startsAfter : ""}`}
+          key={`${fix.kind}:${"course" in fix ? fix.course : ""}${"startsAfter" in fix ? `:${fix.startsAfter}` : ""}`}
           variant={index === 0 ? "primary" : "secondary"}
           size="md"
           fullWidth
