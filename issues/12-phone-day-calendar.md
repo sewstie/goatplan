@@ -2,7 +2,7 @@
 
 Ticket: 12
 Wave: 3
-Status: OPEN
+Status: DONE
 Blocked By: 10
 
 **Track:** schedule

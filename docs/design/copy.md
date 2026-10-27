@@ -40,3 +40,12 @@ Examples:
 - 180 → "3 h free between classes"
 
 The old 30-minute gap count badge ("No gaps", "2 gaps") is removed. The free-time badge keeps its place in the badge order and its pill look.
+
+## Phone day calendar
+
+Copy used in the mobile day view (below 640 px).
+
+| String | Context |
+|---|---|
+| `No classes on {day}` | Day panel when the selected day has no timed classes or blocked times. `{day}` is the full weekday name, e.g. "Friday". |
+| `{n} free` | Divider between consecutive classes with a break longer than 10 minutes. `{n}` is a formatted duration, e.g. "1 h", "30 min", "1 h 30 min". |
