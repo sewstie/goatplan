@@ -1,6 +1,7 @@
 import { LockSimple, X } from "@phosphor-icons/react/ssr";
 import { IconButton } from "@/components/ui/IconButton";
 import { cx } from "@/components/ui/cx";
+import { useOpenPhoneDetails } from "@/components/shell/phoneDetails";
 
 type CourseRowProps = {
   code: string;
@@ -15,12 +16,17 @@ type CourseRowProps = {
 
 /** A planned course in "Your courses" (div.app-3.md). The remove button shows on hover and keyboard focus. */
 export function CourseRow({ code, title, sections, swatch, locked, selected, onSelect, onRemove }: CourseRowProps) {
+  const openPhoneDetails = useOpenPhoneDetails();
   return (
     <li className="group relative">
       <button
         type="button"
         aria-current={selected || undefined}
-        onClick={onSelect}
+        onClick={() => {
+          onSelect();
+          // On a phone this opens the bottom details sheet; on wider screens it's a no-op.
+          openPhoneDetails();
+        }}
         data-course-row={code}
         className={cx(
           "flex w-full cursor-pointer gap-9 rounded-card border border-transparent px-10 py-12 text-left",
@@ -48,7 +54,7 @@ export function CourseRow({ code, title, sections, swatch, locked, selected, onS
           label={`Remove ${code}`}
           icon={<X aria-hidden />}
           onClick={onRemove}
-          className="text-ink-muted"
+          className="text-ink-muted pointer-coarse:after:-inset-17"
         />
       </span>
     </li>

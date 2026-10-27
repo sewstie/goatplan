@@ -10,6 +10,15 @@ type AppShellProps = {
   banner?: ReactNode;
   schedule: ReactNode;
   details?: ReactNode;
+  /**
+   * The phone-only "Your courses" disclosure, shown between the header and the toolbar below the
+   * tablet breakpoint. It stands in for the sidebar, which is hidden on a phone.
+   */
+  phoneDisclosure?: ReactNode;
+  /** The phone-only bottom sheet for course details, hidden on tablet and wider screens. */
+  phoneSheet?: ReactNode;
+  /** Phone-only content placed at the very bottom of the page (after the schedule area). */
+  phoneFooter?: ReactNode;
   /** The names screen readers give the two main regions. */
   scheduleLabel?: string;
   detailsLabel?: string;
@@ -29,6 +38,9 @@ export function AppShell({
   banner,
   schedule,
   details,
+  phoneDisclosure,
+  phoneSheet,
+  phoneFooter,
   scheduleLabel = "Weekly schedule",
   detailsLabel = "Course details",
   scheduleFit = "fixed",
@@ -42,14 +54,17 @@ export function AppShell({
       >
         Skip to main content
       </a>
-      <div className="flex min-h-dvh gap-(--size-gutter) p-(--size-app-padding) wide:h-[max(100dvh,720px)]">
-        {sidebar}
+      {/* Phone: a single column with a 16px side gutter. Tablet and up: the sidebar plus the main region. */}
+      <div className="flex min-h-dvh gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:p-(--size-app-padding) wide:h-[max(100dvh,720px)]">
+        {/* The sidebar is hidden on a phone; its term picker and courses move into the disclosure. */}
+        <div className="contents">{sidebar}</div>
         <main
           id="main"
           tabIndex={-1}
           className="flex min-w-0 flex-1 flex-col gap-(--size-gutter) outline-none"
         >
           {header}
+          {phoneDisclosure}
           {toolbar}
           {banner}
           <div className="flex flex-1 flex-col gap-(--size-gutter) wide:min-h-0 wide:flex-row">
@@ -62,14 +77,17 @@ export function AppShell({
             >
               {schedule}
             </section>
+            {/* The side details panel is hidden on a phone; the bottom sheet takes its place. */}
             {details && (
               <DetailsPanel label={detailsLabel} hideOnTermError={hideDetailsOnTermError}>
                 {details}
               </DetailsPanel>
             )}
           </div>
+          {phoneFooter}
         </main>
       </div>
+      {phoneSheet}
     </>
   );
 }

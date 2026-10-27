@@ -167,4 +167,25 @@ describe("fixText", () => {
     expect(fixText({ kind: "unlock", course: "AE 2320", schedules: 1234, capped: true }, context()).label).toBe("Unlock AE 2320");
     expect(fixText({ kind: "allowFull", schedules: 1234, capped: true }, context()).count).toBe("At least 1,234 schedules fit");
   });
+
+  it("labels clearAnyOf without startsAfter as plain professor fix", () => {
+    const fix: Fix = { kind: "clearAnyOf", course: "PH 1110", schedules: 5, capped: false };
+    expect(fixText(fix, context()).label).toBe("Allow any professor for PH 1110");
+  });
+
+  it("labels clearAnyOf with startsAfter as a combined professor-and-time fix", () => {
+    const fix: Fix = { kind: "clearAnyOf", course: "PH 1110", startsAfter: 660, schedules: 10, capped: false };
+    expect(fixText(fix, context()).label).toBe("Allow any professor for PH 1110 and change to 11:00 AM");
+  });
+
+  it("labels clearAnyOf with startsAfter 720 (12 PM) as a combined fix", () => {
+    const fix: Fix = { kind: "clearAnyOf", course: "PH 1110", startsAfter: 720, schedules: 8, capped: false };
+    expect(fixText(fix, context()).label).toBe("Allow any professor for PH 1110 and change to 12:00 PM");
+  });
+
+  it("labels clearAnyOf with startsAfter 0 as a combined clear-start fix", () => {
+    const fix: Fix = { kind: "clearAnyOf", course: "PH 1110", startsAfter: 0, schedules: 3, capped: true };
+    expect(fixText(fix, context()).label).toBe("Allow any professor for PH 1110 and clear start restriction");
+    expect(fixText(fix, context()).count).toBe("At least 3 schedules fit");
+  });
 });

@@ -5,12 +5,14 @@ import { Plus } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { Dialog } from "@/components/ui/Dialog";
+import { Sheet } from "@/components/ui/Sheet";
+import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import type { Day } from "@/lib/data/types";
 import { usePlanner } from "@/lib/store";
 import { addBlocked } from "./blockedTimes";
 import { BlockTimeForm } from "./BlockTimeForm";
 
-/** The dashed "Block a time" pill and the form it opens. */
+/** The dashed "Block a time" pill and the form it opens. On a phone, opens a bottom Sheet; on tablet+, a Dialog. */
 export function BlockTimeButton() {
   const blocked = usePlanner((state) => state.preferences.blocked);
   const setPreferences = usePlanner((state) => state.setPreferences);
@@ -21,6 +23,7 @@ export function BlockTimeButton() {
   const formId = useId();
   const errorId = useId();
   const nameRef = useRef<HTMLInputElement>(null);
+  const phone = usePhoneViewport();
 
   // The dialog would focus its close button, which Safari outlines; start in the name field instead.
   // This runs after the dialog's own effect has opened it.
@@ -33,50 +36,68 @@ export function BlockTimeButton() {
     setOpen(false);
   }
 
+  function openForm() {
+    setFormKey((key) => key + 1);
+    setError(null);
+    setOpen(true);
+  }
+
+  const form = (
+    <BlockTimeForm
+      key={formKey}
+      id={formId}
+      nameRef={nameRef}
+      onSubmit={handleSubmit}
+      onError={setError}
+      errorId={error ? errorId : undefined}
+    />
+  );
+
+  const footer = (
+    <>
+      {error && (
+        <p id={errorId} role="alert" className="mr-auto self-center text-9 leading-13-5 text-warning">
+          {error}
+        </p>
+      )}
+      <Button variant="secondary" size="md" onClick={() => setOpen(false)}>
+        Cancel
+      </Button>
+      <Button type="submit" size="md" form={formId}>
+        Block time
+      </Button>
+    </>
+  );
+
   return (
     <>
       <Chip
         id="tutorial-block-time"
         variant="dashed"
         icon={<Plus />}
-        onClick={() => {
-          setFormKey((key) => key + 1);
-          setError(null);
-          setOpen(true);
-        }}
+        onClick={openForm}
       >
         Block a time
       </Chip>
-      <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
-        title="Block a time"
-        description="GoatPlan won’t put classes in this time."
-        footer={
-          <>
-            {error && (
-              <p id={errorId} role="alert" className="mr-auto self-center text-9 leading-13-5 text-warning">
-                {error}
-              </p>
-            )}
-            <Button variant="secondary" size="md" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-            <Button type="submit" size="md" form={formId}>
-              Block time
-            </Button>
-          </>
-        }
-      >
-        <BlockTimeForm
-          key={formKey}
-          id={formId}
-          nameRef={nameRef}
-          onSubmit={handleSubmit}
-          onError={setError}
-          errorId={error ? errorId : undefined}
-        />
-      </Dialog>
+      {phone ? (
+        <Sheet open={open} onClose={() => setOpen(false)} title="Block a time" side="bottom">
+          <p className="text-11 leading-19-8 text-ink-muted">
+            GoatPlan won&apos;t put classes in this time.
+          </p>
+          {form}
+          <div className="flex flex-wrap justify-end gap-8 pt-9">{footer}</div>
+        </Sheet>
+      ) : (
+        <Dialog
+          open={open}
+          onClose={() => setOpen(false)}
+          title="Block a time"
+          description="GoatPlan won't put classes in this time."
+          footer={footer}
+        >
+          {form}
+        </Dialog>
+      )}
     </>
   );
 }
