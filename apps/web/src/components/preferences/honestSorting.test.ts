@@ -55,17 +55,17 @@ describe("ticket 05: leading badge correctness", () => {
     ["fewestEarly", /^Starts /],
     ["earliestFinish", /^Done by /],
     ["fewestDays", /off$/],
-    ["fewestGaps", /gap/],
+    ["fewestGaps", /free between classes$|^No gaps between classes$/],
   ];
 
   it.each(EXPECTED_LEAD)("%s has its primary-measure badge first", (preset, pattern) => {
-    const badges = scheduleBadges(meetings, preset);
+    const badges = scheduleBadges(meetings, {}, preset);
     expect(badges.length).toBeGreaterThan(0);
     expect(badges[0]).toMatch(pattern);
   });
 
   it("bestOverall has no forced lead badge", () => {
-    const badges = scheduleBadges(meetings, "bestOverall");
+    const badges = scheduleBadges(meetings, {}, "bestOverall");
     // Default order: DaysOff (if any), Start, Gaps, Finish
     expect(badges.length).toBeLessThanOrEqual(3);
     // First badge is days off because there are free days
@@ -78,8 +78,8 @@ describe("ticket 05: leading badge correctness", () => {
     const scheduleA: BadgeMeeting[] = [{ day: "Mon", start: 660, end: 720 }];
     const scheduleB: BadgeMeeting[] = [{ day: "Mon", start: 540, end: 600 }];
 
-    const badgesA = scheduleBadges(scheduleA, "latestStart");
-    const badgesB = scheduleBadges(scheduleB, "latestStart");
+    const badgesA = scheduleBadges(scheduleA, {}, "latestStart");
+    const badgesB = scheduleBadges(scheduleB, {}, "latestStart");
 
     // Both lead with Start
     expect(badgesA[0]).toMatch(/^Starts /);
@@ -95,8 +95,8 @@ describe("ticket 05: leading badge correctness", () => {
     const scheduleA: BadgeMeeting[] = [{ day: "Mon", start: 540, end: 600 }]; // Done by 10 AM
     const scheduleB: BadgeMeeting[] = [{ day: "Mon", start: 540, end: 900 }]; // Done by 3 PM
 
-    const badgesA = scheduleBadges(scheduleA, "earliestFinish");
-    const badgesB = scheduleBadges(scheduleB, "earliestFinish");
+    const badgesA = scheduleBadges(scheduleA, {}, "earliestFinish");
+    const badgesB = scheduleBadges(scheduleB, {}, "earliestFinish");
 
     expect(badgesA[0]).toMatch(/^Done by /);
     expect(badgesB[0]).toMatch(/^Done by /);
@@ -114,8 +114,8 @@ describe("ticket 05: leading badge correctness", () => {
       { day: "Wed", start: 540, end: 600 },
     ]; // 2 days off
 
-    const badgesA = scheduleBadges(scheduleA, "fewestDays");
-    const badgesB = scheduleBadges(scheduleB, "fewestDays");
+    const badgesA = scheduleBadges(scheduleA, {}, "fewestDays");
+    const badgesB = scheduleBadges(scheduleB, {}, "fewestDays");
 
     expect(badgesA[0]).toMatch(/off$/);
     expect(badgesB[0]).toMatch(/off$/);
