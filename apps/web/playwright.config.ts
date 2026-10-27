@@ -18,7 +18,19 @@ export default defineConfig({
   use: devices["Desktop Chrome"],
   projects: [
     // Every spec runs against the production build, except the /dev page specs: those pages 404 in production.
-    { name: "production", testIgnore: /(primitives|engine)\.spec\.ts/, use: { baseURL: productionUrl } },
+    { name: "production", testIgnore: /(primitives|engine|phone)\.spec\.ts/, use: { baseURL: productionUrl } },
+    // The phone shell specs run below the tablet breakpoint (640px) on a phone-sized viewport.
+    {
+      name: "phone",
+      testMatch: /phone\.spec\.ts/,
+      use: {
+        baseURL: productionUrl,
+        viewport: { width: 375, height: 812 },
+        hasTouch: true,
+        isMobile: true,
+        userAgent: devices["iPhone 13"].userAgent,
+      },
+    },
     { name: "dev-pages", testMatch: /(primitives|engine)\.spec\.ts/, use: { baseURL: devUrl } },
   ],
   webServer: [

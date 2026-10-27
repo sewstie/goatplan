@@ -2,7 +2,7 @@
 
 Ticket: 10
 Wave: 2
-Status: OPEN
+Status: DONE
 Blocked By: 04
 
 **Track:** SHARED (lead: app shell, sidebar, page; search for the course list's touch targets)
