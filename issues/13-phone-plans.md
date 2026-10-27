@@ -2,7 +2,7 @@
 
 Ticket: 13
 Wave: 4
-Status: OPEN
+Status: DONE
 Blocked By: 12
 
 **Track:** plans
