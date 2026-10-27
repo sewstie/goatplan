@@ -50,6 +50,23 @@ States 01–03 and 06 are not in Prototype v2; their PNGs and notes are from v1.
 
 Not exported yet: state 38 "Search incomplete · Found schedules only" and the 834 px tablet states 39–45 (course validation, optional availability, professor rating and section details as a side drawer, finish with no matches, optional professor, wait for term data, results handoff). They are in Figma under "Prototype v2." (state 38 node `68:13884`, tablet frames 834 × 840 from node `68:14227`).
 
+## Phone screens (375 px)
+
+The phone layout has no Figma frame. The implementation and these notes are the
+reference. Screenshots are taken at 375 × 812 px. The phone breakpoint is
+below 40 rem (640 px); from 640 px up every screen looks exactly as the
+desktop/tablet designs above.
+
+| Note | What it shows |
+|---|---|
+| [`phone-planner-empty`](screens/phone-planner-empty.md) | First visit, empty planner. Phone shell reference: single column, "Your courses" disclosure open, day calendar with no classes, stacked preferences. |
+| [`phone-planner-courses`](screens/phone-planner-courses.md) | Planner with courses and schedules. Day view with class blocks, free-time dividers, schedule switcher with wrapping badges, collapsed disclosure. |
+| [`phone-details-sheet`](screens/phone-details-sheet.md) | Course details in a bottom sheet. Full-width, ≤ 85 dvh, slide-up, same content as the desktop side panel. |
+| [`phone-preferences`](screens/phone-preferences.md) | Preferences bar stacked, icon-only header actions, "Block a time" in a bottom sheet, guide popover adaptation, "Your courses" disclosure behavior. |
+| [`phone-plans`](screens/phone-plans.md) | Sections to register on `/plans`. Section cards (label–value rows) replace the desktop table; full-width action buttons. |
+
+These notes cover the phone adaptations. Desktop state notes (01–37 above) describe the shared content and data; the phone notes describe only the layout differences.
+
 ## What changed in v2
 
 - **Wider course panel**: 284 instead of 270. The calendar shrinks from 1134 to 1120.
