@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { Check, Copy } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
+import { cx } from "@/components/ui/cx";
 
 const COPIED_FOR_MS = 2000;
 
@@ -12,6 +13,10 @@ type CopySectionListButtonProps = {
   previewRef: RefObject<HTMLElement | null>;
   onCopied: () => void;
   onFallback: () => void;
+  /** Full-width on phones (ticket 13). */
+  fullWidth?: boolean;
+  /** 44px touch target on phones (ticket 13). */
+  phone?: boolean;
 };
 
 function selectContents(element: HTMLElement) {
@@ -23,7 +28,7 @@ function selectContents(element: HTMLElement) {
 }
 
 /** "Copy section list". After copying it reads "Copied" with a check for a moment, like "Saved". */
-export function CopySectionListButton({ text, previewRef, onCopied, onFallback }: CopySectionListButtonProps) {
+export function CopySectionListButton({ text, previewRef, onCopied, onFallback, fullWidth, phone }: CopySectionListButtonProps) {
   const [copied, setCopied] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -46,7 +51,13 @@ export function CopySectionListButton({ text, previewRef, onCopied, onFallback }
 
   return (
     <>
-      <Button size="md" icon={copied ? <Check aria-hidden /> : <Copy aria-hidden />} onClick={copy} className="min-w-127">
+      <Button
+        size="md"
+        icon={copied ? <Check aria-hidden /> : <Copy aria-hidden />}
+        onClick={copy}
+        fullWidth={fullWidth}
+        className={cx(!fullWidth && "min-w-127", phone && "min-h-44")}
+      >
         {copied ? "Copied" : "Copy section list"}
       </Button>
       <span role="status" className="sr-only">

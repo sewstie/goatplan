@@ -3,7 +3,8 @@ import { Suspense } from "react";
 import { PlansBreadcrumbs } from "@/components/plans/PlansBreadcrumbs";
 import { PlansPageActions } from "@/components/plans/PlansPageActions";
 import { PlansPreferences } from "@/components/plans/PlansPreferences";
-import { PlansSidebar } from "@/components/plans/PlansSidebar";
+import { PlansPhoneFooter } from "@/components/plans/PlansPhoneFooter";
+import { PlansSidebarWrapper } from "@/components/plans/PlansSidebarWrapper";
 import { PlansSubtitle } from "@/components/plans/PlansSubtitle";
 import { PlansTitle } from "@/components/plans/PlansTitle";
 import { RegistrationPrint } from "@/components/plans/RegistrationPrint";
@@ -12,7 +13,6 @@ import { RegistrationSummary } from "@/components/plans/RegistrationSummary";
 import { SavedPlanPill } from "@/components/plans/SavedPlanPill";
 import { AppShell } from "@/components/shell/AppShell";
 import { PlannerBootstrap } from "@/components/shell/PlannerBootstrap";
-import { Sidebar } from "@/components/shell/Sidebar";
 import { WorkspaceHeader } from "@/components/shell/WorkspaceHeader";
 
 export const metadata: Metadata = {
@@ -30,11 +30,9 @@ export default function PlansPage() {
       <div className="print:hidden">
         <AppShell
           sidebar={
-            <Sidebar>
-              <Suspense>
-                <PlansSidebar />
-              </Suspense>
-            </Sidebar>
+            <Suspense>
+              <PlansSidebarWrapper />
+            </Suspense>
           }
           header={
             <WorkspaceHeader
@@ -77,6 +75,11 @@ export default function PlansPage() {
           details={
             <Suspense>
               <RegistrationSummary />
+            </Suspense>
+          }
+          phoneFooter={
+            <Suspense>
+              <PlansPhoneFooter />
             </Suspense>
           }
         />

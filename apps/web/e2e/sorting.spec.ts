@@ -226,7 +226,7 @@ for (const [width, height] of [
 
     // Fewest early classes leads with the start; there is class every weekday, so no days-off badge.
     await expect(sort).toHaveText("SortFewest early classes");
-    await expect(badges(page)).toHaveText(["Starts 9 AM", "1 gap", "Done by 2:50 PM"]);
+    await expect(badges(page)).toHaveText(["Starts 9 AM", "2 h free between classes", "Done by 2:50 PM"]);
 
     // The closed control has the Preferences row's height.
     const sortBox = await box(sort);
@@ -287,7 +287,7 @@ for (const [width, height] of [
     await settled(page);
     await expect(sort).toHaveText("SortEarliest finish");
     await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
-    await expect(badges(page)).toHaveText(["Done by 2:50 PM", "Starts 9 AM", "1 gap"]);
+    await expect(badges(page)).toHaveText(["Done by 2:50 PM", "Starts 9 AM", "2 h free between classes"]);
     await page.mouse.move(0, 0);
     await page.screenshot({ path: `${screenshotDir}/sorting-earliest-finish-${width}.png`, fullPage: width === 834, animations: "disabled" });
   });

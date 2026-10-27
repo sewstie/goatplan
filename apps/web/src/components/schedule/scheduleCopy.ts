@@ -1,6 +1,6 @@
 import type { Day, Delivery } from "@/lib/data/types";
 import { formatTimeShort } from "@/lib/data/time";
-import type { SolveResponse } from "@/lib/engine/types";
+import type { Score, SolveResponse } from "@/lib/engine/types";
 import type { SolveStatus, SortPresetId, TermStatus } from "@/lib/store/types";
 
 const numberFormat = new Intl.NumberFormat("en-US");
@@ -50,9 +50,9 @@ const SHORT_DAY: Readonly<Record<Day, string>> = {
 };
 
 /** Badge category keys, in the default display order (after any lead badge). */
-type BadgeKind = "DaysOff" | "Start" | "Gaps" | "Finish";
+type BadgeKind = "DaysOff" | "Start" | "FreeTime" | "Finish";
 
-const DEFAULT_ORDER: readonly BadgeKind[] = ["DaysOff", "Start", "Gaps", "Finish"];
+const DEFAULT_ORDER: readonly BadgeKind[] = ["DaysOff", "Start", "FreeTime", "Finish"];
 
 /** Which badge kind leads for each sort preset. bestOverall has no lead. */
 const LEAD_BADGE: Partial<Record<SortPresetId, BadgeKind>> = {
@@ -60,20 +60,29 @@ const LEAD_BADGE: Partial<Record<SortPresetId, BadgeKind>> = {
   fewestEarly: "Start",
   earliestFinish: "Finish",
   fewestDays: "DaysOff",
-  fewestGaps: "Gaps",
+  fewestGaps: "FreeTime",
 };
 
-const GAP_THRESHOLD = 30; // minutes
+/** Breaks this long or shorter are the walk between back-to-back classes, not free time (the engine's rule). */
+const WALK_MINUTES = 10;
 const MAX_BADGES = 3;
 
 /**
  * Up to three badge texts describing the shown schedule. Replaces the old scoreChips.
  *
- * Input: the schedule's meetings (day, start, end) and the current sort preset.
+ * Input: the schedule's meetings (day, start, end), its engine score and the current sort preset.
  * Meetings with no set time (online/async courses) are excluded by the caller
  * — they simply don't appear in the meetings array.
+ *
+ * Free time comes from `score.freeMinutes`, the measure "Most compact" ranks by. A plan saved
+ * before the engine sent it has no `freeMinutes`; then it's worked out from the meetings with
+ * the same rule.
  */
-export function scheduleBadges(meetings: readonly BadgeMeeting[], preset: SortPresetId): string[] {
+export function scheduleBadges(
+  meetings: readonly BadgeMeeting[],
+  score: Readonly<Pick<Score, "freeMinutes">>,
+  preset: SortPresetId,
+): string[] {
   if (meetings.length === 0) return [];
 
   // ── Week facts ──
@@ -95,14 +104,22 @@ export function scheduleBadges(meetings: readonly BadgeMeeting[], preset: SortPr
   // Free weekdays (Mon–Fri only).
   const freeDays = WEEKDAYS.filter((day) => !meetingsByDay.has(day));
 
-  // Gaps: breaks ≥30 min between classes on the same day, summed over the week.
-  let gapCount = 0;
-  for (const [, dayMeetings] of meetingsByDay) {
-    const sorted = [...dayMeetings].sort((a, b) => a.start - b.start);
-    for (let i = 1; i < sorted.length; i++) {
-      if (sorted[i].start - sorted[i - 1].end >= GAP_THRESHOLD) gapCount++;
+  // Free time: same-day breaks longer than the walk between classes, summed over the week.
+  // Taken from the score; worked out from the meetings only when the score lacks it.
+  // Overlapping meetings count as one stretch of class.
+  let fromMeetings = 0;
+  if (score.freeMinutes === undefined) {
+    for (const [, dayMeetings] of meetingsByDay) {
+      const sorted = [...dayMeetings].sort((a, b) => a.start - b.start);
+      let busyUntil = sorted[0].end;
+      for (const meeting of sorted.slice(1)) {
+        const free = meeting.start - busyUntil;
+        if (free > WALK_MINUTES) fromMeetings += free;
+        busyUntil = Math.max(busyUntil, meeting.end);
+      }
     }
   }
+  const freeMinutes = score.freeMinutes ?? fromMeetings;
 
   // ── Badge text per kind ──
   function badgeText(kind: BadgeKind): string | null {
@@ -117,8 +134,12 @@ export function scheduleBadges(meetings: readonly BadgeMeeting[], preset: SortPr
         if (freeDays.length === 2) return `${SHORT_DAY[freeDays[0]]}, ${SHORT_DAY[freeDays[1]]} off`;
         return `${freeDays.length} days off`;
       }
-      case "Gaps":
-        return gapCount === 0 ? "No gaps" : `${gapCount} ${gapCount === 1 ? "gap" : "gaps"}`;
+      case "FreeTime": {
+        if (freeMinutes <= 0) return "No gaps between classes";
+        if (freeMinutes < 60) return `${freeMinutes} min free between classes`;
+        // An hour or more: to the nearest half hour, so 75 → "1.5 h" and 150 → "2.5 h".
+        return `${Math.round(freeMinutes / 30) / 2} h free between classes`;
+      }
     }
   }
 
