@@ -38,7 +38,7 @@ export function ScheduleSummary() {
   if (!text) return null;
 
   const showChips = termStatus === "ready" && solveStatus === "done" && courseCount > 0 && schedule;
-  const badges = showChips ? scheduleBadges(classes, sortPreset) : [];
+  const badges = showChips ? scheduleBadges(classes, schedule.score, sortPreset) : [];
 
   return (
     <div className="flex flex-wrap items-center gap-x-8 gap-y-4">

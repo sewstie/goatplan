@@ -13,8 +13,20 @@ describe("ScheduleSummary", () => {
     expect(screen.getByText("2 courses · 3 schedules fit")).toBeInTheDocument();
     const chips = screen.getByRole("list", { name: "This schedule" });
     expect(chips).toHaveTextContent("Starts 9 AM");
-    expect(chips).toHaveTextContent("1 gap");
+    // The fixture's score has no freeMinutes, so the 3 h 10 min Thursday break comes from the meetings.
+    expect(chips).toHaveTextContent("3 h free between classes");
     expect(chips).toHaveTextContent("Done by 2:50 PM");
+  });
+
+  it("reads the free time from the shown schedule's score", () => {
+    const response = solved(["CX01", "CX02"]);
+    response.schedules = response.schedules.map((schedule, index) => ({
+      ...schedule,
+      score: { ...schedule.score, freeMinutes: index === 0 ? 40 : 0 },
+    }));
+    setPlanner({ response });
+    render(<ScheduleSummary />);
+    expect(screen.getByRole("list", { name: "This schedule" })).toHaveTextContent("40 min free between classes");
   });
 
   it("says which term is loading", () => {

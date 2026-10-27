@@ -2,7 +2,7 @@
 
 Ticket: 06
 Wave: 2
-Status: OPEN
+Status: DONE
 Blocked By: 01, 02
 
 **Track:** schedule
