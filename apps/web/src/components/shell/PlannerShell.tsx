@@ -7,6 +7,7 @@ import { YourCoursesDisclosure } from "@/components/courses/YourCoursesDisclosur
 import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
 import { ChooseAlternativeSheet } from "@/components/sections/ChooseAlternativeSheet";
 import { AppShell } from "@/components/shell/AppShell";
+import { DataUpdated } from "@/components/shell/DataUpdated";
 import { PhoneDetailsProvider } from "@/components/shell/phoneDetails";
 import { PhoneDetailsSheet } from "@/components/shell/PhoneDetailsSheet";
 import { Sidebar } from "@/components/shell/Sidebar";
@@ -106,6 +107,7 @@ export function PlannerShell({ header, toolbar, banner, schedule }: PlannerShell
             </PhoneDetailsSheet>
           ) : null
         }
+        phoneFooter={phone ? <DataUpdated /> : null}
       />
       {/* Rendered last and fixed to the viewport, so it's the final Tab stop and sits above the shell. */}
       <Toast

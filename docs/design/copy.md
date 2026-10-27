@@ -79,3 +79,14 @@ When a course is removed, the toast reads:
 | Action | Undo |
 
 Example: "Removed MA 1024 · Undo"
+
+## Course data updated date
+
+Shows when the selected term's data was last generated, from `generatedAt` in the term list. Muted ink at 9 px / 400, in a `<time>` element with the full ISO timestamp.
+
+| Rule | Text |
+|---|---|
+| Template | Course data updated {date} |
+| Example | Course data updated Oct 25, 2026 |
+
+The date is formatted as "MMM D, YYYY" in the student's time zone (e.g. "Oct 25, 2026"). Nothing shows before the term list loads. The date changes when the selected term changes.
