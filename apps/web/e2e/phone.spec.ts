@@ -113,3 +113,66 @@ test.describe("phone shell", () => {
     await expect(page.getByRole("region", { name: "Weekly schedule" })).toBeVisible();
   });
 });
+
+test.describe("phone day calendar", () => {
+  test("every class shows its time and room, visible and readable", async ({ page }) => {
+    await openPlanner(page, ["AE 2320", "AE 2410"]);
+
+    // The day calendar should be visible on a 375px phone viewport.
+    const tablist = page.getByRole("tablist", { name: "Days of the week" });
+    await expect(tablist).toBeVisible();
+
+    // AE 2320 and AE 2410 both have Mon–Fri classes. Check that blocks are visible.
+    // AE 2320 CL01: 9:00 AM–9:50 AM, Unity Hall 400
+    // AE 2410 C01: 10:00 AM–10:50 AM, Higgins Labs 116
+    const panel = page.getByRole("tabpanel");
+    await expect(panel.getByText("9:00 AM–9:50 AM")).toBeVisible();
+    await expect(panel.getByText("Unity Hall 400")).toBeVisible();
+    await expect(panel.getByText("10:00 AM–10:50 AM")).toBeVisible();
+    await expect(panel.getByText("Higgins Labs 116")).toBeVisible();
+
+    // No sideways scroll with the day calendar
+    const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+    const clientWidth = await page.evaluate(() => document.documentElement.clientWidth);
+    expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
+  });
+
+  test("switching days by tap shows that day's classes", async ({ page }) => {
+    await openPlanner(page, ["AE 2320", "AE 2410"]);
+
+    const tablist = page.getByRole("tablist", { name: "Days of the week" });
+    await expect(tablist).toBeVisible();
+
+    // AE 2320 has a lab on Thursday (CX01 or CX02 depending on the schedule).
+    // Tap the Thursday tab.
+    const thuTab = page.getByRole("tab", { name: "Thu" });
+    await thuTab.tap();
+    await expect(thuTab).toHaveAttribute("aria-selected", "true");
+
+    // The panel should show Thursday's lab (e.g., Higgins Labs 230).
+    const panel = page.getByRole("tabpanel");
+    await expect(panel.getByText(/Higgins Labs 230/)).toBeVisible();
+  });
+
+  test("tapping a class block opens the details sheet", async ({ page }) => {
+    await openPlanner(page, ["AE 2320", "AE 2410"]);
+
+    // Wait for the day calendar and find a class block to tap.
+    const panel = page.getByRole("tabpanel");
+    const classBlock = panel.getByRole("button", { name: /AE 2410 C01/ });
+    await expect(classBlock).toBeVisible();
+    await classBlock.tap();
+
+    // The bottom sheet should appear with AE 2410 details.
+    const sheet = page.getByRole("dialog", { name: "AE 2410" });
+    await expect(sheet).toBeVisible();
+  });
+
+  test("no sideways scroll with the day calendar", async ({ page }) => {
+    await openPlanner(page, ["AE 2320", "AE 2410"]);
+    await expect(page.getByRole("tablist", { name: "Days of the week" })).toBeVisible();
+    const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+    const clientWidth = await page.evaluate(() => document.documentElement.clientWidth);
+    expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
+  });
+});
