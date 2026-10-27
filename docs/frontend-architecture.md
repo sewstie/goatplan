@@ -265,6 +265,103 @@ still shows that plan's courses, preferences and summary.
   don't call it: the store owns the engine and puts its answers in `response`.
   The types follow `engine-api.md`.
 
+## Phone layout
+
+Phone is in scope at 375 px. The breakpoint is `--breakpoint-tablet: 40rem`
+(640 px): below it the app renders the phone shell, above it the
+tablet/desktop layout from the Figma designs. The JS hook `usePhoneViewport()`
+and the Tailwind `tablet:` prefix both read this boundary.
+
+### Phone shell (`components/shell/`)
+
+`PlannerShell` (`components/shell/PlannerShell.tsx`) is the client component
+that wires the responsive shell together. It uses `usePhoneViewport()` to
+choose which layout to mount:
+
+- **Phone (< 640 px):** single column, 16 px side gutter (`px-(--size-phone-gutter)`).
+  The sidebar and side details panel are not mounted. Instead:
+  - `YourCoursesDisclosure` replaces the sidebar. A collapsible button
+    "Your courses (N)" with the term picker, search and course list inside.
+    Open by default when empty, collapses once the first course lands.
+  - `PhoneDetailsSheet` replaces the side details panel. A bottom `Sheet`
+    with the same `CourseDetailsPanel`, opened only by a deliberate tap
+    (never by selectedCourse changing on its own).
+  - `DataUpdated` moves to `phoneFooter`, below the schedule.
+- **Tablet+ (≥ 640 px):** the `Sidebar` and side `DetailsPanel` mount as
+  usual, and phone-only slots are null.
+
+Only one of the sidebar and the disclosure is mounted at a time, so
+tutorial-target IDs never duplicate in the DOM.
+
+`AppShell` (`components/shell/AppShell.tsx`) is the presentational shell that
+accepts all the slots (`sidebar`, `phoneDisclosure`, `phoneSheet`,
+`phoneFooter`, etc.) and renders them in the right positions. The `main`
+element has `min-w-0 flex-1` and the schedule section has `overflow-hidden`,
+so nothing can force horizontal scroll.
+
+### Day view (`components/schedule/DayCalendar.tsx`)
+
+On phone, `ScheduleView` renders `DayCalendar` instead of `PlanCalendar`
+(the 5-column week grid). The day calendar has:
+
+- **Day tabs:** `role="tablist"` with Mon–Fri (plus Sat/Sun when they have
+  classes). Arrow-key navigation (Left, Right, Home, End) with roving
+  tabindex. Selected tab is `bg-accent-soft text-accent`; a 4 px dot marks
+  days with classes.
+- **Day panel:** a vertical scrolling list of class blocks, sorted by start
+  time. Each block shows course code, section code (truncated), time range
+  and room (`break-words`). Tapping a block selects the course+section and
+  opens the phone details sheet.
+- **Free-time dividers:** between consecutive items when the gap is > 10 min,
+  showing "{N}h free" or "{N} min free".
+- **Empty day:** "No classes on {Day}" centered in muted text.
+- **No set time:** the `NoTimeStrip` lists online/unscheduled sections below
+  the day's classes.
+
+The pure logic lives in `dayView.ts`: which days to show, the default-open
+day (today if it has classes, else the next day with classes, weekends wrap
+to Monday), and how to map classes and blocked times into day items. Covered
+by `DayCalendar.test.tsx` and `dayView.test.ts`.
+
+### Toast (`components/ui/Toast.tsx`)
+
+A fixed-position status region for ephemeral messages with an optional action
+button:
+
+- Position: `fixed inset-x-16 bottom-16 z-10`, centered. Full width on phone
+  (`w-full`), content-width on tablet (`tablet:w-auto`).
+- `role="status" aria-live="polite" aria-atomic="true"`, so screen readers
+  announce changes without interrupting.
+- Auto-dismisses after 6 seconds (`DURATION = 6000`). The timer pauses on
+  hover or focus and resumes with the remaining time.
+- The action button (e.g. "Undo") calls the handler and dismisses immediately.
+- Rendered last in `PlannerShell`, so it's the final Tab stop and sits above
+  the shell at `z-10`.
+- Used for the undo-remove toast: "Removed {code} · Undo".
+
+### Bottom Sheet (`components/ui/Sheet.tsx`)
+
+`Sheet` is a native `<dialog>` modal with two sides:
+
+| Side | Use | Sizing |
+|---|---|---|
+| `right` | Desktop/tablet details, "Choose a lab" | `max-w-[calc(100vw-32px)]`, slide from right |
+| `bottom` | Phone details, phone "Block a time" | `w-full max-w-none`, `max-h-[85dvh]`, `rounded-t-panel`, slide up |
+
+Both sides share:
+- Focus trap (`keepFocusInside`): heading-first focus when opening.
+- Backdrop scrim overlay.
+- `motion-reduce:transition-none` for reduced-motion preference.
+- Close via Escape, Close button, or tap outside.
+
+The `bottom` variant adds safe-area padding for the iPhone home indicator:
+`pb-[max(20px,env(safe-area-inset-bottom))]`.
+
+Phone uses `Sheet side="bottom"` in two places:
+1. `PhoneDetailsSheet` — wraps `CourseDetailsPanel`, managed by `PlannerShell`.
+2. `BlockTimeButton` — the "Block a time" form, which uses `Dialog` on tablet
+   but `Sheet side="bottom"` on phone.
+
 ## Checks before a PR
 
 From the repo root:
@@ -305,6 +402,9 @@ PORT=3002 npm run test:e2e  # tests: production build on 4002, dev pages on 3002
 - Every worktree has its own `.next`, `e2e/results` and `e2e/screenshots`, so
   parallel runs don't touch each other's files.
 
-Take screenshots of your screens at 1440 and 834 px (save them in
+Take screenshots of your screens at 1440, 834 and 375 px (save them in
 `apps/web/e2e/screenshots/`, which git ignores) and compare them with the
-PNGs in `docs/design/screens/`. Then run the ui-reviewer agent.
+PNGs in `docs/design/screens/`. The 834 and 1440 px screenshots match the
+Figma designs; the 375 px ones are the new phone reference (see
+[design/frames.md](design/frames.md#phone-screens-375-px)). Then run the
+ui-reviewer agent.
