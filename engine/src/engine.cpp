@@ -44,6 +44,7 @@ namespace goatplan {
             std::vector<std::string> courses;
             Preferences prefs;
             ScoreWeights weights;
+            SortPrimary primary = SortPrimary::None;
             SolveLimits limits;
         };
 
@@ -115,6 +116,24 @@ namespace goatplan {
             if (const json* value = find(object, key)) {
                 target = expectUpTo(*value, parent + "." + key, high);
             }
+        }
+
+        SortPrimary toPrimary(const json& value) {
+            static const std::pair<const char*, SortPrimary> names[] = {
+                {"earlyMinutes", SortPrimary::EarlyMinutes},
+                {"firstStart", SortPrimary::FirstStart},
+                {"lastEnd", SortPrimary::LastEnd},
+                {"days", SortPrimary::Days},
+                {"freeMinutes", SortPrimary::FreeMinutes},
+            };
+            if (value.is_string()) {
+                for (const auto& [name, primary] : names) {
+                    if (value.get<std::string>() == name) {
+                        return primary;
+                    }
+                }
+            }
+            throw badRequest("sort.primary", "must be one of earlyMinutes, firstStart, lastEnd, days, freeMinutes");
         }
 
         std::string itemField(const std::string& list, std::size_t index) {
@@ -226,6 +245,9 @@ namespace goatplan {
             }
             if (const json* sort = find(root, "sort")) {
                 expectObject(*sort, "sort");
+                if (const json* primary = find(*sort, "primary")) {
+                    request.primary = toPrimary(*primary);
+                }
                 readUpTo(*sort, "earlyCutoff", "sort", kMinutesPerDay, request.weights.earlyCutoff);
                 readUpTo(*sort, "perEarlyMinute", "sort", kMaxWeight, request.weights.perEarlyMinute);
                 readUpTo(*sort, "lateCutoff", "sort", kMinutesPerDay, request.weights.lateCutoff);
@@ -279,6 +301,11 @@ namespace goatplan {
                     {"gapMinutes", score.gapMinutes},
                     {"lateMinutes", score.lateMinutes},
                     {"days", score.days},
+                    {"firstStart", score.firstStart},
+                    {"lastEnd", score.lastEnd},
+                    {"averageStart", score.averageStart},
+                    {"averageEnd", score.averageEnd},
+                    {"freeMinutes", score.freeMinutes},
                 }},
                 {"courses", std::move(courses)},
             };
@@ -333,6 +360,9 @@ namespace goatplan {
                     fix.kind == FixKind::DropCourse) {
                     item["course"] = codes.at(fix.course);
                 }
+                if (fix.kind == FixKind::ClearAnyOf && fix.startsAfter >= 0) {
+                    item["startsAfter"] = fix.startsAfter;
+                }
                 item["schedules"] = fix.schedules;
                 item["capped"] = fix.capped;
                 fixes.push_back(std::move(item));
@@ -350,7 +380,7 @@ namespace goatplan {
             const Request request = parseRequest(text, term);
             const auto start = Clock::now();
             const std::vector<CourseChoices> choices = filterOptions(term, request.courses, request.prefs);
-            const SolveResult result = solve(choices, request.limits, request.weights);
+            const SolveResult result = solve(choices, request.limits, request.weights, request.primary);
             std::optional<Diagnosis> diagnosis;
             if (result.total == 0) {
                 diagnosis = diagnose(term, request.courses, request.prefs, request.limits);

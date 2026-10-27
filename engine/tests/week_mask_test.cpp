@@ -200,3 +200,25 @@ TEST(WeekMask, FullDaysDoNotSpillIntoEachOther) {
     EXPECT_EQ(span.filled, 288);
     EXPECT_THROW((void)mask.daySpan(7), std::invalid_argument);
 }
+
+TEST(WeekMask, BreakSlotsCountOnlyLongBreaks) {
+    WeekMask mask;
+    EXPECT_EQ(mask.breakSlots(kTue, 0), 0);
+    mask.addRange(kTue, at(5, 0), at(5, 10));
+    EXPECT_EQ(mask.breakSlots(kTue, 0), 0);
+    mask.addRange(kTue, at(5, 25), at(5, 30));
+    mask.addRange(kTue, at(6, 0), at(6, 5));
+    mask.addRange(kTue, at(6, 15), at(6, 20));
+    EXPECT_EQ(mask.breakSlots(kTue, 0), 3 + 6 + 2);
+    EXPECT_EQ(mask.breakSlots(kTue, 2), 3 + 6);
+    EXPECT_EQ(mask.breakSlots(kTue, 3), 6);
+    EXPECT_EQ(mask.breakSlots(kMon, 0), 0);
+}
+
+TEST(WeekMask, BreakSlotsSpanEveryWordOfTheDay) {
+    WeekMask mask;
+    mask.addRange(kSun, at(0, 0), at(0, 5));
+    mask.addRange(kSun, at(23, 55), at(24, 0));
+    EXPECT_EQ(mask.breakSlots(kSun, 2), 286);
+    EXPECT_THROW((void)mask.breakSlots(7, 0), std::invalid_argument);
+}
