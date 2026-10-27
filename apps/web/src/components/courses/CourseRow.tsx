@@ -54,7 +54,7 @@ export function CourseRow({ code, title, sections, swatch, locked, selected, onS
           label={`Remove ${code}`}
           icon={<X aria-hidden />}
           onClick={onRemove}
-          className="text-ink-muted"
+          className="text-ink-muted pointer-coarse:after:-inset-17"
         />
       </span>
     </li>
