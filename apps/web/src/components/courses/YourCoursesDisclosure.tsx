@@ -67,6 +67,7 @@ export function YourCoursesDisclosure({ children }: YourCoursesDisclosureProps) 
     <div className="flex flex-col tablet:hidden">
       <button
         type="button"
+        data-your-courses-disclosure
         aria-expanded={expanded}
         aria-controls={contentId}
         onClick={toggle}
