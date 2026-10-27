@@ -2,7 +2,7 @@
 
 Ticket: 01
 Wave: 1
-Status: OPEN
+Status: DONE
 Blocked By: none
 
 **Track:** SHARED (lead: engine types, planner store, data helpers)
@@ -16,11 +16,11 @@ Blocked By: none
 
 No screen changes yet. The UI tickets wire these up. Runs in parallel with 02 and 04. It's tested against the engine fake, so it doesn't wait for the real engine.
 
-- [ ] The engine types in the web app match `docs/engine-api.md` as 02 changes it (02 changes the doc first; agree on the shape below and keep it in sync):
+- [x] The engine types in the web app match `docs/engine-api.md` as 02 changes it (02 changes the doc first; agree on the shape below and keep it in sync):
   - optional `sort.primary` (`earlyMinutes` | `firstStart` | `lastEnd` | `days` | `freeMinutes` | null);
   - score fields `firstStart`, `lastEnd`, `averageStart`, `averageEnd` and `freeMinutes`;
   - optional `startsAfter` on the `clearAnyOf` fix.
-- [ ] The sort presets table becomes `{ label, description, primary }` and the per-preset weights are removed:
+- [x] The sort presets table becomes `{ label, description, primary }` and the per-preset weights are removed:
 
   | ID | Label | Description | Primary |
   |---|---|---|---|
@@ -31,20 +31,20 @@ No screen changes yet. The UI tickets wire these up. Runs in parallel with 02 an
   | `fewestDays` | Most days off | Fewer days on campus | `days` |
   | `fewestGaps` | Most compact | Less free time between classes | `freeMinutes` |
 
-- [ ] Request building sends the Best overall weights (600 / 3, gap 1, day 60, 1440 / 0) for every preset, plus its `primary`. Best overall sends no `primary`. Its interface doesn't change, and no preset getters or other pass-through helpers are added.
-- [ ] Preset IDs don't change. Stored drafts and saved plans keep their ID, and nothing is migrated.
-- [ ] Store state gets `removedCourse` (shape below) and two actions, `undoRemoveCourse` and `dismissRemovedCourse`:
+- [x] Request building sends the Best overall weights (600 / 3, gap 1, day 60, 1440 / 0) for every preset, plus its `primary`. Best overall sends no `primary`. Its interface doesn't change, and no preset getters or other pass-through helpers are added.
+- [x] Preset IDs don't change. Stored drafts and saved plans keep their ID, and nothing is migrated.
+- [x] Store state gets `removedCourse` (shape below) and two actions, `undoRemoveCourse` and `dismissRemovedCourse`:
   - `removeCourse` saves the snapshot first: position, locks, professor, this course's alternatives, and whether it was selected.
   - A second remove replaces the snapshot.
   - Any other draft change clears it: add, preferences, sort, lock or unlock, professor, alternative, applying a fix, switching term, opening a plan.
   - Selecting a course or moving between schedules doesn't clear it.
   - Undo puts the course back at its position (clamped to the list length), restores everything, reselects it if it was selected, clears the snapshot, and solves once.
   - The snapshot isn't saved to the draft or with plans.
-- [ ] `applyFix` for `clearAnyOf` clears the course's professor and, when `startsAfter` is present, sets the start time. It's one draft change and one solve.
-- [ ] When a chosen professor has no sections this term, the store runs one more solve without that course's professor rule. If that gives schedules, the 0-result answer gets `clearAnyOf` for that course with that solve's count (one per course, in course order). The extra solve never replaces the answer on screen.
-- [ ] The data helpers can format a term's `generatedAt` as "Oct 25, 2026" in the student's time zone.
-- [ ] The frontend architecture doc lists the new store state and actions.
-- [ ] Tests at the request-building and store seams:
+- [x] `applyFix` for `clearAnyOf` clears the course's professor and, when `startsAfter` is present, sets the start time. It's one draft change and one solve.
+- [x] When a chosen professor has no sections this term, the store runs one more solve without that course's professor rule. If that gives schedules, the 0-result answer gets `clearAnyOf` for that course with that solve's count (one per course, in course order). The extra solve never replaces the answer on screen.
+- [x] The data helpers can format a term's `generatedAt` as "Oct 25, 2026" in the student's time zone.
+- [x] The frontend architecture doc lists the new store state and actions.
+- [x] Tests at the request-building and store seams:
   - each preset's weights and `primary`;
   - undo for position, locks, professor, alternatives and selection;
   - which changes clear the snapshot and which don't;
