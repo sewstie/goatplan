@@ -9,7 +9,9 @@ import { CountPill } from "./CountPill";
 const MOVES: Readonly<Record<string, "previous" | "next">> = { ArrowLeft: "previous", ArrowRight: "next" };
 
 // The arrows use aria-disabled at the ends so they keep focus, so the disabled look is set here.
+// Ticket 11: min-w-44 min-h-44 ensures 44px touch targets on phone.
 const ARROW_DISABLED = "aria-disabled:cursor-not-allowed aria-disabled:opacity-45 aria-disabled:hover:bg-surface";
+const ARROW_TOUCH = "min-w-44 min-h-44";
 
 /** Schedule agent: "Schedule 3 of 24" with arrows, or "0 schedules fit", next to the title. */
 export function ScheduleSwitcher() {
@@ -65,14 +67,14 @@ export function ScheduleSwitcher() {
   const atStart = index === 0;
   const atEnd = index >= count - 1;
   return (
-    <div role="group" aria-label="Schedules" className="flex items-center gap-7" onKeyDown={handleKeyDown}>
+    <div role="group" aria-label="Schedules" className="flex flex-wrap items-center gap-x-8 gap-y-4" onKeyDown={handleKeyDown}>
       <IconButton
         label="Previous schedule"
         icon={<CaretLeft aria-hidden />}
         aria-disabled={atStart}
         aria-keyshortcuts="ArrowLeft"
         onClick={() => !atStart && previousSchedule()}
-        className={ARROW_DISABLED}
+        className={`${ARROW_TOUCH} ${ARROW_DISABLED}`}
       />
       <CountPill>
         Schedule {index + 1} of {count.toLocaleString("en-US")}
@@ -83,7 +85,7 @@ export function ScheduleSwitcher() {
         aria-disabled={atEnd}
         aria-keyshortcuts="ArrowRight"
         onClick={() => !atEnd && nextSchedule()}
-        className={ARROW_DISABLED}
+        className={`${ARROW_TOUCH} ${ARROW_DISABLED}`}
       />
     </div>
   );
