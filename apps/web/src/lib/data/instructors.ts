@@ -21,17 +21,6 @@ export function lectureInstructors(sections: readonly Section[]): string[] {
   return uniqueInstructors(sections.filter((section) => section.type === "lecture"));
 }
 
-export function lectureInstructorChoices(sections: readonly Section[]) {
-  return lectureInstructors(sections).map((name) => {
-    const lectures = lecturesByProfessor(sections, name);
-    return {
-      name,
-      lectureCount: lectures.length,
-      coTaughtCount: lectures.filter((section) => uniqueInstructors([section]).length > 1).length,
-    };
-  });
-}
-
 /** Labs and discussions often list the wrong person, so only lectures and other sections show who teaches them. */
 export function showsInstructor(section: Pick<Section, "type">): boolean {
   return section.type !== "lab" && section.type !== "discussion";

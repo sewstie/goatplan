@@ -32,7 +32,8 @@ describe("registrationRows", () => {
       instructors: "Ye Lu",
       change: null,
     });
-    expect(rows[1]).toMatchObject({ seats: "Lab · 4 open", meetings: ["Thu · 3:00–3:50 PM"], room: "Higgins Labs 230" });
+    // Lab instructors are often wrong, so the lab row leaves them out.
+    expect(rows[1]).toMatchObject({ seats: "Lab · 4 open", meetings: ["Thu · 3:00–3:50 PM"], room: "Higgins Labs 230", instructors: "" });
   });
 
   it("shows a room as building and number, and keeps its full name", () => {

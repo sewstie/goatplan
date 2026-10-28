@@ -19,7 +19,7 @@ it("puts the lecture professor and its hint before the sections in this schedule
   render(<PlannerProvider store={store}><CourseDetailsPanel /></PlannerProvider>);
 
   const field = screen.getByRole("combobox", { name: "Lecture professor" });
-  const hint = screen.getByText("Filters lectures only. Labs and discussions can have other instructors.");
+  const hint = screen.getByText("Filters lectures only. Labs and discussions stay as they are.");
   const sections = screen.getByRole("heading", { name: "Sections in this schedule" });
   expect(field.compareDocumentPosition(hint) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   expect(hint.compareDocumentPosition(sections) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
@@ -119,7 +119,7 @@ it("shows paired labs and discussions as compatible compact cards without their 
     expect(card.queryByRole("link")).not.toBeInTheDocument();
   }
   expect(screen.getAllByText("Compatible")).toHaveLength(2);
-  expect(screen.getByText("Filters lectures only. Compatible labs and discussions can have other instructors.")).toBeInTheDocument();
+  expect(screen.getByText("Filters lectures only. Labs and discussions stay as they are.")).toBeInTheDocument();
 });
 
 it("hides the lecture professor for one co-taught lecture, since choosing would change nothing", async () => {

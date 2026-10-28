@@ -1,15 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { lectureInstructorChoices, rateMyProfessorsUrl, showsInstructor, uniqueInstructors } from "./instructors";
+import { lectureInstructors, rateMyProfessorsUrl, showsInstructor, uniqueInstructors } from "./instructors";
 import { lectureProfessorTerm } from "../store/testing/lectureProfessors";
 
-it("counts all lecture times for each co-teacher, ignoring other sections and duplicate names", () => {
+it("lists every lecture professor once, ignoring other sections, blanks and duplicate names", () => {
   const sections = lectureProfessorTerm().courses[0].sections;
   sections[1].instructors.push("Alex Smith", " ");
-  expect(lectureInstructorChoices(sections)).toEqual([
-    { name: "Ye Lu", lectureCount: 4, coTaughtCount: 1 },
-    { name: "Alex Smith", lectureCount: 1, coTaughtCount: 1 },
-    { name: "Mark Richman", lectureCount: 2, coTaughtCount: 0 },
-  ]);
+  expect(lectureInstructors(sections)).toEqual(["Ye Lu", "Alex Smith", "Mark Richman"]);
 });
 
 it("shows who teaches lectures and other sections, but not labs or discussions", () => {

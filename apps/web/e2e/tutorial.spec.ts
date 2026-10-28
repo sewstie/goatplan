@@ -142,7 +142,7 @@ test("state 34: DEMO guide finishes while real professor, locks and schedule bro
   for (const section of ["B02", "B01"]) {
     await tabTo(page, page.getByRole("button", { name: "View other lab choices", exact: true }));
     await page.keyboard.press("Enter");
-    await tabTo(page, page.getByRole("button", { name: `Choose ${section}`, exact: true }));
+    await tabTo(page, page.getByRole("button", { name: `Choose Lab ${section}`, exact: true }));
     await page.keyboard.press("Enter");
     await settled(page);
   }

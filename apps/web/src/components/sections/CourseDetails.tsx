@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { uniqueInstructors } from "@/lib/data";
+import { showsInstructor, uniqueInstructors } from "@/lib/data";
 import type { Course } from "@/lib/data/types";
 import { usePlanner } from "@/lib/store";
 import { ProfessorPicker } from "./ProfessorPicker";
@@ -22,12 +22,14 @@ export function CourseDetails({ course }: { course: Course }) {
 
   const sections = sectionsById(course, displayed);
   const steps = useSectionSteps(course, displayed);
-  const shownInstructors = uniqueInstructors(sections);
+  const taught = sections.filter(showsInstructor);
   // Cards shown only because they're locked disappear on Unlock, so focus goes to the heading.
   const focusHeading = chosen.length === 0 ? () => headingRef.current?.focus() : undefined;
   const untimed = sections.some((section) => !hasSetTime(section));
   const hasLectures = course.sections.some((section) => section.type === "lecture");
   const waitlist = sections.some((section) => section.status === "waitlist");
+  // With no course left nothing re-renders the panel's focus target, so focus goes to search.
+  const lastCourse = usePlanner((state) => state.courses.length === 1);
 
   return (
     <div className="flex flex-col gap-4">
@@ -68,7 +70,7 @@ export function CourseDetails({ course }: { course: Course }) {
       )}
 
       {/* div.app-13 shows only the strip note for an untimed section without an instructor. */}
-      {sections.length > 0 && shownInstructors.length === 0 && !untimed && (
+      {taught.length > 0 && uniqueInstructors(taught).length === 0 && !untimed && (
         <div className="pt-7 text-10 leading-17-5 text-ink-muted">
           <p>Instructor not assigned yet.</p>
           <p>Professor reviews appear when an instructor is available.</p>
@@ -76,7 +78,7 @@ export function CourseDetails({ course }: { course: Course }) {
       )}
 
       <div className="pt-16 empty:hidden">
-        <RemoveCourseButton />
+        <RemoveCourseButton onRemoved={lastCourse ? () => document.getElementById("tutorial-search")?.focus() : undefined} />
       </div>
     </div>
   );

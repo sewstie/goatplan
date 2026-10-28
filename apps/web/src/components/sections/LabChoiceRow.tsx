@@ -18,7 +18,7 @@ export function LabChoiceRow({ courseCode, section, onChoose }: { courseCode: st
     <li>
       <button
         type="button"
-        aria-label={`Choose ${section.code}`}
+        aria-label={`Choose ${sectionHeading(section)}`}
         onClick={onChoose}
         onMouseEnter={() => start(courseCode, section.id)}
         onFocus={() => start(courseCode, section.id)}
@@ -40,7 +40,7 @@ export function LabChoiceRow({ courseCode, section, onChoose }: { courseCode: st
           </span>
         ))}
         <span className="mt-1 flex items-start justify-between gap-5 text-8 leading-12-8 text-ink-muted">
-          <span className="min-w-0">{place?.text}</span>
+          <span title={place && place.full !== place.text ? place.full : undefined} className="min-w-0">{place?.text}</span>
           <span className="shrink-0">{seatsLine(section)}</span>
         </span>
       </button>

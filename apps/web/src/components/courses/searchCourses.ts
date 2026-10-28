@@ -1,3 +1,4 @@
+import { showsInstructor } from "@/lib/data";
 import type { Course } from "@/lib/data/types";
 import { compactCode } from "./courseCode";
 
@@ -44,7 +45,7 @@ export function buildSearchIndex(courses: readonly Course[]): SearchEntry[] {
     const code = compactCode(course.code);
     const titles = [course.title, ...course.sections.flatMap((section) => section.title ?? [])];
     const names = new Map<string, string[]>();
-    for (const section of course.sections) {
+    for (const section of course.sections.filter(showsInstructor)) {
       for (const name of section.instructors) names.set(fold(name), words(name));
     }
     return {

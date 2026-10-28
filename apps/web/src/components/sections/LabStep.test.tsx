@@ -45,12 +45,12 @@ it("opens other labs inline, leaves out the current lab, and returns focus on Es
   expect([card.className, disclosure.className]).toEqual(look);
   const list = screen.getByRole("list", { name: "Other lab choices" });
   expect(list).toHaveAttribute("id", disclosure.getAttribute("aria-controls"));
-  expect(within(list).queryByRole("button", { name: "Choose CX01" })).not.toBeInTheDocument();
+  expect(within(list).queryByRole("button", { name: "Choose Lab CX01" })).not.toBeInTheDocument();
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   await user.tab();
-  expect(within(list).getByRole("button", { name: "Choose CX02" })).toHaveFocus();
+  expect(within(list).getByRole("button", { name: "Choose Lab CX02" })).toHaveFocus();
   await user.tab();
-  expect(within(list).getByRole("button", { name: "Choose CX04" })).toHaveFocus();
+  expect(within(list).getByRole("button", { name: "Choose Lab CX04" })).toHaveFocus();
   await user.keyboard("{Escape}");
   expect(screen.queryByRole("list", { name: "Other lab choices" })).not.toBeInTheDocument();
   expect(disclosure).toHaveFocus();
@@ -61,7 +61,7 @@ it("previews a lab on hover or focus without replacing the current calendar bloc
   const store = await panel();
   const user = userEvent.setup();
   await user.click(screen.getByRole("button", { name: "View other lab choices" }));
-  const choice = screen.getByRole("button", { name: "Choose CX02" });
+  const choice = screen.getByRole("button", { name: "Choose Lab CX02" });
   const current = screen.getByRole("button", { name: /^AE 2320 CX01,/ });
   await user.hover(choice);
   expect(screen.getByRole("button", { name: /^Preview, AE 2320 CX02,/ })).toBeInTheDocument();
@@ -123,10 +123,10 @@ it("opens a lab and a discussion from their own cards and preserves the other co
   expect(labCard.nextElementSibling).toBe(labDisclosure);
   expect(discussionCard.nextElementSibling).toBe(discussionDisclosure);
   await user.click(labDisclosure);
-  expect(screen.queryByRole("button", { name: "Choose D02" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: "Choose Discussion D02" })).not.toBeInTheDocument();
   await user.keyboard("{Escape}");
   await user.click(discussionDisclosure);
-  expect(screen.queryByRole("button", { name: "Choose CX02" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: "Choose Lab CX02" })).not.toBeInTheDocument();
   await user.tab();
   await user.keyboard(" ");
   await waitFor(() => expect(screen.getByRole("button", { name: "Unlock Discussion D02" })).toHaveFocus());
@@ -139,7 +139,7 @@ it("removes stale choices and previews while a new solve is pending", async () =
   await user.click(screen.getByRole("button", { name: "View other lab choices" }));
   await user.tab();
   act(() => store.getState().setPreferences({ startsAfter: 540 }));
-  expect(screen.queryByRole("button", { name: "Choose CX02" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: "Choose Lab CX02" })).not.toBeInTheDocument();
   expect(screen.queryByRole("button", { name: /^Preview,/ })).not.toBeInTheDocument();
   await waitForSolve(store);
 });
@@ -155,7 +155,7 @@ it("keeps the current calendar block in place when another lab meets at the same
   const width = current.style.width;
   const left = current.style.left;
   await user.click(screen.getByRole("button", { name: "View other lab choices" }));
-  await user.hover(screen.getByRole("button", { name: "Choose CX02" }));
+  await user.hover(screen.getByRole("button", { name: "Choose Lab CX02" }));
   expect(screen.getByRole("button", { name: /^Preview, AE 2320 CX02,/ })).toBeInTheDocument();
   expect(current.style.width).toBe(width);
   expect(current.style.left).toBe(left);
