@@ -55,7 +55,7 @@ export function RegistrationCardList({ rows }: { rows: RegistrationRow[] }) {
                   title={section.roomFull === section.room ? undefined : section.roomFull}
                   className="text-9 leading-14-85 text-ink-muted"
                 >
-                  {section.room} · {section.instructors}
+                  {section.instructors ? `${section.room} · ${section.instructors}` : section.room}
                 </span>
               </li>
             ))}

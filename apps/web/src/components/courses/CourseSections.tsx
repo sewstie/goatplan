@@ -1,11 +1,11 @@
 import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
-import { rateMyProfessorsUrl, uniqueInstructors } from "@/lib/data";
+import { rateMyProfessorsUrl, showsInstructor, uniqueInstructors } from "@/lib/data";
 import type { Course } from "@/lib/data/types";
 import { SectionItem } from "./SectionItem";
 
 /** Every section of a course, then a Rate My Professors link for each instructor. */
 export function CourseSections({ id, course }: { id: string; course: Course }) {
-  const instructors = uniqueInstructors(course.sections);
+  const instructors = uniqueInstructors(course.sections.filter(showsInstructor));
 
   return (
     <div id={id} className="mt-5 flex flex-col gap-10 border-t border-line pt-10">

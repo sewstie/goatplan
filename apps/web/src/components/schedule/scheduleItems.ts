@@ -1,3 +1,4 @@
+import { showsInstructor } from "@/lib/data";
 import type { Course, Day, Delivery, Section } from "@/lib/data/types";
 import { courseSlot, type CourseSlot } from "@/components/ui/courseColors";
 
@@ -67,7 +68,7 @@ export function scheduleItems(
         title: section.title ?? course.title,
         sectionId,
         sectionCode: section.code,
-        instructors: section.instructors,
+        instructors: showsInstructor(section) ? section.instructors : [],
         slot: courseSlot(courses, code),
         locked: locks[code]?.includes(sectionId) ?? false,
       };

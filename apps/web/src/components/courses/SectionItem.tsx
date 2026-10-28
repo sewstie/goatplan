@@ -1,10 +1,10 @@
 import { Clock, GraduationCap, MapPin, Users } from "@phosphor-icons/react/ssr";
 import { RoomName } from "@/components/ui/RoomName";
-import { formatDays, formatOpenSeats, formatTimeRange, formatWaitlist, sectionTypeName } from "@/lib/data";
+import { formatDays, formatOpenSeats, formatTimeRange, formatWaitlist, sectionTypeName, showsInstructor } from "@/lib/data";
 import type { Section } from "@/lib/data/types";
 import { MetaRow } from "./MetaRow";
 
-/** One section of a course: times, room, seats and instructors. */
+/** One section of a course: times, room, seats and, for a lecture, its instructors. */
 export function SectionItem({ section }: { section: Section }) {
   const rooms = [...new Set(section.meetings.map((meeting) => meeting.location.trim()).filter(Boolean))];
 
@@ -32,9 +32,11 @@ export function SectionItem({ section }: { section: Section }) {
           {formatOpenSeats(section, { seats: true })}
           {section.status === "waitlist" && ` · ${formatWaitlist(section)}`}
         </MetaRow>
-        <MetaRow icon={<GraduationCap />}>
-          {section.instructors.length > 0 ? section.instructors.join(", ") : "Instructor not assigned yet"}
-        </MetaRow>
+        {showsInstructor(section) && (
+          <MetaRow icon={<GraduationCap />}>
+            {section.instructors.length > 0 ? section.instructors.join(", ") : "Instructor not assigned yet"}
+          </MetaRow>
+        )}
       </ul>
     </li>
   );

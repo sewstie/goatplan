@@ -3,7 +3,7 @@ import { Clock } from "@phosphor-icons/react/ssr";
 import { Card } from "@/components/ui/Card";
 import type { Section } from "@/lib/data/types";
 import { MetaRow } from "./MetaRow";
-import { instructorLine, meetingLines, placeLine, seatsLine, sectionHeading } from "./sectionDetails";
+import { meetingLines, placeLine, seatsLine, sectionHeading } from "./sectionDetails";
 
 export function CompactSectionCard({ section, control, problem }: { section: Section; control: ReactNode; problem: boolean }) {
   const place = placeLine(section);
@@ -21,7 +21,7 @@ export function CompactSectionCard({ section, control, problem }: { section: Sec
       </ul>
       <div className="mt-1 flex items-start justify-between gap-5 text-8 leading-12-8 text-ink-muted">
         <p className="min-w-0">
-          {place && <><span title={place.full === place.text ? undefined : place.full}>{place.text}</span> · </>}{instructorLine(section)}
+          {place && <span title={place.full === place.text ? undefined : place.full}>{place.text}</span>}
         </p>
         <p className="shrink-0">{seatsLine(section)}</p>
       </div>

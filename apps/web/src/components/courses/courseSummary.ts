@@ -1,4 +1,4 @@
-import { sectionTypeName, uniqueInstructors } from "@/lib/data";
+import { sectionTypeName, showsInstructor, uniqueInstructors } from "@/lib/data";
 import type { Course, Section, SectionType, Term } from "@/lib/data/types";
 
 /** "C Term · Spring 2027" */
@@ -22,7 +22,7 @@ export function courseMeta(course: Pick<Course, "sections">): string {
   for (const section of [...course.sections].sort((a, b) => Number(b.type === "lecture") - Number(a.type === "lecture"))) {
     counts.set(section.type, (counts.get(section.type) ?? 0) + 1);
   }
-  const names = uniqueInstructors(course.sections);
+  const names = uniqueInstructors(course.sections.filter(showsInstructor));
   const people =
     names.length === 0
       ? "Instructor not assigned yet"

@@ -22,8 +22,6 @@ import { otherChoicesLabel } from "./phoneSectionText";
  */
 export function PhoneCourseDetails({ course }: { course: Course }) {
   const { chosen, locked, busy, answered, displayed } = useShownSections(course);
-  // The phone has no professor field; one set elsewhere still shows, so it can be cleared.
-  const professorSet = usePlanner((state) => Boolean(state.professorByCourse[course.code]));
   const lockSection = usePlanner((state) => state.lockSection);
   const unlockSection = usePlanner((state) => state.unlockSection);
   const [open, setOpen] = useState<string | null>(null);
@@ -78,7 +76,7 @@ export function PhoneCourseDetails({ course }: { course: Course }) {
       </h2>
       <p className="mt-6 text-11 font-510 text-ink">{course.title}</p>
 
-      {professorSet && !waitlist && <ProfessorPicker course={course} />}
+      {!waitlist && <ProfessorPicker course={course} phone />}
       {!hasLectures && (
         <p className="mt-12 text-9 text-ink-muted">
           {course.sections.some((section) => section.type === "lab") ? "This course has no lecture. Choose a lab section directly." : "This course has no lecture. Choose a section directly."}
@@ -112,7 +110,7 @@ export function PhoneCourseDetails({ course }: { course: Course }) {
         <div className="mt-12 flex flex-col gap-12">
           <p className="text-9 text-ink-muted">This schedule includes a full section because Only open sections is off.</p>
           <ButtonLink href="https://workday.wpi.edu" external fullWidth icon={<ArrowSquareOut aria-hidden />}>Join waitlist in Workday</ButtonLink>
-          {professorSet && <ProfessorPicker course={course} />}
+          <ProfessorPicker course={course} phone />
         </div>
       )}
       {untimed && (

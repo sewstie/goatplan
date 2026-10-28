@@ -157,6 +157,15 @@ describe("CourseDetailsPanel", () => {
     expect(within(card("Lab CX01")).getByRole("button", { name: "Lock Lab CX01" })).toBeInTheDocument();
   });
 
+  it("removes the open course, leaving Undo to the toast", async () => {
+    const { store } = await startTestPlanner({ courses: ["AE 2320"] });
+    render(<CourseDetailsPanel />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Remove course AE 2320" }));
+    expect(store.getState().courses).toEqual([]);
+    expect(store.getState().removedCourse?.code).toBe("AE 2320");
+  });
+
   it("locks and unlocks a section", async () => {
     const { store, requests } = await startTestPlanner({ courses: ["AE 2320"] });
     render(<CourseDetailsPanel />);
@@ -227,7 +236,7 @@ describe("CourseDetailsPanel", () => {
     const picker = screen.getByRole("combobox", { name: "Lecture professor" });
     await userEvent.click(picker);
     expect(screen.getAllByRole("option").map((option) => option.textContent)).toEqual([
-      "Any professorAll 6 lecture times", "Ye Lu4 lecture times · includes co-teaching", "Alex Smith1 co-taught lecture", "Mark Richman2 lecture times",
+      "Any professor", "Ye Lu", "Alex Smith", "Mark Richman",
     ]);
     await userEvent.keyboard("{Escape}");
     picker.focus();

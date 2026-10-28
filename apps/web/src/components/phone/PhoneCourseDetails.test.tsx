@@ -46,7 +46,7 @@ function seminarTerm() {
   return term;
 }
 
-it("shows the course with its lecture and lab cards and no professor field", async () => {
+it("shows the course with its lecture and lab cards, and no professor field for a single professor", async () => {
   await details({}, orbitalTerm());
 
   expect(screen.getByRole("heading", { level: 2, name: "AE 2320" })).toBeInTheDocument();
@@ -91,13 +91,22 @@ it("asks to unlock a locked lab before another one can be chosen, and closes on 
   expect(change).toHaveAttribute("aria-expanded", "false");
 });
 
+it("offers a lecture professor menu like the desktop one", async () => {
+  const store = await details({}, seminarTerm());
+  const user = userEvent.setup();
+  await user.click(screen.getByRole("combobox", { name: "Lecture professor" }));
+  expect(screen.getAllByRole("option").map((option) => option.textContent)).toEqual(["Any professor", "Alex Rivera", "Jordan Kim", "Morgan Lee"]);
+  await user.click(screen.getByRole("option", { name: "Jordan Kim" }));
+  expect(store.getState().professorByCourse).toEqual({ "DEMO 3001": "Jordan Kim" });
+});
+
 it("offers other professors under Change lecture with their ratings, and picks one", async () => {
   const store = await details({}, seminarTerm());
   const user = userEvent.setup();
   expect(screen.getByRole("button", { name: "Lock Lecture L01" })).toBeInTheDocument();
   const lab = within(screen.getByRole("heading", { name: "Lab B01" }).closest("article")!);
   expect(lab.getByText("Only lab")).toBeInTheDocument();
-  expect(lab.getByText("Sam Patel")).toBeInTheDocument();
+  expect(lab.queryByText("Sam Patel")).not.toBeInTheDocument();
 
   await user.click(screen.getByRole("button", { name: "Change lecture 2 other professors" }));
   const list = screen.getByRole("list", { name: "Other lecture choices" });

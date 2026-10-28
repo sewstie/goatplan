@@ -84,10 +84,11 @@ describe("scheduleItems", () => {
       start: 900,
       end: 950,
       location: "Higgins Labs 230",
-      instructors: ["Ye Lu"],
+      instructors: [],
       slot: 1,
       locked: false,
     });
+    expect(classes[0].instructors).toEqual(["Ye Lu"]);
   });
 
   it("uses a section's own title for topic courses", () => {

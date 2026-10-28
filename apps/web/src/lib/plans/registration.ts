@@ -4,6 +4,7 @@ import {
   openSeats,
   roomName,
   sectionTypeName,
+  showsInstructor,
   type Section,
   type Term,
   type TermFile,
@@ -50,6 +51,7 @@ function rooms(section: Section): { room: string; roomFull: string } {
 }
 
 function instructors(section: Section): string {
+  if (!showsInstructor(section)) return "";
   const names = section.instructors.map((name) => name.trim()).filter(Boolean);
   return names.length > 0 ? names.join(", ") : "No instructor yet";
 }

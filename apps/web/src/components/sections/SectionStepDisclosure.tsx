@@ -18,10 +18,10 @@ export function SectionStepDisclosure({ kind, open, listId, onToggle, buttonRef,
       aria-controls={listId}
       aria-disabled={busy}
       onClick={() => { if (!busy) onToggle(); }}
-      className={cx("flex w-full cursor-pointer items-center justify-between rounded-badge py-2", open ? "mt-7 mb-5 text-10 leading-14-5 font-650 text-ink" : "mt-7.5 px-3 text-9 leading-13-5 text-ink-muted hover:text-ink")}
+      className="mt-7.5 flex w-full cursor-pointer items-center justify-between rounded-badge px-3 py-2 text-9 leading-13-5 text-ink-muted hover:text-ink"
     >
-      {open ? `Other ${kind} choices` : `View other ${kind} choices`}
-      {!open && <CaretDown aria-hidden className="size-11 text-ink" />}
+      {open ? `Hide other ${kind} choices` : `View other ${kind} choices`}
+      <CaretDown aria-hidden className={cx("size-11 text-ink transition-transform motion-reduce:transition-none", open && "rotate-180")} />
     </button>
   );
 }

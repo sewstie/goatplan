@@ -32,6 +32,11 @@ export function lectureInstructorChoices(sections: readonly Section[]) {
   });
 }
 
+/** Labs and discussions often list the wrong person, so only lectures and other sections show who teaches them. */
+export function showsInstructor(section: Pick<Section, "type">): boolean {
+  return section.type !== "lab" && section.type !== "discussion";
+}
+
 /** Every instructor once, in the order they first appear, ignoring blanks and case. */
 export function uniqueInstructors(sections: readonly Pick<Section, "instructors">[]): string[] {
   const seen = new Set<string>();
