@@ -8,6 +8,7 @@ import { formatTimeRange, formatTimeShort } from "@/lib/data/time";
 import type { Day } from "@/lib/data/types";
 import type { Density } from "./density";
 import { hourMarks, percentOf, type TimeRange } from "./timeRange";
+import { useKeptScrollLeft } from "./useKeptScrollLeft";
 
 type SwipeWeekCalendarProps = {
   days: readonly Day[];
@@ -33,6 +34,7 @@ function axisLabel(minute: number): string {
 export function SwipeWeekCalendar({ days, range, note, renderDay, background, overlay, footer, busy }: SwipeWeekCalendarProps) {
   const scroller = useRef<HTMLDivElement>(null);
   const [atEnd, setAtEnd] = useState(false);
+  useKeptScrollLeft(scroller);
   const hours = (range.end - range.start) / 60;
   const height = `calc(var(--size-phone-hour) * ${hours})`;
   const marks = hourMarks(range);
