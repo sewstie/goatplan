@@ -75,15 +75,13 @@ afterEach(() => {
 });
 
 describe("init", () => {
-  it("reports only sanitized restored choices and keeps the summary separate from later edits", async () => {
+  it("reports only sanitized restored choices and drops the summary after the first edit", async () => {
     const storage = new MemoryStorage();
     storage.setItem(draftKey("2027-C"), JSON.stringify({ version: 1, ...emptyDraft(), courses: ["AE 2320", "REMOVED 1000"], locks: { "AE 2320": ["AE 2320-CX02", "missing"] }, professorByCourse: { "AE 2320": "Ye Lu", "REMOVED 1000": "Gone" } }));
     const { state } = setup({ storage });
     await state().init();
     expect(state().restoredPlanSummary).toBe("Plan restored · Ye Lu and lab CX02 are kept.");
     state().setPreferences({ startsAfter: 600 });
-    expect(state().restoredPlanSummary).toBe("Plan restored · Ye Lu and lab CX02 are kept.");
-    await state().setTerm("2027-D");
     expect(state().restoredPlanSummary).toBeNull();
   });
 

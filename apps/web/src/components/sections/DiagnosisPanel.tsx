@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import type { Course } from "@/lib/data/types";
@@ -7,14 +9,20 @@ import { DiagnosisIssueCard } from "./DiagnosisIssueCard";
 import { SectionChoiceCard } from "./SectionChoiceCard";
 import { CheckAnotherTermButton } from "./CheckAnotherTermButton";
 import { ProfessorPicker } from "./ProfessorPicker";
+import { usePlanner } from "@/lib/store";
 
-export function DiagnosisPanel({ course, diagnosis, locks }: {
+export function DiagnosisPanel({ course: selected, diagnosis, locks }: {
   course?: Course;
   diagnosis: ReturnType<typeof diagnosisText>;
   locks: Readonly<Record<string, readonly string[]>>;
 }) {
-  const ordered = [...diagnosis.issues].sort((a, b) => Number(b.courses.includes(course?.code ?? "")) - Number(a.courses.includes(course?.code ?? "")));
+  const term = usePlanner((state) => state.term);
+  const ordered = [...diagnosis.issues].sort((a, b) => Number(b.courses.includes(selected?.code ?? "")) - Number(a.courses.includes(selected?.code ?? "")));
   const primary = ordered[0];
+  // The selected course only heads the card when the problem involves it.
+  const course = selected && (!primary || primary.courses.includes(selected.code))
+    ? selected
+    : term?.courses.find((item) => item.code === primary?.courses[0]);
   const ids = [...(primary?.sectionIds ?? []), ...(course ? locks[course.code] ?? [] : [])];
   const sections = course?.sections.filter((section) => ids.includes(section.id)) ?? [];
   const waitlist = sections.some((section) => section.status === "waitlist") || primary?.kind === "full";

@@ -141,6 +141,7 @@ export function CourseSearchPanel() {
       <p className="sr-only" aria-live="polite">
         {notice} {status}
       </p>
+      <div data-guide-slot="courses" className="pb-20 empty:hidden" />
       <YourCourses searchRef={searchRef} />
     </>
   );

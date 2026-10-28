@@ -7,7 +7,7 @@ import { cx } from "./cx";
 import { floatingPosition } from "./floatingPosition";
 
 export type ListboxOption = { value: string; label: string; description?: string };
-export type ListboxVariant = "field" | "menu";
+export type ListboxVariant = "field" | "menu" | "link" | "pill";
 
 type ListboxProps = Omit<ComponentProps<"button">, "onChange" | "children" | "onClick" | "onBlur" | "onKeyDown"> & {
   label: string;
@@ -22,10 +22,13 @@ type ListboxProps = Omit<ComponentProps<"button">, "onChange" | "children" | "on
 const triggerBase =
   "rounded-row border border-line bg-surface px-9 text-left text-10 leading-14-5 text-ink focus-visible:border-choice-line focus-visible:shadow-field-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint";
 
-// The menu is the field look, sized to sit in the Preferences row.
+// The menu is the field look, sized to sit in the Preferences row. The link is plain muted text,
+// like the phone calendar's "Fewest early classes ⌄". The pill is the phone top bar's term picker.
 const triggerClasses: Record<ListboxVariant, string> = {
-  field: "flex min-h-36.5 w-full items-center justify-between gap-6 py-9",
-  menu: "relative inline-flex min-h-32 min-w-146 cursor-pointer items-center gap-6 py-7",
+  field: cx(triggerBase, "flex min-h-36.5 w-full items-center justify-between gap-6 py-9"),
+  menu: cx(triggerBase, "relative inline-flex min-h-32 min-w-146 cursor-pointer items-center gap-6 py-7"),
+  pill: "flex min-h-44 w-full cursor-pointer items-center justify-between gap-6 rounded-control border border-line bg-surface px-12 text-left text-12 font-700 text-ink tablet:text-10 focus-visible:border-choice-line focus-visible:shadow-field-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint",
+  link: "relative inline-flex min-w-0 cursor-pointer items-center gap-3 rounded-badge text-9 leading-13 text-ink-muted hover:text-ink",
 };
 
 export function Listbox({ label, menuLabel, options, value, onChange, variant = "field", className, ...props }: ListboxProps) {
@@ -55,7 +58,7 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
     popup.current.style.width = "max-content";
     const size = popup.current.getBoundingClientRect();
     // The menu sits at the end of a row, so its list lines up with the trigger's right edge.
-    const offsetX = variant === "menu" ? anchor.width - size.width : 0;
+    const offsetX = variant === "field" ? 0 : anchor.width - size.width;
     const position = floatingPosition(anchor, size, { width: window.innerWidth, height: window.innerHeight }, { gap: 0, offsetX });
     popup.current.style.left = `${position.left}px`;
     popup.current.style.top = `${position.top}px`;
@@ -78,7 +81,7 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
         aria-expanded={open}
         aria-controls={popupId}
         aria-activedescendant={open ? `${id}-option-${active}` : undefined}
-        className={cx(triggerBase, triggerClasses[variant], className)}
+        className={cx(triggerClasses[variant], className)}
         onClick={() => { setActive(selected); setOpen(!open); }}
         onBlur={() => setOpen(false)}
         onKeyDown={(event) => {
@@ -124,10 +127,10 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
         <span className={cx("truncate", variant === "menu" && "flex-1")}>{options[selected]?.label}</span>
         <CaretDown
           aria-hidden
-          className={cx("size-11 shrink-0 transition-transform motion-reduce:transition-none", open && "rotate-180")}
+          className={cx(variant === "link" ? "size-9" : "size-11", "shrink-0 transition-transform motion-reduce:transition-none", open && "rotate-180")}
         />
         {/* Invisible extended hit area for 44px tap target on menu variant */}
-        {variant === "menu" && (
+        {(variant === "menu" || variant === "link") && (
           <span aria-hidden className="absolute inset-x-0 top-1/2 h-44 -translate-y-1/2" />
         )}
       </button>

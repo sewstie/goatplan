@@ -12,6 +12,7 @@ import { RegistrationSheet } from "@/components/plans/RegistrationSheet";
 import { RegistrationSummary } from "@/components/plans/RegistrationSummary";
 import { SavedPlanPill } from "@/components/plans/SavedPlanPill";
 import { AppShell } from "@/components/shell/AppShell";
+import { Brand } from "@/components/shell/Brand";
 import { PlannerBootstrap } from "@/components/shell/PlannerBootstrap";
 import { WorkspaceHeader } from "@/components/shell/WorkspaceHeader";
 
@@ -20,8 +21,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * /plans lists the saved plans; /plans?plan=<id> shows one plan's sections to register
- * (docs/design/screens/div.app-22.md). Plans live in this browser, so the parts that read the
+ * /plans lists the saved plans; /plans?plan=<id> shows one plan's sections to register.
+ * Plans live in this browser, so the parts that read the
  * address render in the browser, under Suspense.
  */
 export default function PlansPage() {
@@ -34,6 +35,7 @@ export default function PlansPage() {
               <PlansSidebarWrapper />
             </Suspense>
           }
+          phoneBrand={<Brand variant="phone" />}
           header={
             <WorkspaceHeader
               title={

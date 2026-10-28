@@ -61,6 +61,7 @@ export function RegistrationSheetView({ plan }: { plan: SavedPlan }) {
           <ButtonLink
             href={WORKDAY_URL}
             external
+            variant="secondary"
             fullWidth
             icon={<ArrowSquareOut aria-hidden />}
             className="min-h-44"

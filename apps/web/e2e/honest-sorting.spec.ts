@@ -3,7 +3,7 @@ import type { TermFile } from "../src/lib/data/types";
 import type { Draft, SortPresetId } from "../src/lib/store/types";
 import { pickSort, SORT_LABELS, SORT_MENU_COURSES, sortControl, sortMenuTerm } from "./fixtures/sortMenu";
 
-// Honest sorting (issues/product-brief.md, item 1): each order puts the best schedule on its own
+// Honest sorting: each order puts the best schedule on its own
 // measure first, and only ties fall back to Best overall. Checked on the brief's courses with the
 // published C Term data, and on the 48-schedule DEMO term from the sort-menu spec.
 

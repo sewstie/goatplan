@@ -1,11 +1,13 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { DAY_NAMES } from "@/lib/data/days";
 import type { Day } from "@/lib/data/types";
 import { CalendarCaption } from "./CalendarCaption";
 import { DayHeader } from "./DayHeader";
 import { blockDensity, type Density } from "./density";
+import { SwipeWeekCalendar } from "./SwipeWeekCalendar";
 import { TimeAxis } from "./TimeAxis";
 import { hourMarks, percentOf, type TimeRange } from "./timeRange";
 import { useElementHeight } from "./useElementHeight";
@@ -14,6 +16,8 @@ type WeekCalendarProps = {
   days: readonly Day[];
   range: TimeRange;
   caption: string;
+  /** The phone card's line under the grid. Defaults to the caption. */
+  note?: string;
   /** What goes in each day column, sized for the current hour height. */
   renderDay?: (day: Day, density: Density) => ReactNode;
   /** Drawn under the day columns, across all of them (the early band). */
@@ -26,12 +30,19 @@ type WeekCalendarProps = {
 };
 
 /** The calendar card's content: day names, the time grid and the caption (div.app.md). */
-export function WeekCalendar({ days, range, caption, renderDay, background, overlay, footer, busy }: WeekCalendarProps) {
+export function WeekCalendar({ days, range, caption, note, renderDay, background, overlay, footer, busy }: WeekCalendarProps) {
+  const phone = usePhoneViewport();
   const [viewportRef, viewportHeight] = useElementHeight<HTMLDivElement>();
   const hours = (range.end - range.start) / 60;
   const gridHeight = viewportHeight === null ? null : Math.max(viewportHeight - 17, hours * 36);
   const density = blockDensity(gridHeight === null ? null : gridHeight / hours);
   const marks = hourMarks(range);
+
+  if (phone) {
+    return (
+      <SwipeWeekCalendar days={days} range={range} note={note ?? caption} renderDay={renderDay} background={background} overlay={overlay} footer={footer} busy={busy} />
+    );
+  }
 
   return (
     <div aria-busy={busy} className="flex min-h-0 flex-1 flex-col">

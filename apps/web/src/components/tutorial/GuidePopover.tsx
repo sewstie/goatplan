@@ -1,4 +1,6 @@
-import { useLayoutEffect, useRef, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
+import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { X } from "@phosphor-icons/react/ssr";
 import { guidePlacement } from "./guidePlacement";
 import { guideTarget } from "./GuideTargetOutline";
@@ -18,7 +20,10 @@ type GuidePopoverProps = {
 export function GuidePopover({ step, targetId, title, body, hint, progress, onClose, children }: GuidePopoverProps) {
   const box = useRef<HTMLDivElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
+  const phone = usePhoneViewport();
+  const slot = usePhoneSlot(phone ? step : null);
   useLayoutEffect(() => {
+    if (phone) return;
     function place() {
       const element = box.current;
       if (!element) return;
@@ -49,10 +54,12 @@ export function GuidePopover({ step, targetId, title, body, hint, progress, onCl
     window.addEventListener("resize", place);
     window.addEventListener("scroll", place, true);
     return () => { observer.disconnect(); mutation.disconnect(); window.removeEventListener("resize", place); window.removeEventListener("scroll", place, true); };
-  }, [step, targetId]);
-  useLayoutEffect(() => { if (step !== "schedules") heading.current?.focus({ preventScroll: true }); }, [step]);
+  }, [step, targetId, phone]);
+  useLayoutEffect(() => { if (step !== "schedules") heading.current?.focus({ preventScroll: !phone }); }, [step, slot, phone]);
 
-  return <div ref={box} role="dialog" aria-labelledby="guide-heading" aria-describedby="guide-body" className={`guide-popover invisible fixed z-20 flex max-h-[calc(100dvh-16px)] max-w-[calc(100vw-16px)] flex-col gap-8 overflow-y-auto rounded-guide border border-guide-line bg-surface px-20 pt-19 pb-16 shadow-guide ${step === "schedules" ? "w-330" : "w-292"}`}>
+  const card = <div ref={box} role="dialog" aria-labelledby="guide-heading" aria-describedby="guide-body" className={phone
+    ? "guide-popover flex flex-col gap-8 rounded-guide border border-guide-line bg-surface px-16 pt-16 pb-14 shadow-guide"
+    : `guide-popover invisible fixed z-20 flex max-h-[calc(100dvh-16px)] max-w-[calc(100vw-16px)] flex-col gap-8 overflow-y-auto rounded-guide border border-guide-line bg-surface px-20 pt-19 pb-16 shadow-guide ${step === "schedules" ? "w-330" : "w-292"}`}>
     <div className="flex items-center justify-between">
       <p aria-live="polite" aria-atomic="true" className="text-9 leading-13 font-600 text-accent">Getting started · {progress.current} of {progress.total}</p>
       <button type="button" aria-label="Close guide" onClick={onClose} className="flex size-13 cursor-pointer items-center justify-center text-ink"><X aria-hidden className="size-13" /></button>
@@ -63,4 +70,21 @@ export function GuidePopover({ step, targetId, title, body, hint, progress, onCl
     {children}
     <p className="mt-5 text-8 leading-12 text-ink-muted">Your choices stay in your plan.</p>
   </div>;
+
+  if (!phone) return card;
+  return slot ? createPortal(card, slot) : null;
+}
+
+/** On a phone the guide sits in the page, in the open screen's place for this step (`data-guide-slot`). */
+function usePhoneSlot(step: GuideStep | null): Element | null {
+  const [slot, setSlot] = useState<Element | null>(null);
+  useLayoutEffect(() => {
+    if (!step) return;
+    const find = () => setSlot(document.querySelector(`[data-phone-screen]:not([hidden]) [data-guide-slot="${step}"]`));
+    find();
+    const observer = new MutationObserver(find);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [step]);
+  return step ? slot : null;
 }

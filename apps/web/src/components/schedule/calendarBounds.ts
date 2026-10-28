@@ -10,6 +10,7 @@ export function calendarBounds(
   schedules: readonly Schedule[],
   blocked: readonly CalendarItem[],
   previews: readonly CalendarItem[] = [],
+  startsAfter = 0,
 ) {
   const sectionIds = new Set(schedules.flatMap((schedule) =>
     schedule.courses.flatMap((course) => [...course.sections, ...course.alternatives.flat()]),
@@ -20,5 +21,5 @@ export function calendarBounds(
     ),
   );
   const items = [...meetings, ...blocked, ...previews];
-  return { range: fitRange(items), days: visibleDays(items) };
+  return { range: fitRange(items, startsAfter), days: visibleDays(items) };
 }

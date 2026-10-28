@@ -32,13 +32,18 @@ describe("saved plan view", () => {
     expect(screen.getByRole("button", { name: "Open in planner to edit" })).toBeEnabled();
   });
 
-  it("keeps the current plan editable", () => {
+  it("keeps the current plan's courses editable but its preferences read-only", () => {
     setPlanner();
     selected.plan = designPlan({ id: selected.currentId });
     render(<><PlansSidebar /><PlansPreferences /></>);
+    // The courses list stays editable for the plan you're actively working on.
     expect(screen.getByRole("button", { name: "Remove AE 2320" })).toBeEnabled();
-    expect(screen.getByRole("button", { name: "Block a time" })).toBeEnabled();
     expect(screen.queryByRole("button", { name: "Open in planner to edit" })).not.toBeInTheDocument();
+    // Preferences and sort are a record of the saved plan, so they're read-only here, not editable.
+    const preferences = screen.getByRole("group", { name: "Preferences" });
+    expect(within(preferences).getByRole("switch")).toBeDisabled();
+    expect(within(preferences).queryByRole("combobox")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Block a time" })).not.toBeInTheDocument();
   });
 
   it("is read-only for another term even when that term remembers this plan as current", () => {

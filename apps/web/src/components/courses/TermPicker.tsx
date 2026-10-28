@@ -4,7 +4,7 @@ import { Select } from "@/components/ui/Select";
 import { usePlanner } from "@/lib/store";
 import { termFieldLabel } from "./courseSummary";
 
-/** The term field and the line under it (docs/design/screens/div.app.md). */
+/** The term field and the line under it. */
 export function TermPicker() {
   const terms = usePlanner((state) => state.terms);
   const termId = usePlanner((state) => state.termId);

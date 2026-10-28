@@ -1,7 +1,7 @@
 import { LockSimple, X } from "@phosphor-icons/react/ssr";
 import { IconButton } from "@/components/ui/IconButton";
 import { cx } from "@/components/ui/cx";
-import { useOpenPhoneDetails } from "@/components/shell/phoneDetails";
+import { useShowPhoneScreen } from "@/components/phone/phoneScreen";
 
 type CourseRowProps = {
   code: string;
@@ -16,7 +16,7 @@ type CourseRowProps = {
 
 /** A planned course in "Your courses" (div.app-3.md). The remove button shows on hover and keyboard focus. */
 export function CourseRow({ code, title, sections, swatch, locked, selected, onSelect, onRemove }: CourseRowProps) {
-  const openPhoneDetails = useOpenPhoneDetails();
+  const showPhoneScreen = useShowPhoneScreen();
   return (
     <li className="group relative">
       <button
@@ -24,8 +24,7 @@ export function CourseRow({ code, title, sections, swatch, locked, selected, onS
         aria-current={selected || undefined}
         onClick={() => {
           onSelect();
-          // On a phone this opens the bottom details sheet; on wider screens it's a no-op.
-          openPhoneDetails();
+          showPhoneScreen("course");
         }}
         data-course-row={code}
         className={cx(
@@ -54,7 +53,12 @@ export function CourseRow({ code, title, sections, swatch, locked, selected, onS
           label={`Remove ${code}`}
           icon={<X aria-hidden />}
           onClick={onRemove}
-          className="text-ink-muted pointer-coarse:after:-inset-17"
+          /*
+            The ghost icon is 10px. On a phone grow its ::after hit area to a ~44px touch target
+            (10 + 2*17 = 44); the tablet override brings it back to the compact desktop size. Coarse
+            pointers on any width also get the large target.
+          */
+          className="text-ink-muted after:-inset-17 tablet:after:-inset-7 pointer-coarse:after:-inset-17"
         />
       </span>
     </li>

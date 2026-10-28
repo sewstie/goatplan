@@ -27,6 +27,16 @@ vi.mock("@/components/courses/CourseSearchPanel", () => ({
 }));
 vi.mock("@/components/sections/CourseDetailsPanel", () => ({ CourseDetailsPanel: () => <div data-testid="details" /> }));
 vi.mock("@/components/sections/ChooseAlternativeSheet", () => ({ ChooseAlternativeSheet: () => null }));
+vi.mock("@/components/phone/PhonePlanner", () => ({
+  PhonePlanner: ({ banner }: { banner: React.ReactNode }) => (
+    <main data-testid="phone-planner">
+      {banner}
+      <button type="button" data-course-row="AE 2320">
+        AE 2320
+      </button>
+    </main>
+  ),
+}));
 
 // Import after the mocks are registered so PlannerShell picks up the stubs.
 import { PlannerShell } from "./PlannerShell";
@@ -110,24 +120,20 @@ describe("PlannerShell toast wiring", () => {
     expect(row).toHaveFocus();
   });
 
-  it("opens the collapsed disclosure first on a phone before focusing the row", async () => {
+  it("renders the phone planner instead of the sidebar layout on a phone", () => {
+    phoneFlag = true;
+    setPlanner({ courses: ["AE 2410"] });
+    renderShell();
+    expect(screen.getByTestId("phone-planner")).toHaveTextContent("banner");
+    expect(screen.queryByTestId("term-picker")).not.toBeInTheDocument();
+  });
+
+  it("moves focus to the restored course chip after undo on a phone", async () => {
     phoneFlag = true;
     const user = userEvent.setup();
-    // One course already planned, so the phone disclosure renders collapsed.
     setPlanner({ courses: ["AE 2410"], removedCourse: removed });
     renderShell();
-
-    const disclosure = document.querySelector<HTMLButtonElement>("[data-your-courses-disclosure]");
-    expect(disclosure).not.toBeNull();
-    expect(disclosure).toHaveAttribute("aria-expanded", "false");
-
     await user.click(screen.getByRole("button", { name: "Undo" }));
-    expect(disclosure).toHaveAttribute("aria-expanded", "true");
-
-    // The row lives inside the now-open disclosure; focus lands on it after the next frame.
-    await vi.waitFor(() => {
-      const row = document.querySelector<HTMLElement>('[data-course-row="AE 2320"]');
-      expect(row).toHaveFocus();
-    });
+    expect(document.querySelector('[data-course-row="AE 2320"]')).toHaveFocus();
   });
 });

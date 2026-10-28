@@ -45,6 +45,7 @@ export function ProfessorPicker({ course }: { course: Course }) {
       <p id="lecture-professor-hint" className="text-9 leading-13-95 text-ink-muted">
         {compatible ? "Filters lectures only. Compatible labs and discussions can have other instructors." : "Filters lectures only. Labs and discussions can have other instructors."}
       </p>
+      <div data-guide-slot="professor" className="empty:hidden" />
     </div>
   );
 }

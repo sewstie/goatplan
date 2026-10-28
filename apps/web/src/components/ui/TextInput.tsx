@@ -43,7 +43,7 @@ export function TextInput({
         <input
           id={inputId}
           aria-describedby={hint ? hintId : undefined}
-          className="min-w-0 flex-1 bg-transparent py-10.75 text-10 leading-14-5 text-ink outline-none placeholder:text-ink-muted disabled:cursor-not-allowed disabled:placeholder:text-ink-faint [&::-webkit-search-cancel-button]:hidden"
+          className="min-w-0 flex-1 bg-transparent py-10.75 text-[1rem] leading-[1.375rem] text-ink outline-none placeholder:text-ink-muted tablet:text-10 tablet:leading-14-5 disabled:cursor-not-allowed disabled:placeholder:text-ink-faint [&::-webkit-search-cancel-button]:hidden"
           {...rest}
         />
       </div>

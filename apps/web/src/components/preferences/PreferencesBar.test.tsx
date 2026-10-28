@@ -164,7 +164,7 @@ describe("PreferencesBar", () => {
     await userEvent.click(sort);
 
     const list = screen.getByRole("listbox", { name: "Sort" });
-    // Each order's name and description, as a screen reader reads them (docs/design/copy.md).
+    // Each order's name and description, as a screen reader reads them.
     const orders = [
       ["Best overall", "A balance of start time, gaps and days"],
       ["Fewest early classes", "Fewer classes before 10 AM"],

@@ -20,6 +20,7 @@ export function TermErrorCalendar() {
       days={WEEK.slice(0, 5)}
       range={DEFAULT_RANGE}
       caption="No timed courses yet"
+      note="Auto-fit to your schedule"
       overlay={
         <CalendarMessage
           role="alert"

@@ -76,32 +76,28 @@ afterEach(() => {
 });
 
 describe("RegistrationSheetView on a phone", () => {
-  it("shows section cards instead of a table", () => {
+  it("shows one compact card per course instead of a table or one card per section", () => {
     mockPhoneViewport();
     render(<RegistrationSheetView plan={plan} />);
 
     // Should NOT show the table on phone
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
 
-    // Should show card-style section entries with label/value rows
-    // The plan has 4 sections (CL01, CX02 for AE 2320, C01 for AE 2410, C01 for AE 2210)
+    // The plan has 4 sections across 3 courses (AE 2320 has CL01 + CX02, AE 2410, AE 2210).
+    // One card per course keeps 8-section plans short, so there are 3 cards, not 4.
     const cards = screen.getAllByRole("article");
-    expect(cards).toHaveLength(4);
+    expect(cards).toHaveLength(3);
   });
 
-  it("shows label/value rows for each section card", () => {
+  it("lists each of a course's sections inside its single card", () => {
     mockPhoneViewport();
     render(<RegistrationSheetView plan={plan} />);
 
-    const cards = screen.getAllByRole("article");
-    const firstCard = cards[0];
-
-    // Each card should have label/value pairs for: Course, Section, Days and time, Room, Instructor
-    expect(within(firstCard).getByText("Course")).toBeInTheDocument();
-    expect(within(firstCard).getByText("Section")).toBeInTheDocument();
-    expect(within(firstCard).getByText("Days and time")).toBeInTheDocument();
-    expect(within(firstCard).getByText("Room")).toBeInTheDocument();
-    expect(within(firstCard).getByText("Instructor")).toBeInTheDocument();
+    // The AE 2320 card holds both of its sections (lecture CL01 and lab CX02).
+    const firstCard = screen.getAllByRole("article")[0];
+    expect(within(firstCard).getByRole("heading", { name: "AE 2320" })).toBeInTheDocument();
+    expect(within(firstCard).getByText("CL01")).toBeInTheDocument();
+    expect(within(firstCard).getByText("CX02")).toBeInTheDocument();
   });
 
   it("displays course code and title in the card", () => {
@@ -147,6 +143,17 @@ describe("RegistrationSheetView on a phone", () => {
     expect(workday).toHaveAttribute("href", "https://workday.wpi.edu");
     expect(workday.className).toMatch(/w-full/);
     expect(workday.className).toMatch(/min-h-44/);
+  });
+
+  it("keeps a single filled primary button: Copy is primary, Open Workday is not", () => {
+    mockPhoneViewport();
+    render(<RegistrationSheetView plan={plan} />);
+
+    // The primary fill uses the accent background; only Copy should carry it.
+    const copyButton = screen.getByRole("button", { name: "Copy section list" });
+    const workday = screen.getByRole("link", { name: /Open Workday/i });
+    expect(copyButton.className).toMatch(/bg-accent(?![\w-])/);
+    expect(workday.className).not.toMatch(/bg-accent(?![\w-])/);
   });
 
   it("puts the same text on the clipboard as on desktop (Copy button present)", () => {

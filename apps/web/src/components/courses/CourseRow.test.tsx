@@ -1,8 +1,19 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { usePhoneScreen } from "@/components/phone/phoneScreen";
+
+let phoneFlag = false;
+vi.mock("@/components/shell/usePhoneViewport", () => ({
+  usePhoneViewport: () => phoneFlag,
+}));
+
 import { CourseRow } from "./CourseRow";
-import { PhoneDetailsProvider } from "@/components/shell/phoneDetails";
+
+afterEach(() => {
+  phoneFlag = false;
+  usePhoneScreen.setState({ screen: "schedule" });
+});
 
 function row(overrides: Partial<Parameters<typeof CourseRow>[0]> = {}) {
   return (
@@ -23,24 +34,23 @@ function row(overrides: Partial<Parameters<typeof CourseRow>[0]> = {}) {
 }
 
 describe("CourseRow", () => {
-  it("calls onSelect and opens the phone details when inside a provider", async () => {
-    const user = userEvent.setup();
-    const onSelect = vi.fn();
-    const onOpen = vi.fn();
-    const { container } = render(
-      <PhoneDetailsProvider onOpen={onOpen}>{row({ onSelect })}</PhoneDetailsProvider>,
-    );
-    await user.click(container.querySelector<HTMLElement>('[data-course-row="AE 2320"]')!);
-    expect(onSelect).toHaveBeenCalledTimes(1);
-    expect(onOpen).toHaveBeenCalledTimes(1);
-  });
-
-  it("only calls onSelect when there's no phone details provider", async () => {
+  it("calls onSelect and opens the course screen on a phone", async () => {
+    phoneFlag = true;
     const user = userEvent.setup();
     const onSelect = vi.fn();
     const { container } = render(row({ onSelect }));
     await user.click(container.querySelector<HTMLElement>('[data-course-row="AE 2320"]')!);
     expect(onSelect).toHaveBeenCalledTimes(1);
+    expect(usePhoneScreen.getState().screen).toBe("course");
+  });
+
+  it("only calls onSelect on a tablet and wider", async () => {
+    const user = userEvent.setup();
+    const onSelect = vi.fn();
+    const { container } = render(row({ onSelect }));
+    await user.click(container.querySelector<HTMLElement>('[data-course-row="AE 2320"]')!);
+    expect(onSelect).toHaveBeenCalledTimes(1);
+    expect(usePhoneScreen.getState().screen).toBe("schedule");
   });
 
   it("calls onRemove from the remove button", async () => {
