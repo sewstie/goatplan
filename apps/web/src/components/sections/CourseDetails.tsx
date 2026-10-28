@@ -7,6 +7,7 @@ import { uniqueInstructors } from "@/lib/data";
 import type { Course } from "@/lib/data/types";
 import { usePlanner } from "@/lib/store";
 import { ProfessorPicker } from "./ProfessorPicker";
+import { RemoveCourseButton } from "./RemoveCourseButton";
 import { SectionsInSchedule } from "./SectionsInSchedule";
 import { hasSetTime, sectionsById } from "./sectionDetails";
 import { useSectionSteps } from "./useSectionSteps";
@@ -73,6 +74,10 @@ export function CourseDetails({ course }: { course: Course }) {
           <p>Professor reviews appear when an instructor is available.</p>
         </div>
       )}
+
+      <div className="pt-16 empty:hidden">
+        <RemoveCourseButton />
+      </div>
     </div>
   );
 }

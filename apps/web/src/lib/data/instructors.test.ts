@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { lectureInstructorChoices, rateMyProfessorsUrl, uniqueInstructors } from "./instructors";
+import { lectureInstructorChoices, rateMyProfessorsUrl, showsInstructor, uniqueInstructors } from "./instructors";
 import { lectureProfessorTerm } from "../store/testing/lectureProfessors";
 
 it("counts all lecture times for each co-teacher, ignoring other sections and duplicate names", () => {
@@ -10,6 +10,13 @@ it("counts all lecture times for each co-teacher, ignoring other sections and du
     { name: "Alex Smith", lectureCount: 1, coTaughtCount: 1 },
     { name: "Mark Richman", lectureCount: 2, coTaughtCount: 0 },
   ]);
+});
+
+it("shows who teaches lectures and other sections, but not labs or discussions", () => {
+  expect(showsInstructor({ type: "lecture" })).toBe(true);
+  expect(showsInstructor({ type: "other" })).toBe(true);
+  expect(showsInstructor({ type: "lab" })).toBe(false);
+  expect(showsInstructor({ type: "discussion" })).toBe(false);
 });
 
 describe("rateMyProfessorsUrl", () => {

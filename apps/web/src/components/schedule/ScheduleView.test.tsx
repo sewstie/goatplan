@@ -45,7 +45,7 @@ describe("ScheduleView", () => {
     expect(within(thursday).getAllByRole("button").map((block) => block.getAttribute("aria-label"))).toEqual([
       "AE 2320 CL01, Introduction to Orbital Mechanics, Thursday, 9:00 AM–9:50 AM, Unity Hall 400, Ye Lu",
       "AE 2410 C01, Introduction to Aerospace Structures, Thursday, 10:00 AM–10:50 AM, Higgins Labs 116, Mark Richman",
-      "AE 2320 CX01, Introduction to Orbital Mechanics, Thursday, 2:00 PM–2:50 PM, Higgins Labs 230 Geom Modeling Computer Lab, Ye Lu, locked",
+      "AE 2320 CX01, Introduction to Orbital Mechanics, Thursday, 2:00 PM–2:50 PM, Higgins Labs 230 Geom Modeling Computer Lab, locked",
     ]);
     expect(screen.getByText("No classes before 9:00 AM")).toBeInTheDocument();
     expect(screen.getByText("Auto-fit · 8:00 AM–5:00 PM")).toBeInTheDocument();

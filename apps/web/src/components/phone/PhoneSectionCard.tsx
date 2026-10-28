@@ -1,6 +1,5 @@
 import { Clock, GraduationCap, MapPin, Users } from "@phosphor-icons/react/ssr";
 import { Badge } from "@/components/ui/Badge";
-import { cx } from "@/components/ui/cx";
 import { InstructorRating } from "@/components/sections/InstructorRating";
 import { SectionControl } from "@/components/sections/SectionControl";
 import { instructorLine, meetingLines, placeLine, seatsLine, sectionHeading } from "@/components/sections/sectionDetails";
@@ -18,7 +17,7 @@ type PhoneSectionCardProps = {
   onUnlocked?: () => void;
 };
 
-/** One chosen section on the phone course screen: a lecture with its professor's rating, or a compact lab. */
+/** One chosen section on the phone course screen. Only a lecture shows who teaches it, with the professor's rating. */
 export function PhoneSectionCard({ course, section, locked, busy, onlyLecture, onLock, onUnlocked }: PhoneSectionCardProps) {
   const place = placeLine(section);
   const lecture = section.type === "lecture";
@@ -38,23 +37,13 @@ export function PhoneSectionCard({ course, section, locked, busy, onlyLecture, o
             <span title={place.full === place.text ? undefined : place.full}>{place.text}</span>
           </PhoneFact>
         )}
-        {lecture && <PhoneFact icon={<Users />} tone={seatsTone}>{seatsLine(section)}</PhoneFact>}
+        <PhoneFact icon={<Users />} tone={seatsTone}>{seatsLine(section)}</PhoneFact>
         {section.status === "waitlist" && <PhoneFact icon={<Users />}><Badge tone="warning">{formatWaitlist(section)}</Badge></PhoneFact>}
         {lecture && instructors.length === 0 && <PhoneFact icon={<GraduationCap />}>{instructorLine(section)}</PhoneFact>}
       </ul>
-      {lecture ? (
-        instructors.length > 0 && (
-          <div className="mt-14 flex flex-col gap-12">
-            {instructors.map((name) => <InstructorRating key={name} name={name} phone />)}
-          </div>
-        )
-      ) : (
-        <div className="mt-10 flex items-start justify-between gap-8 text-9">
-          <span className="flex min-w-0 items-start gap-8 text-ink-muted">
-            <GraduationCap aria-hidden className="mt-2 size-14 shrink-0" />
-            {instructorLine(section)}
-          </span>
-          <span className={cx("shrink-0 font-570", seatsTone === "success" ? "text-success" : "text-warning")}>{seatsLine(section)}</span>
+      {lecture && instructors.length > 0 && (
+        <div className="mt-14 flex flex-col gap-12">
+          {instructors.map((name) => <InstructorRating key={name} name={name} phone />)}
         </div>
       )}
     </article>

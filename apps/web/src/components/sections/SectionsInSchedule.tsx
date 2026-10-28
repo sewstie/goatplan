@@ -1,7 +1,6 @@
 import type { Course, Section } from "@/lib/data/types";
 import { useRef, useState } from "react";
 import { usePlanner } from "@/lib/store";
-import { cx } from "@/components/ui/cx";
 import { SectionChoiceCard } from "./SectionChoiceCard";
 import { LabSectionStep } from "./LabSectionStep";
 import { LectureSectionStep } from "./LectureSectionStep";
@@ -24,7 +23,6 @@ export function SectionsInSchedule({ course, sections, locked, waitlist, onUnloc
   const lockSection = usePlanner((state) => state.lockSection);
   const unlockSection = usePlanner((state) => state.unlockSection);
   const response = usePlanner((state) => state.response);
-  const dense = openSection !== null;
   const focusDisclosure = (kind: string, button: HTMLButtonElement | null) => {
     if (button && pendingFocus.current === kind) {
       pendingFocus.current = null;
@@ -42,7 +40,7 @@ export function SectionsInSchedule({ course, sections, locked, waitlist, onUnloc
   if (sections.length === 0) return null;
 
   return (
-    <section aria-labelledby="sections-in-schedule" className={cx("flex flex-col gap-4", dense ? "mt-7" : "mt-11")}>
+    <section aria-labelledby="sections-in-schedule" className="mt-11 flex flex-col gap-4">
       <h3 id="sections-in-schedule" className="text-10 leading-14-5 font-650 text-ink">{waitlist ? "Your choices" : "Sections in this schedule"}</h3>
       {sections.map((section, index) => {
         const card = <SectionChoiceCard course={course} section={section} locked={locked.includes(section.id)} onlyLecture={section.type === "lecture" && lectures?.label === "Only lecture"} readOnly={busy} onLock={section.type === "lecture" ? () => chooseLecture(section) : undefined} onUnlocked={() => {
@@ -51,7 +49,7 @@ export function SectionsInSchedule({ course, sections, locked, waitlist, onUnloc
             setOpenSection("lecture");
             setChosenLecture(null);
           } else onUnlocked?.();
-        }} dense={dense} lockButtonRef={(button) => {
+        }} lockButtonRef={(button) => {
           if (button && settled && locked.includes(section.id) && pendingFocus.current === section.id) {
             pendingFocus.current = null;
             button.focus();

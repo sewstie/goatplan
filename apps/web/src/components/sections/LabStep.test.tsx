@@ -34,9 +34,15 @@ it("opens other labs inline, leaves out the current lab, and returns focus on Es
   await panel();
   const user = userEvent.setup();
   const disclosure = screen.getByRole("button", { name: "View other lab choices" });
+  const card = screen.getByRole("heading", { name: "Lab CX01" }).closest("article")!;
+  const look = [card.className, disclosure.className];
   expect(disclosure).toHaveAttribute("aria-expanded", "false");
   await user.click(disclosure);
   expect(disclosure).toHaveAttribute("aria-expanded", "true");
+  expect(disclosure).toHaveAccessibleName("Hide other lab choices");
+  // Opening the list leaves the card and the toggle as they were, so nothing above it moves.
+  expect(screen.getByRole("heading", { name: "Lab CX01" }).closest("article")).toBe(card);
+  expect([card.className, disclosure.className]).toEqual(look);
   const list = screen.getByRole("list", { name: "Other lab choices" });
   expect(list).toHaveAttribute("id", disclosure.getAttribute("aria-controls"));
   expect(within(list).queryByRole("button", { name: "Choose CX01" })).not.toBeInTheDocument();

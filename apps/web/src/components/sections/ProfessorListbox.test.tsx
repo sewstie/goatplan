@@ -6,7 +6,7 @@ import { lectureProfessorTerm } from "@/lib/store/testing/lectureProfessors";
 import { CourseDetailsPanel } from "./CourseDetailsPanel";
 import { startTestPlanner, waitForSolve } from "./testing/plannerStore";
 
-it("offers lecture counts and co-teaching, picks every matching lecture and clears without changing locks or availability", async () => {
+it("offers lecture professors by name alone, picks every matching lecture and clears without changing locks or availability", async () => {
   const user = userEvent.setup();
   const preferences = { startsAfter: 540, blocked: [{ day: "Fri" as const, start: 840, end: 960 }], onlyOpen: true };
   const locks = { "AE 2320": ["AE 2320-CX01", "AE 2320-CD01"] };
@@ -16,17 +16,12 @@ it("offers lecture counts and co-teaching, picks every matching lecture and clea
   await user.click(field);
   expect(screen.getByRole("listbox")).toBeInTheDocument();
   expect(screen.getAllByRole("option").map((option) => option.textContent)).toEqual([
-    "Any professorAll 6 lecture times", "Ye Lu4 lecture times · includes co-teaching", "Alex Smith1 co-taught lecture", "Mark Richman2 lecture times",
+    "Any professor", "Ye Lu", "Alex Smith", "Mark Richman",
   ]);
   expect(screen.queryByRole("option", { name: "Lab Tutor" })).not.toBeInTheDocument();
-  // Each professor is named by the name alone; the lecture count is extra detail.
-  for (const [name, description] of [
-    ["Any professor", "All 6 lecture times"],
-    ["Ye Lu", "4 lecture times · includes co-teaching"],
-    ["Alex Smith", "1 co-taught lecture"],
-    ["Mark Richman", "2 lecture times"],
-  ]) {
-    expect(screen.getByRole("option", { name })).toHaveAccessibleDescription(description);
+  // Just the names: a lecture count under each adds nothing.
+  for (const name of ["Any professor", "Ye Lu", "Alex Smith", "Mark Richman"]) {
+    expect(screen.getByRole("option", { name })).not.toHaveAccessibleDescription();
   }
   await user.keyboard("y{Enter}");
   await waitForSolve(store);

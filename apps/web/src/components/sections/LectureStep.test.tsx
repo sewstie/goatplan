@@ -44,7 +44,7 @@ it("chooses a lecture by keyboard, waits on the disabled lab disclosure, then op
   await user.tab();
   await user.keyboard("{Enter}");
   await waitFor(() => expect(store.getState().solveStatus).toBe("solving"));
-  const lab = screen.getByRole("button", { name: "Other lab choices" });
+  const lab = screen.getByRole("button", { name: "Hide other lab choices" });
   expect(lab).toHaveFocus();
   expect(lab).toHaveAttribute("aria-disabled", "true");
   expect(screen.queryByRole("button", { name: "Choose CX02" })).not.toBeInTheDocument();
@@ -65,7 +65,7 @@ it("locks the displayed lecture by keyboard, closes step 1, and waits on step 2 
   pause();
   await user.keyboard("{Enter}");
   await waitFor(() => expect(store.getState().solveStatus).toBe("solving"));
-  const lab = screen.getByRole("button", { name: "Other lab choices" });
+  const lab = screen.getByRole("button", { name: "Hide other lab choices" });
   expect(lab).toHaveFocus();
   expect(lab).toHaveAttribute("aria-disabled", "true");
   expect(lab).toHaveAttribute("aria-expanded", "true");

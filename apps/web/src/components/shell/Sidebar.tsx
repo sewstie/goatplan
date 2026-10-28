@@ -12,8 +12,10 @@ export function Sidebar({ children, termId }: { children?: ReactNode; termId?: s
       <Brand />
       {/* The 4px padding, taken back by the negative margin, keeps focus rings from being cut off by the scroll edge. */}
       <div className="-m-4 flex min-h-0 flex-1 flex-col overflow-y-auto p-4">{children}</div>
-      <DataUpdated termId={termId} />
-      <SupportLinks />
+      <div className="mt-auto flex shrink-0 flex-col gap-2 border-t border-line pt-10.75">
+        <DataUpdated termId={termId} />
+        <SupportLinks />
+      </div>
     </aside>
   );
 }

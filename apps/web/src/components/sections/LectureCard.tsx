@@ -7,7 +7,7 @@ export function LectureCard(props: RegularSectionCardProps) {
 
   return (
     <RegularSectionCard {...props} showInstructor={instructors.length === 0}>
-      {instructors.map((name) => <InstructorRating key={name} name={name} dense={props.dense} />)}
+      {instructors.map((name) => <InstructorRating key={name} name={name} />)}
     </RegularSectionCard>
   );
 }

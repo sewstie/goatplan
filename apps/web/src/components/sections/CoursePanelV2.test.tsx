@@ -96,7 +96,7 @@ it("hides the lecture professor for a course without lectures and offers direct 
   expect(screen.queryByText("Compatible")).not.toBeInTheDocument();
 });
 
-it("shows paired labs and discussions as compatible compact cards without instructor ratings", async () => {
+it("shows paired labs and discussions as compatible compact cards without their instructors", async () => {
   const term = termFile("2027-C");
   const course = term.courses[0];
   const discussion = { ...course.sections[1], id: "AE 2320-D01", code: "D01", type: "discussion" as const, instructors: ["Discussion Tutor"] };
@@ -113,7 +113,8 @@ it("shows paired labs and discussions as compatible compact cards without instru
   for (const heading of ["Lab CX01", "Discussion D01"]) {
     const card = within(screen.getByRole("heading", { name: heading }).closest("article")!);
     expect(card.getByText("Compatible")).toBeInTheDocument();
-    expect(card.getByText("Unity Hall 400").parentElement).toHaveTextContent(heading === "Lab CX01" ? "Unity Hall 400 · Ye Lu" : "Unity Hall 400 · Discussion Tutor");
+    expect(card.getByText("Unity Hall 400").parentElement).toHaveTextContent(/^Unity Hall 400$/);
+    expect(card.queryByText(/Ye Lu|Discussion Tutor/)).not.toBeInTheDocument();
     expect(card.queryByText(/\/ 5/)).not.toBeInTheDocument();
     expect(card.queryByRole("link")).not.toBeInTheDocument();
   }
