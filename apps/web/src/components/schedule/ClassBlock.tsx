@@ -55,7 +55,7 @@ export function ClassBlock({ item, density, style, selected, onSelect }: ClassBl
               "border-transparent hover:shadow-block-hover",
               COURSE_COLORS[item.slot].block,
               // A phone opens the course screen on tap, so the block keeps its course color there.
-              selected && "tablet:bg-surface-raised tablet:text-ink tablet:shadow-block-hover",
+              selected && "tablet:border-dashed tablet:border-ink-muted tablet:bg-surface-raised tablet:text-ink tablet:shadow-block-hover tablet:hover:border-ink-muted",
             ),
       )}
       style={style}

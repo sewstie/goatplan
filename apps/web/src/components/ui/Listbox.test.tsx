@@ -292,9 +292,24 @@ describe("hover highlight", () => {
     );
   });
 
-  it.each([["field", Field], ["menu", MenuField]] as const)("the highlighted selected option keeps its accent fill (%s variant)", async (_, Component) => {
+  it("a one-line list marks the selected option with accent text and a short row, and only the highlight is filled", async () => {
     const user = userEvent.setup();
-    render(<Component />);
+    render(<MenuField />);
+    await user.click(screen.getByRole("combobox"));
+    const selected = screen.getByRole("option", { selected: true });
+    expect(selected).toHaveClass("text-accent", "min-h-32", "bg-surface-selected");
+    expect(selected).not.toHaveClass("bg-accent-soft", "min-h-49");
+
+    const other = screen.getAllByRole("option", { selected: false })[0];
+    await user.hover(other);
+    expect(other).toHaveClass("text-ink", "bg-surface-selected");
+    expect(selected).toHaveClass("text-accent");
+    expect(selected).not.toHaveClass("bg-surface-selected");
+  });
+
+  it("the highlighted selected option with a description keeps its accent fill", async () => {
+    const user = userEvent.setup();
+    render(<Field />);
     const field = screen.getByRole("combobox");
     await user.click(field);
     // Opening highlights the selected option: it keeps the soft accent fill, not the highlight fill.
