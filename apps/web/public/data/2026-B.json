@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-10-27T15:16:01Z",
+  "generatedAt": "2026-10-28T15:52:29Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -268,7 +268,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course focuses on the methods, procedures and techniques of creating and manipulating images through electronic and digital means. Students will develop an understanding of image alteration. Topics may include color theory, displays, modeling, shading, and visual perception. Recommended background: AR 1100.",
       "sections": [
-        {"id":"AR 1101-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":27,"capacity":24,"waitlist":{"taken":8,"capacity":12},"instructors":["Matthew Steinke"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Salisbury Labs 123 Computer Lab"}]}
+        {"id":"AR 1101-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":26,"capacity":24,"waitlist":{"taken":8,"capacity":12},"instructors":["Matthew Steinke"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Salisbury Labs 123 Computer Lab"}]}
       ],
       "options": [
         ["AR 1101-B01"]
@@ -282,7 +282,7 @@
       "level": "Undergraduate",
       "description": "Cat. I How do we understand a work of art? Through readings and the study of objects at the Worcester Art Museum, the student will survey the major developments in world art and be introduced to various critical perspectives in art history. Students will learn how art historians work with primary materials and formulate arguments. No previous knowledge of art is required. (Formerly HU 1014.)",
       "sections": [
-        {"id":"AR 1111-B01","code":"B01","type":"lecture","status":"open","enrolled":22,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Sheila Hoffman"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Salisbury Labs 011"}]}
+        {"id":"AR 1111-B01","code":"B01","type":"lecture","status":"open","enrolled":23,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Sheila Hoffman"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Salisbury Labs 011"}]}
       ],
       "options": [
         ["AR 1111-B01"]
@@ -310,7 +310,7 @@
       "level": "Undergraduate",
       "description": "This course introduces students to the fundamental principles of three-dimensional visual organization through contemporary 3D modeling practices. Students will explore the technological foundations of digital modeling, including 3D scanning, retopology, UV mapping, and prop modeling. The course emphasizes visual perception, graphic expression, and rendering within digital environments. Students gain hands-on experience with industry tools while learning to create and manipulate digital assets suitable for games, 3D printing, interactive media, animation, and visual storytelling. Core skills include modeling, shading, and the presentation of visual ideas through 3D forms. The course also highlights current sculpting, modeling, and workflow technologies, preparing students to adapt to evolving tools and practices in digital art and design. By the end of the course, students will understand how to create shaders, work in 3D dimensional space, have foundational design principles, and develop their ability to translate concepts into digital form. Recommended Background No prerequisites are suggested or recommended",
       "sections": [
-        {"id":"AR 174X-B01","code":"B01","type":"lecture","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":6,"capacity":10},"instructors":["Paul Ruppar"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
+        {"id":"AR 174X-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":6,"capacity":10},"instructors":["Paul Ruppar"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
         ["AR 174X-B01"]
@@ -354,7 +354,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to techniques and processes for the creation of real-time, interactive works of art. Students learn to use electronic sensors and other tools for audio, graphics, and video processing, as well as design customized software interfaces to create interactive artworks that respond to users and their environment. The course also introduces students to the work of significant contemporary arts practitioners as well as their historical precedents, with a special emphasis on inter-media works that bridge visual art, music composition, and the performing arts. Topics may include electronic musical instruments and performance interfaces, computer vision, VJing, electronically augmented dance, controller hacking, wired clothing, networked collaboration and mobile media, and algorithmic and generative art. Recommended background: Animation (AR/IMGD 2101 or equivalent), and exposure to digital audio or music and introductory programming.",
       "sections": [
-        {"id":"AR 3200-B01","code":"B01","type":"lecture","status":"open","enrolled":16,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Kramer Elwell"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
+        {"id":"AR 3200-B01","code":"B01","type":"lecture","status":"open","enrolled":15,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Kramer Elwell"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
         ["AR 3200-B01"]
@@ -440,8 +440,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/9 unit) Continuation of AS1001. Topics include Air Force core values, leadership principles, group leadership dynamics, and an introduction to communication skills. Leadership Laboratory is mandatory for AFROTC cadets and complements this course by providing cadets with followership experiences.",
       "sections": [
-        {"id":"AS 1002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":19,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["DeAndre Tipton"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Fuller Labs 320"}]},
-        {"id":"AS 1002-BX01","code":"BX01","type":"lab","status":"open","enrolled":19,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Jacob Fillinger","Justin Baker","DeAndre Tipton","Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"AS 1002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["DeAndre Tipton"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Fuller Labs 320"}]},
+        {"id":"AS 1002-BX01","code":"BX01","type":"lab","status":"open","enrolled":20,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Jacob Fillinger","Justin Baker","DeAndre Tipton","Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["AS 1002-BL01","AS 1002-BX01"]
@@ -455,8 +455,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/9 unit) Continuation of AS2001. Topics include full-range leadership, problem solving, motivation, and continued development of communication skills.Leadership Laboratory is mandatory for AFROTC cadets and complements this course by providing cadets with followership experiences.",
       "sections": [
-        {"id":"AS 2002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":11,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Fuller Labs 320"}]},
-        {"id":"AS 2002-BX01","code":"BX01","type":"lab","status":"open","enrolled":11,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"AS 2002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":12,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Fuller Labs 320"}]},
+        {"id":"AS 2002-BX01","code":"BX01","type":"lab","status":"open","enrolled":12,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["AS 2002-BL01","AS 2002-BX01"]
@@ -470,8 +470,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/6 unit) Continuation of AS3001. Topics include, Bias, Managing Diversity & Inclusion, Cross-Cultural Competence, Managing Competing Priorities, and continued development of communication and leadership skills. A mandatory Leadership Laboratory complements this course by providing advanced leadership experience in officer-type activities, giving students the opportunity to apply the leadership and management principles of this course.",
       "sections": [
-        {"id":"AS 3002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":13,"capacity":15,"waitlist":{"taken":0,"capacity":0},"instructors":["Justin Baker"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":890,"location":"Salisbury Labs 011"}]},
-        {"id":"AS 3002-BX01","code":"BX01","type":"lab","status":"open","enrolled":13,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Jacob Fillinger","Justin Baker","DeAndre Tipton","Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"AS 3002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":14,"capacity":15,"waitlist":{"taken":0,"capacity":0},"instructors":["Justin Baker"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":890,"location":"Salisbury Labs 011"}]},
+        {"id":"AS 3002-BX01","code":"BX01","type":"lab","status":"open","enrolled":14,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Jacob Fillinger","Justin Baker","DeAndre Tipton","Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["AS 3002-BL01","AS 3002-BX01"]
@@ -959,7 +959,7 @@
       "level": "Undergraduate",
       "description": "BME 3112 Human Physiology for Biomedical Engineers 1/3 unit (Cat. I) This course provides students with an understanding of the structure, function and pathologies of physiological systems such as the cardiovascular, respiratory, and the renal system. The course will teach the mechanisms of organ function from an engineering standpoint that help students understand the principles and techniques employed in designing devices used to treat or correct pathological conditions in these organ systems. Students will gain a better understanding of the interface between physiology and device design used in medical devices such as stents, catheters, pacemakers, ECG machines, and other devices as applicable. Special emphasis will be given to group discussions where students will discuss disease pathologies and review the devices used to treat those conditions. Students will be encouraged to review the device design and suggest improvements for better patient outcomes. Other topics covered in the course include regenerative medicine, biomedical ethics and the concept of “Bioinspired design”. This course will not count towards the “Biomedical Engineering and Engineering” course requirement for Biomedical Engineering majors. Students who have received credit for BME3111 cannot receive credit for BME3112. Recommended Background: A knowledge of Human biology (such as BB 1025 or equivalent) and Cell Biology (such as BB 2550 or equivalent).",
       "sections": [
-        {"id":"BME 3112-B01","code":"B01","type":"lecture","status":"open","enrolled":44,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Sakthikumar Ambady"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Salisbury Labs 305"}]}
+        {"id":"BME 3112-B01","code":"B01","type":"lecture","status":"open","enrolled":45,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Sakthikumar Ambady"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Salisbury Labs 305"}]}
       ],
       "options": [
         ["BME 3112-B01"]
@@ -2147,8 +2147,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides an introduction to modern computational methods for differential and integral calculus and differential equations. Topics covered include interpolation and polynomial approximation, approximation theory, numerical differentiation and integration, and numerical solutions of ordinary differential equations. Error analysis will be emphasized throughout. Recommended background: MA 2051. An ability to write computer programs in a scientific language is assumed. Undergraduate credit may not be earned for both this course and for MA 3255/CS 4031.",
       "sections": [
-        {"id":"CS 4033-BD01","code":"BD01","type":"discussion","status":"open","enrolled":28,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 201"}]},
-        {"id":"CS 4033-BL01","code":"BL01","type":"lecture","status":"open","enrolled":28,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Salisbury Labs 305"}]}
+        {"id":"CS 4033-BD01","code":"BD01","type":"discussion","status":"open","enrolled":27,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 201"}]},
+        {"id":"CS 4033-BL01","code":"BL01","type":"lecture","status":"open","enrolled":27,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Salisbury Labs 305"}]}
       ],
       "options": [
         ["CS 4033-BD01","CS 4033-BL01"]
@@ -2162,7 +2162,7 @@
       "level": "Undergraduate",
       "description": "Cat. II This Software Engineering course will focus on the process of Object-Oriented Analysis and Design. Students will be expected to complete a large number of exercises in Domain Modeling, Use Case Analysis, and Object-Oriented Design. In addition, the course will investigate Design Patterns, which are elements of reusable object-oriented software designs. This course will survey a set of design patterns and consider how these patterns are described and used to solve design problems. Recommended Background: CS 2303 and CS 3733. This course will be offered in 2020-21, and in alternating years thereafter.",
       "sections": [
-        {"id":"CS 4233-B01","code":"B01","type":"lecture","status":"open","enrolled":39,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Sakire Arslan Ay"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Fuller Labs 320"}]}
+        {"id":"CS 4233-B01","code":"B01","type":"lecture","status":"open","enrolled":38,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Sakire Arslan Ay"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Fuller Labs 320"}]}
       ],
       "options": [
         ["CS 4233-B01"]
@@ -2690,7 +2690,7 @@
       "level": "Undergraduate",
       "description": "Cat. I What is development? How has international development been understood and what has been done about it? How do development scholars explain why some countries are rich while others are poor? How can students understand and incorporate development studies in the contexts of their own global engagements? This course addresses these questions by looking at theories, ideologies, and processes that have influenced and embodied development thinking and practice over the past five decades. We will examine the role of colonization, modernization, dependency, globalization, democratization, industrialization, and urbanization in processes of development in countries across the globe. The course encourages students to think critically about what development is, about how it is carried out and, most importantly of all, about what it can achieve. DEV 1200 provides excellent preparation for international projects and careers. Recommended background: None.",
       "sections": [
-        {"id":"DEV 1200-B01","code":"B01","type":"lecture","status":"open","enrolled":19,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Tom Hollywood"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 407"}]}
+        {"id":"DEV 1200-B01","code":"B01","type":"lecture","status":"open","enrolled":20,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Tom Hollywood"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 407"}]}
       ],
       "options": [
         ["DEV 1200-B01"]
@@ -3654,7 +3654,7 @@
       "level": "Undergraduate",
       "description": "This course surveys the aesthetics, forms, histories, and politics of poetic expression from ancient, modern, and contemporary periods, focusing primarily on English-language examples while simultaneously incorporating works across world literatures, in original texts or in English translations. Attention may be given to epic, dramatic, and lyric modes, to elegies, odes, repeating forms (sonnet, villanelle), and short forms (epigram, haiku), and to specific architectures of poetry including address, assonance and consonance, closure, lineation, meter, rhyme, rhythm, and stanzaic structure. Recommended background: None.",
       "sections": [
-        {"id":"EN 1439-B01","code":"B01","type":"lecture","status":"open","enrolled":22,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Jim Cocola"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Stratton Hall 301"}]}
+        {"id":"EN 1439-B01","code":"B01","type":"lecture","status":"open","enrolled":23,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Jim Cocola"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Stratton Hall 301"}]}
       ],
       "options": [
         ["EN 1439-B01"]
@@ -3682,7 +3682,7 @@
       "level": "Undergraduate",
       "description": "Cat. II This course begins with selections from John Milton’s provocative version of Adam and Eve’s original sin in Paradise Lost. Focusing on Milton, John Donne and others, we will examine the theme of sin—political, religious, and sexual— in early modern literature. The events of the English Reformation profoundly influenced these writers, and their personal struggles against societal institutions have greatly influenced subsequent literary expressions of rage and rebellion. Students will also be reading texts by contemporary writers such as David Mamet which address the theme of sin in the modern city. This course will be offered in 2020-21, and in alternating years thereafter.",
       "sections": [
-        {"id":"EN 2225-B01","code":"B01","type":"lecture","status":"open","enrolled":33,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Ephraim"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Stratton Hall 313"}]}
+        {"id":"EN 2225-B01","code":"B01","type":"lecture","status":"open","enrolled":32,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Ephraim"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Stratton Hall 313"}]}
       ],
       "options": [
         ["EN 2225-B01"]
@@ -3710,7 +3710,7 @@
       "level": "Undergraduate",
       "description": "Cat. I The study of environmental problems and their solutions requires an interdisciplinary approach. This course will examine current environmental issues from the intersection of several key disciplines including: environmental philosophy and history, environmental policy, and science. The course will develop these different approaches for analyzing environmental problems, explore the tensions between them, and present a framework for integrating them. Topics such as environmental justice, developing nations, globalization, and climate change policy will be explored.",
       "sections": [
-        {"id":"ENV 1100-B01","code":"B01","type":"lecture","status":"open","enrolled":46,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["Elisabeth Stoddard"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Higgins Labs 116"}]}
+        {"id":"ENV 1100-B01","code":"B01","type":"lecture","status":"open","enrolled":45,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["Elisabeth Stoddard"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Higgins Labs 116"}]}
       ],
       "options": [
         ["ENV 1100-B01"]
@@ -3814,8 +3814,8 @@
       "level": "Undergraduate",
       "description": "Cat. I Engineers should be able to formulate and solve problems that involve forces that act on bodies which are moving. This course deals with the kinematics and dynamics of particles and rigid bodies which move in a plane. Topics covered will include: kinematics of particles and rigid bodies, equations of motion, work-energy methods, and impulse and momentum. In this course a basic introduction to mechanical vibration is also discussed. Basic equations will be developed with respect to translating and rotating coordinate systems. Recommended background: Statics (ES 2501 or CE 2000).",
       "sections": [
-        {"id":"ES 2503-BD01","code":"BD01","type":"discussion","status":"open","enrolled":85,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Radu Ceausu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Higgins Labs 218 Discovery Classroom"}]},
-        {"id":"ES 2503-BL01","code":"BL01","type":"lecture","status":"open","enrolled":85,"capacity":90,"waitlist":{"taken":0,"capacity":40},"instructors":["Radu Ceausu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Higgins Labs 218 Discovery Classroom"}]}
+        {"id":"ES 2503-BD01","code":"BD01","type":"discussion","status":"open","enrolled":86,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Radu Ceausu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Higgins Labs 218 Discovery Classroom"}]},
+        {"id":"ES 2503-BL01","code":"BL01","type":"lecture","status":"open","enrolled":86,"capacity":90,"waitlist":{"taken":0,"capacity":40},"instructors":["Radu Ceausu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Higgins Labs 218 Discovery Classroom"}]}
       ],
       "options": [
         ["ES 2503-BD01","ES 2503-BL01"]
@@ -3954,7 +3954,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is designed to help the student make well-informed judgments when faced with personal financial decisions. Such decisions are growing in number and complexity, and both individuals and families need a considerable degree of financial expertise in order to utilize optimally their limited incomes. Principal topics include: insurance (medical, life, automobile and disability), consumer credit, estate planning, taxation, personal investments (real estate, securities, etc.), social security legislation and personal financial planning.",
       "sections": [
-        {"id":"FIN 1250-B01","code":"B01","type":"lecture","status":"open","enrolled":32,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Karen Murray"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":480,"end":590,"location":"Innovation Studio 105 Active Learning Classroom"}]}
+        {"id":"FIN 1250-B01","code":"B01","type":"lecture","status":"open","enrolled":33,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Karen Murray"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":480,"end":590,"location":"Innovation Studio 105 Active Learning Classroom"}]}
       ],
       "options": [
         ["FIN 1250-B01"]
@@ -3968,7 +3968,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course develops expertise in Finance, Technology, Innovation, leadership, and decision-making by focusing on real-world challenges in the field of FinTech. We will be actively discussing and learning how to analyze, identify, and manage/innovate FinTech across many functional disciplines including Financial, Insurance, Banking, Trading, Information Technology, Regulation, and Budgeting. Students are introduced to the Financial industry and the FinTech ecosystem. The course adopts a decision-maker and leadership perspective (business, operational, functional, and technical leadership) by emphasizing the relationships among financial data, their underlying economic events, risk profiles, challenges/opportunities, and the responses by all stakeholders in a business/corporation. Recommended Background: Introductory business and finance topics such as those found in ACC courses or BUS 2060.",
       "sections": [
-        {"id":"FIN 3300-B01","code":"B01","type":"lecture","status":"open","enrolled":29,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Eugene Okyere-Yeboah"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Innovation Studio 105 Active Learning Classroom"}]}
+        {"id":"FIN 3300-B01","code":"B01","type":"lecture","status":"open","enrolled":28,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Eugene Okyere-Yeboah"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Innovation Studio 105 Active Learning Classroom"}]}
       ],
       "options": [
         ["FIN 3300-B01"]
@@ -4307,7 +4307,7 @@
       "level": "Undergraduate",
       "description": "Cat I. A survey of the major developments in European history from the nineteenth century to the present. The course will focus upon those factors and events that led to the formation of modern European society: revolutions, nationalism, industrialization, world wars, the Cold War, the creation of the European Union. No prior knowledge of European history is required. Especially appropriate for students interested in WPI's global Project Centers in Europe. Students may not receive credit for HI 2320 and HI 2322.",
       "sections": [
-        {"id":"HI 2320-B01","code":"B01","type":"lecture","status":"open","enrolled":31,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Elise Franklin"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Higgins Labs 114"}]}
+        {"id":"HI 2320-B01","code":"B01","type":"lecture","status":"open","enrolled":29,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Elise Franklin"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":960,"end":1070,"location":"Higgins Labs 114"}]}
       ],
       "options": [
         ["HI 2320-B01"]
@@ -4377,7 +4377,7 @@
       "level": "Undergraduate",
       "description": "HI 3334 Topics in the History of American Science and Technology (Cat. I) This seminar will examine a particular issue or theme in the history of American science and technology. Topics will vary from year to year, but may include: technology and the built environment; science, technology and the arts; communications of science and scientific issues with the larger public; technology and scientific illustration; science in popular culture; science and the law; or close examination of episodes in the history of American science and technology such as the American Industrial Revolution; science and technology in the years between the world wars; the Manhattan Project; science and the culture of the Cold War; or science, technology and war in American history. This course will require significant reading and writing. This course may be repeated for different topics. Recommended Background: Some familiarity with history of science or history of technology, and with United States history.",
       "sections": [
-        {"id":"HI 3334-B01","code":"B01","type":"lecture","title":"Topics In The History Of American Science And Technology: Media Revolutions","status":"waitlist","enrolled":20,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Constance Clark"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Salisbury Labs 407"}]}
+        {"id":"HI 3334-B01","code":"B01","type":"lecture","title":"Topics In The History Of American Science And Technology: Media Revolutions","status":"open","enrolled":19,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Constance Clark"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Salisbury Labs 407"}]}
       ],
       "options": [
         ["HI 3334-B01"]
@@ -4621,7 +4621,7 @@
       "level": "Undergraduate",
       "description": "This course introduces students to the fundamental principles of three-dimensional visual organization through contemporary 3D modeling practices. Students will explore the technological foundations of digital modeling, including 3D scanning, retopology, UV mapping, and prop modeling. The course emphasizes visual perception, graphic expression, and rendering within digital environments. Students gain hands-on experience with industry tools while learning to create and manipulate digital assets suitable for games, 3D printing, interactive media, animation, and visual storytelling. Core skills include modeling, shading, and the presentation of visual ideas through 3D forms. The course also highlights current sculpting, modeling, and workflow technologies, preparing students to adapt to evolving tools and practices in digital art and design. By the end of the course, students will understand how to create shaders, work in 3D dimensional space, have foundational design principles, and develop their ability to translate concepts into digital form. Recommended Background No prerequisites are suggested or recommended",
       "sections": [
-        {"id":"IMGD 174X-B01","code":"B01","type":"lecture","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":6,"capacity":10},"instructors":["Paul Ruppar"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
+        {"id":"IMGD 174X-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":6,"capacity":10},"instructors":["Paul Ruppar"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
         ["IMGD 174X-B01"]
@@ -4705,7 +4705,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to techniques and processes for the creation of real-time, interactive works of art. Students learn to use electronic sensors and other tools for audio, graphics, and video processing, as well as design customized software interfaces to create interactive artworks that respond to users and their environment. The course also introduces students to the work of significant contemporary arts practitioners as well as their historical precedents, with a special emphasis on inter-media works that bridge visual art, music composition, and the performing arts. Topics may include electronic musical instruments and performance interfaces, computer vision, VJing, electronically augmented dance, controller hacking, wired clothing, networked collaboration and mobile media, and algorithmic and generative art. Recommended background: Animation (AR/IMGD 2101 or equivalent), and exposure to digital audio or music and introductory programming.",
       "sections": [
-        {"id":"IMGD 3200-B01","code":"B01","type":"lecture","status":"open","enrolled":16,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Kramer Elwell"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
+        {"id":"IMGD 3200-B01","code":"B01","type":"lecture","status":"open","enrolled":15,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Kramer Elwell"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
         ["IMGD 3200-B01"]
@@ -4974,15 +4974,15 @@
         {"id":"MA 1022-BD12","code":"BD12","type":"discussion","status":"open","enrolled":27,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":600,"end":650,"location":"Stratton Hall 205"}]},
         {"id":"MA 1022-BD13","code":"BD13","type":"discussion","status":"open","enrolled":33,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Barry Posterro"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":660,"end":710,"location":"Stratton Hall 205"}]},
         {"id":"MA 1022-BD14","code":"BD14","type":"discussion","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Barry Posterro"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":720,"end":770,"location":"Stratton Hall 205"}]},
-        {"id":"MA 1022-BD16","code":"BD16","type":"discussion","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":540,"end":590,"location":"Stratton Hall 205"}]},
+        {"id":"MA 1022-BD16","code":"BD16","type":"discussion","status":"closed","enrolled":36,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":540,"end":590,"location":"Stratton Hall 205"}]},
         {"id":"MA 1022-BD17","code":"BD17","type":"discussion","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":900,"end":950,"location":"Stratton Hall 207"}]},
         {"id":"MA 1022-BL01","code":"BL01","type":"lecture","status":"closed","enrolled":60,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Barry Posterro"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Atwater Kent 233"}]},
         {"id":"MA 1022-BL02","code":"BL02","type":"lecture","status":"open","enrolled":102,"capacity":105,"waitlist":{"taken":0,"capacity":0},"instructors":["Barry Posterro"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
-        {"id":"MA 1022-BL05","code":"BL05","type":"lecture","status":"open","enrolled":95,"capacity":100,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
+        {"id":"MA 1022-BL05","code":"BL05","type":"lecture","status":"open","enrolled":96,"capacity":100,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
         {"id":"MA 1022-BL08","code":"BL08","type":"lecture","status":"open","enrolled":69,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Atwater Kent 116 Newell Hall"}]},
         {"id":"MA 1022-BL09","code":"BL09","type":"lecture","status":"open","enrolled":62,"capacity":65,"waitlist":{"taken":0,"capacity":0},"instructors":["Kenji Kozai"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Washburn 229"}]},
         {"id":"MA 1022-BL11","code":"BL11","type":"lecture","status":"open","enrolled":19,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Jeffrey Barden"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1080,"end":1190,"location":"Higgins Labs 218 Discovery Classroom"}]},
-        {"id":"MA 1022-BX01","code":"BX01","type":"lab","status":"open","enrolled":25,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":530,"location":"Stratton Hall 116 Computer Lab"}]},
+        {"id":"MA 1022-BX01","code":"BX01","type":"lab","status":"open","enrolled":26,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":530,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1022-BX02","code":"BX02","type":"lab","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":590,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1022-BX03","code":"BX03","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1022-BX04","code":"BX04","type":"lab","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Stratton Hall 116 Computer Lab"}]},
@@ -5174,7 +5174,7 @@
         {"id":"MA 1023-BD01","code":"BD01","type":"discussion","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Keenan Kidwell"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 205"}]},
         {"id":"MA 1023-BD02","code":"BD02","type":"discussion","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Francisco Ponce-Carrion"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":590,"location":"Stratton Hall 313"}]},
         {"id":"MA 1023-BD03","code":"BD03","type":"discussion","status":"open","enrolled":23,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Francisco Ponce-Carrion"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Stratton Hall 313"}]},
-        {"id":"MA 1023-BD04","code":"BD04","type":"discussion","status":"open","enrolled":23,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Francisco Ponce-Carrion"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Stratton Hall 313"}]},
+        {"id":"MA 1023-BD04","code":"BD04","type":"discussion","status":"open","enrolled":22,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Francisco Ponce-Carrion"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Stratton Hall 313"}]},
         {"id":"MA 1023-BD05","code":"BD05","type":"discussion","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Jane Coons"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Stratton Hall 313"}]},
         {"id":"MA 1023-BD07","code":"BD07","type":"discussion","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Keenan Kidwell"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Stratton Hall 313"}]},
         {"id":"MA 1023-BD08","code":"BD08","type":"discussion","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Jane Coons"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Stratton Hall 313"}]},
@@ -5182,12 +5182,12 @@
         {"id":"MA 1023-BD10","code":"BD10","type":"discussion","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Keenan Kidwell"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Stratton Hall 205"}]},
         {"id":"MA 1023-BL01","code":"BL01","type":"lecture","status":"closed","enrolled":70,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Keenan Kidwell"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Salisbury Labs 104"}]},
         {"id":"MA 1023-BL02","code":"BL02","type":"lecture","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Francisco Ponce-Carrion"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Unity Hall 520"}]},
-        {"id":"MA 1023-BL03","code":"BL03","type":"lecture","status":"open","enrolled":46,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Francisco Ponce-Carrion"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Salisbury Labs 104"}]},
+        {"id":"MA 1023-BL03","code":"BL03","type":"lecture","status":"open","enrolled":45,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Francisco Ponce-Carrion"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Salisbury Labs 104"}]},
         {"id":"MA 1023-BL05","code":"BL05","type":"lecture","status":"closed","enrolled":70,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Jane Coons"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Higgins Labs 218 Discovery Classroom"}]},
         {"id":"MA 1023-BL06","code":"BL06","type":"lecture","status":"open","enrolled":69,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Keenan Kidwell"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Higgins Labs 116"}]},
         {"id":"MA 1023-BX01","code":"BX01","type":"lab","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Fri"],"start":480,"end":530,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1023-BX02","code":"BX02","type":"lab","status":"open","enrolled":27,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Fri"],"start":540,"end":590,"location":"Stratton Hall 116 Computer Lab"}]},
-        {"id":"MA 1023-BX03","code":"BX03","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Fri"],"start":600,"end":650,"location":"Stratton Hall 116 Computer Lab"}]},
+        {"id":"MA 1023-BX03","code":"BX03","type":"lab","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Fri"],"start":600,"end":650,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1023-BX04","code":"BX04","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Fri"],"start":660,"end":710,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1023-BX06","code":"BX06","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Fri"],"start":780,"end":830,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1023-BX07","code":"BX07","type":"lab","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Fri"],"start":840,"end":890,"location":"Stratton Hall 116 Computer Lab"}]},
@@ -5512,12 +5512,12 @@
       "sections": [
         {"id":"MA 2071-BD01","code":"BD01","type":"discussion","status":"open","enrolled":29,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Olin Hall 218"}]},
         {"id":"MA 2071-BD02","code":"BD02","type":"discussion","status":"open","enrolled":26,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Stratton Hall 301"}]},
-        {"id":"MA 2071-BD03","code":"BD03","type":"discussion","status":"open","enrolled":26,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Stratton Hall 301"}]},
-        {"id":"MA 2071-BD05","code":"BD05","type":"discussion","status":"closed","enrolled":33,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Stratton Hall 301"}]},
+        {"id":"MA 2071-BD03","code":"BD03","type":"discussion","status":"open","enrolled":27,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Stratton Hall 301"}]},
+        {"id":"MA 2071-BD05","code":"BD05","type":"discussion","status":"closed","enrolled":32,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Stratton Hall 301"}]},
         {"id":"MA 2071-BD06","code":"BD06","type":"discussion","status":"closed","enrolled":31,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 301"}]},
         {"id":"MA 2071-BD08","code":"BD08","type":"discussion","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Higgins Labs 202"}]},
-        {"id":"MA 2071-BL01","code":"BL01","type":"lecture","status":"open","enrolled":81,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
-        {"id":"MA 2071-BL02","code":"BL02","type":"lecture","status":"closed","enrolled":94,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Salisbury Labs 115 Kinnicutt Hall"}]}
+        {"id":"MA 2071-BL01","code":"BL01","type":"lecture","status":"open","enrolled":82,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
+        {"id":"MA 2071-BL02","code":"BL02","type":"lecture","status":"closed","enrolled":93,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Salisbury Labs 115 Kinnicutt Hall"}]}
       ],
       "options": [
         ["MA 2071-BD01","MA 2071-BL01"],
@@ -5663,8 +5663,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides an introduction to modern computational methods for differential and integral calculus and differential equations. Topics covered include interpolation and polynomial approximation, approximation theory, numerical differentiation and integration, and numerical solutions of ordinary differential equations. Error analysis will be emphasized throughout. Recommended background: MA 2051. An ability to write computer programs in a scientific language is assumed. Undergraduate credit may not be earned for both this course and for MA 3255/CS 4031.",
       "sections": [
-        {"id":"MA 3457-BD01","code":"BD01","type":"discussion","status":"open","enrolled":28,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 201"}]},
-        {"id":"MA 3457-BL01","code":"BL01","type":"lecture","status":"open","enrolled":28,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Salisbury Labs 305"}]}
+        {"id":"MA 3457-BD01","code":"BD01","type":"discussion","status":"open","enrolled":27,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 201"}]},
+        {"id":"MA 3457-BL01","code":"BL01","type":"lecture","status":"open","enrolled":27,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Salisbury Labs 305"}]}
       ],
       "options": [
         ["MA 3457-BD01","MA 3457-BL01"]
@@ -5962,12 +5962,12 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to manufacturing science and engineering and prototype part production. It emphasizes CNC (computer-controlled) machining. Students will learn how to go from a solid (CAD, computer-aided design) model to a machined part, using CAM software (computer-aided manufacturing) and CNC machining. They will also be exposed to associated issues in manufacturing process analysis, engineering design, material science, and in dimensional and surface metrology. Using machining as an example, the science of manufacturing processes is developed in a combination of class work and laboratory experience. The laboratory experience includes an experimental component that relates process variables in machining with performance and machined part quality. Students whose project work will necessitate fabrication of parts and those who want a background in manufacturing process science and engineering should take this course.",
       "sections": [
-        {"id":"ME 1800-BL01","code":"BL01","type":"lecture","status":"open","enrolled":89,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Washburn 229"}]},
+        {"id":"ME 1800-BL01","code":"BL01","type":"lecture","status":"open","enrolled":88,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Washburn 229"}]},
         {"id":"ME 1800-BX01","code":"BX01","type":"lab","status":"closed","enrolled":18,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Washburn 107 Machine Shop"}]},
         {"id":"ME 1800-BX02","code":"BX02","type":"lab","status":"closed","enrolled":18,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Washburn 107 Machine Shop"}]},
         {"id":"ME 1800-BX03","code":"BX03","type":"lab","status":"closed","enrolled":18,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Washburn 107 Machine Shop"}]},
         {"id":"ME 1800-BX04","code":"BX04","type":"lab","status":"closed","enrolled":18,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Washburn 107 Machine Shop"}]},
-        {"id":"ME 1800-BX05","code":"BX05","type":"lab","status":"open","enrolled":17,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Sterrett","Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":1140,"end":1250,"location":"Washburn 107 Machine Shop"}]}
+        {"id":"ME 1800-BX05","code":"BX05","type":"lab","status":"open","enrolled":16,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Sterrett","Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":1140,"end":1250,"location":"Washburn 107 Machine Shop"}]}
       ],
       "options": [
         ["ME 1800-BL01","ME 1800-BX01"],
@@ -6306,7 +6306,7 @@
       "description": "This course is designed to introduce students to the field of fiber optics, with an emphasis on design and working principles of fiber optical sensors for mechanical, biological, and chemical measurements. Students will be able to learn the basic knowledge and working principles of optical fibers and fiber optical components, as well as practical design guidelines and applications of fiber optical sensing systems. The first half of the course will introduce the fundamentals of fiber optics, including working principles of optical fibers, single-mode and multimode fibers, properties of optical fibers, passive fiber optical devices, light sources, and optical detectors. The second half will focus on practical fiber optical sensors and sensing systems, including working principles of fiber optical sensors, intensitybased and interferometer-based fiber optical sensors, fiber Bragg gratings, and low-coherence fiber optical interferometers. Specifically, design and implementation of fiber optical sensors and sensing systems for strain and pressure measurements will be discussed in detail. Measurement characteristics and signal processing of fiber optical sensing systems for different applications will be introduced. Recommended Background: Undergraduate level stress analysis and wave fundamentals, such as ES 2502, PH 1140. Knowledge of vibrations such as ME 4506 is preferred but not required.",
       "sections": [
         {"id":"ME 5225-B01","code":"B01","type":"lecture","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Yuxiang (Shawn) Liu"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Olin Hall 223"}]},
-        {"id":"ME 5225-B02","code":"B02","type":"lecture","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Yuxiang (Shawn) Liu"],"delivery":"online-async","meetings":[]}
+        {"id":"ME 5225-B02","code":"B02","type":"lecture","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Yuxiang (Shawn) Liu"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["ME 5225-B01"],
@@ -6353,7 +6353,7 @@
       "level": "Graduate",
       "description": "(2 credits) The two introductory classes on materials science (MTE 511 and MTE 512) describe the structure property relationships in materials. The purpose of this class is to provide a basic knowledge of the principles pertaining to the physical, mechanical and chemical properties of materials. The primary focus of this class will be on mechanical properties. The thermal, tensile, compressive, flexural and shear properties of metallic alloys, ceramics and glasses and plastics will be discussed. Fundamental aspects of fracture mechanics and viscoelasticity will be presented. An overview of dynamic properties such as fatigue, impact and creep will be provided. The relationship between the structural parameters and the preceding mechanical properties will be described. Basic composite theories will be presented to describe fiber-reinforced composites and nanocomposites. Various factors associated with material degradation during use will be discussed. Some introductory definitions of electrical and optical properties will be outlined. (Prerequisites: senior or graduate standing or consent of the instructor.) Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 594P).",
       "sections": [
-        {"id":"ME 5312-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":35,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Thomas Christiansen"],"delivery":"online-async","meetings":[]},
+        {"id":"ME 5312-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":34,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Thomas Christiansen"],"delivery":"online-async","meetings":[]},
         {"id":"ME 5312-B02","code":"B02","type":"lecture","status":"open","enrolled":40,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Thomas Christiansen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Olin Hall 223"}]}
       ],
       "options": [
@@ -6425,7 +6425,7 @@
       "level": "Graduate",
       "description": "Seminars on current issues related to various areas of mechanical engineering are presented by authorities in their fields. All full-time mechanical engineering students are required to register and attend.",
       "sections": [
-        {"id":"ME 591-B01","code":"B01","type":"seminar","status":"open","enrolled":112,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Mehdi Mortazavi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"ME 591-B01","code":"B01","type":"seminar","status":"open","enrolled":113,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Mehdi Mortazavi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["ME 591-B01"]
@@ -6771,7 +6771,7 @@
       "level": "Graduate",
       "description": "(2 credits) The two introductory classes on materials science (MTE 511 and MTE 512) describe the structure property relationships in materials. The purpose of this class is to provide a basic knowledge of the principles pertaining to the physical, mechanical and chemical properties of materials. The primary focus of this class will be on mechanical properties. The thermal, tensile, compressive, flexural and shear properties of metallic alloys, ceramics and glasses and plastics will be discussed. Fundamental aspects of fracture mechanics and viscoelasticity will be presented. An overview of dynamic properties such as fatigue, impact and creep will be provided. The relationship between the structural parameters and the preceding mechanical properties will be described. Basic composite theories will be presented to describe fiber-reinforced composites and nanocomposites. Various factors associated with material degradation during use will be discussed. Some introductory definitions of electrical and optical properties will be outlined. (Prerequisites: senior or graduate standing or consent of the instructor.) Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 594P).",
       "sections": [
-        {"id":"MTE 512-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":35,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Thomas Christiansen"],"delivery":"online-async","meetings":[]},
+        {"id":"MTE 512-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":34,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Thomas Christiansen"],"delivery":"online-async","meetings":[]},
         {"id":"MTE 512-B02","code":"B02","type":"lecture","status":"open","enrolled":40,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Thomas Christiansen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Olin Hall 223"}]}
       ],
       "options": [
@@ -7971,7 +7971,7 @@
       "level": "Undergraduate",
       "description": "Cat. II An introduction to the use of optics for transmission and processing of information. The emphasis is on understanding principles underlying practical photonic devices. Topics include lasers, light emitting diodes, optical fiber communications, fiber lasers and fiber amplifiers, planar optical waveguides, light modulators and photodetectors. Recommended background is PH 1110, PH 1120, PH 1130 and PH 1140 (or their equivalents). This course will be offered in 2020-21, and in alternating years thereafter.",
       "sections": [
-        {"id":"PH 2501-B01","code":"B01","type":"lecture","status":"open","enrolled":28,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Kateryna Friedman"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Olin Hall 109"}]}
+        {"id":"PH 2501-B01","code":"B01","type":"lecture","status":"open","enrolled":27,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Kateryna Friedman"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Olin Hall 109"}]}
       ],
       "options": [
         ["PH 2501-B01"]
@@ -8762,7 +8762,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course will teach basic walking techniques and principles with the goal for students to develop and implement an individualized conditioning program for themselves.",
       "sections": [
-        {"id":"WPE 1009-B01","code":"B01","type":"workshop","status":"waitlist","enrolled":37,"capacity":35,"waitlist":{"taken":5,"capacity":10},"instructors":["Philip Jackson"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Track"}]},
+        {"id":"WPE 1009-B01","code":"B01","type":"workshop","status":"waitlist","enrolled":37,"capacity":35,"waitlist":{"taken":4,"capacity":10},"instructors":["Philip Jackson"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Track"}]},
         {"id":"WPE 1009-B02","code":"B02","type":"workshop","status":"waitlist","enrolled":42,"capacity":35,"waitlist":{"taken":5,"capacity":10},"instructors":["Matthew Kelly"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Track"}]},
         {"id":"WPE 1009-B03","code":"B03","type":"workshop","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":1,"capacity":10},"instructors":["Danielle Rainey"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":840,"end":890,"location":"Recreation Center Track"}]},
         {"id":"WPE 1009-B04","code":"B04","type":"workshop","status":"waitlist","enrolled":34,"capacity":30,"waitlist":{"taken":7,"capacity":10},"instructors":["Philip Jackson"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":660,"end":710,"location":"Recreation Center Track"}]}
@@ -8799,7 +8799,7 @@
       "description": "Cat. I (1/12 unit) Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
         {"id":"WPE 1018-B01","code":"B01","type":"workshop","status":"open","enrolled":27,"capacity":28,"waitlist":{"taken":1,"capacity":10},"instructors":["Mickey Cahoon"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]},
-        {"id":"WPE 1018-B02","code":"B02","type":"workshop","status":"waitlist","enrolled":28,"capacity":28,"waitlist":{"taken":8,"capacity":10},"instructors":["Cherise Galasso"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":890,"location":"Recreation Center Courts 1-2"}]}
+        {"id":"WPE 1018-B02","code":"B02","type":"workshop","status":"waitlist","enrolled":29,"capacity":28,"waitlist":{"taken":6,"capacity":10},"instructors":["Cherise Galasso"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":890,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
         ["WPE 1018-B01"],
@@ -8829,15 +8829,13 @@
       "description": "Cat. I (1/12 units) This course will teach the use of bodyweight to develop personal strength and conditioning.",
       "sections": [
         {"id":"WPE 1054-B01","code":"B01","type":"workshop","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Matt Oney"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":840,"end":890,"location":"Recreation Center Courts 3-4"}]},
-        {"id":"WPE 1054-B02","code":"B02","type":"workshop","status":"open","enrolled":22,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Emily Dippel"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Courts 3-4"}]},
-        {"id":"WPE 1054-B03","code":"B03","type":"workshop","status":"open","enrolled":11,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Armando Dunn"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 3-4"}]},
-        {"id":"WPE 1054-B04","code":"B04","type":"workshop","status":"closed","enrolled":8,"capacity":0,"waitlist":{"taken":0,"capacity":0},"instructors":["Brian Chabot"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Recreation Center Courts 3-4"}]}
+        {"id":"WPE 1054-B02","code":"B02","type":"workshop","status":"open","enrolled":21,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Emily Dippel"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Courts 3-4"}]},
+        {"id":"WPE 1054-B03","code":"B03","type":"workshop","status":"open","enrolled":11,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Armando Dunn"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 3-4"}]}
       ],
       "options": [
         ["WPE 1054-B01"],
         ["WPE 1054-B02"],
-        ["WPE 1054-B03"],
-        ["WPE 1054-B04"]
+        ["WPE 1054-B03"]
       ]
     },
     {
@@ -8878,7 +8876,7 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/12 unit) In each term, specific PE courses are offered to provide a variety of wellness, dance and healthy alternatives to traditional PE sport-based classes . The specific courses are subject to change on a yearly basis in order to provide flexibility in the PE offerings based upon the latest trends in wellness and dance . The focus of these classes is more on individual fitness, wellness and education, with instruction provided to all students in the classes.",
       "sections": [
-        {"id":"WPE 1099-B01","code":"B01","type":"workshop","title":"Healthy Alternative: Zumba","status":"open","enrolled":19,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Linda Bullock"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":540,"end":590,"location":"Recreation Center Dance"}]},
+        {"id":"WPE 1099-B01","code":"B01","type":"workshop","title":"Healthy Alternative: Zumba","status":"open","enrolled":18,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Linda Bullock"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":540,"end":590,"location":"Recreation Center Dance"}]},
         {"id":"WPE 1099-B03","code":"B03","type":"workshop","title":"Healthy Alternative: Zumba","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Linda Bullock"],"delivery":"in-person","meetings":[{"days":["Mon","Wed"],"start":1170,"end":1220,"location":"Recreation Center Dance"}]}
       ],
       "options": [
@@ -8950,7 +8948,7 @@
       "level": "Undergraduate",
       "description": "Club Sports are activities in various sports and wellness that are organized and recognized by SGA as Class II organizations and open to any undergraduate student. Students who are properly registered in advance for the club activity in their interest area (more information regarding Club Sports can be found at wpi.edu/+techsync) and meet the established criteria for participation by the club as well as by PERA department policy, may be eligible for WPE course credit. Practice and/or competition times vary but are generally in the evenings and weekends. Participating students may incur additional fees for equipment, travel, and/or uniforms",
       "sections": [
-        {"id":"WPE 1205-B01","code":"B01","type":"workshop","status":"open","enrolled":29,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Ann McCarron"],"delivery":"in-person","meetings":[]}
+        {"id":"WPE 1205-B01","code":"B01","type":"workshop","status":"open","enrolled":28,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Ann McCarron"],"delivery":"in-person","meetings":[]}
       ],
       "options": [
         ["WPE 1205-B01"]
