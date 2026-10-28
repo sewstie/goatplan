@@ -70,7 +70,7 @@ export function AppShell({
           <div className="order-2 tablet:order-none tablet:contents">{header}</div>
           <div className="order-6 tablet:order-none tablet:contents">{toolbar}</div>
           {/*
-            Phone: the banner (e.g. the "Plan restored" note) sits right under the header, above the
+            Phone: the banner (e.g. the guide storage note) sits right under the header, above the
             schedule, instead of at the very bottom. Tablet and up keep the source order.
           */}
           <div className="order-3 tablet:order-none tablet:contents">{banner}</div>

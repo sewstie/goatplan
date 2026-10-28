@@ -75,6 +75,16 @@ describe("BlockTimeButton on a phone", () => {
     expect(surface.className).not.toContain("m-auto");
   });
 
+  it("does not focus the optional name field, so the keyboard stays down", async () => {
+    mockPhoneViewport();
+    await startTestPlanner({ courses: ["AE 2320"] });
+    render(<BlockTimeButton />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
+
+    expect(screen.getByRole("textbox", { name: "Name (optional)" })).not.toHaveFocus();
+  });
+
   it("still blocks a time from the sheet's form", async () => {
     mockPhoneViewport();
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });

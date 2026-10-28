@@ -122,7 +122,6 @@ modules. Without a provider, both hooks use the app's shared store.
 | `term` | The chosen term's parsed file (courses and sections); `null` while it loads. |
 | `termStatus` | `idle`, `loading`, `ready` or `error`. Plan actions do nothing until `ready`. |
 | `termError` | Why the term couldn't load, in plain English. |
-| `restoredPlanSummary` | The choices kept when a draft or plan opened, or `null` when nothing was restored. Later edits do not change this summary. |
 | `courses` | The chosen course codes, in the order they were added. |
 | `preferences` | `{ startsAfter, blocked, onlyOpen }`. New drafts start at Any time (`startsAfter: 0`), with no blocked times and only open sections. Stored drafts and saved plans keep their settings, including a chosen 9:00 AM start. A blocked time can have a `label`, the name the student gave it ("Work"); it is saved with the draft but never sent to the engine. |
 | `locks` | Course code → the section ids locked for that course. |
@@ -279,9 +278,10 @@ choose which layout to mount:
   - `YourCoursesDisclosure` replaces the sidebar. A collapsible button
     "Your courses (N)" with the term picker, search and course list inside.
     Open by default when empty, collapses once the first course lands.
-  - `PhoneDetailsSheet` replaces the side details panel. A bottom `Sheet`
-    with the same `CourseDetailsPanel`, opened only by a deliberate tap
-    (never by selectedCourse changing on its own).
+  - `PhoneCourseScreen` replaces the side details panel. A full screen,
+    opened only by a deliberate tap on a course chip or calendar block. It
+    renders `CourseDetailsPanel` with `PhoneCourseDetails` for the course:
+    a card per chosen section and "Change lecture" / "Change lab" lists.
   - `DataUpdated` moves to `phoneFooter`, below the schedule.
 - **Tablet+ (≥ 640 px):** the `Sidebar` and side `DetailsPanel` mount as
   usual, and phone-only slots are null.
@@ -353,10 +353,8 @@ Both sides share:
 The `bottom` variant adds safe-area padding for the iPhone home indicator:
 `pb-[max(20px,env(safe-area-inset-bottom))]`.
 
-Phone uses `Sheet side="bottom"` in two places:
-1. `PhoneDetailsSheet` — wraps `CourseDetailsPanel`, managed by `PlannerShell`.
-2. `BlockTimeButton` — the "Block a time" form, which uses `Dialog` on tablet
-   but `Sheet side="bottom"` on phone.
+Phone uses `Sheet side="bottom"` for `BlockTimeButton`: the "Block a time"
+form, which uses `Dialog` on tablet but `Sheet side="bottom"` on phone.
 
 ## Checks before a PR
 

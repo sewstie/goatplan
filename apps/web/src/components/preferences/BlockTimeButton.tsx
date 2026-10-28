@@ -29,10 +29,11 @@ export function BlockTimeButton({ variant = "chip", label = "Block a time", clas
   const phone = usePhoneViewport();
 
   // The dialog would focus its close button, which Safari outlines; start in the name field instead.
-  // This runs after the dialog's own effect has opened it.
+  // This runs after the dialog's own effect has opened it. The name is optional, so a phone keeps
+  // the sheet's heading focus rather than popping up the keyboard.
   useEffect(() => {
-    if (open) nameRef.current?.focus();
-  }, [open]);
+    if (open && !phone) nameRef.current?.focus();
+  }, [open, phone]);
 
   function handleSubmit(days: Day[], start: number, end: number, label: string) {
     setPreferences({ blocked: addBlocked(blocked, days, start, end, label) });

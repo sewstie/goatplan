@@ -23,12 +23,9 @@ test("state 36: finishing the guide and returning restores only the choices kept
   await page.getByRole("searchbox").fill("AE 2320");
   await page.getByRole("searchbox").press("Enter");
   await settled(page);
+  // AE 2320 has one lecture professor, so the guide skips the professor step.
   await next(page).click();
-  const professor = page.getByRole("combobox", { name: "Lecture professor" });
-  await professor.click();
-  await page.getByRole("option", { name: "Ye Lu", exact: true }).click();
-  await settled(page);
-  await next(page).click();
+  await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
   await next(page).click();
   await guide(page).getByRole("button", { name: "Finish guide" }).click();
   await expect(guide(page)).toBeHidden();
@@ -44,8 +41,7 @@ test("state 36: finishing the guide and returning restores only the choices kept
   await page.reload();
   await settled(page);
   await expect(guide(page)).toBeHidden();
-  const banner = page.getByRole("status").filter({ hasText: "Plan restored" });
-  await expect(banner).toHaveText("Plan restored · 9 AM start, Work, Ye Lu and lab CX02 are kept.");
+  await expect(page.getByText(/Plan restored/)).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Unlock Lab CX02", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "AE 2320 CX02", exact: false }).first().click();
   await page.evaluate(() => document.fonts.ready);
@@ -72,9 +68,9 @@ test("state 37: a failed guide write changes the open step once while planning c
   await page.screenshot({ path: "e2e/screenshots/visit-state-37-1440.png", animations: "disabled" });
   await expect(page).toHaveScreenshot("visit-state-37-1440.png", { animations: "disabled" });
   await next(page).click();
-  await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
+  await expect(guide(page).getByRole("heading", { name: "Browse, inspect, then save if you like" })).toBeVisible();
   await guide(page).getByRole("button", { name: "Back", exact: true }).click();
-  await expect(guide(page).getByRole("heading", { name: "A professor preference is optional" })).toBeVisible();
+  await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
   await guide(page).getByRole("button", { name: "Skip guide" }).click();
   await expect(guide(page)).toBeHidden();
   await page.getByRole("combobox", { name: "Starts after" }).selectOption("600");
@@ -90,7 +86,8 @@ test("saved-plan URLs restore the snapshot with an empty working draft", async (
     localStorage.setItem("goatplan:draft:v1:2027-C", JSON.stringify({ version: 1, ...draft }));
   }, { saved, draft: emptyDraft() });
   await page.goto("/?view=saved&plan=plan-1");
-  await expect(page.getByRole("status").filter({ hasText: "Plan restored" })).toHaveText("Plan restored · 9 AM start, Ye Lu and lab CX02 are kept.");
+  await expect(page.getByRole("heading", { name: "AE 2320", exact: true }).first()).toBeVisible();
+  await expect(page.getByText(/Plan restored/)).toHaveCount(0);
   await expect(guide(page)).toBeHidden();
 });
 
@@ -106,7 +103,7 @@ test("storage blocked from arrival still permits finishing the guide", async ({ 
   await page.getByRole("searchbox").fill("AE 2320");
   await page.getByRole("searchbox").press("Enter");
   await settled(page);
-  for (let i = 0; i < 3; i++) await next(page).click();
+  for (let i = 0; i < 2; i++) await next(page).click();
   await guide(page).getByRole("button", { name: "Finish guide" }).click();
   await expect(guide(page)).toBeHidden();
   await expect(page.getByRole("status").filter({ hasText: notice })).toBeVisible();

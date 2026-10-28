@@ -2,12 +2,17 @@ import { expect, it } from "vitest";
 import { termFile } from "@/lib/store/testing/fixtures";
 import { advanceGuide, guideProgress, professorCourse, type GuideVisit } from "./tutorialSteps";
 
-it("targets the selected lecture course, or the first planned lecture course", () => {
+it("targets the selected course with a professor choice, or the first planned one", () => {
   const term = termFile("2027-C");
-  term.courses[2].sections[0].type = "lab";
+  for (const course of term.courses.slice(0, 3)) course.sections.push({ ...course.sections[0], id: `${course.code}-X`, instructors: ["Alex Rivera"] });
+  term.courses[2].sections.forEach((section) => { section.type = "lab"; });
   expect(professorCourse(term, ["AE 2320", "AE 2410"], "AE 2410")).toBe("AE 2410");
   expect(professorCourse(term, ["AB 1533", "AE 2320", "AE 2410"], "AB 1533")).toBe("AE 2320");
   expect(professorCourse(term, ["AB 1533"], "AB 1533")).toBeNull();
+});
+
+it("skips a course whose lectures all have the same professor", () => {
+  expect(professorCourse(termFile("2027-C"), ["AE 2320", "AE 2410"], "AE 2320")).toBeNull();
 });
 
 it("skips the professor step in both directions and freezes the total until navigation", () => {

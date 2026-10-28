@@ -214,10 +214,7 @@ describe("CourseDetailsPanel", () => {
     await startTestPlanner({ courses: ["AE 2320"] });
     render(<CourseDetailsPanel />);
 
-    const picker = screen.getByRole("combobox", { name: "Lecture professor" });
-    expect(picker).toHaveTextContent("Any professor");
-    expect(screen.getByRole("link", { name: /Rate My Professors/ })).toBeInTheDocument();
-    await chooseProfessor(picker, "Ye Lu");
+    expect(screen.queryByRole("combobox", { name: "Lecture professor" })).not.toBeInTheDocument();
     const link = screen.getByRole("link", { name: /Rate My Professors/ });
     expect(link).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
     expect(link).toHaveAttribute("target", "_blank");
@@ -311,7 +308,7 @@ describe("CourseDetailsPanel", () => {
 
     expect(within(card("Lecture C01")).getByText("Instructor not assigned yet")).toBeInTheDocument();
     expect(screen.getByText("Professor reviews appear when an instructor is available.")).toBeInTheDocument();
-    expect(screen.getByRole("combobox", { name: "Lecture professor" })).toHaveTextContent("Any professor");
+    expect(screen.queryByRole("combobox", { name: "Lecture professor" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 });

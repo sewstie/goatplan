@@ -55,7 +55,6 @@ export interface RemovedCourse {
 }
 
 export interface PlannerState extends Draft {
-  restoredPlanSummary: string | null;
   savedPlans: SavedPlan[];
   savedPlanId: string | null;
   savedSelectedCourse: string | null;

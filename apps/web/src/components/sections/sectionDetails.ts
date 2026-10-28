@@ -15,12 +15,12 @@ export function hasSetTime(section: Pick<Section, "meetings">): boolean {
   return section.meetings.some((meeting) => meeting.days.length > 0);
 }
 
-/** One line per meeting: "Mon–Fri · 9:00 AM–9:50 AM". */
-export function meetingLines(section: Pick<Section, "meetings">): string[] {
+/** One line per meeting: "Mon–Fri · 9:00 AM–9:50 AM", or "Mon–Fri · 9:00–9:50 AM" in the shared style. */
+export function meetingLines(section: Pick<Section, "meetings">, style: Parameters<typeof formatTimeRange>[2] = "full"): string[] {
   if (!hasSetTime(section)) return ["No scheduled meeting time"];
   return section.meetings
     .filter((meeting) => meeting.days.length > 0)
-    .map((meeting) => `${formatDays(meeting.days)} · ${formatTimeRange(meeting.start, meeting.end)}`);
+    .map((meeting) => `${formatDays(meeting.days)} · ${formatTimeRange(meeting.start, meeting.end, style)}`);
 }
 
 const ONLINE: Partial<Record<Delivery, string>> = {

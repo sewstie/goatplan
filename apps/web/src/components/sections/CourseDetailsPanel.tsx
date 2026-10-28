@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
+import type { Course } from "@/lib/data/types";
 import { usePlanner } from "@/lib/store";
 import { useDiagnosis } from "@/components/schedule/useDiagnosis";
 import { CourseDetails } from "./CourseDetails";
@@ -9,8 +10,11 @@ import { PanelIntro } from "./PanelIntro";
 import { PanelSkeleton } from "./PanelSkeleton";
 import { SavedCourseDetails } from "./SavedCourseDetails";
 
-/** The details panel: section choices, Lock / Unlock and the professor, or the intro when no course is picked. */
-export function CourseDetailsPanel() {
+/**
+ * The details panel: section choices, Lock / Unlock and the professor, or the intro when no course is picked.
+ * The phone passes its own layout for a course's sections.
+ */
+export function CourseDetailsPanel({ renderCourse = (course) => <CourseDetails key={course.code} course={course} /> }: { renderCourse?: (course: Course) => ReactNode } = {}) {
   const saved = usePlanner((state) => state.savedPlanId !== null);
   const code = usePlanner((state) => state.selectedCourse);
   const termStatus = usePlanner((state) => state.termStatus);
@@ -36,6 +40,6 @@ export function CourseDetailsPanel() {
   if (termStatus === "idle" || termStatus === "loading") content = <PanelSkeleton />;
   else if (diagnosis && (diagnosis.issues.length > 0 || diagnosis.fixes.length > 0)) content = <DiagnosisPanel course={course} diagnosis={diagnosis} locks={locks} />;
   else if (!course) content = <PanelIntro />;
-  else content = <CourseDetails key={course.code} course={course} />;
+  else content = renderCourse(course);
   return <div ref={panel} onFocusCapture={(event) => { focused.current = event.target as HTMLElement; }}>{content}</div>;
 }

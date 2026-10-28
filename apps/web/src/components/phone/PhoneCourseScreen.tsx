@@ -1,20 +1,20 @@
 "use client";
 
-import { X } from "@phosphor-icons/react/ssr";
-import { ScheduleBrowser } from "@/components/schedule/ScheduleBrowser";
+import { Trash } from "@phosphor-icons/react/ssr";
 import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
 import { Button } from "@/components/ui/Button";
 import { usePlanner } from "@/lib/store";
 import { BackLink } from "./BackLink";
+import { PhoneCourseDetails } from "./PhoneCourseDetails";
 import { usePhoneScreen } from "./phoneScreen";
 
-/** One course's details as a full screen, in place of the tablet side panel (div-app-phone-25). */
+/** One course's details as a full screen, in place of the tablet side panel (phone-fix-1 to 4). */
 export function PhoneCourseScreen() {
   return (
-    <div className="flex flex-col gap-10">
-      <BackLink aside={<ScheduleBrowser compact />} />
+    <div className="flex flex-1 flex-col gap-6">
+      <BackLink />
       <section data-screen-heading tabIndex={-1} aria-label="Course details" className="outline-none">
-        <CourseDetailsPanel />
+        <CourseDetailsPanel renderCourse={(course) => <PhoneCourseDetails key={course.code} course={course} />} />
       </section>
       <RemoveCourseButton />
     </div>
@@ -32,17 +32,20 @@ function RemoveCourseButton() {
   const show = usePhoneScreen((state) => state.show);
   if (!code) return null;
   return (
-    <Button
-      variant="secondary"
-      fullWidth
-      icon={<X aria-hidden />}
-      className="mt-20 min-h-44"
-      onClick={() => {
-        removeCourse(code);
-        show("schedule");
-      }}
-    >
-      Remove {code}
-    </Button>
+    <div className="mt-auto pt-24">
+      <Button
+        variant="secondary"
+        fullWidth
+        icon={<Trash aria-hidden />}
+        className="min-h-44"
+        aria-label={`Remove course ${code}`}
+        onClick={() => {
+          removeCourse(code);
+          show("schedule");
+        }}
+      >
+        Remove course
+      </Button>
+    </div>
   );
 }

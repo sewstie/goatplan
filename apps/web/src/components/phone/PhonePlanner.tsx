@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
 import { Brand } from "@/components/shell/Brand";
 import { DataUpdated } from "@/components/shell/DataUpdated";
 import { PhoneCourseScreen } from "./PhoneCourseScreen";
@@ -44,18 +45,19 @@ export function PhonePlanner({ banner }: { banner: ReactNode }) {
       </div>
       <main ref={main} id="main" tabIndex={-1} className="flex min-w-0 flex-1 flex-col px-(--size-phone-gutter) pt-14 pb-20 outline-none">
         {screen === "search" && <div data-phone-screen><PhoneSearchScreen /></div>}
-        {screen === "course" && <div data-phone-screen><PhoneCourseScreen /></div>}
+        {screen === "course" && <div data-phone-screen className="flex flex-1 flex-col"><PhoneCourseScreen /></div>}
         {screen === "preferences" && <div data-phone-screen><PhonePreferencesScreen /></div>}
         <div data-phone-screen hidden={screen !== "schedule"}>
           <PhoneScheduleScreen banner={banner} />
         </div>
-        <footer className="mt-auto flex flex-col items-center gap-4 pt-28 text-8 text-ink-muted">
+        <footer className="mt-auto flex flex-col items-center pt-20 text-8 text-ink-muted">
+          <DataUpdated />
           <nav aria-label="Help">
-            <a href="https://courselistings.wpi.edu" target="_blank" rel="noreferrer" className="inline-flex min-h-44 items-center rounded-badge hover:text-ink hover:underline">
+            <a href="https://courselistings.wpi.edu" target="_blank" rel="noreferrer" className="inline-flex min-h-44 items-center gap-4 rounded-badge underline hover:text-ink">
               Data source<span className="sr-only"> (opens in a new tab)</span>
+              <ArrowSquareOut aria-hidden className="size-12" />
             </a>
           </nav>
-          <DataUpdated />
         </footer>
       </main>
     </div>

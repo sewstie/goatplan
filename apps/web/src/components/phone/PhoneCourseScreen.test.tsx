@@ -17,7 +17,7 @@ describe("PhoneCourseScreen", () => {
     usePhoneScreen.setState({ screen: "course" });
     render(<PhoneCourseScreen />);
 
-    await userEvent.click(screen.getByRole("button", { name: "Remove AE 2410" }));
+    await userEvent.click(screen.getByRole("button", { name: "Remove course AE 2410" }));
     expect(getPlannerStore().getState().courses).not.toContain("AE 2410");
     expect(getPlannerStore().getState().removedCourse?.code).toBe("AE 2410");
     expect(usePhoneScreen.getState().screen).toBe("schedule");
