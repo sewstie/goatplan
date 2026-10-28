@@ -34,13 +34,9 @@ export function ProfessorPicker({ course, phone = false }: { course: Course; pho
         aria-labelledby="lecture-professor-label"
         options={options}
         value={value}
-        aria-describedby="lecture-professor-hint"
         disabled={!ready}
         onChange={(value) => setProfessor(course.code, value || null)}
       />
-      <p id="lecture-professor-hint" className="text-9 leading-13-95 text-ink-muted">
-        Filters lectures only. Labs and discussions stay as they are.
-      </p>
       <div data-guide-slot="professor" className="empty:hidden" />
     </div>
   );

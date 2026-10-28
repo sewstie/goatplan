@@ -19,7 +19,7 @@ export function DetailsPanel({ label, hideOnTermError, children }: DetailsPanelP
     <aside
       aria-label={label}
       data-guide-hide={hideOnTermError && !hasCourses ? "" : undefined}
-      className="hidden flex-col rounded-panel bg-surface px-16 py-20 tablet:flex wide:w-(--size-details) wide:shrink-0 wide:overflow-y-auto"
+      className="relative hidden flex-col rounded-panel bg-surface px-16 py-20 tablet:flex wide:w-(--size-details) wide:shrink-0 wide:overflow-y-auto"
     >
       {children}
     </aside>

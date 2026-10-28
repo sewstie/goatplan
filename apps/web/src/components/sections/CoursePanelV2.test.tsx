@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { expect, it } from "vitest";
 import { PlannerProvider } from "@/lib/store";
 import { solved, termFile } from "@/lib/store/testing/fixtures";
@@ -12,18 +13,17 @@ function addSecondProfessor(course: ReturnType<typeof termFile>["courses"][numbe
   course.options.push(course.options[0].map((id) => (id === lecture.id ? `${course.code}-L02` : id)));
 }
 
-it("puts the lecture professor and its hint before the sections in this schedule", async () => {
+it("puts the lecture professor, with no hint under it, before the sections in this schedule", async () => {
   const term = termFile("2027-C");
   addSecondProfessor(term.courses[0]);
   const { store } = await startTestPlanner({ courses: ["AE 2320"] }, { term });
   render(<PlannerProvider store={store}><CourseDetailsPanel /></PlannerProvider>);
 
   const field = screen.getByRole("combobox", { name: "Lecture professor" });
-  const hint = screen.getByText("Filters lectures only. Labs and discussions stay as they are.");
   const sections = screen.getByRole("heading", { name: "Sections in this schedule" });
-  expect(field.compareDocumentPosition(hint) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-  expect(hint.compareDocumentPosition(sections) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-  expect(field).toHaveAccessibleDescription(hint.textContent!);
+  expect(field.compareDocumentPosition(sections) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(screen.queryByText(/Filters lectures only/)).not.toBeInTheDocument();
+  expect(field).not.toHaveAccessibleDescription();
   expect(screen.getByText("Optional")).toBeInTheDocument();
   expect(screen.queryByText("Compatible")).not.toBeInTheDocument();
 });
@@ -96,7 +96,7 @@ it("hides the lecture professor for a course without lectures and offers direct 
   expect(screen.queryByText("Compatible")).not.toBeInTheDocument();
 });
 
-it("shows paired labs and discussions as compatible compact cards without their instructors", async () => {
+it("lets a lab be locked in a course with labs and discussions, and shows neither instructor", async () => {
   const term = termFile("2027-C");
   const course = term.courses[0];
   const discussion = { ...course.sections[1], id: "AE 2320-D01", code: "D01", type: "discussion" as const, instructors: ["Discussion Tutor"] };
@@ -112,14 +112,17 @@ it("shows paired labs and discussions as compatible compact cards without their 
 
   for (const heading of ["Lab CX01", "Discussion D01"]) {
     const card = within(screen.getByRole("heading", { name: heading }).closest("article")!);
-    expect(card.getByText("Compatible")).toBeInTheDocument();
     expect(card.getByText("Unity Hall 400").parentElement).toHaveTextContent(/^Unity Hall 400$/);
     expect(card.queryByText(/Ye Lu|Discussion Tutor/)).not.toBeInTheDocument();
     expect(card.queryByText(/\/ 5/)).not.toBeInTheDocument();
     expect(card.queryByRole("link")).not.toBeInTheDocument();
   }
-  expect(screen.getAllByText("Compatible")).toHaveLength(2);
-  expect(screen.getByText("Filters lectures only. Labs and discussions stay as they are.")).toBeInTheDocument();
+  expect(screen.queryByText("Compatible")).not.toBeInTheDocument();
+  // Every option has this discussion, so there's nothing to lock it against.
+  expect(within(screen.getByRole("heading", { name: "Discussion D01" }).closest("article")!).getByText("Only discussion")).toBeInTheDocument();
+  await userEvent.click(screen.getByRole("button", { name: "Lock Lab CX01" }));
+  expect(store.getState().locks).toEqual({ "AE 2320": ["AE 2320-CX01"] });
+  expect(await screen.findByRole("button", { name: "Unlock Lab CX01" })).toBeInTheDocument();
 });
 
 it("hides the lecture professor for one co-taught lecture, since choosing would change nothing", async () => {

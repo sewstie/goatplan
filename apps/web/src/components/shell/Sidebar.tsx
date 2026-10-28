@@ -10,8 +10,11 @@ export function Sidebar({ children, termId }: { children?: ReactNode; termId?: s
       className="hidden w-(--size-sidebar) shrink-0 flex-col rounded-panel bg-surface px-16 pt-22 pb-15 tablet:flex"
     >
       <Brand />
-      {/* The 4px padding, taken back by the negative margin, keeps focus rings from being cut off by the scroll edge. */}
-      <div className="-m-4 flex min-h-0 flex-1 flex-col overflow-y-auto p-4">{children}</div>
+      {/*
+        The 4px padding, taken back by the negative margin, keeps focus rings from being cut off by the scroll edge.
+        Relative, so screen-reader-only text in a long result list stays inside the scroll and doesn't stretch the page.
+      */}
+      <div className="relative -m-4 flex min-h-0 flex-1 flex-col overflow-y-auto p-4">{children}</div>
       <div className="mt-auto flex shrink-0 flex-col gap-2 border-t border-line pt-10.75">
         <DataUpdated termId={termId} />
         <SupportLinks />
