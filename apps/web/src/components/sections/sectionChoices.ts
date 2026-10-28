@@ -2,7 +2,7 @@ import { meetingSpans, meetsRules, optionOpenSeats, roomName, spansOverlap, type
 import type { Course, Section } from "@/lib/data/types";
 import { meetingLines, sectionsById, typeWord } from "./sectionDetails";
 
-/** One way to take the course, as a row of the "Choose a lab" sheet. */
+/** One way to take the course: the sections that differ from the current choice. */
 export interface SectionChoice {
   /** The whole option, as the store's pickOption wants it. */
   sectionIds: string[];
@@ -84,13 +84,4 @@ export function sectionChoices(
   const suggested = others.reduce((best, choice) => (choice.openSeats > best.openSeats ? choice : best));
 
   return { kind: kinds.size === 1 ? typeWord([...kinds][0]) : "section", current, others, suggested };
-}
-
-/** The meeting time, plus the room when the time alone doesn't tell the choice apart from another. */
-export function choiceDetail(choice: SectionChoice): string {
-  return choice.sharesTime && choice.rooms.short ? `${choice.times} · ${choice.rooms.short}` : choice.times;
-}
-
-export function choiceSeats(choice: SectionChoice): string {
-  return choice.openSeats > 0 ? `${choice.openSeats} open` : "Full";
 }

@@ -115,3 +115,9 @@ it("returns to the lecture step until a lecture is locked, and finishes after th
   expect(sectionSteps(course, chosen, chosen, [], rules).currentStep).toBeNull();
   expect(sectionSteps(orbitalMechanics, chosen, [], [], rules).currentStep).toBe(2);
 });
+
+it("offers other seminars the same way as labs, since there's no other place to pick one", () => {
+  const seminar = lectureProfessorTerm().courses.find((course) => course.code === "AE 2410")!;
+  const result = sectionSteps(seminar, ["AE 2410-S01"], [], [], rules);
+  expect(result.labs.map(({ current, choices }) => [current.code, choices.map((section) => section.code)])).toEqual([["S01", ["S02"]]]);
+});

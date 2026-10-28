@@ -16,8 +16,6 @@ import type { ClassItem } from "./scheduleItems";
 import { useScheduleItems } from "./useScheduleItems";
 import { useDiagnosticPreview } from "./useDiagnosticPreview";
 import { useSectionPreviewItems } from "./useSectionPreviewItems";
-import { useAlternativeSheet } from "@/components/sections/alternativeSheet";
-import { useSectionChoices } from "@/components/sections/useSectionChoices";
 import { usePhoneScreen } from "@/components/phone/phoneScreen";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { WeekCalendar } from "./WeekCalendar";
@@ -34,9 +32,6 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
   const selectedCourse = usePlanner(selectViewedCourse);
   const selectedSection = usePlanner(selectViewedSection);
   const selectCourse = usePlanner((state) => state.selectCourse);
-  const course = term?.courses.find((item) => item.code === selectedCourse);
-  const choices = useSectionChoices(course);
-  const openChoices = useAlternativeSheet((state) => state.open);
   const phone = usePhoneViewport();
   const showPhoneScreen = usePhoneScreen((state) => state.show);
   const { classes: scheduled, untimed } = useScheduleItems();
@@ -97,10 +92,6 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
               if (phone && !clicked.preview) {
                 selectCourse(clicked.courseCode, clicked.sectionId);
                 showPhoneScreen("course");
-                return;
-              }
-              if (!saved && selected && choices && !clicked.preview) {
-                openChoices(clicked.courseCode);
                 return;
               }
               selectCourse(clicked.courseCode, selected ? null : clicked.sectionId);

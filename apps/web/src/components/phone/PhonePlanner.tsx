@@ -1,15 +1,14 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
-import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
-import { Brand } from "@/components/shell/Brand";
-import { DataUpdated } from "@/components/shell/DataUpdated";
 import { cx } from "@/components/ui/cx";
 import { PhoneCourseScreen } from "./PhoneCourseScreen";
+import { PhoneFooter } from "./PhoneFooter";
 import { PhonePreferencesScreen } from "./PhonePreferencesScreen";
 import { PhoneScheduleScreen } from "./PhoneScheduleScreen";
 import { PhoneSearchScreen } from "./PhoneSearchScreen";
 import { PhoneTermSelect } from "./PhoneTermSelect";
+import { PhoneTopBar } from "./PhoneTopBar";
 import { usePhoneScreen } from "./phoneScreen";
 
 /**
@@ -62,10 +61,9 @@ export function PhonePlanner({ banner }: { banner: ReactNode }) {
       >
         Skip to main content
       </a>
-      <div className="flex min-h-(--size-phone-bar) items-center justify-between gap-12 border-b border-line bg-surface px-(--size-phone-gutter)">
-        <Brand variant="phone" />
+      <PhoneTopBar>
         <PhoneTermSelect />
-      </div>
+      </PhoneTopBar>
       <main
         ref={main}
         id="main"
@@ -81,15 +79,7 @@ export function PhonePlanner({ banner }: { banner: ReactNode }) {
         <div data-phone-screen hidden={screen !== "schedule"}>
           <PhoneScheduleScreen banner={banner} />
         </div>
-        <footer className="mt-auto flex flex-col items-center pt-20 text-8 text-ink-muted">
-          <DataUpdated />
-          <nav aria-label="Help">
-            <a href="https://courselistings.wpi.edu" target="_blank" rel="noreferrer" className="inline-flex min-h-44 items-center gap-4 rounded-badge underline hover:text-ink">
-              Data source<span className="sr-only"> (opens in a new tab)</span>
-              <ArrowSquareOut aria-hidden className="size-12" />
-            </a>
-          </nav>
-        </footer>
+        <PhoneFooter />
       </main>
     </div>
   );

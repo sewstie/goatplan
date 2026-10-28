@@ -50,12 +50,12 @@ export function ClassBlock({ item, density, style, selected, onSelect }: ClassBl
         item.choicePreview
           ? "border-dashed border-accent bg-preview-surface text-accent"
           : item.problem
-          ? cx("border-clash-line bg-clash-surface text-clash-ink", selected && "tablet:shadow-selected")
+          ? "border-clash-line bg-clash-surface text-clash-ink"
           : cx(
               "border-transparent hover:shadow-block-hover",
               COURSE_COLORS[item.slot].block,
               // A phone opens the course screen on tap, so the block keeps its course color there.
-              selected && "tablet:border-accent tablet:bg-surface-raised tablet:text-ink tablet:shadow-selected tablet:hover:border-accent tablet:hover:shadow-selected",
+              selected && "tablet:bg-surface-raised tablet:text-ink tablet:shadow-block-hover",
             ),
       )}
       style={style}

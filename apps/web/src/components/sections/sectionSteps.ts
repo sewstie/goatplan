@@ -26,7 +26,7 @@ export interface LectureChoices {
 
 export function sectionSteps(course: Course, chosen: readonly string[], locked: readonly string[], rest: readonly Section[], rules: FitRules): SectionSteps {
   const labs: LabChoices[] = sectionsById(course, chosen)
-    .filter((section) => section.type === "lab" || section.type === "discussion")
+    .filter((section) => section.type !== "lecture")
     .map((current) => {
       const kept = [...chosen, ...locked].filter((id) => id !== current.id);
       const options = course.options.filter((option) => option.length === chosen.length

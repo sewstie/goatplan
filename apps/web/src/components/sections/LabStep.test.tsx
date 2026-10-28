@@ -5,7 +5,6 @@ import { PlannerProvider } from "@/lib/store";
 import type { Draft } from "@/lib/store/types";
 import type { TermFile } from "@/lib/data/types";
 import { solved, termFile } from "@/lib/store/testing/fixtures";
-import { ChooseAlternativeSheet } from "./ChooseAlternativeSheet";
 import { CourseDetailsPanel } from "./CourseDetailsPanel";
 import { polyfillDialog, startTestPlanner, waitForSolve } from "./testing/plannerStore";
 import { makeSection, orbitalMechanics } from "./testing/sections";
@@ -26,7 +25,7 @@ async function panel(draft: Partial<Draft> = {}, data?: TermFile) {
     }
     return response;
   } });
-  render(<PlannerProvider store={store}><CourseDetailsPanel /><ChooseAlternativeSheet /><ScheduleView /></PlannerProvider>);
+  render(<PlannerProvider store={store}><CourseDetailsPanel /><ScheduleView /></PlannerProvider>);
   return store;
 }
 
@@ -96,14 +95,13 @@ it("chooses a lab with the keyboard, moves its lock, preserves other locks, and 
   expect(screen.queryByRole("list", { name: "Other lab choices" })).not.toBeInTheDocument();
 });
 
-it("keeps the choice sheet available when activating a selected calendar block", async () => {
+it("opens no section sheet when a selected calendar block is clicked again", async () => {
   await panel();
   const user = userEvent.setup();
   const lab = screen.getByRole("button", { name: /^AE 2320 CX01,/ });
   await user.click(lab);
   await user.click(lab);
-  expect(screen.getByRole("dialog", { name: "Choose a lab" })).toBeInTheDocument();
-  await user.click(screen.getByRole("button", { name: "Close" }));
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 });
 
 it("opens a lab and a discussion from their own cards and preserves the other component's lock", async () => {
