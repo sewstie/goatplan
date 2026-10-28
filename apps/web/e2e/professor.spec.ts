@@ -53,7 +53,8 @@ for (const state of ["04", "07", "24", "29"] as const) {
         await page.getByRole("button", { name: "Next schedule" }).click();
       }
       await expect(details(page).getByText("4.4 / 5")).toBeVisible();
-      await expect(details(page).getByText("Compatible", { exact: true })).toHaveCount(2);
+      await expect(details(page).getByText("Compatible", { exact: true })).toHaveCount(0);
+      await expect(details(page).getByRole("button", { name: /^Lock Lab B0/ })).toBeVisible();
     }
     await page.evaluate(() => document.fonts.ready);
     await expect(page).toHaveScreenshot(`course-panel-v2-${state}-1440.png`, { animations: "disabled" });
