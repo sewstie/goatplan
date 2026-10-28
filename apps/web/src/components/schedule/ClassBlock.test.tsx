@@ -13,14 +13,15 @@ function block(selected: boolean) {
   return screen.getByRole("button", { name: /^AE 2320 CL01,/ });
 }
 
-it("keeps the course color on a phone and lifts a selected block from the tablet breakpoint up, without a blue outline", () => {
+it("keeps the course color on a phone and gives a selected block a dashed outline from the tablet breakpoint up", () => {
   const { className } = block(true);
   const classes = className.split(" ");
-  expect(classes).toEqual(expect.arrayContaining(["bg-course-1", "tablet:bg-surface-raised", "tablet:shadow-block-hover"]));
+  expect(classes).toEqual(expect.arrayContaining(["bg-course-1", "tablet:bg-surface-raised", "tablet:border-dashed", "tablet:border-ink-muted", "tablet:hover:border-ink-muted"]));
   expect(className).not.toMatch(/border-accent|shadow-selected/);
+  expect(classes).not.toContain("border-dashed");
   expect(classes).not.toContain("bg-surface-raised");
 });
 
 it("has no selected outline when not selected", () => {
-  expect(block(false).className).not.toMatch(/border-accent|shadow-selected/);
+  expect(block(false).className).not.toMatch(/border-dashed|border-ink-muted/);
 });

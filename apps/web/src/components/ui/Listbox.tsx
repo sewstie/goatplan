@@ -59,7 +59,7 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
     const size = popup.current.getBoundingClientRect();
     // The menu sits at the end of a row, so its list lines up with the trigger's right edge.
     const offsetX = variant === "field" ? 0 : anchor.width - size.width;
-    const position = floatingPosition(anchor, size, { width: window.innerWidth, height: window.innerHeight }, { gap: 0, offsetX });
+    const position = floatingPosition(anchor, size, { width: window.innerWidth, height: window.innerHeight }, { gap: variant === "field" ? 4 : 0, offsetX });
     popup.current.style.left = `${position.left}px`;
     popup.current.style.top = `${position.top}px`;
     popup.current.style.visibility = "visible";
@@ -136,18 +136,25 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
       </button>
       {open && createPortal(
         <div ref={popup} id={popupId} role="listbox" aria-label={label} className="invisible fixed z-40 max-h-[min(400px,calc(100vh-16px))] overflow-y-auto rounded-[11px] border border-listbox-line bg-surface p-5 shadow-listbox">
-          {options.map((option, index) => (
-            <div key={option.value} id={`${id}-option-${index}`} role="option" aria-selected={option.value === value} aria-labelledby={`${id}-name-${index}`} aria-describedby={option.description ? `${id}-description-${index}` : undefined}
-              className={cx("relative flex min-h-49 cursor-pointer flex-col justify-center gap-2.5 rounded-[7px] px-9 py-9 pr-26", option.value === value ? "bg-accent-soft text-accent" : cx("text-ink", index === active && "bg-surface-selected"))}
-              onMouseDown={(event) => event.preventDefault()}
-              onMouseEnter={() => setActive(index)}
-              onClick={() => { onChange(option.value); setOpen(false); button.current?.focus(); }}
-            >
-              <span id={`${id}-name-${index}`} className="text-10 leading-14-5 font-700">{option.label}</span>
-              {option.description && <span id={`${id}-description-${index}`} className="text-8 leading-12-8 text-ink-muted">{option.description}</span>}
-              {option.value === value && <Check aria-hidden className="absolute top-1/2 right-9 size-13 -translate-y-1/2 text-ink" />}
-            </div>
-          ))}
+          {options.map((option, index) => {
+            const chosen = option.value === value;
+            // A one-line list (professor names) stays short and light, marking the choice with text color and a check.
+            const rowClasses = option.description
+              ? cx("min-h-49 gap-2.5 py-9", chosen ? "bg-accent-soft text-accent" : cx("text-ink", index === active && "bg-surface-selected"))
+              : cx("min-h-32 py-7", chosen ? "text-accent" : "text-ink", index === active && "bg-surface-selected");
+            return (
+              <div key={option.value} id={`${id}-option-${index}`} role="option" aria-selected={chosen} aria-labelledby={`${id}-name-${index}`} aria-describedby={option.description ? `${id}-description-${index}` : undefined}
+                className={cx("relative flex cursor-pointer flex-col justify-center rounded-[7px] px-9 pr-26", rowClasses)}
+                onMouseDown={(event) => event.preventDefault()}
+                onMouseEnter={() => setActive(index)}
+                onClick={() => { onChange(option.value); setOpen(false); button.current?.focus(); }}
+              >
+                <span id={`${id}-name-${index}`} className={cx("text-10 leading-14-5", option.description || chosen ? "font-700" : "font-510")}>{option.label}</span>
+                {option.description && <span id={`${id}-description-${index}`} className="text-8 leading-12-8 text-ink-muted">{option.description}</span>}
+                {chosen && <Check aria-hidden className={cx("absolute top-1/2 right-9 size-13 -translate-y-1/2", option.description ? "text-ink" : "text-accent")} />}
+              </div>
+            );
+          })}
         </div>, document.body,
       )}
     </>
