@@ -10,13 +10,6 @@ type AppShellProps = {
   banner?: ReactNode;
   schedule: ReactNode;
   details?: ReactNode;
-  /**
-   * The phone-only brand/logo row, shown above the header below the tablet breakpoint. On tablet and
-   * up the brand lives in the sidebar, so this slot is hidden there.
-   */
-  phoneBrand?: ReactNode;
-  /** Phone-only content placed at the very bottom of the page (after the schedule area). */
-  phoneFooter?: ReactNode;
   /** The names screen readers give the two main regions. */
   scheduleLabel?: string;
   detailsLabel?: string;
@@ -36,8 +29,6 @@ export function AppShell({
   banner,
   schedule,
   details,
-  phoneBrand,
-  phoneFooter,
   scheduleLabel = "Weekly schedule",
   detailsLabel = "Course details",
   scheduleFit = "fixed",
@@ -66,7 +57,6 @@ export function AppShell({
           tabIndex={-1}
           className="flex min-w-0 flex-1 flex-col gap-(--size-gutter) outline-none"
         >
-          {phoneBrand && <div className="order-1 tablet:hidden">{phoneBrand}</div>}
           <div className="order-2 tablet:order-none tablet:contents">{header}</div>
           <div className="order-6 tablet:order-none tablet:contents">{toolbar}</div>
           {/*
@@ -93,7 +83,6 @@ export function AppShell({
               </DetailsPanel>
             )}
           </div>
-          <div className="order-7 tablet:order-none tablet:contents">{phoneFooter}</div>
         </main>
       </div>
     </>

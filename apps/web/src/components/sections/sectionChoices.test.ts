@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Course } from "@/lib/data/types";
 import { lectureProfessorTerm } from "@/lib/store/testing/lectureProfessors";
-import { choiceDetail, sectionChoices } from "./sectionChoices";
+import { sectionChoices } from "./sectionChoices";
 import { makeSection, orbitalMechanics } from "./testing/sections";
 
 const rules = { startsAfter: 0, blocked: [], onlyOpen: true };
@@ -58,8 +58,6 @@ describe("sectionChoices", () => {
       { label: "CX01", times: "Thu · 2:00 PM–2:50 PM", sharesTime: false, openSeats: 4 },
       { label: "CX04", times: "Thu · 3:00 PM–3:50 PM", sharesTime: true, openSeats: 20 },
     ]);
-    expect(choiceDetail(choices.others[1])).toBe("Thu · 3:00 PM–3:50 PM · Higgins Labs 231");
-    expect(choiceDetail(choices.current)).toBe("Thu · 3:00 PM–3:50 PM · Higgins Labs 230");
     expect(choices.others[1].sectionIds).toEqual(["AE 2320-CL01", "AE 2320-CX04"]);
     expect(choices.suggested.label).toBe("CX04");
   });

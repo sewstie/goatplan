@@ -13,12 +13,11 @@ function block(selected: boolean) {
   return screen.getByRole("button", { name: /^AE 2320 CL01,/ });
 }
 
-it("keeps the course color on a phone and outlines a selected block from the tablet breakpoint up", () => {
-  const classes = block(true).className.split(" ");
-  expect(classes).toEqual(expect.arrayContaining(["bg-course-1", "tablet:bg-surface-raised", "tablet:border-accent", "tablet:shadow-selected"]));
-  // Hovering a selected block on a tablet or desktop keeps the selected look.
-  expect(classes).toEqual(expect.arrayContaining(["tablet:hover:border-accent", "tablet:hover:shadow-selected"]));
-  expect(classes).not.toContain("border-accent");
+it("keeps the course color on a phone and lifts a selected block from the tablet breakpoint up, without a blue outline", () => {
+  const { className } = block(true);
+  const classes = className.split(" ");
+  expect(classes).toEqual(expect.arrayContaining(["bg-course-1", "tablet:bg-surface-raised", "tablet:shadow-block-hover"]));
+  expect(className).not.toMatch(/border-accent|shadow-selected/);
   expect(classes).not.toContain("bg-surface-raised");
 });
 

@@ -3,12 +3,9 @@ import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { designPlan, termWith } from "@/lib/plans/testing";
 import { RegistrationSheetView } from "./RegistrationSheetView";
 
-// Ticket 13: Phone saved plans and Sections to register
-// Below 640 px the sections-to-register view switches from a table to one card per section,
-// with label/value rows for course, section, CRN, days and time, room and instructor.
-// Copy, Print and "Open Workday" sit above the cards as full-width buttons.
-// Touch targets are at least 44 px.
-// Print output keeps the desktop table at every screen width.
+// Below 640 px the sections-to-register view is one card per course, with Copy and "Open Workday"
+// side by side above them. No Print and no section list there; the list shows only if copying fails.
+// Touch targets are at least 44 px. Print output keeps the desktop table at every screen width.
 
 vi.mock("next/link", () => ({
   default: ({ href, children, ...rest }: React.ComponentProps<"a">) => (
@@ -110,28 +107,26 @@ describe("RegistrationSheetView on a phone", () => {
     expect(within(firstCard).getByText("Introduction to Orbital Mechanics")).toBeInTheDocument();
   });
 
-  it("shows Copy and Print buttons as full-width above the cards", () => {
+  it("keeps only Copy and Workday above the cards: no Print, no section list, no closing note", () => {
     mockPhoneViewport();
     render(<RegistrationSheetView plan={plan} />);
 
     const copyButton = screen.getByRole("button", { name: "Copy section list" });
-    const printButton = screen.getByRole("button", { name: "Print" });
-
-    // On phone, buttons should have full-width styling
     expect(copyButton.className).toMatch(/w-full/);
-    expect(printButton.className).toMatch(/w-full/);
+    expect(copyButton.className).toMatch(/min-h-44/);
+    expect(screen.queryByRole("button", { name: "Print" })).not.toBeInTheDocument();
+    expect(screen.queryByText("Section list")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Complete registration in Workday/)).not.toBeInTheDocument();
   });
 
-  it("gives action buttons a minimum 44px touch target", () => {
+  it("shows the section list to copy by hand when the clipboard is blocked", async () => {
     mockPhoneViewport();
+    vi.mocked(navigator.clipboard.writeText).mockRejectedValueOnce(new Error("blocked"));
     render(<RegistrationSheetView plan={plan} />);
 
-    const copyButton = screen.getByRole("button", { name: "Copy section list" });
-    const printButton = screen.getByRole("button", { name: "Print" });
-
-    // 44px touch target: min-h-44 class
-    expect(copyButton.className).toMatch(/min-h-44/);
-    expect(printButton.className).toMatch(/min-h-44/);
+    screen.getByRole("button", { name: "Copy section list" }).click();
+    expect(await screen.findByRole("alert")).toHaveTextContent("Press and hold the list below to copy it.");
+    expect(screen.getByText("Section list")).toBeInTheDocument();
   });
 
   it("shows the Workday link above the cards", () => {

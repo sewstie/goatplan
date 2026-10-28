@@ -23,7 +23,7 @@ export function RegistrationCardList({ rows }: { rows: RegistrationRow[] }) {
       {byCourse(rows).map((group) => (
         <article
           key={group.course}
-          className="flex flex-col rounded-card border border-line bg-surface-subtle px-14 py-12"
+          className="flex flex-col rounded-message border border-line bg-surface px-16 pt-14 pb-16"
         >
           <div className="flex flex-col gap-1 pb-8">
             <h3 className="text-11 leading-17-6 font-700 text-ink">{group.course}</h3>

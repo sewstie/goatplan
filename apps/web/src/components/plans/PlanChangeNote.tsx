@@ -4,9 +4,13 @@ import { Badge } from "@/components/ui/Badge";
 import { changeLabel, findPlanChanges, isSeriousChange, type SavedPlan } from "@/lib/plans";
 import type { TermFileState } from "@/lib/plans/useTermFile";
 
-/** What changed in the latest data since the plan was saved, as badges in the plan list. */
-export function PlanChangeNote({ plan, data }: { plan: SavedPlan; data: TermFileState }) {
+/**
+ * What changed in the latest data since the plan was saved, as badges in the plan list. `quiet` (the
+ * phone) says nothing while checking or when nothing changed.
+ */
+export function PlanChangeNote({ plan, data, quiet = false }: { plan: SavedPlan; data: TermFileState; quiet?: boolean }) {
   if (data.status === "loading") {
+    if (quiet) return null;
     return <p className="text-9 leading-13 text-ink-muted">Checking for changes…</p>;
   }
   if (data.status === "error") {
@@ -14,6 +18,7 @@ export function PlanChangeNote({ plan, data }: { plan: SavedPlan; data: TermFile
   }
   const changes = findPlanChanges(plan, data.term);
   if (changes.length === 0) {
+    if (quiet) return null;
     return <p className="text-9 leading-13 text-ink-muted">No changes since you saved.</p>;
   }
   return (

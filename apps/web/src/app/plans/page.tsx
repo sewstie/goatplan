@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PlansBreadcrumbs } from "@/components/plans/PlansBreadcrumbs";
+import { PhonePlans } from "@/components/plans/PhonePlans";
+import { PlansLayout } from "@/components/plans/PlansLayout";
 import { PlansPageActions } from "@/components/plans/PlansPageActions";
 import { PlansPreferences } from "@/components/plans/PlansPreferences";
-import { PlansPhoneFooter } from "@/components/plans/PlansPhoneFooter";
 import { PlansSidebarWrapper } from "@/components/plans/PlansSidebarWrapper";
 import { PlansSubtitle } from "@/components/plans/PlansSubtitle";
 import { PlansTitle } from "@/components/plans/PlansTitle";
@@ -12,7 +13,6 @@ import { RegistrationSheet } from "@/components/plans/RegistrationSheet";
 import { RegistrationSummary } from "@/components/plans/RegistrationSummary";
 import { SavedPlanPill } from "@/components/plans/SavedPlanPill";
 import { AppShell } from "@/components/shell/AppShell";
-import { Brand } from "@/components/shell/Brand";
 import { PlannerBootstrap } from "@/components/shell/PlannerBootstrap";
 import { WorkspaceHeader } from "@/components/shell/WorkspaceHeader";
 
@@ -29,62 +29,64 @@ export default function PlansPage() {
   return (
     <>
       <div className="print:hidden">
-        <AppShell
-          sidebar={
+        <PlansLayout
+          phone={
             <Suspense>
-              <PlansSidebarWrapper />
+              <PhonePlans />
             </Suspense>
           }
-          phoneBrand={<Brand variant="phone" />}
-          header={
-            <WorkspaceHeader
-              title={
-                <Suspense fallback="Sections to register">
-                  <PlansTitle />
-                </Suspense>
-              }
-              breadcrumbs={
-                <Suspense>
-                  <PlansBreadcrumbs />
-                </Suspense>
-              }
-              titleAside={
-                <Suspense>
-                  <SavedPlanPill />
-                </Suspense>
-              }
-              subtitle={
-                <Suspense>
-                  <PlansSubtitle />
-                </Suspense>
-              }
-              actions={<PlansPageActions />}
-            />
-          }
-          toolbar={
-            <Suspense>
-              <PlansPreferences />
-            </Suspense>
-          }
-          scheduleLabel="Sections to register"
-          detailsLabel="Plan summary"
-          scheduleFit="content"
-          schedule={
-            <Suspense>
-              <RegistrationSheet />
-            </Suspense>
-          }
-          details={
-            <Suspense>
-              <RegistrationSummary />
-            </Suspense>
-          }
-          phoneFooter={
-            <Suspense>
-              <PlansPhoneFooter />
-            </Suspense>
-          }
-        />
+        >
+          <AppShell
+            sidebar={
+              <Suspense>
+                <PlansSidebarWrapper />
+              </Suspense>
+            }
+            header={
+              <WorkspaceHeader
+                title={
+                  <Suspense fallback="Sections to register">
+                    <PlansTitle />
+                  </Suspense>
+                }
+                breadcrumbs={
+                  <Suspense>
+                    <PlansBreadcrumbs />
+                  </Suspense>
+                }
+                titleAside={
+                  <Suspense>
+                    <SavedPlanPill />
+                  </Suspense>
+                }
+                subtitle={
+                  <Suspense>
+                    <PlansSubtitle />
+                  </Suspense>
+                }
+                actions={<PlansPageActions />}
+              />
+            }
+            toolbar={
+              <Suspense>
+                <PlansPreferences />
+              </Suspense>
+            }
+            scheduleLabel="Sections to register"
+            detailsLabel="Plan summary"
+            scheduleFit="content"
+            schedule={
+              <Suspense>
+                <RegistrationSheet />
+              </Suspense>
+            }
+            details={
+              <Suspense>
+                <RegistrationSummary />
+              </Suspense>
+            }
+          />
+        </PlansLayout>
       </div>
       <Suspense>
         <RegistrationPrint />

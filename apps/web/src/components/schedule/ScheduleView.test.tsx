@@ -53,7 +53,7 @@ describe("ScheduleView", () => {
     expect(within(screen.getByRole("group", { name: "Tuesday" })).getByText("2 PM–4 PM")).toBeInTheDocument();
   });
 
-  it("selects a section's blocks and keeps them selected when opening its calendar choices", async () => {
+  it("selects a section's blocks, and a second click clears the section but keeps the course open", async () => {
     setPlanner();
     const user = userEvent.setup();
     renderInCard();
@@ -64,8 +64,9 @@ describe("ScheduleView", () => {
     expect(getPlannerStore().getState()).toMatchObject({ selectedCourse: "AE 2320", selectedSection: "AE 2320-CX01" });
     expect(screen.getByRole("button", { name: /^AE 2320 CL01, .*Monday/ })).toHaveAttribute("aria-pressed", "false");
     await user.click(lab);
-    expect(lab).toHaveAttribute("aria-pressed", "true");
-    expect(getPlannerStore().getState().selectedCourse).toBe("AE 2320");
+    expect(lab).toHaveAttribute("aria-pressed", "false");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(getPlannerStore().getState()).toMatchObject({ selectedCourse: "AE 2320", selectedSection: null });
 
     await user.click(screen.getByRole("button", { name: /^AE 2410 C01, .*Monday/ }));
     expect(getPlannerStore().getState()).toMatchObject({ selectedCourse: "AE 2410", selectedSection: "AE 2410-C01" });

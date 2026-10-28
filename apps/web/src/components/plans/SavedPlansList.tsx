@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { getPlansSource, groupPlansByTerm, type PlansSnapshot, type SavedPlan } from "@/lib/plans";
+import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
+import { cx } from "@/components/ui/cx";
 import { usePlanner } from "@/lib/store";
 import { DeletePlanDialog } from "./DeletePlanDialog";
 import { NoSavedPlans } from "./NoSavedPlans";
@@ -17,6 +19,7 @@ export function SavedPlansList({ snapshot }: { snapshot: PlansSnapshot }) {
   const [deleting, setDeleting] = useState<SavedPlan | null>(null);
   const [deleted, setDeleted] = useState(0);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const phone = usePhoneViewport();
 
   // The deleted plan's row (where focus came from) is gone, so focus goes to the list's heading.
   // This runs after the dialog's own effect, which tries to give focus back to that row.
@@ -26,20 +29,16 @@ export function SavedPlansList({ snapshot }: { snapshot: PlansSnapshot }) {
 
   if (snapshot.plans.length === 0) return <NoSavedPlans headingRef={headingRef} />;
 
+  // The phone page's own title already says "Saved plans", so the heading is only for screen readers there.
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-20 overflow-y-auto px-20 py-23">
-      <div className="flex flex-col gap-5">
-        <h2
-          ref={headingRef}
-          tabIndex={-1}
-          className="text-19 leading-27-55 font-700 tracking-heading-sm text-ink outline-none"
-        >
-          Your saved plans
-        </h2>
-        <p className="text-10 leading-14-5 text-ink-muted">
-          Saved in this browser. Seats and times are checked against the latest course data.
-        </p>
-      </div>
+    <div className={cx("flex flex-col gap-20", !phone && "min-h-0 flex-1 overflow-y-auto px-20 py-23")}>
+      <h2
+        ref={headingRef}
+        tabIndex={-1}
+        className={cx("text-19 leading-27-55 font-700 tracking-heading-sm text-ink outline-none", phone && "sr-only")}
+      >
+        Your saved plans
+      </h2>
       {groupPlansByTerm(snapshot.plans).map((plans) => (
         <TermPlanGroup
           key={plans[0].termId}

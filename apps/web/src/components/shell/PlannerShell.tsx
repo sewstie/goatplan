@@ -5,7 +5,6 @@ import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
 import { TermPicker } from "@/components/courses/TermPicker";
 import { PhonePlanner } from "@/components/phone/PhonePlanner";
 import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
-import { ChooseAlternativeSheet } from "@/components/sections/ChooseAlternativeSheet";
 import { AppShell } from "@/components/shell/AppShell";
 import { Sidebar } from "@/components/shell/Sidebar";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
@@ -67,10 +66,7 @@ export function PlannerShell({ header, toolbar, banner, schedule }: PlannerShell
           schedule={schedule}
           hideDetailsOnTermError
           details={
-            <>
-              <CourseDetailsPanel />
-              <ChooseAlternativeSheet />
-            </>
+            <CourseDetailsPanel />
           }
         />
       )}

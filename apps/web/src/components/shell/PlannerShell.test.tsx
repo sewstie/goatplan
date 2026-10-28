@@ -26,7 +26,6 @@ vi.mock("@/components/courses/CourseSearchPanel", () => ({
   ),
 }));
 vi.mock("@/components/sections/CourseDetailsPanel", () => ({ CourseDetailsPanel: () => <div data-testid="details" /> }));
-vi.mock("@/components/sections/ChooseAlternativeSheet", () => ({ ChooseAlternativeSheet: () => null }));
 vi.mock("@/components/phone/PhonePlanner", () => ({
   PhonePlanner: ({ banner }: { banner: React.ReactNode }) => (
     <main data-testid="phone-planner">

@@ -21,13 +21,6 @@ describe("AppShell", () => {
     expect(screen.getByLabelText("Weekly schedule")).toBeInTheDocument();
   });
 
-  it("renders the phone brand above the header when given, hidden on tablet", () => {
-    render(<AppShell {...parts()} phoneBrand={<div data-testid="brand">brand</div>} />);
-    const main = screen.getByRole("main");
-    const brandWrap = [...main.children].find((node) => node.querySelector('[data-testid="brand"]') !== null);
-    expect(brandWrap).toHaveClass("tablet:hidden");
-  });
-
   it("uses a phone side gutter that drops away at the tablet breakpoint", () => {
     const { container } = render(<AppShell {...parts()} />);
     const shell = container.querySelector("div.flex.min-h-dvh");
