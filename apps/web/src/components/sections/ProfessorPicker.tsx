@@ -3,13 +3,14 @@
 import { Listbox, type ListboxOption } from "@/components/ui/Listbox";
 import { lectureInstructorChoices, type Course } from "@/lib/data";
 import { usePlanner } from "@/lib/store";
+import { hasProfessorChoice } from "./professorChoice";
 
 export function ProfessorPicker({ course }: { course: Course }) {
   const name = usePlanner((state) => state.professorByCourse[course.code] ?? null);
   const setProfessor = usePlanner((state) => state.setProfessor);
   const ready = usePlanner((state) => state.termStatus === "ready");
   const instructors = lectureInstructorChoices(course.sections);
-  if (!name && !course.sections.some((section) => section.type === "lecture")) return null;
+  if (!name && !hasProfessorChoice(course)) return null;
   const count = course.sections.filter((section) => section.type === "lecture").length;
   const options: ListboxOption[] = [
     { value: "", label: "Any professor", description: `All ${count} lecture times` },

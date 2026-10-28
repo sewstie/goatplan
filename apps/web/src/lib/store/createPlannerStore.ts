@@ -7,7 +7,6 @@ import type { Fix, SolveRequest, SolveResponse } from "@/lib/engine/types";
 import { lectureInstructors, lecturesByProfessor } from "@/lib/data/instructors";
 import { buildRequest } from "./buildRequest";
 import { unavailableProfessorResponse } from "./unavailableProfessorResponse";
-import { restoredPlanSummary } from "./restoredPlanSummary";
 import {
   emptyDraft,
   readDraft,
@@ -35,7 +34,6 @@ export interface PlannerDeps {
 
 const initialState: PlannerState = {
   ...emptyDraft(),
-  restoredPlanSummary: null,
   savedPlans: [],
   savedPlanId: null,
   savedSelectedCourse: null,
@@ -175,7 +173,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       if (!update) return;
       showNext = null;
       const lastChosenSections = selectCurrentSchedule(state) ? selectChosenSections(state) : state.lastChosenSections;
-      set({ removedCourse: null, restoredPlanSummary: null, ...update, lastChosenSections });
+      set({ removedCourse: null, ...update, lastChosenSections });
       writeDraft(deps.storage, state.termId, draftOf(get()));
       if (options.solve) scheduleSolve();
     }
@@ -236,7 +234,6 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         term: null,
         termStatus: "loading",
         removedCourse: null,
-        restoredPlanSummary: null,
         termError: null,
         response: null,
         scheduleIndex: 0,
@@ -257,7 +254,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         if (!loaded.ok) throw new Error(loaded.error.message);
 
         const draft = sanitizeDraft(draftFor(), term);
-        set({ ...draft, term, termStatus: "ready", restoredPlanSummary: restoredPlanSummary(draft, term), selectedCourse: draft.courses[0] ?? null });
+        set({ ...draft, term, termStatus: "ready", selectedCourse: draft.courses[0] ?? null });
         return true;
       } catch (error) {
         if (token !== termToken) return false;
@@ -340,7 +337,6 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
           const sanitized = sanitizeDraft(draft, state.term);
           set({
             ...sanitized,
-            restoredPlanSummary: restoredPlanSummary(sanitized, state.term),
             response: null,
             scheduleIndex: 0,
             solveStatus: "idle",

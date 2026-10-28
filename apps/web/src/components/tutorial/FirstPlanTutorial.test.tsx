@@ -16,7 +16,16 @@ import { designPlan } from "@/lib/plans/testing";
 
 beforeAll(() => { vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} }); });
 
-function start(loadTerm = async (id: string) => termFile(id), solve: (request: SolveRequest) => Promise<SolveResponse> = async (request) => solved(request), storage = new MemoryStorage()) {
+/** AE 2320 with a second lecture professor, so the guide has a Lecture professor choice to point at. */
+function twoProfessorTerm(id: string) {
+  const term = termFile(id);
+  const [lecture] = term.courses[0].sections;
+  term.courses[0].sections.push({ ...lecture, id: "AE 2320-CL02", code: "CL02", instructors: ["Alex Rivera"] });
+  term.courses[0].options.push(["AE 2320-CL02", "AE 2320-CX01"]);
+  return term;
+}
+
+function start(loadTerm = async (id: string) => twoProfessorTerm(id), solve: (request: SolveRequest) => Promise<SolveResponse> = async (request) => solved(request), storage = new MemoryStorage()) {
   const planner = createPlannerStore({
     engine: { loadTerm: async (id) => loaded(id), solve },
     loadTermIndex: async () => ({ terms: [termSummary("2027-C")] }),
@@ -156,7 +165,7 @@ it("never targets Saved controls and restores guide focus on returning to Found"
   expect(screen.getByRole("heading", { name: "Choose your term" })).toHaveFocus();
 });
 
-it("targets a lecture course even when its instructor is pending", async () => {
+it("skips the professor step when a course has no professor to choose", async () => {
   start(async (id) => {
     const term = termFile(id);
     term.courses[1].sections[0].instructors = [];
@@ -168,8 +177,8 @@ it("targets a lecture course even when its instructor is pending", async () => {
   await user.click(screen.getByRole("button", { name: "Next" }));
   await user.type(screen.getByRole("searchbox"), "AE 2410{Enter}");
   await user.click(screen.getByRole("button", { name: "Next" }));
-  expect(screen.getByRole("heading", { name: "A professor preference is optional" })).toHaveFocus();
-  expect(screen.getByRole("combobox", { name: "Lecture professor" })).toHaveTextContent("Any professor");
+  expect(screen.getByRole("heading", { name: "Make room for your day" })).toHaveFocus();
+  expect(screen.queryByRole("combobox", { name: "Lecture professor" })).not.toBeInTheDocument();
 });
 
 it("keeps focus on real controls when the selected course changes during the final step", async () => {
@@ -228,15 +237,15 @@ it("warns if the browser cannot remember dismissal and leaves the planner usable
   expect(screen.getByRole("combobox", { name: "Term" })).toBeEnabled();
 });
 
-it("shows a restored-plan status without opening the guide", async () => {
+it("opens a restored plan without the guide or a restored-plan status", async () => {
   const { planner, storage, unmount } = start();
   unmount();
   storage.setItem(draftKey("2027-C"), JSON.stringify({ version: 1, ...emptyDraft(), courses: ["AE 2320"], preferences: { startsAfter: 540, blocked: [], onlyOpen: true } }));
   await act(async () => { await planner.getState().init(); await planner.getState().setTerm("2027-C"); });
   render(<PlannerProvider store={planner}><FirstPlanTutorial storage={storage} /></PlannerProvider>);
-  expect(await screen.findByRole("status")).toHaveTextContent("Plan restored · 9 AM start is kept.");
+  await act(async () => {});
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-  expect(screen.getByRole("status").querySelector("svg")?.closest('[aria-hidden="true"]')).not.toBeNull();
+  expect(screen.queryByRole("status")).not.toBeInTheDocument();
 });
 
 it("changes only the open step once after a storage write fails and keeps planning usable", async () => {
@@ -268,7 +277,7 @@ it("changes only the open step once after a storage write fails and keeps planni
   expect(banner).toBeVisible();
 });
 
-it("shows the saved snapshot’s kept choices even when the working draft is empty", async () => {
+it("opens a saved snapshot without the guide or a restored-plan status", async () => {
   const { planner } = start();
   await screen.findByRole("heading", { name: "Choose your term" });
   await act(async () => {
@@ -276,8 +285,8 @@ it("shows the saved snapshot’s kept choices even when the working draft is emp
     planner.getState().setSavedPlans([designPlan({ professorByCourse: { "AE 2320": "Ye Lu" } })]);
     planner.getState().showSaved("plan-1");
   });
-  expect(screen.getByRole("status")).toHaveTextContent("Plan restored · 9 AM start, Ye Lu and lab CX02 are kept.");
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(screen.queryByRole("status")).not.toBeInTheDocument();
 });
 
 it("keeps the guide hidden while a returning draft loads, even without a tutorial flag", async () => {
@@ -290,7 +299,7 @@ it("keeps the guide hidden while a returning draft loads, even without a tutoria
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   await act(async () => release(termFile("2027-C")));
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-  expect(screen.getByText("Plan restored.").closest('[role="status"]')).toBeVisible();
+  expect(screen.queryByText(/Plan restored/)).not.toBeInTheDocument();
 });
 
 it("shows the storage wording once if the first failed write is Finish guide", async () => {

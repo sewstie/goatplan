@@ -36,6 +36,10 @@ describe("meetingLines", () => {
     expect(meetingLines(makeSection("AE 2320-CL01"))).toEqual(["Mon–Fri · 9:00 AM–9:50 AM"]);
   });
 
+  it("names the period once in the shared style, as the phone design does", () => {
+    expect(meetingLines(makeSection("AE 2320-CL01"), "shared")).toEqual(["Mon–Fri · 9:00–9:50 AM"]);
+  });
+
   it("lists non-consecutive days by name", () => {
     const section = makeSection("AB 1533-C01", {
       meetings: [{ days: ["Mon", "Tue", "Thu", "Fri"], start: 540, end: 590, location: "Olin Hall 126" }],

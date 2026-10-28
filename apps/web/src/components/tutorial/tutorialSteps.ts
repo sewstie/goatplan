@@ -1,6 +1,7 @@
 import { formatTime, type TermFile } from "@/lib/data";
 import type { PlanPreferences } from "@/lib/store";
 import { groupBlocked, groupDays, groupTimes } from "@/components/preferences/blockedTimes";
+import { hasProfessorChoice } from "@/components/sections/professorChoice";
 
 const STEPS = ["term", "courses", "professor", "availability", "schedules"] as const;
 export type GuideStep = typeof STEPS[number];
@@ -22,7 +23,7 @@ export function advanceGuide(visit: GuideVisit, direction: -1 | 1, includesProfe
 }
 
 export function professorCourse(term: TermFile | null, courses: readonly string[], selected: string | null): string | null {
-  const eligible = courses.filter((code) => term?.courses.some((course) => course.code === code && course.sections.some((section) => section.type === "lecture")));
+  const eligible = courses.filter((code) => term?.courses.some((course) => course.code === code && hasProfessorChoice(course)));
   return eligible.find((code) => code === selected) ?? eligible[0] ?? null;
 }
 

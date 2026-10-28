@@ -59,7 +59,7 @@ export function sectionChoices(
   // Sections every listed option shares (like the only lecture) aren't part of the choice.
   const listed = [currentIds, ...fitting];
   const varies = (id: string) => !listed.every((option) => option.includes(id));
-  const timesOf = (option: readonly string[]) => sectionsById(course, option.filter(varies)).flatMap(meetingLines).join(", ");
+  const timesOf = (option: readonly string[]) => sectionsById(course, option.filter(varies)).flatMap((section) => meetingLines(section)).join(", ");
   const allTimes = listed.map(timesOf);
 
   const toChoice = (sectionIds: string[]): SectionChoice => {
