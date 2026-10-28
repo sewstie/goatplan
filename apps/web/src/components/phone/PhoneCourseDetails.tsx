@@ -7,7 +7,7 @@ import { hasSetTime, sectionsById, typeWord } from "@/components/sections/sectio
 import { useSectionSteps } from "@/components/sections/useSectionSteps";
 import { useShownSections } from "@/components/sections/useShownSections";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { uniqueInstructors } from "@/lib/data";
+import { showsInstructor, uniqueInstructors } from "@/lib/data";
 import type { Course, Section } from "@/lib/data/types";
 import { usePlanner } from "@/lib/store";
 import { PhoneLabChoice } from "./PhoneLabChoice";
@@ -116,7 +116,7 @@ export function PhoneCourseDetails({ course }: { course: Course }) {
       {untimed && (
         <p className="mt-12 text-9 text-ink-muted">This section appears in the No set time strip. It does not block calendar time.</p>
       )}
-      {sections.length > 0 && uniqueInstructors(sections).length === 0 && !untimed && (
+      {sections.some(showsInstructor) && uniqueInstructors(sections.filter(showsInstructor)).length === 0 && !untimed && (
         <div className="mt-12 text-9 text-ink-muted">
           <p>Instructor not assigned yet.</p>
           <p>Professor reviews appear when an instructor is available.</p>

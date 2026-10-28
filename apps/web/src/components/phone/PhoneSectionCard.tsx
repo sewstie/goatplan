@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/Badge";
 import { InstructorRating } from "@/components/sections/InstructorRating";
 import { SectionControl } from "@/components/sections/SectionControl";
 import { instructorLine, meetingLines, placeLine, seatsLine, sectionHeading } from "@/components/sections/sectionDetails";
-import { formatWaitlist, isFull, uniqueInstructors } from "@/lib/data";
+import { formatWaitlist, isFull, showsInstructor, uniqueInstructors } from "@/lib/data";
 import type { Course, Section } from "@/lib/data/types";
 import { PhoneFact } from "./PhoneFact";
 
@@ -17,7 +17,7 @@ type PhoneSectionCardProps = {
   onUnlocked?: () => void;
 };
 
-/** One chosen section on the phone course screen. Only a lecture shows who teaches it, with the professor's rating. */
+/** One chosen section on the phone course screen: a lecture with its professor's rating; labs and discussions without who teaches them. */
 export function PhoneSectionCard({ course, section, locked, busy, onlyLecture, onLock, onUnlocked }: PhoneSectionCardProps) {
   const place = placeLine(section);
   const lecture = section.type === "lecture";
@@ -39,7 +39,7 @@ export function PhoneSectionCard({ course, section, locked, busy, onlyLecture, o
         )}
         <PhoneFact icon={<Users />} tone={seatsTone}>{seatsLine(section)}</PhoneFact>
         {section.status === "waitlist" && <PhoneFact icon={<Users />}><Badge tone="warning">{formatWaitlist(section)}</Badge></PhoneFact>}
-        {lecture && instructors.length === 0 && <PhoneFact icon={<GraduationCap />}>{instructorLine(section)}</PhoneFact>}
+        {(lecture ? instructors.length === 0 : showsInstructor(section)) && <PhoneFact icon={<GraduationCap />}>{instructorLine(section)}</PhoneFact>}
       </ul>
       {lecture && instructors.length > 0 && (
         <div className="mt-14 flex flex-col gap-12">

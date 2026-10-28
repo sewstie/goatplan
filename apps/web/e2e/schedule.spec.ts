@@ -85,7 +85,7 @@ for (const viewport of [
     await expect(week.getByText("No classes before 9:00 AM")).toBeVisible();
     await expect(week.getByRole("group", { name: "Monday" }).getByRole("button")).toHaveCount(3);
     await expect(
-      week.getByRole("button", { name: "AE 2320 CX02, Introduction to Orbital Mechanics, Thursday, 3:00 PM–3:50 PM, Higgins Labs 230 Geom Modeling Computer Lab, Ye Lu, locked" }),
+      week.getByRole("button", { name: "AE 2320 CX02, Introduction to Orbital Mechanics, Thursday, 3:00 PM–3:50 PM, Higgins Labs 230 Geom Modeling Computer Lab, locked" }),
     ).toBeVisible();
     await expect(week.getByRole("group", { name: "Tuesday" }).getByText("Work")).toBeVisible();
     await expect(week.getByRole("button", { name: /^AE 2320 CX02/ })).toContainText("Higgins Labs 230");

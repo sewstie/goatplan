@@ -19,12 +19,11 @@ export function ProfessorPicker({ course, phone = false }: { course: Course; pho
   ];
   if (name && !options.some((option) => option.value.toLowerCase() === name.toLowerCase())) options.push({ value: name, label: name });
   const value = options.find((option) => option.value.toLowerCase() === name?.toLowerCase())?.value ?? "";
-  const compatible = course.sections.some((section) => section.type === "lab") && course.sections.some((section) => section.type === "discussion");
 
   return (
     <div className={cx("flex flex-col gap-5", phone ? "mt-16" : "mt-7")}>
       <div className="flex items-end justify-between">
-        <label id="lecture-professor-label" htmlFor="tutorial-professor" className="text-10 leading-14-5 font-650 text-ink">Lecture professor</label>
+        <label id="lecture-professor-label" htmlFor="tutorial-professor" className={cx("font-650 text-ink", phone ? "text-11" : "text-10 leading-14-5")}>Lecture professor</label>
         {instructors.length > 1 && <span className="text-8 leading-11-6 text-ink-muted">Optional</span>}
       </div>
       <Listbox
@@ -40,7 +39,7 @@ export function ProfessorPicker({ course, phone = false }: { course: Course; pho
         onChange={(value) => setProfessor(course.code, value || null)}
       />
       <p id="lecture-professor-hint" className="text-9 leading-13-95 text-ink-muted">
-        {compatible ? "Filters lectures only. Compatible labs and discussions can have other instructors." : "Filters lectures only. Labs and discussions can have other instructors."}
+        Filters lectures only. Labs and discussions stay as they are.
       </p>
       <div data-guide-slot="professor" className="empty:hidden" />
     </div>

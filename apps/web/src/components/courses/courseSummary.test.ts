@@ -43,6 +43,16 @@ describe("courseMeta", () => {
       "1 lecture · Instructor not assigned yet",
     );
   });
+
+  it("leaves lab and discussion instructors out", () => {
+    const labOnly = course("BB 3840", "Lab Techniques", [section("BB 3840", "X01", { type: "lab", instructors: ["Floyd Brownewell"] })]);
+    expect(courseMeta(labOnly)).toBe("1 lab");
+    const withLab = course("PH 1110", "Mechanics", [
+      section("PH 1110", "CL01", { instructors: ["Germano Iannacchione"] }),
+      section("PH 1110", "CX01", { type: "lab", instructors: ["Veneta Tountcheva"] }),
+    ]);
+    expect(courseMeta(withLab)).toBe("1 lecture · 1 lab · Germano Iannacchione");
+  });
 });
 
 describe("rowSections and sectionsLine", () => {
@@ -60,6 +70,11 @@ describe("rowSections and sectionsLine", () => {
   it("says when the instructor is still pending", () => {
     const pending = course("AE 5231", "Air Breathing Propulsion", [section("AE 5231", "C02")]);
     expect(sectionsLine(rowSections(pending, ["AE 5231-C02"], undefined))).toBe("C02 · Instructor pending");
+  });
+
+  it("doesn't call a lab's instructor pending, since lab instructors aren't shown", () => {
+    const labOnly = course("BB 3840", "Lab Techniques", [section("BB 3840", "X01", { type: "lab", instructors: [] })]);
+    expect(sectionsLine(rowSections(labOnly, ["BB 3840-X01"], undefined))).toBe("Lab X01");
   });
 });
 

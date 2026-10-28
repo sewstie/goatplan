@@ -157,13 +157,14 @@ describe("CourseDetailsPanel", () => {
     expect(within(card("Lab CX01")).getByRole("button", { name: "Lock Lab CX01" })).toBeInTheDocument();
   });
 
-  it("removes the open course, leaving Undo to the toast", async () => {
+  it("removes the open course, leaving Undo to the toast, and moves focus to search when none are left", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
-    render(<CourseDetailsPanel />);
+    render(<><input id="tutorial-search" aria-label="Search courses" /><CourseDetailsPanel /></>);
 
     await userEvent.click(screen.getByRole("button", { name: "Remove course AE 2320" }));
     expect(store.getState().courses).toEqual([]);
     expect(store.getState().removedCourse?.code).toBe("AE 2320");
+    expect(screen.getByRole("textbox", { name: "Search courses" })).toHaveFocus();
   });
 
   it("locks and unlocks a section", async () => {

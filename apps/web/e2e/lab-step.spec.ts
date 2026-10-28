@@ -42,8 +42,8 @@ test("state 21 previews another lab inline at 1440", async ({ page }) => {
   await details(page).getByRole("button", { name: "View other lab choices" }).click();
   const list = details(page).getByRole("list", { name: "Other lab choices" });
   await expect(list.getByRole("button")).toHaveCount(2);
-  await expect(list.getByRole("button", { name: "Choose CX02" })).toHaveCount(0);
-  await list.getByRole("button", { name: "Choose CX03" }).hover();
+  await expect(list.getByRole("button", { name: "Choose Lab CX02" })).toHaveCount(0);
+  await list.getByRole("button", { name: "Choose Lab CX03" }).hover();
   await expect(list.getByText("Previewing")).toBeVisible();
   const ghost = page.getByRole("button", { name: /^Preview, AE 2320 CX03,/ });
   await expect(ghost).toBeVisible();
@@ -62,7 +62,7 @@ test("the real engine narrows the count after a keyboard lab choice and keeps ot
   await disclosure.focus();
   await page.keyboard.press("Enter");
   await page.keyboard.press("Tab");
-  const choice = details(page).getByRole("button", { name: "Choose CX02" });
+  const choice = details(page).getByRole("button", { name: "Choose Lab CX02" });
   await expect(choice).toBeFocused();
   await expect(page.getByRole("button", { name: /^Preview, AE 2320 CX02,/ })).toBeVisible();
   await page.keyboard.press("Escape");

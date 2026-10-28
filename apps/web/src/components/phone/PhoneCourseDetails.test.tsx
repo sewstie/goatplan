@@ -91,6 +91,16 @@ it("asks to unlock a locked lab before another one can be chosen, and closes on 
   expect(change).toHaveAttribute("aria-expanded", "false");
 });
 
+it("names who teaches a seminar, but not a lab", async () => {
+  const term = seminarTerm();
+  term.courses[0].sections[0] = { ...term.courses[0].sections[0], type: "seminar" };
+  await details({}, term);
+  const seminar = within(screen.getByRole("heading", { name: /^Seminar L0/ }).closest("article")!);
+  expect(seminar.getByText(/Alex Rivera|Jordan Kim|Morgan Lee/)).toBeInTheDocument();
+  const lab = within(screen.getByRole("heading", { name: "Lab B01" }).closest("article")!);
+  expect(lab.queryByText("Sam Patel")).not.toBeInTheDocument();
+});
+
 it("offers a lecture professor menu like the desktop one", async () => {
   const store = await details({}, seminarTerm());
   const user = userEvent.setup();

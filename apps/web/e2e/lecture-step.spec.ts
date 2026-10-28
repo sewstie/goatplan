@@ -29,7 +29,7 @@ test("locking the displayed lecture advances to lab choices with the real engine
   await page.keyboard.press("Space");
   await settled(page);
   await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
-  await expect(details(page).getByRole("button", { name: "Other lab choices" })).toBeFocused();
+  await expect(details(page).getByRole("button", { name: "Hide other lab choices" })).toBeFocused();
   await expect(details(page).getByRole("button", { name: "1 other lecture time · Locked" })).toHaveAttribute("aria-expanded", "false");
   await expect(details(page).getByRole("list", { name: "Other lecture times" })).toHaveCount(0);
   await expect(details(page).getByRole("status")).toHaveText(`${lecture} locked · 2 schedules fit`);
@@ -65,16 +65,16 @@ test("lecture-first choices narrow real-engine results and preserve a locked lab
   await page.screenshot({ path: "e2e/screenshots/lecture-step-open-1440.png", fullPage: true, animations: "disabled" });
   await page.keyboard.press("Tab");
   await page.keyboard.press("Tab");
-  await expect(details(page).getByRole("button", { name: "Choose L02" })).toBeFocused();
+  await expect(details(page).getByRole("button", { name: "Choose Lecture L02" })).toBeFocused();
   await page.keyboard.press("Enter");
   await settled(page);
   await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
   await expect(details(page).getByRole("status")).toHaveText("Lecture L02 locked · 2 schedules fit");
-  await expect(details(page).getByRole("button", { name: "Other lab choices" })).toBeFocused();
+  await expect(details(page).getByRole("button", { name: "Hide other lab choices" })).toBeFocused();
   const currentLab = await details(page).getByRole("heading", { name: /^Lab B0/ }).innerText();
   const lockedLab = currentLab === "Lab B01" ? "B02" : "B01";
   await page.keyboard.press("Tab");
-  const lab = details(page).getByRole("button", { name: `Choose ${lockedLab}` });
+  const lab = details(page).getByRole("button", { name: `Choose Lab ${lockedLab}` });
   await expect(lab).toBeFocused();
   await page.keyboard.press("Space");
   await settled(page);
@@ -85,7 +85,7 @@ test("lecture-first choices narrow real-engine results and preserve a locked lab
   await page.keyboard.press("Enter");
   await page.keyboard.press("Tab");
   if (lockedLab === "B01") await page.keyboard.press("Tab");
-  const disabled = details(page).getByRole("button", { name: lockedLab === "B02" ? "Choose L01" : "Choose L03" });
+  const disabled = details(page).getByRole("button", { name: lockedLab === "B02" ? "Choose Lecture L01" : "Choose Lecture L03" });
   await expect(disabled).toBeFocused();
   await expect(disabled).toHaveAttribute("aria-disabled", "true");
   await expect(disabled).toHaveAccessibleDescription(`Doesn't fit locked lab ${lockedLab}`);
@@ -94,7 +94,7 @@ test("lecture-first choices narrow real-engine results and preserve a locked lab
   await page.screenshot({ path: "e2e/screenshots/lecture-step-locked-lab-1440.png", fullPage: true, animations: "disabled" });
   await page.keyboard.press(lockedLab === "B02" ? "Tab" : "Shift+Tab");
   const nextLecture = lockedLab === "B02" ? "L03" : "L01";
-  await expect(details(page).getByRole("button", { name: `Choose ${nextLecture}` })).toBeFocused();
+  await expect(details(page).getByRole("button", { name: `Choose Lecture ${nextLecture}` })).toBeFocused();
   await page.keyboard.press("Enter");
   await settled(page);
   await expect(details(page).getByRole("button", { name: `Unlock Lecture ${nextLecture}` })).toBeVisible();

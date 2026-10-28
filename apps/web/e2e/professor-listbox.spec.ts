@@ -33,7 +33,7 @@ test("state 25 opens the professor list over the course panel at 1440", async ({
   await picker(page).click();
   const popup = page.getByRole("listbox", { name: "Lecture professor" });
   await expect(popup.getByRole("option")).toHaveText([
-    "Any professorAll 4 lecture times", "Alex Rivera3 lecture times · includes co-teaching", "Jordan Kim1 co-taught lecture", "Morgan Lee1 lecture time",
+    "Any professor", "Alex Rivera", "Jordan Kim", "Morgan Lee",
   ]);
   const box = (await popup.boundingBox())!;
   const field = (await picker(page).boundingBox())!;

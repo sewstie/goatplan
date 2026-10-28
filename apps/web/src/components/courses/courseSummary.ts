@@ -22,14 +22,17 @@ export function courseMeta(course: Pick<Course, "sections">): string {
   for (const section of [...course.sections].sort((a, b) => Number(b.type === "lecture") - Number(a.type === "lecture"))) {
     counts.set(section.type, (counts.get(section.type) ?? 0) + 1);
   }
-  const names = uniqueInstructors(course.sections.filter(showsInstructor));
+  const taught = course.sections.filter(showsInstructor);
+  const names = uniqueInstructors(taught);
   const people =
-    names.length === 0
-      ? "Instructor not assigned yet"
-      : names.length <= 2
-        ? names.join(", ")
-        : `${names.slice(0, 2).join(", ")} +${names.length - 2} more`;
-  return [...[...counts].map(([type, count]) => typeCount(type, count)), people].join(" · ");
+    taught.length === 0
+      ? []
+      : names.length === 0
+        ? ["Instructor not assigned yet"]
+        : names.length <= 2
+          ? [names.join(", ")]
+          : [`${names.slice(0, 2).join(", ")} +${names.length - 2} more`];
+  return [...[...counts].map(([type, count]) => typeCount(type, count)), ...people].join(" · ");
 }
 
 /** The sections a planned course row describes: the current schedule's, else the only option, else the locked ones. */
@@ -44,7 +47,8 @@ export function sectionsLine(sections: readonly Section[]): string {
   const parts = sections.map((section) =>
     section.type === "lecture" || section.type === "other" ? section.code : `${sectionTypeName(section.type)} ${section.code}`,
   );
-  if (sections.every((section) => section.instructors.length === 0)) parts.push("Instructor pending");
+  const taught = sections.filter(showsInstructor);
+  if (taught.length > 0 && taught.every((section) => section.instructors.length === 0)) parts.push("Instructor pending");
   return parts.join(" · ");
 }
 

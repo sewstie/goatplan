@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildSearchIndex, SEARCH_RANK, searchCourses, suggestCourseCode } from "./searchCourses";
-import { allCourses } from "./testing/courses";
+import { allCourses, course, section } from "./testing/courses";
 
 const index = buildSearchIndex(allCourses);
 const codes = (query: string) => searchCourses(index, query).map((result) => result.course.code);
@@ -41,6 +41,18 @@ describe("searchCourses", () => {
     expect(codes("olinger")).toEqual(["AE 2210"]);
     expect(codes("david olinger")).toEqual(["AE 2210"]);
     expect(codes("ye lu")).toEqual(["AE 2320"]);
+  });
+
+  it("doesn't find a course by its lab or discussion instructors, which aren't shown", () => {
+    const physics = course("PH 1110", "General Physics-Mechanics", [
+      section("PH 1110", "CL01", { instructors: ["Germano Iannacchione"] }),
+      section("PH 1110", "CX01", { type: "lab", instructors: ["Veneta Tountcheva"] }),
+      section("PH 1110", "CD01", { type: "discussion", instructors: ["Riley Chen"] }),
+    ]);
+    const physicsIndex = buildSearchIndex([physics]);
+    expect(searchCourses(physicsIndex, "iannacchione")).toHaveLength(1);
+    expect(searchCourses(physicsIndex, "tountcheva")).toEqual([]);
+    expect(searchCourses(physicsIndex, "riley chen")).toEqual([]);
   });
 
   it("ignores accents and case in names", () => {

@@ -116,7 +116,7 @@ test("lecture filtering keeps linked labs and discussions, supports alternatives
   }, lectureProfessorTerm());
   await expect(picker(page)).toHaveText("Any professor");
   await picker(page).click();
-  await expect(page.getByRole("listbox").getByRole("option")).toHaveText(["Any professorAll 6 lecture times", "Ye Lu4 lecture times · includes co-teaching", "Alex Smith1 co-taught lecture", "Mark Richman2 lecture times"]);
+  await expect(page.getByRole("listbox").getByRole("option")).toHaveText(["Any professor", "Ye Lu", "Alex Smith", "Mark Richman"]);
   await page.keyboard.press("Escape");
   await expect(page.getByText("Schedule 1 of 4", { exact: true })).toBeVisible();
   await picker(page).focus();
@@ -130,7 +130,7 @@ test("lecture filtering keeps linked labs and discussions, supports alternatives
     lectures.push(await details(page).getByRole("heading", { name: /^Lecture CL/ }).innerText());
     labs.push(await details(page).getByRole("heading", { name: /^Lab CX/ }).innerText());
     await expect(details(page).getByRole("heading", { name: "Discussion CD01", exact: true })).toBeVisible();
-    await expect(details(page).getByRole("article").filter({ hasText: "Discussion CD01" })).toContainText("Discussion Tutor");
+    await expect(details(page).getByRole("article").filter({ hasText: "Discussion CD01" })).not.toContainText("Discussion Tutor");
     await expect(details(page).getByRole("heading", { name: /Lecture CL0[3-6]|Lab CX03/ })).toHaveCount(0);
     if (index < 2) await page.getByRole("button", { name: "Next schedule" }).click();
   }
@@ -203,7 +203,7 @@ test("a professor filters both lecture choices, survives reload and Any professo
   await open(page);
   await expect(picker(page)).toHaveText("Any professor");
   await picker(page).click();
-  await expect(page.getByRole("listbox").getByRole("option").first()).toHaveText("Any professorAll 3 lecture times");
+  await expect(page.getByRole("listbox").getByRole("option").first()).toHaveText("Any professor");
   await page.keyboard.press("Escape");
   await expect(page.getByText("Schedule 1 of 3", { exact: true })).toBeVisible();
   await chooseProfessor(page, "Ye Lu");
@@ -321,7 +321,7 @@ for (const hasLectures of [true, false]) {
   });
 }
 
-test("compatible lab and discussion locks keep other instructors and only an explicit unlock changes them", async ({ page }) => {
+test("compatible lab and discussion locks hold under a lecture professor, hide their instructors, and only an explicit unlock changes them", async ({ page }) => {
   const courseCode = "AE 2320";
   const preferences = { startsAfter: 540, blocked: [{ day: "Fri" as const, start: 840, end: 960 }], onlyOpen: true };
   const locks = { [courseCode]: [`${courseCode}-CX01`, `${courseCode}-CD01`] };
@@ -331,9 +331,9 @@ test("compatible lab and discussion locks keep other instructors and only an exp
   await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
   for (let index = 0; index < 2; index++) {
     await expect(details(page).getByRole("button", { name: "Unlock Lab CX01", exact: true })).toBeVisible();
-    await expect(details(page).getByRole("article").filter({ hasText: "Lab CX01" })).toContainText("Lab Tutor");
+    await expect(details(page).getByRole("article").filter({ hasText: "Lab CX01" })).not.toContainText("Lab Tutor");
     await expect(details(page).getByRole("button", { name: "Unlock Discussion CD01", exact: true })).toBeVisible();
-    await expect(details(page).getByRole("article").filter({ hasText: "Discussion CD01" })).toContainText("Discussion Tutor");
+    await expect(details(page).getByRole("article").filter({ hasText: "Discussion CD01" })).not.toContainText("Discussion Tutor");
     if (index === 0) await page.getByRole("button", { name: "Next schedule" }).click();
   }
   expect((await draft(page)).locks).toEqual(locks);
