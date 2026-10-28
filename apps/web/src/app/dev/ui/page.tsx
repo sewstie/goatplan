@@ -49,8 +49,7 @@ export default function UiPrimitivesPage() {
       <header className="flex flex-col gap-7 px-4 pt-8 pb-12">
         <h1 className="text-25 leading-30 font-700 tracking-title">UI primitives</h1>
         <p className="text-10 leading-14-5 text-ink-muted">
-          Every primitive in components/ui with its variants and states. Sample labels come from
-          the designs in docs/design.
+          Every primitive in components/ui with its variants and states.
         </p>
       </header>
 

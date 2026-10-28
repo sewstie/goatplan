@@ -1,8 +1,11 @@
 # Engine
 
 The C++ scheduling engine. Give it a term file and a list of courses, and it
-finds every schedule that fits, scores them and sends back the best ones. When
-nothing fits, it says why and what to change. The same code runs natively, as
+finds every schedule that fits, ranks them and sends back the best ones. It can
+rank by one measure first (latest start, earliest finish, fewest days, least
+free time between classes, fewest early classes) or by an overall score, and
+it can limit a course to some of its sections, for example one professor's.
+When nothing fits, it says why and what to change. The same code runs natively, as
 a command-line tool and in the tests, and in the browser as WebAssembly.
 
 The request and response format is in [docs/engine-api.md](../docs/engine-api.md),
@@ -13,7 +16,8 @@ engine/
 ├── include/goatplan/   headers; engine.hpp is the way in
 ├── src/                the engine, main.cpp (command-line tool), wasm_bindings.cpp (browser)
 ├── tests/              GoogleTest tests; golden/ holds saved responses
-└── examples/           sample requests
+└── examples/           sample requests (basic, preferences, impossible, any-of,
+                        professor-start, sort-primary)
 ```
 
 ## Native build
@@ -22,7 +26,11 @@ engine/
 npm run engine:build    # engine, command-line tool and tests, in engine/build/
 npm run engine:test     # build, then run the tests
 ./engine/build/goatplan_cli apps/web/public/data/2026-B.json engine/examples/basic.json --text
+./engine/build/goatplan_cli apps/web/public/data/2026-B.json engine/examples/sort-primary.json --text
 ```
+
+The tool takes a term file and a request file, or `-` to read the request from
+stdin. `--text` prints a readable summary instead of JSON.
 
 One test compares two full responses with the files in `tests/golden/`. If a
 change is meant to alter responses, rewrite those files with
@@ -66,12 +74,22 @@ Both functions take and return JSON text, and neither one throws.
 ## How a request is answered
 
 1. `filters.cpp` drops the options that break the preferences (locked
-   sections, full sections, too early, blocked times) and counts why.
+   sections, `anyOf` sections such as one professor's, full sections, too
+   early, blocked times) and counts why.
 2. `groups.cpp` puts a course's options that meet at exactly the same times
    into one group, so the search sees each weekly pattern once.
 3. `solver.cpp` goes course by course, the one with the fewest groups first,
-   skips anything that overlaps, and keeps the best schedules by `score.cpp`.
-4. When nothing fits, `diagnose.cpp` works out why and tries the usual fixes.
+   skips anything that overlaps, and keeps the best `maxSchedules` in a heap.
+   `score.cpp` measures each schedule (early, late and free minutes, days,
+   first start, last end) and compares two schedules: by `sort.primary`
+   first when the request sets it, then by the overall score, then by section
+   order. The heap and the final list use the same comparison, so the first
+   schedule is the best of everything the search checked, not only of the
+   ones returned. See [Order of schedules](../docs/engine-api.md#order-of-schedules).
+4. When nothing fits, `diagnose.cpp` works out why and tries the usual fixes:
+   an earlier start time, clearing blocked times, allowing full
+   sections, unlocking a course, allowing any of a course's sections
+   (`clearAnyOf`), or dropping a course.
 
 `week_mask.cpp` stores a week as 5-minute slots in 35 64-bit words, five per
 day, so checking two options for a clash takes at most 35 AND operations.

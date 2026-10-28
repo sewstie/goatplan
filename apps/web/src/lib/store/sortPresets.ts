@@ -2,8 +2,7 @@ import type { SortPrimary } from "@/lib/engine/types";
 import type { SortPresetId } from "./types";
 
 /**
- * The Sort menu: six presets in display order. Labels come from issues/product-brief.md. Each preset
- * names the score field the engine ranks by first; ties fall back to Best overall (no primary).
+ * The Sort menu: six presets in display order. Each preset names the score field the engine ranks by first; ties fall back to Best overall (no primary).
  */
 export const SORT_PRESETS: Readonly<Record<SortPresetId, { label: string; description: string; primary: SortPrimary | null }>> = {
   bestOverall: { label: "Best overall", description: "A balance of start time, gaps and days", primary: null },

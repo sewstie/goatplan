@@ -407,3 +407,25 @@ describe("ChooseAlternativeSheet", () => {
     expect(store.getState().alternatives).toEqual({});
   });
 });
+
+describe("Needs attention", () => {
+  it("names the course with the problem, not the selected one", async () => {
+    const blocked = (): SolveResponse => ({
+      ...(nothingFits() as Extract<SolveResponse, { ok: true }>),
+      diagnosis: {
+        unsure: false,
+        emptyCourses: [{ code: "AB 1533", optionsInData: 1, removed: { notLocked: 0, notAnyOf: 0, notOpen: 0, startsTooEarly: 0, blocked: 1 }, latestStartsAfter: null }],
+        clashingPairs: [],
+        minimalClash: [],
+        fixes: [],
+      },
+    });
+    const { store } = await startTestPlanner({ courses: ["AE 2410", "AB 1533"] }, { solve: blocked });
+    act(() => store.getState().selectCourse("AE 2410"));
+    render(<CourseDetailsPanel />);
+
+    expect(screen.getByText("Needs attention")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "AB 1533" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { level: 2, name: "AE 2410" })).not.toBeInTheDocument();
+  });
+});

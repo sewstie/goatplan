@@ -11,12 +11,10 @@ type AppShellProps = {
   schedule: ReactNode;
   details?: ReactNode;
   /**
-   * The phone-only "Your courses" disclosure, shown between the header and the toolbar below the
-   * tablet breakpoint. It stands in for the sidebar, which is hidden on a phone.
+   * The phone-only brand/logo row, shown above the header below the tablet breakpoint. On tablet and
+   * up the brand lives in the sidebar, so this slot is hidden there.
    */
-  phoneDisclosure?: ReactNode;
-  /** The phone-only bottom sheet for course details, hidden on tablet and wider screens. */
-  phoneSheet?: ReactNode;
+  phoneBrand?: ReactNode;
   /** Phone-only content placed at the very bottom of the page (after the schedule area). */
   phoneFooter?: ReactNode;
   /** The names screen readers give the two main regions. */
@@ -38,8 +36,7 @@ export function AppShell({
   banner,
   schedule,
   details,
-  phoneDisclosure,
-  phoneSheet,
+  phoneBrand,
   phoneFooter,
   scheduleLabel = "Weekly schedule",
   detailsLabel = "Course details",
@@ -58,21 +55,33 @@ export function AppShell({
       <div className="flex min-h-dvh gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:p-(--size-app-padding) wide:h-[max(100dvh,720px)]">
         {/* The sidebar is hidden on a phone; its term picker and courses move into the disclosure. */}
         <div className="contents">{sidebar}</div>
+        {/*
+          On a phone the children are reordered with flex `order` so the schedule comes first, right
+          after the brand and header, and the "Your courses" disclosure and preferences follow it.
+          `tablet:order-none` restores the source order from the tablet breakpoint up, so the
+          sidebar-based layout is unchanged.
+        */}
         <main
           id="main"
           tabIndex={-1}
           className="flex min-w-0 flex-1 flex-col gap-(--size-gutter) outline-none"
         >
-          {header}
-          {phoneDisclosure}
-          {toolbar}
-          {banner}
-          <div className="flex flex-1 flex-col gap-(--size-gutter) wide:min-h-0 wide:flex-row">
+          {phoneBrand && <div className="order-1 tablet:hidden">{phoneBrand}</div>}
+          <div className="order-2 tablet:order-none tablet:contents">{header}</div>
+          <div className="order-6 tablet:order-none tablet:contents">{toolbar}</div>
+          {/*
+            Phone: the banner (e.g. the "Plan restored" note) sits right under the header, above the
+            schedule, instead of at the very bottom. Tablet and up keep the source order.
+          */}
+          <div className="order-3 tablet:order-none tablet:contents">{banner}</div>
+          <div className="order-4 flex flex-1 flex-col gap-(--size-gutter) tablet:order-none wide:min-h-0 wide:flex-row">
             <section
               aria-label={scheduleLabel}
               className={cx(
-                "relative flex shrink-0 flex-col overflow-hidden rounded-panel bg-surface wide:h-auto wide:min-h-0 wide:flex-1",
-                scheduleFit === "fixed" ? "h-630" : "min-h-630",
+                "relative flex flex-col overflow-hidden rounded-panel bg-surface tablet:shrink-0 wide:h-auto wide:min-h-0 wide:flex-1",
+                // Phone: the day view grows with its content instead of leaving a fixed empty gap.
+                // Tablet and up: keep the 630px calendar (fixed), or let it grow for the plans sheet.
+                scheduleFit === "fixed" ? "tablet:h-630" : "tablet:min-h-630",
               )}
             >
               {schedule}
@@ -84,10 +93,9 @@ export function AppShell({
               </DetailsPanel>
             )}
           </div>
-          {phoneFooter}
+          <div className="order-7 tablet:order-none tablet:contents">{phoneFooter}</div>
         </main>
       </div>
-      {phoneSheet}
     </>
   );
 }

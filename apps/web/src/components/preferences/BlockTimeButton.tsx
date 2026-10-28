@@ -12,8 +12,11 @@ import { usePlanner } from "@/lib/store";
 import { addBlocked } from "./blockedTimes";
 import { BlockTimeForm } from "./BlockTimeForm";
 
-/** The dashed "Block a time" pill and the form it opens. On a phone, opens a bottom Sheet; on tablet+, a Dialog. */
-export function BlockTimeButton() {
+/**
+ * The dashed "Block a time" pill, or the phone Preferences screen's "+ Add", and the form it opens.
+ * On a phone the form is a bottom Sheet; on tablet+, a Dialog.
+ */
+export function BlockTimeButton({ variant = "chip", label = "Block a time", className }: { variant?: "chip" | "add"; label?: string; className?: string } = {}) {
   const blocked = usePlanner((state) => state.preferences.blocked);
   const setPreferences = usePlanner((state) => state.setPreferences);
   const [open, setOpen] = useState(false);
@@ -71,14 +74,15 @@ export function BlockTimeButton() {
 
   return (
     <>
-      <Chip
-        id="tutorial-block-time"
-        variant="dashed"
-        icon={<Plus />}
-        onClick={openForm}
-      >
-        Block a time
-      </Chip>
+      {variant === "add" ? (
+        <Button variant="soft" size="sm" icon={<Plus aria-hidden />} aria-label="Add a blocked time" onClick={openForm} className="min-h-36">
+          Add
+        </Button>
+      ) : (
+        <Chip id="tutorial-block-time" variant="dashed" icon={<Plus />} onClick={openForm} className={className}>
+          {label}
+        </Chip>
+      )}
       {phone ? (
         <Sheet open={open} onClose={() => setOpen(false)} title="Block a time" side="bottom">
           <p className="text-11 leading-19-8 text-ink-muted">

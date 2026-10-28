@@ -1,15 +1,13 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { resetPlanner, setPlanner } from "@/components/schedule/testing/plannerFixtures";
 import { createPlan, getPlansSource } from "@/lib/plans";
 import { getPlannerStore } from "@/lib/store";
 import { PlanActions } from "./PlanActions";
 
-// Ticket 11, requirement 4: on a phone the header actions become icon-only buttons with a tooltip
-// (the text label moves into the tooltip, so the button keeps an accessible name but shows only its
-// icon). Requirement 5: those buttons stay 44x44px touch targets. On a tablet and wider the full
-// text buttons stay. usePhoneViewport() drives the switch via window.matchMedia.
+// On a phone the Save button keeps a short visible label ("Save" / "Saved") with its status under
+// it, and stays a 44px touch target. On a tablet and wider the full text buttons stay.
+// usePhoneViewport() drives the switch via window.matchMedia.
 
 vi.mock("next/link", () => ({
   default: ({ href, children, ...rest }: React.ComponentProps<"a">) => (
@@ -88,52 +86,48 @@ function withSavedPlan() {
 }
 
 describe("PlanActions on a phone", () => {
-  it("shows the Save button as icon-only: an accessible name but no visible text", () => {
+  it("shows a short Save label, named Save for assistive tech", () => {
     mockPhoneViewport();
     setPlanner();
     render(<PlanActions />);
 
-    const save = screen.getByRole("button", { name: "Save schedule" });
-    // The label is still reachable for assistive tech, but the words aren't rendered as visible text.
-    expect(save).toHaveAccessibleName("Save schedule");
-    expect(save).not.toHaveTextContent("Save schedule");
+    expect(screen.getByRole("button", { name: "Save" })).toHaveTextContent("Save");
   });
 
-  it("keeps the label reachable through a tooltip on hover", async () => {
+  it("gives the Save button a 44px touch target", () => {
     mockPhoneViewport();
     setPlanner();
     render(<PlanActions />);
 
-    const save = screen.getByRole("button", { name: "Save schedule" });
-    // The Tooltip wraps the button in an inline-flex span; hover that wrapper to trigger the tooltip.
-    const wrapper = save.closest("span.relative");
-    await userEvent.hover(wrapper ?? save);
-    // The tooltip has describes={false} so it's aria-hidden; find it by role with hidden option.
-    const tooltip = screen.getByRole("tooltip", { hidden: true });
-    expect(tooltip).toHaveTextContent("Save schedule");
+    expect(screen.getByRole("button", { name: "Save" })).toHaveClass("min-h-44");
   });
 
-  it("gives the icon-only Save button a 44px touch target", () => {
-    mockPhoneViewport();
-    setPlanner();
-    render(<PlanActions />);
-
-    const save = screen.getByRole("button", { name: "Save schedule" });
-    const reachesTouchSize =
-      (/\bmin-w-44\b/.test(save.className) && /\bmin-h-44\b/.test(save.className)) ||
-      /after:/.test(save.className);
-    expect(reachesTouchSize).toBe(true);
-  });
-
-  it("shows the saved state icon-only as well, still named for assistive tech", () => {
+  it("shows Saved with a status line once the plan is saved", () => {
     mockPhoneViewport();
     setPlanner();
     withSavedPlan();
     render(<PlanActions />);
 
-    const saved = screen.getByRole("button", { name: "Schedule saved" });
-    expect(saved).toHaveAccessibleName("Schedule saved");
-    expect(saved).not.toHaveTextContent("Saved");
+    expect(screen.getByRole("button", { name: "Schedule saved" })).toHaveTextContent("Saved");
+    expect(screen.getByText("Schedule saved")).toBeInTheDocument();
+  });
+
+  it("lets a layout place the menu and Save button apart", () => {
+    mockPhoneViewport();
+    setPlanner();
+    render(
+      <PlanActions
+        layout={({ menu, save }) => (
+          <>
+            <div data-testid="title-row">{menu}</div>
+            <div data-testid="browser-row">{save}</div>
+          </>
+        )}
+      />,
+    );
+
+    expect(screen.getByTestId("title-row")).toHaveTextContent("Saved plans");
+    expect(screen.getByTestId("browser-row")).toHaveTextContent("Save");
   });
 });
 

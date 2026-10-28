@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   createPlan,
   defaultPlanName,
@@ -19,8 +19,20 @@ import { usePlanSaveState } from "./usePlanSaveState";
 
 const COULDNT_SAVE = "Couldn’t save. Browser storage is full or blocked.";
 
-/** "Saved plans" and the Save schedule button in the header (div.app-12.md). */
-export function PlanActions() {
+type PlanActionsLayout = (parts: { menu: ReactNode; save: ReactNode }) => ReactNode;
+
+const besideEachOther: PlanActionsLayout = ({ menu, save }) => (
+  <>
+    <div className="flex items-center gap-10">{menu}</div>
+    {save}
+  </>
+);
+
+/**
+ * "Saved plans" and the Save schedule button in the header (div.app-12.md). The phone header puts the
+ * two in different rows, so it passes its own `layout`.
+ */
+export function PlanActions({ layout = besideEachOther }: { layout?: PlanActionsLayout } = {}) {
   const store = usePlannerStore();
   const viewed = usePlanner(selectSavedPlan);
   const save = usePlanSaveState();
@@ -67,23 +79,28 @@ export function PlanActions() {
 
   return (
     <>
-      <div className="flex items-center gap-10">
-        <SavedPlansMenu
-          plans={save.termPlans}
-          termName={term ? termLabel(term) : null}
-          currentPlan={viewed ?? save.currentPlan}
-          disabled={!viewed && save.busy}
-          canSaveAsNew={viewed !== null || save.canSave || save.status === "saved"}
-          onOpenPlan={(plan) => requestOpen(plan, "/")}
-          onSaveAsNew={() => setNaming("copy")}
-          onNewPlan={requestNewPlan}
-        />
-      </div>
-      <SaveScheduleButton
-        saved={viewed !== null || save.status === "saved"}
-        disabled={viewed !== null || !save.canSave || save.busy || saving}
-        onSave={saveChanges}
-      />
+      {layout({
+        menu: (
+          <SavedPlansMenu
+            plans={save.termPlans}
+            termName={term ? termLabel(term) : null}
+            currentPlan={viewed ?? save.currentPlan}
+            disabled={!viewed && save.busy}
+            canSaveAsNew={viewed !== null || save.canSave || save.status === "saved"}
+            onOpenPlan={(plan) => requestOpen(plan, "/")}
+            onSaveAsNew={() => setNaming("copy")}
+            onNewPlan={requestNewPlan}
+          />
+        ),
+        save: (
+          <SaveScheduleButton
+            saved={viewed !== null || save.status === "saved"}
+            unsaved={viewed === null && save.status === "unsaved"}
+            disabled={viewed !== null || !save.canSave || save.busy || saving}
+            onSave={saveChanges}
+          />
+        ),
+      })}
       {error && <p role="alert" className="text-9 leading-13 text-warning">{error}</p>}
       <span role="status" aria-live="polite" aria-atomic="true" className="sr-only">
         {opened && <span key={opened.sequence}>{opened.name === null ? "Started a new plan." : `Opened “${opened.name}” for editing.`}</span>}

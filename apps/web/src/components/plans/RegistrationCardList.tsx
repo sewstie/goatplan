@@ -1,58 +1,65 @@
 import { Badge } from "@/components/ui/Badge";
 import { isSeriousChange, rowChangeLabel, type RegistrationRow } from "@/lib/plans";
 
-const label = "text-9 leading-13 font-600 text-ink-muted";
-const value = "text-10 leading-16 text-ink";
+/** Group the per-section rows into one entry per course, keeping plan order. */
+function byCourse(rows: RegistrationRow[]): { course: string; courseTitle: string; sections: RegistrationRow[] }[] {
+  const groups: { course: string; courseTitle: string; sections: RegistrationRow[] }[] = [];
+  for (const row of rows) {
+    const last = groups[groups.length - 1];
+    if (last && last.course === row.course) last.sections.push(row);
+    else groups.push({ course: row.course, courseTitle: row.courseTitle, sections: [row] });
+  }
+  return groups;
+}
 
-/** One card per section, with label/value rows, for phones (ticket 13). */
+/**
+ * One compact card per course for phones, with a tight row per section inside it. A plan with eight
+ * sections across four courses is four cards, not eight tall ones, so it scans with far less
+ * scrolling. Each section still lists its code, type and seats, days and time, room and instructor.
+ */
 export function RegistrationCardList({ rows }: { rows: RegistrationRow[] }) {
   return (
     <div className="flex flex-col gap-10">
-      {rows.map((row) => (
+      {byCourse(rows).map((group) => (
         <article
-          key={row.id}
-          className="flex flex-col gap-8 rounded-card border border-line bg-surface-subtle px-14 py-12"
+          key={group.course}
+          className="flex flex-col rounded-card border border-line bg-surface-subtle px-14 py-12"
         >
-          <div className="flex flex-col gap-2">
-            <span className={label}>Course</span>
-            <span className="text-11 leading-17-6 font-700 text-ink">{row.course}</span>
-            <span className="text-9 leading-14-85 text-ink-muted">{row.courseTitle}</span>
+          <div className="flex flex-col gap-1 pb-8">
+            <h3 className="text-11 leading-17-6 font-700 text-ink">{group.course}</h3>
+            <p className="text-9 leading-14-85 text-ink-muted">{group.courseTitle}</p>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <span className={label}>Section</span>
-            <span className="text-11 leading-17-6 font-700 text-ink">{row.section}</span>
-            <span className="text-9 leading-14-85 text-ink-muted">{row.seats}</span>
-            {row.change && (
-              <Badge tone={isSeriousChange(row.change) ? "warning" : "neutral"} size="sm" className="mt-2 self-start">
-                {rowChangeLabel(row.change)}
-              </Badge>
-            )}
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <span className={label}>Days and time</span>
-            {row.meetings.map((line) => (
-              <span key={line} className={value}>
-                {line}
-              </span>
+          <ul className="flex flex-col divide-y divide-line">
+            {group.sections.map((section) => (
+              <li key={section.id} className="flex flex-col gap-3 py-8 first:pt-0 last:pb-0">
+                <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
+                  <span className="text-10 leading-16 font-650 text-ink">{section.section}</span>
+                  <span className="text-9 leading-14-85 text-ink-muted">{section.seats}</span>
+                  {section.change && (
+                    <Badge
+                      tone={isSeriousChange(section.change) ? "warning" : "neutral"}
+                      size="sm"
+                      className="self-center"
+                    >
+                      {rowChangeLabel(section.change)}
+                    </Badge>
+                  )}
+                </div>
+                {section.meetings.map((line) => (
+                  <span key={line} className="text-9 leading-14-85 text-ink-muted">
+                    {line}
+                  </span>
+                ))}
+                <span
+                  title={section.roomFull === section.room ? undefined : section.roomFull}
+                  className="text-9 leading-14-85 text-ink-muted"
+                >
+                  {section.room} · {section.instructors}
+                </span>
+              </li>
             ))}
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <span className={label}>Room</span>
-            <span
-              title={row.roomFull === row.room ? undefined : row.roomFull}
-              className={value}
-            >
-              {row.room}
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <span className={label}>Instructor</span>
-            <span className={value}>{row.instructors}</span>
-          </div>
+          </ul>
         </article>
       ))}
     </div>

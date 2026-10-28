@@ -7,9 +7,7 @@ agents build the features in their own folders, in parallel. This page says who
 owns what, what the shared store offers, and how to ask for a change to a
 shared file.
 
-Read it together with `CLAUDE.local.md` (the rules),
-[design/frames.md](design/frames.md) and the screen notes in
-[design/screens/](design/screens/), [data-format.md](data-format.md) and
+Read it together with [data-format.md](data-format.md) and
 [engine-api.md](engine-api.md).
 
 ## Folder map
@@ -20,7 +18,7 @@ All paths are under `apps/web/src/`.
 app/
   layout.tsx            lead     root layout, DM Sans
   page.tsx              lead     the planner page: places every feature component
-  globals.css           lead     design tokens (docs/design/tokens.md)
+  globals.css           lead     design tokens (colors, type, spacing)
   plans/                plans    /plans, "Sections to register"
   dev/                  lead     /dev/ui and /dev/engine; 404 in production
 components/
@@ -50,12 +48,12 @@ own components and adds new files in its own folders. **Never edit the page or
 the layout to place things**: if a component needs to be somewhere new, ask
 the lead (see [Asking for a shared-file change](#asking-for-a-shared-file-change)).
 
-| Agent | Owns | Components already in the page | Main designs |
-|---|---|---|---|
-| **search** | `components/courses/` | `TermPicker` (sidebar, under the logo), `CourseSearchPanel` (sidebar: search box, results, "Your courses"), `TermBreadcrumbs` (above the title) | `div.app.md`, `div.app-3.md`, `div.app-4.md`, `div.app-5.md`, course rows in `div.app-10.md` |
-| **schedule** | `components/schedule/` | `ScheduleView` (calendar card), `ScheduleSwitcher` (next to the title), `ScheduleSummary` (line under the title), `ScheduleBanner` (full-width banner above the calendar) | `div.app-1.md`, `div.app-2.md`, `div.app-6.md`, `div.app-7.md`, `div.app-13.md`, `div.app-17.md` to `div.app-20.md` |
-| **prefs** | `components/preferences/`, `components/sections/` | `PreferencesBar` (the Preferences row), `CourseDetailsPanel` (details panel: section choices, Lock/Unlock, professor, "Needs attention" and fixes), `ChooseAlternativeSheet` | `div.app-3.md` (panel), `div.app-7.md` to `div.app-11.md`, `div.app-15.md`, `div.app-16.md`, `div.app-20.md` |
-| **plans** | `app/plans/`, `components/plans/`, `lib/plans/` | `PlanActions` (header, right side), `RegistrationSheet` and `RegistrationSummary` (on `/plans`) | `div.app-12.md`, `div.app-22.md` |
+| Agent | Owns | Components already in the page |
+|---|---|---|
+| **search** | `components/courses/` | `TermPicker` (sidebar, under the logo), `CourseSearchPanel` (sidebar: search box, results, "Your courses"), `TermBreadcrumbs` (above the title) |
+| **schedule** | `components/schedule/` | `ScheduleView` (calendar card), `ScheduleSwitcher` (next to the title), `ScheduleSummary` (line under the title), `ScheduleBanner` (full-width banner above the calendar) |
+| **prefs** | `components/preferences/`, `components/sections/` | `PreferencesBar` (the Preferences row), `CourseDetailsPanel` (details panel: section choices, Lock/Unlock, professor, "Needs attention" and fixes), `ChooseAlternativeSheet` |
+| **plans** | `app/plans/`, `components/plans/`, `lib/plans/` | `PlanActions` (header, right side), `RegistrationSheet` and `RegistrationSummary` (on `/plans`) |
 
 - Keep the file names and exports of the placeholders; the page imports them.
 - Components that need state or events become client components (`"use client"`).
@@ -67,8 +65,7 @@ the lead (see [Asking for a shared-file change](#asking-for-a-shared-file-change
 - Sort options: the store keeps six sort presets (`SORT_PRESETS`), and the
   prefs agent shows all six in the sort menu. Each preset is
   `{ label, description, primary }`, where `primary` is the score field the
-  engine ranks by first (`null` for Best overall). Labels come from
-  `issues/product-brief.md`.
+  engine ranks by first (`null` for Best overall).
 - Tests: unit tests go next to the code, in your folders. Browser tests go in a
   new `e2e/<agent>.spec.ts`; they run against the production build.
 
@@ -130,7 +127,7 @@ modules. Without a provider, both hooks use the app's shared store.
 | `preferences` | `{ startsAfter, blocked, onlyOpen }`. New drafts start at Any time (`startsAfter: 0`), with no blocked times and only open sections. Stored drafts and saved plans keep their settings, including a chosen 9:00 AM start. A blocked time can have a `label`, the name the student gave it ("Work"); it is saved with the draft but never sent to the engine. |
 | `locks` | Course code → the section ids locked for that course. |
 | `professorByCourse` | Course code → the selected lecture professor, or `null` for Any professor. All matching lectures remain eligible, including co-taught lectures. Labs and discussions can have other instructors. |
-| `sortPreset` | The Sort choice: `bestOverall`, `fewestEarly`, `latestStart`, `earliestFinish`, `fewestDays` or `fewestGaps` (labels, descriptions and primary measures in `SORT_PRESETS`; labels from `issues/product-brief.md`). The menu shows all six sort orders. Every preset sends the Best overall weights, so `score.total` means the same in each, plus its `primary`; Best overall sends none. Stored IDs are kept as they are. |
+| `sortPreset` | The Sort choice: `bestOverall`, `fewestEarly`, `latestStart`, `earliestFinish`, `fewestDays` or `fewestGaps` (labels, descriptions and primary measures in `SORT_PRESETS`). The menu shows all six sort orders. Every preset sends the Best overall weights, so `score.total` means the same in each, plus its `primary`; Best overall sends none. Stored IDs are kept as they are. |
 | `alternatives` | Per schedule (by `scheduleKey`) and per course, the same-time alternative the student picked. |
 | `response` | The engine's last answer, success or engine error; `null` when there are no courses. |
 | `scheduleIndex` | Which schedule in `response.schedules` is shown. |
@@ -213,8 +210,7 @@ still shows that plan's courses, preferences and summary.
   their usual copy. An info banner stays visible for the visit, including after
   the guide closes. Restored drafts and saved snapshots show a success banner
   listing the settings they kept. Loading placeholders and the empty-calendar
-  prompt stay hidden while the guide is open. See [the guide reference](design/screens/div.app-29.md).
-  Issue 17 covers screenshots at 1440 px; 834 px is an agreed exception.
+  prompt stay hidden while the guide is open.
 
 - **Solving.** Every change to the plan waits 200 ms (`SOLVE_DELAY_MS`) for
   more changes, then sends one request built by the pure `buildRequest(state)`.
@@ -269,7 +265,7 @@ still shows that plan's courses, preferences and summary.
 
 Phone is in scope at 375 px. The breakpoint is `--breakpoint-tablet: 40rem`
 (640 px): below it the app renders the phone shell, above it the
-tablet/desktop layout from the Figma designs. The JS hook `usePhoneViewport()`
+tablet/desktop layout. The JS hook `usePhoneViewport()`
 and the Tailwind `tablet:` prefix both read this boundary.
 
 ### Phone shell (`components/shell/`)
@@ -379,7 +375,7 @@ Every agent works in its own git worktree and uses its own port, set with the
 `PORT` environment variable (default 3000):
 
 | Agent | `PORT` | Dev server | Production build during `test:e2e` |
-|---|---|---|---|
+|---|---|---|
 | search | 3001 | http://localhost:3001 | 4001 |
 | schedule | 3002 | http://localhost:3002 | 4002 |
 | prefs | 3003 | http://localhost:3003 | 4003 |
@@ -403,8 +399,5 @@ PORT=3002 npm run test:e2e  # tests: production build on 4002, dev pages on 3002
   parallel runs don't touch each other's files.
 
 Take screenshots of your screens at 1440, 834 and 375 px (save them in
-`apps/web/e2e/screenshots/`, which git ignores) and compare them with the
-PNGs in `docs/design/screens/`. The 834 and 1440 px screenshots match the
-Figma designs; the 375 px ones are the new phone reference (see
-[design/frames.md](design/frames.md#phone-screens-375-px)). Then run the
-ui-reviewer agent.
+`apps/web/e2e/screenshots/`, which git ignores) and check each one before
+you open a pull request.

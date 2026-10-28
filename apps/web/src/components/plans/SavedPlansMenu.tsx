@@ -72,7 +72,7 @@ export function SavedPlansMenu({
         aria-controls={panelId}
         disabled={disabled}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex cursor-pointer items-center gap-5 rounded-badge py-4 text-10 leading-14-5 text-ink-soft enabled:hover:text-ink disabled:cursor-not-allowed disabled:opacity-45"
+        className="inline-flex min-h-44 cursor-pointer items-center gap-5 rounded-badge py-4 text-10 leading-14-5 text-ink-soft tablet:min-h-0 enabled:hover:text-ink disabled:cursor-not-allowed disabled:opacity-45"
       >
         Saved plans
         <CaretDown aria-hidden className={cx("size-10 transition-transform", open && "rotate-180")} />

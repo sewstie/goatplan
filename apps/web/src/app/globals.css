@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
-  Design tokens from docs/design/tokens.md. This is the only file with raw color values.
+  Design tokens. This is the only file with raw color values.
   Utilities read these variables, so a dark theme only has to redefine them, e.g.
   :root[data-theme="dark"] { --color-canvas: …; --color-ink: …; }
 */
@@ -18,10 +18,10 @@
   --color-code-surface: #f8f9fc;
 
   --color-ink: #20232b;
-  --color-ink-muted: #697387;
+  --color-ink-muted: #616b7e;
   --color-ink-soft: #525c70;
   --color-ink-secondary: #596577;
-  --color-ink-faint: #81899a;
+  --color-ink-faint: #656e82;
   --color-ink-hatch: #586479;
   --color-on-accent: #ffffff;
 
@@ -227,12 +227,19 @@
 
   /* Phone styles are written unprefixed; from 640 px up, `tablet:` keeps today's layout. */
   --breakpoint-tablet: 40rem;
+  /* Below 360 px the phone top bar has room for the logo but not the wordmark. */
+  --breakpoint-narrow: 22.5rem;
   --breakpoint-wide: 68.75rem;
 
   --size-app-padding: 14px;
   --size-gutter: 12px;
   /* The side gutter of the single-column phone layout, below the tablet breakpoint. */
   --size-phone-gutter: 16px;
+  /* The phone week calendar: one hour of grid, the time labels and the day names. */
+  --size-phone-hour: 84px;
+  --size-phone-axis: 34px;
+  --size-phone-day-header: 34px;
+  --size-phone-bar: 64px;
   --size-sidebar: 224px;
   --size-details: 284px;
   --size-header: 76px;
@@ -285,4 +292,45 @@
 
 body:has(.guide-popover) [data-guide-hide] {
   display: none;
+}
+
+/*
+  Phone typography. Below the tablet breakpoint (640px), the design's Figma-px sizes (8–11px) are too
+  small to read and the search box triggers iOS Safari's tap-to-zoom. The utilities compile to
+  `font-size: var(--text-N)`, so redefining the small tokens here scales every `text-N` up at once,
+  without touching components. Body lands at 14–15px, secondary text at a 12px floor, headings keep
+  their size. Tablet and wider are unchanged. Line heights scale with the size.
+*/
+@media (max-width: 39.99rem) {
+  :root {
+    --text-12: 16px;
+    --text-12--line-height: 21px;
+    --text-11: 15px;
+    --text-11--line-height: 20px;
+    --text-10: 14px;
+    --text-10--line-height: 19px;
+    --text-9: 12px;
+    --text-9--line-height: 16px;
+    /* Floor every smaller size (badges, captions, calendar densities) at 12px for legibility. */
+    --text-8-5: 12px;
+    --text-8-5--line-height: 16px;
+    --text-8: 12px;
+    --text-8--line-height: 16px;
+    --text-7-5: 12px;
+    --text-7-5--line-height: 16px;
+    --text-7: 12px;
+    --text-7--line-height: 16px;
+    --text-6-8: 12px;
+    --text-6-8--line-height: 16px;
+    --text-6-5: 12px;
+    --text-6-5--line-height: 16px;
+  }
+
+  /* iOS Safari zooms in on a form control with text under 16px. Unlayered, so it beats the text-N utilities. */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+    line-height: 1.375;
+  }
 }

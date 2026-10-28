@@ -5,8 +5,10 @@ export interface TimeRange {
 
 export const DEFAULT_RANGE: Readonly<TimeRange> = { start: 480, end: 1020 };
 
-export function fitRange(items: readonly TimeRange[]): TimeRange {
-  let { start, end } = DEFAULT_RANGE;
+/** Grows to fit every item. A start-time preference moves the default start later, to skip the empty morning. */
+export function fitRange(items: readonly TimeRange[], startsAfter = 0): TimeRange {
+  let start = Math.max(DEFAULT_RANGE.start, Math.floor(startsAfter / 60) * 60);
+  let end = Math.max(DEFAULT_RANGE.end, start + 60);
   for (const item of items) {
     start = Math.min(start, Math.floor(item.start / 60) * 60);
     end = Math.max(end, Math.ceil(item.end / 60) * 60);

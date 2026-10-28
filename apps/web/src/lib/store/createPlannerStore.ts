@@ -175,7 +175,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       if (!update) return;
       showNext = null;
       const lastChosenSections = selectCurrentSchedule(state) ? selectChosenSections(state) : state.lastChosenSections;
-      set({ removedCourse: null, ...update, lastChosenSections });
+      set({ removedCourse: null, restoredPlanSummary: null, ...update, lastChosenSections });
       writeDraft(deps.storage, state.termId, draftOf(get()));
       if (options.solve) scheduleSolve();
     }

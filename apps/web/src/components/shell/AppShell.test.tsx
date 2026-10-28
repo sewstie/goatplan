@@ -9,8 +9,6 @@ function parts() {
     toolbar: <div data-testid="toolbar">toolbar</div>,
     banner: <div data-testid="banner">banner</div>,
     schedule: <div data-testid="schedule">schedule</div>,
-    phoneDisclosure: <div data-testid="disclosure">disclosure</div>,
-    phoneSheet: <div data-testid="sheet">sheet</div>,
   };
 }
 
@@ -23,22 +21,11 @@ describe("AppShell", () => {
     expect(screen.getByLabelText("Weekly schedule")).toBeInTheDocument();
   });
 
-  it("places the phone disclosure between the header and the toolbar", () => {
-    render(<AppShell {...parts()} />);
+  it("renders the phone brand above the header when given, hidden on tablet", () => {
+    render(<AppShell {...parts()} phoneBrand={<div data-testid="brand">brand</div>} />);
     const main = screen.getByRole("main");
-    const nodes = [...main.children];
-    const headerIndex = nodes.findIndex((node) => node.tagName === "HEADER");
-    const disclosureIndex = nodes.findIndex((node) => node.getAttribute("data-testid") === "disclosure");
-    const toolbarIndex = nodes.findIndex((node) => node.getAttribute("data-testid") === "toolbar");
-    expect(headerIndex).toBeLessThan(disclosureIndex);
-    expect(disclosureIndex).toBeLessThan(toolbarIndex);
-  });
-
-  it("renders the phone sheet outside the main layout", () => {
-    render(<AppShell {...parts()} />);
-    const sheet = screen.getByTestId("sheet");
-    expect(sheet).toBeInTheDocument();
-    expect(screen.getByRole("main")).not.toContainElement(sheet);
+    const brandWrap = [...main.children].find((node) => node.querySelector('[data-testid="brand"]') !== null);
+    expect(brandWrap).toHaveClass("tablet:hidden");
   });
 
   it("uses a phone side gutter that drops away at the tablet breakpoint", () => {

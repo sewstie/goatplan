@@ -1,15 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePhoneScreen, type PhoneScreen } from "@/components/phone/phoneScreen";
+import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { usePlanner, usePlannerStore } from "@/lib/store";
 import { browserStorage, readDraft, readLastTerm, type DraftStorage } from "@/lib/store/draft";
-import { advanceGuide, guideContent, guideProgress, professorCourse, type GuideVisit } from "./tutorialSteps";
+import { advanceGuide, guideContent, guideProgress, professorCourse, type GuideStep, type GuideVisit } from "./tutorialSteps";
 import { GuideButtons } from "./GuideButtons";
 import { GuidePopover } from "./GuidePopover";
 import { GuideTargetOutline } from "./GuideTargetOutline";
 import { focusTutorialTarget } from "./focusTutorialTarget";
 import { rememberGuideProgress, rememberTutorial, tutorialFinished, type TutorialOutcome } from "./tutorialStorage";
 import { VisitBanner } from "./VisitBanner";
+
+/** On a phone each step opens the screen that holds its control. */
+const PHONE_SCREENS: Readonly<Record<GuideStep, PhoneScreen>> = {
+  term: "schedule",
+  courses: "search",
+  professor: "course",
+  availability: "preferences",
+  schedules: "schedule",
+};
 
 export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }) {
   const planner = usePlannerStore();
@@ -51,6 +62,11 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
   }, [planner, storage]);
 
   const step = visit?.step;
+  const phone = usePhoneViewport();
+  const showPhoneScreen = usePhoneScreen((state) => state.show);
+  useEffect(() => {
+    if (phone && step && !saved) showPhoneScreen(PHONE_SCREENS[step]);
+  }, [phone, step, saved, showPhoneScreen]);
   const content = step ? guideContent(step, preferences, noMatches) : null;
   const targetId = content?.target ?? "tutorial-term";
   useEffect(() => {

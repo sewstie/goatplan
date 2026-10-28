@@ -18,6 +18,8 @@ import { useDiagnosticPreview } from "./useDiagnosticPreview";
 import { useSectionPreviewItems } from "./useSectionPreviewItems";
 import { useAlternativeSheet } from "@/components/sections/alternativeSheet";
 import { useSectionChoices } from "@/components/sections/useSectionChoices";
+import { usePhoneScreen } from "@/components/phone/phoneScreen";
+import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { WeekCalendar } from "./WeekCalendar";
 
 const FULL_COLUMN = { lane: 0, lanes: 1 };
@@ -35,15 +37,19 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
   const course = term?.courses.find((item) => item.code === selectedCourse);
   const choices = useSectionChoices(course);
   const openChoices = useAlternativeSheet((state) => state.open);
+  const phone = usePhoneViewport();
+  const showPhoneScreen = usePhoneScreen((state) => state.show);
   const { classes: scheduled, untimed } = useScheduleItems();
   const diagnostic = useDiagnosticPreview();
   const sectionPreviews = useSectionPreviewItems();
   const previewItems = useMemo(() => saved ? [] : [...previews, ...diagnostic.classes, ...sectionPreviews], [saved, previews, diagnostic.classes, sectionPreviews]);
   const classes = useMemo(() => [...scheduled, ...previewItems], [scheduled, previewItems]);
 
+  // The phone grid is tall, so it starts at the start-time preference instead of under a hatched band.
+  const startsAfter = phone ? preferences.startsAfter : 0;
   const { range, days } = useMemo(
-    () => saved ? calendarBounds(null, [], preferences.blocked, scheduled) : calendarBounds(term, schedules, preferences.blocked, previewItems),
-    [saved, scheduled, term, schedules, preferences.blocked, previewItems],
+    () => saved ? calendarBounds(null, [], preferences.blocked, scheduled, startsAfter) : calendarBounds(term, schedules, preferences.blocked, previewItems, startsAfter),
+    [saved, scheduled, term, schedules, preferences.blocked, previewItems, startsAfter],
   );
   // Each day's blocks in time order, so screen readers and Tab go through the day as it happens.
   const byDay = useMemo(() => {
@@ -87,6 +93,12 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN)}
             selected={selected}
             onSelect={(clicked) => {
+              // On a phone a tap opens the course screen with that section picked.
+              if (phone && !clicked.preview) {
+                selectCourse(clicked.courseCode, clicked.sectionId);
+                showPhoneScreen("course");
+                return;
+              }
               if (!saved && selected && choices && !clicked.preview) {
                 openChoices(clicked.courseCode);
                 return;
@@ -107,6 +119,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
       days={days}
       range={range}
       caption={hasTimes ? `${saved ? "Saved plan" : diagnostic.hasDiagnosis ? "Preview" : "Auto-fit"} · ${formatTimeRange(range.start, range.end)}` : diagnostic.hasDiagnosis && !saved ? "No schedule fits" : "No timed courses yet"}
+      note={saved ? "Saved plan" : diagnostic.hasDiagnosis ? "Preview" : "Auto-fit to your schedule"}
       renderDay={renderDay}
       background={hasTimes && <EarlyBand range={range} startsAfter={preferences.startsAfter} />}
       footer={<NoTimeStrip items={saved || untimed.length > 0 ? untimed : diagnostic.untimed} />}

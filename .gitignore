@@ -1,8 +1,5 @@
 # Dependencies
 node_modules/
-.agents
-.kiro
-
 
 # Next.js
 .next/
@@ -33,10 +30,18 @@ data/raw/*
 .cache/
 .DS_Store
 Thumbs.db
-AGENTS.md
-CLAUDE
-ralph
 
 # Logs
 npm-debug.log*
 *.log
+
+# Local AI agent files and working notes (never committed)
+/AGENTS.md
+CLAUDE.local.md
+.claude/
+.codex/
+.agents/
+.kiro/
+.worktreeinclude
+ralph/
+/issues/

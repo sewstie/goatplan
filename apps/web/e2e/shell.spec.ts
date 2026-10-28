@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem("goatplan:tutorial:v1", "dismissed"));
 });
 
-// Boxes of the shell regions in the Figma frame "div.app" (1680 × 800), see docs/design/screens/div.app.md.
+// Boxes of the shell regions in the desktop layout (1680 × 800).
 const figma = {
   sidebar: { x: 14, y: 14, width: 224, height: 772 },
   main: { x: 250, y: 14, width: 1416, height: 772 },
