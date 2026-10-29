@@ -53,6 +53,6 @@ it("returns to the planner from the saved-plans header instead of offering save 
 it("keeps the schedule switcher without source buttons", () => {
   setPlanner();
   render(<ScheduleBrowser />);
-  expect(screen.getByText("Schedule 1 of 3")).toBeVisible();
+  expect(screen.getByText((_, element) => element?.tagName === "P" && element.textContent === "Schedule 1 of 3")).toBeVisible();
   expect(screen.queryByRole("group", { name: "Schedule source" })).not.toBeInTheDocument();
 });

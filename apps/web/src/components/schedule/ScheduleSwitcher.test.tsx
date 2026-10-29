@@ -9,19 +9,22 @@ afterEach(resetPlanner);
 
 const index = () => getPlannerStore().getState().scheduleIndex;
 
+/** "Schedule 1 of 3", whose numbers sit in their own spans. */
+const position = (text: string) => screen.getByText((_, element) => element?.tagName === "P" && element.textContent === text);
+
 describe("ScheduleSwitcher", () => {
   it("pages through schedules with the arrows and the arrow keys", async () => {
     setPlanner();
     const user = userEvent.setup();
     render(<ScheduleSwitcher />);
-    expect(screen.getByText("Schedule 1 of 3")).toBeInTheDocument();
+    expect(position("Schedule 1 of 3")).toBeInTheDocument();
 
     const previous = screen.getByRole("button", { name: "Previous schedule" });
     const next = screen.getByRole("button", { name: "Next schedule" });
     expect(previous).toHaveAttribute("aria-disabled", "true");
 
     await user.click(next);
-    expect(screen.getByText("Schedule 2 of 3")).toBeInTheDocument();
+    expect(position("Schedule 2 of 3")).toBeInTheDocument();
 
     await user.keyboard("{ArrowRight}");
     expect(index()).toBe(2);
@@ -59,7 +62,7 @@ describe("ScheduleSwitcher", () => {
   it("hides the arrows when one schedule fits", () => {
     setPlanner({ response: solved(["CX02"]) });
     render(<ScheduleSwitcher />);
-    expect(screen.getByText("Schedule 1 of 1")).toBeInTheDocument();
+    expect(position("Schedule 1 of 1")).toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
   });
 

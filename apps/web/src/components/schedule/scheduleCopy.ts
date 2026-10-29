@@ -66,6 +66,19 @@ const LEAD_BADGE: Partial<Record<SortPresetId, BadgeKind>> = {
 /** Breaks this long or shorter are the walk between back-to-back classes, not free time (the engine's rule). */
 const WALK_MINUTES = 10;
 const MAX_BADGES = 3;
+/** With no "Starts after" set, a first class before 9 AM counts as early. */
+const COMFORT_START = 9 * 60;
+/** Done by 5 PM leaves the evening free. */
+const GOOD_FINISH = 17 * 60;
+
+/** good is quiet green, warning is the early-start tint. lead marks the badge the sort ranks by. */
+export interface ScheduleBadge {
+  text: string;
+  tone: "plain" | "good" | "warning";
+  lead: boolean;
+  /** For screen readers, since the tint alone says nothing to them. */
+  note?: string;
+}
 
 /**
  * Up to three badge texts describing the shown schedule. Replaces the old scoreChips.
@@ -83,6 +96,16 @@ export function scheduleBadges(
   score: Readonly<Pick<Score, "freeMinutes">>,
   preset: SortPresetId,
 ): string[] {
+  return scheduleBadgeDetails(meetings, score, preset, 0).map((badge) => badge.text);
+}
+
+/** The same badges with their tint. An early start is one before "Starts after", or before 9 AM when it's off. */
+export function scheduleBadgeDetails(
+  meetings: readonly BadgeMeeting[],
+  score: Readonly<Pick<Score, "freeMinutes">>,
+  preset: SortPresetId,
+  startsAfter: number,
+): ScheduleBadge[] {
   if (meetings.length === 0) return [];
 
   // ── Week facts ──
@@ -149,11 +172,25 @@ export function scheduleBadges(
     ? [lead, ...DEFAULT_ORDER.filter((kind) => kind !== lead)]
     : [...DEFAULT_ORDER];
 
-  const badges: string[] = [];
+  const comfort = startsAfter > 0 ? startsAfter : COMFORT_START;
+  function badgeTone(kind: BadgeKind): Pick<ScheduleBadge, "tone" | "note"> {
+    switch (kind) {
+      case "Start":
+        return earliestStart < comfort ? { tone: "warning", note: `before ${formatTimeShort(comfort)}` } : { tone: "plain" };
+      case "Finish":
+        return { tone: latestEnd <= GOOD_FINISH ? "good" : "plain" };
+      case "DaysOff":
+        return { tone: "good" };
+      case "FreeTime":
+        return { tone: freeMinutes > 0 ? "good" : "plain" };
+    }
+  }
+
+  const badges: ScheduleBadge[] = [];
   for (const kind of order) {
     if (badges.length >= MAX_BADGES) break;
     const text = badgeText(kind);
-    if (text !== null) badges.push(text);
+    if (text !== null) badges.push({ text, lead: kind === lead, ...badgeTone(kind) });
   }
 
   return badges;
