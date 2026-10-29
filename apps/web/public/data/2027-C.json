@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05"},
-  "generatedAt": "2026-10-28T15:52:29Z",
+  "generatedAt": "2026-10-29T15:58:56Z",
   "courses": [
     {
       "code": "AB 1533",
@@ -24,7 +24,7 @@
       "level": "Undergraduate",
       "description": "AE 2210: Introduction to Thermal Engineering (1/3 units; Cat. I) Thermal engineering encompasses a broad range of topics that include the behavior of matter and energy and their interaction as part of a system with the surrounding environment. This course covers topics from the fields of thermodynamics and heat transfer. You will learn how to identify systems and to use thermodynamic analysis to describe the behavior of the system in terms of properties and processes. Heat transfer between systems is a fundamental part of many engineering disciplines. While thermodynamics provides the foundation for understanding the energy distribution in a system in equilibrium, heat transfer provides a means for determining the rates of energy transfer under a variety of conditions. Understanding how to apply these concepts is a powerful tool for the engineer, enabling the evaluation of material states (phases) under different conditions and the maximum efficiency achievable with various power cycles. After completing this course, you should be able to define and describe properties and processes used in thermodynamic analysis and the governing laws. You should also be able to define and describe the phenomena of conduction, convection, and radiation and apply the heat diffusion equation to determine the temperature distribution in objects subject to different thermal boundary conditions. Finally, you should be able to calculate the heat transfer rates for objects subject to different (and combined) modes of heat transfer. Recommended background: basic physics, (PH 1110, PH 1111) elementary differential and integral calculus (MA 1021, MA 1022), ordinary differential equations (MA2051) or equivalent.",
       "sections": [
-        {"id":"AE 2210-C01","code":"C01","type":"lecture","status":"open","enrolled":63,"capacity":70,"waitlist":{"taken":0,"capacity":15},"instructors":["David Olinger"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Salisbury Labs 104"}]}
+        {"id":"AE 2210-C01","code":"C01","type":"lecture","status":"open","enrolled":62,"capacity":70,"waitlist":{"taken":0,"capacity":15},"instructors":["David Olinger"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Salisbury Labs 104"}]}
       ],
       "options": [
         ["AE 2210-C01"]
@@ -110,7 +110,7 @@
       "level": "Undergraduate",
       "description": "This course covers models of fixed-wing aircraft dynamics, and the design of aircraft control systems. Topics include: aircraft performance, longitudinal and lateral flight dynamics, simulation methodologies, natural modes of motion, static and dynamic stability, and aircraft control systems (such as autopilot design, flight path control, and automatic landing). Recommended background: controls (AE 2310 or equivalent), attitude and position kinematics (AE 4733 or equivalent). Students may not receive credit for both AE 4310 and AE 4723.",
       "sections": [
-        {"id":"AE 4310-C01","code":"C01","type":"lecture","status":"open","enrolled":65,"capacity":80,"waitlist":{"taken":0,"capacity":20},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Higgins Labs 116"}]}
+        {"id":"AE 4310-C01","code":"C01","type":"lecture","status":"open","enrolled":66,"capacity":80,"waitlist":{"taken":0,"capacity":20},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Higgins Labs 116"}]}
       ],
       "options": [
         ["AE 4310-C01"]
@@ -124,7 +124,7 @@
       "level": "Undergraduate",
       "description": "The course covers broad topics in spacecraft attitude dynamics, stability and control. The course includes a review of particle and two-body dynamics and introduction to rigid body dynamics. Orbital and attitude maneuvers are presented. Attitude control devices and momentum exchange techniques such as spinners, dual spinners, gravity gradient, and geomagnetic torques are presented. Attitude sensors/actuators are presented and the attitude control problem is introduced. Open-loop stability analysis for a variety of equilibrium conditions is discussed. Control using momentum exchange and mass expulsion (thrusters) devices is discussed. The analyses and designs will be implemented using scientific computing software such as MATLAB®. Recommended background: astronautics (AE 2320 or equivalent), dynamics (ES 2503, PH 2201 or equivalent), control (AE 2310 or equivalent). Students may not receive credit for both AE 4320 and AE 4713.",
       "sections": [
-        {"id":"AE 4320-C01","code":"C01","type":"lecture","status":"open","enrolled":54,"capacity":78,"waitlist":{"taken":0,"capacity":15},"instructors":["Michael Demetriou"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":600,"end":650,"location":"Unity Hall 420"}]}
+        {"id":"AE 4320-C01","code":"C01","type":"lecture","status":"open","enrolled":53,"capacity":78,"waitlist":{"taken":0,"capacity":15},"instructors":["Michael Demetriou"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":600,"end":650,"location":"Unity Hall 420"}]}
       ],
       "options": [
         ["AE 4320-C01"]
@@ -698,7 +698,7 @@
       "level": "Graduate",
       "description": "",
       "sections": [
-        {"id":"BB 501-S01","code":"S01","type":"lecture","status":"open","enrolled":26,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Jeff Bourgeois"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":720,"end":800,"location":"Gateway Park 1 Room 1002"}]}
+        {"id":"BB 501-S01","code":"S01","type":"lecture","status":"open","enrolled":28,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Jeff Bourgeois"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":720,"end":800,"location":"Gateway Park 1 Room 1002"}]}
       ],
       "options": [
         ["BB 501-S01"]
@@ -712,8 +712,8 @@
       "level": "Graduate",
       "description": "Animal cell culture technology is about maintaining cells in vitro under controlled conditions. In recent decades this technology has advanced significantly, and animal cells are used in variety of application both in research and product development. The students in this course will be exposed to the different methodologies utilized to grow cells and how this technology is becoming critical in production of many of the health care products used to control human diseases. The course is covers four general skills (1) Basic techniques for culturing and sub-culturing animal cells and growth parameters, (2) Quality control of a cell culture laboratory/How to control contamination, (3) Primary cell culture and development of cell lines, and (4) Scale-up of cell culture from a T-Flask to a bioreactor. Note: Students may not receive credit for BB508 and BB570-198",
       "sections": [
-        {"id":"BB 508-SL01","code":"SL01","type":"lecture","status":"open","enrolled":14,"capacity":24,"waitlist":{"taken":5,"capacity":20},"instructors":["Jean-Francois Hamel"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]},
-        {"id":"BB 508-SX01","code":"SX01","type":"lab","status":"open","enrolled":14,"capacity":24,"waitlist":{"taken":5,"capacity":20},"instructors":["Jean-Francois Hamel"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"BB 508-SL01","code":"SL01","type":"lecture","status":"open","enrolled":15,"capacity":24,"waitlist":{"taken":4,"capacity":20},"instructors":["Jean-Francois Hamel"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]},
+        {"id":"BB 508-SX01","code":"SX01","type":"lab","status":"open","enrolled":15,"capacity":24,"waitlist":{"taken":4,"capacity":20},"instructors":["Jean-Francois Hamel"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["BB 508-SL01","BB 508-SX01"]
@@ -798,8 +798,8 @@
       "description": "Antibodies constitute the most rapidly growing class of human therapeutics, and the second largest class of drugs after vaccines. The generation of a potent antibody therapeutics is an iterative design process that involves the generation and optimization of antibodies to improve their clinical potential. Dozens of monoclonal antibodies are in clinical use to treat graft rejection, Crohn’s disease, asthma, leukemia, other cancers, and immune disorders. They continue to generate a market value approaching $200 billion and growing nearly 15% each year. Molecular biology makes it possible to reproducibly clone recombinant versions of antibodies, including chimeric, humanized, and human antibodies with optimized effectiveness. In this course, we explore the use of antibodies as therapeutic agents based on early-stage discovery, generation, and selection of antibodies from immune and non-immune sources. Topics include the origin and structure of antibodies, their molecular and pharmacological properties, and key methods used in the biotechnology industry to develop and produce them. In addition, will uncover the fast-growing antibodies as antibody-drug conjugates for cancer therapeutics. Weekly online assessments are designed to ensure understanding. Prerequisite Courses: An undergraduate level background in Molecular Biology, Cell Biology, basics of immunology or equivalent experience is recommended.",
       "sections": [
         {"id":"BB 570-C01","code":"C01","type":"lecture","title":"ST: Quantitative Biology","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":5},"instructors":["Shane McInally"],"delivery":"in-person","credits":2,"meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Innovation Studio 203 Active Learning Classroom South"}],"description":"(variable credit) Speciality subject courses are offered based on the expertise of the department faculty such as Stem Cell Biology."},
-        {"id":"BB 570-SL02","code":"SL02","type":"lecture","title":"ST: Antibody Therapeutics","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]},
-        {"id":"BB 570-SX02","code":"SX02","type":"lab","title":"ST: Antibody Therapeutics","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"BB 570-SL02","code":"SL02","type":"lecture","title":"ST: Antibody Therapeutics","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]},
+        {"id":"BB 570-SX02","code":"SX02","type":"lab","title":"ST: Antibody Therapeutics","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["BB 570-C01"],
@@ -870,7 +870,7 @@
       "level": "Graduate",
       "description": "(0 credits; pass/fail grading) This seminar provides an opportunity for students in the BCB program to present their research work, as well as hear research talks from guest speakers.",
       "sections": [
-        {"id":"BCB 510-S01","code":"S01","type":"lecture","status":"open","enrolled":26,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Jeff Bourgeois"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":720,"end":800,"location":"Gateway Park 1 Room 1002"}]}
+        {"id":"BCB 510-S01","code":"S01","type":"lecture","status":"open","enrolled":28,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Jeff Bourgeois"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":720,"end":800,"location":"Gateway Park 1 Room 1002"}]}
       ],
       "options": [
         ["BCB 510-S01"]
@@ -1614,7 +1614,7 @@
       "level": "Undergraduate",
       "description": "Cat. I Modern theories of aromaticity, including a general assessment of delocalized bonding. The chemistry of some significant functional groups not surveyed in Organic Chemistry I, and the meaning of acidity and basicity in organic chemistry, will be more fully explored. The course will provide an introduction to the systematic synthesis of polyfunctional organic compounds. Recommended background: CH 2310. The course is intended for chemists, chemical engineers and bio-science majors.",
       "sections": [
-        {"id":"CH 2320-C01","code":"C01","type":"lecture","status":"open","enrolled":94,"capacity":110,"waitlist":{"taken":0,"capacity":10},"instructors":["John MacDonald"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":780,"end":830,"location":"Atwater Kent 116 Newell Hall"}]},
+        {"id":"CH 2320-C01","code":"C01","type":"lecture","status":"open","enrolled":95,"capacity":110,"waitlist":{"taken":0,"capacity":10},"instructors":["John MacDonald"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":780,"end":830,"location":"Atwater Kent 116 Newell Hall"}]},
         {"id":"CH 2320-C02","code":"C02","type":"lecture","status":"open","enrolled":24,"capacity":80,"waitlist":{"taken":0,"capacity":20},"instructors":["Victor Adebomi"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":540,"end":590,"location":"Higgins Labs 116"}]}
       ],
       "options": [
@@ -2387,7 +2387,7 @@
       "level": "Graduate",
       "description": "A topic of current interest is covered in detail. Please consult the department for a current listing of selected topics in this area. (Prerequisites: vary with topic) See the SUPPLEMENT section of the on-line catalog at www.wpi.edu/+gradcat​ for descriptions of courses to be offered in this academic year.",
       "sections": [
-        {"id":"CS 525-S01","code":"S01","type":"lecture","title":"ST: Large Language Models for Education","status":"open","enrolled":5,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Neil Heffernan"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":1080,"end":1160,"location":"Unity Hall"}]},
+        {"id":"CS 525-S01","code":"S01","type":"lecture","title":"ST: Large Language Models for Education","status":"open","enrolled":7,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Neil Heffernan"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":1080,"end":1160,"location":"Unity Hall"}]},
         {"id":"CS 525-S02","code":"S02","type":"lecture","title":"ST: Quantum Computing","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Hanmeng Zhan","Tian Guo"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Fuller Labs 320"}]}
       ],
       "options": [
@@ -2566,7 +2566,7 @@
       "description": "CS 552 / DS552. Generative Artificial Intelligence (3 credits) Generative Artificial Intelligence (Gen-AI) is a class of machine learning models that generate new data (text, images, faces, voice, artwork) that is near indistinguishable from the equivalent real data typically generated by humans. These models are trained based on realistic example data sets from the real world. This course covers the underlying fundamentals of generative models. It also introduces the design and modeling of some of the modern generative models: Variational Autoencoders (VAEs), Generative Adversarial Networks (GANs), Diffusion models, ChatGPT, Large Language Models, to name a few. Several applications will be discussed, ranging from image generation for engineering or science applications to the utilization of generated data for data augmentation in AI systems. Ethical concerns related to the danger of these generative technologies concerning issues from misinformation, bias, to data ownership are reviewed. Recommended Background: Core artificial intelligence classes, such as machine learning and deep learning, or equivalent background is highly recommended.",
       "sections": [
         {"id":"CS 552-S01","code":"S01","type":"lecture","status":"open","enrolled":15,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Walter Gerych"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Fuller Labs 320"}]},
-        {"id":"CS 552-S02","code":"S02","type":"lecture","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Narahara Chari Dingari"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 552-S02","code":"S02","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Narahara Chari Dingari"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 552-S01"],
@@ -2918,7 +2918,7 @@
       "description": "CS 552 / DS552. Generative Artificial Intelligence (3 credits) Generative Artificial Intelligence (Gen-AI) is a class of machine learning models that generate new data (text, images, faces, voice, artwork) that is near indistinguishable from the equivalent real data typically generated by humans. These models are trained based on realistic example data sets from the real world. This course covers the underlying fundamentals of generative models. It also introduces the design and modeling of some of the modern generative models: Variational Autoencoders (VAEs), Generative Adversarial Networks (GANs), Diffusion models, ChatGPT, Large Language Models, to name a few. Several applications will be discussed, ranging from image generation for engineering or science applications to the utilization of generated data for data augmentation in AI systems. Ethical concerns related to the danger of these generative technologies concerning issues from misinformation, bias, to data ownership are reviewed. Recommended Background: Core artificial intelligence classes, such as machine learning and deep learning, or equivalent background is highly recommended.",
       "sections": [
         {"id":"DS 552-S01","code":"S01","type":"lecture","status":"open","enrolled":15,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Walter Gerych"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Fuller Labs 320"}]},
-        {"id":"DS 552-S02","code":"S02","type":"lecture","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Narahara Chari Dingari"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"DS 552-S02","code":"S02","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Narahara Chari Dingari"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["DS 552-S01"],
@@ -3410,7 +3410,7 @@
       "level": "Graduate",
       "description": "The presentations in the graduate seminar serieswill be of tutorial nature and will be presented byrecognized experts in various fields of electricaland computer engineering. All full-time graduatestudents will be required to take both seminarcourses, ECE 596A and ECE 596B, once duringtheir graduate studies in the Electrical and ComputerEngineering Department. The course will begiven Pass/Fail. (Prerequisite: Graduate standing.)",
       "sections": [
-        {"id":"ECE 596-S01","code":"S01","type":"seminar","status":"open","enrolled":23,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["Patrick Schaumont"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Fri"],"start":900,"end":950,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"ECE 596-S01","code":"S01","type":"seminar","status":"open","enrolled":24,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["Patrick Schaumont"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Fri"],"start":900,"end":950,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["ECE 596-S01"]
@@ -3634,7 +3634,7 @@
       "level": "Undergraduate",
       "description": "Sustainability traditionally focuses on reducing harm to the environment and maintaining balance by using resources responsibly. Regenerative sustainability goes further. Inspired by nature’s ability to heal and renew itself, it promotes systems that restore and regenerate – helping landscapes and communities co-adapt, grow, and thrive over time. This approach is systemsoriented, action-driven, and self-sustaining. It allows natural and human systems to continuously evolve and renew themselves. In this course, students will explore practical strategies for restoring ecosystems, strengthening resilience, and creating self-sustaining systems. Key topics include conservation, reforestation, combating desertification, restoring watersheds, mines, and fostering ethical resource management. Students will compare large-scale sustainability initiatives—such as Africa’s Great Green Wall and China’s Three-North Shelterbelt Program—to community-led efforts like agroforestry and agroecology in the Sahel and Sahara, which leverage local knowledge, participatory governance, and adaptive technologies. This comparison will highlight why topdown policies often fall short, while decentralized, community-driven solutions tend to succeed. Through case studies, workshops, and hands-on projects, students will examine governance models and restoration strategies, exploring both government-led approaches and grassroots solutions. By the end of the course, students will be equipped to apply regenerative sustainability principles across policy, governance, agriculture, hydrology, energy, business, and technology to tackle global challenges. This course equips students with the skills needed for IQP projects and future graduate studies. Recommended background: None",
       "sections": [
-        {"id":"ENV 2110-C01","code":"C01","type":"lecture","status":"open","enrolled":17,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Achirri Ismael"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Salisbury Labs 305"}]}
+        {"id":"ENV 2110-C01","code":"C01","type":"lecture","status":"open","enrolled":16,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Achirri Ismael"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Salisbury Labs 305"}]}
       ],
       "options": [
         ["ENV 2110-C01"]
@@ -3694,9 +3694,9 @@
       "description": "Cat. I This beginning course provides important background for all science and engineering disciplines regarding the capabilities and limitations of materials in our everyday lives. Students are introduced to the fundamental theme of materials science-- structure-property-processing relationships—in metals, ceramics, and plastics. Aspects of material structure range from the atomic to microstructural and macroscopic scales. In turn, these structural features determine the properties of materials. In particular, this course investigates connections between structure and mechanical properties, and how working and thermal treatments may transform structure and thus alter material properties. This knowledge is then applied to material selection decisions. Recommended background: prior knowledge of college-level chemistry.",
       "sections": [
         {"id":"ES 2001-CD01","code":"CD01","type":"discussion","status":"open","enrolled":66,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Diana Lados"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Higgins Labs 116"}]},
-        {"id":"ES 2001-CD02","code":"CD02","type":"discussion","status":"open","enrolled":0,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Joyce Hyde"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Unity Hall 400"}]},
+        {"id":"ES 2001-CD02","code":"CD02","type":"discussion","status":"open","enrolled":1,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Joyce Hyde"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Unity Hall 400"}]},
         {"id":"ES 2001-CL01","code":"CL01","type":"lecture","status":"open","enrolled":66,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Diana Lados"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Higgins Labs 116"}]},
-        {"id":"ES 2001-CL02","code":"CL02","type":"lecture","status":"open","enrolled":0,"capacity":90,"waitlist":{"taken":0,"capacity":15},"instructors":["Joyce Hyde"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Unity Hall 400"}]}
+        {"id":"ES 2001-CL02","code":"CL02","type":"lecture","status":"open","enrolled":1,"capacity":90,"waitlist":{"taken":0,"capacity":15},"instructors":["Joyce Hyde"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Unity Hall 400"}]}
       ],
       "options": [
         ["ES 2001-CD01","ES 2001-CL01"],
@@ -5088,8 +5088,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (14-week course) The topics for integral calculus (MA 1022) are covered in this course: the concept of the definite integral, the Fundamental Theorem of Calculus, integration techniques, and applications of integration. Applications include: area, volume, arc length, center of mass, work, force, and exponential growth and decay. Logarithmic and exponential functions are studied in depth. Arithmetic and geometric sequences and series will also be covered. Key historical events in the development of integral calculus are examined. Technology will be used as appropriate to support the material being studied.This course extends for 14 weeks and offers 1/3 unit of credit. It is designed for students who would benefit from additional contact hours and who need to strengthen their mathematical background. Although the course will make use of computers, no programming experience is assumed. Students may not receive credit for both MA 1120 and MA 1022 or MA 1102.",
       "sections": [
-        {"id":"MA 1120-SD01","code":"SD01","type":"discussion","title":"Calculus II W/ Prelim Topics","status":"open","enrolled":5,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Johnson"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Fri"],"start":540,"end":590,"location":"Stratton Hall 301"}]},
-        {"id":"MA 1120-SL01","code":"SL01","type":"lecture","title":"Calculus II W/ Prelim Topics","status":"open","enrolled":5,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michael Johnson"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Tue","Thu"],"start":540,"end":590,"location":"Olin Hall 109"}]}
+        {"id":"MA 1120-SD01","code":"SD01","type":"discussion","title":"Calculus II W/ Prelim Topics","status":"open","enrolled":6,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Johnson"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Fri"],"start":540,"end":590,"location":"Stratton Hall 301"}]},
+        {"id":"MA 1120-SL01","code":"SL01","type":"lecture","title":"Calculus II W/ Prelim Topics","status":"open","enrolled":6,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Michael Johnson"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Tue","Thu"],"start":540,"end":590,"location":"Olin Hall 109"}]}
       ],
       "options": [
         ["MA 1120-SD01","MA 1120-SL01"]
@@ -5341,7 +5341,7 @@
       "level": "Undergraduate",
       "description": "This course will explore regression through simple and multiple linear models using least squares estimation, with an emphasis on practical applications and data analysis. Topics include coefficient interpretation, prediction, model diagnostics, variable selection, transformations, multicollinearity, hypothesis testing (e.g., Wald test, F-test), and confidence intervals for coefficients. This course will be offered in academic years ending in even numbers. Recommended background: Understanding of applied statistics including estimation, inference, and simple linear regression (MA 2612), and familiarity with linear algebra (MA 2071 or MA 2072)",
       "sections": [
-        {"id":"MA 3625-C01","code":"C01","type":"lecture","status":"open","enrolled":4,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Charlotte Fowler"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Stratton Hall 207"}]}
+        {"id":"MA 3625-C01","code":"C01","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Charlotte Fowler"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Stratton Hall 207"}]}
       ],
       "options": [
         ["MA 3625-C01"]
@@ -5483,7 +5483,7 @@
       "level": "Graduate",
       "description": "This course is an introduction to statistics forgraduate students in engineering and the sciences.Topics covered include basic data analysis, issues in the design of studies, an introduction to probability,point and interval estimation and hypothesistesting for means and proportions from oneand two samples, simple and multiple regression,analysis of one and two-way tables, one-way analysisof variance. As time permits, additional topics,such as distribution-free methods and the designand analysis of factorial studies will be considered.(Prerequisites: Integral and differential calculus.)",
       "sections": [
-        {"id":"MA 511-S01","code":"S01","type":"lecture","status":"open","enrolled":23,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Carly Thorp"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Stratton Hall 202"}]},
+        {"id":"MA 511-S01","code":"S01","type":"lecture","status":"open","enrolled":22,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Carly Thorp"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Stratton Hall 202"}]},
         {"id":"MA 511-S02","code":"S02","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Michael Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
@@ -5625,10 +5625,10 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to manufacturing science and engineering andprototype part production. It emphasizes CNC (computer-controlled)machining. Students will learn how to go from a solid (CAD, computer-aideddesign) model to a machined part, using CAM software (computer-aidedmanufacturing) and CNC machining. They will also be exposed to associatedissues in manufacturing process analysis, engineering design, material science,and in dimensional and surface metrology. Using machining as an example, thescience of manufacturing processes is developed in a combination of class workand laboratory experience. The laboratory experience includes an experimentalcomponent that relates process variables in machining with performance andmachined part quality. Students whose project work will necessitate fabricationof parts and those who want a background in manufacturing process science andengineering should take this course.",
       "sections": [
-        {"id":"ME 1800-CL01","code":"CL01","type":"lecture","status":"open","enrolled":65,"capacity":72,"waitlist":{"taken":9,"capacity":15},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Unity Hall 500"}]},
+        {"id":"ME 1800-CL01","code":"CL01","type":"lecture","status":"open","enrolled":66,"capacity":72,"waitlist":{"taken":9,"capacity":15},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Unity Hall 500"}]},
         {"id":"ME 1800-CX01","code":"CX01","type":"lab","status":"closed","enrolled":18,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Washburn 107 Machine Shop"}]},
         {"id":"ME 1800-CX02","code":"CX02","type":"lab","status":"closed","enrolled":18,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Washburn 107 Machine Shop"}]},
-        {"id":"ME 1800-CX03","code":"CX03","type":"lab","status":"open","enrolled":17,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Washburn 107 Machine Shop"}]},
+        {"id":"ME 1800-CX03","code":"CX03","type":"lab","status":"closed","enrolled":18,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Washburn 107 Machine Shop"}]},
         {"id":"ME 1800-CX04","code":"CX04","type":"lab","status":"open","enrolled":11,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Robert Daniello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Washburn 107 Machine Shop"}]}
       ],
       "options": [
@@ -5794,7 +5794,7 @@
       "level": "Graduate",
       "description": "ME 527/RBE 500 Foundations of Robotics (3 Credits) Fundamentals of robotics engineering. Topics include forward and inverse kinematics, velocity kinematics, introduction to dynamics and control theory, sensors, actuators, basic probabilistic robotics concepts, fundamentals of computer vision, and robot ethics. In addition, modular robot programming will be covered, and the concepts learned will be applied using realistic simulators. Prerequisites: Differential Equations (MA 2051 or equivalent), Linear Algebra (MA 2071 or equivalent) and the ability to program in a high-level language",
       "sections": [
-        {"id":"ME 527-S03","code":"S03","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"ME 527-S03","code":"S03","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["ME 527-S03"]
@@ -6263,7 +6263,7 @@
       "level": "Graduate",
       "description": "This course explores how Machine Learning (ML) and Artificial Intelligence (AI) is applied to solve business problems, to satisfy specific business needs, or to discover new opportunities for businesses. Applications of ML and AI are constantly evolving across many industries. This course utilizes existing AutoML solutions to address issues identified in business case studies (e.g. predicting hospital readmissions, loans likely to default, customer churn). The course covers the machine learning project life cycle starting with defining ML project objectives, acquiring and exploring data, modeling using AutoML tools, interpretation of models and communication of outcomes, and implementation and deployment of predictive models in organizations.",
       "sections": [
-        {"id":"MIS 587-S01","code":"S01","type":"lecture","status":"open","enrolled":14,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["ZQ Cheng"],"delivery":"hybrid","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Thu"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
+        {"id":"MIS 587-S01","code":"S01","type":"lecture","status":"open","enrolled":15,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["ZQ Cheng"],"delivery":"hybrid","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Thu"],"start":1080,"end":1250,"location":"Unity Hall 520"}]}
       ],
       "options": [
         ["MIS 587-S01"]
@@ -6440,7 +6440,7 @@
       "description": "(2 credits) This course discusses the fundamentals of crystallography and X-ray diffraction (XRD) of metals, ceramics and polymers. It introduces graduate students to the main issues and techniques of diffraction analysis as they relate to materials. The techniques for the experimental phase identification and determination of phase fraction via XRD will be reviewed. Topics covered include: basic X-ray physics, basic crystallography, fundamentals of XRD, XRD instrumentation and analysis techniques. (Prerequisites: ES 2001 or equivalent, and senior or graduate standing in engineering or science.) Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MTE 594C).",
       "sections": [
         {"id":"MTE 532-C01","code":"C01","type":"lecture","status":"open","enrolled":2,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Jianyu Liang"],"delivery":"online-async","meetings":[]},
-        {"id":"MTE 532-C02","code":"C02","type":"lecture","status":"open","enrolled":8,"capacity":35,"waitlist":{"taken":0,"capacity":5},"instructors":["Jianyu Liang"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Higgins Labs 154"}]}
+        {"id":"MTE 532-C02","code":"C02","type":"lecture","status":"open","enrolled":7,"capacity":35,"waitlist":{"taken":0,"capacity":5},"instructors":["Jianyu Liang"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Higgins Labs 154"}]}
       ],
       "options": [
         ["MTE 532-C01"],
@@ -6555,7 +6555,7 @@
       "level": "Graduate",
       "description": "This course establishes a framework for analysis of processes to convert waste streams or raw materials from the ground or ocean into refined metal ingots and related products. It covers pyrometallurgy, hydrometallurgy, electrometallurgy, and related processes at scales from kilograms of osmium to megatonnes of steel and aluminum (60-70% of each is made from recycled scrap in the US and EU). For each, it establishes the fundamentals of thermodynamics, kinetics, and scaling behavior as well as process economics and life cycle emissions. Team projects conduct deep dives into an existing process in each of the three categories (pyro/hydro/electrometallurgy), discussing the fundamentals of its operation, and exploring how it is changing to improve cost and sustainability. This course meets with the undergraduate course ME 4829; students may not receive credit for both the undergraduate and graduate versions of the course. Credits: 2 Recommended background: chemical properties, molecular bonding, chemical reaction order and kinetics (CH 1010); materials processing-structure-property fundamentals, and binary phase diagrams (ES 2001); enthalpy and entropy (ES 3001); electrical voltage, resistance, current, magnetic field basics (PH 1121).",
       "sections": [
-        {"id":"MTE 5849-C01","code":"C01","type":"lecture","status":"open","enrolled":3,"capacity":15,"waitlist":{"taken":0,"capacity":5},"instructors":["Adam Powell"],"delivery":"online-async","meetings":[]}
+        {"id":"MTE 5849-C01","code":"C01","type":"lecture","status":"open","enrolled":4,"capacity":15,"waitlist":{"taken":0,"capacity":5},"instructors":["Adam Powell"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MTE 5849-C01"]
@@ -7615,8 +7615,8 @@
       "level": "Undergraduate",
       "description": "Cat. I Multidisciplinary introduction to robotics, involving concepts from the fields of electrical engineering, mechanical engineering and computer science. Topics covered include sensor performance and integration, electric and pneumatic actuators, power transmission, materials and static force analysis, controls and programmable embedded computer systems, system integration and robotic applications. Laboratory sessions consist of hands-on exercises and team projects where students design and build mobile robots. Undergraduate credit may not be earned for both this course and for ES 2201. Recommended background: CS 1004 or significant experience with programming in python. PH 1120 or PH 1121.",
       "sections": [
-        {"id":"RBE 1001-CL01","code":"CL01","type":"lecture","status":"open","enrolled":15,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Griffin Tabor"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Atwater Kent 219"}]},
-        {"id":"RBE 1001-CX01","code":"CX01","type":"lab","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Griffin Tabor"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":590,"location":"Innovation Studio 103 Robotics Lab"}]},
+        {"id":"RBE 1001-CL01","code":"CL01","type":"lecture","status":"open","enrolled":16,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Griffin Tabor"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Atwater Kent 219"}]},
+        {"id":"RBE 1001-CX01","code":"CX01","type":"lab","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Griffin Tabor"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":590,"location":"Innovation Studio 103 Robotics Lab"}]},
         {"id":"RBE 1001-CX02","code":"CX02","type":"lab","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Griffin Tabor"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Innovation Studio 103 Robotics Lab"}]}
       ],
       "options": [
@@ -7775,7 +7775,7 @@
       "level": "Graduate",
       "description": "ME 527/RBE 500 Foundations of Robotics (3 Credits) Fundamentals of robotics engineering. Topics include forward and inverse kinematics, velocity kinematics, introduction to dynamics and control theory, sensors, actuators, basic probabilistic robotics concepts, fundamentals of computer vision, and robot ethics. In addition, modular robot programming will be covered, and the concepts learned will be applied using realistic simulators. Prerequisites: Differential Equations (MA 2051 or equivalent), Linear Algebra (MA 2071 or equivalent) and the ability to program in a high-level language",
       "sections": [
-        {"id":"RBE 500-S03","code":"S03","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"RBE 500-S03","code":"S03","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["RBE 500-S03"]
@@ -7919,7 +7919,7 @@
       "level": "Graduate",
       "description": "This project-based course integrates robotics engineering theory and practice, and provides the opportunity to apply the skills and knowledge acquired in the Robotics Engineering curriculum. The project is normally conducted in teams of two to four students. Students are encouraged to select projects with practical significance to their current and future professional responsibilities. The projects are administered, advised, and evaluated by WPI faculty as part of the learning experience, but students are also encouraged to seek mentorship from experienced colleagues in the Robotics Engineering profession. The project will include substantial analysis and/or design and conclude with a written report and a public presentation. Prerequisites: The student must have completed the 9-credit RBE Foundations and additional 6 credits including any combination of RBE core, electives, and Engineering Context before enrolling in RBE 594.",
       "sections": [
-        {"id":"RBE 594-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":20,"waitlist":{"taken":2,"capacity":20},"instructors":["Andre Rosendo"],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
+        {"id":"RBE 594-S01","code":"S01","type":"lecture","status":"open","enrolled":8,"capacity":20,"waitlist":{"taken":2,"capacity":20},"instructors":["Andre Rosendo"],"delivery":"online-sync","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
         {"id":"RBE 594-S02","code":"S02","type":"lecture","status":"open","enrolled":2,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Andre Rosendo"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Olin Hall 218"}]}
       ],
       "options": [
@@ -8271,7 +8271,7 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/12 unit) Introduction to the sports through skill development and play.",
       "sections": [
-        {"id":"WPE 1003-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":20,"capacity":20,"waitlist":{"taken":9,"capacity":10},"instructors":["Matthew Kelly"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Courts 1-2"}]}
+        {"id":"WPE 1003-C01","code":"C01","type":"workshop","status":"closed","enrolled":20,"capacity":20,"waitlist":{"taken":10,"capacity":10},"instructors":["Matthew Kelly"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
         ["WPE 1003-C01"]
@@ -8384,7 +8384,7 @@
       "description": "Cat. I (1/12 unit) This course will teach basic strength training principles and techniques. Students will develop and implement an individualized conditioning program.",
       "sections": [
         {"id":"WPE 1055-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":25,"capacity":24,"waitlist":{"taken":1,"capacity":10},"instructors":["Emily Dippel"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":600,"end":650,"location":"Harrington Auditorium 102"}]},
-        {"id":"WPE 1055-C02","code":"C02","type":"workshop","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Carden Brown"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 3-4"}]}
+        {"id":"WPE 1055-C02","code":"C02","type":"workshop","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Carden Brown"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 3-4"}]}
       ],
       "options": [
         ["WPE 1055-C01"],
