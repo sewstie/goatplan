@@ -29,6 +29,22 @@ describe("ScheduleSummary", () => {
     expect(screen.getByRole("list", { name: "This schedule" })).toHaveTextContent("40 min free between classes");
   });
 
+  it("puts the badges on their own line, bolds the sort's measure and tints an early start", () => {
+    setPlanner({ sortPreset: "earliestFinish" });
+    render(<ScheduleSummary />);
+    expect(screen.getByText("This schedule:")).toBeInTheDocument();
+    const lead = screen.getByRole("listitem", { description: "What this sort ranks by" });
+    expect(lead).toHaveTextContent(/^Done by /);
+    expect(lead).toHaveClass("font-700");
+    expect(screen.getAllByRole("listitem").filter((badge) => badge.classList.contains("font-700"))).toHaveLength(1);
+  });
+
+  it("highlights no badge under Best overall", () => {
+    setPlanner({ sortPreset: "bestOverall" });
+    render(<ScheduleSummary />);
+    expect(screen.queryByRole("listitem", { description: "What this sort ranks by" })).not.toBeInTheDocument();
+  });
+
   it("says which term is loading", () => {
     setPlanner({ termStatus: "loading", term: null, response: null });
     render(<ScheduleSummary />);

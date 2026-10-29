@@ -20,13 +20,13 @@ type ListboxProps = Omit<ComponentProps<"button">, "onChange" | "children" | "on
 };
 
 const triggerBase =
-  "rounded-row border border-line bg-surface px-9 text-left text-10 leading-14-5 text-ink focus-visible:border-choice-line focus-visible:shadow-field-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint";
+  "cursor-pointer rounded-row border border-line bg-surface px-9 text-left text-10 leading-14-5 text-ink focus-visible:border-choice-line focus-visible:shadow-field-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint";
 
 // The menu is the field look, sized to sit in the Preferences row. The link is plain muted text,
 // like the phone calendar's "Fewest early classes ⌄". The pill is the phone top bar's term picker.
 const triggerClasses: Record<ListboxVariant, string> = {
   field: cx(triggerBase, "flex min-h-36.5 w-full items-center justify-between gap-6 py-9"),
-  menu: cx(triggerBase, "relative inline-flex min-h-32 min-w-146 cursor-pointer items-center gap-6 py-7"),
+  menu: cx(triggerBase, "relative inline-flex min-h-32 min-w-146 items-center gap-6 py-7"),
   pill: "flex min-h-44 w-full cursor-pointer items-center justify-between gap-6 rounded-control border border-line bg-surface px-12 text-left text-12 font-700 text-ink tablet:text-10 focus-visible:border-choice-line focus-visible:shadow-field-focus focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint",
   link: "relative inline-flex min-w-0 cursor-pointer items-center gap-3 rounded-badge text-9 leading-13 text-ink-muted hover:text-ink",
 };

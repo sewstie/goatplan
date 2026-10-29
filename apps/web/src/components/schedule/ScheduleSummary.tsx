@@ -1,12 +1,12 @@
 "use client";
 
 import { selectCurrentSchedule, selectSavedPlan, usePlanner } from "@/lib/store";
-import { count, scheduleBadges, summaryText } from "./scheduleCopy";
+import { count, scheduleBadgeDetails, summaryText } from "./scheduleCopy";
 import { ScoreChips } from "./ScoreChips";
 import { useScheduleItems } from "./useScheduleItems";
 import { useDiagnosis } from "./useDiagnosis";
 
-/** Schedule agent: the line under the title, like "3 courses · 24 schedules fit". */
+/** Schedule agent: the line under the title, like "3 courses · 24 schedules fit", with the shown schedule's badges on a line of their own. */
 export function ScheduleSummary() {
   const saved = usePlanner(selectSavedPlan);
   const termStatus = usePlanner((state) => state.termStatus);
@@ -15,6 +15,7 @@ export function ScheduleSummary() {
   const response = usePlanner((state) => state.response);
   const solveStatus = usePlanner((state) => state.solveStatus);
   const sortPreset = usePlanner((state) => state.sortPreset);
+  const startsAfter = usePlanner((state) => state.preferences.startsAfter);
   const schedule = usePlanner(selectCurrentSchedule);
   const { classes, untimed, waitlisted } = useScheduleItems();
   const diagnosis = useDiagnosis();
@@ -38,10 +39,10 @@ export function ScheduleSummary() {
   if (!text) return null;
 
   const showChips = termStatus === "ready" && solveStatus === "done" && courseCount > 0 && schedule;
-  const badges = showChips ? scheduleBadges(classes, schedule.score, sortPreset) : [];
+  const badges = showChips ? scheduleBadgeDetails(classes, schedule.score, sortPreset, startsAfter) : [];
 
   return (
-    <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+    <div className="flex flex-col gap-4">
       <span>{text}</span>
       {badges.length > 0 && <ScoreChips chips={badges} />}
     </div>

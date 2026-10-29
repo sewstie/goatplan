@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { Day } from "@/lib/data/types";
 import type { Diagnosis, SolveResponse } from "@/lib/engine/types";
 import type { SortPresetId } from "@/lib/store/types";
-import { bannerMessage, count, formatDuration, listNames, scheduleBadges, summaryText, type BannerInput } from "./scheduleCopy";
+import { bannerMessage, count, formatDuration, listNames, scheduleBadgeDetails, scheduleBadges, summaryText, type BannerInput } from "./scheduleCopy";
 
 // ── helpers ──
 
@@ -320,6 +320,50 @@ describe("scheduleBadges", () => {
       expect(badges([], "bestOverall", 0)).toEqual([]);
       expect(badges([])).toEqual([]);
     });
+  });
+});
+
+describe("scheduleBadgeDetails", () => {
+  const week: Meeting[] = [
+    { day: "Mon", start: 480, end: 530 },
+    { day: "Mon", start: 600, end: 650 },
+    { day: "Wed", start: 480, end: 830 },
+  ];
+
+  function tones(preset: SortPresetId = "bestOverall", startsAfter = 0) {
+    return scheduleBadgeDetails(week, {}, preset, startsAfter).map(({ text, tone, lead }) => ({ text, tone, lead }));
+  }
+
+  it("warns about an 8 AM start and marks good news green", () => {
+    expect(tones()).toEqual([
+      { text: "3 days off", tone: "good", lead: false },
+      { text: "Starts 8 AM", tone: "warning", lead: false },
+      { text: "1 h free between classes", tone: "good", lead: false },
+    ]);
+  });
+
+  it("says when the start is early, for screen readers", () => {
+    const start = scheduleBadgeDetails(week, {}, "bestOverall", 0).find((badge) => badge.text === "Starts 8 AM");
+    expect(start?.note).toBe("before 9 AM");
+  });
+
+  it("measures an early start against Starts after when it's set", () => {
+    const later: Meeting[] = [{ day: "Mon", start: 570, end: 620 }];
+    expect(scheduleBadgeDetails(later, {}, "latestStart", 0)[0]).toMatchObject({ text: "Starts 9:30 AM", tone: "plain" });
+    expect(scheduleBadgeDetails(later, {}, "latestStart", 600)[0]).toMatchObject({ text: "Starts 9:30 AM", tone: "warning", note: "before 10 AM" });
+  });
+
+  it("highlights only the badge the sort ranks by", () => {
+    expect(tones("earliestFinish").filter((badge) => badge.lead)).toEqual([{ text: "Done by 1:50 PM", tone: "good", lead: true }]);
+    expect(tones("bestOverall").some((badge) => badge.lead)).toBe(false);
+  });
+
+  it("keeps a late finish and no gaps plain", () => {
+    const long: Meeting[] = [{ day: "Mon", start: 600, end: 1080 }];
+    const finish = scheduleBadgeDetails(long, { freeMinutes: 0 }, "earliestFinish", 0);
+    const gaps = scheduleBadgeDetails(long, { freeMinutes: 0 }, "fewestGaps", 0);
+    expect(finish.find((badge) => badge.text === "Done by 6 PM")?.tone).toBe("plain");
+    expect(gaps.find((badge) => badge.text === "No gaps between classes")?.tone).toBe("plain");
   });
 });
 

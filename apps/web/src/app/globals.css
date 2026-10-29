@@ -109,6 +109,8 @@
   --text-19--line-height: 24.7px;
   --text-17: 17px;
   --text-17--line-height: 23.8px;
+  --text-14: 14px;
+  --text-14--line-height: 17.4px;
   --text-12: 12px;
   --text-12--line-height: 17.4px;
   --text-11: 11px;
@@ -303,6 +305,8 @@ body:has(.guide-popover) [data-guide-hide] {
 */
 @media (max-width: 39.99rem) {
   :root {
+    --text-14: 18px;
+    --text-14--line-height: 21px;
     --text-12: 16px;
     --text-12--line-height: 21px;
     --text-11: 15px;
