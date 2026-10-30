@@ -15,8 +15,6 @@ export type BlockDrag = {
 };
 
 const MOVE_PX = 4;
-const HOLD_MS = 400;
-const HOLD_SLOP_PX = 8;
 
 type Press = {
   pointerId: number;
@@ -27,15 +25,15 @@ type Press = {
   erase: boolean;
   touch: boolean;
   started: boolean;
-  timer: ReturnType<typeof setTimeout> | null;
 };
 
 const same = (a: DragSelection | null, b: DragSelection) =>
   a !== null && a.from === b.from && a.to === b.to && a.time.start === b.time.start && a.time.end === b.time.end;
 
 /**
- * Drawing a blocked time on the calendar. A mouse or pen drags right away; a finger presses and holds
- * first, so swipes and scrolling still work. Day columns are the elements with data-drag-day.
+ * Drawing a blocked time on the calendar, in drawing mode only (drag is undefined otherwise). A drag
+ * starts once the pointer moves 4 px, anywhere in a day column. A finger can still swipe sideways to
+ * other days; up and down it draws. Day columns are the elements with data-drag-day.
  */
 export function useBlockDrag(days: readonly Day[], range: TimeRange, drag: BlockDrag | undefined) {
   const [surface, setSurface] = useState<HTMLElement | null>(null);
@@ -69,7 +67,6 @@ export function useBlockDrag(days: readonly Day[], range: TimeRange, drag: Block
 
   function stop() {
     const current = press.current;
-    if (current?.timer) clearTimeout(current.timer);
     if (current && surface?.hasPointerCapture(current.pointerId)) surface.releasePointerCapture(current.pointerId);
     press.current = null;
     latest.current = null;
@@ -77,38 +74,29 @@ export function useBlockDrag(days: readonly Day[], range: TimeRange, drag: Block
   }
 
   function onPointerDown(event: PointerEvent<HTMLElement>) {
-    if (!drag || !event.isPrimary || event.button !== 0) return;
-    const target = event.target as Element;
-    if (!target.closest("[data-drag-day]") || target.closest("button, a")) return;
+    // ⌘-click and Ctrl-click pick blocked times instead of drawing.
+    if (!drag || !event.isPrimary || event.button !== 0 || event.metaKey || event.ctrlKey) return;
+    if (!(event.target as Element).closest("[data-drag-day]")) return;
     const { index, minute } = locate(event.clientX, event.clientY);
     const day = days[index];
     if (!day) return;
-    const touch = event.pointerType === "touch";
-    const current: Press = {
+    press.current = {
       pointerId: event.pointerId,
       x: event.clientX,
       y: event.clientY,
       from: index,
       anchor: minute,
       erase: blockedAt(drag.blocked, day, minute),
-      touch,
+      touch: event.pointerType === "touch",
       started: false,
-      timer: null,
     };
-    if (touch) current.timer = setTimeout(() => start(current), HOLD_MS);
-    press.current = current;
   }
 
   function onPointerMove(event: PointerEvent<HTMLElement>) {
     const current = press.current;
     if (!current || current.pointerId !== event.pointerId) return;
     if (!current.started) {
-      const moved = Math.hypot(event.clientX - current.x, event.clientY - current.y);
-      if (current.touch) {
-        if (moved > HOLD_SLOP_PX) stop();
-        return;
-      }
-      if (moved < MOVE_PX) return;
+      if (Math.hypot(event.clientX - current.x, event.clientY - current.y) < MOVE_PX) return;
       start(current);
     }
     follow(current, event.clientX, event.clientY);
@@ -129,7 +117,7 @@ export function useBlockDrag(days: readonly Day[], range: TimeRange, drag: Block
     if (press.current?.pointerId === event.pointerId) stop();
   }
 
-  // A column hands its touch capture to the surface when a long press starts; only the surface's own loss counts.
+  // A column hands its touch capture to the surface when a drag starts; only the surface's own loss counts.
   function onLostPointerCapture(event: PointerEvent<HTMLElement>) {
     if (event.target === event.currentTarget) onPointerCancel(event);
   }
@@ -140,7 +128,7 @@ export function useBlockDrag(days: readonly Day[], range: TimeRange, drag: Block
     stop();
   });
 
-  // Once a long press has started, the finger draws instead of scrolling the page.
+  // Once a drag has started, the finger draws instead of swiping to other days.
   useEffect(() => {
     if (!surface) return;
     const hold = (event: TouchEvent) => {
@@ -154,13 +142,10 @@ export function useBlockDrag(days: readonly Day[], range: TimeRange, drag: Block
   useEffect(() => {
     if (!dragging) return;
     const cancel = (event: KeyboardEvent) => cancelOnEscape(event);
-    window.addEventListener("keydown", cancel);
-    return () => window.removeEventListener("keydown", cancel);
+    // Capture, so a cancelled drag's Escape doesn't also leave drawing mode.
+    window.addEventListener("keydown", cancel, true);
+    return () => window.removeEventListener("keydown", cancel, true);
   }, [dragging]);
-
-  useEffect(() => () => {
-    if (press.current?.timer) clearTimeout(press.current.timer);
-  }, []);
 
   return {
     selection,
@@ -176,7 +161,7 @@ export function useBlockDrag(days: readonly Day[], range: TimeRange, drag: Block
           onContextMenu: (event: MouseEvent<HTMLElement>) => {
             if (press.current?.touch) event.preventDefault();
           },
-          style: dragging ? { touchAction: "none" as const } : undefined,
+          style: { touchAction: dragging ? ("none" as const) : ("pan-x" as const) },
         }
       : { ref: setSurface },
   };

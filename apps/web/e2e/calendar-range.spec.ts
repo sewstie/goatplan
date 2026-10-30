@@ -93,6 +93,7 @@ test("range changes animate briefly and respect reduced motion", async ({ page }
   const block = calendar(page).locator("[data-block]");
   expect(await block.evaluate((node) => getComputedStyle(node).transitionProperty)).toContain("top");
   await page.getByRole("button", { name: "Block a time" }).click();
+  await page.getByRole("button", { name: "Type a time instead" }).click();
   const dialog = page.getByRole("dialog");
   await dialog.getByLabel("Sunday", { exact: true }).check();
   await dialog.getByLabel("From", { exact: true }).selectOption("1080");

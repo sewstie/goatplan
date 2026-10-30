@@ -39,6 +39,8 @@ type TooltipProps = {
   gap?: number;
   /** Off when the trigger's own label already says everything, so screen readers don't hear it twice. */
   describes?: boolean;
+  /** Keeps it hidden, like while the trigger has its own popover open. */
+  disabled?: boolean;
   className?: string;
 };
 
@@ -53,16 +55,18 @@ export function Tooltip({
   offsetX,
   gap,
   describes = true,
+  disabled = false,
   className,
 }: TooltipProps) {
   const id = useId();
-  const [trigger, setTrigger] = useState<HTMLElement | null>(null);
+  const [target, setTarget] = useState<HTMLElement | null>(null);
+  const trigger = disabled ? null : target;
   const open = trigger !== null;
   const floatingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
-    const close = () => setTrigger(null);
+    const close = () => setTarget(null);
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") close();
     }
@@ -104,19 +108,19 @@ export function Tooltip({
           "aria-describedby": describedBy,
           onPointerEnter: (event) => {
             props.onPointerEnter?.(event);
-            setTrigger(event.currentTarget);
+            setTarget(event.currentTarget);
           },
           onPointerLeave: (event) => {
             props.onPointerLeave?.(event);
-            setTrigger(null);
+            setTarget(null);
           },
           onFocus: (event) => {
             props.onFocus?.(event);
-            setTrigger(event.currentTarget);
+            setTarget(event.currentTarget);
           },
           onBlur: (event) => {
             props.onBlur?.(event);
-            setTrigger(null);
+            setTarget(null);
           },
         })}
         {open &&
@@ -139,10 +143,10 @@ export function Tooltip({
   return (
     <span
       className="relative inline-flex"
-      onPointerEnter={(event) => setTrigger(event.currentTarget)}
-      onPointerLeave={() => setTrigger(null)}
-      onFocus={(event) => setTrigger(event.currentTarget)}
-      onBlur={() => setTrigger(null)}
+      onPointerEnter={(event) => setTarget(event.currentTarget)}
+      onPointerLeave={() => setTarget(null)}
+      onFocus={(event) => setTarget(event.currentTarget)}
+      onBlur={() => setTarget(null)}
     >
       {cloneElement(children, { "aria-describedby": describedBy })}
       <span

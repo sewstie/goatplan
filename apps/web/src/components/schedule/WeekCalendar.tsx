@@ -22,8 +22,8 @@ type WeekCalendarProps = {
   caption: string;
   /** The phone card's line under the grid. Defaults to the caption. */
   note?: string;
-  /** What goes in each day column, sized for the current hour height. */
-  renderDay?: (day: Day, density: Density) => ReactNode;
+  /** What goes in each day column, sized for the current hour height (null until it's measured). */
+  renderDay?: (day: Day, density: Density, pixelsPerHour: number | null) => ReactNode;
   /** Drawn under the day columns, across all of them (the early band). */
   background?: ReactNode;
   /** Drawn over the grid (a message card). */
@@ -31,7 +31,7 @@ type WeekCalendarProps = {
   /** Between the grid and the caption (the "No set time" strip). */
   footer?: ReactNode;
   busy?: boolean;
-  /** Lets the student draw blocked times on empty space, or remove them by starting on one. */
+  /** In drawing mode: lets the student draw blocked times, or remove them by starting on one. */
   drag?: BlockDrag;
 };
 
@@ -41,7 +41,8 @@ export function WeekCalendar({ days, range, caption, note, renderDay, background
   const [viewportRef, viewportHeight] = useElementHeight<HTMLDivElement>();
   const hours = (range.end - range.start) / 60;
   const gridHeight = viewportHeight === null ? null : Math.max(viewportHeight - 17, hours * 36);
-  const density = blockDensity(gridHeight === null ? null : gridHeight / hours);
+  const pixelsPerHour = gridHeight === null ? null : gridHeight / hours;
+  const density = blockDensity(pixelsPerHour);
   const marks = hourMarks(range);
   const { selection, announcement, surfaceProps } = useBlockDrag(days, range, phone ? undefined : drag);
 
@@ -83,13 +84,13 @@ export function WeekCalendar({ days, range, caption, note, renderDay, background
               className={cx(
                 "absolute inset-0 grid grid-rows-1",
                 drag && "cursor-crosshair select-none [-webkit-touch-callout:none]",
-                selection && (selection.erase ? "**:cursor-not-allowed" : "**:cursor-crosshair"),
+                selection && (selection.erase ? "**:cursor-erase" : "**:cursor-crosshair"),
               )}
               style={{ ...surfaceProps.style, gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))` }}
             >
               {days.map((day) => (
                 <div key={day} role="group" aria-label={DAY_NAMES[day]} data-drag-day={day} className="relative border-l border-line">
-                  {renderDay?.(day, density)}
+                  {renderDay?.(day, density, pixelsPerHour)}
                 </div>
               ))}
               {selection && chosen && (

@@ -5,11 +5,15 @@ import { addBlocked } from "@/components/preferences/blockedTimes";
 import { BlockTimeDialog } from "@/components/preferences/BlockTimeDialog";
 import { BLOCK_FROM, BLOCK_TO } from "@/components/preferences/timeOptions";
 import { changeText, mergeBlocked } from "@/components/schedule/dragBlock";
+import { count } from "@/components/schedule/scheduleCopy";
 import { Toast } from "@/components/ui/Toast";
 import type { Day } from "@/lib/data/types";
 import { usePlanner, type BlockedChange } from "@/lib/store";
 
-/** The one toast: "Removed MA 1024 · Undo", or "Blocked Mon–Wed 12–1 PM · Name it · Undo" after a drag. */
+/**
+ * The one toast: "Removed MA 1024 · Undo", "Blocked Mon–Wed 12–1 PM · Name it · Undo" after a drag, or
+ * "Removed 3 blocked times · Undo" after deleting selected ones.
+ */
 export function PlannerToast() {
   const removedCourse = usePlanner((state) => state.removedCourse);
   const undoRemoveCourse = usePlanner((state) => state.undoRemoveCourse);
@@ -58,7 +62,9 @@ export function PlannerToast() {
   const nameable = blockedChange && !blockedChange.erased && blockedChange.start >= BLOCK_FROM && blockedChange.end <= BLOCK_TO;
   const toast = blockedChange
     ? {
-        message: changeText(blockedChange.days, blockedChange, blockedChange.erased),
+        message: (blockedChange.count ?? 1) > 1
+          ? `Removed ${count("blocked time", blockedChange.count ?? 0)}`
+          : changeText(blockedChange.days, blockedChange, blockedChange.erased),
         actions: [
           ...(nameable
             ? [{ label: "Name it", onAction: () => {

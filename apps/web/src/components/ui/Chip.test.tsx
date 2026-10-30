@@ -31,4 +31,14 @@ describe("Chip", () => {
     await userEvent.keyboard("{Enter}");
     expect(onClick).toHaveBeenCalledOnce();
   });
+
+  it("is a toggle button when it has a pressed state", async () => {
+    const { rerender } = render(<Chip variant="dashed" pressed={false} onClick={() => {}}>Block a time</Chip>);
+    expect(screen.getByRole("button", { name: "Block a time" })).toHaveAttribute("aria-pressed", "false");
+    rerender(<Chip variant="dashed" pressed onClick={() => {}}>Drawing busy times</Chip>);
+    const chip = screen.getByRole("button", { name: "Drawing busy times" });
+    expect(chip).toHaveAttribute("aria-pressed", "true");
+    expect(chip.className).toContain("bg-accent-soft");
+    expect(chip.className).not.toContain("border-dashed");
+  });
 });

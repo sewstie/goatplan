@@ -12,6 +12,7 @@ import { selectionText } from "./dragBlock";
 import { DragSelectionBox } from "./DragSelectionBox";
 import { hourMarks, percentOf, type TimeRange } from "./timeRange";
 import { useBlockDrag, type BlockDrag } from "./useBlockDrag";
+import { useElementHeight } from "./useElementHeight";
 import { useKeptScrollLeft } from "./useKeptScrollLeft";
 
 type SwipeWeekCalendarProps = {
@@ -19,7 +20,7 @@ type SwipeWeekCalendarProps = {
   range: TimeRange;
   /** The line under the grid, like "Auto-fit to your schedule". */
   note: string;
-  renderDay?: (day: Day, density: Density) => ReactNode;
+  renderDay?: (day: Day, density: Density, pixelsPerHour: number | null) => ReactNode;
   background?: ReactNode;
   overlay?: ReactNode;
   footer?: ReactNode;
@@ -42,6 +43,8 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
   useKeptScrollLeft(scroller);
   const hours = (range.end - range.start) / 60;
   const height = `calc(var(--size-phone-hour) * ${hours})`;
+  const [axisRef, axisHeight] = useElementHeight<HTMLDivElement>();
+  const pixelsPerHour = axisHeight === null ? null : axisHeight / hours;
   const marks = hourMarks(range);
   const empty = !renderDay && !busy;
   const { selection, announcement, surfaceProps } = useBlockDrag(days, range, drag);
@@ -65,7 +68,10 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
           </p>
         </div>
         <div className="-mt-10 flex shrink-0 flex-col items-end">
-          <SortSelect variant="link" className="min-h-44 max-w-160" />
+          {/* While drawing, Sort keeps its space when it goes away, so the grid doesn't move up. */}
+          <div className={cx(drag && "min-h-44")}>
+            <SortSelect variant="link" className="min-h-44 max-w-160" />
+          </div>
           {days.length > 2 && (
             <button
               type="button"
@@ -94,7 +100,7 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
             className={cx(
               "relative flex w-max pr-8 pb-10",
               drag && "select-none [-webkit-touch-callout:none]",
-              selection && (selection.erase ? "**:cursor-not-allowed" : "**:cursor-crosshair"),
+              selection && (selection.erase ? "**:cursor-erase" : "**:cursor-crosshair"),
             )}
           >
             <div aria-hidden className="absolute top-(--size-phone-day-header) right-0 left-(--size-phone-axis)" style={{ height }}>
@@ -104,7 +110,7 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
               {background}
             </div>
             <div aria-hidden className="sticky left-0 z-2 w-(--size-phone-axis) shrink-0 bg-surface pt-(--size-phone-day-header)">
-              <div className="relative" style={{ height }}>
+              <div ref={axisRef} className="relative" style={{ height }}>
                 {marks.map((minute) => (
                   <span
                     key={minute}
@@ -128,7 +134,7 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
                   className={cx("relative", drag && "cursor-crosshair")}
                   style={{ height }}
                 >
-                  {renderDay?.(day, "regular")}
+                  {renderDay?.(day, "regular", pixelsPerHour)}
                   {selection && index >= first && index <= last && (
                     <DragSelectionBox
                       erase={selection.erase}

@@ -4,6 +4,7 @@ import { beforeAll, describe, expect, it, vi } from "vitest";
 import { SORT_PRESETS } from "@/lib/store";
 import { solved } from "@/lib/store/testing/fixtures";
 import { polyfillDialog, startTestPlanner, waitForSolve } from "@/components/sections/testing/plannerStore";
+import { DrawingBar } from "@/components/schedule/DrawingBar";
 import { PreferencesBar } from "./PreferencesBar";
 
 vi.mock("@/lib/store", async (importOriginal) => ({
@@ -12,6 +13,22 @@ vi.mock("@/lib/store", async (importOriginal) => ({
 }));
 
 beforeAll(polyfillDialog);
+
+/** The row with the drawing bar, which has the form. */
+function renderWithBar() {
+  render(
+    <>
+      <PreferencesBar />
+      <DrawingBar />
+    </>,
+  );
+}
+
+async function openForm() {
+  await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
+  await userEvent.click(screen.getByRole("button", { name: "Type a time instead" }));
+  return screen.getByRole("dialog", { name: "Block a time" });
+}
 
 const work = [
   { day: "Tue" as const, start: 840, end: 960 },
@@ -64,10 +81,9 @@ describe("PreferencesBar", () => {
 
   it("adds a blocked time from the form", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
-    render(<PreferencesBar />);
+    renderWithBar();
 
-    await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
-    const dialog = screen.getByRole("dialog", { name: "Block a time" });
+    const dialog = await openForm();
     await userEvent.click(within(dialog).getByRole("checkbox", { name: "Monday" }));
     await userEvent.click(within(dialog).getByRole("checkbox", { name: "Wednesday" }));
     await userEvent.selectOptions(within(dialog).getByRole("combobox", { name: "From" }), "10:00 AM");
@@ -85,10 +101,9 @@ describe("PreferencesBar", () => {
 
   it("names a blocked time when asked, like the design's Work pill", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
-    render(<PreferencesBar />);
+    renderWithBar();
 
-    await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
-    const dialog = screen.getByRole("dialog", { name: "Block a time" });
+    const dialog = await openForm();
     const name = within(dialog).getByRole("textbox", { name: "Name (optional)" });
     expect(name).toHaveValue("");
     await userEvent.type(name, "Work");
@@ -109,20 +124,18 @@ describe("PreferencesBar", () => {
 
   it("opens the block form with focus in the name field, not on Close", async () => {
     await startTestPlanner({ courses: ["AE 2320"] });
-    render(<PreferencesBar />);
+    renderWithBar();
 
-    await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
-    const dialog = screen.getByRole("dialog", { name: "Block a time" });
+    const dialog = await openForm();
     expect(within(dialog).getByRole("textbox", { name: "Name (optional)" })).toHaveFocus();
     expect(within(dialog).getByRole("button", { name: "Close" })).not.toHaveFocus();
   });
 
   it("asks for a day before blocking a time", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
-    render(<PreferencesBar />);
+    renderWithBar();
 
-    await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
-    const dialog = screen.getByRole("dialog", { name: "Block a time" });
+    const dialog = await openForm();
     await userEvent.click(within(dialog).getByRole("button", { name: "Block time" }));
 
     expect(within(dialog).getByRole("alert")).toHaveTextContent("Pick at least one day.");
@@ -131,15 +144,60 @@ describe("PreferencesBar", () => {
 
   it("keeps the end of a blocked time after its start", async () => {
     await startTestPlanner({ courses: ["AE 2320"] });
-    render(<PreferencesBar />);
+    renderWithBar();
 
-    await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
-    const dialog = screen.getByRole("dialog", { name: "Block a time" });
+    const dialog = await openForm();
     await userEvent.selectOptions(within(dialog).getByRole("combobox", { name: "From" }), "3:00 PM");
 
     const to = within(dialog).getByRole("combobox", { name: "To" });
     expect(to).toHaveDisplayValue("4:00 PM");
     expect(within(to).queryByRole("option", { name: "3:00 PM" })).not.toBeInTheDocument();
+  });
+
+  it("turns drawing mode on and off with Block a time, which says when it's on", async () => {
+    const { store } = await startTestPlanner({ courses: ["AE 2320"] });
+    renderWithBar();
+
+    const toggle = screen.getByRole("button", { name: "Block a time" });
+    expect(toggle).toHaveAttribute("aria-pressed", "false");
+    expect(screen.queryByRole("group", { name: "Drawing mode" })).not.toBeInTheDocument();
+    await userEvent.click(toggle);
+
+    expect(store.getState().drawing).toBe(true);
+    expect(toggle).toHaveAccessibleName("Drawing busy times");
+    expect(toggle).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("group", { name: "Drawing mode" })).toHaveTextContent("Drag on the calendar to block time·Type a time instead·Done");
+
+    await userEvent.click(toggle);
+    expect(store.getState().drawing).toBe(false);
+    expect(toggle).toHaveAccessibleName("Block a time");
+    expect(screen.queryByRole("group", { name: "Drawing mode" })).not.toBeInTheDocument();
+  });
+
+  it("leaves drawing mode with Done or Escape and puts focus back on the toggle", async () => {
+    const { store } = await startTestPlanner({ courses: ["AE 2320"] });
+    renderWithBar();
+
+    await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
+    await userEvent.click(screen.getByRole("button", { name: "Done" }));
+    expect(store.getState().drawing).toBe(false);
+    expect(screen.getByRole("button", { name: "Block a time" })).toHaveFocus();
+
+    await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
+    screen.getByRole("button", { name: "Done" }).focus();
+    await userEvent.keyboard("{Escape}");
+    expect(store.getState().drawing).toBe(false);
+    expect(screen.getByRole("button", { name: "Block a time" })).toHaveFocus();
+  });
+
+  it("leaves drawing mode when Type a time instead opens the form, and gives focus back after", async () => {
+    const { store } = await startTestPlanner({ courses: ["AE 2320"] });
+    renderWithBar();
+
+    const dialog = await openForm();
+    expect(store.getState().drawing).toBe(false);
+    await userEvent.click(within(dialog).getByRole("button", { name: "Cancel" }));
+    expect(screen.getByRole("button", { name: "Block a time" })).toHaveFocus();
   });
 
   it("turns Only open sections off", async () => {

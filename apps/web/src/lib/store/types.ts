@@ -61,6 +61,8 @@ export interface BlockedChange {
   start: number;
   end: number;
   erased: boolean;
+  /** How many blocked times a delete of several selected ones removed; days, start and end then only span them. */
+  count?: number;
 }
 
 export interface PlannerState extends Draft {
@@ -89,6 +91,8 @@ export interface PlannerState extends Draft {
   removedCourse: RemovedCourse | null;
   /** Like removedCourse: kept until another change to the draft, and not saved. */
   blockedChange: BlockedChange | null;
+  /** Drawing mode: a drag on the calendar blocks or unblocks time. Not saved with the draft or with plans. */
+  drawing: boolean;
 }
 
 export interface PlannerActions {
@@ -119,6 +123,8 @@ export interface PlannerActions {
   /** Puts blockedChange.previous back and solves once. */
   undoBlockedChange(): void;
   dismissBlockedChange(): void;
+  /** Turns drawing mode on or off. It stays off in a saved plan and while the term isn't ready. */
+  setDrawing(on: boolean): void;
   setProfessor(courseCode: string, name: string | null): void;
   lockSection(courseCode: string, sectionId: string): void;
   unlockSection(courseCode: string, sectionId: string): void;

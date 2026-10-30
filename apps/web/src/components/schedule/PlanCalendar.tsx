@@ -4,8 +4,10 @@ import { useMemo, type ReactNode } from "react";
 import { formatTimeRange } from "@/lib/data/time";
 import type { Day } from "@/lib/data/types";
 import { selectSavedPlan, selectSchedules, selectViewedCourse, selectViewedSection, usePlanner } from "@/lib/store";
+import { blockHeight, blockLayout } from "./blockLayout";
 import { blockPosition } from "./blockStyles";
 import { BlockedTimeBlock } from "./BlockedTimeBlock";
+import { blockedKey, useBlockedTimeMenu } from "./useBlockedTimeMenu";
 import { ClassBlock } from "./ClassBlock";
 import { calendarBounds } from "./calendarBounds";
 import type { Density } from "./density";
@@ -23,6 +25,11 @@ import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { WeekCalendar } from "./WeekCalendar";
 
 const FULL_COLUMN = { lane: 0, lanes: 1 };
+/** Shorter classes get a one-line or empty block when the full text wouldn't fit. */
+const SHORT_CLASS_MINUTES = 40;
+const CLASS_END_GAP = 3;
+/** Drawing mode shows at least 8 AM to 10 PM, so evening times can be blocked too. */
+const DRAWING_RANGE = { start: 8 * 60, end: 22 * 60 };
 const NO_PREVIEWS: readonly ClassItem[] = [];
 
 export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: readonly ClassItem[]; overlay?: ReactNode }) {
@@ -35,6 +42,11 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
   const selectedSection = usePlanner(selectViewedSection);
   const selectCourse = usePlanner((state) => state.selectCourse);
   const changeBlocked = usePlanner((state) => state.changeBlocked);
+  const drawing = usePlanner((state) => state.drawing);
+  const openMenu = useBlockedTimeMenu((state) => state.open);
+  const toggleMenu = useBlockedTimeMenu((state) => state.toggle);
+  const selectedBlocks = useBlockedTimeMenu((state) => state.selected);
+  const toggleSelected = useBlockedTimeMenu((state) => state.toggleSelected);
   const phone = usePhoneViewport();
   const showPhoneScreen = usePhoneScreen((state) => state.show);
   const { classes: scheduled, untimed } = useScheduleItems();
@@ -45,10 +57,12 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
 
   // The phone grid is tall, so it starts at the start-time preference instead of under a hatched band.
   const startsAfter = phone ? preferences.startsAfter : 0;
-  const { range, days } = useMemo(
-    () => saved ? calendarBounds(null, [], preferences.blocked, scheduled, startsAfter) : calendarBounds(term, schedules, preferences.blocked, previewItems, startsAfter),
-    [saved, scheduled, term, schedules, preferences.blocked, previewItems, startsAfter],
-  );
+  const drawingHere = drawing && !saved;
+  const { range, days } = useMemo(() => {
+    const bounds = saved ? calendarBounds(null, [], preferences.blocked, scheduled, startsAfter) : calendarBounds(term, schedules, preferences.blocked, previewItems, startsAfter);
+    if (!drawingHere) return bounds;
+    return { ...bounds, range: { start: Math.min(bounds.range.start, DRAWING_RANGE.start), end: Math.max(bounds.range.end, DRAWING_RANGE.end) } };
+  }, [saved, scheduled, term, schedules, preferences.blocked, previewItems, startsAfter, drawingHere]);
   // Each day's blocks in time order, so screen readers and Tab go through the day as it happens.
   const byDay = useMemo(() => {
     const groups = new Map<Day, ClassItem[]>();
@@ -67,29 +81,39 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
     return result;
   }, [byDay, classes]);
 
-  const renderDay = (day: Day, density: Density) => (
+  const renderDay = (day: Day, density: Density, pixelsPerHour: number | null) => (
     <>
       {preferences.blocked
         .filter((block) => block.day === day)
         .map((block) => (
           <BlockedTimeBlock
             key={`${block.start}-${block.end}`}
+            day={block.day}
             start={block.start}
             end={block.end}
             label={block.label}
             density={density}
-            erasable={!saved}
+            layout={blockLayout(blockHeight(block.end - block.start, pixelsPerHour))}
+            erasable={drawingHere}
+            onOpen={drawing || saved ? undefined : (anchor) => toggleMenu(block, anchor)}
+            expanded={openMenu?.block === block}
+            selected={!saved && selectedBlocks.includes(blockedKey(block))}
+            onToggleSelected={saved ? undefined : () => toggleSelected(block)}
             style={blockPosition(range, block, FULL_COLUMN, 0)}
+            coveredBy={byDay.get(day)}
           />
         ))}
       {(byDay.get(day) ?? []).map((item) => {
         const selected = item.courseCode === selectedCourse && item.sectionId === selectedSection;
+        const minutes = item.end - item.start;
         return (
           <ClassBlock
             key={item.key}
             item={item}
             density={density}
-            style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN)}
+            layout={minutes < SHORT_CLASS_MINUTES ? blockLayout(blockHeight(minutes, pixelsPerHour, CLASS_END_GAP)) : "full"}
+            drawing={drawingHere}
+            style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN, CLASS_END_GAP)}
             selected={selected}
             onSelect={(clicked) => {
               // On a phone a tap opens the course screen with that section picked.
@@ -108,7 +132,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
 
   const hasTimes = classes.length > 0 || preferences.blocked.length > 0;
 
-  const drag: BlockDrag | undefined = saved ? undefined : {
+  const drag: BlockDrag | undefined = !drawingHere ? undefined : {
     blocked: preferences.blocked,
     onDrop(ranges, erase) {
       const next = erase ? subtractBlocked(preferences.blocked, ranges) : addRanges(preferences.blocked, ranges);

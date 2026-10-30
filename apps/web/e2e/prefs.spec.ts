@@ -83,6 +83,7 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   await waitForSchedules(page);
 
   await row.getByRole("button", { name: "Block a time" }).click();
+  await page.getByRole("button", { name: "Type a time instead" }).click();
   const dialog = page.getByRole("dialog", { name: "Block a time" });
   await dialog.getByRole("textbox", { name: "Name (optional)" }).fill("Lunch");
   await dialog.getByRole("checkbox", { name: "Monday" }).check();
@@ -119,6 +120,9 @@ test("the block form works with the keyboard and checks its days", async ({ page
 
   await preferencesRow(page).getByRole("button", { name: "Block a time" }).focus();
   await page.keyboard.press("Enter");
+  await expect(preferencesRow(page).getByRole("button", { name: "Drawing busy times" })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Type a time instead" }).focus();
+  await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Block a time" });
   await expect(dialog).toBeVisible();
   await expect(dialog.getByRole("textbox", { name: "Name (optional)" })).toBeFocused();
@@ -137,6 +141,7 @@ test("the block form opens without a ring on Close and keeps its size while hove
   await openPlanner(page, regular);
 
   await preferencesRow(page).getByRole("button", { name: "Block a time" }).click();
+  await page.getByRole("button", { name: "Type a time instead" }).click();
   const dialog = page.getByRole("dialog", { name: "Block a time" });
   await expect(dialog.getByRole("textbox", { name: "Name (optional)" })).toBeFocused();
   await expect(dialog.getByRole("button", { name: "Close" })).not.toBeFocused();
@@ -244,6 +249,7 @@ for (const [width, height] of [
     await page.screenshot({ path: `${screenshotDir}/prefs-locked-${width}.png`, fullPage: width === 834, animations: "disabled" });
 
     await preferencesRow(page).getByRole("button", { name: "Block a time" }).click();
+    await page.getByRole("button", { name: "Type a time instead" }).click();
     await page.getByRole("checkbox", { name: "Monday" }).check();
     await page.screenshot({ path: `${screenshotDir}/prefs-block-form-${width}.png`, animations: "disabled" });
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);

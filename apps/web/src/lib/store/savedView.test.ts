@@ -36,6 +36,19 @@ describe("saved view", () => {
     state().showSaved();
     expect(state().savedPlanId).toBeNull();
   });
+  it("turns drawing mode off in a saved plan and keeps it off there", async () => {
+    const { state } = await setup();
+    state().setSavedPlans([designPlan()]);
+    state().setDrawing(true);
+    state().showSaved();
+    expect(state().drawing).toBe(false);
+    state().setDrawing(true);
+    expect(state().drawing).toBe(false);
+    state().showFound();
+    state().setDrawing(true);
+    state().showFound();
+    expect(state().drawing).toBe(false);
+  });
   it("blocks draft edits and found paging while viewing a saved plan", async () => {
     const { state, storage } = await setup();
     const plan = designPlan();

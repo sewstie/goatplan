@@ -111,4 +111,21 @@ describe("Tooltip", () => {
       expect(document.querySelector("[role=tooltip]")).toHaveAttribute("aria-hidden", "true");
     });
   });
+
+  it("stays hidden while disabled, and shows again once it isn't", async () => {
+    const { rerender } = render(
+      <Tooltip content="Work · Monday" portal disabled>
+        <button type="button">Work</button>
+      </Tooltip>,
+    );
+    const trigger = screen.getByRole("button", { name: "Work" });
+    await userEvent.hover(trigger);
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+    rerender(
+      <Tooltip content="Work · Monday" portal>
+        <button type="button">Work</button>
+      </Tooltip>,
+    );
+    expect(screen.getByRole("tooltip")).toHaveTextContent("Work · Monday");
+  });
 });

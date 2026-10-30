@@ -63,6 +63,9 @@ async function expectSchedules(page: Page, sections: string[]) {
 
 async function blockTime(page: Page, day: string, from: string, to: string) {
   await preferences(page).getByRole("button", { name: "Block a time" }).click();
+  // The guide stays open in these tests and covers the drawing bar, so this goes by keyboard.
+  await page.getByRole("button", { name: "Type a time instead" }).focus();
+  await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Block a time" });
   await dialog.getByRole("checkbox", { name: day, exact: true }).check();
   await dialog.getByRole("combobox", { name: "From", exact: true }).selectOption(from);

@@ -80,7 +80,8 @@ export function selectionText(days: readonly Day[], time: TimeRange, erase: bool
   return `${erase ? "Remove " : ""}${formatDays(days)} ${formatTimeRange(time.start, time.end, "shared")}`;
 }
 
-function compactRange({ start, end }: TimeRange): string {
+/** 720–780 → "12–1 PM", with AM or PM once when both ends share it. */
+export function compactRange({ start, end }: TimeRange): string {
   const from = formatTimeShort(start);
   const to = formatTimeShort(end);
   return from.slice(-2) === to.slice(-2) ? `${from.slice(0, -3)}–${to}` : `${from}–${to}`;
@@ -93,4 +94,23 @@ export function changeText(days: readonly Day[], time: TimeRange, erase: boolean
 export function changedDays(before: readonly PlanBlockedTime[], after: readonly PlanBlockedTime[], ranges: readonly DayRange[]): Day[] {
   const onDay = (blocked: readonly PlanBlockedTime[], day: Day) => JSON.stringify(blocked.filter((time) => time.day === day));
   return ranges.map((range) => range.day).filter((day) => onDay(before, day) !== onDay(after, day));
+}
+
+const sameBlocked = (a: PlanBlockedTime, b: PlanBlockedTime) =>
+  a.day === b.day && a.start === b.start && a.end === b.end && nameOf(a) === nameOf(b);
+
+export function removeBlocked(blocked: readonly PlanBlockedTime[], old: PlanBlockedTime): PlanBlockedTime[] {
+  return blocked.filter((time) => !sameBlocked(time, old));
+}
+
+/** The blocked times with one of them changed by the form, joined again where they meet. */
+export function replaceBlocked(
+  blocked: readonly PlanBlockedTime[],
+  old: PlanBlockedTime,
+  days: readonly Day[],
+  start: number,
+  end: number,
+  label: string,
+): PlanBlockedTime[] {
+  return mergeBlocked(addBlocked(removeBlocked(blocked, old), days, start, end, label));
 }
