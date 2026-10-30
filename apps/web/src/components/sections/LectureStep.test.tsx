@@ -39,7 +39,7 @@ it("chooses a lecture by keyboard, waits on the disabled lab disclosure, then op
   const list = screen.getByRole("list", { name: "Other lecture times" });
   expect(list).toHaveAttribute("id", disclosure.getAttribute("aria-controls"));
   expect(within(list).getByText("Alex Smith")).toBeInTheDocument();
-  expect(within(list).getAllByText("Rating unavailable")).toHaveLength(4);
+  expect(within(list).queryByRole("link")).not.toBeInTheDocument();
   pause();
   await user.tab();
   await user.keyboard("{Enter}");

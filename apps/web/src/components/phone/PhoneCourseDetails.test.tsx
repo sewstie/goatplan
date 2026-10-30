@@ -110,7 +110,7 @@ it("offers a lecture professor menu like the desktop one", async () => {
   expect(store.getState().professorByCourse).toEqual({ "DEMO 3001": "Jordan Kim" });
 });
 
-it("offers other professors under Change lecture with their ratings, and picks one", async () => {
+it("offers other professors under Change lecture with their links, and picks one", async () => {
   const store = await details({}, seminarTerm());
   const user = userEvent.setup();
   expect(screen.getByRole("button", { name: "Lock Lecture L01" })).toBeInTheDocument();
@@ -121,7 +121,7 @@ it("offers other professors under Change lecture with their ratings, and picks o
   await user.click(screen.getByRole("button", { name: "Change lecture 2 other professors" }));
   const list = screen.getByRole("list", { name: "Other lecture choices" });
   expect(within(list).getByRole("group", { name: "Jordan Kim" })).toBeInTheDocument();
-  expect(within(list).getByRole("link", { name: /Rate My Professors: Morgan Lee/ })).toBeInTheDocument();
+  expect(within(list).getByRole("link", { name: /View Morgan Lee on Rate My Professors/ })).toBeInTheDocument();
   await user.click(within(list).getByRole("button", { name: /^Choose Lecture L03,/ }));
 
   await waitFor(() => expect(screen.getByRole("button", { name: "Unlock Lecture L03" })).toBeInTheDocument());

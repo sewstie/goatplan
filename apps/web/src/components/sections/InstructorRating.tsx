@@ -1,36 +1,33 @@
-import { ArrowSquareOut, GraduationCap, Star } from "@phosphor-icons/react/ssr";
-import { rateMyProfessorsUrl } from "@/lib/data";
-import { usePlanner } from "@/lib/store";
+import { ArrowSquareOut, GraduationCap } from "@phosphor-icons/react/ssr";
+import { OSCAR_URL, rateMyProfessorsUrl } from "@/lib/data";
 import { cx } from "@/components/ui/cx";
 
-/** The phone variant sets the name in bold and the review link in muted text. */
+/** A professor's name with links to look them up in OSCAR and on Rate My Professors. The phone variant sets the name in bold. */
 export function InstructorRating({ name, dense = false, showLink = true, phone = false }: { name: string; dense?: boolean; showLink?: boolean; phone?: boolean }) {
-  const instructor = usePlanner((state) => Object.entries(state.term?.instructors ?? {})
-    .find(([key]) => key.trim().toLowerCase() === name.toLowerCase())?.[1]);
-  const rating = instructor?.rating;
+  const linkClass = cx(
+    "inline-flex shrink-0 items-center rounded-badge bg-accent-soft font-570 whitespace-nowrap text-accent transition-colors hover:bg-accent-line",
+    phone ? "min-h-44 gap-6 px-12 text-10" : "min-h-21 gap-4 px-6 py-4 text-9 leading-10-8",
+  );
+  const icon = <ArrowSquareOut aria-hidden className={phone ? "size-12" : "size-9"} />;
 
   return (
-    <div role="group" aria-label={showLink ? name : undefined} className={cx("flex flex-col gap-5 border-t border-line", phone ? (dense ? "pt-10" : "pt-14") : dense ? "pt-7" : "pt-9")}>
-      <div className="flex items-start justify-between gap-8">
-        <span className={cx("flex min-w-0 items-start gap-8 text-10 leading-14-5 text-ink", phone && "font-650")}>
-          <GraduationCap aria-hidden className={cx("shrink-0", phone ? "mt-1.5 size-16" : "mt-1 size-12")} />
-          {name}
-        </span>
-        <span className="inline-flex shrink-0 items-center gap-4 text-10 leading-14-5 font-650 text-accent">
-          <Star aria-hidden className={phone ? "size-16" : "size-12"} />
-          {rating ? rating.score.toFixed(1) : "—"} / 5
-        </span>
-      </div>
-      <div className="flex items-start justify-between gap-5 text-8 leading-12">
-        <span className="text-ink-muted">
-          {rating ? `${rating.count} ${rating.count === 1 ? "rating" : "ratings"}${instructor?.ratingSource ? ` · ${instructor.ratingSource}` : ""}` : "Rating unavailable"}
-        </span>
-        {showLink && <a href={rateMyProfessorsUrl(name)} target="_blank" rel="noreferrer"
-          className={cx("inline-flex shrink-0 items-center gap-3 rounded-badge hover:underline", phone ? "text-ink-muted hover:text-ink" : "text-accent")}>
-          Rate My Professors<span className="sr-only">: {name} (opens in a new tab)</span>
-          <ArrowSquareOut aria-hidden className="size-9" />
-        </a>}
-      </div>
+    <div role="group" aria-label={showLink ? name : undefined} className={cx("flex flex-col border-t border-line", phone ? (dense ? "gap-8 pt-10" : "gap-10 pt-14") : dense ? "gap-5 pt-7" : "gap-6 pt-9")}>
+      <span className={cx("flex min-w-0 items-start gap-8 text-10 leading-14-5 text-ink", phone && "font-650")}>
+        <GraduationCap aria-hidden className={cx("shrink-0", phone ? "mt-1.5 size-16" : "mt-1 size-12")} />
+        {name}
+      </span>
+      {showLink && (
+        <div className={cx("flex flex-wrap", phone ? "gap-8" : "gap-5")}>
+          <a href={OSCAR_URL} target="_blank" rel="noreferrer" aria-label={`View ${name} in OSCAR (opens in a new tab)`} className={linkClass}>
+            View in OSCAR
+            {icon}
+          </a>
+          <a href={rateMyProfessorsUrl(name)} target="_blank" rel="noreferrer" aria-label={`View ${name} on Rate My Professors (opens in a new tab)`} className={linkClass}>
+            Rate My Professors
+            {icon}
+          </a>
+        </div>
+      )}
     </div>
   );
 }

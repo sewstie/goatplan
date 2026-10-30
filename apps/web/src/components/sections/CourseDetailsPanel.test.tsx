@@ -238,10 +238,10 @@ describe("CourseDetailsPanel", () => {
     expect(requests.at(-1)?.preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01"] });
     expect(store.getState().locks).toEqual({ "AE 2320": ["AE 2320-CX01"] });
     expect(screen.queryByText(/Unlocked .* for this professor/)).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Rate My Professors: Ye Lu/ })).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
+    expect(screen.getByRole("link", { name: /View Ye Lu on Rate My Professors/ })).toHaveAttribute("href", rateMyProfessorsUrl("Ye Lu"));
     await chooseProfessor(picker, "Other Professor");
     await waitForSolve(store);
-    expect(screen.getByRole("link", { name: /Rate My Professors: Other Professor/ })).toHaveAttribute("href", rateMyProfessorsUrl("Other Professor"));
+    expect(screen.getByRole("link", { name: /View Other Professor on Rate My Professors/ })).toHaveAttribute("href", rateMyProfessorsUrl("Other Professor"));
     await chooseProfessor(picker, "");
     await waitForSolve(store);
     expect(requests.at(-1)?.preferences?.anyOf).toEqual({});

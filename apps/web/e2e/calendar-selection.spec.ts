@@ -28,7 +28,7 @@ for (const width of [1440, 834]) {
     await lecture.hover();
 
     await expect(page.getByRole("tooltip")).toHaveCount(0);
-    await expect(lecture).not.toContainText(/\/ 5|ratings/);
+    await expect(lecture).not.toContainText(/OSCAR|Rate My Professors/);
     const panel = page.getByRole("complementary", { name: "Course details" });
     await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
@@ -46,8 +46,9 @@ for (const width of [1440, 834]) {
 
     await page.keyboard.press("Enter");
     await expect(panel.getByRole("heading", { level: 2, name: "AE 2410" })).toBeVisible();
-    await expect(panel.getByRole("group", { name: "Mark Richman" })).toContainText("4.4 / 5");
-    await expect(panel.getByRole("group", { name: "Mark Richman" })).toContainText("27 ratings");
+    const professor = panel.getByRole("group", { name: "Mark Richman" });
+    await expect(professor.getByRole("link", { name: "View Mark Richman in OSCAR (opens in a new tab)" })).toBeVisible();
+    await expect(professor).not.toContainText(/\/ 5|ratings/);
     await expect(page.getByRole("tooltip")).toHaveCount(0);
     await lab.click();
     await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();

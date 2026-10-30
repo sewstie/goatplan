@@ -51,7 +51,7 @@ for (const state of ["04", "07", "24", "29"] as const) {
       while (await details(page).getByRole("heading", { name: "Lecture L01", exact: true }).count() === 0) {
         await page.getByRole("button", { name: "Next schedule" }).click();
       }
-      await expect(details(page).getByText("4.4 / 5")).toBeVisible();
+      await expect(details(page).getByRole("link", { name: /in OSCAR/ }).first()).toBeVisible();
       await expect(details(page).getByText("Compatible", { exact: true })).toHaveCount(0);
       await expect(details(page).getByRole("button", { name: /^Lock Lab B0/ })).toBeVisible();
     }
