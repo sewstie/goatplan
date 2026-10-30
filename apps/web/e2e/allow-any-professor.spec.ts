@@ -1,10 +1,9 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, frozenTerm, test } from "./fixtures/test";
+import type { Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft } from "../src/lib/store/types";
 
-const source: TermFile = JSON.parse(readFileSync(path.join(__dirname, "../public/data/2027-C.json"), "utf8"));
+const source: TermFile = frozenTerm("2027-C");
 const key = "goatplan:draft:v1:2027-C";
 const details = (page: Page) => page.getByRole("complementary", { name: "Course details" });
 const settled = (page: Page) => expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
@@ -13,7 +12,7 @@ const draft = (page: Page): Promise<Draft> => page.evaluate((key) => JSON.parse(
 /**
  * Build term data for the allow-any-professor tests.
  *
- * PH 1110: three lectures — Alpha at 9 AM, Beta at 11 AM, Gamma at 12 PM — plus a lab.
+ * PH 1110: three lectures — Alpha at 9 AM, Beta at 11 AM, Gamma at 12 PM — plus a lab at 3 PM.
  * CS 2022: one lecture at 12 PM (clashes with PH CL03).
  * MA 1024: one lecture at 2 PM (no clash with anything).
  *
@@ -42,7 +41,7 @@ function termData(): TermFile {
       section("PH 1110-CL01", "CL01", "lecture", "Prof Alpha", 540),
       section("PH 1110-CL02", "CL02", "lecture", "Prof Beta", 660),
       section("PH 1110-CL03", "CL03", "lecture", "Prof Gamma", 720),
-      section("PH 1110-CX01", "CX01", "lab", "Lab TA", 840),
+      section("PH 1110-CX01", "CX01", "lab", "Lab TA", 900),
     ],
     options: [
       ["PH 1110-CL01", "PH 1110-CX01"],

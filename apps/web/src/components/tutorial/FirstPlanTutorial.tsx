@@ -82,7 +82,7 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
   }
   useEffect(() => {
     if (!visit || saved) return;
-    const close = (event: KeyboardEvent) => { if (event.key === "Escape") dismiss(); };
+    const close = (event: KeyboardEvent) => { if (event.key === "Escape" && !event.defaultPrevented) dismiss(); };
     document.addEventListener("keydown", close);
     return () => document.removeEventListener("keydown", close);
   });

@@ -1,4 +1,5 @@
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
+import type { Locator } from "@playwright/test";
 
 const screenshotDir = "e2e/screenshots";
 
@@ -6,12 +7,13 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem("goatplan:tutorial:v1", "dismissed"));
 });
 
-// Boxes of the shell regions in the desktop layout (1680 × 800).
+// Boxes of the shell regions in the desktop layout (1680 × 800). Course panel v2 widened the details
+// panel from 270 to 284 px (--size-details), and the schedule gave up those 14 px.
 const figma = {
   sidebar: { x: 14, y: 14, width: 224, height: 772 },
   main: { x: 250, y: 14, width: 1416, height: 772 },
-  schedule: { x: 250, y: 156.5, width: 1134, height: 629.5 },
-  details: { x: 1396, y: 156.5, width: 270, height: 629.5 },
+  schedule: { x: 250, y: 156.5, width: 1120, height: 629.5 },
+  details: { x: 1382, y: 156.5, width: 284, height: 629.5 },
 };
 
 async function expectBox(locator: Locator, expected: (typeof figma)["main"]) {
@@ -38,7 +40,7 @@ test("shell at 1440 keeps the desktop layout", async ({ page }) => {
   const schedule = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
   const details = await page.getByRole("complementary", { name: "Course details" }).boundingBox();
   expect(details!.x).toBeGreaterThan(schedule!.x + schedule!.width);
-  expect(details!.width).toBe(270);
+  expect(details!.width).toBe(284);
   await page.screenshot({ path: `${screenshotDir}/shell-1440.png` });
 });
 
@@ -87,9 +89,9 @@ test("the planner downloads its term file once, for both the page and the engine
   expect(requested.filter((path) => path === "/engine/goatplan.wasm")).toHaveLength(1);
 });
 
-test("/plans has the Sections to register page", async ({ page }) => {
+test("/plans lists the saved plans in the app shell", async ({ page }) => {
   await page.goto("/plans");
-  await expect(page.getByRole("heading", { level: 1, name: "Sections to register" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "All saved plans" })).toBeVisible();
   await expect(page.getByRole("complementary", { name: "Term and courses" })).toBeVisible();
 });
 

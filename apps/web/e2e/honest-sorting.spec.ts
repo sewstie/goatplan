@@ -1,4 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
+import type { Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft, SortPresetId } from "../src/lib/store/types";
 import { pickSort, SORT_LABELS, SORT_MENU_COURSES, sortControl, sortMenuTerm } from "./fixtures/sortMenu";

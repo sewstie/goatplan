@@ -155,6 +155,20 @@ it.each(["Skip guide", "Close guide", "Escape"])("remembers %s without changing 
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 });
 
+it("leaves the guide open when Escape only backs out of the search results", async () => {
+  start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  const search = await screen.findByRole("searchbox", { name: "Search courses" });
+  await waitFor(() => expect(search).toBeEnabled());
+  await user.type(search, "ae 2");
+  await user.keyboard("{ArrowDown}");
+  expect(screen.getByRole("button", { name: "Add AE 2320" })).toHaveFocus();
+  await user.keyboard("{Escape}");
+  expect(search).toHaveFocus();
+  expect(screen.getByRole("dialog")).toBeInTheDocument();
+});
+
 it("never targets Saved controls and restores guide focus on returning to Found", async () => {
   const { planner } = start();
   await screen.findByRole("heading", { name: "Choose your term" });

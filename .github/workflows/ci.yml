@@ -61,3 +61,28 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
+
+  e2e:
+    name: Web app (end-to-end tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install Playwright Chromium
+        working-directory: apps/web
+        run: npx playwright install --with-deps chromium
+      # Playwright builds the app itself (a fresh `npm run build`, then `next start`) before the tests.
+      # The screenshot baselines are recorded on macOS, so CI skips the comparisons; check them locally.
+      - name: Build and run the end-to-end tests
+        working-directory: apps/web
+        run: npm run test:e2e -- --ignore-snapshots
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-results
+          path: apps/web/e2e/results
+          retention-days: 7

@@ -1,4 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
+import type { Page } from "@playwright/test";
 import type { Draft } from "../src/lib/store/types";
 import { coursePanelTerm } from "./fixtures/coursePanel";
 

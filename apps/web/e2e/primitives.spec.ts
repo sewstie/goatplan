@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
 
 const screenshotDir = "e2e/screenshots";
 
@@ -151,7 +151,8 @@ test("toast: one message and Undo, bottom centre or full width on phone, never t
       return { size: style.fontSize, weight: style.fontWeight, radius: style.borderTopLeftRadius, padding: style.padding, gap: style.columnGap, undo: undo.fontWeight,
         dmSans: style.fontFamily.includes(getComputedStyle(document.documentElement).getPropertyValue("--font-dm-sans").split(",")[0].trim()) };
     });
-    expect(look).toEqual({ size: "11px", weight: "570", radius: "10px", padding: "10px 14px", gap: "12px", undo: "650", dmSans: true });
+    // Phone typography scales text-11 up to 15px below the tablet breakpoint.
+    expect(look).toEqual({ size: width === 375 ? "15px" : "11px", weight: "570", radius: "10px", padding: "10px 14px", gap: "12px", undo: "650", dmSans: true });
     await page.screenshot({ path: `${screenshotDir}/dev-ui-toast-${width}.png` });
 
     // Undo with the keyboard.

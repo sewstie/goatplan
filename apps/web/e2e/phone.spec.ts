@@ -1,13 +1,8 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { expect, test, type Page } from "@playwright/test";
-import type { TermFile } from "../src/lib/data/types";
+import { expect, test } from "./fixtures/test";
+import type { Page } from "@playwright/test";
 
-const source: TermFile = JSON.parse(readFileSync(path.join(__dirname, "../public/data/2027-C.json"), "utf8"));
-
-/** Seeds a draft with the given courses, serves the term data, and waits for the first solve. */
+/** Seeds a draft with the given courses and waits for the term, and for the first solve when there are courses. */
 async function openPlanner(page: Page, courses: string[]) {
-  await page.route("**/data/2027-C.json", (route) => route.fulfill({ json: source }));
   await page.addInitScript((seeded) => {
     localStorage.setItem("goatplan:term:v1", "2027-C");
     localStorage.setItem("goatplan:tutorial:v1", "dismissed");
@@ -25,11 +20,19 @@ async function openPlanner(page: Page, courses: string[]) {
     );
   }, courses);
   await page.goto("/");
-  await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute(
-    "data-planner-solve-status",
-    "done",
-    { timeout: 30_000 },
-  );
+  const status = page.locator("[data-planner-solve-status]");
+  // An empty plan sends nothing to the engine, so its solve status stays idle.
+  if (courses.length === 0) await expect(status).toHaveAttribute("data-planner-term-status", "ready");
+  else await expect(status).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
+}
+
+const settled = (page: Page) =>
+  expect(page.locator("[data-planner-solve-status]")).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
+
+/** Taps the search box look-alike on the schedule screen and lands on "Find a course". */
+async function openSearch(page: Page) {
+  await page.getByRole("button", { name: "Course code or professor . Find a course" }).tap();
+  await expect(page.getByRole("heading", { level: 1, name: "Find a course" })).toBeVisible();
 }
 
 test.describe("phone shell", () => {
@@ -42,68 +45,45 @@ test.describe("phone shell", () => {
 
   test("add a course by touch", async ({ page }) => {
     await openPlanner(page, []);
-    // The disclosure is open when there are no courses.
-    const toggle = page.getByRole("button", { name: /^Your courses/ });
-    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await expect(page.getByRole("list", { name: "Your courses" })).toHaveCount(0);
 
-    // Search and add a course by tapping.
-    const searchBox = page.getByLabel("Search courses");
-    await searchBox.fill("AE 2320");
+    await openSearch(page);
+    await page.getByRole("searchbox", { name: "Search courses" }).fill("AE 2320");
     const addButton = page.getByRole("button", { name: "Add AE 2320" });
-    await expect(addButton).toBeVisible({ timeout: 5_000 });
+    await expect(addButton).toBeVisible();
     await addButton.tap();
 
-    // The course should appear in the list.
     await expect(page.getByRole("button", { name: "AE 2320 added" })).toBeVisible();
-    await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute(
-      "data-planner-solve-status",
-      "done",
-      { timeout: 30_000 },
-    );
+    await settled(page);
   });
 
-  test("opens and closes details in the bottom sheet", async ({ page }) => {
+  test("opens a course's details as its own screen and goes back to the schedule", async ({ page }) => {
     await openPlanner(page, ["AE 2320", "AE 2410"]);
-    // Open the disclosure to reach the course rows.
-    await page.getByRole("button", { name: "Your courses (2)" }).click();
-    await page.locator('[data-course-row="AE 2320"]').click();
+    await page.getByRole("button", { name: "AE 2320. Show details" }).tap();
 
-    // The bottom sheet should appear.
-    const sheet = page.getByRole("dialog", { name: "AE 2320" });
-    await expect(sheet).toBeVisible();
-    // Verify it's a full-width bottom sheet.
-    const box = (await sheet.boundingBox())!;
-    const viewport = page.viewportSize()!;
-    expect(box.width).toBeGreaterThan(viewport.width - 2);
+    const details = page.getByRole("region", { name: "Course details" });
+    await expect(details.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "Schedule planner" })).toBeHidden();
+    const box = (await details.boundingBox())!;
+    expect(box.width).toBeGreaterThan(page.viewportSize()!.width - 40);
 
-    // Close the sheet and verify the selection is kept.
-    await sheet.getByRole("button", { name: "Close" }).click();
-    await expect(sheet).toBeHidden();
-    await expect(page.locator('[data-course-row="AE 2320"]')).toHaveAttribute("aria-current", "true");
+    await page.getByRole("button", { name: "Back to schedule" }).tap();
+    await expect(details).toHaveCount(0);
+    await expect(page.getByRole("heading", { level: 1, name: "Schedule planner" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "AE 2320. Show details" })).toBeVisible();
   });
 
-  test("the disclosure collapses after the first course is added", async ({ page }) => {
+  test("the first added course shows up as a chip back on the schedule", async ({ page }) => {
     await openPlanner(page, []);
-    const toggle = page.getByRole("button", { name: /^Your courses/ });
-    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await openSearch(page);
+    await page.getByRole("searchbox", { name: "Search courses" }).fill("AE 2320");
+    await page.getByRole("button", { name: "Add AE 2320" }).tap();
+    await settled(page);
 
-    // Add a course.
-    await page.getByLabel("Search courses").fill("AE 2320");
-    const addButton = page.getByRole("button", { name: "Add AE 2320" });
-    await expect(addButton).toBeVisible({ timeout: 5_000 });
-    await addButton.tap();
-
-    // Wait for the solve to complete so the UI has settled.
-    await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute(
-      "data-planner-solve-status",
-      "done",
-      { timeout: 30_000 },
-    );
-
-    // The disclosure should collapse, showing the course code in a summary line.
-    const updatedToggle = page.getByRole("button", { name: "Your courses (1)" });
-    await expect(updatedToggle).toHaveAttribute("aria-expanded", "false");
-    await expect(page.getByText("AE 2320")).toBeVisible();
+    await page.getByRole("button", { name: "Back to schedule" }).tap();
+    const chips = page.getByRole("list", { name: "Your courses" });
+    await expect(chips.getByRole("button")).toHaveText(["AE 2320"]);
+    await expect(page.getByRole("group", { name: "Calendar time grid" }).getByRole("button", { name: /^AE 2320 CL01/ }).first()).toBeVisible();
   });
 
   test("hides the sidebar and shows a single column", async ({ page }) => {
@@ -114,63 +94,48 @@ test.describe("phone shell", () => {
   });
 });
 
-test.describe("phone day calendar", () => {
+test.describe("phone week calendar", () => {
+  const grid = (page: Page) => page.getByRole("group", { name: "Calendar time grid" });
+
   test("every class shows its time and room, visible and readable", async ({ page }) => {
     await openPlanner(page, ["AE 2320", "AE 2410"]);
 
-    // The day calendar should be visible on a 375px phone viewport.
-    const tablist = page.getByRole("tablist", { name: "Days of the week" });
-    await expect(tablist).toBeVisible();
+    // AE 2320 CL01 meets 9:00–9:50 AM in Unity Hall 400, AE 2410 C01 10:00–10:50 AM in Higgins Labs 116.
+    const monday = grid(page).getByRole("group", { name: "Monday" });
+    for (const text of ["9:00 AM–9:50 AM", "Unity Hall 400", "10:00 AM–10:50 AM", "Higgins Labs 116"]) {
+      await expect(monday.getByText(text)).toBeInViewport();
+    }
 
-    // AE 2320 and AE 2410 both have Mon–Fri classes. Check that blocks are visible.
-    // AE 2320 CL01: 9:00 AM–9:50 AM, Unity Hall 400
-    // AE 2410 C01: 10:00 AM–10:50 AM, Higgins Labs 116
-    const panel = page.getByRole("tabpanel");
-    await expect(panel.getByText("9:00 AM–9:50 AM")).toBeVisible();
-    await expect(panel.getByText("Unity Hall 400")).toBeVisible();
-    await expect(panel.getByText("10:00 AM–10:50 AM")).toBeVisible();
-    await expect(panel.getByText("Higgins Labs 116")).toBeVisible();
-
-    // No sideways scroll with the day calendar
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
     const clientWidth = await page.evaluate(() => document.documentElement.clientWidth);
     expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
   });
 
-  test("switching days by tap shows that day's classes", async ({ page }) => {
+  test("swiping shows the later days' classes", async ({ page }) => {
     await openPlanner(page, ["AE 2320", "AE 2410"]);
 
-    const tablist = page.getByRole("tablist", { name: "Days of the week" });
-    await expect(tablist).toBeVisible();
-
-    // AE 2320 has a lab on Thursday (CX01 or CX02 depending on the schedule).
-    // Tap the Thursday tab.
-    const thuTab = page.getByRole("tab", { name: "Thu" });
-    await thuTab.tap();
-    await expect(thuTab).toHaveAttribute("aria-selected", "true");
-
-    // The panel should show Thursday's lab (e.g., Higgins Labs 230).
-    const panel = page.getByRole("tabpanel");
-    await expect(panel.getByText(/Higgins Labs 230/)).toBeVisible();
+    // AE 2320's Thursday lab is in Higgins Labs 230, off to the right until the week is swiped. It's
+    // below the fold at 2 PM, so only its sideways position is checked against the calendar's.
+    const lab = grid(page).getByRole("group", { name: "Thursday" }).getByText(/Higgins Labs 230/);
+    const across = async () => {
+      const [box, frame] = [await lab.boundingBox(), await grid(page).boundingBox()];
+      return box!.x >= frame!.x && box!.x + box!.width <= frame!.x + frame!.width;
+    };
+    expect(await across()).toBe(false);
+    await page.getByRole("button", { name: "Swipe for more days" }).tap();
+    await expect.poll(across).toBe(true);
   });
 
-  test("tapping a class block opens the details sheet", async ({ page }) => {
+  test("tapping a class block opens its course details", async ({ page }) => {
     await openPlanner(page, ["AE 2320", "AE 2410"]);
 
-    // Wait for the day calendar and find a class block to tap.
-    const panel = page.getByRole("tabpanel");
-    const classBlock = panel.getByRole("button", { name: /AE 2410 C01/ });
-    await expect(classBlock).toBeVisible();
-    await classBlock.tap();
-
-    // The bottom sheet should appear with AE 2410 details.
-    const sheet = page.getByRole("dialog", { name: "AE 2410" });
-    await expect(sheet).toBeVisible();
+    await grid(page).getByRole("group", { name: "Monday" }).getByRole("button", { name: /^AE 2410 C01/ }).tap();
+    await expect(page.getByRole("region", { name: "Course details" }).getByRole("heading", { level: 2, name: "AE 2410" })).toBeVisible();
   });
 
-  test("no sideways scroll with the day calendar", async ({ page }) => {
+  test("no sideways scroll with the week calendar", async ({ page }) => {
     await openPlanner(page, ["AE 2320", "AE 2410"]);
-    await expect(page.getByRole("tablist", { name: "Days of the week" })).toBeVisible();
+    await expect(grid(page)).toBeVisible();
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
     const clientWidth = await page.evaluate(() => document.documentElement.clientWidth);
     expect(scrollWidth).toBeLessThanOrEqual(clientWidth);

@@ -1,4 +1,5 @@
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
+import type { Locator, Page } from "@playwright/test";
 import { coursePanelTerm } from "./fixtures/coursePanel";
 import type { TermFile } from "../src/lib/data/types";
 
@@ -52,10 +53,24 @@ async function addCourse(page: Page, code: string) {
   await settled(page);
 }
 
+/**
+ * State 04's term, with a second AE 2320 lecture by another professor so the guide has its professor step
+ * (it skips the step when picking a professor would change nothing). Same 9 AM time, so a 10 AM start still
+ * leaves no matches.
+ */
+function twoProfessorTerm(): TermFile {
+  const term = coursePanelTerm("04");
+  const course = term.courses.find((item) => item.code === "AE 2320")!;
+  const lecture = { ...structuredClone(course.sections[0]), id: "AE 2320-CL02", code: "CL02", instructors: ["Alex Rivera"] };
+  course.sections.push(lecture);
+  course.options.push(...course.options.map((option) => option.map((id) => (id === "AE 2320-CL01" ? lecture.id : id))));
+  return term;
+}
+
 test("states 30–33 and 35: keyboard guide uses real controls and keeps restrictions after finishing", async ({ page }) => {
   let release!: () => void;
   const loading = new Promise<void>((resolve) => { release = resolve; });
-  await data(page, coursePanelTerm("04"), loading);
+  await data(page, twoProfessorTerm(), loading);
   await page.goto("/");
   await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
   await expect(next(page)).toHaveAttribute("aria-disabled", "true");
