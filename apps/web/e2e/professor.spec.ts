@@ -1,12 +1,11 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, frozenTerm, test } from "./fixtures/test";
+import type { Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft } from "../src/lib/store/types";
 import { lectureProfessorTerm } from "../src/lib/store/testing/lectureProfessors";
 import { coursePanelTerm } from "./fixtures/coursePanel";
 
-const source: TermFile = JSON.parse(readFileSync(path.join(__dirname, "../public/data/2027-C.json"), "utf8"));
+const source: TermFile = frozenTerm("2027-C");
 const key = "goatplan:draft:v1:2027-C";
 const code = "AE 2410";
 const details = (page: Page) => page.getByRole("complementary", { name: "Course details" });
@@ -38,10 +37,13 @@ for (const state of ["04", "07", "24", "29"] as const) {
     }
     await expect(details(page).getByRole("heading", { level: 2, name: code })).toBeVisible();
     expect((await details(page).boundingBox())!.width).toBe(284);
-    if (state === "29") {
+    // State 04's AE 2320 has one lecture and no chosen professor, so there's nothing to pick. State 29 has no lectures.
+    if (state === "04" || state === "29") {
       await expect(picker(page)).toHaveCount(0);
+    }
+    if (state === "29") {
       await expect(details(page).getByRole("button", { name: "Unlock Lab B01", exact: true })).toBeVisible();
-    } else {
+    } else if (state !== "04") {
       await expect(picker(page)).toBeVisible();
       const field = await picker(page).boundingBox();
       const sections = await details(page).getByRole("heading", { name: "Sections in this schedule" }).boundingBox();

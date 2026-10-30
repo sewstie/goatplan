@@ -1,16 +1,12 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, frozenTerm, test } from "./fixtures/test";
+import type { Page } from "@playwright/test";
+import type { Course } from "../src/lib/data/types";
 
 const screenshotDir = "e2e/screenshots";
 
 // The scenario of div.app-12 and div.app-22, built from the real C Term data: AE 2320 (lab CX02
 // locked), AE 2410 and AE 2210, starts after 9:00 AM, Work blocked Tue and Fri 2–4 PM.
-type Section = { id: string; code: string; enrolled: number; capacity: number } & Record<string, unknown>;
-type Course = { code: string; title: string; sections: Section[] };
-const term: { courses: Course[] } = JSON.parse(
-  readFileSync(path.join(__dirname, "../public/data/2027-C.json"), "utf8"),
-);
+const term = frozenTerm("2027-C");
 const course = (code: string) => term.courses.find((item) => item.code === code)!;
 const designLab = course("AE 2320").sections.find((section) => section.id === "AE 2320-CX02")!;
 designLab.status = "open";

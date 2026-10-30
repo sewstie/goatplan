@@ -1,4 +1,5 @@
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
+import type { Locator, Page } from "@playwright/test";
 import { designPlan } from "../src/lib/plans/testing";
 
 const first = designPlan({ name: "Morning classes" });

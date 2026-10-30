@@ -1,9 +1,8 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, frozenTerm, test } from "./fixtures/test";
+import type { Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 
-const source: TermFile = JSON.parse(readFileSync(path.join(__dirname, "../public/data/2027-C.json"), "utf8"));
+const source: TermFile = frozenTerm("2027-C");
 const calendar = (page: Page) => page.getByRole("region", { name: "Weekly schedule" });
 
 async function openCalendar(page: Page, times: number[], blocked: { day: string; start: number; end: number }[] = [], withOtherCourses = false) {

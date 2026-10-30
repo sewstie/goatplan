@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
 import { designPlan, termWith } from "../src/lib/plans/testing";
 
 test("state 23 offers Print beside Copy section list and prints the registration list", async ({ page }) => {

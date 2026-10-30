@@ -1,4 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
+import type { Page } from "@playwright/test";
 
 const screenshotDir = "e2e/screenshots";
 const TERM = "2027-C";
@@ -58,9 +59,13 @@ async function screenshotBoth(page: Page, name: string) {
   await page.setViewportSize({ width: 1440, height: 900 });
 }
 
-test("first visit shows the empty week and the first-course message", async ({ page }) => {
+test("first visit shows the empty week, and the first-course message once the guide is skipped", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlan(page, null);
+  // The guide opens on a first visit and hides the message while it's open.
+  await expect(page.getByRole("dialog", { name: "Choose your term" })).toBeVisible();
+  await expect(calendar(page).getByRole("heading", { name: "Add your first course" })).toBeHidden();
+  await page.getByRole("button", { name: "Skip guide" }).click();
   await expect(calendar(page).getByRole("heading", { name: "Add your first course" })).toBeVisible();
   await expect(calendar(page).getByText("No timed courses yet")).toBeVisible();
   await expect(page.getByText("Add courses to start planning your term.")).toBeVisible();
@@ -157,9 +162,12 @@ test("while the term loads the calendar shows placeholders, and a failed load of
   await page.route(`**/data/${TERM}.json`, async (route) => {
     if (data.fail) return route.abort();
     await new Promise<void>((resolve) => (data.release = resolve));
-    await route.continue();
+    await route.fallback();
   });
-  await page.addInitScript((term) => localStorage.setItem("goatplan:term:v1", term), TERM);
+  await page.addInitScript((term) => {
+    localStorage.setItem("goatplan:term:v1", term);
+    localStorage.setItem("goatplan:tutorial:v1", "dismissed");
+  }, TERM);
   await page.goto("/");
 
   await expect(page.getByText("Loading C Term sections…")).toBeVisible();

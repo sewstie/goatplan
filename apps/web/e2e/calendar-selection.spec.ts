@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
 import { coursePanelTerm } from "./fixtures/coursePanel";
 
 for (const width of [1440, 834]) {
@@ -41,8 +41,10 @@ for (const width of [1440, 834]) {
     await expect(lecture).toBeFocused();
     await expect(page.getByRole("tooltip")).toHaveCount(0);
     await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
-    await expect(page).toHaveScreenshot(`calendar-no-popup-focus-${width}.png`, { animations: "disabled", fullPage: true });
-    await page.screenshot({ path: `e2e/screenshots/calendar-no-popup-focus-${width}.png`, animations: "disabled", fullPage: true });
+    // Not full page: Chromium's full-page capture briefly reports a 1×1 viewport, which flips the app to
+    // the phone layout for a moment and drops the focus this screenshot is about.
+    await expect(page).toHaveScreenshot(`calendar-no-popup-focus-${width}.png`, { animations: "disabled" });
+    await page.screenshot({ path: `e2e/screenshots/calendar-no-popup-focus-${width}.png`, animations: "disabled" });
 
     await page.keyboard.press("Enter");
     await expect(panel.getByRole("heading", { level: 2, name: "AE 2410" })).toBeVisible();

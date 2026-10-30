@@ -1,4 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
+import type { Page } from "@playwright/test";
 
 const screenshotDir = "e2e/screenshots";
 const DRAFT_KEY = "goatplan:draft:v1:2027-C";
@@ -28,7 +29,7 @@ const regular: Draft = {
 };
 
 // CH 1010 with times blocked so that only lecture CL01 and the same-time labs CX02 and CX10 fit.
-// This relies on the 2027-C sections in public/data: check it again if a data update breaks the lab swap test.
+// This relies on the frozen 2027-C sections in e2e/fixtures/data.
 const sameTimeLabs: Draft = {
   courses: ["CH 1010"],
   preferences: {

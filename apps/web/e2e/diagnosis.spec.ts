@@ -1,11 +1,10 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, frozenTerm, test } from "./fixtures/test";
+import type { Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft } from "../src/lib/store/types";
 import type { WorkerReply, WorkerRequest } from "../src/lib/engine/protocol";
 
-const source: TermFile = JSON.parse(readFileSync(path.join(__dirname, "../public/data/2027-C.json"), "utf8"));
+const source: TermFile = frozenTerm("2027-C");
 const key = "goatplan:draft:v1:2027-C";
 const regular: Draft = {
   professorByCourse: {},
