@@ -48,7 +48,7 @@ test("saved URLs survive reload and back without changing the working draft", as
   await expect(page.getByRole("button", { name: "Next saved plan" })).toHaveAttribute("aria-disabled", "true");
   await expect(page.getByRole("group", { name: "Preferences", exact: true })).toContainText("Job");
   await expect(page.getByRole("button", { name: /AE 2320 CX99/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Rate My Professors\s*: Ye Lu/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /View Ye Lu on Rate My Professors/ })).toBeVisible();
   await expect(page.getByRole("button", { name: /^(Lock |Unlock |Remove |Block a time|Save schedule)/ })).toHaveCount(0);
   await expect(page.getByRole("combobox", { name: "Lecture professor" })).toHaveCount(0);
   await page.reload();

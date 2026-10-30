@@ -25,7 +25,7 @@ it("shows saved sections, ratings, and preferences with no planner edit controls
   expect(screen.getByRole("region", { name: "Your courses" })).toHaveTextContent("AE 2210");
   expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
   expect(screen.getByRole("heading", { name: "AE 2210" })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /Rate My Professors: David Olinger/ })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /View David Olinger on Rate My Professors/ })).toBeInTheDocument();
   const preferences = screen.getByRole("group", { name: "Preferences" });
   expect(preferences).toHaveTextContent("Any time");
   expect(preferences).toHaveTextContent("Job");

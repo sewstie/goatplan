@@ -37,36 +37,29 @@ it("hides the lecture professor when every lecture has the same professor", asyn
   expect(screen.queryByText(/Filters lectures only/)).not.toBeInTheDocument();
 });
 
-it.each([undefined, {}, { rating: null }])("shows Rating unavailable for missing or null instructor ratings: %j", async (instructor) => {
-  const term = { ...termFile("2027-C"), instructors: instructor ? { "Ye Lu": instructor } : undefined };
+it("shows no star score or rating text, only OSCAR and Rate My Professors links", async () => {
+  const term = { ...termFile("2027-C"), instructors: { "Ye Lu": { rating: { score: 4.4, count: 27 }, ratingSource: "Example data" } } };
   const { store } = await startTestPlanner({ courses: ["AE 2320"] }, { term });
   render(<PlannerProvider store={store}><CourseDetailsPanel /></PlannerProvider>);
 
   const row = within(screen.getByRole("group", { name: "Ye Lu" }));
-  expect(row.getByText("— / 5")).toBeInTheDocument();
-  expect(row.getByText("Rating unavailable")).toBeInTheDocument();
-  expect(row.getByRole("link", { name: "Rate My Professors: Ye Lu (opens in a new tab)" })).toBeInTheDocument();
+  expect(row.queryByText(/\/ 5|ratings?\b|Rating unavailable|Example data/)).not.toBeInTheDocument();
+  expect(row.getByRole("link", { name: "View Ye Lu in OSCAR (opens in a new tab)" })).toHaveAttribute("href", "https://oscar.wpi.edu");
+  expect(row.getByRole("link", { name: "View Ye Lu on Rate My Professors (opens in a new tab)" })).toBeInTheDocument();
 });
 
-it("gives each co-teacher their own rating and review link without rating lab instructors", async () => {
-  const term = { ...termFile("2027-C"), instructors: {
-    "Ye Lu": { rating: { score: 4.4, count: 27 } },
-    "Alex Smith": { rating: { score: 0, count: 0 } },
-    "Mark Richman": { rating: null },
-  } };
+it("gives each co-teacher their own links without listing lab instructors", async () => {
+  const term = termFile("2027-C");
   term.courses[0].sections[0].instructors = ["Ye Lu", "Alex Smith", "Mark Richman", "Former Teacher"];
   const { store } = await startTestPlanner({ courses: ["AE 2320"] }, { term });
   render(<PlannerProvider store={store}><CourseDetailsPanel /></PlannerProvider>);
 
   const row = (name: string) => within(screen.getByRole("group", { name }));
-  expect(row("Ye Lu").getByText("4.4 / 5")).toBeInTheDocument();
-  expect(row("Alex Smith").getByText("0.0 / 5")).toBeInTheDocument();
-  expect(row("Alex Smith").getByText("0 ratings")).toBeInTheDocument();
-  expect(row("Mark Richman").getByText("Rating unavailable")).toBeInTheDocument();
-  expect(row("Former Teacher").getByText("Rating unavailable")).toBeInTheDocument();
   for (const name of ["Ye Lu", "Alex Smith", "Mark Richman", "Former Teacher"]) {
-    expect(row(name).getByRole("link", { name: `Rate My Professors: ${name} (opens in a new tab)` })).toBeInTheDocument();
+    expect(row(name).getByRole("link", { name: `View ${name} in OSCAR (opens in a new tab)` })).toBeInTheDocument();
+    expect(row(name).getByRole("link", { name: `View ${name} on Rate My Professors (opens in a new tab)` })).toBeInTheDocument();
   }
+  expect(screen.getAllByRole("link", { name: /in OSCAR/ })).toHaveLength(4);
   expect(screen.getAllByRole("link", { name: /Rate My Professors/ })).toHaveLength(4);
 });
 
@@ -114,7 +107,6 @@ it("lets a lab be locked in a course with labs and discussions, and shows neithe
     const card = within(screen.getByRole("heading", { name: heading }).closest("article")!);
     expect(card.getByText("Unity Hall 400").parentElement).toHaveTextContent(/^Unity Hall 400$/);
     expect(card.queryByText(/Ye Lu|Discussion Tutor/)).not.toBeInTheDocument();
-    expect(card.queryByText(/\/ 5/)).not.toBeInTheDocument();
     expect(card.queryByRole("link")).not.toBeInTheDocument();
   }
   expect(screen.queryByText("Compatible")).not.toBeInTheDocument();
@@ -135,16 +127,18 @@ it("hides the lecture professor for one co-taught lecture, since choosing would 
   expect(screen.queryByRole("combobox", { name: "Lecture professor" })).not.toBeInTheDocument();
 });
 
-it("shows a lecture instructor's score, count and review link before a professor is selected", async () => {
-  const term = { ...termFile("2027-C"), instructors: { "Ye Lu": { rating: { score: 4.4, count: 27 } } } };
-  const { store } = await startTestPlanner({ courses: ["AE 2320"] }, { term });
+it("links a lecture instructor to OSCAR and Rate My Professors in new tabs before a professor is selected", async () => {
+  const { store } = await startTestPlanner({ courses: ["AE 2320"] });
   render(<PlannerProvider store={store}><CourseDetailsPanel /></PlannerProvider>);
 
   const lecture = within(screen.getByRole("heading", { name: "Lecture CL01" }).closest("article")!);
-  expect(lecture.getByText("4.4 / 5")).toBeInTheDocument();
-  expect(lecture.getByText("27 ratings")).toBeInTheDocument();
-  const link = lecture.getByRole("link", { name: "Rate My Professors: Ye Lu (opens in a new tab)" });
-  expect(link).toHaveAttribute("target", "_blank");
-  expect(link).toHaveAttribute("href", "https://www.ratemyprofessors.com/search/professors/1220?q=Ye%20Lu");
-  expect(link.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+  const oscar = lecture.getByRole("link", { name: "View Ye Lu in OSCAR (opens in a new tab)" });
+  expect(oscar).toHaveAttribute("href", "https://oscar.wpi.edu");
+  const reviews = lecture.getByRole("link", { name: "View Ye Lu on Rate My Professors (opens in a new tab)" });
+  expect(reviews).toHaveAttribute("href", "https://www.ratemyprofessors.com/search/professors/1220?q=Ye%20Lu");
+  for (const link of [oscar, reviews]) {
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noreferrer");
+    expect(link.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
+  }
 });

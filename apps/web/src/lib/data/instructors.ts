@@ -1,5 +1,8 @@
 import type { Section } from "./types";
 
+/** WPI's course reports, where students search for a professor themselves. */
+export const OSCAR_URL = "https://oscar.wpi.edu";
+
 /** Worcester Polytechnic Institute on Rate My Professors (ratemyprofessors.com/school/1220). */
 const RATE_MY_PROFESSORS_SCHOOL_ID = 1220;
 

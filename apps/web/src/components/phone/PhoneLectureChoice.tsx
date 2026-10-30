@@ -6,7 +6,7 @@ import { cx } from "@/components/ui/cx";
 import { isFull, uniqueInstructors } from "@/lib/data";
 import { openSeatsShort } from "./phoneSectionText";
 
-/** Another lecture in the Change list, with its professor's rating. Without `onChoose` it can't be picked. */
+/** Another lecture in the Change list, with links to look up its professor. Without `onChoose` it can't be picked. */
 export function PhoneLectureChoice({ choice: { section, reason }, onChoose }: { choice: LectureChoice; onChoose?: () => void }) {
   const reasonId = useId();
   const place = placeLine(section);

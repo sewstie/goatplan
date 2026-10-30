@@ -17,7 +17,7 @@ type PhoneSectionCardProps = {
   onUnlocked?: () => void;
 };
 
-/** One chosen section on the phone course screen: a lecture with its professor's rating; labs and discussions without who teaches them. */
+/** One chosen section on the phone course screen: a lecture with links to look up its professor; labs and discussions without who teaches them. */
 export function PhoneSectionCard({ course, section, locked, busy, onlyLecture, onLock, onUnlocked }: PhoneSectionCardProps) {
   const place = placeLine(section);
   const lecture = section.type === "lecture";
