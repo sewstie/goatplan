@@ -19,6 +19,9 @@ compile_commands.json
 data/raw/*
 !data/raw/.gitkeep
 
+# Source-watch measurement (kept in the Actions cache, never committed)
+watch/
+
 # Env files
 .env
 .env*.local

@@ -355,3 +355,52 @@ npm run data:test
 `data/fixtures/sample-sections.json` is a small real sample in WPI's format.
 `data/fixtures/2027-C.small.json` is what the script makes of its C Term rows,
 and a test keeps the two in sync.
+
+## Watching how often WPI updates its file
+
+For one week (until November 6, 2026), the "Watch WPI source" workflow checks
+WPI's file every 30 minutes. The goal is to find out how often WPI really
+regenerates it, so we know how fresh the seat numbers in GoatPlan could be. It
+doesn't change the daily update, the app, or anything in the repo.
+
+Each run makes one request. It sends back the `ETag` and `Last-Modified` from
+the last check, so if the file hasn't changed, WPI can answer with a short
+"304 Not Modified" instead of the whole file. When a new file comes back, the
+script fingerprints it twice: once for the seats (enrolled, waitlist and
+status of every section) and once for everything else (titles, times, rooms,
+instructors, the list of sections). Comparing them with the last check gives
+one of these:
+
+- `unchanged`: a new file, but the data is the same as before.
+- `seats-only`: only seat numbers or statuses moved.
+- `structure`: something other than seats changed.
+- `both`: seats and something else changed. A section being added or removed
+  always counts as `both`, because the seat list changes too.
+- `unchanged (304)`: WPI said the file hasn't changed.
+
+The checks are kept in the Actions cache (`watch/`), not in git, so nothing is
+committed and Vercel doesn't redeploy. Each run's summary page shows the
+report, and the full log is attached as the `watch-log` artifact. To read a
+downloaded log locally:
+
+```bash
+node scripts/watch-report.mjs path/to/log.jsonl
+```
+
+How to read the report:
+
+- "Distinct versions" counts different files. If it's much higher than
+  "Changes in the data", WPI rebuilds the file on a timer even when nothing
+  changed.
+- The gaps between changes tell you how often the data moves. A short median
+  gap during the day means seats could be refreshed more often than once a
+  day.
+- "Changes by hour" shows when WPI updates, in New York time. All the changes
+  landing on the same few hours means WPI runs on a schedule.
+- If "304 Not Modified answers" is above zero, the server supports cheap
+  checks, and frequent polling would cost WPI almost nothing.
+
+A change is logged at the check that noticed it, so its time is only accurate
+to about 30 minutes. GitHub also delays or skips scheduled runs when it's
+busy, so expect some gaps of an hour or more. Delete the workflow once the
+week is over.
