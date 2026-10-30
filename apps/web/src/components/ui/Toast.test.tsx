@@ -23,7 +23,7 @@ function setup(message: string | null = "Removed MA 1024") {
   const view = render(
     <>
       <button type="button">Remove CS 2022</button>
-      <Toast message={message} action={{ label: "Undo", onAction }} onDismiss={onDismiss} />
+      <Toast message={message} actions={[{ label: "Undo", onAction }]} onDismiss={onDismiss} />
       <button type="button">Page end</button>
     </>,
   );
@@ -31,7 +31,7 @@ function setup(message: string | null = "Removed MA 1024") {
     view.rerender(
       <>
         <button type="button">Remove CS 2022</button>
-        <Toast message={next} action={{ label: "Undo", onAction }} onDismiss={onDismiss} />
+        <Toast message={next} actions={[{ label: "Undo", onAction }]} onDismiss={onDismiss} />
         <button type="button">Page end</button>
       </>,
     );
@@ -162,7 +162,7 @@ describe("Toast", () => {
         return (
           <>
             <p>Dismissed {dismissed}</p>
-            <Toast message={dismissed ? null : "Removed MA 1024"} action={{ label: "Undo", onAction: () => {} }} onDismiss={() => setDismissed(dismissed + 1)} />
+            <Toast message={dismissed ? null : "Removed MA 1024"} actions={[{ label: "Undo", onAction: () => {} }]} onDismiss={() => setDismissed(dismissed + 1)} />
           </>
         );
       }
@@ -189,6 +189,18 @@ describe("Toast", () => {
     const { user, onAction } = setup();
     await user.click(screen.getByRole("button", { name: "Undo" }));
     expect(onAction).toHaveBeenCalledTimes(1);
+  });
+
+  it("shows several actions in order, each running its own handler", async () => {
+    const name = vi.fn();
+    const undo = vi.fn();
+    const user = userEvent.setup();
+    render(<Toast message="Blocked Mon–Wed 12–1 PM" actions={[{ label: "Name it", onAction: name }, { label: "Undo", onAction: undo }]} onDismiss={() => {}} />);
+    expect(screen.getByRole("status")).toHaveTextContent("Blocked Mon–Wed 12–1 PM · Name it · Undo");
+    expect(screen.getAllByRole("button").map((button) => button.textContent)).toEqual(["Name it", "Undo"]);
+    await user.click(screen.getByRole("button", { name: "Name it" }));
+    expect(name).toHaveBeenCalledTimes(1);
+    expect(undo).not.toHaveBeenCalled();
   });
 
   it("uses tokens only: surface, popover border and shadow, card radius, 11 px / 570 ink, accent action at 650", () => {

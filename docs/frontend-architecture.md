@@ -135,6 +135,7 @@ modules. Without a provider, both hooks use the app's shared store.
 | `selectedCourse` | The course the details panel shows and "Your courses" marks. The first course once a term loads; not saved in the draft. |
 | `selectedSection` | The section whose calendar blocks are selected, after a click on a block; `null` otherwise. |
 | `removedCourse` | The last removed course, so it can be undone: `{ code, index, locks, professor, alternatives, wasSelected }` (its position, its locks or `undefined`, its professor entry, its picked alternatives per schedule key, and whether it was selected); `null` otherwise. A second remove replaces it. Any other draft change clears it (adding a course, preferences, sort, lock or unlock, professor, alternative, applying a fix, switching term, opening a plan); selecting a course or section and paging schedules don't. Not saved with the draft or with plans, so a reload loses it. |
+| `blockedChange` | The last blocked times added or removed by dragging on the calendar: `{ previous, days, start, end, erased }`, where `previous` is the blocked list from before the drag. Like `removedCourse`, any other draft change clears it, a removed course replaces it, and it isn't saved. |
 | `savedPlans` | A read-only mirror of the plans source. Saved plans keep their own storage. |
 | `savedPlanId` | The saved plan being viewed, or `null` for Found. `PlannerViewSync` follows `/?view=saved&plan={id}` and browser history. Never persisted with the draft. |
 | `savedSelectedCourse`, `savedSelectedSection` | Selection within Saved. Found keeps its own selection. |
@@ -153,6 +154,9 @@ modules. Without a provider, both hooks use the app's shared store.
 | `removeCourse(code)` | Removes a course with its locks, professor and picked alternatives, keeping them in `removedCourse` first. If it was selected, the next course (or the one before) is selected. |
 | `undoRemoveCourse()` | Puts `removedCourse` back at its position (clamped to the list length) with its locks, professor and alternatives, reselects it if it was selected, clears `removedCourse` and solves once. Does nothing without one. |
 | `dismissRemovedCourse()` | Clears `removedCourse` without changing the plan. |
+| `changeBlocked(blocked, change)` | Replaces the blocked times after a calendar drag, keeps the old list in `blockedChange` and solves once. |
+| `undoBlockedChange()` | Puts `blockedChange.previous` back, clears `blockedChange` and solves once. Does nothing without one. |
+| `dismissBlockedChange()` | Clears `blockedChange` without changing the plan. |
 | `selectCourse(code, sectionId?)` | Selects a planned course, and optionally one of its sections; `null` clears the selection. |
 | `setPreferences(changes)` | Changes any of `startsAfter`, `blocked` and `onlyOpen`. |
 | `setProfessor(course, name)` | Selects a lecture professor, or `null` for Any professor, and regenerates schedules. |
@@ -321,8 +325,8 @@ by `DayCalendar.test.tsx` and `dayView.test.ts`.
 
 ### Toast (`components/ui/Toast.tsx`)
 
-A fixed-position status region for ephemeral messages with an optional action
-button:
+A fixed-position status region for short messages with one or more action
+buttons (`actions`):
 
 - Position: `fixed inset-x-16 bottom-16 z-10`, centered. Full width on phone
   (`w-full`), content-width on tablet (`tablet:w-auto`).
@@ -330,10 +334,39 @@ button:
   announce changes without interrupting.
 - Auto-dismisses after 6 seconds (`DURATION = 6000`). The timer pauses on
   hover or focus and resumes with the remaining time.
-- The action button (e.g. "Undo") calls the handler and dismisses immediately.
-- Rendered last in `PlannerShell`, so it's the final Tab stop and sits above
-  the shell at `z-10`.
-- Used for the undo-remove toast: "Removed {code} · Undo".
+- Each action button (e.g. "Undo") calls its handler; the handler clears the
+  message.
+- `PlannerToast` (`components/shell/`) renders the one Toast last in
+  `PlannerShell`, so it's the final Tab stop and sits above the shell at `z-10`.
+- It shows "Removed {code} · Undo", or after a calendar drag "Blocked Mon–Wed
+  12–1 PM · Name it · Undo" or "Unblocked Mon 12:30–1:30 PM · Undo". Name it
+  opens the Block a time form filled in with the drawn days and times. It only
+  shows when those times fit the form's 7 AM–10 PM choices. The message only
+  names days that really changed. After Undo or the Name it form, focus moves to
+  the Block a time button.
+
+### Blocking time by dragging
+
+On the week grid and the phone calendar, the student can drag on empty space
+to block a time on one or more days. The time snaps to half hours, is at least
+30 minutes long, and stays inside the visible range. A drag that starts on a
+blocked time removes that time instead, and splits a block when it only covers
+part of it. After adding, blocks on the same day with the same name that
+overlap or touch become one. The plan solves once, when the pointer is
+released.
+
+- A mouse or pen drag starts after the pointer moves 4 px. A finger has to
+  press and hold for 400 ms first, so swipes and scrolling still work. Scrolling
+  is only blocked once the hold starts. Escape cancels a drag.
+- Class blocks still open their details, and a click on empty space does
+  nothing.
+- The pure math is in `components/schedule/dragBlock.ts`, the pointer handling
+  in `useBlockDrag.ts`, and the rectangle in `DragSelectionBox.tsx`. Day columns
+  are marked with `data-drag-day`.
+- Keyboard and screen reader users keep using the Block a time button and
+  form. The calendar has a polite live region that says what changed on
+  release ("Blocked Mon–Wed 12–1 PM"), and stays quiet when nothing did.
+- The saved plan view is read-only, so dragging is off there.
 
 ### Bottom Sheet (`components/ui/Sheet.tsx`)
 
