@@ -3,11 +3,15 @@
 import { useRef, useState, type ReactNode } from "react";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react/ssr";
 import { SortSelect } from "@/components/preferences/SortSelect";
+import { cx } from "@/components/ui/cx";
 import { DAY_NAMES } from "@/lib/data/days";
 import { formatTimeRange, formatTimeShort } from "@/lib/data/time";
 import type { Day } from "@/lib/data/types";
 import type { Density } from "./density";
+import { selectionText } from "./dragBlock";
+import { DragSelectionBox } from "./DragSelectionBox";
 import { hourMarks, percentOf, type TimeRange } from "./timeRange";
+import { useBlockDrag, type BlockDrag } from "./useBlockDrag";
 import { useKeptScrollLeft } from "./useKeptScrollLeft";
 
 type SwipeWeekCalendarProps = {
@@ -20,6 +24,7 @@ type SwipeWeekCalendarProps = {
   overlay?: ReactNode;
   footer?: ReactNode;
   busy?: boolean;
+  drag?: BlockDrag;
 };
 
 /** "8:30", "9", "10" — the phone axis drops AM and PM to stay narrow. */
@@ -31,7 +36,7 @@ function axisLabel(minute: number): string {
  * The phone calendar card: two days side by side at a fixed hour height, swiped sideways for the rest
  * of the week. The time labels stay put while the days scroll. The page scrolls down, not the card.
  */
-export function SwipeWeekCalendar({ days, range, note, renderDay, background, overlay, footer, busy }: SwipeWeekCalendarProps) {
+export function SwipeWeekCalendar({ days, range, note, renderDay, background, overlay, footer, busy, drag }: SwipeWeekCalendarProps) {
   const scroller = useRef<HTMLDivElement>(null);
   const [atEnd, setAtEnd] = useState(false);
   useKeptScrollLeft(scroller);
@@ -39,6 +44,9 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
   const height = `calc(var(--size-phone-hour) * ${hours})`;
   const marks = hourMarks(range);
   const empty = !renderDay && !busy;
+  const { selection, announcement, surfaceProps } = useBlockDrag(days, range, drag);
+  const first = selection ? Math.min(selection.from, selection.to) : -1;
+  const last = selection ? Math.max(selection.from, selection.to) : -1;
 
   function swipe() {
     const element = scroller.current;
@@ -81,7 +89,14 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
           }}
           className="@container scroll-pl-(--size-phone-axis) snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          <div className="relative flex w-max pr-8 pb-10">
+          <div
+            {...surfaceProps}
+            className={cx(
+              "relative flex w-max pr-8 pb-10",
+              drag && "select-none [-webkit-touch-callout:none]",
+              selection && (selection.erase ? "**:cursor-not-allowed" : "**:cursor-crosshair"),
+            )}
+          >
             <div aria-hidden className="absolute top-(--size-phone-day-header) right-0 left-(--size-phone-axis)" style={{ height }}>
               {marks.map((minute) => (
                 <div key={minute} className="absolute inset-x-0 border-t border-line" style={{ top: `${percentOf(range, minute)}%` }} />
@@ -101,13 +116,29 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
                 ))}
               </div>
             </div>
-            {days.map((day) => (
+            {days.map((day, index) => (
               <div key={day} className="w-[44cqw] shrink-0 snap-start border-l border-line">
                 <p aria-hidden className="flex h-(--size-phone-day-header) items-center justify-center text-10 font-650">
                   {day}
                 </p>
-                <div role="group" aria-label={DAY_NAMES[day]} className="relative" style={{ height }}>
+                <div
+                  role="group"
+                  aria-label={DAY_NAMES[day]}
+                  data-drag-day={day}
+                  className={cx("relative", drag && "cursor-crosshair")}
+                  style={{ height }}
+                >
                   {renderDay?.(day, "regular")}
+                  {selection && index >= first && index <= last && (
+                    <DragSelectionBox
+                      erase={selection.erase}
+                      text={index === first ? selectionText(days.slice(first, last + 1), selection.time, selection.erase) : undefined}
+                      style={{
+                        top: `${percentOf(range, selection.time.start)}%`,
+                        height: `${percentOf(range, selection.time.end) - percentOf(range, selection.time.start)}%`,
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             ))}
@@ -115,6 +146,7 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
         </div>
         {overlay}
       </div>
+      {drag && <p aria-live="polite" className="sr-only">{announcement}</p>}
       {footer}
       <div className="flex justify-between gap-12 px-12 pt-6 pb-12 text-8 leading-11-6 text-ink-muted">
         <p>{note}</p>

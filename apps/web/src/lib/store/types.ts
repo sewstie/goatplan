@@ -1,4 +1,4 @@
-import type { TermFile, TermSummary } from "@/lib/data/types";
+import type { Day, TermFile, TermSummary } from "@/lib/data/types";
 import type { BlockedTime, Fix, SolveResponse } from "@/lib/engine/types";
 import type { SavedPlan } from "@/lib/plans/types";
 
@@ -54,6 +54,15 @@ export interface RemovedCourse {
   wasSelected: boolean;
 }
 
+/** The last blocked times added or removed by dragging on the calendar, with the list from before. */
+export interface BlockedChange {
+  previous: PlanBlockedTime[];
+  days: Day[];
+  start: number;
+  end: number;
+  erased: boolean;
+}
+
 export interface PlannerState extends Draft {
   savedPlans: SavedPlan[];
   savedPlanId: string | null;
@@ -78,6 +87,8 @@ export interface PlannerState extends Draft {
    * keeps it. Not saved with the draft or with plans.
    */
   removedCourse: RemovedCourse | null;
+  /** Like removedCourse: kept until another change to the draft, and not saved. */
+  blockedChange: BlockedChange | null;
 }
 
 export interface PlannerActions {
@@ -103,6 +114,11 @@ export interface PlannerActions {
   dismissRemovedCourse(): void;
   selectCourse(code: string | null, sectionId?: string | null): void;
   setPreferences(changes: Partial<PlanPreferences>): void;
+  /** Replaces the blocked times after a drag and keeps the old list in blockedChange, so it can be undone. */
+  changeBlocked(blocked: PlanBlockedTime[], change: Omit<BlockedChange, "previous">): void;
+  /** Puts blockedChange.previous back and solves once. */
+  undoBlockedChange(): void;
+  dismissBlockedChange(): void;
   setProfessor(courseCode: string, name: string | null): void;
   lockSection(courseCode: string, sectionId: string): void;
   unlockSection(courseCode: string, sectionId: string): void;

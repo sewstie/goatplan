@@ -10,13 +10,15 @@ type BlockedTimeBlockProps = {
   label?: string;
   density: Density;
   style: CSSProperties;
+  /** A drag that starts here removes time, so the pointer says so. */
+  erasable?: boolean;
 };
 
 /**
  * A time the student blocked, hatched like the early band (div.app-3.md): its name and time, or just
  * its time written short ("2 PM–4 PM") so it fits a narrow column, then "blocked".
  */
-export function BlockedTimeBlock({ start, end, label, density, style }: BlockedTimeBlockProps) {
+export function BlockedTimeBlock({ start, end, label, density, style, erasable }: BlockedTimeBlockProps) {
   const dense = density === "dense";
   const time = formatTimeRange(start, end);
   const small = cx("truncate", dense ? "text-7 leading-10-5" : "text-8 leading-12");
@@ -25,6 +27,7 @@ export function BlockedTimeBlock({ start, end, label, density, style }: BlockedT
       className={cx(
         "absolute overflow-hidden rounded-block border border-line-disabled bg-hatch text-ink-hatch motion-safe:transition-[top,height] motion-safe:duration-180",
         dense ? "px-4 pt-9.5" : "px-7 pt-12.5",
+        erasable && "cursor-not-allowed",
       )}
       style={style}
     >

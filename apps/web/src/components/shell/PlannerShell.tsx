@@ -1,15 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useRef, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
 import { TermPicker } from "@/components/courses/TermPicker";
 import { PhonePlanner } from "@/components/phone/PhonePlanner";
 import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
 import { AppShell } from "@/components/shell/AppShell";
+import { PlannerToast } from "@/components/shell/PlannerToast";
 import { Sidebar } from "@/components/shell/Sidebar";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
-import { Toast } from "@/components/ui/Toast";
-import { usePlanner } from "@/lib/store";
 
 type PlannerShellProps = {
   header: ReactNode;
@@ -25,28 +24,6 @@ type PlannerShellProps = {
  */
 export function PlannerShell({ header, toolbar, banner, schedule }: PlannerShellProps) {
   const phone = usePhoneViewport();
-
-  const removedCourse = usePlanner((state) => state.removedCourse);
-  const undoRemoveCourse = usePlanner((state) => state.undoRemoveCourse);
-  const dismissRemovedCourse = usePlanner((state) => state.dismissRemovedCourse);
-
-  // The code of the course a student just chose to undo. Set in the click handler and read by the
-  // effect below once React has re-rendered with the course back in the list, so focus can land on
-  // the restored row. A dismiss (timeout) never sets this, so the two paths stay distinct.
-  const undoneCodeRef = useRef<string | null>(null);
-
-  const handleUndo = useCallback(() => {
-    if (!removedCourse) return;
-    undoneCodeRef.current = removedCourse.code;
-    undoRemoveCourse();
-  }, [removedCourse, undoRemoveCourse]);
-
-  useEffect(() => {
-    const code = undoneCodeRef.current;
-    if (removedCourse !== null || !code) return;
-    undoneCodeRef.current = null;
-    document.querySelector<HTMLElement>(`[data-course-row="${CSS.escape(code)}"]`)?.focus();
-  }, [removedCourse]);
 
   return (
     <>
@@ -71,11 +48,7 @@ export function PlannerShell({ header, toolbar, banner, schedule }: PlannerShell
         />
       )}
       {/* Rendered last and fixed to the viewport, so it's the final Tab stop and sits above the shell. */}
-      <Toast
-        message={removedCourse ? `Removed ${removedCourse.code}` : null}
-        action={{ label: "Undo", onAction: handleUndo }}
-        onDismiss={dismissRemovedCourse}
-      />
+      <PlannerToast />
     </>
   );
 }

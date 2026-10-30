@@ -51,12 +51,13 @@ const initialState: PlannerState = {
   selectedCourse: null,
   selectedSection: null,
   removedCourse: null,
+  blockedChange: null,
 };
 
 type Selection = Pick<PlannerState, "selectedCourse" | "selectedSection">;
 
 /** A change to the draft, with the selection that goes with it. */
-type DraftChange = Partial<Draft> & Partial<Selection> & Partial<Pick<PlannerState, "removedCourse">>;
+type DraftChange = Partial<Draft> & Partial<Selection> & Partial<Pick<PlannerState, "removedCourse" | "blockedChange">>;
 
 function describe(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
@@ -173,7 +174,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       if (!update) return;
       showNext = null;
       const lastChosenSections = selectCurrentSchedule(state) ? selectChosenSections(state) : state.lastChosenSections;
-      set({ removedCourse: null, ...update, lastChosenSections });
+      set({ removedCourse: null, blockedChange: null, ...update, lastChosenSections });
       writeDraft(deps.storage, state.termId, draftOf(get()));
       if (options.solve) scheduleSolve();
     }
@@ -234,6 +235,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         term: null,
         termStatus: "loading",
         removedCourse: null,
+        blockedChange: null,
         termError: null,
         response: null,
         scheduleIndex: 0,
@@ -345,6 +347,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
             selectedCourse: sanitized.courses[0] ?? null,
             selectedSection: null,
             removedCourse: null,
+            blockedChange: null,
           });
         } else if (!(await switchTerm(termId, () => draft))) {
           return false;
@@ -408,6 +411,21 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
 
       setPreferences(changes) {
         changeDraft((state) => ({ preferences: { ...state.preferences, ...changes } }));
+      },
+
+      changeBlocked(blocked, change) {
+        changeDraft((state) => ({
+          preferences: { ...state.preferences, blocked },
+          blockedChange: { ...change, previous: state.preferences.blocked },
+        }));
+      },
+
+      undoBlockedChange() {
+        changeDraft((state) => state.blockedChange && { preferences: { ...state.preferences, blocked: state.blockedChange.previous } });
+      },
+
+      dismissBlockedChange() {
+        if (get().blockedChange) set({ blockedChange: null });
       },
 
       setProfessor(courseCode, name) {
@@ -501,6 +519,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
             scheduleIndex: found.index,
             alternatives: withChoices(state.alternatives, key, found.choices),
             removedCourse: null,
+            blockedChange: null,
           });
           writeDraft(deps.storage, state.termId, draftOf(get()));
           return;

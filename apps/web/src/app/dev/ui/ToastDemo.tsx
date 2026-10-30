@@ -28,13 +28,13 @@ export function ToastDemo() {
       <p className="text-10 leading-14-5 text-ink-muted">{note}</p>
       <Toast
         message={removed && `Removed ${removed}`}
-        action={{
+        actions={[{
           label: "Undo",
           onAction: () => {
             setNote(`${removed} is back.`);
             setRemoved(null);
           },
-        }}
+        }]}
         onDismiss={() => {
           setNote(`The toast for ${removed} timed out.`);
           setRemoved(null);

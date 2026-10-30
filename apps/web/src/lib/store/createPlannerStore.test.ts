@@ -1135,6 +1135,74 @@ describe("undo remove", () => {
   });
 });
 
+describe("blocked time drags", () => {
+  const work = { day: "Fri" as const, start: 840, end: 960, label: "Work" };
+  const lunch = [
+    { day: "Mon" as const, start: 720, end: 780 },
+    { day: "Tue" as const, start: 720, end: 780 },
+  ];
+  const change = { days: ["Mon" as const, "Tue" as const], start: 720, end: 780, erased: false };
+
+  async function planned() {
+    const context = setup();
+    await context.state().init();
+    context.state().addCourse("AE 2320");
+    context.state().setPreferences({ blocked: [work] });
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    context.engine.solve.mockClear();
+    return context;
+  }
+
+  it("sets the blocked times, keeps the list from before so it can be undone, and solves once", async () => {
+    const { state, engine, storage } = await planned();
+    state().changeBlocked([work, ...lunch], change);
+    expect(state().preferences.blocked).toEqual([work, ...lunch]);
+    expect(state().blockedChange).toEqual({ ...change, previous: [work] });
+    expect(readDraft(storage, "2027-C")?.preferences.blocked).toEqual([work, ...lunch]);
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).toHaveBeenCalledTimes(1);
+    expect(engine.solve.mock.calls[0][0].preferences?.blocked).toHaveLength(3);
+  });
+
+  it("puts the earlier list back on undo, forgets the change and solves once", async () => {
+    const { state, engine } = await planned();
+    state().changeBlocked([work, ...lunch], change);
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    state().undoBlockedChange();
+    expect(state().preferences.blocked).toEqual([work]);
+    expect(state().blockedChange).toBeNull();
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).toHaveBeenCalledTimes(2);
+    state().undoBlockedChange();
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).toHaveBeenCalledTimes(2);
+  });
+
+  it("is forgotten on dismiss or any other change to the plan, and a removed course takes its place", async () => {
+    const { state } = await planned();
+    state().changeBlocked(lunch, change);
+    state().dismissBlockedChange();
+    expect(state()).toMatchObject({ blockedChange: null, preferences: expect.objectContaining({ blocked: lunch }) });
+
+    state().changeBlocked([work], { ...change, erased: true });
+    state().setPreferences({ onlyOpen: false });
+    expect(state().blockedChange).toBeNull();
+
+    state().changeBlocked(lunch, change);
+    state().removeCourse("AE 2320");
+    expect(state().blockedChange).toBeNull();
+    expect(state().removedCourse).not.toBeNull();
+    state().changeBlocked([work], change);
+    expect(state().removedCourse).toBeNull();
+  });
+
+  it("isn't saved with the draft", async () => {
+    const { state, storage } = await planned();
+    state().changeBlocked(lunch, change);
+    expect(storage.getItem(draftKey("2027-C"))).not.toContain("previous");
+  });
+});
+
 describe("professor fixes", () => {
   it("applies Allow any professor with a start time in one draft change and one solve", async () => {
     const { store, state, engine, storage } = setup();

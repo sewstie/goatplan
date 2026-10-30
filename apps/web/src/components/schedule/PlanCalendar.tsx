@@ -9,10 +9,12 @@ import { BlockedTimeBlock } from "./BlockedTimeBlock";
 import { ClassBlock } from "./ClassBlock";
 import { calendarBounds } from "./calendarBounds";
 import type { Density } from "./density";
+import { addRanges, changedDays, subtractBlocked } from "./dragBlock";
 import { EarlyBand } from "./EarlyBand";
 import { assignLanes } from "./lanes";
 import { NoTimeStrip } from "./NoTimeStrip";
 import type { ClassItem } from "./scheduleItems";
+import type { BlockDrag } from "./useBlockDrag";
 import { useScheduleItems } from "./useScheduleItems";
 import { useDiagnosticPreview } from "./useDiagnosticPreview";
 import { useSectionPreviewItems } from "./useSectionPreviewItems";
@@ -32,6 +34,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
   const selectedCourse = usePlanner(selectViewedCourse);
   const selectedSection = usePlanner(selectViewedSection);
   const selectCourse = usePlanner((state) => state.selectCourse);
+  const changeBlocked = usePlanner((state) => state.changeBlocked);
   const phone = usePhoneViewport();
   const showPhoneScreen = usePhoneScreen((state) => state.show);
   const { classes: scheduled, untimed } = useScheduleItems();
@@ -75,6 +78,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             end={block.end}
             label={block.label}
             density={density}
+            erasable={!saved}
             style={blockPosition(range, block, FULL_COLUMN, 0)}
           />
         ))}
@@ -104,6 +108,16 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
 
   const hasTimes = classes.length > 0 || preferences.blocked.length > 0;
 
+  const drag: BlockDrag | undefined = saved ? undefined : {
+    blocked: preferences.blocked,
+    onDrop(ranges, erase) {
+      const next = erase ? subtractBlocked(preferences.blocked, ranges) : addRanges(preferences.blocked, ranges);
+      const days = changedDays(preferences.blocked, next, ranges);
+      if (days.length > 0) changeBlocked(next, { days, start: ranges[0].start, end: ranges[0].end, erased: erase });
+      return days;
+    },
+  };
+
   return (
     <WeekCalendar
       busy={!saved && pending}
@@ -115,6 +129,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
       background={hasTimes && <EarlyBand range={range} startsAfter={preferences.startsAfter} />}
       footer={<NoTimeStrip items={saved || untimed.length > 0 ? untimed : diagnostic.untimed} />}
       overlay={overlay}
+      drag={drag}
     />
   );
 }
