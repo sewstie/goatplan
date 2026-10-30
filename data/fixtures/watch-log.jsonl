@@ -1,0 +1,8 @@
+{"checkedAt":"2026-10-30T12:00:00.000Z","status":200,"etag":"\"a\"","lastModified":null,"contentLength":null,"cacheControl":null,"age":null,"bodyHash":"a","change":"first","sectionCount":2,"enrolledTotal":53}
+{"checkedAt":"2026-10-30T12:30:00.000Z","status":304,"etag":"\"a\"","lastModified":null,"contentLength":null,"cacheControl":null,"age":null,"bodyHash":"a","change":"unchanged (304)"}
+{"checkedAt":"2026-10-30T13:00:00.000Z","status":200,"etag":"\"b\"","lastModified":null,"contentLength":null,"cacheControl":null,"age":null,"bodyHash":"b","change":"seats-only","sectionCount":2,"enrolledTotal":55}
+{"checkedAt":"2026-10-30T13:30:00.000Z","status":"error","message":"fetch failed"}
+{"checkedAt":"2026-10-30T15:00:00.000Z","status":200,"etag":"\"c\"","lastModified":null,"contentLength":null,"cacheControl":null,"age":null,"bodyHash":"c","change":"unchanged","sectionCount":2,"enrolledTotal":55}
+{"checkedAt":"2026-10-30T17:00:00.000Z","status":200,"etag":"\"d\"","lastModified":null,"contentLength":null,"cacheControl":null,"age":null,"bodyHash":"d","change":"structure","sectionCount":2,"enrolledTotal":55}
+{"checkedAt":"2026-11-02T14:00:00.000Z","status":200,"etag":"\"e\"","lastModified":null,"contentLength":null,"cacheControl":null,"age":null,"bodyHash":"e","change":"both","sectionCount":3,"enrolledTotal":60}
+{"checkedAt":"2026-11-02T14:30:00.000Z","status":200,"etag":"\"f\"","lastModified":null,"contentLength":null,"cacheControl":null,"age":null,"bodyHash":"f","change":"seats-only","sectionCount":3,"enrolledTotal":61}

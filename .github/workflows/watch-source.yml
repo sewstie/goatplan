@@ -1,0 +1,64 @@
+name: Watch WPI source
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: watch-source
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stop after the measurement week
+        id: window
+        run: |
+          today=$(TZ=America/New_York date +%F)
+          if [[ "$today" > "2026-11-06" ]]; then
+            echo "The measurement ended on 2026-11-06. Delete this workflow."
+            echo "over=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.window.outputs.over != 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.window.outputs.over != 'true'
+        with:
+          node-version: 22
+
+      - name: Restore earlier checks
+        if: steps.window.outputs.over != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: watch/
+          key: watch-${{ github.run_id }}
+          restore-keys: watch-
+
+      - name: Check WPI's file once
+        if: steps.window.outputs.over != 'true'
+        run: node scripts/watch-source.mjs
+
+      - name: Write the report
+        if: steps.window.outputs.over != 'true'
+        run: node scripts/watch-report.mjs | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Save checks for the next run
+        if: steps.window.outputs.over != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: watch/
+          key: watch-${{ github.run_id }}
+
+      - uses: actions/upload-artifact@v4
+        if: steps.window.outputs.over != 'true'
+        with:
+          name: watch-log
+          path: watch/log.jsonl
+          retention-days: 14

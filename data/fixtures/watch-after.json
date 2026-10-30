@@ -1,0 +1,26 @@
+{
+  "Report_Entry": [
+    {
+      "Course_Title": "AB 1531 - Elementary Arabic I",
+      "Course_Section": "AB 1531-A01 - Elementary Arabic I",
+      "Offering_Period": "2026 Fall A Term",
+      "Meeting_Patterns": "M-T-R-F | 9:00 AM - 9:50 AM",
+      "Locations": "Fuller Labs 311",
+      "Instructors": "Mohammed El Hamzaoui",
+      "Section_Status": "Waitlist",
+      "Enrolled_Capacity": "21/20",
+      "Waitlist_Waitlist_Capacity": "1/9"
+    },
+    {
+      "Course_Title": "ACC 2060 - Financial Statements For Decision Making",
+      "Course_Section": "ACC 2060-B01 - Financial Statements For Decision Making",
+      "Offering_Period": "2026 Fall B Term",
+      "Meeting_Patterns": "T-F | 12:00 PM - 1:50 PM",
+      "Locations": "Salisbury Labs 115",
+      "Instructors": "Nii Ollenu",
+      "Section_Status": "Open",
+      "Enrolled_Capacity": "34/50",
+      "Waitlist_Waitlist_Capacity": "0/10"
+    }
+  ]
+}
