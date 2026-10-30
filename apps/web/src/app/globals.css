@@ -266,6 +266,11 @@
   );
 }
 
+/* Over a blocked time in drawing mode, where a drag removes it. The hotspot is the eraser's tip. */
+@utility cursor-erase {
+  cursor: url("/cursors/erase.svg") 3 20, not-allowed;
+}
+
 @layer base {
   html {
     background-color: var(--color-canvas);

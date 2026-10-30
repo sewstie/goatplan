@@ -100,6 +100,8 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue("540");
   await tabTo(page, page.getByRole("button", { name: "Block a time", exact: true }));
   await page.keyboard.press("Enter");
+  await tabTo(page, page.getByRole("button", { name: "Type a time instead", exact: true }));
+  await page.keyboard.press("Enter");
   const block = page.getByRole("dialog", { name: "Block a time" });
   await expect(block.getByRole("textbox", { name: "Name (optional)" })).toBeFocused();
   await page.keyboard.type("Lunch");

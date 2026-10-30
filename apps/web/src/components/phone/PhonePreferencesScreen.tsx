@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { X } from "@phosphor-icons/react/ssr";
-import { BlockTimeButton } from "@/components/preferences/BlockTimeButton";
+import { AddBlockedTimeButton } from "@/components/preferences/AddBlockedTimeButton";
 import { groupBlocked, groupDays, groupTimes, removeGroup } from "@/components/preferences/blockedTimes";
 import { startsAfterOptions } from "@/components/preferences/timeOptions";
 import { Select } from "@/components/ui/Select";
@@ -51,7 +51,7 @@ export function PhonePreferencesScreen() {
 
       <div className="flex items-center justify-between gap-8 pt-24 pb-10">
         <h2 className="text-10 font-650">Blocked time</h2>
-        <BlockTimeButton variant="add" />
+        <AddBlockedTimeButton />
       </div>
       {groups.length === 0 ? (
         <div className="rounded-panel border border-dashed border-line-strong px-16 py-16">

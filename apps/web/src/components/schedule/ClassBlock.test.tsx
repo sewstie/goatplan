@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { expect, it, vi } from "vitest";
 import { ClassBlock } from "./ClassBlock";
 import type { ClassItem } from "./scheduleItems";
 
@@ -24,4 +25,29 @@ it("keeps the course color on a phone and gives a selected block a dashed outlin
 
 it("has no selected outline when not selected", () => {
   expect(block(false).className).not.toMatch(/border-dashed|border-ink-muted/);
+});
+
+it("fits a short section on one line, with everything still in its label", () => {
+  render(<ClassBlock item={{ ...item, end: 570 }} density="regular" layout="line" style={{}} selected={false} onSelect={() => {}} />);
+  const button = screen.getByRole("button", { name: "AE 2320 CL01, Introduction to Orbital Mechanics, Monday, 9:00 AM–9:30 AM, Unity Hall 400, Ye Lu" });
+  expect(button).toHaveTextContent(/^AE 2320 · 9–9:30$/);
+});
+
+it("shows only the color when not even one line fits", () => {
+  render(<ClassBlock item={{ ...item, end: 560 }} density="dense" layout="none" style={{}} selected={false} onSelect={() => {}} />);
+  expect(screen.getByRole("button", { name: /^AE 2320 CL01,/ })).toHaveTextContent(/^$/);
+});
+
+it("doesn't open its details on a click in drawing mode, but does from the keyboard", async () => {
+  const onSelect = vi.fn();
+  render(<ClassBlock item={item} density="regular" style={{}} selected={false} onSelect={onSelect} drawing />);
+  const button = screen.getByRole("button", { name: /^AE 2320 CL01,/ });
+  await userEvent.click(button);
+  expect(onSelect).not.toHaveBeenCalled();
+  expect(button.className).toContain("cursor-crosshair");
+  expect(button.className).toContain("opacity-70");
+
+  button.focus();
+  await userEvent.keyboard("{Enter}");
+  expect(onSelect).toHaveBeenCalledOnce();
 });

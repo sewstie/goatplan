@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Day } from "@/lib/data/types";
-import { addRanges, blockedAt, changedDays, changeText, dayIndexAt, dayRanges, mergeBlocked, minuteAt, selectionText, snapRange, subtractBlocked } from "./dragBlock";
+import { addRanges, blockedAt, changedDays, changeText, dayIndexAt, dayRanges, mergeBlocked, minuteAt, removeBlocked, replaceBlocked, selectionText, snapRange, subtractBlocked } from "./dragBlock";
 
 const RANGE = { start: 480, end: 1020 };
 const WEEKDAYS: Day[] = ["Mon", "Tue", "Wed", "Thu", "Fri"];
@@ -176,5 +176,28 @@ describe("changedDays", () => {
     expect(changedDays(before, addRanges(before, ranges), ranges)).toEqual(["Wed", "Fri"]);
     expect(changedDays(before, subtractBlocked(before, ranges), ranges)).toEqual(["Thu"]);
     expect(changedDays(before, before, ranges)).toEqual([]);
+  });
+});
+
+describe("replaceBlocked", () => {
+  const work = { day: "Mon" as const, start: 720, end: 750, label: "Work" };
+  const other = { day: "Tue" as const, start: 720, end: 750, label: "Work" };
+
+  it("removes just that blocked time, not others it overlaps", () => {
+    const gym = { day: "Mon" as const, start: 690, end: 780, label: "Gym" };
+    expect(removeBlocked([work, gym, other], { ...work })).toEqual([gym, other]);
+  });
+
+  it("renames one blocked time and leaves the others alone", () => {
+    expect(replaceBlocked([work, other], work, ["Mon"], 720, 750, "Gym")).toEqual([other, { ...work, label: "Gym" }]);
+  });
+
+  it("moves it to the form's days and times, and joins it with a block it now touches", () => {
+    const lunch = { day: "Wed" as const, start: 750, end: 780, label: "Work" };
+    expect(replaceBlocked([work, lunch], work, ["Wed"], 720, 750, "Work")).toEqual([{ ...lunch, start: 720 }]);
+  });
+
+  it("drops the name when the field is cleared", () => {
+    expect(replaceBlocked([work], work, ["Mon"], 720, 750, " ")).toEqual([{ day: "Mon", start: 720, end: 750 }]);
   });
 });

@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { CaretDown, Clock } from "@phosphor-icons/react/ssr";
+import { BlockedTimesMenu } from "@/components/preferences/BlockedTimesMenu";
 import { BlockTimeButton } from "@/components/preferences/BlockTimeButton";
 import { groupBlocked, groupDays, groupTimes } from "@/components/preferences/blockedTimes";
 import { ReadOnlyPreferences } from "@/components/preferences/ReadOnlyPreferences";
@@ -22,6 +23,7 @@ export function PhonePreferenceChips() {
   const startsAfter = usePlanner((state) => state.preferences.startsAfter);
   const blocked = usePlanner((state) => state.preferences.blocked);
   const onlyOpen = usePlanner((state) => state.preferences.onlyOpen);
+  const drawing = usePlanner((state) => state.drawing);
   const setPreferences = usePlanner((state) => state.setPreferences);
   const show = usePhoneScreen((state) => state.show);
   const options = useMemo(() => startsAfterOptions(startsAfter), [startsAfter]);
@@ -60,7 +62,9 @@ export function PhonePreferenceChips() {
         </span>
         <BlockTimeButton label="Block time" className="min-w-0 flex-auto justify-center px-8" />
       </div>
-      {groups.length > 0 && (
+      {/* While drawing, one pill stands for them all, so the calendar below doesn't move. */}
+      {drawing && <BlockedTimesMenu className="self-start" />}
+      {!drawing && groups.length > 0 && (
         <div className="flex flex-wrap gap-8">
           {groups.map((group) => (
             <button

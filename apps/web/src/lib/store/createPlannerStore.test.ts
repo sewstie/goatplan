@@ -1203,6 +1203,62 @@ describe("blocked time drags", () => {
   });
 });
 
+describe("drawing mode", () => {
+  async function ready() {
+    const context = setup();
+    await context.state().init();
+    context.state().addCourse("AE 2320");
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    return context;
+  }
+
+  it("starts off and turns on and off", async () => {
+    const { state } = await ready();
+    expect(state().drawing).toBe(false);
+    state().setDrawing(true);
+    expect(state().drawing).toBe(true);
+    state().setDrawing(false);
+    expect(state().drawing).toBe(false);
+  });
+
+  it("stays off until the term is ready", () => {
+    const { state } = setup();
+    state().setDrawing(true);
+    expect(state().drawing).toBe(false);
+  });
+
+  it("doesn't change the plan, solve or get saved with the draft", async () => {
+    const { state, engine, storage } = await ready();
+    engine.solve.mockClear();
+    const before = storage.getItem(draftKey("2027-C"));
+    state().setDrawing(true);
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(engine.solve).not.toHaveBeenCalled();
+    expect(storage.getItem(draftKey("2027-C"))).toBe(before);
+    expect(before).not.toContain("drawing");
+  });
+
+  it("stays on through changes to the plan, like a drawn blocked time", async () => {
+    const { state } = await ready();
+    state().setDrawing(true);
+    state().changeBlocked([{ day: "Mon", start: 720, end: 780 }], { days: ["Mon"], start: 720, end: 780, erased: false });
+    state().undoBlockedChange();
+    expect(state().drawing).toBe(true);
+  });
+
+  it("turns off when the term changes or a plan opens", async () => {
+    const { state } = await ready();
+    state().setDrawing(true);
+    const switching = state().setTerm("2027-D");
+    expect(state().drawing).toBe(false);
+    await switching;
+
+    state().setDrawing(true);
+    await state().openPlan("2027-D", { ...emptyDraft(), courses: ["AE 2320"] });
+    expect(state().drawing).toBe(false);
+  });
+});
+
 describe("professor fixes", () => {
   it("applies Allow any professor with a start time in one draft change and one solve", async () => {
     const { store, state, engine, storage } = setup();

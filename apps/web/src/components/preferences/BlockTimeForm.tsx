@@ -8,7 +8,7 @@ import type { Day } from "@/lib/data/types";
 import { DayCheckbox } from "./DayCheckbox";
 import { blockEndOptions, blockStartOptions, endAfter } from "./timeOptions";
 
-export type BlockTimeValues = { days: Day[]; start: number; end: number };
+export type BlockTimeValues = { days: Day[]; start: number; end: number; label?: string };
 
 type BlockTimeFormProps = {
   id: string;
@@ -26,7 +26,7 @@ const START_OPTIONS = blockStartOptions();
 
 /** A name, days and a time range to keep free. The dialog's footer holds its submit button. */
 export function BlockTimeForm({ id, onSubmit, onError, errorId, nameRef, initial }: BlockTimeFormProps) {
-  const [label, setLabel] = useState("");
+  const [label, setLabel] = useState(initial?.label ?? "");
   const [days, setDays] = useState<Day[]>(initial?.days ?? []);
   const [start, setStart] = useState(initial?.start ?? 12 * 60);
   const [end, setEnd] = useState(initial?.end ?? 13 * 60);

@@ -88,6 +88,21 @@ describe("ScheduleView", () => {
     expect(lab).toHaveAccessibleName(/Higgins Labs 230 Geom Modeling Computer Lab/);
   });
 
+  it("swaps the first-course message for a grid to draw on in drawing mode", () => {
+    setPlanner({ courses: [], response: null, preferences: { startsAfter: 0, blocked: [], onlyOpen: true } });
+    renderInCard();
+    expect(screen.getByRole("heading", { name: "Add your first course" })).toBeInTheDocument();
+
+    act(() => getPlannerStore().getState().setDrawing(true));
+    expect(screen.queryByRole("heading", { name: "Add your first course" })).not.toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Drawing mode" })).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Monday" })).toHaveAttribute("data-drag-day", "Mon");
+    expect(screen.getByText("No timed courses yet")).toBeInTheDocument();
+
+    act(() => getPlannerStore().getState().setDrawing(false));
+    expect(screen.getByRole("heading", { name: "Add your first course" })).toBeInTheDocument();
+  });
+
   it("lists sections with no set time under the grid", () => {
     setPlanner({ courses: ["AE 2320", "AE 2410", "AE 5131"], response: solved(["CX02"], {}, true) });
     renderInCard();

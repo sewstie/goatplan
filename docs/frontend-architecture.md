@@ -135,7 +135,8 @@ modules. Without a provider, both hooks use the app's shared store.
 | `selectedCourse` | The course the details panel shows and "Your courses" marks. The first course once a term loads; not saved in the draft. |
 | `selectedSection` | The section whose calendar blocks are selected, after a click on a block; `null` otherwise. |
 | `removedCourse` | The last removed course, so it can be undone: `{ code, index, locks, professor, alternatives, wasSelected }` (its position, its locks or `undefined`, its professor entry, its picked alternatives per schedule key, and whether it was selected); `null` otherwise. A second remove replaces it. Any other draft change clears it (adding a course, preferences, sort, lock or unlock, professor, alternative, applying a fix, switching term, opening a plan); selecting a course or section and paging schedules don't. Not saved with the draft or with plans, so a reload loses it. |
-| `blockedChange` | The last blocked times added or removed by dragging on the calendar: `{ previous, days, start, end, erased }`, where `previous` is the blocked list from before the drag. Like `removedCourse`, any other draft change clears it, a removed course replaces it, and it isn't saved. |
+| `blockedChange` | The last blocked times added or removed by dragging on the calendar (or removed from its popover or selection): `{ previous, days, start, end, erased, count? }`, where `previous` is the blocked list from before and `count` is how many selected times one delete removed. Like `removedCourse`, any other draft change clears it, a removed course replaces it, and it isn't saved. |
+| `drawing` | Drawing mode: a drag on the calendar blocks or unblocks time. Off by default. Changing the term, opening a plan or switching between Found and Saved turns it off, and it stays off in a saved plan. Not saved with the draft or with plans. |
 | `savedPlans` | A read-only mirror of the plans source. Saved plans keep their own storage. |
 | `savedPlanId` | The saved plan being viewed, or `null` for Found. `PlannerViewSync` follows `/?view=saved&plan={id}` and browser history. Never persisted with the draft. |
 | `savedSelectedCourse`, `savedSelectedSection` | Selection within Saved. Found keeps its own selection. |
@@ -157,6 +158,7 @@ modules. Without a provider, both hooks use the app's shared store.
 | `changeBlocked(blocked, change)` | Replaces the blocked times after a calendar drag, keeps the old list in `blockedChange` and solves once. |
 | `undoBlockedChange()` | Puts `blockedChange.previous` back, clears `blockedChange` and solves once. Does nothing without one. |
 | `dismissBlockedChange()` | Clears `blockedChange` without changing the plan. |
+| `setDrawing(on)` | Turns drawing mode on or off. Does nothing in a saved plan or before the term is ready. |
 | `selectCourse(code, sectionId?)` | Selects a planned course, and optionally one of its sections; `null` clears the selection. |
 | `setPreferences(changes)` | Changes any of `startsAfter`, `blocked` and `onlyOpen`. |
 | `setProfessor(course, name)` | Selects a lecture professor, or `null` for Any professor, and regenerates schedules. |
@@ -343,30 +345,82 @@ buttons (`actions`):
   opens the Block a time form filled in with the drawn days and times. It only
   shows when those times fit the form's 7 AM–10 PM choices. The message only
   names days that really changed. After Undo or the Name it form, focus moves to
-  the Block a time button.
+  the Block a time button. Remove in a blocked time's popover shows the same
+  "Unblocked … · Undo".
 
 ### Blocking time by dragging
 
-On the week grid and the phone calendar, the student can drag on empty space
-to block a time on one or more days. The time snaps to half hours, is at least
-30 minutes long, and stays inside the visible range. A drag that starts on a
-blocked time removes that time instead, and splits a block when it only covers
-part of it. After adding, blocks on the same day with the same name that
-overlap or touch become one. The plan solves once, when the pointer is
-released.
+The "Block a time" pill (`BlockTimeButton`, "Block time" on a phone) is a
+toggle (`aria-pressed`) for drawing mode, kept in the store as `drawing`. While
+it's on, the pill says "Drawing busy times" and a slim bar above the calendar
+(`DrawingBar`) says "Drag on the calendar to block time · Type a time instead ·
+Done". "Type a time instead" opens the Block a time form; Done and Escape turn
+the mode off and put focus back on the pill. The mode also turns off when the
+planner page goes away, the phone shows another screen or any dialog opens. The
+phone Preferences screen's "+ Add" (`AddBlockedTimeButton`) still opens the
+form directly.
 
-- A mouse or pen drag starts after the pointer moves 4 px. A finger has to
-  press and hold for 400 ms first, so swipes and scrolling still work. Scrolling
-  is only blocked once the hold starts. Escape cancels a drag.
-- Class blocks still open their details, and a click on empty space does
-  nothing.
+Out of drawing mode a drag does nothing: clicks open class details and phone
+swipes scroll. In drawing mode, a drag anywhere in a day column blocks a time
+on one or more days. The time snaps to half hours, is at least 30 minutes long,
+and stays inside the visible range. A drag that starts on a blocked time
+removes that time instead, and splits a block when it only covers part of it.
+After adding, blocks on the same day with the same name that overlap or touch
+become one. The plan solves once, when the pointer is released.
+
+- A drag starts after the pointer moves 4 px, for a finger too. On the phone
+  the grid lets the page swipe sideways to other days (`touch-action: pan-x`),
+  so an up-and-down drag draws; the "Swipe for more days" button still works.
+  Escape cancels a drag first, and a second Escape leaves drawing mode.
+- While drawing, the calendar shows at least 8 AM to 10 PM, on desktop and
+  phone, so evening times can be blocked; the auto range comes back after.
+  With no courses yet, the "Add your first course" message gives way to a grid
+  to draw on. The grid stays on screen while the plan solves.
+- Nothing above the calendar moves between drags: the blocked times are one
+  fixed-width pill ("3 blocked times", `BlockedTimesMenu`) with a list to
+  remove each, the banner's space and the badge line are kept even when empty,
+  and `useHeldHeight` keeps the summary, the schedule browser, the banner and
+  the Preferences row from shrinking until drawing ends.
+- On a phone, when nothing fits, the week stays in view with the "Needs
+  attention" card under it, so the time that caused it can be erased.
+- Empty space has a crosshair pointer; blocked times have an eraser pointer
+  (`cursor-erase`, `public/cursors/erase.svg`). Class blocks don't open their
+  details while drawing.
 - The pure math is in `components/schedule/dragBlock.ts`, the pointer handling
   in `useBlockDrag.ts`, and the rectangle in `DragSelectionBox.tsx`. Day columns
   are marked with `data-drag-day`.
-- Keyboard and screen reader users keep using the Block a time button and
-  form. The calendar has a polite live region that says what changed on
-  release ("Blocked Mon–Wed 12–1 PM"), and stays quiet when nothing did.
-- The saved plan view is read-only, so dragging is off there.
+- Keyboard and screen reader users can use "Type a time instead". The calendar
+  has a polite live region that says what changed on release ("Blocked Mon–Wed
+  12–1 PM"), and stays quiet when nothing did.
+- The saved plan view is read-only, so drawing mode is off there.
+
+### Short blocks and the blocked-time popover
+
+`blockLayout(heightPx)` in `components/schedule/blockLayout.ts` decides how
+much text a block shows: `full` from 48 px, `line` from 18 px, `none` below.
+The height comes from the block's minutes and the grid's pixels per hour
+(`WeekCalendar` and `SwipeWeekCalendar` measure the grid once and pass it to
+`renderDay`).
+
+- A blocked time with `line` shows one centered line ("Work · 12–12:30", or
+  "12–12:30 PM" without a name); `none` is only hatching. When its text is cut
+  down, a Tooltip shows the rest on hover and focus. Every blocked time has an
+  aria-label with everything: "Work, Monday 12:00 to 12:30 PM, blocked".
+- Class blocks under 40 minutes use the same rule: one line ("CS 1101 ·
+  9–9:30") or only the color. Their aria-label is unchanged.
+- Out of drawing mode a blocked time is a button. A click or Enter opens a small
+  popover (`BlockedTimePopover`, shown by `BlockedTimeMenu` next to the
+  calendar) with its name, day and time, "Rename" (the Block a time form filled
+  in) and "Remove" (with the Undo toast). Escape closes it and returns focus to
+  the block; after Rename or Remove, focus moves to the Block a time pill.
+- ⌘-click on a Mac, Ctrl-click elsewhere (or Ctrl/⌘+Enter on a focused block)
+  adds a blocked time to a selection or takes it out, in or out of drawing mode.
+  Selected blocks get an accent ring and ", selected" in their label. While
+  something is selected, `BlockedSelectionBar` floats over the bottom of the
+  calendar: "2 selected · Delete · Clear". Delete or Backspace removes them
+  too, as one change with "Removed 2 blocked times · Undo" (`blockedChange.count`);
+  Escape clears the selection before it leaves drawing mode. The selection
+  lives in `useBlockedTimeMenu` with the open popover, by `blockedKey`.
 
 ### Bottom Sheet (`components/ui/Sheet.tsx`)
 
@@ -386,8 +440,8 @@ Both sides share:
 The `bottom` variant adds safe-area padding for the iPhone home indicator:
 `pb-[max(20px,env(safe-area-inset-bottom))]`.
 
-Phone uses `Sheet side="bottom"` for `BlockTimeButton`: the "Block a time"
-form, which uses `Dialog` on tablet but `Sheet side="bottom"` on phone.
+The "Block a time" form (`BlockTimeDialog`) uses `Dialog` on tablet and
+`Sheet side="bottom"` on phone.
 
 ## Checks before a PR
 

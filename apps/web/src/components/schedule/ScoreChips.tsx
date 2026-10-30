@@ -8,14 +8,17 @@ const TONE: Readonly<Record<ScheduleBadge["tone"], string>> = {
   warning: "bg-warning-soft text-warning-ink",
 };
 
-/** What the shown schedule is like. Good news is green, an early start is orange, and the badge the sort ranks by is bold. */
-export function ScoreChips({ chips }: { chips: readonly ScheduleBadge[] }) {
+/**
+ * What the shown schedule is like. Good news is green, an early start is orange, and the badge the sort
+ * ranks by is bold. `oneRow` never wraps; the row then scrolls sideways.
+ */
+export function ScoreChips({ chips, oneRow = false }: { chips: readonly ScheduleBadge[]; oneRow?: boolean }) {
   const id = useId();
   const leadId = `${id}-lead`;
   return (
-    <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+    <div className={cx("flex items-center gap-x-6 gap-y-4", oneRow ? "w-max whitespace-nowrap" : "flex-wrap")}>
       <span aria-hidden>This schedule:</span>
-      <ul aria-label="This schedule" className="flex flex-wrap gap-4">
+      <ul aria-label="This schedule" className={cx("flex gap-4", !oneRow && "flex-wrap")}>
         {chips.map((chip, index) => {
           const noteId = chip.note ? `${id}-note-${index}` : null;
           const described = [noteId, chip.lead ? leadId : null].filter(Boolean).join(" ");

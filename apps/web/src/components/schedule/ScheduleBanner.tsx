@@ -2,10 +2,13 @@
 
 import { selectSchedules, usePlanner } from "@/lib/store";
 import { Banner } from "./Banner";
-import { bannerMessage } from "./scheduleCopy";
+import { bannerMessage, type BannerMessage } from "./scheduleCopy";
 import { useDelayedFlag } from "./useDelayedFlag";
 import { useScheduleItems } from "./useScheduleItems";
 import { useDiagnosis } from "./useDiagnosis";
+import { useHeldHeight } from "./useHeldHeight";
+
+const DRAWING_TIP: BannerMessage = { tone: "info", title: "Tip:", detail: "Start a drag on a blocked time to erase it." };
 
 /** How long the engine may work before the banner says it's still looking. */
 const SLOW_SOLVE_MS = 600;
@@ -22,9 +25,18 @@ export function ScheduleBanner() {
   const { waitlisted } = useScheduleItems();
   const diagnosis = useDiagnosis();
   const slow = useDelayedFlag(solveStatus === "waiting" || solveStatus === "solving", SLOW_SOLVE_MS);
+  const drawing = usePlanner((state) => state.drawing);
+  const [heldRef, heldStyle] = useHeldHeight<HTMLDivElement>(drawing);
 
   if (saved || termStatus !== "ready") return null;
   const message = bannerMessage({ courseCount, solveStatus, slow, solveError, response, shownSchedules, waitlisted });
-  if (diagnosis?.issues[0]) return <Banner message={{ tone: "warning", ...diagnosis.issues[0].banner }} />;
-  return message && <Banner message={message} />;
+  const banner = diagnosis?.issues[0] ? <Banner message={{ tone: "warning", ...diagnosis.issues[0].banner }} /> : message && <Banner message={message} />;
+  if (!drawing) return banner;
+  // In drawing mode the banner's place is always taken, by a tip when there's nothing else to say, so
+  // "No schedule fits" can't push the calendar down.
+  return (
+    <div ref={heldRef} style={heldStyle} className="grid">
+      {banner || <Banner message={DRAWING_TIP} />}
+    </div>
+  );
 }

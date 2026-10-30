@@ -52,6 +52,7 @@ const initialState: PlannerState = {
   selectedSection: null,
   removedCourse: null,
   blockedChange: null,
+  drawing: false,
 };
 
 type Selection = Pick<PlannerState, "selectedCourse" | "selectedSection">;
@@ -236,6 +237,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         termStatus: "loading",
         removedCourse: null,
         blockedChange: null,
+        drawing: false,
         termError: null,
         response: null,
         scheduleIndex: 0,
@@ -275,13 +277,13 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       },
 
       showFound() {
-        set({ savedPlanId: null, savedSelectedCourse: null, savedSelectedSection: null });
+        set({ savedPlanId: null, savedSelectedCourse: null, savedSelectedSection: null, drawing: false });
       },
 
       showSaved(id) {
         const state = get();
         const plan = state.savedPlans.find((plan) => plan.termId === state.termId && (id === undefined || plan.id === id));
-        if (plan) set({ savedPlanId: plan.id, savedSelectedCourse: plan.courses[0] ?? null, savedSelectedSection: null });
+        if (plan) set({ savedPlanId: plan.id, savedSelectedCourse: plan.courses[0] ?? null, savedSelectedSection: null, drawing: false });
       },
 
       nextSavedPlan() {
@@ -426,6 +428,12 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
 
       dismissBlockedChange() {
         if (get().blockedChange) set({ blockedChange: null });
+      },
+
+      setDrawing(on) {
+        const state = get();
+        const drawing = on && !state.savedPlanId && state.termStatus === "ready";
+        if (state.drawing !== drawing) set({ drawing });
       },
 
       setProfessor(courseCode, name) {

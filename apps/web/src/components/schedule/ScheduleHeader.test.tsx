@@ -45,6 +45,17 @@ describe("ScheduleSummary", () => {
     expect(screen.queryByRole("listitem", { description: "What this sort ranks by" })).not.toBeInTheDocument();
   });
 
+  it("on the phone keeps the badge line's space when no schedule fits", () => {
+    setPlanner({ response: solved([], { total: 0, patterns: 0 }) });
+    const { container, unmount } = render(<ScheduleSummary steady />);
+    expect(screen.queryByRole("list", { name: "This schedule" })).not.toBeInTheDocument();
+    expect(container.querySelector("[aria-hidden].invisible")).toBeInTheDocument();
+    unmount();
+
+    render(<ScheduleSummary />);
+    expect(document.querySelector("[aria-hidden].invisible")).not.toBeInTheDocument();
+  });
+
   it("says which term is loading", () => {
     setPlanner({ termStatus: "loading", term: null, response: null });
     render(<ScheduleSummary />);

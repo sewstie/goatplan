@@ -4,7 +4,9 @@ import { useCallback, useId, useRef } from "react";
 import { Toggle } from "@/components/ui/Toggle";
 import { selectSavedPlan, usePlanner } from "@/lib/store";
 import { ReadOnlyPreferences } from "./ReadOnlyPreferences";
+import { useHeldHeight } from "@/components/schedule/useHeldHeight";
 import { BlockedTimeChips } from "./BlockedTimeChips";
+import { BlockedTimesMenu } from "./BlockedTimesMenu";
 import { BlockTimeButton } from "./BlockTimeButton";
 import { SortSelect } from "./SortSelect";
 import { StartTimeSelect } from "./StartTimeSelect";
@@ -15,6 +17,8 @@ export function PreferencesBar() {
   const labelId = useId();
   const onlyOpen = usePlanner((state) => state.preferences.onlyOpen);
   const setPreferences = usePlanner((state) => state.setPreferences);
+  const drawing = usePlanner((state) => state.drawing);
+  const [heldRef, heldStyle] = useHeldHeight<HTMLDivElement>(drawing);
   const blockAddRef = useRef<HTMLSpanElement>(null);
   const focusBlockAdd = useCallback(() => blockAddRef.current?.querySelector("button")?.focus(), []);
 
@@ -22,6 +26,8 @@ export function PreferencesBar() {
 
   return (
     <div
+      ref={heldRef}
+      style={heldStyle}
       id="tutorial-preferences"
       role="group"
       aria-labelledby={labelId}
@@ -31,7 +37,7 @@ export function PreferencesBar() {
         Preferences
       </span>
       <StartTimeSelect />
-      <BlockedTimeChips onAllRemoved={focusBlockAdd} />
+      {drawing ? <BlockedTimesMenu /> : <BlockedTimeChips onAllRemoved={focusBlockAdd} />}
       <span ref={blockAddRef} className="contents">
         <BlockTimeButton />
       </span>
