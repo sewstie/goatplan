@@ -82,7 +82,6 @@ export function PhonePreferencesScreen() {
           })}
         </ul>
       )}
-      <div data-guide-slot="availability" className="pt-16 empty:hidden" />
     </div>
   );
 }

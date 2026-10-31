@@ -1,6 +1,4 @@
-import { formatTime, type TermFile } from "@/lib/data";
-import type { PlanPreferences } from "@/lib/store";
-import { groupBlocked, groupDays, groupTimes } from "@/components/preferences/blockedTimes";
+import type { TermFile } from "@/lib/data";
 import { hasProfessorChoice } from "@/components/sections/professorChoice";
 
 const STEPS = ["term", "courses", "professor", "availability", "schedules"] as const;
@@ -27,17 +25,9 @@ export function professorCourse(term: TermFile | null, courses: readonly string[
   return eligible.find((code) => code === selected) ?? eligible[0] ?? null;
 }
 
-export function availabilityDescription(preferences: PlanPreferences): string {
-  const groups = groupBlocked(preferences.blocked);
-  const start = preferences.startsAfter === 0 ? "Any time" : `${formatTime(preferences.startsAfter).replace(":00", "")} start`;
-  const blocks = groups.map((group) => group.label?.toLowerCase() === "lunch" ? "lunch break" : `${group.label ? `“${group.label}” ` : ""}block (${groupDays(group)} ${groupTimes(group)})`);
-  const settings = blocks.length > 0
-    ? `Your ${start} and ${blocks.join(" and ")} are already applied.`
-    : preferences.startsAfter === 0 ? "Your start is set to Any time, with no blocked time." : `Your ${start} is already applied, with no blocked time.`;
-  return `${settings} You can change these controls or keep them and continue. Only open sections is ${preferences.onlyOpen ? "on" : "off"}.`;
-}
+type GuideContext = { hasCourses?: boolean; noMatches?: boolean; phone?: boolean };
 
-export function guideContent(step: GuideStep, preferences: PlanPreferences, noMatches = false) {
+export function guideContent(step: GuideStep, { hasCourses = false, noMatches = false, phone = false }: GuideContext = {}) {
   switch (step) {
     case "term": return {
       target: "tutorial-term", title: "Choose your term",
@@ -46,24 +36,24 @@ export function guideContent(step: GuideStep, preferences: PlanPreferences, noMa
     case "courses": return {
       target: "tutorial-search", title: "Add the courses you need",
       body: "Use the course search by code or professor. Adding a course finds its fitting lecture and lab combinations automatically.",
-      hint: "Add at least one course to continue.",
+      hint: hasCourses ? "Great — press Next" : "Add at least one course to continue.",
     };
     case "professor": return {
       target: "tutorial-professor", title: "A professor preference is optional",
-      body: "Use Lecture professor to narrow this course’s lectures. Any professor keeps every eligible lecture time; compatible labs can have another instructor.",
+      body: "Want a specific professor? Pick them here to see only their lectures. Any professor keeps every option.",
     };
     case "availability": return {
-      target: "tutorial-preferences", title: "Make room for your day",
-      body: availabilityDescription(preferences),
+      target: "tutorial-block-time", title: "Make room for your day",
+      body: `${phone ? "Tap Block time" : "Press Block a time"}, then drag on the calendar to mark when you’re busy. Drag on a blocked time to erase it.`,
       hint: "Time preferences are optional. Next keeps your current choices.",
     };
     case "schedules": return noMatches ? {
-      target: "tutorial-schedules", title: "You can finish with no matches",
-      body: "This lecture starts before your chosen time. Finish the guide whenever you’re ready, then use an explicit fix if you want to change that restriction.",
+      target: "tutorial-diagnosis", title: "You can finish with no matches",
+      body: "Nothing fits right now. The panel shows why and offers fixes — finish the guide and pick one when you’re ready.",
       hint: "Finishing keeps every current preference and lock.",
     } : {
       target: "tutorial-schedules", title: "Browse, inspect, then save if you like",
-      body: "Use the arrows to compare returned schedules. The course panel lists this timetable’s lecture, lab and discussion IDs. Save a plan to find Sections to register, where you can copy or print the codes for Workday.",
+      body: `Use the arrows to compare returned schedules. ${phone ? "Tap a class or a course chip to see its sections." : "The course panel lists this timetable’s lecture, lab and discussion IDs."} Save a plan to find Sections to register, where you can copy or print the codes for Workday.`,
       hint: "Saving and registering are not required to finish.",
     };
   }

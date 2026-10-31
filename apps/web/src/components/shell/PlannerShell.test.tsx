@@ -6,6 +6,7 @@ import { getPlannerStore } from "@/lib/store";
 
 // A phone flag we can flip per test without a real matchMedia.
 let phoneFlag = false;
+vi.mock("next/navigation", () => ({ usePathname: () => "/", useRouter: () => ({ push: vi.fn() }) }));
 vi.mock("@/components/shell/usePhoneViewport", () => ({
   usePhoneViewport: () => phoneFlag,
 }));

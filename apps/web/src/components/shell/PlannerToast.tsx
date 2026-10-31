@@ -6,13 +6,14 @@ import { BlockTimeDialog } from "@/components/preferences/BlockTimeDialog";
 import { BLOCK_FROM, BLOCK_TO } from "@/components/preferences/timeOptions";
 import { changeText, mergeBlocked } from "@/components/schedule/dragBlock";
 import { count } from "@/components/schedule/scheduleCopy";
+import { GUIDE_SKIPPED_MESSAGE, useGuideSession } from "@/components/tutorial/guideSession";
 import { Toast } from "@/components/ui/Toast";
 import type { Day } from "@/lib/data/types";
 import { usePlanner, type BlockedChange } from "@/lib/store";
 
 /**
  * The one toast: "Removed MA 1024 · Undo", "Blocked Mon–Wed 12–1 PM · Name it · Undo" after a drag, or
- * "Removed 3 blocked times · Undo" after deleting selected ones.
+ * "Removed 3 blocked times · Undo" after deleting selected ones, or the note after skipping the guide.
  */
 export function PlannerToast() {
   const removedCourse = usePlanner((state) => state.removedCourse);
@@ -22,7 +23,16 @@ export function PlannerToast() {
   const undoBlockedChange = usePlanner((state) => state.undoBlockedChange);
   const dismissBlockedChange = usePlanner((state) => state.dismissBlockedChange);
   const setPreferences = usePlanner((state) => state.setPreferences);
+  const guideSkipped = useGuideSession((state) => state.skipped);
+  const hideGuideSkipped = useGuideSession((state) => state.hideSkipped);
   const [naming, setNaming] = useState<BlockedChange | null>(null);
+
+  // The note is only about the moment of skipping, so it doesn't wait behind another toast or a trip away.
+  const otherToast = blockedChange !== null || removedCourse !== null;
+  useEffect(() => {
+    if (otherToast) hideGuideSkipped();
+  }, [otherToast, hideGuideSkipped]);
+  useEffect(() => hideGuideSkipped, [hideGuideSkipped]);
 
   // The code of the course a student just chose to undo. Set in the click handler and read by the
   // effect below once React has re-rendered with the course back in the list, so focus can land on
@@ -79,11 +89,17 @@ export function PlannerToast() {
         ],
         onDismiss: dismissBlockedChange,
       }
-    : {
-        message: removedCourse ? `Removed ${removedCourse.code}` : null,
-        actions: [{ label: "Undo", onAction: handleUndo }],
-        onDismiss: dismissRemovedCourse,
-      };
+    : removedCourse
+      ? {
+          message: `Removed ${removedCourse.code}`,
+          actions: [{ label: "Undo", onAction: handleUndo }],
+          onDismiss: dismissRemovedCourse,
+        }
+      : {
+          message: guideSkipped ? GUIDE_SKIPPED_MESSAGE : null,
+          actions: [],
+          onDismiss: hideGuideSkipped,
+        };
 
   return (
     <>

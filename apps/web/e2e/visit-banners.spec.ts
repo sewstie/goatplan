@@ -74,6 +74,7 @@ test("state 37: a failed guide write changes the open step once while planning c
   await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
   await guide(page).getByRole("button", { name: "Skip guide" }).click();
   await expect(guide(page)).toBeHidden();
+  await expect(page.getByRole("status").filter({ hasText: "Guide closed · Replay it from How to use" })).toBeVisible();
   await page.getByRole("combobox", { name: "Starts after" }).selectOption("600");
   await settled(page);
   await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue("600");
@@ -90,6 +91,19 @@ test("saved-plan URLs restore the snapshot with an empty working draft", async (
   await expect(page.getByRole("heading", { name: "AE 2320", exact: true }).first()).toBeVisible();
   await expect(page.getByText(/Plan restored/)).toHaveCount(0);
   await expect(guide(page)).toBeHidden();
+});
+
+test("closing with Escape doesn't store the guide as done, and the replay button still works when storage is blocked", async ({ page }) => {
+  await page.goto("/");
+  await expect(next(page)).toHaveAttribute("aria-disabled", "false");
+  await page.keyboard.press("Escape");
+  await expect(guide(page)).toBeHidden();
+  expect(await page.evaluate(() => localStorage.getItem("goatplan:tutorial:v1"))).toBe("started");
+  await page.evaluate(() => {
+    Storage.prototype.setItem = () => { throw new DOMException("Storage blocked", "SecurityError"); };
+  });
+  await page.getByRole("button", { name: "How to use GoatPlan", exact: true }).click();
+  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
 });
 
 test("storage blocked from arrival still permits finishing the guide", async ({ page }) => {

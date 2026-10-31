@@ -27,7 +27,7 @@ export function DiagnosisPanel({ course: selected, diagnosis, locks }: {
   const sections = course?.sections.filter((section) => ids.includes(section.id)) ?? [];
   const waitlist = sections.some((section) => section.status === "waitlist") || primary?.kind === "full";
   return (
-    <div className="flex flex-col gap-4">
+    <div id="tutorial-diagnosis" tabIndex={-1} className="flex flex-col gap-4 rounded-control">
       <p className="text-9 leading-13 font-650 text-attention">Needs attention</p>
       <h2 tabIndex={-1} className="mt-4 text-21 leading-25-2 font-700 tracking-heading text-ink">{course?.code ?? "No schedule fits"}</h2>
       {course && <p className="text-11 leading-17-6 font-510 text-ink">{course.title}</p>}

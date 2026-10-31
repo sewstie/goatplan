@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeAll, expect, it, vi } from "vitest";
+import { beforeAll, beforeEach, expect, it, vi } from "vitest";
 import { TermPicker } from "@/components/courses/TermPicker";
 import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
 import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
@@ -10,11 +10,17 @@ import { PlannerProvider } from "@/lib/store";
 import { createPlannerStore } from "@/lib/store/createPlannerStore";
 import { loaded, MemoryStorage, solved, termFile, termSummary } from "@/lib/store/testing/fixtures";
 import type { SolveRequest, SolveResponse } from "@/lib/engine/types";
+import { PlannerToast } from "@/components/shell/PlannerToast";
 import { FirstPlanTutorial } from "./FirstPlanTutorial";
+import { useGuideSession } from "./guideSession";
+import { ReplayGuideButton } from "./ReplayGuideButton";
 import { draftKey, emptyDraft } from "@/lib/store/draft";
 import { designPlan } from "@/lib/plans/testing";
 
+vi.mock("next/navigation", () => ({ usePathname: () => "/", useRouter: () => ({ push: vi.fn() }) }));
+
 beforeAll(() => { vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} }); });
+beforeEach(() => { useGuideSession.setState({ replayRequested: false, skipped: false, closedThisVisit: false }); });
 
 /** AE 2320 with a second lecture professor, so the guide has a Lecture professor choice to point at. */
 function twoProfessorTerm(id: string) {
@@ -34,6 +40,7 @@ function start(loadTerm = async (id: string) => twoProfessorTerm(id), solve: (re
   });
   const view = render(<PlannerProvider store={planner}>
     <FirstPlanTutorial storage={storage} />
+    <ReplayGuideButton />
     <TermPicker /><CourseSearchPanel /><PreferencesBar /><CourseDetailsPanel />
     <div id="tutorial-schedules" tabIndex={-1} role="region" aria-label="Schedule browser"><ScheduleSwitcher /></div>
   </PlannerProvider>);
@@ -75,10 +82,12 @@ it("moves focus through all five steps without changing the plan and finishes wi
   const before = plan(planner);
   await user.click(screen.getByRole("button", { name: "Next" }));
   expect(screen.getByRole("heading", { name: "A professor preference is optional" })).toHaveFocus();
+  expect(screen.getByRole("dialog")).toHaveAccessibleDescription("Want a specific professor? Pick them here to see only their lectures. Any professor keeps every option.");
   expect(document.querySelector('[data-guide-target]')).toBe(screen.getByRole("combobox", { name: "Lecture professor" }));
   await user.click(screen.getByRole("button", { name: "Next" }));
   expect(screen.getByRole("heading", { name: "Make room for your day" })).toHaveFocus();
-  expect(screen.getByRole("dialog")).toHaveAccessibleDescription("Your 9 AM start and lunch break are already applied. You can change these controls or keep them and continue. Only open sections is on.");
+  expect(screen.getByRole("dialog")).toHaveAccessibleDescription("Press Block a time, then drag on the calendar to mark when you’re busy. Drag on a blocked time to erase it.");
+  expect(document.querySelector("[data-guide-target]")).toBe(screen.getByRole("button", { name: "Block a time" }));
   await user.click(screen.getByRole("button", { name: "Next" }));
   expect(screen.getByRole("button", { name: "Finish guide" })).toHaveFocus();
   await user.click(screen.getByRole("button", { name: "Back" }));
@@ -109,7 +118,10 @@ it.each(["zero", "pending", "error", "matches"])("always allows finishing with %
   await user.click(screen.getByRole("button", { name: "Next" }));
   await user.type(screen.getByRole("searchbox"), "AE 2320{Enter}");
   for (let i = 0; i < 3; i++) await user.click(screen.getByRole("button", { name: "Next" }));
-  if (outcome === "zero") expect(await screen.findByRole("heading", { name: "You can finish with no matches" })).toBeVisible();
+  if (outcome === "zero") {
+    expect(await screen.findByRole("heading", { name: "You can finish with no matches" })).toBeVisible();
+    expect(screen.getByRole("dialog")).toHaveAccessibleDescription("Nothing fits right now. The panel shows why and offers fixes — finish the guide and pick one when you’re ready.");
+  }
   else expect(screen.getByRole("heading", { name: "Browse, inspect, then save if you like" })).toBeVisible();
   const before = plan(planner);
   expect(screen.getByRole("button", { name: "Finish guide" })).toHaveFocus();
@@ -139,7 +151,22 @@ it("keeps progress stable when lectures disappear until the next navigation", as
   expect(screen.getByRole("heading", { name: "Add the courses you need" })).toHaveFocus();
 });
 
-it.each(["Skip guide", "Close guide", "Escape"])("remembers %s without changing the plan and hides the guide on return", async (action) => {
+it("remembers Skip guide without changing the plan and hides the guide on return", async () => {
+  const { planner, storage, unmount } = start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  const before = plan(planner);
+  await user.click(screen.getByRole("button", { name: "Skip guide" }));
+  expect(plan(planner)).toEqual(before);
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(storage.getItem("goatplan:tutorial:v1")).toBe("dismissed");
+  unmount();
+  render(<PlannerProvider store={planner}><FirstPlanTutorial storage={storage} /></PlannerProvider>);
+  await act(async () => {});
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+});
+
+it.each(["Close guide", "Escape"])("%s closes the guide for this visit only", async (action) => {
   const { planner, storage, unmount } = start();
   const user = userEvent.setup();
   await screen.findByRole("heading", { name: "Choose your term" });
@@ -148,11 +175,184 @@ it.each(["Skip guide", "Close guide", "Escape"])("remembers %s without changing 
   else await user.click(screen.getByRole("button", { name: action }));
   expect(plan(planner)).toEqual(before);
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-  expect(storage.getItem("goatplan:tutorial:v1")).toBe("dismissed");
+  expect(storage.getItem("goatplan:tutorial:v1")).toBe("started");
   unmount();
-  render(<PlannerProvider store={planner}><FirstPlanTutorial storage={storage} /></PlannerProvider>);
+  // Back within the same visit, as after a trip to /plans.
+  const again = render(<PlannerProvider store={planner}><FirstPlanTutorial storage={storage} /></PlannerProvider>);
   await act(async () => {});
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  again.unmount();
+  // The next page load.
+  useGuideSession.setState({ closedThisVisit: false });
+  render(<PlannerProvider store={planner}><FirstPlanTutorial storage={storage} /></PlannerProvider>);
+  expect(await screen.findByRole("heading", { name: "Choose your term" })).toBeVisible();
+});
+
+it.each(["Close guide", "Escape"])("%s after adding a course brings the guide back on the next visit", async (action) => {
+  const { planner, storage, unmount } = start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toHaveAttribute("aria-disabled", "false"));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.type(screen.getByRole("searchbox"), "AE 2320{Enter}");
+  if (action === "Escape") await user.keyboard("{Escape}");
+  else await user.click(screen.getByRole("button", { name: action }));
+  expect(storage.getItem("goatplan:tutorial:v1")).toBe("started");
+  unmount();
+  const again = render(<PlannerProvider store={planner}><FirstPlanTutorial storage={storage} /></PlannerProvider>);
+  await act(async () => {});
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(storage.getItem("goatplan:tutorial:v1")).toBe("started");
+  again.unmount();
+  useGuideSession.setState({ closedThisVisit: false });
+  render(<PlannerProvider store={planner}><FirstPlanTutorial storage={storage} /></PlannerProvider>);
+  expect(await screen.findByRole("heading", { name: "Choose your term" })).toBeVisible();
+  expect(storage.getItem("goatplan:tutorial:v1")).toBe("started");
+});
+
+it("leaves the guide open when Escape closes a dialog on top of it", async () => {
+  start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  const dialog = document.body.appendChild(document.createElement("dialog"));
+  dialog.setAttribute("open", "");
+  await user.keyboard("{Escape}");
+  expect(screen.getByRole("heading", { name: "Choose your term" })).toBeVisible();
+  dialog.remove();
+});
+
+it("drops the Skip note when another toast takes over, so it can't come back later", async () => {
+  const { planner } = start();
+  render(<PlannerProvider store={planner}><PlannerToast /></PlannerProvider>);
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toHaveAttribute("aria-disabled", "false"));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.type(screen.getByRole("searchbox"), "AE 2320{Enter}");
+  await user.click(screen.getByRole("button", { name: "Skip guide" }));
+  expect(screen.getByText("Guide closed · Replay it from How to use")).toBeVisible();
+  await act(async () => planner.getState().removeCourse("AE 2320"));
+  expect(screen.getByText("Removed AE 2320")).toBeVisible();
+  await act(async () => planner.getState().dismissRemovedCourse());
+  expect(screen.queryByText("Guide closed · Replay it from How to use")).not.toBeInTheDocument();
+});
+
+it("notes where to replay the guide after Skip, and not after Close", async () => {
+  const { planner, storage } = start();
+  render(<PlannerProvider store={planner}><PlannerToast /></PlannerProvider>);
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await user.click(screen.getByRole("button", { name: "Close guide" }));
+  expect(screen.queryByText("Guide closed · Replay it from How to use")).not.toBeInTheDocument();
+  await user.click(screen.getByRole("button", { name: "How to use GoatPlan" }));
+  await user.click(await screen.findByRole("button", { name: "Skip guide" }));
+  expect(screen.getByText("Guide closed · Replay it from How to use")).toBeVisible();
+  expect(storage.getItem("goatplan:tutorial:v1")).toBe("dismissed");
+  await user.click(screen.getByRole("button", { name: "How to use GoatPlan" }));
+  await screen.findByRole("dialog");
+  expect(screen.queryByText("Guide closed · Replay it from How to use")).not.toBeInTheDocument();
+});
+
+it("replays from step 1 without changing the plan, and closing the replay keeps the guide done", async () => {
+  const { planner, storage } = start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toHaveAttribute("aria-disabled", "false"));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.type(screen.getByRole("searchbox"), "AE 2320{Enter}");
+  for (let i = 0; i < 3; i++) await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.click(screen.getByRole("button", { name: "Finish guide" }));
+  expect(storage.getItem("goatplan:tutorial:v1")).toBe("completed");
+  const before = plan(planner);
+  await user.click(screen.getByRole("button", { name: "How to use GoatPlan" }));
+  expect(await screen.findByRole("heading", { name: "Choose your term" })).toHaveFocus();
+  expect(screen.getByText("Getting started · 1 of 5")).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  expect(screen.getByText("Great — press Next")).toBeVisible();
+  expect(storage.getItem("goatplan:tutorial:v1")).toBe("completed");
+  await user.keyboard("{Escape}");
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  expect(storage.getItem("goatplan:tutorial:v1")).toBe("completed");
+  expect(plan(planner)).toEqual(before);
+});
+
+it("restarts at step 1 when replay is pressed with the guide already open", async () => {
+  start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toHaveAttribute("aria-disabled", "false"));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.click(screen.getByRole("button", { name: "How to use GoatPlan" }));
+  expect(await screen.findByRole("heading", { name: "Choose your term" })).toHaveFocus();
+});
+
+it("leaves a saved plan's view to replay the guide", async () => {
+  const { planner, storage } = start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await act(async () => planner.setState({ savedPlanId: "saved-plan" }));
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  await user.click(screen.getByRole("button", { name: "How to use GoatPlan" }));
+  expect(await screen.findByRole("heading", { name: "Choose your term" })).toBeVisible();
+  expect(planner.getState().savedPlanId).toBeNull();
+  expect(storage.getItem("goatplan:tutorial:v1")).toBeNull();
+});
+
+it("keeps Finish guide on record when a replay is skipped", async () => {
+  const storage = new MemoryStorage();
+  storage.setItem("goatplan:tutorial:v1", "completed");
+  start(undefined, undefined, storage);
+  const user = userEvent.setup();
+  await user.click(screen.getByRole("button", { name: "How to use GoatPlan" }));
+  await user.click(await screen.findByRole("button", { name: "Skip guide" }));
+  expect(storage.getItem("goatplan:tutorial:v1")).toBe("completed");
+});
+
+it("swaps the step 2 hint once a course is added", async () => {
+  start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toHaveAttribute("aria-disabled", "false"));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  expect(screen.getByText("Add at least one course to continue.")).toBeVisible();
+  await user.type(screen.getByRole("searchbox"), "AE 2320{Enter}");
+  expect(screen.getByText("Great — press Next")).toBeVisible();
+  expect(screen.queryByText("Add at least one course to continue.")).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Next" })).not.toHaveAccessibleDescription();
+});
+
+it("lets Escape leave drawing mode first, keeps the guide open, and ends drawing on Next", async () => {
+  const { planner } = start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toHaveAttribute("aria-disabled", "false"));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.type(screen.getByRole("searchbox"), "AE 2320{Enter}");
+  for (let i = 0; i < 2; i++) await user.click(screen.getByRole("button", { name: "Next" }));
+  await act(async () => planner.getState().setDrawing(true));
+  await user.keyboard("{Escape}");
+  expect(screen.getByRole("heading", { name: "Make room for your day" })).toBeVisible();
+  await act(async () => planner.getState().setDrawing(true));
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  expect(planner.getState().drawing).toBe(false);
+});
+
+it("says once, on the last step, that the plan is kept in this browser", async () => {
+  start();
+  const user = userEvent.setup();
+  await screen.findByRole("heading", { name: "Choose your term" });
+  await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toHaveAttribute("aria-disabled", "false"));
+  expect(screen.queryByText("Your plan is saved in this browser.")).not.toBeInTheDocument();
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  await user.type(screen.getByRole("searchbox"), "AE 2320{Enter}");
+  for (let i = 0; i < 2; i++) {
+    expect(screen.queryByText("Your plan is saved in this browser.")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Next" }));
+  }
+  expect(screen.queryByText("Your plan is saved in this browser.")).not.toBeInTheDocument();
+  await user.click(screen.getByRole("button", { name: "Next" }));
+  expect(screen.getByText("Your plan is saved in this browser.")).toBeVisible();
+  expect(screen.queryByText("Your choices stay in your plan.")).not.toBeInTheDocument();
 });
 
 it("leaves the guide open when Escape only backs out of the search results", async () => {
