@@ -6,13 +6,26 @@ import { compactRange } from "./dragBlock";
 /** How much text a calendar block has room for: all of it, one line, or none. */
 export type BlockLayout = "full" | "line" | "none";
 
-const FULL_PX = 48;
-const LINE_PX = 18;
+/** The height a block needs for all its text, and for one line. */
+export type BlockTiers = { full: number; line: number };
 
-export function blockLayout(heightPx: number | null): BlockLayout {
-  if (heightPx === null || heightPx >= FULL_PX) return "full";
-  if (heightPx >= LINE_PX) return "line";
+const PHONE_TIERS: BlockTiers = { full: 48, line: 18 };
+/** Two 16 px lines plus padding and border; one line plus border. */
+export const CLASS_TIERS: BlockTiers = { full: 38, line: 18 };
+/** Its short time and "blocked", or one line. */
+export const BLOCKED_TIERS: BlockTiers = { full: 42, line: 18 };
+/** Its name, its time and "blocked". */
+export const NAMED_BLOCKED_TIERS: BlockTiers = { full: 62, line: 18 };
+
+export function blockLayout(heightPx: number | null, tiers = PHONE_TIERS): BlockLayout {
+  if (heightPx === null || heightPx >= tiers.full) return "full";
+  if (heightPx >= tiers.line) return "line";
   return "none";
+}
+
+/** A measured height in the sizes the tiers are written in, which are px at the 16 px root font. */
+export function designPixels(px: number, rootFontPx: number): number {
+  return (px * 16) / rootFontPx;
 }
 
 /** A block's height in px from its minutes and the hour height, less the gap at its end. */

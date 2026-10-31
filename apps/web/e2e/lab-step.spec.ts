@@ -49,6 +49,8 @@ test("state 21 previews another lab inline at 1440", async ({ page }) => {
   const ghost = page.getByRole("button", { name: /^Preview, AE 2320 CX03,/ });
   await expect(ghost).toBeVisible();
   await expect(ghost).toHaveCSS("border-top-style", "dashed");
+  // "Preview" takes room in the block, so the time goes short rather than getting cut off.
+  await expect(ghost.getByText("4–4:50")).toBeVisible();
   await expect(page.getByRole("button", { name: /^AE 2320 CX02,/ })).toBeVisible();
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await page.evaluate(() => document.fonts.ready);

@@ -7,16 +7,16 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem("goatplan:tutorial:v1", "dismissed"));
 });
 
-// Boxes of the shell regions in the desktop layout (1680 × 800). Course panel v2 widened the details
-// panel from 270 to 284 px (--size-details), and the schedule gave up those 14 px.
-const figma = {
-  sidebar: { x: 14, y: 14, width: 224, height: 772 },
-  main: { x: 250, y: 14, width: 1416, height: 772 },
-  schedule: { x: 250, y: 156.5, width: 1120, height: 629.5 },
-  details: { x: 1382, y: 156.5, width: 284, height: 629.5 },
+// Boxes of the shell regions at 1680 × 800, where the root font is 16.86 px: the sidebar is 16.5rem and
+// the details panel 20rem. The schedule takes what's left.
+const regions = {
+  sidebar: { x: 14.75, y: 14.75, width: 278.1, height: 770.5 },
+  main: { x: 305.5, y: 14.75, width: 1359.75, height: 770.5 },
+  schedule: { x: 305.5, y: 178.5, width: 1010, height: 606.75 },
+  details: { x: 1328.1, y: 178.5, width: 337.1, height: 606.75 },
 };
 
-async function expectBox(locator: Locator, expected: (typeof figma)["main"]) {
+async function expectBox(locator: Locator, expected: (typeof regions)["main"]) {
   const box = await locator.boundingBox();
   expect(box).not.toBeNull();
   for (const key of ["x", "y", "width", "height"] as const) {
@@ -24,13 +24,13 @@ async function expectBox(locator: Locator, expected: (typeof figma)["main"]) {
   }
 }
 
-test("shell regions line up with the Figma frame at 1680 × 800", async ({ page }) => {
+test("shell regions line up at 1680 × 800", async ({ page }) => {
   await page.setViewportSize({ width: 1680, height: 800 });
   await page.goto("/");
-  await expectBox(page.getByRole("complementary", { name: "Term and courses" }), figma.sidebar);
-  await expectBox(page.getByRole("main"), figma.main);
-  await expectBox(page.getByRole("region", { name: "Weekly schedule" }), figma.schedule);
-  await expectBox(page.getByRole("complementary", { name: "Course details" }), figma.details);
+  await expectBox(page.getByRole("complementary", { name: "Term and courses" }), regions.sidebar);
+  await expectBox(page.getByRole("main"), regions.main);
+  await expectBox(page.getByRole("region", { name: "Weekly schedule" }), regions.schedule);
+  await expectBox(page.getByRole("complementary", { name: "Course details" }), regions.details);
   await page.screenshot({ path: `${screenshotDir}/shell-1680.png` });
 });
 
@@ -40,7 +40,7 @@ test("shell at 1440 keeps the desktop layout", async ({ page }) => {
   const schedule = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
   const details = await page.getByRole("complementary", { name: "Course details" }).boundingBox();
   expect(details!.x).toBeGreaterThan(schedule!.x + schedule!.width);
-  expect(details!.width).toBe(284);
+  expect(details!.width).toBe(320);
   await page.screenshot({ path: `${screenshotDir}/shell-1440.png` });
 });
 

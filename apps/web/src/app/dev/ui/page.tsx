@@ -53,7 +53,7 @@ export default function UiPrimitivesPage() {
         </p>
       </header>
 
-      <DemoSection title="Button" note="Variants: primary, secondary, warning, soft. Sizes: lg 36, md 36 with 10px label, sm 32, xs 21.">
+      <DemoSection title="Button" note="Variants: primary, secondary, warning, soft. Sizes: lg 36, md 36, sm 32, xs 21.">
         <DemoRow label="Primary">
           <Button icon={<BookmarkSimple />}>Save schedule</Button>
           <Button icon={<BookmarkSimple />} disabled>
@@ -120,7 +120,7 @@ export default function UiPrimitivesPage() {
         </DemoRow>
       </DemoSection>
 
-      <DemoSection title="Badge" note="Tones: success, warning, neutral, accent. Sizes: sm 8px, md 8.5px, lg 9px.">
+      <DemoSection title="Badge" note="Tones: success, warning, neutral, accent. Sizes: sm and md 12px, lg 13px.">
         <DemoRow label="Fit badges (md)">
           <Badge tone="success">Fits</Badge>
           <Badge tone="warning">Clashes with AE 2320 lecture</Badge>

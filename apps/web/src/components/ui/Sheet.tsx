@@ -25,7 +25,7 @@ const sideClasses: Record<SheetSide, { dialog: string; body: string }> = {
   // Full width and as tall as its content, up to 85% of the screen. It slides up as it opens.
   bottom: {
     dialog: "mx-0 mt-auto mb-0 w-full max-w-none max-h-[85dvh] rounded-t-panel transition-[translate] duration-200 ease-out starting:translate-y-full motion-reduce:transition-none",
-    body: "max-h-[85dvh] pt-20 pb-[max(20px,env(safe-area-inset-bottom))]",
+    body: "max-h-[85dvh] pt-20 pb-[max(--spacing(20),env(safe-area-inset-bottom))]",
   },
 };
 

@@ -14,7 +14,7 @@ type AppShellProps = {
   scheduleLabel?: string;
   detailsLabel?: string;
   /**
-   * Below the wide breakpoint the main region is 630px tall, which suits the calendar. "content" lets
+   * Below the wide breakpoint the main region is 640px tall, which suits the calendar. "content" lets
    * it grow with longer content instead, like the registration sheet.
    */
   scheduleFit?: "fixed" | "content";
@@ -43,7 +43,7 @@ export function AppShell({
         Skip to main content
       </a>
       {/* Phone: a single column with a 16px side gutter. Tablet and up: the sidebar plus the main region. */}
-      <div className="flex min-h-dvh gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:p-(--size-app-padding) wide:h-[max(100dvh,720px)]">
+      <div className="mx-auto flex min-h-dvh w-full max-w-(--size-app-max) gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:p-(--size-app-padding) wide:h-[max(100dvh,45rem)]">
         {/* The sidebar is hidden on a phone; its term picker and courses move into the disclosure. */}
         <div className="contents">{sidebar}</div>
         {/*
@@ -70,8 +70,8 @@ export function AppShell({
               className={cx(
                 "relative flex flex-col overflow-hidden rounded-panel bg-surface tablet:shrink-0 wide:h-auto wide:min-h-0 wide:flex-1",
                 // Phone: the day view grows with its content instead of leaving a fixed empty gap.
-                // Tablet and up: keep the 630px calendar (fixed), or let it grow for the plans sheet.
-                scheduleFit === "fixed" ? "tablet:h-630" : "tablet:min-h-630",
+                // Tablet and up: keep the 640px calendar (fixed), or let it grow for the plans sheet.
+                scheduleFit === "fixed" ? "tablet:h-640" : "tablet:min-h-640",
               )}
             >
               {schedule}

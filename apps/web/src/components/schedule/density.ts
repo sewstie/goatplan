@@ -1,8 +1,8 @@
-/** Block text shrinks with the hour height: regular ≈67 px, compact ≈57 px, dense ≈41 px per hour (div.app-6.md, div.app-17.md). */
-export type Density = "regular" | "compact" | "dense";
+/** How much of a class block's text fits: code, time and room, or just code and time. */
+export type Density = "regular" | "compact";
 
-export function blockDensity(pixelsPerHour: number | null): Density {
-  if (pixelsPerHour === null || pixelsPerHour >= 62) return "regular";
-  if (pixelsPerHour >= 48) return "compact";
-  return "dense";
+const REGULAR_PX = 52;
+
+export function blockDensity(heightPx: number | null): Density {
+  return heightPx === null || heightPx >= REGULAR_PX ? "regular" : "compact";
 }

@@ -245,7 +245,7 @@ for (const [width, height] of [
     }
 
     // The closed control looks like the professor field: surface fill, line border, row radius, 7 / 9 padding, gap 6,
-    // "Sort" in muted ink and the order in ink at 10 px, an 11 px caret.
+    // "Sort" in muted ink and the order in ink at 14 px, an 11 px caret.
     const look = await sort.evaluate((element) => {
       const probe = (property: string, value: string) => {
         const div = document.createElement("div");
@@ -282,7 +282,7 @@ for (const [width, height] of [
       minWidth: "146px",
       labelColor: true,
       valueColor: true,
-      fontSizes: ["10px", "10px"],
+      fontSizes: ["14px", "14px"],
       fontFamily: true,
       cursor: "pointer",
       caret: [11, 11],

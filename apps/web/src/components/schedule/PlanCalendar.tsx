@@ -4,13 +4,13 @@ import { useMemo, type ReactNode } from "react";
 import { formatTimeRange } from "@/lib/data/time";
 import type { Day } from "@/lib/data/types";
 import { selectSavedPlan, selectSchedules, selectViewedCourse, selectViewedSection, usePlanner } from "@/lib/store";
-import { blockHeight, blockLayout } from "./blockLayout";
+import { BLOCKED_TIERS, blockHeight, blockLayout, CLASS_TIERS, NAMED_BLOCKED_TIERS } from "./blockLayout";
 import { blockPosition } from "./blockStyles";
 import { BlockedTimeBlock } from "./BlockedTimeBlock";
 import { blockedKey, useBlockedTimeMenu } from "./useBlockedTimeMenu";
 import { ClassBlock } from "./ClassBlock";
 import { calendarBounds } from "./calendarBounds";
-import type { Density } from "./density";
+import { blockDensity } from "./density";
 import { addRanges, changedDays, subtractBlocked } from "./dragBlock";
 import { EarlyBand } from "./EarlyBand";
 import { assignLanes } from "./lanes";
@@ -25,7 +25,7 @@ import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { WeekCalendar } from "./WeekCalendar";
 
 const FULL_COLUMN = { lane: 0, lanes: 1 };
-/** Shorter classes get a one-line or empty block when the full text wouldn't fit. */
+/** On a phone, shorter classes get a one-line or empty block when the full text wouldn't fit. */
 const SHORT_CLASS_MINUTES = 40;
 const CLASS_END_GAP = 3;
 /** Drawing mode shows at least 8 AM to 10 PM, so evening times can be blocked too. */
@@ -81,7 +81,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
     return result;
   }, [byDay, classes]);
 
-  const renderDay = (day: Day, density: Density, pixelsPerHour: number | null) => (
+  const renderDay = (day: Day, pixelsPerHour: number | null) => (
     <>
       {preferences.blocked
         .filter((block) => block.day === day)
@@ -92,8 +92,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             start={block.start}
             end={block.end}
             label={block.label}
-            density={density}
-            layout={blockLayout(blockHeight(block.end - block.start, pixelsPerHour))}
+            layout={blockLayout(blockHeight(block.end - block.start, pixelsPerHour), phone ? undefined : block.label ? NAMED_BLOCKED_TIERS : BLOCKED_TIERS)}
             erasable={drawingHere}
             onOpen={drawing || saved ? undefined : (anchor) => toggleMenu(block, anchor)}
             expanded={openMenu?.block === block}
@@ -106,12 +105,13 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
       {(byDay.get(day) ?? []).map((item) => {
         const selected = item.courseCode === selectedCourse && item.sectionId === selectedSection;
         const minutes = item.end - item.start;
+        const height = blockHeight(minutes, pixelsPerHour, CLASS_END_GAP);
         return (
           <ClassBlock
             key={item.key}
             item={item}
-            density={density}
-            layout={minutes < SHORT_CLASS_MINUTES ? blockLayout(blockHeight(minutes, pixelsPerHour, CLASS_END_GAP)) : "full"}
+            density={phone ? "regular" : blockDensity(height)}
+            layout={phone ? (minutes < SHORT_CLASS_MINUTES ? blockLayout(height) : "full") : blockLayout(height, CLASS_TIERS)}
             drawing={drawingHere}
             style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN, CLASS_END_GAP)}
             selected={selected}

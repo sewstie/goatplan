@@ -33,8 +33,15 @@ it("fits a short section on one line, with everything still in its label", () =>
   expect(button).toHaveTextContent(/^AE 2320 · 9–9:30$/);
 });
 
+it("names itself on hover, for a block too narrow to show any text, without saying it twice to a screen reader", () => {
+  const button = block(false);
+  expect(button).not.toHaveAttribute("title");
+  expect(button.querySelector("[title]")).toHaveAttribute("title", button.getAttribute("aria-label"));
+  expect(button.querySelector("[title]")).toHaveAttribute("aria-hidden", "true");
+});
+
 it("shows only the color when not even one line fits", () => {
-  render(<ClassBlock item={{ ...item, end: 560 }} density="dense" layout="none" style={{}} selected={false} onSelect={() => {}} />);
+  render(<ClassBlock item={{ ...item, end: 560 }} density="compact" layout="none" style={{}} selected={false} onSelect={() => {}} />);
   expect(screen.getByRole("button", { name: /^AE 2320 CL01,/ })).toHaveTextContent(/^$/);
 });
 

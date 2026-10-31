@@ -38,7 +38,7 @@ test("state 25 opens the professor list over the course panel at 1440", async ({
   ]);
   const box = (await popup.boundingBox())!;
   const field = (await picker(page).boundingBox())!;
-  expect(box.width).toBe(252);
+  expect(box.width).toBe(288);
   expect(box.height).toBe(140);
   expect(box.y).toBe(field.y + field.height + 4);
   await page.evaluate(() => document.fonts.ready);

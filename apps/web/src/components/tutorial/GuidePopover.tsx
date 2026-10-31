@@ -64,8 +64,8 @@ export function GuidePopover({ step, targetId, title, body, hint, progress, onCl
       <p aria-live="polite" aria-atomic="true" className="text-9 leading-13 font-600 text-accent">Getting started · {progress.current} of {progress.total}</p>
       <button type="button" aria-label="Close guide" onClick={onClose} className="flex size-13 cursor-pointer items-center justify-center text-ink"><X aria-hidden className="size-13" /></button>
     </div>
-    <h2 id="guide-heading" ref={heading} tabIndex={-1} className="mt-3 text-17 leading-[22.1px] font-700 tracking-[-0.4px] text-ink outline-none">{title}</h2>
-    <p id="guide-body" className="text-11 leading-[19.3px] text-ink-muted">{body}</p>
+    <h2 id="guide-heading" ref={heading} tabIndex={-1} className="mt-3 text-17 leading-guide-title font-700 tracking-tight text-ink outline-none">{title}</h2>
+    <p id="guide-body" className="text-11 leading-guide-body text-ink-muted">{body}</p>
     {hint && <p id="guide-hint" className="mt-2 text-10 leading-16 text-guide-hint">{hint}</p>}
     {children}
     <p className="mt-5 text-8 leading-12 text-ink-muted">Your choices stay in your plan.</p>

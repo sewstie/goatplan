@@ -101,36 +101,36 @@
   --color-course-4-hover-line: #8b86b0;
 
   --text-*: initial;
-  --text-25: 25px;
-  --text-25--line-height: 30px;
-  --text-21: 21px;
-  --text-21--line-height: 25.2px;
-  --text-19: 19px;
-  --text-19--line-height: 24.7px;
-  --text-17: 17px;
-  --text-17--line-height: 23.8px;
-  --text-14: 14px;
-  --text-14--line-height: 17.4px;
-  --text-12: 12px;
-  --text-12--line-height: 17.4px;
-  --text-11: 11px;
-  --text-11--line-height: 15.95px;
-  --text-10: 10px;
-  --text-10--line-height: 14.5px;
-  --text-9: 9px;
-  --text-9--line-height: 13px;
-  --text-8-5: 8.5px;
-  --text-8-5--line-height: 11.9px;
-  --text-8: 8px;
-  --text-8--line-height: 11.6px;
-  --text-7-5: 7.5px;
-  --text-7-5--line-height: 9.75px;
-  --text-7: 7px;
-  --text-7--line-height: 8.4px;
-  --text-6-8: 6.8px;
-  --text-6-8--line-height: 8.84px;
-  --text-6-5: 6.5px;
-  --text-6-5--line-height: 8.45px;
+  --text-25: 1.75rem;
+  --text-25--line-height: 2.125rem;
+  --text-21: 1.125rem;
+  --text-21--line-height: 1.5rem;
+  --text-19: 1.125rem;
+  --text-19--line-height: 1.5rem;
+  --text-17: 1rem;
+  --text-17--line-height: 1.375rem;
+  --text-14: 1rem;
+  --text-14--line-height: 1.25rem;
+  --text-12: 0.875rem;
+  --text-12--line-height: 1.25rem;
+  --text-11: 0.875rem;
+  --text-11--line-height: 1.25rem;
+  --text-10: 0.875rem;
+  --text-10--line-height: 1.25rem;
+  --text-9: 0.8125rem;
+  --text-9--line-height: 1.125rem;
+  --text-8-5: 0.75rem;
+  --text-8-5--line-height: 1rem;
+  --text-8: 0.75rem;
+  --text-8--line-height: 1rem;
+  --text-7-5: 0.75rem;
+  --text-7-5--line-height: 1rem;
+  --text-7: 0.75rem;
+  --text-7--line-height: 1rem;
+  --text-6-8: 0.75rem;
+  --text-6-8--line-height: 1rem;
+  --text-6-5: 0.75rem;
+  --text-6-5--line-height: 1rem;
 
   --font-weight-*: initial;
   --font-weight-400: 400;
@@ -145,76 +145,80 @@
   --font-weight-750: 750;
 
   --leading-*: initial;
-  --leading-8-4: 8.4px;
-  --leading-8-45: 8.45px;
-  --leading-8-84: 8.84px;
-  --leading-9: 9px;
-  --leading-9-6: 9.6px;
-  --leading-9-75: 9.75px;
-  --leading-10-4: 10.4px;
-  --leading-10-5: 10.5px;
-  --leading-10-8: 10.8px;
-  --leading-11-2: 11.2px;
-  --leading-11-6: 11.6px;
-  --leading-11-9: 11.9px;
-  --leading-12: 12px;
-  --leading-12-33: 12.33px;
-  --leading-12-6: 12.6px;
-  --leading-12-8: 12.8px;
-  --leading-13: 13px;
-  --leading-13-2: 13.2px;
-  --leading-13-5: 13.5px;
-  --leading-13-95: 13.95px;
-  --leading-14-4: 14.4px;
-  --leading-14-5: 14.5px;
-  --leading-14-85: 14.85px;
-  --leading-15: 15px;
-  --leading-15-3: 15.3px;
-  --leading-15-5: 15.5px;
-  --leading-15-95: 15.95px;
-  --leading-16: 16px;
-  --leading-16-5: 16.5px;
-  --leading-16-65: 16.65px;
-  --leading-17: 17px;
-  --leading-17-4: 17.4px;
-  --leading-17-5: 17.5px;
-  --leading-17-6: 17.6px;
-  --leading-18: 18px;
-  --leading-18-7: 18.7px;
-  --leading-19-2: 19.2px;
-  --leading-19-8: 19.8px;
-  --leading-20-35: 20.35px;
-  --leading-22: 22px;
-  --leading-23-8: 23.8px;
-  --leading-24-7: 24.7px;
-  --leading-25-2: 25.2px;
-  --leading-27-55: 27.55px;
-  --leading-30: 30px;
-  --leading-30-45: 30.45px;
+  --leading-8-4: 1rem;
+  --leading-8-45: 1rem;
+  --leading-8-84: 1rem;
+  --leading-9: 1rem;
+  --leading-9-6: 1rem;
+  --leading-9-75: 1rem;
+  --leading-10-4: 1rem;
+  --leading-10-5: 1rem;
+  --leading-10-8: 1rem;
+  --leading-11-2: 1rem;
+  --leading-11-6: 1rem;
+  --leading-11-9: 1rem;
+  --leading-12: 1rem;
+  --leading-12-33: 1rem;
+  --leading-12-6: 1rem;
+  --leading-12-8: 1rem;
+  --leading-13: 1.125rem;
+  --leading-13-2: 1.125rem;
+  --leading-13-5: 1.125rem;
+  --leading-13-95: 1.125rem;
+  --leading-14-4: 1.125rem;
+  --leading-14-5: 1.125rem;
+  --leading-14-85: 1.125rem;
+  --leading-15: 1.25rem;
+  --leading-15-3: 1.25rem;
+  --leading-15-5: 1.25rem;
+  --leading-15-95: 1.25rem;
+  --leading-16: 1.25rem;
+  --leading-16-5: 1.25rem;
+  --leading-16-65: 1.25rem;
+  --leading-17: 1.3125rem;
+  --leading-17-4: 1.3125rem;
+  --leading-17-5: 1.3125rem;
+  --leading-17-6: 1.3125rem;
+  --leading-18: 1.3125rem;
+  --leading-18-7: 1.375rem;
+  --leading-19-2: 1.375rem;
+  --leading-19-8: 1.375rem;
+  --leading-20-35: 1.375rem;
+  --leading-22: 1.375rem;
+  --leading-23-8: 1.375rem;
+  --leading-24-7: 1.5rem;
+  --leading-25-2: 1.5rem;
+  --leading-27-55: 1.625rem;
+  --leading-30: 2.125rem;
+  --leading-30-45: 1.875rem;
+  --leading-guide-title: 1.375rem;
+  --leading-guide-body: 1.375rem;
 
   --tracking-*: initial;
-  --tracking-title: -0.9px;
-  --tracking-heading: -0.55px;
-  --tracking-heading-sm: -0.5px;
-  --tracking-tight: -0.4px;
-  --tracking-message: -0.3px;
+  --tracking-title: -0.05625rem;
+  --tracking-heading: -0.034375rem;
+  --tracking-heading-sm: -0.03125rem;
+  --tracking-tight: -0.025rem;
+  --tracking-message: -0.01875rem;
 
   --radius-*: initial;
-  --radius-swatch: 3px;
-  --radius-badge: 5px;
-  --radius-block: 6px;
-  --radius-knob: 6.5px;
-  --radius-loading: 7px;
-  --radius-row: 8px;
-  --radius-control: 9px;
-  --radius-card: 10px;
-  --radius-tile: 12px;
-  --radius-guide: 15px;
-  --radius-message: 16px;
-  --radius-panel: 18px;
-  --radius-toggle: 20px;
-  --radius-app: 22px;
-  --radius-pill: 24px;
+  --radius-swatch: 0.1875rem;
+  --radius-badge: 0.3125rem;
+  --radius-block: 0.375rem;
+  --radius-knob: 0.40625rem;
+  --radius-option: 0.4375rem;
+  --radius-listbox: 0.6875rem;
+  --radius-loading: 0.4375rem;
+  --radius-row: 0.5rem;
+  --radius-control: 0.5625rem;
+  --radius-card: 0.625rem;
+  --radius-tile: 0.75rem;
+  --radius-guide: 0.9375rem;
+  --radius-message: 1rem;
+  --radius-panel: 1.125rem;
+  --radius-toggle: 1.25rem;
+  --radius-app: 1.375rem;
+  --radius-pill: 1.5rem;
 
   --shadow-*: initial;
   --shadow-selected: 0 0 0 0.5px var(--color-accent);
@@ -225,7 +229,7 @@
   /* Proposed, not in Figma yet: the soft focus ring of form fields (text inputs, selects, checkbox pills). */
   --shadow-field-focus: 0 0 0 1px var(--color-choice-line), 0 0 0 4px color-mix(in srgb, var(--color-choice-line) 40%, transparent);
 
-  --spacing: 1px;
+  --spacing: 0.0625rem;
 
   /* Phone styles are written unprefixed; from 640 px up, `tablet:` keeps today's layout. */
   --breakpoint-tablet: 40rem;
@@ -233,25 +237,46 @@
   --breakpoint-narrow: 22.5rem;
   --breakpoint-wide: 68.75rem;
 
-  --size-app-padding: 14px;
-  --size-gutter: 12px;
+  /*
+    The room inside a calendar block for its code wrapped, a short code on one line, any code on one line, those
+    two beside a lock in a one-line block, a code beside a lock, its section code, its time or room in full, a locked
+    one-line block's time, and a blocked time's range in the larger type. Below these, it shows less.
+  */
+  --container-block-text: 1.75rem;
+  --container-block-code-short: 3.5rem;
+  --container-block-code: 4.625rem;
+  --container-block-line-short-locked: 4.25rem;
+  --container-block-line-long-locked: 5rem;
+  --container-block-code-locked: 5.5rem;
+  --container-block-section: 7.5rem;
+  --container-block-time: 7.75rem;
+  --container-block-line-locked: 8.5rem;
+  --container-block-blocked-time: 8.5rem;
+  /* A day header wide enough for "Wednesday". */
+  --container-day-name: 5rem;
+
+  /* In px: the root font keeps growing, so a rem cap would stop the app short of 2200 px. */
+  --size-app-max: 2200px;
+  --size-registration-row: 4.2125rem;
+  --size-app-padding: 0.875rem;
+  --size-gutter: 0.75rem;
   /* The side gutter of the single-column phone layout, below the tablet breakpoint. */
-  --size-phone-gutter: 16px;
+  --size-phone-gutter: 1rem;
   /* The phone week calendar: one hour of grid, the time labels and the day names. */
-  --size-phone-hour: 84px;
-  --size-phone-axis: 34px;
-  --size-phone-day-header: 34px;
-  --size-phone-bar: 64px;
-  --size-sidebar: 224px;
-  --size-details: 284px;
-  --size-header: 76px;
-  --size-control: 36px;
-  --size-control-sm: 32px;
-  --size-input: 38px;
-  --size-time-axis: 47px;
-  --size-day-header: 47px;
-  --size-message: 420px;
-  --size-actions: 285px;
+  --size-phone-hour: 5.25rem;
+  --size-phone-axis: 2.125rem;
+  --size-phone-day-header: 2.125rem;
+  --size-phone-bar: 4rem;
+  --size-sidebar: 16.5rem;
+  --size-details: 20rem;
+  --size-header: 4.75rem;
+  --size-control: 2.25rem;
+  --size-control-sm: 2rem;
+  --size-input: 2.375rem;
+  --size-time-axis: 3.875rem;
+  --size-day-header: 2.9375rem;
+  --size-message: 26.25rem;
+  --size-actions: 17.8125rem;
 }
 
 @theme inline {
@@ -275,6 +300,8 @@
   html {
     background-color: var(--color-canvas);
     color: var(--color-ink);
+    /* Every size is in rem, so the layout grows with this: 16 px up to a 1440 px window, 20 px from 2560 px. */
+    font-size: clamp(1rem, 0.6786rem + 0.3571vw, 1.25rem);
   }
 
   body {
@@ -302,14 +329,27 @@ body:has(.guide-popover) [data-guide-hide] {
 }
 
 /*
-  Phone typography. Below the tablet breakpoint (640px), the design's Figma-px sizes (8–11px) are too
-  small to read and the search box triggers iOS Safari's tap-to-zoom. The utilities compile to
-  `font-size: var(--text-N)`, so redefining the small tokens here scales every `text-N` up at once,
-  without touching components. Body lands at 14–15px, secondary text at a 12px floor, headings keep
-  their size. Tablet and wider are unchanged. Line heights scale with the size.
+  Phone typography. The text and leading tokens above are the tablet-and-up scale; below the tablet
+  breakpoint (640px) these values replace them. The utilities compile to `font-size: var(--text-N)` and
+  `line-height: var(--leading-N)`, so this redefines every use at once, without touching components.
 */
 @media (max-width: 39.99rem) {
+  html {
+    font-size: 16px;
+  }
+
   :root {
+    --size-sidebar: 224px;
+    --size-details: 284px;
+    --size-time-axis: 47px;
+    --text-25: 25px;
+    --text-25--line-height: 30px;
+    --text-21: 21px;
+    --text-21--line-height: 25.2px;
+    --text-19: 19px;
+    --text-19--line-height: 24.7px;
+    --text-17: 17px;
+    --text-17--line-height: 23.8px;
     --text-14: 18px;
     --text-14--line-height: 21px;
     --text-12: 16px;
@@ -333,6 +373,54 @@ body:has(.guide-popover) [data-guide-hide] {
     --text-6-8--line-height: 16px;
     --text-6-5: 12px;
     --text-6-5--line-height: 16px;
+    --leading-8-4: 8.4px;
+    --leading-8-45: 8.45px;
+    --leading-8-84: 8.84px;
+    --leading-9: 9px;
+    --leading-9-6: 9.6px;
+    --leading-9-75: 9.75px;
+    --leading-10-4: 10.4px;
+    --leading-10-5: 10.5px;
+    --leading-10-8: 10.8px;
+    --leading-11-2: 11.2px;
+    --leading-11-6: 11.6px;
+    --leading-11-9: 11.9px;
+    --leading-12: 12px;
+    --leading-12-33: 12.33px;
+    --leading-12-6: 12.6px;
+    --leading-12-8: 12.8px;
+    --leading-13: 13px;
+    --leading-13-2: 13.2px;
+    --leading-13-5: 13.5px;
+    --leading-13-95: 13.95px;
+    --leading-14-4: 14.4px;
+    --leading-14-5: 14.5px;
+    --leading-14-85: 14.85px;
+    --leading-15: 15px;
+    --leading-15-3: 15.3px;
+    --leading-15-5: 15.5px;
+    --leading-15-95: 15.95px;
+    --leading-16: 16px;
+    --leading-16-5: 16.5px;
+    --leading-16-65: 16.65px;
+    --leading-17: 17px;
+    --leading-17-4: 17.4px;
+    --leading-17-5: 17.5px;
+    --leading-17-6: 17.6px;
+    --leading-18: 18px;
+    --leading-18-7: 18.7px;
+    --leading-19-2: 19.2px;
+    --leading-19-8: 19.8px;
+    --leading-20-35: 20.35px;
+    --leading-22: 22px;
+    --leading-23-8: 23.8px;
+    --leading-24-7: 24.7px;
+    --leading-25-2: 25.2px;
+    --leading-27-55: 27.55px;
+    --leading-30: 30px;
+    --leading-30-45: 30.45px;
+    --leading-guide-title: 22.1px;
+    --leading-guide-body: 19.3px;
   }
 
   /* iOS Safari zooms in on a form control with text under 16px. Unlayered, so it beats the text-N utilities. */
