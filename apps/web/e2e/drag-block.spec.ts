@@ -3,15 +3,15 @@ import type { Page } from "@playwright/test";
 
 type Blocked = { day: string; start: number; end: number; label?: string };
 
-async function openPlan(page: Page, blocked: Blocked[] = []) {
-  await page.addInitScript((seeded) => {
+async function openPlan(page: Page, blocked: Blocked[] = [], courses = ["CS 1101"], caption = "Auto-fit · 8:00 AM–5:00 PM") {
+  await page.addInitScript(({ seeded, courses }) => {
     localStorage.setItem("goatplan:term:v1", "2027-C");
     localStorage.setItem("goatplan:tutorial:v1", "dismissed");
     localStorage.setItem(
       "goatplan:draft:v1:2027-C",
       JSON.stringify({
         version: 1,
-        courses: ["CS 1101"],
+        courses,
         preferences: { startsAfter: 0, blocked: seeded, onlyOpen: true },
         locks: {},
         professorByCourse: {},
@@ -19,19 +19,19 @@ async function openPlan(page: Page, blocked: Blocked[] = []) {
         alternatives: {},
       }),
     );
-  }, blocked);
+  }, { seeded: blocked, courses });
   await page.goto("/");
   await settled(page);
-  await expect(page.getByText("Auto-fit · 8:00 AM–5:00 PM")).toBeVisible();
+  await expect(page.getByText(caption)).toBeVisible();
 }
 
 const settled = (page: Page) =>
   expect(page.locator("[data-planner-solve-status]")).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
 
-/** The middle of a day's column at a time, with the drawing-mode grid showing 8 AM to 10 PM. */
-async function pointAt(page: Page, day: string, minute: number) {
+/** The middle of a day's column at a time, with the grid starting at 8 AM and ending at gridEnd. */
+async function pointAt(page: Page, day: string, minute: number, gridEnd = 1020) {
   const box = (await page.getByRole("group", { name: day, exact: true }).boundingBox())!;
-  return { x: box.x + box.width / 2, y: box.y + ((minute - 480) / 840) * box.height };
+  return { x: box.x + box.width / 2, y: box.y + ((minute - 480) / (gridEnd - 480)) * box.height };
 }
 
 const gridTop = async (page: Page) => (await page.getByRole("group", { name: "Calendar time grid" }).boundingBox())!.y;
@@ -281,20 +281,44 @@ test("with no courses yet, drawing mode swaps the first-course message for a gri
   await expect(page.getByRole("button", { name: "Monday 12:00 to 1:00 PM, blocked", exact: true })).toBeVisible();
 });
 
-test("drawing mode shows 8 AM to 10 PM, and the auto range comes back after Done", async ({ page }) => {
+test("drawing mode keeps the auto-fit range", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlan(page);
   await startDrawing(page);
-  await expect(page.getByText("Auto-fit · 8:00 AM–10:00 PM")).toBeVisible();
-  await page.getByRole("group", { name: "Calendar time grid" }).evaluate((element) => element.scrollTo({ top: element.scrollHeight }));
-  await drag(page, await pointAt(page, "Thursday", 1145), await pointAt(page, "Thursday", 1195));
-  await expect(page.getByRole("status").filter({ hasText: "Blocked Thu 7–8 PM" })).toBeVisible();
+  await expect(page.getByText("Auto-fit · 8:00 AM–5:00 PM")).toBeVisible();
+
+  await drag(page, await pointAt(page, "Thursday", 905), await pointAt(page, "Thursday", 955));
+  await expect(page.getByRole("status").filter({ hasText: "Blocked Thu 3–4 PM" })).toBeVisible();
+  await expect(page.getByText("Auto-fit · 8:00 AM–5:00 PM")).toBeVisible();
 
   await page.getByRole("button", { name: "Done" }).click();
-  await expect(page.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeVisible();
-  await page.getByRole("button", { name: "Thursday 7:00 to 8:00 PM, blocked", exact: true }).click();
-  await page.getByRole("dialog", { name: "Blocked time" }).getByRole("button", { name: "Remove" }).click();
   await expect(page.getByText("Auto-fit · 8:00 AM–5:00 PM")).toBeVisible();
+});
+
+test("the hours don't shift between drags, so the same drag again erases, and the range updates after Done", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await openPlan(page, [], ["CS 1101", "MA 1023"], "Auto-fit · 8:00 AM–8:00 PM");
+  await startDrawing(page);
+  await expect(page.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeVisible();
+  const from = await pointAt(page, "Monday", 605, 1200);
+  const to = await pointAt(page, "Monday", 655, 1200);
+
+  await drag(page, from, to);
+  await expect(page.getByRole("status").filter({ hasText: "Blocked Mon 10–11 AM" })).toBeVisible();
+  await settled(page);
+  await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
+  await expect(page.getByText("Preview · 8:00 AM–8:00 PM")).toBeVisible();
+
+  await drag(page, from, to);
+  await expect(page.getByRole("status").filter({ hasText: "Unblocked Mon 10–11 AM" })).toBeVisible();
+  await expect(page.getByLabel(/, blocked$/)).toHaveCount(0);
+  await settled(page);
+
+  await drag(page, from, to);
+  await expect(page.getByRole("status").filter({ hasText: "Blocked Mon 10–11 AM" })).toBeVisible();
+  await settled(page);
+  await page.getByRole("button", { name: "Done" }).click();
+  await expect(page.getByText("Preview · 8:00 AM–5:00 PM")).toBeVisible();
 });
 
 test("the calendar doesn't move between drags, even when nothing fits", async ({ page }) => {

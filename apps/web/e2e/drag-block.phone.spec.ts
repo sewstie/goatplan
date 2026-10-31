@@ -22,15 +22,15 @@ async function openPlan(page: Page, blocked: { day: string; start: number; end: 
   await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
 }
 
-/** Scrolls Monday's 12 PM into view and gives the point at a time in that column (8 AM to 10 PM while drawing). */
-async function mondayAt(page: Page, minute: number) {
+/** Scrolls Monday's 12 PM into view and gives the point at a time in that column, with the grid starting at 8 AM and ending at gridEnd. */
+async function mondayAt(page: Page, minute: number, gridEnd = 1020) {
   const monday = page.getByRole("group", { name: "Monday", exact: true });
   await monday.evaluate((element) => {
     const box = element.getBoundingClientRect();
     window.scrollBy(0, box.top + box.height * 0.3 - window.innerHeight / 2);
   });
   const box = (await monday.boundingBox())!;
-  return { x: box.x + box.width / 2, y: box.y + ((minute - 480) / 840) * box.height };
+  return { x: box.x + box.width / 2, y: box.y + ((minute - 480) / (gridEnd - 480)) * box.height };
 }
 
 async function touch(cdp: CDPSession, type: "touchStart" | "touchMove" | "touchEnd", point?: { x: number; y: number }) {
@@ -43,9 +43,9 @@ async function startDrawing(page: Page) {
   await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
 }
 
-async function drawMonday(page: Page, cdp: CDPSession, from: number, to: number) {
-  const start = await mondayAt(page, from);
-  const end = await mondayAt(page, to);
+async function drawMonday(page: Page, cdp: CDPSession, from: number, to: number, gridEnd = 1020) {
+  const start = await mondayAt(page, from, gridEnd);
+  const end = await mondayAt(page, to, gridEnd);
   await touch(cdp, "touchStart", start);
   for (let step = 1; step <= 8; step += 1) {
     await touch(cdp, "touchMove", { x: start.x, y: start.y + ((end.y - start.y) * step) / 8 });
@@ -170,12 +170,12 @@ test("in drawing mode the grid stays put between 22 schedules and none", async (
   const cdp = await page.context().newCDPSession(page);
   const top = await gridTop(page);
 
-  await drawMonday(page, cdp, 485, 1100);
+  await drawMonday(page, cdp, 485, 1075, 1080);
   await expect(page.getByRole("region", { name: "Needs attention" })).toBeVisible();
   await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
   await expectGridAt(page, top);
 
-  await drawMonday(page, cdp, 485, 1100);
+  await drawMonday(page, cdp, 485, 1075, 1080);
   await expect(page.getByText("3 courses · 22 schedules fit", { exact: true })).toBeVisible();
   await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute("data-planner-solve-status", "done");
   await expectGridAt(page, top);

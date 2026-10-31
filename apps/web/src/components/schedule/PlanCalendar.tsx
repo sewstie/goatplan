@@ -19,6 +19,7 @@ import type { ClassItem } from "./scheduleItems";
 import type { BlockDrag } from "./useBlockDrag";
 import { useScheduleItems } from "./useScheduleItems";
 import { useDiagnosticPreview } from "./useDiagnosticPreview";
+import { useHeldRange } from "./useHeldRange";
 import { useSectionPreviewItems } from "./useSectionPreviewItems";
 import { usePhoneScreen } from "@/components/phone/phoneScreen";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
@@ -28,8 +29,6 @@ const FULL_COLUMN = { lane: 0, lanes: 1 };
 /** On a phone, shorter classes get a one-line or empty block when the full text wouldn't fit. */
 const SHORT_CLASS_MINUTES = 40;
 const CLASS_END_GAP = 3;
-/** Drawing mode shows at least 8 AM to 10 PM, so evening times can be blocked too. */
-const DRAWING_RANGE = { start: 8 * 60, end: 22 * 60 };
 const NO_PREVIEWS: readonly ClassItem[] = [];
 
 export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: readonly ClassItem[]; overlay?: ReactNode }) {
@@ -58,11 +57,11 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
   // The phone grid is tall, so it starts at the start-time preference instead of under a hatched band.
   const startsAfter = phone ? preferences.startsAfter : 0;
   const drawingHere = drawing && !saved;
-  const { range, days } = useMemo(() => {
-    const bounds = saved ? calendarBounds(null, [], preferences.blocked, scheduled, startsAfter) : calendarBounds(term, schedules, preferences.blocked, previewItems, startsAfter);
-    if (!drawingHere) return bounds;
-    return { ...bounds, range: { start: Math.min(bounds.range.start, DRAWING_RANGE.start), end: Math.max(bounds.range.end, DRAWING_RANGE.end) } };
-  }, [saved, scheduled, term, schedules, preferences.blocked, previewItems, startsAfter, drawingHere]);
+  const { range: fitted, days } = useMemo(
+    () => saved ? calendarBounds(null, [], preferences.blocked, scheduled, startsAfter) : calendarBounds(term, schedules, preferences.blocked, previewItems, startsAfter),
+    [saved, scheduled, term, schedules, preferences.blocked, previewItems, startsAfter],
+  );
+  const range = useHeldRange(fitted, drawingHere);
   // Each day's blocks in time order, so screen readers and Tab go through the day as it happens.
   const byDay = useMemo(() => {
     const groups = new Map<Day, ClassItem[]>();
