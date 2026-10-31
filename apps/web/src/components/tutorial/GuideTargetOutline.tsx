@@ -2,6 +2,8 @@ import { useLayoutEffect, useRef } from "react";
 
 export function guideTarget(id: string): HTMLElement | null {
   const target = document.getElementById(id);
+  // The diagnosis panel can lag behind the zero result, or never come when the engine isn't sure why.
+  if (id === "tutorial-diagnosis" && !target) return guideTarget("tutorial-schedules");
   if (id === "tutorial-term" || id === "tutorial-search") return target?.parentElement ?? null;
   if (id === "tutorial-schedules" && !target?.querySelector('[role="group"], p')) return null;
   return target;

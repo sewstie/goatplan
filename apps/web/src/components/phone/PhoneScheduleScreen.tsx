@@ -52,6 +52,7 @@ export function PhoneScheduleScreen({ banner }: { banner: ReactNode }) {
         )}
       />
       <PhonePreferenceChips />
+      <div data-guide-slot="availability" className="empty:hidden" />
       {banner}
       {attention && !drawing && attentionCard}
       <div data-guide-slot="schedules" className="empty:hidden" />

@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { usePhoneScreen } from "./phoneScreen";
 
+vi.mock("next/navigation", () => ({ usePathname: () => "/", useRouter: () => ({ push: vi.fn() }) }));
 vi.mock("@/components/shell/Brand", () => ({ Brand: () => null }));
 vi.mock("@/components/shell/DataUpdated", () => ({ DataUpdated: () => null }));
 vi.mock("./PhoneTermSelect", () => ({ PhoneTermSelect: () => null }));

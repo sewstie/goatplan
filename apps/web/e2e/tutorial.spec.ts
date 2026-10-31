@@ -82,6 +82,7 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await advance(page);
   await expect(guide(page).getByRole("heading", { name: "Add the courses you need" })).toBeFocused();
   await expect(next(page)).toHaveAttribute("aria-disabled", "true");
+  await expect(guide(page)).toContainText("Add at least one course to continue.");
   await expect(page.getByText("Add your first course", { exact: true })).toBeHidden();
   await tabTo(page, page.getByRole("searchbox"));
   await page.keyboard.type("AE 2320");
@@ -89,11 +90,16 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await capture(page, "31");
   await page.keyboard.press("Enter");
   await settled(page);
+  await expect(guide(page)).toContainText("Great — press Next");
+  await expect(guide(page)).not.toContainText("Add at least one course to continue.");
   await advance(page);
   await expect(guide(page).getByRole("heading", { name: "A professor preference is optional" })).toBeFocused();
+  await expect(guide(page)).toContainText("Want a specific professor? Pick them here to see only their lectures. Any professor keeps every option.");
   await expect(page.getByRole("combobox", { name: "Lecture professor" })).toHaveText("Any professor");
   await capture(page, "32");
   await advance(page);
+  await expect(guide(page)).toContainText("Press Block a time, then drag on the calendar to mark when you’re busy. Drag on a blocked time to erase it.");
+  await expect(page.locator("[data-guide-target]")).toHaveAccessibleName("Block a time");
   await tabTo(page, page.getByRole("combobox", { name: "Starts after" }));
   await page.keyboard.type("9");
   await page.keyboard.press("Tab");
@@ -112,7 +118,6 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await tabTo(page, block.getByRole("button", { name: "Block time", exact: true }));
   await page.keyboard.press("Enter");
   await settled(page);
-  await expect(guide(page)).toContainText("Your 9 AM start and lunch break are already applied.");
   await capture(page, "33");
   await tabTo(page, page.getByRole("combobox", { name: "Starts after" }));
   await page.keyboard.type("10");
@@ -122,10 +127,13 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await advance(page);
   await expect(guide(page).getByRole("heading", { name: "You can finish with no matches" })).toBeVisible();
   await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeFocused();
+  await expect(guide(page)).toContainText("Nothing fits right now. The panel shows why and offers fixes — finish the guide and pick one when you’re ready.");
+  await expect(guide(page)).toContainText("Your plan is saved in this browser.");
+  await expect(page.locator("[data-guide-target]")).toContainText("Ways to fix it");
   await capture(page, "35");
   await page.keyboard.press("Enter");
   await expect(guide(page)).toBeHidden();
-  await expect(page.getByRole("region", { name: "Schedule browser" })).toBeFocused();
+  await expect(page.locator("#tutorial-diagnosis")).toBeFocused();
   await page.reload();
   await settled(page);
   await expect(guide(page)).toBeHidden();
@@ -197,4 +205,199 @@ test("a lab-only course skips the professor step and keeps progress stable until
   await page.reload();
   await settled(page);
   await expect(guide(page)).toBeHidden();
+});
+
+const replay = (page: Page) => page.getByRole("button", { name: "How to use GoatPlan", exact: true });
+const guideStatus = (page: Page) => page.evaluate(() => localStorage.getItem("goatplan:tutorial:v1"));
+
+test("Escape and the × close the guide for this visit only", async ({ page }) => {
+  await data(page, coursePanelTerm("29"));
+  await page.goto("/");
+  await expect(next(page)).toHaveAttribute("aria-disabled", "false");
+  await page.keyboard.press("Escape");
+  await expect(guide(page)).toBeHidden();
+  expect(await guideStatus(page)).toBe("started");
+  await page.reload();
+  await expect(guide(page)).toBeVisible();
+  await guide(page).getByRole("button", { name: "Close guide" }).click();
+  await expect(guide(page)).toBeHidden();
+  expect(await guideStatus(page)).toBe("started");
+  await expect(page.getByText("Guide closed · Replay it from How to use")).toHaveCount(0);
+  await page.reload();
+  await expect(guide(page)).toBeVisible();
+});
+
+test("a guide closed after adding a course stays closed around the app, and returns on the next visit", async ({ page }) => {
+  await data(page, twoProfessorTerm());
+  await page.goto("/");
+  await advance(page);
+  await addCourse(page, "AE 2320");
+  await page.keyboard.press("Escape");
+  await expect(guide(page)).toBeHidden();
+  await page.getByRole("button", { name: "Saved plans" }).click();
+  await page.getByRole("link", { name: "All saved plans" }).click();
+  await expect(page).toHaveURL(/\/plans/);
+  await page.goBack();
+  await expect(page.getByRole("searchbox")).toBeVisible();
+  // PlannerBootstrap's marker can be on the page twice right after Back.
+  await expect(page.locator("[data-planner-solve-status]").first()).toHaveAttribute("data-planner-solve-status", "done");
+  await expect(guide(page)).toBeHidden();
+  expect(await guideStatus(page)).toBe("started");
+  await page.reload();
+  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeVisible();
+  expect(await guideStatus(page)).toBe("started");
+});
+
+test("Escape in the type-a-time form on step 4 leaves the guide open", async ({ page }) => {
+  await data(page, twoProfessorTerm());
+  await page.goto("/");
+  await advance(page);
+  await addCourse(page, "AE 2320");
+  for (let i = 0; i < 2; i++) await advance(page);
+  await page.locator("[data-guide-target]").click();
+  await page.getByRole("button", { name: "Type a time instead", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Block a time" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog", { name: "Block a time" })).toBeHidden();
+  await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
+});
+
+test("Skip guide stores it as done and says where to replay it", async ({ page }) => {
+  await data(page, coursePanelTerm("29"));
+  await page.goto("/");
+  await guide(page).getByRole("button", { name: "Skip guide" }).click();
+  await expect(guide(page)).toBeHidden();
+  await expect(page.getByRole("status").filter({ hasText: "Guide closed · Replay it from How to use" })).toBeVisible();
+  expect(await guideStatus(page)).toBe("dismissed");
+  await page.reload();
+  await expect(page.getByRole("searchbox")).toBeEnabled();
+  await expect(guide(page)).toBeHidden();
+  await replay(page).click();
+  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
+});
+
+test("the replay button restarts a finished guide without changing the plan or the stored result", async ({ page }) => {
+  await data(page, twoProfessorTerm());
+  await page.goto("/");
+  await advance(page);
+  await addCourse(page, "AE 2320");
+  for (let i = 0; i < 3; i++) await advance(page);
+  await guide(page).getByRole("button", { name: "Finish guide" }).click();
+  await expect(guide(page)).toBeHidden();
+  const draft = () => page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"));
+  const before = await draft();
+  await replay(page).click();
+  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
+  await expect(guide(page)).toContainText("Getting started · 1 of 5");
+  await advance(page);
+  await expect(guide(page)).toContainText("Great — press Next");
+  expect(await guideStatus(page)).toBe("completed");
+  await page.keyboard.press("Escape");
+  await expect(guide(page)).toBeHidden();
+  expect(await guideStatus(page)).toBe("completed");
+  expect(await draft()).toBe(before);
+});
+
+test("the replay button on Saved plans goes back to the planner and opens the guide", async ({ page }) => {
+  await data(page, coursePanelTerm("29"));
+  await page.addInitScript(() => localStorage.setItem("goatplan:tutorial:v1", "completed"));
+  await page.goto("/plans");
+  await replay(page).click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
+});
+
+test("step 4 stays off the calendar, and Escape there only leaves drawing mode", async ({ page }) => {
+  await data(page, twoProfessorTerm());
+  await page.goto("/");
+  await advance(page);
+  await addCourse(page, "AE 2320");
+  for (let i = 0; i < 2; i++) await advance(page);
+  const block = page.locator("[data-guide-target]");
+  await expect(block).toHaveAccessibleName("Block a time");
+  const box = await guide(page).boundingBox();
+  const calendar = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
+  expect(box!.x).toBeGreaterThanOrEqual(calendar!.x + calendar!.width);
+  await block.click();
+  await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("group", { name: "Drawing mode" })).toBeHidden();
+  await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
+});
+
+for (const { width, height } of [{ width: 1440, height: 800 }, { width: 2560, height: 1300 }]) {
+  test(`at ${width}px a replay never covers classes or the highlighted target`, async ({ page }) => {
+    await data(page, coursePanelTerm("24"));
+    await page.setViewportSize({ width, height });
+    await page.goto("/");
+    await advance(page);
+    await addCourse(page, "DEMO 1001");
+    await expect(page.locator("[data-block]").first()).toBeVisible();
+    await guide(page).getByRole("button", { name: "Close guide" }).click();
+    await replay(page).click();
+    for (;;) {
+      await expect(page.locator("[data-guide-target]")).toBeVisible();
+      const covered = await page.evaluate(() => {
+        const box = document.querySelector(".guide-popover")!.getBoundingClientRect();
+        const touches = (rect: DOMRect, margin = 0) => box.left < rect.right + margin && box.right > rect.left - margin && box.top < rect.bottom + margin && box.bottom > rect.top - margin;
+        return {
+          target: touches(document.querySelector("[data-guide-target]")!.getBoundingClientRect(), 6),
+          blocks: Array.from(document.querySelectorAll("[data-block]")).filter((block) => touches(block.getBoundingClientRect())).length,
+        };
+      });
+      expect(covered).toEqual({ target: false, blocks: 0 });
+      if (await guide(page).getByRole("button", { name: "Finish guide" }).count()) break;
+      await next(page).click();
+    }
+  });
+}
+
+test.describe("on a phone", () => {
+  async function toAvailability(page: Page, term: TermFile) {
+    await data(page, term);
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto("/");
+    await expect(next(page)).toHaveAttribute("aria-disabled", "false");
+    await next(page).click();
+    await page.getByRole("searchbox").fill("AE 2320");
+    await page.getByRole("searchbox").press("Enter");
+    await settled(page);
+    await next(page).click();
+    if (await guide(page).getByRole("heading", { name: "A professor preference is optional" }).count()) await next(page).click();
+    await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
+  }
+
+  test("step 4 teaches drawing beside the calendar, and step 5 says how to reach sections", async ({ page }) => {
+    await toAvailability(page, coursePanelTerm("07"));
+    await expect(guide(page)).toContainText("Tap Block time, then drag on the calendar to mark when you’re busy. Drag on a blocked time to erase it.");
+    await expect(page.locator("[data-guide-target]")).toHaveAccessibleName("Block time");
+    await page.locator("[data-guide-target]").click();
+    await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
+    await next(page).click();
+    await expect(page.getByRole("group", { name: "Drawing mode" })).toBeHidden();
+    await expect(guide(page)).toContainText("Tap a class or a course chip to see its sections");
+    await expect(guide(page)).not.toContainText("The course panel");
+    await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeFocused();
+    await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeInViewport();
+    await page.keyboard.press("Enter");
+    await expect(guide(page)).toBeHidden();
+  });
+
+  test("the no-match step points at the diagnosis card", async ({ page }) => {
+    await toAvailability(page, twoProfessorTerm());
+    await page.getByRole("combobox", { name: "Starts after" }).selectOption("600");
+    await settled(page);
+    await next(page).click();
+    await expect(guide(page)).toContainText("Nothing fits right now.");
+    await expect(page.locator("[data-guide-target]")).toContainText("Needs attention");
+    await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeFocused();
+  });
+
+  test("the footer button replays the guide from step 1, wherever the page was", async ({ page }) => {
+    await toAvailability(page, coursePanelTerm("07"));
+    await guide(page).getByRole("button", { name: "Close guide" }).click();
+    await page.getByRole("button", { name: "How to use GoatPlan", exact: true }).click();
+    await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
+    await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeInViewport();
+  });
 });

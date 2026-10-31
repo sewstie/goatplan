@@ -1,8 +1,8 @@
-import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from "react";
 import { createPortal } from "react-dom";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { X } from "@phosphor-icons/react/ssr";
-import { guidePlacement } from "./guidePlacement";
+import { guidePlacement, preferredPlaces, type GuideRect } from "./guidePlacement";
 import { guideTarget } from "./GuideTargetOutline";
 import type { GuideStep } from "./tutorialSteps";
 
@@ -12,12 +12,20 @@ type GuidePopoverProps = {
   title: string;
   body: string;
   hint?: string;
+  note?: string;
   progress: { current: number; total: number };
   onClose(): void;
+  finishRef: RefObject<HTMLButtonElement | null>;
   children: ReactNode;
 };
 
-export function GuidePopover({ step, targetId, title, body, hint, progress, onClose, children }: GuidePopoverProps) {
+/** A landmark on the page, unless it's hidden right now. */
+function visibleRect(selector: string): GuideRect | undefined {
+  const rect = document.querySelector(selector)?.getBoundingClientRect();
+  return rect && rect.width > 0 ? rect : undefined;
+}
+
+export function GuidePopover({ step, targetId, title, body, hint, note, progress, onClose, finishRef, children }: GuidePopoverProps) {
   const box = useRef<HTMLDivElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const phone = usePhoneViewport();
@@ -27,24 +35,20 @@ export function GuidePopover({ step, targetId, title, body, hint, progress, onCl
     function place() {
       const element = box.current;
       if (!element) return;
-      const target = guideTarget(targetId);
-      const rect = target?.getBoundingClientRect() ?? { left: 0, top: 0, width: 0, height: 0 };
+      const rect = guideTarget(targetId)?.getBoundingClientRect() ?? { left: 0, top: 0, width: 0, height: 0 };
       const size = element.getBoundingClientRect();
-      const sidebar = document.querySelector("aside")?.getBoundingClientRect();
-      const panel = target?.closest("aside")?.getBoundingClientRect();
-      const calendar = document.querySelector('[aria-label="Weekly schedule"]')?.getBoundingClientRect();
-      const preferred = step === "professor"
-        ? { left: (panel?.left ?? rect.left) - size.width - 12, top: rect.top - 82 }
-        : step === "availability"
-          ? { left: rect.left + 18, top: rect.top + rect.height + 74 }
-          : step === "schedules"
-            ? { left: (calendar?.left ?? 250) + 24, top: (calendar?.bottom ?? window.innerHeight) - size.height - 22 }
-            : { left: (sidebar?.right ?? rect.left + rect.width + 16) + 12, top: 178 };
-      const position = guidePlacement(rect, size, { width: window.innerWidth, height: window.innerHeight }, preferred);
+      const landmarks = {
+        sidebar: visibleRect("aside"),
+        calendar: visibleRect('[aria-label="Weekly schedule"]'),
+        details: visibleRect('[aria-label="Course details"]'),
+      };
+      const blocks = Array.from(document.querySelectorAll("[data-block], [data-blocked-time]"), (block) => block.getBoundingClientRect());
+      const position = guidePlacement(rect, size, { width: window.innerWidth, height: window.innerHeight }, preferredPlaces(step, targetId, rect, size, landmarks), blocks);
       element.style.left = `${position.left}px`;
       element.style.top = `${position.top}px`;
       element.style.visibility = "visible";
     }
+    guideTarget(targetId)?.scrollIntoView?.({ block: "nearest" });
     place();
     const observer = new ResizeObserver(place);
     observer.observe(document.body);
@@ -55,7 +59,9 @@ export function GuidePopover({ step, targetId, title, body, hint, progress, onCl
     window.addEventListener("scroll", place, true);
     return () => { observer.disconnect(); mutation.disconnect(); window.removeEventListener("resize", place); window.removeEventListener("scroll", place, true); };
   }, [step, targetId, phone]);
-  useLayoutEffect(() => { if (step !== "schedules") heading.current?.focus({ preventScroll: !phone }); }, [step, slot, phone]);
+  useLayoutEffect(() => {
+    (step === "schedules" ? finishRef.current : heading.current)?.focus({ preventScroll: !phone });
+  }, [step, slot, phone, finishRef]);
 
   const card = <div ref={box} role="dialog" aria-labelledby="guide-heading" aria-describedby="guide-body" className={phone
     ? "guide-popover flex flex-col gap-8 rounded-guide border border-guide-line bg-surface px-16 pt-16 pb-14 shadow-guide"
@@ -66,9 +72,9 @@ export function GuidePopover({ step, targetId, title, body, hint, progress, onCl
     </div>
     <h2 id="guide-heading" ref={heading} tabIndex={-1} className="mt-3 text-17 leading-guide-title font-700 tracking-tight text-ink outline-none">{title}</h2>
     <p id="guide-body" className="text-11 leading-guide-body text-ink-muted">{body}</p>
-    {hint && <p id="guide-hint" className="mt-2 text-10 leading-16 text-guide-hint">{hint}</p>}
+    {hint && <p id="guide-hint" aria-live="polite" className="mt-2 text-10 leading-16 text-guide-hint">{hint}</p>}
     {children}
-    <p className="mt-5 text-8 leading-12 text-ink-muted">Your choices stay in your plan.</p>
+    {note && <p className="mt-5 text-8 leading-12 text-ink-muted">{note}</p>}
   </div>;
 
   if (!phone) return card;
