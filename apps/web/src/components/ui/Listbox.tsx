@@ -135,7 +135,7 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
         )}
       </button>
       {open && createPortal(
-        <div ref={popup} id={popupId} role="listbox" aria-label={label} className="invisible fixed z-40 max-h-[min(400px,calc(100vh-16px))] overflow-y-auto rounded-[11px] border border-listbox-line bg-surface p-5 shadow-listbox">
+        <div ref={popup} id={popupId} role="listbox" aria-label={label} className="invisible fixed z-40 max-h-[min(25rem,calc(100vh-16px))] overflow-y-auto rounded-listbox border border-listbox-line bg-surface p-5 shadow-listbox">
           {options.map((option, index) => {
             const chosen = option.value === value;
             // A one-line list (professor names) stays short and light, marking the choice with text color and a check.
@@ -144,7 +144,7 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
               : cx("min-h-32 py-7", chosen ? "text-accent" : "text-ink", index === active && "bg-surface-selected");
             return (
               <div key={option.value} id={`${id}-option-${index}`} role="option" aria-selected={chosen} aria-labelledby={`${id}-name-${index}`} aria-describedby={option.description ? `${id}-description-${index}` : undefined}
-                className={cx("relative flex cursor-pointer flex-col justify-center rounded-[7px] px-9 pr-26", rowClasses)}
+                className={cx("relative flex cursor-pointer flex-col justify-center rounded-option px-9 pr-26", rowClasses)}
                 onMouseDown={(event) => event.preventDefault()}
                 onMouseEnter={() => setActive(index)}
                 onClick={() => { onChange(option.value); setOpen(false); button.current?.focus(); }}

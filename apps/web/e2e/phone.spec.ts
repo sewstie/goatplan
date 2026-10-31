@@ -43,6 +43,12 @@ test.describe("phone shell", () => {
     expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
   });
 
+  test("the No set time strip lines up with the day columns", async ({ page }) => {
+    await openPlanner(page, ["AE 2320", "AE 5131"]);
+    const strip = page.locator("section").filter({ has: page.getByRole("heading", { name: "No set time" }) }).last();
+    await expect(strip).toHaveCSS("padding-left", "47px");
+  });
+
   test("add a course by touch", async ({ page }) => {
     await openPlanner(page, []);
     await expect(page.getByRole("list", { name: "Your courses" })).toHaveCount(0);

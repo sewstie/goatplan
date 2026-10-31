@@ -229,10 +229,10 @@ for (const [width, height] of [
     await expect(sort).toHaveText("SortFewest early classes");
     await expect(badges(page)).toHaveText(["Starts 9 AM", "2 h free between classes", "Done by 2:50 PM"]);
 
-    // The closed control has the Preferences row's height.
+    // The closed control fits inside the Preferences row.
     const sortBox = await box(sort);
     expect(sortBox.width).toBeGreaterThanOrEqual(146);
-    expect(sortBox.height).toBeCloseTo(32, 0);
+    expect(sortBox.height).toBeCloseTo(34, 0);
 
     // Whole pills, inside the window, clear of the switcher, the plan actions and Sort.
     const listBox = await box(badgeList(page));

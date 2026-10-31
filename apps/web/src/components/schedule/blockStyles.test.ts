@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import { blockPosition } from "./blockStyles";
-import { blockDensity } from "./density";
 
 const range = { start: 480, end: 1080 };
 
@@ -25,13 +24,3 @@ describe("blockPosition", () => {
   });
 });
 
-describe("blockDensity", () => {
-  it("shrinks block text with the hour height (div.app-6.md, div.app-17.md)", () => {
-    expect(blockDensity(null)).toBe("regular");
-    expect(blockDensity(67)).toBe("regular");
-    expect(blockDensity(62)).toBe("regular");
-    expect(blockDensity(56.75)).toBe("compact");
-    expect(blockDensity(48)).toBe("compact");
-    expect(blockDensity(41)).toBe("dense");
-  });
-});

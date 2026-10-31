@@ -75,7 +75,7 @@ export function BlockedTimesMenu({ className }: { className?: string }) {
       <div
         id={panelId}
         hidden={!open}
-        className="absolute top-[calc(100%+6px)] left-0 z-30 w-280 max-w-[calc(100vw-32px)] rounded-card border border-line-popover bg-surface p-6 shadow-popover"
+        className="absolute top-[calc(100%+--spacing(6))] left-0 z-30 w-280 max-w-[calc(100vw-32px)] rounded-card border border-line-popover bg-surface p-6 shadow-popover"
       >
         <ul aria-label="Blocked times" className="flex flex-col">
           {groups.map((group, index) => {

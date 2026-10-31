@@ -13,9 +13,14 @@ export function DayHeader({ days }: { days: readonly Day[] }) {
       {days.map((day) => (
         <span
           key={day}
-          className="flex min-w-0 items-center justify-center truncate border-l border-line text-10 leading-14-5 font-620"
+          className="@container flex min-w-0 items-center justify-center truncate border-l border-line text-10 leading-14-5 font-620"
         >
-          {days.length > 5 ? day : DAY_NAMES[day]}
+          {days.length > 5 ? day : (
+            <>
+              <span className="hidden @day-name:inline">{DAY_NAMES[day]}</span>
+              <span className="@day-name:hidden">{day}</span>
+            </>
+          )}
         </span>
       ))}
     </div>

@@ -7,7 +7,6 @@ import { cx } from "@/components/ui/cx";
 import { DAY_NAMES } from "@/lib/data/days";
 import { formatTimeRange, formatTimeShort } from "@/lib/data/time";
 import type { Day } from "@/lib/data/types";
-import type { Density } from "./density";
 import { selectionText } from "./dragBlock";
 import { DragSelectionBox } from "./DragSelectionBox";
 import { hourMarks, percentOf, type TimeRange } from "./timeRange";
@@ -20,7 +19,7 @@ type SwipeWeekCalendarProps = {
   range: TimeRange;
   /** The line under the grid, like "Auto-fit to your schedule". */
   note: string;
-  renderDay?: (day: Day, density: Density, pixelsPerHour: number | null) => ReactNode;
+  renderDay?: (day: Day, pixelsPerHour: number | null) => ReactNode;
   background?: ReactNode;
   overlay?: ReactNode;
   footer?: ReactNode;
@@ -134,7 +133,7 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
                   className={cx("relative", drag && "cursor-crosshair")}
                   style={{ height }}
                 >
-                  {renderDay?.(day, "regular", pixelsPerHour)}
+                  {renderDay?.(day, pixelsPerHour)}
                   {selection && index >= first && index <= last && (
                     <DragSelectionBox
                       erase={selection.erase}

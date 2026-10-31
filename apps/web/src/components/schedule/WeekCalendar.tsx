@@ -5,9 +5,9 @@ import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { cx } from "@/components/ui/cx";
 import { DAY_NAMES } from "@/lib/data/days";
 import type { Day } from "@/lib/data/types";
+import { designPixels } from "./blockLayout";
 import { CalendarCaption } from "./CalendarCaption";
 import { DayHeader } from "./DayHeader";
-import { blockDensity, type Density } from "./density";
 import { selectionText } from "./dragBlock";
 import { DragSelectionBox } from "./DragSelectionBox";
 import { SwipeWeekCalendar } from "./SwipeWeekCalendar";
@@ -22,8 +22,8 @@ type WeekCalendarProps = {
   caption: string;
   /** The phone card's line under the grid. Defaults to the caption. */
   note?: string;
-  /** What goes in each day column, sized for the current hour height (null until it's measured). */
-  renderDay?: (day: Day, density: Density, pixelsPerHour: number | null) => ReactNode;
+  /** What goes in each day column, sized for the current hour height in design px (null until it's measured). */
+  renderDay?: (day: Day, pixelsPerHour: number | null) => ReactNode;
   /** Drawn under the day columns, across all of them (the early band). */
   background?: ReactNode;
   /** Drawn over the grid (a message card). */
@@ -35,14 +35,21 @@ type WeekCalendarProps = {
   drag?: BlockDrag;
 };
 
+const MIN_HOUR = 36;
+/** The grid's own top and bottom padding. */
+const GRID_PADDING = 17;
+
+const rootFontPx = () => parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+const designHeight = (px: number) => `calc(var(--spacing) * ${px})`;
+
 /** The calendar card's content: day names, the time grid and the caption (div.app.md). */
 export function WeekCalendar({ days, range, caption, note, renderDay, background, overlay, footer, busy, drag }: WeekCalendarProps) {
   const phone = usePhoneViewport();
   const [viewportRef, viewportHeight] = useElementHeight<HTMLDivElement>();
   const hours = (range.end - range.start) / 60;
-  const gridHeight = viewportHeight === null ? null : Math.max(viewportHeight - 17, hours * 36);
+  // In design px, like --spacing, so the grid and its blocks grow with the root font.
+  const gridHeight = viewportHeight === null ? null : Math.max(designPixels(viewportHeight, rootFontPx()) - GRID_PADDING, hours * MIN_HOUR);
   const pixelsPerHour = gridHeight === null ? null : gridHeight / hours;
-  const density = blockDensity(pixelsPerHour);
   const marks = hourMarks(range);
   const { selection, announcement, surfaceProps } = useBlockDrag(days, range, phone ? undefined : drag);
 
@@ -66,7 +73,7 @@ export function WeekCalendar({ days, range, caption, note, renderDay, background
       >
         <div
           className="flex pt-9 pr-8 pb-8 motion-safe:transition-[height] motion-safe:duration-180"
-          style={{ height: gridHeight === null ? "100%" : gridHeight + 17, minHeight: hours * 36 + 17 }}
+          style={{ height: gridHeight === null ? "100%" : designHeight(gridHeight + GRID_PADDING), minHeight: designHeight(hours * MIN_HOUR + GRID_PADDING) }}
         >
           <TimeAxis range={range} marks={marks} />
           <div className="relative min-w-0 flex-1">
@@ -90,7 +97,7 @@ export function WeekCalendar({ days, range, caption, note, renderDay, background
             >
               {days.map((day) => (
                 <div key={day} role="group" aria-label={DAY_NAMES[day]} data-drag-day={day} className="relative border-l border-line">
-                  {renderDay?.(day, density, pixelsPerHour)}
+                  {renderDay?.(day, pixelsPerHour)}
                 </div>
               ))}
               {selection && chosen && (

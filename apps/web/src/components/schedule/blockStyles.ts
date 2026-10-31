@@ -3,32 +3,24 @@ import type { Density } from "./density";
 import type { Lane } from "./lanes";
 import { percentOf, type TimeRange } from "./timeRange";
 
-/** Text sizes of a class block at each density (div.app-6.md, div.app-17.md). */
+/** Text sizes of a class block at each density. A phone is always regular, so compact has no phone sizes. */
 export const densityClasses: Readonly<
   Record<Density, { box: string; title: string; code: string; section: string; time: string; room: string }>
 > = {
   regular: {
-    box: "gap-3 px-7 py-6",
+    box: "gap-3 px-7 py-6 tablet:gap-0 tablet:px-4 tablet:py-1",
     title: "gap-4",
-    code: "text-10 leading-13",
+    code: "text-10 leading-13 tablet:text-9 tablet:leading-12",
     section: "text-8 leading-10-4",
-    time: "mt-1 text-8 leading-10-4",
-    room: "text-7-5 leading-9-75",
+    time: "mt-1 text-8 leading-10-4 tablet:mt-0",
+    room: "text-7-5 leading-9-75 tablet:hidden",
   },
   compact: {
-    box: "gap-2 px-5 py-3",
+    box: "px-4 py-2",
     title: "gap-4",
-    code: "text-9 leading-10-8",
-    section: "text-8 leading-9-6",
-    time: "text-7-5 leading-9",
-    room: "text-7 leading-8-4",
-  },
-  dense: {
-    box: "gap-2 px-4 py-3",
-    title: "gap-2",
-    code: "text-8 leading-10-4",
-    section: "text-6-5 leading-8-45",
-    time: "text-6-8 leading-8-84",
+    code: "text-9 leading-12",
+    section: "text-8 leading-12",
+    time: "text-8 leading-12",
     room: "hidden",
   },
 };

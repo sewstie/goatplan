@@ -81,7 +81,7 @@ export function SavedPlansMenu({
       <div
         id={panelId}
         hidden={!open}
-        className="absolute top-[calc(100%+6px)] right-0 z-30 w-260 rounded-card border border-line-popover bg-surface p-6 shadow-popover"
+        className="absolute top-[calc(100%+--spacing(6))] right-0 z-30 w-260 rounded-card border border-line-popover bg-surface p-6 shadow-popover"
       >
         {termName && <p className="px-8 pt-4 pb-4 text-9 leading-13 font-600 text-ink-muted">{termName}</p>}
         {plans && plans.length > 0 ? (

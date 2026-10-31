@@ -1,5 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { blockedLabel, blockedLine, blockHeight, blockLayout, clockRange, coveredTextMask } from "./blockLayout";
+import {
+  BLOCKED_TIERS,
+  blockedLabel,
+  blockedLine,
+  blockHeight,
+  blockLayout,
+  CLASS_TIERS,
+  clockRange,
+  coveredTextMask,
+  designPixels,
+  NAMED_BLOCKED_TIERS,
+} from "./blockLayout";
 
 describe("blockLayout", () => {
   it("shows everything from 48 px, one line from 18 px and only the hatching below that", () => {
@@ -14,6 +25,52 @@ describe("blockLayout", () => {
 
   it("shows everything before the grid is measured", () => {
     expect(blockLayout(null)).toBe("full");
+  });
+});
+
+describe("blockLayout on tablet and up", () => {
+  it("gives a class two lines from 38 px (16 + 16 of text, 4 of padding, 2 of border)", () => {
+    expect(blockLayout(38, CLASS_TIERS)).toBe("full");
+    expect(blockLayout(37.9, CLASS_TIERS)).toBe("line");
+  });
+
+  it("gives a class one line from 18 px (16 of text, 2 of border) and nothing below", () => {
+    expect(blockLayout(18, CLASS_TIERS)).toBe("line");
+    expect(blockLayout(17.9, CLASS_TIERS)).toBe("none");
+  });
+
+  it("gives a blocked time its name, time and 'blocked' from 62 px, and its short time and 'blocked' from 42 px", () => {
+    expect(blockLayout(62, NAMED_BLOCKED_TIERS)).toBe("full");
+    expect(blockLayout(61.9, NAMED_BLOCKED_TIERS)).toBe("line");
+    expect(blockLayout(42, BLOCKED_TIERS)).toBe("full");
+    expect(blockLayout(41.9, BLOCKED_TIERS)).toBe("line");
+  });
+
+  it("gives a blocked time one line from 18 px (16 of text, 2 of border), which a 30-minute block has at the 36 px minimum", () => {
+    expect(blockLayout(blockHeight(30, 36), BLOCKED_TIERS)).toBe("line");
+    expect(blockLayout(17.9, BLOCKED_TIERS)).toBe("none");
+  });
+
+  it("gives a 50-minute class two lines from 50 px an hour and one line at the 36 px minimum", () => {
+    expect(blockLayout(blockHeight(50, 50, 3), CLASS_TIERS)).toBe("full");
+    expect(blockLayout(blockHeight(50, 49, 3), CLASS_TIERS)).toBe("line");
+    expect(blockLayout(blockHeight(50, 36, 3), CLASS_TIERS)).toBe("line");
+  });
+});
+
+describe("designPixels", () => {
+  it("is unchanged at the 16 px root", () => {
+    expect(designPixels(48, 16)).toBe(48);
+  });
+
+  it("measures a grown layout in the sizes the tiers are written in", () => {
+    expect(designPixels(60, 20)).toBe(48);
+    expect(designPixels(100, 20)).toBe(80);
+  });
+
+  it("keeps a block in the same tier at the 20 px root as at 16 px", () => {
+    expect(blockLayout(designPixels(38 * 1.25, 20), CLASS_TIERS)).toBe("full");
+    expect(blockLayout(designPixels(37 * 1.25, 20), CLASS_TIERS)).toBe("line");
   });
 });
 
