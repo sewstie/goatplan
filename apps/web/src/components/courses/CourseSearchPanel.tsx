@@ -1,6 +1,6 @@
 "use client";
 
-import { useDeferredValue, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { useDeferredValue, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { selectChosenSections, usePlanner } from "@/lib/store";
 import { normalizeCourseCode } from "./courseCode";
@@ -39,6 +39,7 @@ export function CourseSearchPanel() {
 
   const searchRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const focusSearchAfterLoad = useRef(false);
   const resultsId = useId();
 
   const ready = termStatus === "ready" && term !== null;
@@ -101,6 +102,13 @@ export function CourseSearchPanel() {
     }
   }
 
+  // The search box is disabled while a term loads, so it can't take focus any sooner.
+  useEffect(() => {
+    if (termStatus === "loading" || !focusSearchAfterLoad.current) return;
+    focusSearchAfterLoad.current = false;
+    if (document.activeElement === document.body) searchRef.current?.focus();
+  }, [termStatus]);
+
   if (saved) return <ViewedSavedCourses />;
 
   return (
@@ -129,8 +137,7 @@ export function CourseSearchPanel() {
               termName={termName}
               runsIn={runsIn}
               onSwitch={(termId) => {
-                // The card goes away while the term loads, so focus moves to the search box first.
-                searchRef.current?.focus();
+                focusSearchAfterLoad.current = true;
                 void setTerm(termId);
               }}
             />

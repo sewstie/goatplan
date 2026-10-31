@@ -13,7 +13,10 @@ export function usePhoneViewport(): boolean {
   useEffect(() => {
     if (typeof window.matchMedia !== "function") return;
     const query = window.matchMedia("(max-width: 39.99rem)");
-    const update = () => setPhone(query.matches);
+    const update = () => {
+      // A full-page screenshot reports a 1px window for a moment. Swapping layouts for it would wipe the search box.
+      if (window.innerWidth > 1) setPhone(query.matches);
+    };
     update();
     query.addEventListener("change", update);
     return () => query.removeEventListener("change", update);
