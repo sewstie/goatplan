@@ -372,9 +372,10 @@ become one. The plan solves once, when the pointer is released.
   the grid lets the page swipe sideways to other days (`touch-action: pan-x`),
   so an up-and-down drag draws; the "Swipe for more days" button still works.
   Escape cancels a drag first, and a second Escape leaves drawing mode.
-- While drawing, the calendar shows at least 8 AM to 10 PM, on desktop and
-  phone, so evening times can be blocked; the auto range comes back after.
-  With no courses yet, the "Add your first course" message gives way to a grid
+- Drawing starts from the same auto-fit range as outside drawing mode, on
+  desktop and phone. Times outside it are added with "Type a time instead".
+  Until Done the range can grow but not shrink (`useHeldRange`), so the hours
+  don't shift under the pointer between drags. With no courses yet, the "Add your first course" message gives way to a grid
   to draw on. The grid stays on screen while the plan solves.
 - Nothing above the calendar moves between drags: the blocked times are one
   fixed-width pill ("3 blocked times", `BlockedTimesMenu`) with a list to

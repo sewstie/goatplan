@@ -225,11 +225,11 @@ test.describe("a block shows its code wherever the code fits", () => {
   });
 
   for (const [width, height] of [[1100, 800], [768, 1024]] as const) {
-    test(`a one-line block in drawing mode at ${width}`, async ({ page }) => {
+    test(`a block in drawing mode at ${width}`, async ({ page }) => {
       await page.setViewportSize({ width, height });
       await openPlanner(page, { courses: ["AE 2320"], blocked: [] });
       await page.getByRole("button", { name: "Block a time" }).click();
-      await expect(page.getByRole("button", { name: /^AE 2320 CL01,/ }).first().locator("b")).toBeVisible();
+      await codeShows(page, /^AE 2320 CL01,/, "AE 2320");
     });
   }
 
@@ -383,7 +383,7 @@ test.describe("everything fits", () => {
         });
       }
 
-      test("drawing mode, where the long day makes blocks short", async ({ page }) => {
+      test("drawing mode", async ({ page }) => {
         await openPlanner(page);
         await page.getByRole("button", { name: "Block a time" }).click();
         await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
