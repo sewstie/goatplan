@@ -49,4 +49,12 @@ describe("usePhoneViewport", () => {
     act(() => media.set(true));
     expect(result.current).toBe(true);
   });
+
+  it("keeps the layout when the window is 1px wide for a moment", () => {
+    const media = mockMatchMedia(false);
+    const { result } = renderHook(() => usePhoneViewport());
+    vi.stubGlobal("innerWidth", 1);
+    act(() => media.set(true));
+    expect(result.current).toBe(false);
+  });
 });

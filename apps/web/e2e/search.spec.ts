@@ -33,6 +33,9 @@ async function open(page: Page, { term, courses = [], locks = {} }: Seed) {
   });
 }
 
+const termLoaded = (page: Page, termId: string) =>
+  expect(page.locator(`[data-planner-term="${termId}"][data-planner-term-status="ready"]`)).toBeAttached({ timeout: 30_000 });
+
 const sidebar = (page: Page) => page.getByRole("complementary", { name: "Term and courses" });
 const searchBox = (page: Page) => page.getByRole("searchbox", { name: "Search courses" });
 const results = (page: Page) => page.getByRole("region", { name: "Search results" });
@@ -139,6 +142,7 @@ test("a course from another term offers to switch, keeping the search", async ({
 
   await sidebar(page).getByRole("button", { name: "Switch to C Term" }).click();
   await expect(page.getByRole("combobox", { name: "Term" })).toHaveValue("2027-C");
+  await termLoaded(page, "2027-C");
   await expect(searchBox(page)).toBeFocused();
   await expect(searchBox(page)).toHaveValue("AE 2320");
   await expect(results(page).getByRole("heading", { level: 3 })).toHaveText(["AE 2320"]);
@@ -256,6 +260,8 @@ test.describe("screenshots", () => {
       await page.screenshot({ path: `${screenshotDir}/search-details-${width}.png`, fullPage: true });
 
       await page.getByRole("combobox", { name: "Term" }).selectOption("2027-D");
+      await termLoaded(page, "2027-D");
+      await expect(searchBox(page)).toHaveValue("ae2320");
       await expect(sidebar(page).getByRole("heading", { name: /isn’t offered in D Term/ })).toBeVisible();
       await page.screenshot({ path: `${screenshotDir}/search-not-offered-${width}.png`, fullPage: true });
     });
