@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-10-31T15:13:32Z",
+  "generatedAt": "2026-11-01T15:55:33Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -1586,8 +1586,8 @@
       "level": "Undergraduate",
       "description": "Cat. I The synthesis, isolation, and characterization of inorganic compounds are emphasized. Syntheses of main group compounds, classical transition metal complexes, and organotransition metal compounds are included. In addition to reinforcing and building on standard techniques of synthesis and characterization, several new techniques are introduced: synthesis under inert atmosphere, measurement of magnetic susceptibility by NMR, and cyclic voltammetry. Some exposure to 13C NMR is also provided. The final experiment of the course requires the student to design a synthesis for a compound selected from a list provided, based on strategies learned in the course.Recommended background: Principles of inorganic chemistry, chemical bonding and reactions, thermodynamic stability of inorganic species, solubility and precipitation of inorganic compounds. Advanced chemistry laboratory skills (see CH 2660)",
       "sections": [
-        {"id":"CH 2670-DL01","code":"DL01","type":"lecture","status":"open","enrolled":12,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Drew Brodeur"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Salisbury Labs 104"}]},
-        {"id":"CH 2670-DX01","code":"DX01","type":"lab","status":"open","enrolled":12,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Drew Brodeur"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu"],"start":840,"end":1010,"location":"Goddard Hall 307 CBC Lab"}]}
+        {"id":"CH 2670-DL01","code":"DL01","type":"lecture","status":"open","enrolled":11,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Drew Brodeur"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Salisbury Labs 104"}]},
+        {"id":"CH 2670-DX01","code":"DX01","type":"lab","status":"open","enrolled":11,"capacity":20,"waitlist":{"taken":0,"capacity":0},"instructors":["Drew Brodeur"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu"],"start":840,"end":1010,"location":"Goddard Hall 307 CBC Lab"}]}
       ],
       "options": [
         ["CH 2670-DL01","CH 2670-DX01"]
@@ -4256,7 +4256,7 @@
       "level": "Undergraduate",
       "description": "Cat I.This course surveys the major political, social, and economic changes of American history from 1920 to the present. Emphasis will be placed on the Great Depression, the New Deal, suburbanization, McCarthyism, the persistence of poverty,the domestic effects of the Vietnam war, and recent demographic trends.",
       "sections": [
-        {"id":"HI 2315-D01","code":"D01","type":"lecture","status":"open","enrolled":12,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Whitney McIntosh"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Higgins Labs 154"}]},
+        {"id":"HI 2315-D01","code":"D01","type":"lecture","status":"open","enrolled":13,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Whitney McIntosh"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Higgins Labs 154"}]},
         {"id":"HI 2315-D02","code":"D02","type":"lecture","status":"open","enrolled":15,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Joseph Cullon"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Stratton Hall 207"}]}
       ],
       "options": [
@@ -4871,17 +4871,17 @@
         {"id":"MA 1024-DD01","code":"DD01","type":"discussion","status":"open","enrolled":4,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sam Walcott"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":540,"end":590,"location":"Stratton Hall 205"}]},
         {"id":"MA 1024-DD04","code":"DD04","type":"discussion","status":"open","enrolled":2,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Arthur Heinricher"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":660,"end":710,"location":"Olin Hall 126"}]},
         {"id":"MA 1024-DD05","code":"DD05","type":"discussion","status":"open","enrolled":7,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Johnson"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":720,"end":770,"location":"Stratton Hall 205"}]},
-        {"id":"MA 1024-DD06","code":"DD06","type":"discussion","status":"open","enrolled":3,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Dalin Tang"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":780,"end":830,"location":"Stratton Hall 205"}]},
+        {"id":"MA 1024-DD06","code":"DD06","type":"discussion","status":"open","enrolled":4,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Dalin Tang"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":780,"end":830,"location":"Stratton Hall 205"}]},
         {"id":"MA 1024-DD07","code":"DD07","type":"discussion","status":"open","enrolled":3,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Dalin Tang"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":540,"end":590,"location":"Salisbury Labs 105"}]},
         {"id":"MA 1024-DD08","code":"DD08","type":"discussion","status":"open","enrolled":4,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Arthur Heinricher"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":720,"end":770,"location":"Olin Hall 109"}]},
         {"id":"MA 1024-DD09","code":"DD09","type":"discussion","status":"open","enrolled":0,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Arthur Heinricher"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":780,"end":830,"location":"Olin Hall 109"}]},
         {"id":"MA 1024-DD13","code":"DD13","type":"discussion","status":"open","enrolled":1,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Dalin Tang"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":600,"end":650,"location":"Fuller Labs 311"}]},
         {"id":"MA 1024-DD14","code":"DD14","type":"discussion","status":"open","enrolled":4,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Dalin Tang"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":900,"end":950,"location":"Higgins Labs 202"}]},
         {"id":"MA 1024-DD15","code":"DD15","type":"discussion","status":"open","enrolled":2,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sam Walcott"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":600,"end":650,"location":"Stratton Hall 205"}]},
-        {"id":"MA 1024-DD16","code":"DD16","type":"discussion","status":"open","enrolled":6,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Johnson"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":840,"end":890,"location":"Stratton Hall 205"}]},
+        {"id":"MA 1024-DD16","code":"DD16","type":"discussion","status":"open","enrolled":5,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Johnson"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":840,"end":890,"location":"Stratton Hall 205"}]},
         {"id":"MA 1024-DL01","code":"DL01","type":"lecture","status":"open","enrolled":6,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Sam Walcott"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Kaven Hall 116"}]},
-        {"id":"MA 1024-DL04","code":"DL04","type":"lecture","status":"open","enrolled":13,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Johnson"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Washburn 229"}]},
-        {"id":"MA 1024-DL05","code":"DL05","type":"lecture","status":"open","enrolled":7,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Dalin Tang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
+        {"id":"MA 1024-DL04","code":"DL04","type":"lecture","status":"open","enrolled":12,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Johnson"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Washburn 229"}]},
+        {"id":"MA 1024-DL05","code":"DL05","type":"lecture","status":"open","enrolled":8,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Dalin Tang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
         {"id":"MA 1024-DL06","code":"DL06","type":"lecture","status":"open","enrolled":4,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Dalin Tang"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
         {"id":"MA 1024-DL08","code":"DL08","type":"lecture","status":"open","enrolled":6,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Arthur Heinricher"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
         {"id":"MA 1024-DX03","code":"DX03","type":"lab","status":"open","enrolled":13,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Stratton Hall 116 Computer Lab"}]},
@@ -5396,7 +5396,7 @@
       "level": "Graduate",
       "description": "This course develops mathematical techniques used in the engineering disciplines. Preliminary concepts will be reviewed as necessary, including vector spaces, matrices and eigen values. The principal topics covered will include vector calculus, Fourier transforms, fast Fourier transforms and Laplace transformations. Applications of these techniques for the solution of boundary value and initial value problems will be given. The problems treated and solved in this course are typical of those seen in applications and include problems of heat conduction, mechanical vibrations and wave propagation. Prerequisite: A knowledge of ordinary differential equations, linear algebra and multivariable calculus is assumed.)",
       "sections": [
-        {"id":"MA 501-S01","code":"S01","type":"lecture","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":7,"capacity":20},"instructors":["Jeffrey Barden"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"MA 501-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":7,"capacity":20},"instructors":["Jeffrey Barden"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["MA 501-S01"]
@@ -5817,7 +5817,7 @@
       "level": "Graduate",
       "description": "ME 527/RBE 500 Foundations of Robotics (3 Credits) Fundamentals of robotics engineering. Topics include forward and inverse kinematics, velocity kinematics, introduction to dynamics and control theory, sensors, actuators, basic probabilistic robotics concepts, fundamentals of computer vision, and robot ethics. In addition, modular robot programming will be covered, and the concepts learned will be applied using realistic simulators. Prerequisites: Differential Equations (MA 2051 or equivalent), Linear Algebra (MA 2071 or equivalent) and the ability to program in a high-level language",
       "sections": [
-        {"id":"ME 527-S03","code":"S03","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"ME 527-S03","code":"S03","type":"lecture","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["ME 527-S03"]
@@ -7510,7 +7510,7 @@
       "level": "Graduate",
       "description": "ME 527/RBE 500 Foundations of Robotics (3 Credits) Fundamentals of robotics engineering. Topics include forward and inverse kinematics, velocity kinematics, introduction to dynamics and control theory, sensors, actuators, basic probabilistic robotics concepts, fundamentals of computer vision, and robot ethics. In addition, modular robot programming will be covered, and the concepts learned will be applied using realistic simulators. Prerequisites: Differential Equations (MA 2051 or equivalent), Linear Algebra (MA 2071 or equivalent) and the ability to program in a high-level language",
       "sections": [
-        {"id":"RBE 500-S03","code":"S03","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"RBE 500-S03","code":"S03","type":"lecture","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["RBE 500-S03"]
