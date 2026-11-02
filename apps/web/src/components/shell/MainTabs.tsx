@@ -25,7 +25,7 @@ export function MainTabs({ phone = false }: { phone?: boolean }) {
           href={tab.href}
           aria-current={tab.active ? "page" : undefined}
           className={cx(
-            "flex min-h-34 items-center justify-center rounded-row px-12 text-9 leading-13 whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none",
+            "flex min-h-34 items-center justify-center rounded-row px-8 text-9 leading-13 whitespace-nowrap wide:px-12 transition-colors focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none",
             phone && "min-h-44 flex-1",
             tab.active ? "bg-accent-soft font-600 text-accent" : "font-510 text-ink-muted hover:bg-surface-selected hover:text-ink",
           )}

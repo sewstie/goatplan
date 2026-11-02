@@ -3,7 +3,7 @@ import { cx } from "@/components/ui/cx";
 import type { StepperSize } from "./StepperBox";
 
 const TEXT: Record<StepperSize, { line: string; number: string }> = {
-  default: { line: "px-12 text-10 leading-17-4", number: "text-10" },
+  default: { line: "px-8 text-10 leading-17-4 wide:px-12", number: "text-10" },
   wide: { line: "min-w-0 flex-1 px-12 text-12 leading-17-4", number: "text-14" },
   compact: { line: "px-10 text-9", number: "text-10" },
 };

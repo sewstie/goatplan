@@ -18,11 +18,12 @@ const MAX_RESULTS = 50;
 
 type FindCourseScreenProps = {
   initialQuery?: string;
+  searchId?: string;
   onBack(): void;
 };
 
 /** The roomier search for students with My degree on: the same results with what each course would fill. */
-export function FindCourseScreen({ initialQuery = "", onBack }: FindCourseScreenProps) {
+export function FindCourseScreen({ initialQuery = "", searchId, onBack }: FindCourseScreenProps) {
   const [query, setQuery] = useState(initialQuery);
   const [onlyGaps, setOnlyGaps] = useState(false);
   const [notice, setNotice] = useState("");
@@ -72,9 +73,10 @@ export function FindCourseScreen({ initialQuery = "", onBack }: FindCourseScreen
         </div>
         <Button variant="secondary" size="md" icon={<CaretLeft aria-hidden />} className="min-h-38 self-start" onClick={onBack}>Back to planner</Button>
       </header>
+      <div data-guide-slot="courses" className="pt-14 empty:hidden" />
       <div ref={input} className="pt-18">
         <TextInput
-          id={inputId}
+          id={searchId ?? inputId}
           label="Course code, title or professor"
           hideLabel={false}
           type="search"

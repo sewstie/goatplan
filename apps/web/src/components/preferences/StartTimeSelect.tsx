@@ -16,6 +16,7 @@ export function StartTimeSelect() {
       id="tutorial-start-time"
       variant="pill"
       label="Starts after"
+      shortLabel="After"
       options={options}
       value={String(startsAfter)}
       onChange={(event) => setPreferences({ startsAfter: Number(event.target.value) })}

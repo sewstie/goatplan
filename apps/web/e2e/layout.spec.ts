@@ -195,7 +195,165 @@ test.describe("the details drawer", () => {
   });
 });
 
+test.describe("Escape belongs to whatever is on top of the drawer", () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+
+  test("the lab disclosure closes first, then the drawer", async ({ page }) => {
+    await openPlanner(page, { courses: ["AE 2320"] });
+    await page.locator('[data-course-row="AE 2320"]').click();
+    const disclosure = page.getByRole("button", { name: /other lab choices/ });
+    await disclosure.click();
+    await expect(disclosure).toHaveAttribute("aria-expanded", "true");
+    await page.keyboard.press("Escape");
+    await expect(disclosure).toHaveAttribute("aria-expanded", "false");
+    await expect(disclosure).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(details(page)).toHaveCount(0);
+  });
+
+  test("the Saved plans list closes first, and opens above the drawer", async ({ page }) => {
+    await openPlanner(page);
+    await page.locator('[data-course-row="PH 1110"]').click();
+    const saved = page.getByRole("button", { name: /Saved plans/ });
+    await saved.click();
+    await expect(saved).toHaveAttribute("aria-expanded", "true");
+    const item = page.getByRole("link", { name: /saved plans/i }).first();
+    const box = (await item.boundingBox())!;
+    expect(await page.evaluate(([x, y]) => document.elementFromPoint(x, y)?.closest("a") !== null, [box.x + box.width / 2, box.y + box.height / 2])).toBe(true);
+    await page.keyboard.press("Escape");
+    await expect(saved).toHaveAttribute("aria-expanded", "false");
+    await expect(details(page)).toBeVisible();
+  });
+
+  test("the ⓘ note closes first", async ({ page }) => {
+    await openPlanner(page, { courses: ["MA 1023", "PH 1110"] });
+    await page.locator('[data-course-row="PH 1110"]').click();
+    const note = page.getByRole("button", { name: "About these schedules" });
+    await note.click();
+    await page.keyboard.press("Escape");
+    await expect(note).toHaveAttribute("aria-expanded", "false");
+    await expect(details(page)).toBeVisible();
+  });
+
+  test("focus comes back to See how to fix it", async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem("goatplan:term:v1", "2027-C");
+      localStorage.setItem("goatplan:tutorial:v1", "dismissed");
+      localStorage.setItem("goatplan:draft:v1:2027-C", JSON.stringify({ version: 1, courses: ["AE 2320"], preferences: { startsAfter: 600, blocked: [], onlyOpen: false }, locks: {}, professorByCourse: {}, sortPreset: "bestOverall", alternatives: {} }));
+    });
+    await page.goto("/");
+    await expect(details(page).getByText("Ways to fix it")).toBeVisible({ timeout: 30_000 });
+    await page.getByRole("button", { name: "Close course details" }).click();
+    const fix = page.getByRole("button", { name: "See how to fix it" });
+    await fix.focus();
+    await page.keyboard.press("Enter");
+    await expect(details(page)).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(fix).toBeFocused();
+  });
+
+  test("seat buttons keep focus through a refresh", async ({ page }) => {
+    await openPlanner(page);
+    const refresh = page.getByRole("button", { name: "Refresh seats" });
+    await refresh.focus();
+    await page.keyboard.press("Enter");
+    await expect(refresh).toBeFocused();
+  });
+
+  test("the details closed by leaving the page stay closed on the way back", async ({ page }) => {
+    await openPlanner(page, { degree: true });
+    await page.locator('[data-course-row="PH 1110"]').click();
+    await page.getByRole("link", { name: "My degree" }).click();
+    await expect(page.getByRole("heading", { level: 1, name: "My degree" })).toBeVisible();
+    await page.getByRole("link", { name: "Planner" }).click();
+    await expect(page.locator('[data-course-row="PH 1110"]')).toBeVisible();
+    await expect(details(page)).toHaveCount(0);
+  });
+});
+
+test.describe("every width keeps the toolbar and calendar steady", () => {
+  for (const width of [768, 834, 1024, 1194]) {
+    test(`at ${width}, warnings and browsing don't move the calendar`, async ({ page, context }) => {
+      await page.setViewportSize({ width, height: 1000 });
+      await openPlanner(page, { courses: ["MA 1023", "PH 1110"] });
+      const top = (await calendar(page).boundingBox())!.y;
+      await page.getByRole("button", { name: "Next schedule" }).click();
+      expect((await calendar(page).boundingBox())!.y).toBe(top);
+      await context.route("**/api/seats?*", (route) => route.abort());
+      await page.getByRole("button", { name: "Refresh seats" }).click();
+      await expect(page.getByRole("status", { name: "Seat freshness" })).toContainText("Seats from");
+      expect((await calendar(page).boundingBox())!.y).toBe(top);
+      await page.getByRole("button", { name: "Block a time" }).click();
+      await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
+      expect((await calendar(page).boundingBox())!.y).toBe(top);
+    });
+  }
+
+  test("preference controls stay on one line at 768 with a blocked time", async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 1000 });
+    await page.addInitScript(() => {
+      localStorage.setItem("goatplan:term:v1", "2027-C");
+      localStorage.setItem("goatplan:tutorial:v1", "dismissed");
+      localStorage.setItem("goatplan:draft:v1:2027-C", JSON.stringify({ version: 1, courses: ["MA 1023"], preferences: { startsAfter: 540, blocked: [{ day: "Mon", start: 720, end: 780 }], onlyOpen: false }, locks: {}, professorByCourse: {}, sortPreset: "bestOverall", alternatives: {} }));
+    });
+    await page.goto("/");
+    const row = page.getByRole("group", { name: "Preferences" }).locator("> div").first();
+    await expect(row.getByRole("button", { name: "1 blocked time" })).toBeVisible();
+    expect(await row.evaluate((element) => element.scrollWidth - element.clientWidth)).toBeLessThanOrEqual(0);
+    expect((await row.getByRole("combobox", { name: "Starts after" }).boundingBox())!.height).toBeLessThanOrEqual(36);
+  });
+
+  test("badges that don't fit fold into details, and it opens", async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 1000 });
+    await page.addInitScript(() => {
+      localStorage.setItem("goatplan:term:v1", "2027-C");
+      localStorage.setItem("goatplan:tutorial:v1", "dismissed");
+      localStorage.setItem("goatplan:draft:v1:2027-C", JSON.stringify({ version: 1, courses: ["MA 1022", "PH 1110", "AE 2320"], preferences: { startsAfter: 540, blocked: [], onlyOpen: false }, locks: {}, professorByCourse: {}, sortPreset: "earliestFinish", alternatives: {} }));
+    });
+    await page.goto("/");
+    await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
+    const row = page.getByRole("group", { name: "Preferences" }).locator("> div").last();
+    expect((await row.boundingBox())!.height).toBeLessThanOrEqual(40);
+    const details = page.getByRole("button", { name: "details" });
+    if (await details.isVisible()) {
+      await details.click();
+      await expect(details).toHaveAttribute("aria-expanded", "true");
+      await page.keyboard.press("Escape");
+      await expect(details).toHaveAttribute("aria-expanded", "false");
+    }
+  });
+});
+
+test("shared plan actions stay out in the bar at 834", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await openPlanner(page);
+  await page.getByRole("button", { name: "Share", exact: true }).click();
+  const dialog = page.getByRole("dialog", { name: "Share this schedule" });
+  const link = await dialog.getByRole("textbox").inputValue();
+  await page.setViewportSize({ width: 834, height: 1112 });
+  await page.goto(link);
+  await expect(page.getByRole("button", { name: "Save a copy" })).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByRole("button", { name: "Close preview" })).toBeVisible();
+  expect(await sidewaysScroll(page)).toBe(false);
+});
+
 test.describe("the top bar", () => {
+  for (const width of [768, 834, 1099, 1100, 1120, 1150, 1194, 1240, 1280]) {
+    test(`nothing in it overlaps at ${width}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await openPlanner(page, { courses: ["MA 1023", "PH 1110"], degree: true });
+      const bar = page.getByRole("banner").first();
+      const hits = await bar.evaluate((element) => [...element.querySelectorAll<HTMLElement>("a, button, select")].filter((control) => control.checkVisibility()).map((control) => {
+        const box = control.getBoundingClientRect();
+        const top = document.elementFromPoint(box.left + box.width / 2, box.top + box.height / 2);
+        return top === control || control.contains(top) ? null : control.getAttribute("aria-label") ?? control.textContent;
+      }).filter(Boolean));
+      expect(hits).toEqual([]);
+      await expect(page.getByRole("button", { name: "About these schedules" })).toBeVisible();
+      expect(await sidewaysScroll(page)).toBe(false);
+    });
+  }
+
   test("with My degree hidden it shows the logo and no lone tab", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openPlanner(page);
@@ -381,6 +539,18 @@ test.describe("My degree", () => {
 
 test.describe("the phone", () => {
   test.use({ viewport: { width: 375, height: 812 } });
+
+  test("the guide has a place on the search screen with My degree on", async ({ page }) => {
+    await page.addInitScript((flag) => {
+      localStorage.setItem("goatplan:term:v1", "2027-C");
+      localStorage.setItem(flag, "on");
+    }, DEGREE_FLAG_KEY);
+    await page.goto("/");
+    const guide = page.locator(".guide-popover");
+    await guide.getByRole("button", { name: "Next" }).click({ timeout: 30_000 });
+    await expect(guide.getByRole("heading", { name: "Add the courses you need" })).toBeVisible();
+    await expect(guide.getByRole("button", { name: "Skip guide" })).toBeVisible();
+  });
 
   test("has a bottom tab bar and no sideways scroll, on both pages", async ({ page }) => {
     await openPlanner(page, { degree: true });

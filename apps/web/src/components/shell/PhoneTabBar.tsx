@@ -3,7 +3,6 @@
 import { useDegreeEnabled } from "@/lib/flags";
 import { MainTabs } from "./MainTabs";
 
-/** Planner and My degree at the bottom of a phone, in thumb reach. With My degree hidden there's nothing to switch to. */
 export function PhoneTabBar() {
   const degreeEnabled = useDegreeEnabled();
   if (!degreeEnabled) return null;

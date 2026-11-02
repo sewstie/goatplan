@@ -285,6 +285,7 @@
   --container-block-time: 7.75rem;
   --container-block-line-locked: 8.5rem;
   --container-block-blocked-time: 8.5rem;
+  --container-block-room-long: 11rem;
   /* A day header wide enough for "Wednesday". */
   --container-day-name: 5rem;
 
@@ -304,7 +305,6 @@
   --size-details: 16.75rem;
   --size-header: 4.75rem;
   --size-topbar: 3.5rem;
-  /* The planner's toolbar: two rows, or one from the desk breakpoint up. */
   --size-toolbar: 5.5rem;
   --size-page-footer: 2.875rem;
   --size-drawer: 29.0625rem;

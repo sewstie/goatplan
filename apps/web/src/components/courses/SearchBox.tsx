@@ -31,7 +31,7 @@ export function SearchBox({ value, onChange, onKeyDown, disabled, resultsId, inp
       autoComplete="off"
       spellCheck={false}
       enterKeyHint="search"
-      className="shrink-0 pb-20"
+      className="shrink-0 pb-20 tablet:[&_input]:text-9"
     />
   );
 }

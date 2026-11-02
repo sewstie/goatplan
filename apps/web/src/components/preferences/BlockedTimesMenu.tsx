@@ -67,7 +67,7 @@ export function BlockedTimesMenu({ className }: { className?: string }) {
         aria-controls={panelId}
         disabled={empty}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex min-h-32 w-full min-w-132 cursor-pointer items-center justify-between gap-6 rounded-pill bg-surface px-10 text-9 leading-13 whitespace-nowrap text-ink enabled:hover:bg-surface-selected disabled:cursor-default disabled:text-ink-muted"
+        className="inline-flex min-h-32 w-full min-w-112 cursor-pointer items-center justify-between gap-6 rounded-pill bg-surface px-10 text-9 leading-13 whitespace-nowrap text-ink enabled:hover:bg-surface-selected disabled:cursor-default disabled:text-ink-muted"
       >
         {empty ? "No blocked times" : count("blocked time", groups.length)}
         {!empty && <CaretDown aria-hidden className={cx("size-10 transition-transform", open && "rotate-180")} />}
