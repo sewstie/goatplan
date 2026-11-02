@@ -264,8 +264,8 @@
 
   --spacing: 0.0625rem;
 
-  /* Phone styles are written unprefixed; from 640 px up, `tablet:` keeps today's layout. */
-  --breakpoint-tablet: 40rem;
+  /* Phone styles are written unprefixed; from 768 px up, `tablet:` keeps today's layout. */
+  --breakpoint-tablet: 48rem;
   /* Below 360 px the phone top bar has room for the logo but not the wordmark. */
   --breakpoint-narrow: 22.5rem;
   --breakpoint-wide: 68.75rem;
@@ -354,6 +354,15 @@
   html:has(dialog[open]:modal) {
     overflow: hidden;
   }
+
+  /* The page keeps clear of the phone's bottom tab bar, which only shows while there are tabs to show. */
+  :root:has([data-phone-tabs]) {
+    --phone-tabs-space: calc(var(--size-phone-tabs) + env(safe-area-inset-bottom));
+  }
+
+  body {
+    padding-bottom: var(--phone-tabs-space, 0px);
+  }
 }
 
 .pace-slider::-webkit-slider-runnable-track {
@@ -397,10 +406,10 @@ body:has(.guide-popover) [data-guide-hide] {
 
 /*
   Phone typography. The text and leading tokens above are the tablet-and-up scale; below the tablet
-  breakpoint (640px) these values replace them. The utilities compile to `font-size: var(--text-N)` and
+  breakpoint (768px) these values replace them. The utilities compile to `font-size: var(--text-N)` and
   `line-height: var(--leading-N)`, so this redefines every use at once, without touching components.
 */
-@media (max-width: 39.99rem) {
+@media (max-width: 47.99rem) {
   html {
     font-size: 16px;
   }
@@ -409,7 +418,7 @@ body:has(.guide-popover) [data-guide-hide] {
     --size-sidebar: 224px;
     --size-details: 284px;
     --size-time-axis: 47px;
-    --size-topbar: 6.8125rem;
+    --size-topbar: 3.8125rem;
     --text-25: 25px;
     --text-25--line-height: 30px;
     --text-21: 21px;

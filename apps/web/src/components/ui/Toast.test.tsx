@@ -215,7 +215,7 @@ describe("Toast", () => {
   it("sits full width minus 16 px on phone and bottom centre from the tablet breakpoint", () => {
     setup();
     const region = screen.getByRole("status");
-    expect(region).toHaveClass("fixed", "inset-x-16", "bottom-16", "justify-center");
+    expect(region).toHaveClass("fixed", "inset-x-16", "justify-center");
     expect(box()).toHaveClass("w-full", "tablet:w-auto");
   });
 

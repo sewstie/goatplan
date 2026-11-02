@@ -55,7 +55,7 @@ export const storedCodes = async (page: Page) => ((await stored(page)).courses a
 
 /** The sheet folds into cards on a phone, so tiles and ticks only show after opening a section. */
 export async function openAllSections(page: Page) {
-  if ((page.viewportSize()?.width ?? 1440) >= 640) return;
+  if ((page.viewportSize()?.width ?? 1440) >= 768) return;
   const closed = page.locator('h3 button[aria-expanded="false"]');
   while ((await closed.count()) > 0) await closed.first().click();
 }

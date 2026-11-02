@@ -21,8 +21,8 @@ type AppShellProps = {
   scheduleLabel?: string;
   detailsLabel?: string;
   /**
-   * Below the wide breakpoint the main region is 640px tall, which suits the calendar. "content" lets
-   * it grow with longer content instead, like the registration sheet.
+   * Below the wide breakpoint the main region has a fixed height. "content" lets it grow with longer
+   * content instead, like the registration sheet.
    */
   scheduleFit?: "fixed" | "content";
   /** No details panel while the planner's term can't load (div.app-2.md). */

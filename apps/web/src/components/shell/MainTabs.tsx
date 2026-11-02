@@ -18,7 +18,7 @@ export function MainTabs({ phone = false }: { phone?: boolean }) {
   ];
 
   return (
-    <nav aria-label="Main" className={cx("flex gap-5", phone && "w-full gap-8 pt-10")}>
+    <nav aria-label="Main" className={cx("flex gap-5", phone && "w-full gap-8")}>
       {tabs.map((tab) => (
         <Link
           key={tab.href}
@@ -26,7 +26,7 @@ export function MainTabs({ phone = false }: { phone?: boolean }) {
           aria-current={tab.active ? "page" : undefined}
           className={cx(
             "flex min-h-34 items-center justify-center rounded-row px-12 text-9 leading-13 whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none",
-            phone && "min-h-30 flex-1",
+            phone && "min-h-44 flex-1",
             tab.active ? "bg-accent-soft font-600 text-accent" : "font-510 text-ink-muted hover:bg-surface-selected hover:text-ink",
           )}
         >

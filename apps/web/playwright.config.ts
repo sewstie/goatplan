@@ -19,7 +19,7 @@ export default defineConfig({
   projects: [
     // Every spec runs against the production build, except the /dev page specs: those pages 404 in production.
     { name: "production", testIgnore: /(primitives|engine|phone)\.spec\.ts/, use: { baseURL: productionUrl } },
-    // The phone shell specs run below the tablet breakpoint (640px) on a phone-sized viewport.
+    // The phone shell specs run below the tablet breakpoint (768px) on a phone-sized viewport.
     {
       name: "phone",
       testMatch: /phone\.spec\.ts/,

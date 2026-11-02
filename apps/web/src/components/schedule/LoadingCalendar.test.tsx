@@ -14,7 +14,7 @@ function mockViewport(phone: boolean) {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: vi.fn().mockImplementation((query: string) => ({
-      matches: phone && query === "(max-width: 39.99rem)",
+      matches: phone && query === "(max-width: 47.99rem)",
       media: query,
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
