@@ -61,7 +61,7 @@ const settled = (page: Page) =>
 const preferencesRow = (page: Page) => page.getByRole("group", { name: "Preferences", exact: true });
 const badgeList = (page: Page) => page.getByRole("list", { name: "This schedule" });
 const badges = (page: Page) => badgeList(page).getByRole("listitem");
-const header = (page: Page) => page.locator("header");
+const header = (page: Page) => page.locator("main header");
 const position = (page: Page, at: number) => page.getByText(`Schedule ${at} of 48`, { exact: true });
 
 /** The lecture each DEMO course takes in the shown schedule, read from "Your courses". */

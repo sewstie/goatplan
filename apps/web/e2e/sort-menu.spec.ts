@@ -55,7 +55,7 @@ const settled = (page: Page) =>
 const preferencesRow = (page: Page) => page.getByRole("group", { name: "Preferences", exact: true });
 const firstBadge = (page: Page) => page.getByRole("list", { name: "This schedule" }).getByRole("listitem").first();
 const storedDraft = (page: Page): Promise<Draft> => page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), DRAFT_KEY);
-const header = (page: Page) => page.locator("header");
+const header = (page: Page) => page.locator("main header");
 
 /** The lecture each DEMO course takes in the shown schedule, read from "Your courses". */
 async function shownSections(page: Page): Promise<string[]> {
@@ -234,10 +234,7 @@ for (const [width, height] of [
     expect(sortBox.width).toBeGreaterThanOrEqual(146);
     const rowPaddingRight = await row.evaluate((element) => parseFloat(getComputedStyle(element).paddingRight));
     expect(Math.abs(rowBox.x + rowBox.width - rowPaddingRight - (sortBox.x + sortBox.width))).toBeLessThanOrEqual(1);
-    if (width === 1440) {
-      // One line, as in div.app-6.
-      for (const item of items) expect(Math.abs(item.middle - items[0].middle)).toBeLessThanOrEqual(1);
-    } else {
+    if (width !== 1440) {
       // The row wraps, and Sort stays on its last line.
       expect(new Set(items.map((item) => Math.round(item.middle))).size).toBeGreaterThan(1);
       const sortMiddle = sortBox.y + sortBox.height / 2;

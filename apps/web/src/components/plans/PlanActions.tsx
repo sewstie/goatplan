@@ -23,7 +23,7 @@ type PlanActionsLayout = (parts: { menu: ReactNode; save: ReactNode }) => ReactN
 
 const besideEachOther: PlanActionsLayout = ({ menu, save }) => (
   <>
-    <div className="flex items-center gap-10">{menu}</div>
+    <div className="flex items-center gap-5">{menu}</div>
     {save}
   </>
 );

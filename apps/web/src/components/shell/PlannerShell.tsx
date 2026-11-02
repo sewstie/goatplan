@@ -2,11 +2,11 @@
 
 import type { ReactNode } from "react";
 import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
-import { TermPicker } from "@/components/courses/TermPicker";
 import { PhonePlanner } from "@/components/phone/PhonePlanner";
 import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
 import { AppShell } from "@/components/shell/AppShell";
 import { PlannerToast } from "@/components/shell/PlannerToast";
+import { ScheduleNote } from "@/components/schedule/ScheduleNote";
 import { Sidebar } from "@/components/shell/Sidebar";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 
@@ -33,7 +33,6 @@ export function PlannerShell({ header, toolbar, banner, schedule }: PlannerShell
         <AppShell
           sidebar={
             <Sidebar>
-              <TermPicker />
               <CourseSearchPanel />
             </Sidebar>
           }
@@ -41,6 +40,7 @@ export function PlannerShell({ header, toolbar, banner, schedule }: PlannerShell
           toolbar={toolbar}
           banner={banner}
           schedule={schedule}
+          scheduleNote={<ScheduleNote />}
           hideDetailsOnTermError
           details={
             <CourseDetailsPanel />

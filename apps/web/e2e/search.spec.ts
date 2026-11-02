@@ -48,14 +48,12 @@ test("the term picker switches terms and the breadcrumbs follow", async ({ page 
   await open(page, { term: "2027-C" });
   const term = page.getByRole("combobox", { name: "Term" });
   await expect(term).toHaveValue("2027-C");
-  await expect(term.locator("option")).toContainText(["C Term · Spring 2027", "D Term · Spring 2027"]);
-  await expect(sidebar(page).getByText("All courses and sections in C Term")).toBeVisible();
-  const header = page.locator("header");
+  await expect(term.locator("option")).toContainText(["C Term · 2027", "D Term · 2027"]);
+  const header = page.locator("main header");
   await expect(header.getByText("Spring 2027", { exact: true })).toBeVisible();
   await expect(header.getByText("C Term", { exact: true })).toBeVisible();
 
   await term.selectOption("2027-D");
-  await expect(sidebar(page).getByText("All courses and sections in D Term")).toBeVisible();
   await expect(header.getByText("D Term", { exact: true })).toBeVisible();
 });
 

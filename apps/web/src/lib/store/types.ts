@@ -1,3 +1,4 @@
+import type { MissingItem } from "@/lib/share/buildSharedPlan";
 import type { Day, TermFile, TermSummary } from "@/lib/data/types";
 import type { BlockedTime, Fix, SolveResponse } from "@/lib/engine/types";
 import type { SavedPlan } from "@/lib/plans/types";

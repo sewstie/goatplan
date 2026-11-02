@@ -1,6 +1,8 @@
 import { expect, test } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 
+test.use({ viewport: { width: 1280, height: 1000 } });
+
 type Blocked = { day: string; start: number; end: number; label?: string };
 
 async function openPlan(page: Page, blocked: Blocked[] = [], courses = ["CS 1101"], caption = "Auto-fit · 8:00 AM–5:00 PM") {
@@ -296,7 +298,7 @@ test("drawing mode keeps the auto-fit range", async ({ page }) => {
 });
 
 test("the hours don't shift between drags, so the same drag again erases, and the range updates after Done", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await openPlan(page, [], ["CS 1101", "MA 1023"], "Auto-fit · 8:00 AM–8:00 PM");
   await startDrawing(page);
   await expect(page.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeVisible();
@@ -322,7 +324,7 @@ test("the hours don't shift between drags, so the same drag again erases, and th
 });
 
 test("the calendar doesn't move between drags, even when nothing fits", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await openPlan(page);
   await startDrawing(page);
   const top = await gridTop(page);

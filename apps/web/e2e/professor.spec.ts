@@ -36,7 +36,7 @@ for (const state of ["04", "07", "24", "29"] as const) {
       await page.getByRole("searchbox").blur();
     }
     await expect(details(page).getByRole("heading", { level: 2, name: code })).toBeVisible();
-    expect((await details(page).boundingBox())!.width).toBe(320);
+    expect((await details(page).boundingBox())!.width).toBe(268);
     // State 04's AE 2320 has one lecture and no chosen professor, so there's nothing to pick. State 29 has no lectures.
     if (state === "04" || state === "29") {
       await expect(picker(page)).toHaveCount(0);

@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeAll, beforeEach, expect, it, vi } from "vitest";
-import { TermPicker } from "@/components/courses/TermPicker";
+import { TopBarTerm } from "@/components/shell/TopBarTerm";
 import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
 import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
 import { PreferencesBar } from "@/components/preferences/PreferencesBar";
@@ -41,7 +41,7 @@ function start(loadTerm = async (id: string) => twoProfessorTerm(id), solve: (re
   const view = render(<PlannerProvider store={planner}>
     <FirstPlanTutorial storage={storage} />
     <ReplayGuideButton />
-    <TermPicker /><CourseSearchPanel /><PreferencesBar /><CourseDetailsPanel />
+    <TopBarTerm /><CourseSearchPanel /><PreferencesBar /><CourseDetailsPanel />
     <div id="tutorial-schedules" tabIndex={-1} role="region" aria-label="Schedule browser"><ScheduleSwitcher /></div>
   </PlannerProvider>);
   return { planner, storage, ...view };
@@ -443,7 +443,7 @@ it("keeps a stored dismissal hidden while the term loads", async () => {
 it("warns if the browser cannot remember dismissal and leaves the planner usable", async () => {
   const { planner, unmount } = start();
   unmount();
-  render(<PlannerProvider store={planner}><FirstPlanTutorial storage={null} /><TermPicker /></PlannerProvider>);
+  render(<PlannerProvider store={planner}><FirstPlanTutorial storage={null} /><TopBarTerm /></PlannerProvider>);
   const user = userEvent.setup();
   await screen.findByRole("dialog");
   await user.click(screen.getByRole("button", { name: "Skip guide" }));

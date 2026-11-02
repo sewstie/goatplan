@@ -1,5 +1,4 @@
 import { expect, test } from "./fixtures/test";
-import type { Locator } from "@playwright/test";
 
 const screenshotDir = "e2e/screenshots";
 
@@ -7,30 +6,22 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem("goatplan:tutorial:v1", "dismissed"));
 });
 
-// Boxes of the shell regions at 1680 × 800, where the root font is 16.86 px: the sidebar is 16.5rem and
-// the details panel 20rem. The schedule takes what's left.
-const regions = {
-  sidebar: { x: 14.75, y: 14.75, width: 278.1, height: 770.5 },
-  main: { x: 305.5, y: 14.75, width: 1359.75, height: 770.5 },
-  schedule: { x: 305.5, y: 178.5, width: 1010, height: 606.75 },
-  details: { x: 1328.1, y: 178.5, width: 337.1, height: 606.75 },
-};
-
-async function expectBox(locator: Locator, expected: (typeof regions)["main"]) {
-  const box = await locator.boundingBox();
-  expect(box).not.toBeNull();
-  for (const key of ["x", "y", "width", "height"] as const) {
-    expect(Math.abs(box![key] - expected[key]), `${key}: ${box![key]} vs ${expected[key]}`).toBeLessThanOrEqual(1.5);
-  }
-}
-
 test("shell regions line up at 1680 × 800", async ({ page }) => {
   await page.setViewportSize({ width: 1680, height: 800 });
   await page.goto("/");
-  await expectBox(page.getByRole("complementary", { name: "Term and courses" }), regions.sidebar);
-  await expectBox(page.getByRole("main"), regions.main);
-  await expectBox(page.getByRole("region", { name: "Weekly schedule" }), regions.schedule);
-  await expectBox(page.getByRole("complementary", { name: "Course details" }), regions.details);
+  const root = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).fontSize));
+  const sidebar = (await page.getByRole("complementary", { name: "Term and courses" }).boundingBox())!;
+  const schedule = (await page.getByRole("region", { name: "Weekly schedule" }).boundingBox())!;
+  const details = (await page.getByRole("complementary", { name: "Course details" }).boundingBox())!;
+  const topBar = (await page.getByRole("banner").first().boundingBox())!;
+  expect(topBar).toMatchObject({ x: 0, y: 0, width: 1680 });
+  expect(Math.abs(sidebar.x - 1.25 * root)).toBeLessThanOrEqual(1.5);
+  expect(Math.abs(sidebar.width - 15 * root)).toBeLessThanOrEqual(1.5);
+  expect(Math.abs(details.width - 16.75 * root)).toBeLessThanOrEqual(1.5);
+  expect(Math.abs(details.x + details.width - (1680 - 1.25 * root))).toBeLessThanOrEqual(1.5);
+  expect(schedule.x).toBeGreaterThan(sidebar.x + sidebar.width);
+  expect(schedule.x + schedule.width).toBeLessThan(details.x);
+  expect(sidebar.y).toBeGreaterThanOrEqual(topBar.height);
   await page.screenshot({ path: `${screenshotDir}/shell-1680.png` });
 });
 
@@ -40,7 +31,7 @@ test("shell at 1440 keeps the desktop layout", async ({ page }) => {
   const schedule = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
   const details = await page.getByRole("complementary", { name: "Course details" }).boundingBox();
   expect(details!.x).toBeGreaterThan(schedule!.x + schedule!.width);
-  expect(details!.width).toBe(320);
+  expect(details!.width).toBe(268);
   await page.screenshot({ path: `${screenshotDir}/shell-1440.png` });
 });
 
@@ -58,7 +49,7 @@ test("short screens keep a usable calendar and scroll the page", async ({ page }
   const schedule = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
   expect(schedule!.height).toBeGreaterThan(500);
   const scrollHeight = await page.evaluate(() => document.documentElement.scrollHeight);
-  expect(scrollHeight).toBe(720);
+  expect(scrollHeight).toBe(960);
 });
 
 test("shell at 834 stacks the details under the calendar", async ({ page }) => {

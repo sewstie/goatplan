@@ -62,8 +62,9 @@ async function expectSchedules(page: Page, sections: string[]) {
 }
 
 async function blockTime(page: Page, day: string, from: string, to: string) {
-  await preferences(page).getByRole("button", { name: "Block a time" }).click();
-  // The guide stays open in these tests and covers the drawing bar, so this goes by keyboard.
+  // The guide stays open in these tests and can cover these buttons, so this goes by keyboard.
+  await preferences(page).getByRole("button", { name: "Block a time" }).focus();
+  await page.keyboard.press("Enter");
   await page.getByRole("button", { name: "Type a time instead" }).focus();
   await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Block a time" });

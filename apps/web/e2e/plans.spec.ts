@@ -108,7 +108,7 @@ async function screenshot(page: Page, name: string, fullPage = false) {
 }
 
 // The workspace header sits inside <main>, so it is no banner landmark.
-const header = (page: Page) => page.locator("header");
+const header = (page: Page) => page.locator("main header");
 
 test.describe("Save schedule", () => {
   test("saves the current schedule with a name, then reads Saved", async ({ page }) => {
