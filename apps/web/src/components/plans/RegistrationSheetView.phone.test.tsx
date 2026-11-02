@@ -3,7 +3,7 @@ import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { designPlan, termWith } from "@/lib/plans/testing";
 import { RegistrationSheetView } from "./RegistrationSheetView";
 
-// Below 640 px the sections-to-register view is one card per course, with Copy and "Open Workday"
+// Below 768 px the sections-to-register view is one card per course, with Copy and "Open Workday"
 // side by side above them. No Print and no section list there; the list shows only if copying fails.
 // Touch targets are at least 44 px. Print output keeps the desktop table at every screen width.
 
@@ -32,7 +32,7 @@ function mockPhoneViewport() {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: vi.fn().mockImplementation((query: string) => ({
-      matches: query === "(max-width: 39.99rem)",
+      matches: query === "(max-width: 47.99rem)",
       media: query,
       onchange: null,
       addListener: vi.fn(),

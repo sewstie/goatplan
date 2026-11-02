@@ -198,7 +198,7 @@ test("the early band's label stays under a blocked time in that band", async ({ 
 });
 
 test("at the tablet minimum the day names are whole", async ({ page }) => {
-  await page.setViewportSize({ width: 640, height: 900 });
+  await page.setViewportSize({ width: 768, height: 900 });
   await openPlanner(page);
   const names = page.locator('[style*="grid-template-columns"] > span:not(:empty)').first().locator("..");
   await expect(names).toContainText("Wed");
