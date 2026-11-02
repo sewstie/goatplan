@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-10-31T15:13:32Z",
+  "generatedAt": "2026-11-02T19:23:40Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -7380,7 +7380,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course covers the application of simulation to a variety of managerial problems with examples from operations management, industrial engineering and manufacturing engineering. It introduces the student to the concepts of computer simulation, with an emphasis on the design of a simulation experiment and statistical interpretation of its results. It will discuss simulation of queueing models, inventory and industrial dynamics, and gaming situations. The role and use of computers for the execution of simulations will also be highlighted. A commercial simulation language such as Arena will be used to solve problems from the manufacturing and service industries. Recommended background: CS 1004 and MA 2612.",
       "sections": [
-        {"id":"OIE 3460-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Matthew Hodson"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Innovation Studio 105 Active Learning Classroom"}]}
+        {"id":"OIE 3460-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":26,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Matthew Hodson"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Innovation Studio 105 Active Learning Classroom"}]}
       ],
       "options": [
         ["OIE 3460-B01"]
@@ -8846,8 +8846,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/12 unit) This course will teach basic strength training principles and techniques. Students will develop and implement an individualized conditioning program.",
       "sections": [
-        {"id":"WPE 1055-B01","code":"B01","type":"workshop","status":"waitlist","enrolled":25,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Philip Jackson"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":840,"end":890,"location":"Recreation Center Courts 3-4"}]},
-        {"id":"WPE 1055-B02","code":"B02","type":"workshop","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Carden Brown"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":600,"end":650,"location":"Recreation Center Courts 3-4"}]}
+        {"id":"WPE 1055-B01","code":"B01","type":"workshop","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Philip Jackson"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":840,"end":890,"location":"Recreation Center Courts 3-4"}]},
+        {"id":"WPE 1055-B02","code":"B02","type":"workshop","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Carden Brown"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":600,"end":650,"location":"Recreation Center Courts 3-4"}]}
       ],
       "options": [
         ["WPE 1055-B01"],
@@ -9186,7 +9186,7 @@
       "level": "Undergraduate",
       "description": "Club Sports are activities in various sports and wellness that are organized and recognized by SGA as Class II organizations and open to any undergraduate student. Students who are properly registered in advance for the club activity in their interest area (more information regarding Club Sports can be found at wpi.edu/+techsync) and meet the established criteria for participation by the club as well as by PERA department policy, may be eligible for WPE course credit. Practice and/or competition times vary but are generally in the evenings and weekends. Participating students may incur additional fees for equipment, travel, and/or uniforms",
       "sections": [
-        {"id":"WPE 1230-B01","code":"B01","type":"workshop","status":"waitlist","enrolled":20,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Ann McCarron"],"delivery":"in-person","meetings":[]}
+        {"id":"WPE 1230-B01","code":"B01","type":"workshop","status":"waitlist","enrolled":21,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Ann McCarron"],"delivery":"in-person","meetings":[]}
       ],
       "options": [
         ["WPE 1230-B01"]
