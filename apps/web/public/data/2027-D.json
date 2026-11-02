@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-11-01T15:55:33Z",
+  "generatedAt": "2026-11-02T19:23:40Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -10,7 +10,7 @@
       "level": "Undergraduate",
       "description": "Cat. 1 This course provides students with an understanding of the primary financial statements used for internal and external business decision- making in start-up firms and large corporations. It emphasizes underlying accounting concepts captured in financial statements, while highlighting the interdependence among these statements. The course will cover analytical techniques, such as ratio analyses and sensitivity analyses to assess the impact of changes in strategy and outcomes on efficiency and effectiveness measures. It also describes the various users of internal and external financial statements, and the potential conflicts between these various stakeholders. Students cannot receive credit for both BUS 2060 and ACC 2060.",
       "sections": [
-        {"id":"ACC 2060-D01","code":"D01","type":"lecture","status":"open","enrolled":23,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Nii Ollenu"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":480,"end":590,"location":"Innovation Studio 105 Active Learning Classroom"}]}
+        {"id":"ACC 2060-D01","code":"D01","type":"lecture","status":"open","enrolled":24,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Nii Ollenu"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":480,"end":590,"location":"Innovation Studio 105 Active Learning Classroom"}]}
       ],
       "options": [
         ["ACC 2060-D01"]
@@ -121,7 +121,7 @@
       "level": "Graduate",
       "description": "The Seminar is a degree requirement for all graduate students and is offered during A, B, C, and D term. The Seminar consists of presentations by experts on technical and broader professional topics. Presentations are also offered by graduate students on topics related to their directed research, dissertation, or industrial experiences. The Seminar is offered in pass/fail mode based on attendance.",
       "sections": [
-        {"id":"AE 5032-D01","code":"D01","type":"seminar","status":"open","enrolled":24,"capacity":50,"waitlist":{"taken":0,"capacity":30},"instructors":["Michael Demetriou"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Goddard Hall 227 Classroom"}]},
+        {"id":"AE 5032-D01","code":"D01","type":"seminar","status":"open","enrolled":25,"capacity":50,"waitlist":{"taken":0,"capacity":30},"instructors":["Michael Demetriou"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Goddard Hall 227 Classroom"}]},
         {"id":"AE 5032-D02","code":"D02","type":"seminar","status":"open","enrolled":15,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Demetriou"],"delivery":"online-sync","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Online-synchronous"}]}
       ],
       "options": [
@@ -867,7 +867,7 @@
       "level": "Graduate",
       "description": "This course will provide an overview of bioinformatics, covering a broad selection of the most important techniques used to analyze biological sequence and expression data. Students will acquire a working knowledge of bioinformatics applications through hands-on use of software to ask and answer biological questions. In addition, the course will provide students with an introduction to the theory behind some of the most important algorithms used to analyze sequence data (for example, alignment algorithms and the use of hidden Markov models). Topics covered will include protein and DNA sequence alignments, evolutionary analysis and phylogenetic trees, obtaining protein secondary structure from sequence, and analysis of gene expression including clustering methods. Students may not receive credit for both BCB 4001 and BCB 501. (Prerequisite: knowledge of genetics, molecular biology, and statistics at the undergraduate level.)",
       "sections": [
-        {"id":"BB 581-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Mia Bosinger"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"BB 581-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Mia Bosinger"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["BB 581-S01"]
@@ -909,7 +909,7 @@
       "level": "Graduate",
       "description": "This course will provide an overview of bioinformatics, covering a broad selection of the most important techniques used to analyze biological sequence and expression data. Students will acquire a working knowledge of bioinformatics applications through hands-on use of software to ask and answer biological questions. In addition, the course will provide students with an introduction to the theory behind some of the most important algorithms used to analyze sequence data (for example, alignment algorithms and the use of hidden Markov models). Topics covered will include protein and DNA sequence alignments, evolutionary analysis and phylogenetic trees, obtaining protein secondary structure from sequence, and analysis of gene expression including clustering methods. Students may not receive credit for both BCB 4001 and BCB 501. (Prerequisite: knowledge of genetics, molecular biology, and statistics at the undergraduate level.)",
       "sections": [
-        {"id":"BCB 501-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Mia Bosinger"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"BCB 501-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Mia Bosinger"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["BCB 501-S01"]
@@ -1686,7 +1686,7 @@
       "level": "Graduate",
       "description": "This course will focus on the medicinal chemistry aspects of drug discovery from an industrial pharmaceutical research and development perspective. Topics will include chemotherapeutic agents (such as antibacterial, antiviral and antitumor agents) and pharmacodynamic agents (such as antihypertensive, antiallergic, antiulcer and CNS agents). (Prerequisite: A good foundation in organic chemistry, e.g., CH 2310 Organic Chemistry I and CH 2320 Organic Chemistry II.)",
       "sections": [
-        {"id":"CH 538-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":7,"capacity":20},"instructors":["James Stambuli"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"CH 538-S01","code":"S01","type":"lecture","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":8,"capacity":20},"instructors":["James Stambuli"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["CH 538-S01"]
@@ -1728,7 +1728,7 @@
       "level": "Graduate",
       "description": "The course describes the evolution of the regulations that govern the pharmaceutical industry and examines how the resultant regulatory framework influences and guides pharmaceutical companies in the development, manufacture, testing and commercial distribution of drugs. Multiple aspects in the drug development process influenced by the regulations including quality system design and operation, regulatory affairs group structure and activities, compliance, good practices (GxPs), and ethics will be covered. The course will explore the global regulatory environment but will focus on the US Food and Drug Administration (FDA) and the European Medicines Agency (EMA) as primary study cases when examining the regulations, processes and controls for clinical development, marketing authorization approvals and post-approval changes for drugs, biologics and vaccines.",
       "sections": [
-        {"id":"CH 563-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Enda Moran"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"CH 563-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Enda Moran"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["CH 563-S01"]
@@ -2420,7 +2420,7 @@
       "level": "Graduate",
       "description": "This course will offer a mathematical and practical perspective on artificial neural networks for machine learning. Students will learn about the most prominent network architectures including multilayer feedforward neural networks, convolutional neural networks (CNNs), auto-encoders, recurrent neural networks (RNNs), and generative-adversarial networks (GANs). This course will also teach students optimization and regularization techniques used to train them -- such as back-propagation, stochastic gradient descent, dropout, pooling, and batch normalization. Connections to related machine learning techniques and algorithms, such as probabilistic graphical models, will be explored. In addition to understanding the mathematics behind deep learning, students will also engage in hands-on course projects. Students will have the opportunity to train neural networks for a wide range of applications, such as object detection, facial expression recognition, handwriting analysis, and natural language processing. Prerequisite: Machine Learning (CS 539), and knowledge of Linear Algebra (such as MA 2071) and Algorithms (such as CS 2223).",
       "sections": [
-        {"id":"CS 541-S01","code":"S01","type":"lecture","status":"open","enrolled":32,"capacity":56,"waitlist":{"taken":0,"capacity":20},"instructors":["Jacob Whitehill"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
+        {"id":"CS 541-S01","code":"S01","type":"lecture","status":"open","enrolled":33,"capacity":56,"waitlist":{"taken":0,"capacity":20},"instructors":["Jacob Whitehill"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
         ["CS 541-S01"]
@@ -2523,7 +2523,7 @@
       "description": "CS 552 / DS552. Generative Artificial Intelligence (3 credits) Generative Artificial Intelligence (Gen-AI) is a class of machine learning models that generate new data (text, images, faces, voice, artwork) that is near indistinguishable from the equivalent real data typically generated by humans. These models are trained based on realistic example data sets from the real world. This course covers the underlying fundamentals of generative models. It also introduces the design and modeling of some of the modern generative models: Variational Autoencoders (VAEs), Generative Adversarial Networks (GANs), Diffusion models, ChatGPT, Large Language Models, to name a few. Several applications will be discussed, ranging from image generation for engineering or science applications to the utilization of generated data for data augmentation in AI systems. Ethical concerns related to the danger of these generative technologies concerning issues from misinformation, bias, to data ownership are reviewed. Recommended Background: Core artificial intelligence classes, such as machine learning and deep learning, or equivalent background is highly recommended.",
       "sections": [
         {"id":"CS 552-S01","code":"S01","type":"lecture","status":"open","enrolled":15,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Walter Gerych"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Fuller Labs 320"}]},
-        {"id":"CS 552-S02","code":"S02","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Narahara Chari Dingari"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 552-S02","code":"S02","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Narahara Chari Dingari"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 552-S01"],
@@ -2552,7 +2552,7 @@
       "level": "Graduate",
       "description": "CS 554 / DS 554: Natural Language Processing (3 credits) Natural Language Processing (NLP) is an interdisciplinary field at the intersection of artificial intelligence, linguistics, and computer science, dedicated to enabling computers to understand, interpret, and generate human language. NLP underpins advancements in human-computer interaction, information retrieval, sentiment analysis, chatbots, and a multitude of other applications. The course may cover a wide range of topics, including language modeling, sequence-to-sequence architectures, sentiment analysis, machine translation, and advanced techniques for natural language understanding and generation, providing a comprehensive foundation for NLP expertise. Recommended Background: Programming skills at the level of CS 5007.",
       "sections": [
-        {"id":"CS 554-S01","code":"S01","type":"lecture","status":"open","enrolled":0,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Xiaozhong Liu"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":1080,"end":1250,"location":"Unity Hall 405"}]}
+        {"id":"CS 554-S01","code":"S01","type":"lecture","status":"open","enrolled":1,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Xiaozhong Liu"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":1080,"end":1250,"location":"Unity Hall 405"}]}
       ],
       "options": [
         ["CS 554-S01"]
@@ -2636,7 +2636,7 @@
       "level": "Graduate",
       "description": "Big Data Management deals with emerging applications in science and engineering disciplines that generate and collect data at unprecedented speed, scale, and complexity that need to be managed and analyzed efficiently. This course introduces the latest techniques and infrastructures developed for big data management including parallel and distributed database systems, map-reduce infrastructures, scalable platforms for complex data types, stream processing systems, and cloud-based computing. Query processing, optimization, access methods, storage layouts, and energy management techniques developed on these infrastructures will be covered. Students are expected to engage in hands-on projects using one or more of these technologies. Prerequisites: A beginning course in databases at the level of CS 4432 or equivalent knowledge, and programming experience.",
       "sections": [
-        {"id":"CS 585-S01","code":"S01","type":"lecture","status":"open","enrolled":24,"capacity":40,"waitlist":{"taken":0,"capacity":20},"instructors":["Roee Shraga"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Unity Hall 520"}]}
+        {"id":"CS 585-S01","code":"S01","type":"lecture","status":"open","enrolled":23,"capacity":40,"waitlist":{"taken":0,"capacity":20},"instructors":["Roee Shraga"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Unity Hall 520"}]}
       ],
       "options": [
         ["CS 585-S01"]
@@ -2860,7 +2860,7 @@
       "level": "Graduate",
       "description": "Big Data Management deals with emerging applications in science and engineering disciplines that generate and collect data at unprecedented speed, scale, and complexity that need to be managed and analyzed efficiently. This course introduces the latest techniques and infrastructures developed for big data management including parallel and distributed database systems, map-reduce infrastructures, scalable platforms for complex data types, stream processing systems, and cloud-based computing. Query processing, optimization, access methods, storage layouts, and energy management techniques developed on these infrastructures will be covered. Students are expected to engage in hands-on projects using one or more of these technologies. Prerequisites: A beginning course in databases at the level of CS 4432 or equivalent knowledge, and programming experience.",
       "sections": [
-        {"id":"DS 503-S01","code":"S01","type":"lecture","status":"open","enrolled":24,"capacity":40,"waitlist":{"taken":0,"capacity":20},"instructors":["Roee Shraga"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Unity Hall 520"}]}
+        {"id":"DS 503-S01","code":"S01","type":"lecture","status":"open","enrolled":23,"capacity":40,"waitlist":{"taken":0,"capacity":20},"instructors":["Roee Shraga"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Unity Hall 520"}]}
       ],
       "options": [
         ["DS 503-S01"]
@@ -2888,7 +2888,7 @@
       "level": "Graduate",
       "description": "This course will offer a mathematical and practical perspective on artificial neural networks for machine learning. Students will learn about the most prominent network architectures including multilayer feedforward neural networks, convolutional neural networks (CNNs), auto-encoders, recurrent neural networks (RNNs), and generative-adversarial networks (GANs). This course will also teach students optimization and regularization techniques used to train them -- such as back-propagation, stochastic gradient descent, dropout, pooling, and batch normalization. Connections to related machine learning techniques and algorithms, such as probabilistic graphical models, will be explored. In addition to understanding the mathematics behind deep learning, students will also engage in hands-on course projects. Students will have the opportunity to train neural networks for a wide range of applications, such as object detection, facial expression recognition, handwriting analysis, and natural language processing. Prerequisite: Machine Learning (CS 539), and knowledge of Linear Algebra (such as MA 2071) and Algorithms (such as CS 2223).",
       "sections": [
-        {"id":"DS 541-S01","code":"S01","type":"lecture","status":"open","enrolled":32,"capacity":56,"waitlist":{"taken":0,"capacity":20},"instructors":["Jacob Whitehill"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
+        {"id":"DS 541-S01","code":"S01","type":"lecture","status":"open","enrolled":33,"capacity":56,"waitlist":{"taken":0,"capacity":20},"instructors":["Jacob Whitehill"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
         ["DS 541-S01"]
@@ -2903,7 +2903,7 @@
       "description": "CS 552 / DS552. Generative Artificial Intelligence (3 credits) Generative Artificial Intelligence (Gen-AI) is a class of machine learning models that generate new data (text, images, faces, voice, artwork) that is near indistinguishable from the equivalent real data typically generated by humans. These models are trained based on realistic example data sets from the real world. This course covers the underlying fundamentals of generative models. It also introduces the design and modeling of some of the modern generative models: Variational Autoencoders (VAEs), Generative Adversarial Networks (GANs), Diffusion models, ChatGPT, Large Language Models, to name a few. Several applications will be discussed, ranging from image generation for engineering or science applications to the utilization of generated data for data augmentation in AI systems. Ethical concerns related to the danger of these generative technologies concerning issues from misinformation, bias, to data ownership are reviewed. Recommended Background: Core artificial intelligence classes, such as machine learning and deep learning, or equivalent background is highly recommended.",
       "sections": [
         {"id":"DS 552-S01","code":"S01","type":"lecture","status":"open","enrolled":15,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Walter Gerych"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Fuller Labs 320"}]},
-        {"id":"DS 552-S02","code":"S02","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Narahara Chari Dingari"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"DS 552-S02","code":"S02","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Narahara Chari Dingari"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["DS 552-S01"],
@@ -2932,7 +2932,7 @@
       "level": "Graduate",
       "description": "CS 554 / DS 554: Natural Language Processing (3 credits) Natural Language Processing (NLP) is an interdisciplinary field at the intersection of artificial intelligence, linguistics, and computer science, dedicated to enabling computers to understand, interpret, and generate human language. NLP underpins advancements in human-computer interaction, information retrieval, sentiment analysis, chatbots, and a multitude of other applications. The course may cover a wide range of topics, including language modeling, sequence-to-sequence architectures, sentiment analysis, machine translation, and advanced techniques for natural language understanding and generation, providing a comprehensive foundation for NLP expertise. Recommended Background: Programming skills at the level of CS 5007.",
       "sections": [
-        {"id":"DS 554-S01","code":"S01","type":"lecture","status":"open","enrolled":0,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Xiaozhong Liu"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":1080,"end":1250,"location":"Unity Hall 405"}]}
+        {"id":"DS 554-S01","code":"S01","type":"lecture","status":"open","enrolled":1,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Xiaozhong Liu"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Wed"],"start":1080,"end":1250,"location":"Unity Hall 405"}]}
       ],
       "options": [
         ["DS 554-S01"]
@@ -3336,7 +3336,7 @@
       "level": "Graduate",
       "description": "This graduate level course will further explore alternating current circuits, three phase circuits, basics of electromagnetic field theory, magnetic circuits, inductance, and electromechanical energy conversion. Topics also include ideal transformer, iron-core transformer, voltage regulation, efficiency equivalent circuit, and three phase transformers. Induction machine construction, equivalent circuit, torque speed characteristics, and single phase motors, synchronous machine construction, equivalent circuit, power relationships phasor diagrams, and synchronous motors will be covered. Direct current machine construction, types, efficiency, power flow diagram, and external characteristics will be discussed",
       "sections": [
-        {"id":"ECE 5512-S01","code":"S01","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Zeeshan Ahmed"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"ECE 5512-S01","code":"S01","type":"lecture","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Zeeshan Ahmed"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["ECE 5512-S01"]
@@ -3518,7 +3518,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is designed to acquaint students with the ways in which macroeconomic variables such as national income, employment and the general level of prices are determined in an economic system. It also includes a study of how the techniques of monetary policy and fiscal policy attempt to achieve stability in the general price level and growth in national income and employment. The problems of achieving these national goals (simultaneously) are also analyzed. The course stresses economic issues in public policy and international trade.",
       "sections": [
-        {"id":"ECON 1120-D01","code":"D01","type":"lecture","status":"open","enrolled":31,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Michael Radzicki"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 402"}]}
+        {"id":"ECON 1120-D01","code":"D01","type":"lecture","status":"open","enrolled":32,"capacity":60,"waitlist":{"taken":0,"capacity":15},"instructors":["Michael Radzicki"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Salisbury Labs 402"}]}
       ],
       "options": [
         ["ECON 1120-D01"]
@@ -3773,7 +3773,7 @@
         {"id":"ES 1310-DL01","code":"DL01","type":"lecture","status":"open","enrolled":41,"capacity":70,"waitlist":{"taken":5,"capacity":15},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Kaven Hall 116"}]},
         {"id":"ES 1310-DL02","code":"DL02","type":"lecture","status":"open","enrolled":42,"capacity":70,"waitlist":{"taken":5,"capacity":15},"instructors":["Rachael Naoum"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Atwater Kent 219"}]},
         {"id":"ES 1310-DX01","code":"DX01","type":"lab","status":"open","enrolled":26,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
-        {"id":"ES 1310-DX02","code":"DX02","type":"lab","status":"open","enrolled":15,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
+        {"id":"ES 1310-DX02","code":"DX02","type":"lab","status":"open","enrolled":14,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
         {"id":"ES 1310-DX03","code":"DX03","type":"lab","status":"open","enrolled":21,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Rachael Naoum"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
         {"id":"ES 1310-DX04","code":"DX04","type":"lab","status":"open","enrolled":21,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Rachael Naoum"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]}
       ],
@@ -4481,7 +4481,7 @@
         {"id":"ID 2050-D01","code":"D01","type":"lecture","title":"SOC SCI RES-IQP: Acadia National Park ME (WI)","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Goddard Hall 227 Classroom"}]},
         {"id":"ID 2050-D02","code":"D02","type":"lecture","title":"SOC SCI RES-IQP: Worcester Community Project Center (WI)","status":"open","enrolled":1,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Innovation Studio 203 Active Learning Classroom South"}]},
         {"id":"ID 2050-D03","code":"D03","type":"lecture","title":"SOC SCI RES-IQP- Beijing China (WI)","status":"open","enrolled":0,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Innovation Studio 205 Active Learning Classroom North"}]},
-        {"id":"ID 2050-D04","code":"D04","type":"lecture","title":"SOC SCI RES-IQP- London England (WI)","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Unity Hall 500"}]},
+        {"id":"ID 2050-D04","code":"D04","type":"lecture","title":"SOC SCI RES-IQP- London England (WI)","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Unity Hall 500"}]},
         {"id":"ID 2050-D05","code":"D05","type":"lecture","title":"SOC SCI RES-IQP: MWROC","status":"open","enrolled":0,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Stratton Hall 207"}]},
         {"id":"ID 2050-D06","code":"D06","type":"lecture","title":"SOC SCI RES-IQP: Lyon France (WI)","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Spandan Pandey"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Salisbury Labs 105"}]},
         {"id":"ID 2050-D07","code":"D07","type":"lecture","title":"SOC SCI RES-IQP- Boston, MA (WI)","status":"open","enrolled":0,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Caitlin Ferrarini"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1110,"end":1220,"location":"Salisbury Labs 305"}]},
@@ -5701,7 +5701,7 @@
       "description": "ME 4324 Integrated Design of Mechanical System. Cat I This course develops student capabilities to conduct the detailed design of mechanical components integrated into a complete mechanical system. Topics covered include kinematic syntheses and analysis and detailed design of mechanical components under dynamic loading using the fatigue-life method. These topics are developed through a guided design project. Computer software packages such as Mathcad and Linkages are used. Recommended Background: ES 2001 (Introduction to Materials Science), ES 1310 (Introduction to Computer Aided Design), ES2501 (Introduction to Static Systems), ES2502 (Stress Analysis), and ES2503 (Introduction to Dynamic Systems).",
       "sections": [
         {"id":"ME 4324-D01","code":"D01","type":"lecture","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":10,"capacity":10},"instructors":["Yihao Zheng"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Higgins Labs 154"}]},
-        {"id":"ME 4324-D02","code":"D02","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":4,"capacity":10},"instructors":["Eben Cobb"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Higgins Labs 116"}]}
+        {"id":"ME 4324-D02","code":"D02","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":5,"capacity":10},"instructors":["Eben Cobb"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Higgins Labs 116"}]}
       ],
       "options": [
         ["ME 4324-D01"],
@@ -5717,7 +5717,7 @@
       "description": "Cat. I This course integrates thermodynamics, fluid mechanics and heat transfer through the use of design projects involving modern technologies, such as electronic cooling, vapor compression power and refrigeration cycles. Activities include problem definition, design creation and analysis, mathematical modeling, cost analysis and optimization. Recommended background: knowledge in thermodynamics, fluid mechanics, heat transfer and introduction to design (ES 3001, ES 3004 and ES 3003, ME 2300 or equivalent).",
       "sections": [
         {"id":"ME 4429-DD01","code":"DD01","type":"discussion","status":"closed","enrolled":40,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Kedar Prashant Shete"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":590,"location":"Olin Hall 223"}]},
-        {"id":"ME 4429-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":40,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Kedar Prashant Shete"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Higgins Labs 154"}]}
+        {"id":"ME 4429-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":40,"capacity":40,"waitlist":{"taken":1,"capacity":10},"instructors":["Kedar Prashant Shete"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Higgins Labs 154"}]}
       ],
       "options": [
         ["ME 4429-DD01","ME 4429-DL01"]
@@ -5773,7 +5773,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course provides the theory and practice of computational fluid dynamics at an entry graduate level. Topics covered include: classification of partial differential equations (PDEs) in fluid dynamics and characteristics; finite difference schemes on structured grids; temporal discretization schemes; consistency, stability and error analysis of finite difference schemes; explicit and implicit finite differencing schemes for linear hyperbolic, parabolic, elliptic, and non-linear PDEs in fluid dynamics; direct and iterative solution methods for algebraic systems. The course requires completion of several projects using MATLAB.",
       "sections": [
-        {"id":"ME 5108-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":2,"capacity":10},"instructors":["Aswin Gnanaskandan"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Atwater Kent 232"}]}
+        {"id":"ME 5108-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":3,"capacity":10},"instructors":["Aswin Gnanaskandan"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Atwater Kent 232"}]}
       ],
       "options": [
         ["ME 5108-D01"]
@@ -5873,7 +5873,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"ME 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":3,"capacity":15,"waitlist":{"taken":6,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"ME 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":4,"capacity":15,"waitlist":{"taken":6,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["ME 5420-D01"]
@@ -5888,7 +5888,7 @@
       "description": "(2 Credits) The problems of cost determination and evaluation of processing alternatives in the designmanufacturing interface are discussed. Approaches for introducing manufacturing capability knowledge into the product design process are covered. An emphasis is placed on part and process simplification, and analysis of alternative manufacturing methods based on such parameters as: anticipated volume, product life cycle, lead time, customer requirements, and quality yield. Lean manufacturing and Six-Sigma concepts and their influence on design quality are included as well. Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MFE594M).",
       "sections": [
         {"id":"ME 5441-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":4,"capacity":20},"instructors":["Paul Cotnoir"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":1020,"end":1190,"location":"Higgins Labs 116"}]},
-        {"id":"ME 5441-D02","code":"D02","type":"lecture","status":"open","enrolled":14,"capacity":30,"waitlist":{"taken":9,"capacity":20},"instructors":["Paul Cotnoir"],"delivery":"online-async","meetings":[]}
+        {"id":"ME 5441-D02","code":"D02","type":"lecture","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":9,"capacity":20},"instructors":["Paul Cotnoir"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["ME 5441-D01"],
@@ -5989,7 +5989,7 @@
       "description": "(2 Credits) The problems of cost determination and evaluation of processing alternatives in the designmanufacturing interface are discussed. Approaches for introducing manufacturing capability knowledge into the product design process are covered. An emphasis is placed on part and process simplification, and analysis of alternative manufacturing methods based on such parameters as: anticipated volume, product life cycle, lead time, customer requirements, and quality yield. Lean manufacturing and Six-Sigma concepts and their influence on design quality are included as well. Note: Students cannot receive credit for this course if they have taken the Special Topics version of the same course (MFE594M).",
       "sections": [
         {"id":"MFE 541-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":4,"capacity":20},"instructors":["Paul Cotnoir"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":1020,"end":1190,"location":"Higgins Labs 116"}]},
-        {"id":"MFE 541-D02","code":"D02","type":"lecture","status":"open","enrolled":14,"capacity":30,"waitlist":{"taken":9,"capacity":20},"instructors":["Paul Cotnoir"],"delivery":"online-async","meetings":[]}
+        {"id":"MFE 541-D02","code":"D02","type":"lecture","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":9,"capacity":20},"instructors":["Paul Cotnoir"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MFE 541-D01"],
@@ -6004,7 +6004,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"MFE 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":3,"capacity":15,"waitlist":{"taken":6,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"MFE 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":4,"capacity":15,"waitlist":{"taken":6,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MFE 5420-D01"]
@@ -6350,7 +6350,7 @@
       "level": "Graduate",
       "description": "(2 credits) The course starts with an in-depth study of axiomatic design. Applications of axiomatic design are considered primarily, although not exclusively, for the design of manufacturing processes and tools. Axiomatic design is a design methodology based on the premise that there are two axioms that apply to all good designs. These axioms facilitate the teaching and practice of engineering design as a scientific discipline. Manufacturing process analysis is considered from the perspective of supporting design. Methods of analysis of manufacturing processes with broad applicability are sought. Special attention is given to examples in machining (traditional, nontraditional and grinding), additive manufacturing, and to the production of surfaces. The ability to find commonalities across applications and generalize is emphasized to facilitate further development of principles with broad applicability. The content is delivered in video lectures and in readings from the technical literature. Homework and quizzes are given and delivered online. There is a project to design a manufacturing process. The topics can be from work or dissertations that can be interpreted as manufacturing processes and tools. Credit cannot be given for this course and any of the similar, in-class versions for 3 credits, MFE 520, MTE 520 and ME 543.",
       "sections": [
-        {"id":"MTE 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":3,"capacity":15,"waitlist":{"taken":6,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"MTE 5420-D01","code":"D01","type":"lecture","status":"open","enrolled":4,"capacity":15,"waitlist":{"taken":6,"capacity":20},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MTE 5420-D01"]
@@ -6760,7 +6760,7 @@
       "level": "Graduate",
       "description": "Human neuroscience is a rapidly changing, interdisciplinary field that focuses on the reciprocal relationships between brain functioning and human behavior. This course will provide in-depth understanding of the functional neuroanatomy of the human brain, as well as working knowledge of various brain recording techniques and other emerging technologies used by neuroscientists that help establish and qualify brain-behavior relationships. Students will learn what these methods can (and cannot) tell us about the neural bases of various cognitive phenomena and behaviors, as well as how to align research questions with appropriate methods and tools to ensure sound interpretations about brain function. The course will also include hands-on and interactive activities such as tutorials involving data collection, analysis, and/or interpretation and live demos of data acquisition tools and modalities commonly used in human neuroscience, including but not limited to EEG, fNIRS, fMRI.",
       "sections": [
-        {"id":"NEU 506-S01","code":"S01","type":"lecture","status":"open","enrolled":4,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Richard Lopez"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Fuller Labs 320"}]}
+        {"id":"NEU 506-S01","code":"S01","type":"lecture","status":"open","enrolled":6,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Richard Lopez"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Fuller Labs 320"}]}
       ],
       "options": [
         ["NEU 506-S01"]
@@ -7169,7 +7169,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course represents a continuation of PH 3401 and includes a study of three-dimensional systems and the application of quantum mechanics in selected fields. Topics include: the hydrogen atom, angular momentum, spin, perturbation theory and examples of the application of quantum mechanics in fields such as atomic and molecular physics, solid state physics, optics, and nuclear physics. Recommended background: PH 3401.",
       "sections": [
-        {"id":"PH 3402-D01","code":"D01","type":"lecture","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Alex Zozulya"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Olin Hall 109"}]}
+        {"id":"PH 3402-D01","code":"D01","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Alex Zozulya"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Olin Hall 109"}]}
       ],
       "options": [
         ["PH 3402-D01"]
@@ -7344,7 +7344,7 @@
       "level": "Undergraduate",
       "description": "PSY 2412: Mental Health (Cat II) This course is intended for anyone from any background who is interested in learning about mental health. This course will introduce mental health more broadly, including topics such as well-being, stress, anxiety, etc. In addition, we will discuss what makes something a disorder and the wide variety of psychological disorders that exist in society (personality, anxiety, mood, psychotic, etc.). Possible causes, symptoms, preventions, and treatments will be examined. Empirical research on mental health will be emphasized. No previous experience with psychological science is needed to take this course. Students may not receive credit for both PSY 1412 and PSY 2412.",
       "sections": [
-        {"id":"PSY 2412-D01","code":"D01","type":"lecture","status":"open","enrolled":17,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Kaitlyn Schneider"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Salisbury Labs 104"}]}
+        {"id":"PSY 2412-D01","code":"D01","type":"lecture","status":"open","enrolled":18,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Kaitlyn Schneider"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Salisbury Labs 104"}]}
       ],
       "options": [
         ["PSY 2412-D01"]
@@ -7950,7 +7950,7 @@
       "level": "Graduate",
       "description": "Model-based systems engineering (MBSE) formalizes the practice of systems engineering through the use of models. This course is intended to answer the why, what and how of MBSE. The course provides background and motivation for transitioning to MBSE from a document centric approach to systems engineering. The course provides a foundation for MBSE by first introducing SysML as a descriptive language for modeling systems in terms of their requirements, structure, behavior, and parametric constraints. The course then introduces the Object-Oriented Systems Engineering Method (OOSEM) as a method for applying SysML to support the specification, architecture design, analysis, and verification of complex systems. A systems modeling tool is also introduced and used throughout the course. Applying MBSE on class projects help the student to grasp the fundamentals. This course is expected to provide the foundations of the systems modeling language, method, and tool to enable the student to get started with MBSE on real projects. (Prerequisite: SYS 501 Concepts of Systems Engineering)",
       "sections": [
-        {"id":"SYS 521-S01","code":"S01","type":"lecture","status":"open","enrolled":4,"capacity":20,"waitlist":{"taken":0,"capacity":20},"instructors":["Daniel Durkin"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"SYS 521-S01","code":"S01","type":"lecture","status":"open","enrolled":5,"capacity":20,"waitlist":{"taken":0,"capacity":20},"instructors":["Daniel Durkin"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["SYS 521-S01"]
@@ -8084,7 +8084,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course will teach basic walking techniques and principles with the goal for students to develop and implement an individualized conditioning program for themselves.",
       "sections": [
-        {"id":"WPE 1009-D01","code":"D01","type":"workshop","status":"waitlist","enrolled":33,"capacity":33,"waitlist":{"taken":7,"capacity":15},"instructors":["Brenden Casey"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Track"}]},
+        {"id":"WPE 1009-D01","code":"D01","type":"workshop","status":"waitlist","enrolled":33,"capacity":33,"waitlist":{"taken":8,"capacity":15},"instructors":["Brenden Casey"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Track"}]},
         {"id":"WPE 1009-D02","code":"D02","type":"workshop","status":"waitlist","enrolled":33,"capacity":33,"waitlist":{"taken":2,"capacity":15},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Recreation Center Track"}]},
         {"id":"WPE 1009-D03","code":"D03","type":"workshop","status":"waitlist","enrolled":33,"capacity":33,"waitlist":{"taken":7,"capacity":15},"instructors":["Philip Jackson"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Track"}]}
       ],
@@ -8600,7 +8600,7 @@
       "level": "Undergraduate",
       "description": "",
       "sections": [
-        {"id":"WPE 2012-D01","code":"D01","type":"workshop","status":"open","enrolled":29,"capacity":999,"waitlist":{"taken":0,"capacity":0},"instructors":["Brenden Casey"],"delivery":"in-person","meetings":[]}
+        {"id":"WPE 2012-D01","code":"D01","type":"workshop","status":"open","enrolled":29,"capacity":999,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[]}
       ],
       "options": [
         ["WPE 2012-D01"]
