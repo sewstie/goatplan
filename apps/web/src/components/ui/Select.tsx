@@ -10,6 +10,8 @@ export type SelectOption = { value: string; label: string; disabled?: boolean };
 
 type SelectProps = Omit<ComponentProps<"select">, "children"> & {
   label: string;
+  /** Shown instead of the label below the desk breakpoint, where a row is tight. */
+  shortLabel?: string;
   /** The field and box variants hide their label unless this is false; then it sits above the box. */
   hideLabel?: boolean;
   options: SelectOption[];
@@ -40,7 +42,7 @@ const focusClasses: Record<SelectVariant, string> = {
 const labelClasses: Record<SelectVariant, string> = {
   field: "sr-only",
   box: "sr-only",
-  pill: "text-9 leading-13 text-ink-muted",
+  pill: "text-9 leading-13 whitespace-nowrap text-ink-muted",
   menu: "text-9 leading-13 text-ink-muted",
   bar: "sr-only",
 };
@@ -66,6 +68,7 @@ const caretClasses: Record<SelectVariant, string> = {
 export function Select({
   label,
   hideLabel = true,
+  shortLabel,
   options,
   variant = "field",
   id,
@@ -80,7 +83,7 @@ export function Select({
       htmlFor={selectId}
       className={labelAbove ? "pb-5 text-10 leading-14-5 font-650 text-ink" : labelClasses[variant]}
     >
-      {label}
+      {shortLabel ? <><span className="sr-only">{label}</span><span aria-hidden className="max-desk:hidden">{label}</span><span aria-hidden className="desk:hidden">{shortLabel}</span></> : label}
     </label>
   );
 

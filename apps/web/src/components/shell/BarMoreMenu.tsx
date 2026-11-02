@@ -22,6 +22,7 @@ export function BarMoreMenu({ children }: { children: ReactNode }) {
     };
     const leave = (event: KeyboardEvent) => {
       if (event.key !== "Escape" || event.defaultPrevented || modalOpen()) return;
+      event.preventDefault();
       setOpen(false);
       trigger.current?.focus();
     };

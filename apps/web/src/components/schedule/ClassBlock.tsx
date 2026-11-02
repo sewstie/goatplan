@@ -29,6 +29,7 @@ type ClassBlockProps = {
 
 /** From the tablet breakpoint up, longer ones don't fit any block. The block's label and the details panel have them. */
 const MAX_ROOM_CHARS = 20;
+const MAX_LONG_ROOM_CHARS = 28;
 const MAX_SECTION_CHARS = 4;
 /** A code this long fits --container-block-code-short on one line. */
 const SHORT_CODE_CHARS = 7;
@@ -102,7 +103,7 @@ export function ClassBlock({ item, density, style, selected, onSelect, layout = 
             <span className={cx("tablet:hidden", !item.choicePreview && "tablet:@block-time:inline")}>{formatTimeRange(item.start, item.end)}</span>
             <span className={cx("hidden tablet:inline", !item.choicePreview && "tablet:@block-time:hidden")}>{clockRange(item.start, item.end)}</span>
           </span>
-          {room && !item.problem && <span className={cx("truncate opacity-85", text.room, density === "regular" && room.length <= MAX_ROOM_CHARS && "tablet:@block-time:block")}>{room}</span>}
+          {room && !item.problem && <span className={cx("truncate opacity-85", text.room, density === "regular" && room.length <= MAX_ROOM_CHARS && "tablet:@block-time:block", density === "regular" && room.length > MAX_ROOM_CHARS && room.length <= MAX_LONG_ROOM_CHARS && "tablet:@block-room-long:block")}>{room}</span>}
         </>
       ) : (
         layout === "line" && (

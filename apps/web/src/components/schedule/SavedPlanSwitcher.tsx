@@ -42,7 +42,7 @@ export function SavedPlanSwitcher({ wide = false }: { wide?: boolean }) {
         total={termPlans.length}
         after={` · ${plan.name}`}
         size={size}
-        className={wide ? undefined : "max-w-260"}
+        className={wide ? undefined : "max-w-120 wide:max-w-260"}
       />
     </StepperBox>
   );

@@ -315,7 +315,7 @@ test("every room label short enough to show on a class block fits the block's ro
         frozenTerm(term).courses.flatMap((course) => course.sections.flatMap((section) => section.meetings.flatMap((meeting) => (meeting.location ? [roomName(meeting.location)] : [])))),
       ),
     ),
-  ].filter((label) => label.length <= 20);
+  ].filter((label) => label.length <= 28);
   expect(labels.length).toBeGreaterThan(50);
   const tooWide = await page.evaluate(async (labels) => {
     await document.fonts.ready;
@@ -324,7 +324,7 @@ test("every room label short enough to show on a class block fits the block's ro
     document.body.append(probe);
     return labels.filter((label) => {
       probe.textContent = label;
-      return probe.getBoundingClientRect().width > 124;
+      return probe.getBoundingClientRect().width > (label.length <= 20 ? 124 : 176);
     });
   }, labels);
   expect(tooWide).toEqual([]);

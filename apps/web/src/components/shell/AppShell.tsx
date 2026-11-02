@@ -7,7 +7,6 @@ import { TopBar } from "./TopBar";
 type AppShellProps = {
   sidebar: ReactNode;
   header: ReactNode;
-  /** The top bar's middle and its actions, for the planner. */
   barCenter?: ReactNode;
   barActions?: ReactNode;
   toolbar?: ReactNode;

@@ -80,7 +80,11 @@ export function AddSeveralTab({ history, tabs }: { history: DegreeHistory; tabs:
                 aria-label={`Add ${row.course.code}`}
                 checked={row.ticked}
                 disabled={row.already}
-                onChange={(event) => setRows(rows.map((item) => (item === row ? { ...item, ticked: event.target.checked } : item)))}
+                onChange={(event) => setRows(rows.map((item) => {
+                  if (item !== row) return item;
+                  const ticked = { ...item, ticked: event.target.checked };
+                  return event.target.checked && termForSelected ? withTerm(ticked, termForSelected) : ticked;
+                }))}
               />
             </li>
           ))}

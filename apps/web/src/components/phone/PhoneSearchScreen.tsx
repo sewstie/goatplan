@@ -16,7 +16,7 @@ export function PhoneSearchScreen() {
     document.getElementById("tutorial-search")?.focus({ preventScroll: true });
   }, []);
 
-  if (degreeEnabled) return <FindCourseScreen onBack={() => show("schedule")} />;
+  if (degreeEnabled) return <FindCourseScreen searchId="tutorial-search" onBack={() => show("schedule")} />;
 
   return (
     <div className="flex flex-col">
