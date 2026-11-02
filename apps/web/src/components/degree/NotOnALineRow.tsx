@@ -9,7 +9,7 @@ export function NotOnALineRow({ view, history }: { view: DegreeView; history: De
   const open = useDegreeUi((state) => state.open);
   const extras = notOnALine(view.result.extra, history, view.sheet);
   return (
-    <section aria-label="Not on a line" className="flex flex-col gap-10 border-t border-card-line py-14 tablet:flex-row tablet:items-center tablet:justify-between">
+    <section aria-label="Not on a line" className="flex flex-col gap-10 border-t border-card-line py-14 tablet:flex-row tablet:py-8 tablet:items-center tablet:justify-between">
       <div className="flex min-w-0 flex-col gap-6 tablet:flex-row tablet:flex-wrap tablet:items-center tablet:gap-16">
         <p className="flex items-center gap-8 text-8 leading-14-4 text-ink-muted"><Info aria-hidden className="size-14 text-ink" />Not on a line</p>
         {extras.length === 0 ? (
