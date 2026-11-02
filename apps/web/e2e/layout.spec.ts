@@ -289,6 +289,23 @@ test.describe("every width keeps the toolbar and calendar steady", () => {
     });
   }
 
+  for (const width of [768, 780]) {
+    test(`drawing mode with a blocked time doesn't scroll sideways at ${width}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 1000 });
+      await page.addInitScript(() => {
+        localStorage.setItem("goatplan:term:v1", "2027-C");
+        localStorage.setItem("goatplan:tutorial:v1", "dismissed");
+        localStorage.setItem("goatplan:draft:v1:2027-C", JSON.stringify({ version: 1, courses: ["MA 1023"], preferences: { startsAfter: 540, blocked: [{ day: "Mon", start: 720, end: 780 }], onlyOpen: false }, locks: {}, professorByCourse: {}, sortPreset: "bestOverall", alternatives: {} }));
+      });
+      await page.goto("/");
+      await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
+      await page.getByRole("button", { name: "Block a time" }).click();
+      await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
+      await expect(page.getByRole("button", { name: "Drawing busy times" })).toBeVisible();
+      expect(await sidewaysScroll(page)).toBe(false);
+    });
+  }
+
   test("preference controls stay on one line at 768 with a blocked time", async ({ page }) => {
     await page.setViewportSize({ width: 768, height: 1000 });
     await page.addInitScript(() => {
@@ -324,18 +341,32 @@ test.describe("every width keeps the toolbar and calendar steady", () => {
   });
 });
 
-test("shared plan actions stay out in the bar at 834", async ({ page }) => {
+test("shared plan actions stay on one row inside the bar at tablet widths", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlanner(page);
   await page.getByRole("button", { name: "Share", exact: true }).click();
-  const dialog = page.getByRole("dialog", { name: "Share this schedule" });
-  const link = await dialog.getByRole("textbox").inputValue();
-  await page.setViewportSize({ width: 834, height: 1112 });
+  const link = await page.getByRole("dialog", { name: "Share this schedule" }).getByRole("textbox").inputValue();
   await page.goto(link);
   await expect(page.getByRole("button", { name: "Save a copy" })).toBeVisible({ timeout: 30_000 });
-  await expect(page.getByRole("button", { name: "Close preview" })).toBeVisible();
-  expect(await sidewaysScroll(page)).toBe(false);
+  for (const width of [768, 834, 900, 976, 1099]) {
+    await page.setViewportSize({ width, height: 1000 });
+    const bar = (await page.getByRole("banner").first().boundingBox())!;
+    for (const name of ["Close preview", "Save a copy", "Open for editing"]) {
+      const box = (await page.getByRole("button", { name }).boundingBox())!;
+      expect(box.y, `${name} at ${width}`).toBeGreaterThanOrEqual(bar.y);
+      expect(box.y + box.height, `${name} at ${width}`).toBeLessThanOrEqual(bar.y + bar.height);
+    }
+    expect(await sidewaysScroll(page)).toBe(false);
+  }
 });
+
+for (const width of [1280, 1440]) {
+  test(`a room of 21 characters shows on its block at ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width === 1280 ? 800 : 900 });
+    await openPlanner(page, { courses: ["BB 402X"] });
+    await expect(page.locator("[data-block]").filter({ hasText: "BB 402X" }).first().getByText("Innovation Studio 203")).toBeVisible();
+  });
+}
 
 test.describe("the top bar", () => {
   for (const width of [768, 834, 1099, 1100, 1120, 1150, 1194, 1240, 1280]) {
@@ -550,6 +581,7 @@ test.describe("the phone", () => {
     await guide.getByRole("button", { name: "Next" }).click({ timeout: 30_000 });
     await expect(guide.getByRole("heading", { name: "Add the courses you need" })).toBeVisible();
     await expect(guide.getByRole("button", { name: "Skip guide" })).toBeVisible();
+    expect(await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).scrollPaddingBottom))).toBeGreaterThan(50);
   });
 
   test("has a bottom tab bar and no sideways scroll, on both pages", async ({ page }) => {

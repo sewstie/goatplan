@@ -324,7 +324,7 @@ test("every room label short enough to show on a class block fits the block's ro
     document.body.append(probe);
     return labels.filter((label) => {
       probe.textContent = label;
-      return probe.getBoundingClientRect().width > (label.length <= 20 ? 124 : 176);
+      return probe.getBoundingClientRect().width > (label.length <= 20 ? 124 : 172);
     });
   }, labels);
   expect(tooWide).toEqual([]);

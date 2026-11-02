@@ -285,7 +285,7 @@
   --container-block-time: 7.75rem;
   --container-block-line-locked: 8.5rem;
   --container-block-blocked-time: 8.5rem;
-  --container-block-room-long: 11rem;
+  --container-block-room-long: 10.5rem;
   /* A day header wide enough for "Wednesday". */
   --container-day-name: 5rem;
 
@@ -370,6 +370,10 @@
 
   body {
     padding-bottom: var(--phone-tabs-space, 0px);
+  }
+
+  html {
+    scroll-padding-bottom: var(--phone-tabs-space, 0px);
   }
 }
 
