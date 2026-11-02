@@ -1,4 +1,4 @@
-import { expect, test } from "./fixtures/test";
+import { openCourseDetails, expect, test } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 
 const screenshotDir = "e2e/screenshots";
@@ -70,13 +70,15 @@ async function savedDraft(page: Page): Promise<Draft> {
 }
 
 const preferencesRow = (page: Page) => page.getByRole("group", { name: "Preferences" });
+test.use({ viewport: { width: 1680, height: 900 } });
+
 const details = (page: Page) => page.getByRole("complementary", { name: "Course details" });
 
 test("the preferences row changes the plan and is saved", async ({ page }) => {
   await openPlanner(page, regular);
   const row = preferencesRow(page);
 
-  await expect(row.getByText("Tue, Fri")).toBeVisible();
+  await expect(row.getByRole("button", { name: "1 blocked time" })).toBeVisible();
   await expect(row.getByRole("combobox", { name: "Sort" })).toHaveText("SortFewest early classes");
 
   await row.getByRole("combobox", { name: "Starts after" }).selectOption({ label: "10:00 AM" });
@@ -92,8 +94,8 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   await dialog.getByRole("combobox", { name: "To" }).selectOption({ label: "1:00 PM" });
   await dialog.getByRole("button", { name: "Block time" }).click();
   await expect(dialog).toBeHidden();
-  await expect(row.getByText("Lunch")).toBeVisible();
-  await expect(row.getByText("· Mon, Wed 12 PM–1 PM")).toBeVisible();
+  await row.getByRole("button", { name: "2 blocked times" }).click();
+  await expect(row.getByText("Mon, Wed 12 PM–1 PM")).toContainText("Lunch");
 
   await row.getByRole("button", { name: "Remove blocked time Tue, Fri 2 PM–4 PM" }).click();
   await row.getByRole("switch", { name: "Only open sections" }).click();
@@ -111,6 +113,7 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   await page.reload();
   await waitForSchedules(page);
   await expect(row.getByRole("combobox", { name: "Starts after" })).toHaveValue("600");
+  await row.getByRole("button", { name: "1 blocked time" }).click();
   await expect(row.getByText("Lunch")).toBeVisible();
   await expect(row.getByRole("switch", { name: "Only open sections" })).toHaveAttribute("aria-checked", "false");
 });
@@ -241,6 +244,7 @@ for (const [width, height] of [
   test(`preferences and details screenshots at ${width}`, async ({ page }) => {
     await page.setViewportSize({ width, height });
     await openPlanner(page, regular);
+    await openCourseDetails(page, "AE 2320");
     await page.screenshot({ path: `${screenshotDir}/prefs-planner-${width}.png`, fullPage: width === 834, animations: "disabled" });
 
     await page.getByRole("button", { name: /^Lock Lab CX0\d$/ }).click();
@@ -248,6 +252,7 @@ for (const [width, height] of [
     await page.mouse.move(0, 0);
     await page.screenshot({ path: `${screenshotDir}/prefs-locked-${width}.png`, fullPage: width === 834, animations: "disabled" });
 
+    await page.keyboard.press("Escape");
     await preferencesRow(page).getByRole("button", { name: "Block a time" }).click();
     await page.getByRole("button", { name: "Type a time instead" }).click();
     await page.getByRole("checkbox", { name: "Monday" }).check();

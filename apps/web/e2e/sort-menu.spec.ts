@@ -223,7 +223,7 @@ for (const [width, height] of [
     const rowBox = await box(row);
     const sortBox = await box(sort);
     const items = await row.evaluate((element) =>
-      [...element.children].filter((child) => child.getBoundingClientRect().width > 0).map((child) => {
+      [...element.querySelectorAll(":scope > div > *")].filter((child) => child.getBoundingClientRect().width > 0).map((child) => {
         const rect = child.getBoundingClientRect();
         return { middle: rect.top + rect.height / 2, right: rect.right, isSort: child.getAttribute("role") === "combobox" };
       }),

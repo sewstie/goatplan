@@ -138,6 +138,7 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await settled(page);
   await expect(guide(page)).toBeHidden();
   await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue("600");
+  await page.getByRole("button", { name: /blocked time/ }).first().click();
   await expect(page.getByRole("button", { name: "Remove blocked time Lunch, Mon, Wed, Fri 12 PM–1 PM" })).toBeVisible();
 });
 
@@ -174,7 +175,7 @@ test("state 34: DEMO guide finishes while real professor, locks and schedule bro
   await advance(page);
   await advance(page);
   await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeFocused();
-  await expect(guide(page)).toHaveCSS("width", "330px");
+  await expect(guide(page)).toHaveCSS("width", "296px");
   await capture(page, "34");
   await tabTo(page, page.getByRole("button", { name: "Next schedule", exact: true }));
   await page.keyboard.press("Enter");
@@ -183,6 +184,7 @@ test("state 34: DEMO guide finishes while real professor, locks and schedule bro
   await tabTo(page, guide(page).getByRole("button", { name: "Finish guide" }));
   await page.keyboard.press("Enter");
   await expect(guide(page)).toBeHidden();
+  await page.locator('[data-course-row="DEMO 1001"]').click();
   await expect(professor).toHaveText("Alex Rivera");
   await expect(page.getByRole("button", { name: "Unlock Lab B01", exact: true })).toBeVisible();
 });
@@ -317,7 +319,7 @@ test("step 4 stays off the calendar, and Escape there only leaves drawing mode",
   await expect(block).toHaveAccessibleName("Block a time");
   const box = await guide(page).boundingBox();
   const calendar = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
-  expect(box!.x).toBeGreaterThanOrEqual(calendar!.x + calendar!.width);
+  expect(box!.x).toBeLessThan(calendar!.x);
   await block.click();
   await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
   await page.keyboard.press("Escape");
@@ -345,7 +347,7 @@ for (const { width, height } of [{ width: 1440, height: 800 }, { width: 2560, he
           blocks: Array.from(document.querySelectorAll("[data-block]")).filter((block) => touches(block.getBoundingClientRect())).length,
         };
       });
-      expect(covered).toEqual({ target: false, blocks: 0 });
+      expect(covered, await guide(page).getByRole("heading").innerText()).toEqual({ target: false, blocks: 0 });
       if (await guide(page).getByRole("button", { name: "Finish guide" }).count()) break;
       await next(page).click();
     }

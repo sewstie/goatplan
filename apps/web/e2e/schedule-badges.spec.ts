@@ -48,7 +48,8 @@ const FREE_TIME = /^(No gaps between classes|\d+ min free between classes|\d+(\.
 const GAP_COUNT = /^(No gaps|\d+ gaps?)$/;
 
 /** The free time a badge says, in minutes: "No gaps between classes" → 0, "2.5 h free between classes" → 150. */
-function freeMinutes(text: string): number {
+function freeMinutes(shown: string): number {
+  const text = shown.replace(/\s+/g, " ");
   expect(text).toMatch(FREE_TIME);
   const hours = text.match(/^([\d.]+) h /);
   if (hours) return Number(hours[1]) * 60;

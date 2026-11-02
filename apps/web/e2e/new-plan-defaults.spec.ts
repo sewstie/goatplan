@@ -40,6 +40,8 @@ async function addCourse(page: Page) {
   await page.getByRole("searchbox").fill(code);
   await page.getByRole("button", { name: `Add ${code}` }).click();
   await settled(page);
+  // Below 1600 px the details are a drawer that a click opens.
+  if ((page.viewportSize()?.width ?? 0) < 1600) await page.locator(`[data-course-row="${code}"]`).click();
 }
 
 async function expectSchedules(page: Page, sections: string[]) {
@@ -49,6 +51,7 @@ async function expectSchedules(page: Page, sections: string[]) {
     return;
   }
   await expect(page.getByText(`Schedule 1 of ${sections.length}`, { exact: true })).toBeVisible();
+  if (!(await details(page).isVisible())) await page.locator(`[data-course-row="${code}"]`).click();
   const shown: string[] = [];
   for (let index = 0; index < sections.length; index++) {
     const heading = details(page).getByRole("heading", { name: /^Lecture C0/ });
@@ -112,6 +115,7 @@ for (const width of [1440, 834]) {
     await onlyOpen(page).click();
     await expectSchedules(page, []);
     await expect(startsAfter(page)).toHaveValue("0");
+    await preferences(page).getByRole("button", { name: "2 blocked times" }).click();
     await expect(preferences(page).getByRole("button", { name: /Remove blocked time/ })).toHaveCount(2);
   });
 }
@@ -140,6 +144,7 @@ test("reload, saving, and saving a copy preserve configured preferences, profess
     await settled(page);
     await expect(startsAfter(page)).toHaveValue("540");
     await expect(onlyOpen(page)).not.toBeChecked();
+    await preferences(page).getByRole("button", { name: "1 blocked time" }).click();
     await expect(preferences(page).getByRole("button", { name: "Remove blocked time Tue 12 PM–1 PM" })).toBeVisible();
     await expect(professor(page)).toHaveText("Ye Lu");
     await expect(details(page).getByRole("heading", { name: "Lecture C03", exact: true })).toBeVisible();
@@ -164,6 +169,8 @@ test("reload, saving, and saving a copy preserve configured preferences, profess
 
   for (const name of ["Mornings free", "Mornings copy"]) {
     await startsAfter(page).selectOption("0");
+    const blockedPill = preferences(page).getByRole("button", { name: /^\d+ blocked time/ });
+    if ((await blockedPill.getAttribute("aria-expanded")) !== "true") await blockedPill.click();
     await preferences(page).getByRole("button", { name: "Remove blocked time Tue 12 PM–1 PM" }).click();
     await details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true }).click();
     await chooseProfessor(page, "Any professor");

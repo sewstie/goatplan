@@ -114,6 +114,7 @@ test("clicking a block selects it and opens its course in the details panel", as
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlan(page, designPlan);
   await page.getByRole("button", { name: /^AE 2410 C01, .*Monday/ }).click();
+  await page.keyboard.press("Escape");
   const lab = calendar(page).getByRole("button", { name: /^AE 2320 CX02/ });
   await lab.click();
   await expect(lab).toHaveAttribute("aria-pressed", "true");
@@ -151,8 +152,8 @@ test("sections with no set time are listed under the grid", async ({ page }) => 
   await openPlan(page, { ...designPlan, courses: [...designPlan.courses, "AE 5131"] });
   await expect(page.getByText("4 courses · 1 schedule fits · 1 course has no set time")).toBeVisible();
   const strip = calendar(page).getByRole("region", { name: "No set time" });
-  await expect(strip.getByText("AE 5131 · C01")).toBeVisible();
-  await expect(strip.getByText("Incompressible Fluid Dynamics · Online, asynchronous")).toBeVisible();
+  await expect(strip.getByRole("listitem")).toContainText("AE 5131 C01 · Online, asynchronous");
+  await expect(strip.getByTitle("Incompressible Fluid Dynamics")).toBeVisible();
   await screenshotBoth(page, "no-set-time");
 });
 

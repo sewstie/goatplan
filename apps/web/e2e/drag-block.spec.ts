@@ -128,10 +128,11 @@ test("Name it opens the Block time form filled in, saves the name and leaves dra
   await dialog.getByRole("textbox", { name: "Name (optional)" }).fill("Lunch");
   await page.getByRole("button", { name: "Block time" }).click();
 
-  await expect(page.getByRole("button", { name: "Remove blocked time Lunch, Mon–Wed 12 PM–1 PM" })).toBeVisible();
-  await expect(page.getByRole("button", { name: /^Remove blocked time/ })).toHaveCount(1);
   await expect(page.getByRole("button", { name: "Block a time" })).toBeFocused();
   await expect(page.getByRole("group", { name: "Drawing mode" })).toHaveCount(0);
+  await page.getByRole("button", { name: "1 blocked time" }).click();
+  await expect(page.getByRole("button", { name: "Remove blocked time Lunch, Mon–Wed 12 PM–1 PM" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Remove blocked time/ })).toHaveCount(1);
 });
 
 test("the toast only names the days that changed", async ({ page }) => {
@@ -354,7 +355,6 @@ test("while drawing, the blocked times are one pill with a list to remove each",
     { day: "Wed", start: 720, end: 780, label: "Lunch" },
     { day: "Thu", start: 900, end: 960 },
   ]);
-  await expect(page.getByRole("button", { name: /^Remove blocked time/ })).toHaveCount(2);
   await startDrawing(page);
 
   const pill = page.getByRole("button", { name: "2 blocked times" });
@@ -376,7 +376,7 @@ test("while drawing, the blocked times are one pill with a list to remove each",
 test("a 30-minute blocked time in drawing mode still shows its time", async ({ page }) => {
   await openPlan(page, [{ day: "Wed", start: 900, end: 930 }]);
   await startDrawing(page);
-  await expect(page.getByLabel("Wednesday 3:00 to 3:30 PM, blocked", { exact: true })).toHaveText("3–3:30 PM");
+  await expect(page.getByLabel("Wednesday 3:00 to 3:30 PM, blocked", { exact: true })).toContainText("3 PM–3:30 PM");
 });
 
 test("⌘-click or Ctrl-click picks several blocked times, and Delete removes them with one Undo", async ({ page }) => {

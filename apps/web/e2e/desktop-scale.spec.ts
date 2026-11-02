@@ -96,11 +96,11 @@ async function widthOf(page: Page, region: ReturnType<typeof sidebar>) {
 
 test.describe("fluid scaling", () => {
   for (const { width, root, sidebarWidth, detailsWidth, button } of [
-    { width: 1194, root: 16, sidebarWidth: 240, detailsWidth: 268, button: 36 },
-    { width: 1440, root: 16, sidebarWidth: 240, detailsWidth: 268, button: 36 },
-    { width: 2000, root: 18, sidebarWidth: 270, detailsWidth: 301.5, button: 40.5 },
-    { width: 2560, root: 20, sidebarWidth: 300, detailsWidth: 335, button: 45 },
-    { width: 3440, root: 20, sidebarWidth: 300, detailsWidth: 335, button: 45 },
+    { width: 1194, root: 16, sidebarWidth: 224, detailsWidth: null, button: 36 },
+    { width: 1440, root: 16, sidebarWidth: 224, detailsWidth: null, button: 36 },
+    { width: 2000, root: 18, sidebarWidth: 252, detailsWidth: 405, button: 40.5 },
+    { width: 2560, root: 20, sidebarWidth: 280, detailsWidth: 450, button: 45 },
+    { width: 3440, root: 20, sidebarWidth: 280, detailsWidth: 450, button: 45 },
   ]) {
     test(`at ${width} px the root font is ${root} px and the panels and controls grow with it`, async ({ page }) => {
       await page.setViewportSize({ width, height: 1000 });
@@ -108,7 +108,7 @@ test.describe("fluid scaling", () => {
       const rootSize = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).fontSize));
       expect(rootSize).toBeCloseTo(root, 1);
       expect(await widthOf(page, sidebar(page))).toBeCloseTo(sidebarWidth, 0);
-      expect(await widthOf(page, details(page))).toBeCloseTo(detailsWidth, 0);
+      if (detailsWidth) expect(await widthOf(page, details(page))).toBeCloseTo(detailsWidth, 0);
       expect((await page.getByRole("button", { name: "Save schedule" }).boundingBox())!.height).toBeCloseTo(button, 0);
     });
   }
@@ -220,8 +220,8 @@ test.describe("a block shows its code wherever the code fits", () => {
   test("one-line blocks side by side at 1440", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openPlanner(page, { courses: ["AE 2320", "AB 1533", "BME 552"], startsAfter: 0 });
-    await expect(page.getByRole("button", { name: /^Preview, AE 2320 CL01,/ }).first().locator("b")).toBeVisible();
-    await expect(page.getByRole("button", { name: /^Preview, AB 1533 C01,/ }).first().locator("b")).toBeVisible();
+    await codeShows(page, /^Preview, AE 2320 CL01,/, "AE 2320");
+    await codeShows(page, /^Preview, AB 1533 C01,/, "AB 1533");
   });
 
   for (const [width, height] of [[1100, 800], [768, 1024]] as const) {
@@ -247,14 +247,14 @@ test.describe("a block shows its code wherever the code fits", () => {
     await openPlanner(page, { courses: ["AE 2320", "BME 552"], blocked: [], locks: { "AE 2320": ["AE 2320-CX02"] }, startsAfter: 0 });
     const block = page.getByRole("button", { name: /^AE 2320 CX02,/ });
     await expect(block.locator("svg:visible")).toHaveCount(1);
-    await expect(block.locator("b")).toBeVisible();
+    await expect(block.getByText("AE 2320", { exact: true })).toBeVisible();
   });
 
   test("an eight-character code on a one-line block at 834", async ({ page }) => {
     await page.setViewportSize({ width: 834, height: 1194 });
     await openPlanner(page, { courses: ["IMGD 2000", "ECE 2010", "RBE 2001", "MA 1023"], blocked: [], startsAfter: 0 });
-    await expect(page.getByRole("button", { name: /^ECE 2010 CL01,/ }).first().locator("b")).toBeVisible();
-    await expect(page.getByRole("button", { name: /^RBE 2001 CL01,/ }).first().locator("b")).toBeVisible();
+    await codeShows(page, /^ECE 2010 CL01,/, "ECE 2010");
+    await codeShows(page, /^RBE 2001 CL01,/, "RBE 2001");
   });
 
   for (const [width, height] of [[834, 1194], [1194, 834], [1440, 900]] as const) {
@@ -353,6 +353,7 @@ test.describe("everything fits", () => {
 
         await page.getByRole("group", { name: "Monday", exact: true }).getByRole("button").first().click();
         await expectFits(page);
+        await page.keyboard.press("Escape");
       });
 
       test("two classes at the same time, side by side", async ({ page }) => {
@@ -400,6 +401,7 @@ test.describe("everything fits", () => {
       test("a lab preview keeps its time", async ({ page }) => {
         await page.setViewportSize({ width: page.viewportSize()!.width, height: 1100 });
         await openPlanner(page, { courses: ["AE 2320"], locks: { "AE 2320": ["AE 2320-CX02"] } });
+        await page.locator('[data-course-row="AE 2320"]').click();
         await page.getByRole("button", { name: "View other lab choices" }).click();
         await page.getByRole("button", { name: "Choose Lab CX03" }).hover();
         const ghost = page.getByRole("button", { name: /^Preview, AE 2320 CX03,/ });

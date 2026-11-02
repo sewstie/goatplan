@@ -52,6 +52,7 @@ test("selecting a saved plan confirms unsaved changes and opens it directly for 
   await expect(page.getByRole("region", { name: "Schedule browser" })).toBeFocused();
   await expect(page.getByRole("status").filter({ hasText: "Opened “Morning classes” for editing." })).toBeAttached();
   await expect(page.getByRole("button", { name: "Remove AE 2410", exact: true })).toBeVisible();
+  await page.locator('[data-course-row="AE 2320"]').click();
   await expect(page.getByRole("button", { name: "Unlock Lab CX02", exact: true })).toBeVisible();
   await page.reload();
   await ready(page);
