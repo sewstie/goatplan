@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { cx } from "@/components/ui/cx";
 import { DetailsPanel } from "./DetailsPanel";
+import { PageFooter } from "./PageFooter";
+import { TopBar } from "./TopBar";
 
 type AppShellProps = {
   sidebar: ReactNode;
@@ -9,6 +11,8 @@ type AppShellProps = {
   /** Full-width messages between the toolbar and the calendar, like "No schedule fits." */
   banner?: ReactNode;
   schedule: ReactNode;
+  /** One small line under the schedule. */
+  scheduleNote?: ReactNode;
   details?: ReactNode;
   /** The names screen readers give the two main regions. */
   scheduleLabel?: string;
@@ -28,6 +32,7 @@ export function AppShell({
   toolbar,
   banner,
   schedule,
+  scheduleNote,
   details,
   scheduleLabel = "Weekly schedule",
   detailsLabel = "Course details",
@@ -43,48 +48,43 @@ export function AppShell({
         Skip to main content
       </a>
       {/* Phone: a single column with a 16px side gutter. Tablet and up: the sidebar plus the main region. */}
-      <div className="mx-auto flex min-h-dvh w-full max-w-(--size-app-max) gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:p-(--size-app-padding) wide:h-[max(100dvh,45rem)]">
-        {/* The sidebar is hidden on a phone; its term picker and courses move into the disclosure. */}
+      <div className="mx-auto flex min-h-0 w-full max-w-(--size-app-max) flex-1 gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:px-20 tablet:pt-20 tablet:pb-0">
         <div className="contents">{sidebar}</div>
-        {/*
-          On a phone the children are reordered with flex `order` so the schedule comes first, right
-          after the brand and header, and the "Your courses" disclosure and preferences follow it.
-          `tablet:order-none` restores the source order from the tablet breakpoint up, so the
-          sidebar-based layout is unchanged.
-        */}
         <main
           id="main"
           tabIndex={-1}
-          className="flex min-w-0 flex-1 flex-col gap-(--size-gutter) outline-none"
+          className="flex min-w-0 flex-1 flex-col gap-(--size-gutter) outline-none wide:flex-row"
         >
-          <div className="order-2 tablet:order-none tablet:contents">{header}</div>
-          <div className="order-6 tablet:order-none tablet:contents">{toolbar}</div>
-          {/*
-            Phone: the banner (e.g. the guide storage note) sits right under the header, above the
-            schedule, instead of at the very bottom. Tablet and up keep the source order.
-          */}
-          <div className="order-3 tablet:order-none tablet:contents">{banner}</div>
-          <div className="order-4 flex flex-1 flex-col gap-(--size-gutter) tablet:order-none wide:min-h-0 wide:flex-row">
+          <div className="flex min-w-0 flex-1 flex-col gap-(--size-gutter)">
+            <div className="order-2 tablet:order-none tablet:contents">{header}</div>
+            <div className="order-6 tablet:order-none tablet:contents">{toolbar}</div>
+            {/*
+              Phone: the banner (e.g. the guide storage note) sits right under the header, above the
+              schedule, instead of at the very bottom. Tablet and up keep the source order.
+            */}
+            <div className="order-3 tablet:order-none tablet:contents">{banner}</div>
             <section
               aria-label={scheduleLabel}
               className={cx(
-                "relative flex flex-col overflow-hidden rounded-panel bg-surface tablet:shrink-0 wide:h-auto wide:min-h-0 wide:flex-1",
+                "relative order-4 flex flex-col overflow-hidden rounded-panel bg-surface tablet:order-none tablet:shrink-0 wide:min-h-0 wide:flex-1 wide:shrink",
                 // Phone: the day view grows with its content instead of leaving a fixed empty gap.
                 // Tablet and up: keep the 640px calendar (fixed), or let it grow for the plans sheet.
-                scheduleFit === "fixed" ? "tablet:h-640" : "tablet:min-h-640",
+                scheduleFit === "fixed" ? "tablet:h-640 wide:h-auto" : "tablet:min-h-640",
               )}
             >
               {schedule}
             </section>
-            {/* The side details panel is hidden on a phone; the bottom sheet takes its place. */}
-            {details && (
-              <DetailsPanel label={detailsLabel} hideOnTermError={hideDetailsOnTermError}>
-                {details}
-              </DetailsPanel>
-            )}
+            {scheduleNote}
           </div>
+          {/* The side details panel is hidden on a phone; the bottom sheet takes its place. */}
+          {details && (
+            <DetailsPanel label={detailsLabel} hideOnTermError={hideDetailsOnTermError}>
+              {details}
+            </DetailsPanel>
+          )}
         </main>
       </div>
-    </>
+      <PageFooter />
+    </div>
   );
 }

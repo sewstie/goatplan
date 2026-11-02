@@ -65,7 +65,7 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
         <h2 id={headingId} className="text-11 leading-15-95 font-650">
           Your courses
         </h2>
-        <span className="text-9 leading-13 font-450 text-ink-muted">{count}</span>
+        <span className="text-8 leading-13 font-450 whitespace-nowrap text-ink-muted">{count}</span>
       </div>
       {termStatus === "error" ? (
         <EmptyText lines={["Your courses will appear here", "once sections load."]} />

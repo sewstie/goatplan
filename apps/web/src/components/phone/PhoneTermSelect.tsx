@@ -20,7 +20,7 @@ export function PhoneTermSelect() {
       terms.length > 0
         ? terms.map((term) => ({
             value: term.id,
-            label: `${term.name} ${term.year}`,
+            label: `${term.name} · ${term.year}`,
             description: `${term.season} ${term.year} · ${term.courses.toLocaleString("en-US")} courses`,
           }))
         : [{ value: "", label: "Loading terms…" }],
@@ -30,16 +30,16 @@ export function PhoneTermSelect() {
   const term = terms.find((item) => item.id === termId);
   if (courseScreen && term) {
     return (
-      <p className="shrink-0 text-10 font-570 text-ink">
+      <p className="shrink-0 text-8 font-510 text-ink-soft">
         <span className="sr-only">Term: </span>
-        {term.name} {term.year}
+        {term.name} · {term.year}
       </p>
     );
   }
 
   // The wrapper is the guide's outline target for the term step.
   return (
-    <div className="w-168 shrink-0">
+    <div className="shrink-0">
       <Listbox
         id="tutorial-term"
         variant="pill"

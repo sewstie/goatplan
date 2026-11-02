@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { AppShell } from "./AppShell";
 
 function parts() {
@@ -12,19 +12,22 @@ function parts() {
   };
 }
 
+vi.mock("next/navigation", () => ({ usePathname: () => "/", useRouter: () => ({ push: vi.fn(), replace: vi.fn() }) }));
+
 describe("AppShell", () => {
   it("renders the sidebar, header, toolbar, banner and schedule", () => {
     render(<AppShell {...parts()} />);
     expect(screen.getByTestId("sidebar")).toBeInTheDocument();
-    expect(screen.getByRole("banner")).toBeInTheDocument();
+    expect(screen.getByText("header")).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Main" })).toBeInTheDocument();
     expect(screen.getByTestId("toolbar")).toBeInTheDocument();
     expect(screen.getByLabelText("Weekly schedule")).toBeInTheDocument();
   });
 
   it("uses a phone side gutter that drops away at the tablet breakpoint", () => {
     const { container } = render(<AppShell {...parts()} />);
-    const shell = container.querySelector("div.flex.min-h-dvh");
-    expect(shell).toHaveClass("px-(--size-phone-gutter)", "tablet:p-(--size-app-padding)");
+    const shell = container.querySelector("div.mx-auto");
+    expect(shell).toHaveClass("px-(--size-phone-gutter)", "tablet:px-20");
   });
 
   it("omits the details panel when no details are given", () => {

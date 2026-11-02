@@ -2,6 +2,9 @@
 
 import type { ReactNode } from "react";
 import { PlanActions } from "@/components/plans/PlanActions";
+import { PlannerTitle } from "@/components/share/PlannerTitle";
+import { ScheduleNote } from "@/components/schedule/ScheduleNote";
+import { SeatStatus } from "@/components/shell/SeatStatus";
 import { ScheduleBrowser } from "@/components/schedule/ScheduleBrowser";
 import { ScheduleSummary } from "@/components/schedule/ScheduleSummary";
 import { ScheduleView } from "@/components/schedule/ScheduleView";
@@ -21,6 +24,7 @@ export function PhoneScheduleScreen({ banner }: { banner: ReactNode }) {
   const diagnosis = useDiagnosis();
   const attention = diagnosis !== null && (diagnosis.issues.length > 0 || diagnosis.fixes.length > 0);
   const drawing = usePlanner((state) => state.drawing);
+  const shared = usePlanner((state) => state.temporaryPlan !== null);
   const attentionCard = (
     <section aria-label="Needs attention" className="rounded-panel border border-line bg-surface px-16 pt-20 pb-16">
       <CourseDetailsPanel />
@@ -30,14 +34,14 @@ export function PhoneScheduleScreen({ banner }: { banner: ReactNode }) {
   return (
     <div className="flex flex-col gap-12">
       <div data-guide-slot="term" className="empty:hidden" />
-      <SearchTrigger />
-      <CourseChips />
+      {!shared && <SearchTrigger />}
+      {!shared && <CourseChips />}
       <PlanActions
         layout={({ menu, save }) => (
           <header className="flex flex-col gap-10">
             <div className="flex items-center justify-between gap-8">
               <h1 data-screen-heading tabIndex={-1} className="text-21 leading-30 font-700 tracking-title outline-none">
-                Schedule planner
+                <PlannerTitle />
               </h1>
               {menu}
             </div>
@@ -51,6 +55,7 @@ export function PhoneScheduleScreen({ banner }: { banner: ReactNode }) {
           </header>
         )}
       />
+      <SeatStatus />
       <PhonePreferenceChips />
       <div data-guide-slot="availability" className="empty:hidden" />
       {banner}
@@ -62,6 +67,7 @@ export function PhoneScheduleScreen({ banner }: { banner: ReactNode }) {
       </section>
       {/* While drawing, the week stays in view so the time that caused the problem can be erased. */}
       {attention && drawing && attentionCard}
+      <ScheduleNote />
     </div>
   );
 }

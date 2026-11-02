@@ -96,11 +96,11 @@ async function widthOf(page: Page, region: ReturnType<typeof sidebar>) {
 
 test.describe("fluid scaling", () => {
   for (const { width, root, sidebarWidth, detailsWidth, button } of [
-    { width: 1194, root: 16, sidebarWidth: 264, detailsWidth: 320, button: 36 },
-    { width: 1440, root: 16, sidebarWidth: 264, detailsWidth: 320, button: 36 },
-    { width: 2000, root: 18, sidebarWidth: 297, detailsWidth: 360, button: 40.5 },
-    { width: 2560, root: 20, sidebarWidth: 330, detailsWidth: 400, button: 45 },
-    { width: 3440, root: 20, sidebarWidth: 330, detailsWidth: 400, button: 45 },
+    { width: 1194, root: 16, sidebarWidth: 240, detailsWidth: 268, button: 36 },
+    { width: 1440, root: 16, sidebarWidth: 240, detailsWidth: 268, button: 36 },
+    { width: 2000, root: 18, sidebarWidth: 270, detailsWidth: 301.5, button: 40.5 },
+    { width: 2560, root: 20, sidebarWidth: 300, detailsWidth: 335, button: 45 },
+    { width: 3440, root: 20, sidebarWidth: 300, detailsWidth: 335, button: 45 },
   ]) {
     test(`at ${width} px the root font is ${root} px and the panels and controls grow with it`, async ({ page }) => {
       await page.setViewportSize({ width, height: 1000 });
@@ -118,7 +118,7 @@ test.describe("fluid scaling", () => {
     await openPlanner(page);
     const left = (await sidebar(page).boundingBox())!.x;
     const panel = (await details(page).boundingBox())!;
-    const padding = 17.5;
+    const padding = 25;
     expect(left).toBeCloseTo((3440 - 2200) / 2 + padding, 0);
     expect(panel.x + panel.width).toBeCloseTo((3440 + 2200) / 2 - padding, 0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(3440);
@@ -129,7 +129,7 @@ test.describe("fluid scaling", () => {
     await openPlanner(page);
     const panel = (await details(page).boundingBox())!;
     const root = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).fontSize));
-    expect(panel.x + panel.width).toBeCloseTo(2100 - 0.875 * root, 0);
+    expect(panel.x + panel.width).toBeCloseTo(2100 - 1.25 * root, 0);
   });
 });
 
@@ -398,6 +398,7 @@ test.describe("everything fits", () => {
       });
 
       test("a lab preview keeps its time", async ({ page }) => {
+        await page.setViewportSize({ width: page.viewportSize()!.width, height: 1100 });
         await openPlanner(page, { courses: ["AE 2320"], locks: { "AE 2320": ["AE 2320-CX02"] } });
         await page.getByRole("button", { name: "View other lab choices" }).click();
         await page.getByRole("button", { name: "Choose Lab CX03" }).hover();

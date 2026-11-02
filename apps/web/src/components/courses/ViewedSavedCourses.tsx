@@ -9,11 +9,13 @@ export function ViewedSavedCourses() {
   const plan = usePlanner(selectSavedPlan);
   const selected = usePlanner(selectViewedCourse);
   const select = usePlanner((state) => state.selectCourse);
+  const shared = usePlanner((state) => state.temporaryPlan !== null);
   if (!plan) return null;
   return (
-    <section aria-label="Your courses" className="flex shrink-0 flex-col">
+    <section aria-label={shared ? "Shared courses" : "Your courses"} className="flex shrink-0 flex-col">
+      {shared && <p className="pt-8 pb-22 text-9 leading-13 text-ink-muted">Shared course list</p>}
       <div className="flex items-end justify-between gap-8 pb-10">
-        <h2 className="text-11 leading-15-95 font-650">Your courses</h2>
+        <h2 className="text-11 leading-15-95 font-650">{shared ? "Shared courses" : "Your courses"}</h2>
         <span className="text-9 leading-13 text-ink-muted">{plan.courses.length} selected</span>
       </div>
       <ul className="flex flex-col gap-5">

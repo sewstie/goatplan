@@ -2,7 +2,6 @@
 
 import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
 import { termFieldLabel } from "@/components/courses/courseSummary";
-import { TermPicker } from "@/components/courses/TermPicker";
 import { Button } from "@/components/ui/Button";
 import { SavedPlanCourses } from "./SavedPlanCourses";
 import { useOpenPlan } from "./useOpenPlan";
@@ -14,12 +13,7 @@ export function PlansSidebar() {
   const plan = useReadOnlyPlan();
   const { requestOpen, dialog } = useOpenPlan();
   if (!selectedPlan) return null;
-  if (!plan) return (
-    <>
-      <TermPicker />
-      <CourseSearchPanel />
-    </>
-  );
+  if (!plan) return <CourseSearchPanel />;
   return (
     <>
       <p className="mb-15 rounded-control border border-line-control px-11 py-10 text-11 font-650">

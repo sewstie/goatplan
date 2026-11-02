@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { selectLockedFull } from "@/components/schedule/lockedFull";
 import { usePlanner } from "@/lib/store";
 
 type DetailsPanelProps = {
@@ -14,7 +15,9 @@ type DetailsPanelProps = {
 export function DetailsPanel({ label, hideOnTermError, children }: DetailsPanelProps) {
   const hasCourses = usePlanner((state) => state.courses.length > 0 || state.savedPlanId !== null);
   const termFailed = usePlanner((state) => state.termStatus === "error");
-  if (hideOnTermError && termFailed) return null;
+  const shared = usePlanner((state) => state.temporaryPlan !== null);
+  const lockedFull = usePlanner((state) => hideOnTermError && selectLockedFull(state) !== null);
+  if ((hideOnTermError && termFailed) || shared || lockedFull) return null;
   return (
     <aside
       aria-label={label}

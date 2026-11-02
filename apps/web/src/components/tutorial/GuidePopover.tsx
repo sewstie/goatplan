@@ -65,7 +65,7 @@ export function GuidePopover({ step, targetId, title, body, hint, note, progress
 
   const card = <div ref={box} role="dialog" aria-labelledby="guide-heading" aria-describedby="guide-body" className={phone
     ? "guide-popover flex flex-col gap-8 rounded-guide border border-guide-line bg-surface px-16 pt-16 pb-14 shadow-guide"
-    : `guide-popover invisible fixed z-20 flex max-h-[calc(100dvh-16px)] max-w-[calc(100vw-16px)] flex-col gap-8 overflow-y-auto rounded-guide border border-guide-line bg-surface px-20 pt-19 pb-16 shadow-guide ${step === "schedules" ? "w-330" : "w-292"}`}>
+    : `guide-popover invisible fixed z-20 flex max-h-[calc(100dvh-16px)] max-w-[calc(100vw-16px)] flex-col gap-8 overflow-y-auto rounded-guide border border-guide-line bg-surface px-20 pt-19 pb-16 shadow-guide ${step === "schedules" ? "w-330" : "w-280"}`}>
     <div className="flex items-center justify-between">
       <p aria-live="polite" aria-atomic="true" className="text-9 leading-13 font-600 text-accent">Getting started · {progress.current} of {progress.total}</p>
       <button type="button" aria-label="Close guide" onClick={onClose} className="flex size-13 cursor-pointer items-center justify-center text-ink"><X aria-hidden className="size-13" /></button>

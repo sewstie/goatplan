@@ -4,7 +4,7 @@ import { useId, type ComponentProps } from "react";
 import { CaretDown } from "@phosphor-icons/react/ssr";
 import { cx } from "./cx";
 
-export type SelectVariant = "field" | "box" | "pill" | "menu";
+export type SelectVariant = "field" | "box" | "pill" | "menu" | "bar";
 
 export type SelectOption = { value: string; label: string; disabled?: boolean };
 
@@ -21,6 +21,7 @@ const wrapperClasses: Record<SelectVariant, string> = {
   box: "flex min-h-35 rounded-row border border-line bg-surface",
   pill: "inline-flex min-h-32 gap-6 rounded-pill bg-surface pl-10",
   menu: "inline-flex min-w-146 gap-6 rounded-row bg-surface pl-9",
+  bar: "inline-flex rounded-row",
 };
 
 // Bordered fields get the same focus look as text inputs: a lavender border and a soft halo.
@@ -33,6 +34,7 @@ const focusClasses: Record<SelectVariant, string> = {
   box: fieldFocus,
   pill: ringFocus,
   menu: ringFocus,
+  bar: ringFocus,
 };
 
 const labelClasses: Record<SelectVariant, string> = {
@@ -40,6 +42,7 @@ const labelClasses: Record<SelectVariant, string> = {
   box: "sr-only",
   pill: "text-9 leading-13 text-ink-muted",
   menu: "text-9 leading-13 text-ink-muted",
+  bar: "sr-only",
 };
 
 // Only the field and box selects take their box's corners. The pill and menu selects stay square:
@@ -49,6 +52,7 @@ const selectClasses: Record<SelectVariant, string> = {
   box: "w-full rounded-[inherit] py-9 pr-28 pl-9 text-10 leading-14-5",
   pill: "field-sizing-content py-8.75 pr-28 text-10 leading-14-5 font-650",
   menu: "field-sizing-content py-7.5 pr-25 text-9 leading-13",
+  bar: "field-sizing-content py-8 pr-29 pl-6 text-9 leading-13 font-510 text-ink-soft",
 };
 
 const caretClasses: Record<SelectVariant, string> = {
@@ -56,6 +60,7 @@ const caretClasses: Record<SelectVariant, string> = {
   box: "right-9 size-11",
   pill: "right-10 size-10",
   menu: "right-9 size-10",
+  bar: "right-6 size-13",
 };
 
 export function Select({

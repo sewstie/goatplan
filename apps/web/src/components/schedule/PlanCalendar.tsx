@@ -90,7 +90,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             day={block.day}
             start={block.start}
             end={block.end}
-            label={block.label}
+            label={block.label ?? (shared ? "Unavailable" : undefined)}
             layout={blockLayout(blockHeight(block.end - block.start, pixelsPerHour), phone ? undefined : block.label ? NAMED_BLOCKED_TIERS : BLOCKED_TIERS)}
             erasable={drawingHere}
             onOpen={drawing || saved ? undefined : (anchor) => toggleMenu(block, anchor)}

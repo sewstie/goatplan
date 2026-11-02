@@ -41,13 +41,7 @@ export function PreferencesBar() {
       <span ref={blockAddRef} className="contents">
         <BlockTimeButton />
       </span>
-      <Toggle
-        id="tutorial-only-open"
-        checked={onlyOpen}
-        onCheckedChange={(checked) => setPreferences({ onlyOpen: checked })}
-        label="Only open sections"
-        className="ml-3"
-      />
+      <OnlyOpenPill id="tutorial-only-open" checked={onlyOpen} onChange={(checked) => setPreferences({ onlyOpen: checked })} />
       <SortSelect />
     </div>
   );

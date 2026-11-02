@@ -1,0 +1,55 @@
+"use client";
+
+import { ShieldCheck } from "@phosphor-icons/react/ssr";
+import { Button } from "@/components/ui/Button";
+import { getDegreeSource, type DegreeSnapshot } from "@/lib/degree";
+import { DegreeSkeleton } from "./DegreeSkeleton";
+import { DegreeSummary } from "./DegreeSummary";
+import { FilterBar } from "./FilterBar";
+import { FirstVisitPanel } from "./FirstVisitPanel";
+import { InsightsSection } from "./InsightsSection";
+import { NotOnALineRow } from "./NotOnALineRow";
+import { RequirementsList } from "./RequirementsList";
+import { SheetPanel } from "./SheetPanel";
+import { useDegreeUi } from "./degreeUi";
+import type { DegreeView } from "./useDegreeView";
+
+type DegreeMainProps = { degree: DegreeSnapshot; view: DegreeView | null };
+
+export function DegreeMain({ degree, view }: DegreeMainProps) {
+  const layout = useDegreeUi((state) => state.view);
+  const filter = useDegreeUi((state) => state.filter);
+  const { status } = degree.audit;
+  const empty = degree.history.courses.length === 0;
+  const auditStatus = <span hidden data-degree-audit-status={status} />;
+
+  if (status === "failed" && !view) {
+    return (
+      <div role="alert" className="flex flex-col items-start gap-10 rounded-panel border border-card-line bg-surface p-22">
+        {auditStatus}
+        <p className="text-10 leading-16-5 text-ink-soft">We couldn’t check your progress. Your courses are still saved.</p>
+        <Button variant="secondary" size="sm" onClick={() => getDegreeSource().retryAudit()}>Try again</Button>
+      </div>
+    );
+  }
+  if (!view) return <>{auditStatus}<DegreeSkeleton /></>;
+
+  return (
+    <div aria-busy={status === "waiting"} className="flex flex-col gap-22">
+      {auditStatus}
+      {degree.damaged && <p role="alert" className="rounded-card bg-notice-warning px-15 py-10 text-8-5 leading-16 text-notice-warning-ink">Some of your saved courses couldn’t be read, so they aren’t listed.</p>}
+      <DegreeSummary view={view} />
+      {empty && <FirstVisitPanel />}
+      <FilterBar view={view} />
+      {layout === "sheet" ? <SheetPanel view={view} history={degree.history} /> : <RequirementsList view={view} />}
+      {empty && (
+        <p className="flex items-center justify-center gap-10 py-8 text-center text-8-5 leading-16 text-ink-muted">
+          <ShieldCheck aria-hidden className="size-16 shrink-0 text-ink" />
+          Course history stays in this browser. You can import a history file from another device.
+        </p>
+      )}
+      {!empty && !filter && <InsightsSection view={view} degree={degree} />}
+      {!empty && !filter && <NotOnALineRow view={view} history={degree.history} />}
+    </div>
+  );
+}

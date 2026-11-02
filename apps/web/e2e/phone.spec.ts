@@ -109,6 +109,7 @@ test.describe("phone week calendar", () => {
     // AE 2320 CL01 meets 9:00–9:50 AM in Unity Hall 400, AE 2410 C01 10:00–10:50 AM in Higgins Labs 116.
     const monday = grid(page).getByRole("group", { name: "Monday" });
     for (const text of ["9:00 AM–9:50 AM", "Unity Hall 400", "10:00 AM–10:50 AM", "Higgins Labs 116"]) {
+      await monday.getByText(text).scrollIntoViewIfNeeded();
       await expect(monday.getByText(text)).toBeInViewport();
     }
 

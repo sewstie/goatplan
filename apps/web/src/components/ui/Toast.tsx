@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useEffectEvent, useRef, useState } from "react";
+import { CheckCircle } from "@phosphor-icons/react/ssr";
 
 /** How long a message stays, in milliseconds, not counting time with the pointer or focus on it. */
 const DURATION = 6000;
@@ -14,6 +15,8 @@ type ToastProps = {
   actions: readonly ToastAction[];
   /** Called when the message has been up for 6 seconds. */
   onDismiss: () => void;
+  /** The dark bar My degree uses for a change with Undo. */
+  dark?: boolean;
 };
 
 /**
@@ -21,7 +24,7 @@ type ToastProps = {
  * page while there's nothing to show, so screen readers announce a message as soon as it appears.
  * Focus never moves here on its own; render it last so it's the last Tab stop.
  */
-export function Toast({ message, actions, onDismiss }: ToastProps) {
+export function Toast({ message, actions, onDismiss, dark = false }: ToastProps) {
   return (
     <div
       role="status"
@@ -30,12 +33,12 @@ export function Toast({ message, actions, onDismiss }: ToastProps) {
       className="pointer-events-none fixed inset-x-16 bottom-16 z-10 flex justify-center"
     >
       {/* A new message is a new box, so its timer starts over. */}
-      {message !== null && <ToastMessage key={message} message={message} actions={actions} onDismiss={onDismiss} />}
+      {message !== null && <ToastMessage key={message} message={message} actions={actions} onDismiss={onDismiss} dark={dark} />}
     </div>
   );
 }
 
-function ToastMessage({ message, actions, onDismiss }: { message: string; actions: readonly ToastAction[]; onDismiss: () => void }) {
+function ToastMessage({ message, actions, onDismiss, dark }: { message: string; actions: readonly ToastAction[]; onDismiss: () => void; dark: boolean }) {
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const timeLeft = useRef(DURATION);
@@ -52,6 +55,28 @@ function ToastMessage({ message, actions, onDismiss }: { message: string; action
       timeLeft.current = Math.max(0, timeLeft.current - (Date.now() - started));
     };
   }, [paused]);
+
+  if (dark) {
+    return (
+      <div
+        className="pointer-events-auto flex w-full items-center gap-10 rounded-card bg-toast-dark px-16 py-11 text-9 leading-14-5 text-on-dark shadow-guide tablet:w-510"
+        onPointerEnter={() => setHovered(true)}
+        onPointerLeave={() => setHovered(false)}
+        onFocus={() => setFocused(true)}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
+        }}
+      >
+        <CheckCircle aria-hidden className="size-16 shrink-0" />
+        <span className="min-w-0 flex-1">{message}</span>
+        {actions.map((action) => (
+          <button key={action.label} type="button" onClick={action.onAction} className="relative shrink-0 cursor-pointer rounded-badge font-650 underline after:absolute after:top-1/2 after:left-1/2 after:h-44 after:w-[max(100%,44px)] after:-translate-x-1/2 after:-translate-y-1/2">
+            {action.label}
+          </button>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div

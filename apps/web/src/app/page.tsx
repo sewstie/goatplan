@@ -1,5 +1,8 @@
 import { TermBreadcrumbs } from "@/components/courses/TermBreadcrumbs";
 import { PlanActions } from "@/components/plans/PlanActions";
+import { PlannerTitle } from "@/components/share/PlannerTitle";
+import { SeatRefreshNotice } from "@/components/schedule/SeatRefreshNotice";
+import { SeatStatus } from "@/components/shell/SeatStatus";
 import { PreferencesBar } from "@/components/preferences/PreferencesBar";
 import { ScheduleBanner } from "@/components/schedule/ScheduleBanner";
 import { ScheduleSummary } from "@/components/schedule/ScheduleSummary";
@@ -17,7 +20,7 @@ export default function PlannerPage() {
       <PlannerShell
         header={
           <WorkspaceHeader
-            title="Schedule planner"
+            title={<PlannerTitle />}
             breadcrumbs={<TermBreadcrumbs />}
             titleAside={
               <div id="tutorial-schedules" role="region" aria-label="Schedule browser" tabIndex={-1} className="rounded-control">
@@ -28,8 +31,8 @@ export default function PlannerPage() {
             actions={<PlanActions />}
           />
         }
-        toolbar={<PreferencesBar />}
-        banner={<><PlannerViewSync /><FirstPlanTutorial /><ScheduleBanner /></>}
+        toolbar={<><SeatStatus /><PreferencesBar /></>}
+        banner={<><PlannerViewSync /><FirstPlanTutorial /><SeatRefreshNotice /><ScheduleBanner /></>}
         schedule={<ScheduleView />}
       />
       <PlannerBootstrap />

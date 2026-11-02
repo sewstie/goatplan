@@ -8,7 +8,7 @@
 @theme static {
   --color-*: initial;
 
-  --color-canvas: #f3f4f6;
+  --color-canvas: #f7f8fb;
   --color-surface: #ffffff;
   --color-surface-overlay: rgb(255 255 255 / 0.98);
   --color-surface-subtle: #f8f9fb;
@@ -79,6 +79,27 @@
   --color-clash-surface: #fff2e7;
   --color-clash-line: #d5a483;
   --color-clash-ink: #944922;
+  --color-tile-done: #f0f1fa;
+  --color-tile-empty: #fafbfd;
+  --color-tile-empty-line: #d7dbe4;
+  --color-tile-check: #fff8ed;
+  --color-tile-check-line: #ecd5a8;
+  --color-tile-planned-line: #8d88d6;
+  --color-tile-tick-line: #e3e6ed;
+  --color-chart-planned: #8d88d6;
+  --color-chart-none: #a1a8ba;
+  --color-chart-grid: #e8eaf0;
+  --color-track: #e5e8ef;
+  --color-notice-info: #eeeffc;
+  --color-notice-warning: #f9f0df;
+  --color-notice-warning-ink: #7a5416;
+  --color-notice-neutral: #f2f3fb;
+  --color-card-field: #fafbfe;
+  --color-card-line: #e6e8f0;
+  --color-filter-surface: #f3f2fe;
+  --color-toast-dark: #2f3342;
+  --color-on-dark: #ffffff;
+  --color-scrim-flat: rgb(32 35 43 / 0.16);
   --color-neutral-soft: #f1f3f6;
   --color-neutral-ink: #6b7383;
 
@@ -103,6 +124,18 @@
   --text-*: initial;
   --text-25: 1.75rem;
   --text-25--line-height: 2.125rem;
+  --text-24: 1.5rem;
+  --text-24--line-height: 1.875rem;
+  --text-20: 1.25rem;
+  --text-20--line-height: 1.625rem;
+  --text-22: 1.375rem;
+  --text-22--line-height: 1.75rem;
+  --text-tile: 0.71875rem;
+  --text-tile--line-height: 1rem;
+  --text-caption: 0.625rem;
+  --text-caption--line-height: 0.875rem;
+  --text-micro: 0.5625rem;
+  --text-micro--line-height: 0.75rem;
   --text-21: 1.125rem;
   --text-21--line-height: 1.5rem;
   --text-19: 1.125rem;
@@ -267,9 +300,13 @@
   --size-phone-axis: 2.125rem;
   --size-phone-day-header: 2.125rem;
   --size-phone-bar: 4rem;
-  --size-sidebar: 16.5rem;
-  --size-details: 20rem;
+  --size-sidebar: 15rem;
+  --size-details: 16.75rem;
   --size-header: 4.75rem;
+  --size-topbar: 4.0625rem;
+  --size-page-footer: 2.875rem;
+  --size-drawer: 29.0625rem;
+  --size-modal-page: 32.75rem;
   --size-control: 2.25rem;
   --size-control-sm: 2rem;
   --size-input: 2.375rem;
@@ -319,6 +356,36 @@
   }
 }
 
+.pace-slider::-webkit-slider-runnable-track {
+  height: 0.3125rem;
+  border-radius: 1rem;
+  background: linear-gradient(to right, var(--color-chart-planned) var(--pace-fill), var(--color-track) var(--pace-fill));
+}
+
+.pace-slider::-moz-range-track {
+  height: 0.3125rem;
+  border-radius: 1rem;
+  background: linear-gradient(to right, var(--color-chart-planned) var(--pace-fill), var(--color-track) var(--pace-fill));
+}
+
+.pace-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: -0.28125rem;
+  border: 0.15625rem solid var(--color-accent);
+  border-radius: 50%;
+  background: var(--color-surface);
+}
+
+.pace-slider::-moz-range-thumb {
+  width: 0.625rem;
+  height: 0.625rem;
+  border: 0.15625rem solid var(--color-accent);
+  border-radius: 50%;
+  background: var(--color-surface);
+}
+
 .guide-popover button:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
@@ -342,6 +409,7 @@ body:has(.guide-popover) [data-guide-hide] {
     --size-sidebar: 224px;
     --size-details: 284px;
     --size-time-axis: 47px;
+    --size-topbar: 6.8125rem;
     --text-25: 25px;
     --text-25--line-height: 30px;
     --text-21: 21px;
