@@ -12,7 +12,7 @@ type SaveScheduleButtonProps = {
   onSave: () => void;
 };
 
-/** "Save schedule", or "Saved" with a check while the plan is saved as it is (div.app-12). On phone: "Save" with its status under it. */
+/** "Save", or "Saved" with a check while the plan is saved as it is (div.app-12). On phone, with its status under it. */
 export function SaveScheduleButton({ saved, disabled, unsaved = false, onSave }: SaveScheduleButtonProps) {
   const phone = usePhoneViewport();
 
@@ -36,15 +36,15 @@ export function SaveScheduleButton({ saved, disabled, unsaved = false, onSave }:
 
   if (saved) {
     return (
-      <Button variant="soft" aria-label="Schedule saved" aria-disabled="true" icon={<Check aria-hidden />} className="min-w-112" aria-live="polite">
+      <Button variant="soft" aria-label="Schedule saved" aria-disabled="true" icon={<Check aria-hidden />} className="min-w-84" aria-live="polite">
         Saved
       </Button>
     );
   }
 
   return (
-    <Button icon={<BookmarkSimple aria-hidden />} disabled={disabled} onClick={onSave} className="min-w-112" aria-live="polite">
-      Save schedule
+    <Button aria-label="Save schedule" icon={<BookmarkSimple aria-hidden />} disabled={disabled} onClick={onSave} className="min-w-84" aria-live="polite">
+      Save
     </Button>
   );
 }

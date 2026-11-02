@@ -132,13 +132,13 @@ describe("PlanActions on a phone", () => {
 });
 
 describe("PlanActions on a tablet and wider", () => {
-  it("keeps the full text Save button, with its words visible and no tooltip needed", () => {
+  it("keeps a Save button with its word visible and the full name for screen readers", () => {
     mockTabletViewport();
     setPlanner();
     render(<PlanActions />);
 
     const save = screen.getByRole("button", { name: "Save schedule" });
-    expect(save).toHaveTextContent("Save schedule");
+    expect(save).toHaveTextContent("Save");
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
   });
 

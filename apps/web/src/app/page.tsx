@@ -1,5 +1,3 @@
-import { TermBreadcrumbs } from "@/components/courses/TermBreadcrumbs";
-import { PlanActions } from "@/components/plans/PlanActions";
 import { PlannerTitle } from "@/components/share/PlannerTitle";
 import { SeatRefreshNotice } from "@/components/schedule/SeatRefreshNotice";
 import { SeatStatus } from "@/components/shell/SeatStatus";
@@ -11,27 +9,21 @@ import { PlannerViewSync } from "@/components/shell/PlannerViewSync";
 import { ScheduleView } from "@/components/schedule/ScheduleView";
 import { PlannerBootstrap } from "@/components/shell/PlannerBootstrap";
 import { PlannerShell } from "@/components/shell/PlannerShell";
-import { WorkspaceHeader } from "@/components/shell/WorkspaceHeader";
+import { PlannerBarActions } from "@/components/shell/PlannerBarActions";
 import { FirstPlanTutorial } from "@/components/tutorial/FirstPlanTutorial";
 
 export default function PlannerPage() {
   return (
     <>
       <PlannerShell
-        header={
-          <WorkspaceHeader
-            title={<PlannerTitle />}
-            breadcrumbs={<TermBreadcrumbs />}
-            titleAside={
-              <div id="tutorial-schedules" role="region" aria-label="Schedule browser" tabIndex={-1} className="rounded-control">
-                <ScheduleBrowser />
-              </div>
-            }
-            subtitle={<ScheduleSummary />}
-            actions={<PlanActions />}
-          />
+        header={<h1 data-screen-heading tabIndex={-1} className="sr-only"><PlannerTitle /></h1>}
+        barCenter={
+          <div id="tutorial-schedules" role="region" aria-label="Schedule browser" tabIndex={-1} className="rounded-control">
+            <ScheduleBrowser />
+          </div>
         }
-        toolbar={<><SeatStatus /><PreferencesBar /></>}
+        barActions={<PlannerBarActions />}
+        toolbar={<><ScheduleSummary /><SeatStatus /><PreferencesBar /></>}
         banner={<><PlannerViewSync /><FirstPlanTutorial /><SeatRefreshNotice /><ScheduleBanner /></>}
         schedule={<ScheduleView />}
       />

@@ -19,7 +19,7 @@ import { usePlanSaveState } from "./usePlanSaveState";
 
 const COULDNT_SAVE = "Couldn’t save. Browser storage is full or blocked.";
 
-type PlanActionsLayout = (parts: { menu: ReactNode; save: ReactNode }) => ReactNode;
+type PlanActionsLayout = (parts: { menu: ReactNode; save: ReactNode; share: ReactNode; exportButton: ReactNode; saveButton: ReactNode }) => ReactNode;
 
 const besideEachOther: PlanActionsLayout = ({ menu, save }) => (
   <>
@@ -29,8 +29,8 @@ const besideEachOther: PlanActionsLayout = ({ menu, save }) => (
 );
 
 /**
- * "Saved plans" and the Save schedule button in the header (div.app-12.md). The phone header puts the
- * two in different rows, so it passes its own `layout`.
+ * Saved plans, Share, Export and Save. The phone header puts them in different rows and the top bar folds
+ * some into a menu, so each passes its own `layout`.
  */
 export function PlanActions({ layout = besideEachOther }: { layout?: PlanActionsLayout } = {}) {
   const store = usePlannerStore();
@@ -100,8 +100,11 @@ export function PlanActions({ layout = besideEachOther }: { layout?: PlanActions
             onSave={saveChanges}
           />
         ),
+        share,
+        exportButton,
+        saveButton,
       })}
-      {error && <p role="alert" className="text-9 leading-13 text-warning">{error}</p>}
+      {error && <p role="alert" className="text-9 leading-13 text-warning tablet:absolute tablet:top-full tablet:right-20 tablet:z-30 tablet:mt-4 tablet:rounded-row tablet:border tablet:border-line-popover tablet:bg-surface tablet:px-8 tablet:py-4 tablet:shadow-popover">{error}</p>}
       <span role="status" aria-live="polite" aria-atomic="true" className="sr-only">
         {opened && <span key={opened.sequence}>{opened.name === null ? "Started a new plan." : `Opened “${opened.name}” for editing.`}</span>}
       </span>

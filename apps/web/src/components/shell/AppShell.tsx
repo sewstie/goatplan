@@ -7,6 +7,9 @@ import { TopBar } from "./TopBar";
 type AppShellProps = {
   sidebar: ReactNode;
   header: ReactNode;
+  /** The top bar's middle and its actions, for the planner. */
+  barCenter?: ReactNode;
+  barActions?: ReactNode;
   toolbar?: ReactNode;
   /** Full-width messages between the toolbar and the calendar, like "No schedule fits." */
   banner?: ReactNode;
@@ -29,6 +32,8 @@ type AppShellProps = {
 export function AppShell({
   sidebar,
   header,
+  barCenter,
+  barActions,
   toolbar,
   banner,
   schedule,
