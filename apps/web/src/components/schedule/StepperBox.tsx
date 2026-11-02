@@ -6,7 +6,7 @@ export type StepperSize = "default" | "wide" | "compact";
 export type StepperArrow = { label: string; disabled: boolean; onClick: () => void; shortcut?: string };
 
 const BOX: Record<StepperSize, string> = {
-  default: "h-35",
+  default: "h-36",
   wide: "min-h-44 w-full min-w-0",
   compact: "h-30 shrink-0",
 };

@@ -12,7 +12,7 @@ const MOVES: Readonly<Record<string, "previous" | "next">> = { ArrowLeft: "previ
 /** Schedule agent: "Schedule 3 of 24" with arrows, or "0 schedules fit", next to the title. */
 export function ScheduleSwitcher({ compact = false, wide = false }: { compact?: boolean; wide?: boolean }) {
   const size: StepperSize = compact ? "compact" : wide ? "wide" : "default";
-  const skeleton = <span aria-hidden className={cx("rounded-row bg-skeleton", wide ? "h-44 w-full" : compact ? "h-30 w-130" : "h-35 w-185")} />;
+  const skeleton = <span aria-hidden className={cx("rounded-row bg-skeleton", wide ? "h-44 w-full" : compact ? "h-30 w-130" : "h-36 w-185")} />;
   const termStatus = usePlanner((state) => state.termStatus);
   const hasCourses = usePlanner((state) => state.courses.length > 0);
   const response = usePlanner((state) => state.response);

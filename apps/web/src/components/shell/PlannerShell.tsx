@@ -12,6 +12,8 @@ import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 
 type PlannerShellProps = {
   header: ReactNode;
+  barCenter?: ReactNode;
+  barActions?: ReactNode;
   toolbar: ReactNode;
   banner: ReactNode;
   schedule: ReactNode;
@@ -22,7 +24,7 @@ type PlannerShellProps = {
  * from the tablet breakpoint up, or the phone planner's one-screen-at-a-time layout below it. Only
  * one of the two is mounted, so the tutorial target IDs never appear twice in the DOM.
  */
-export function PlannerShell({ header, toolbar, banner, schedule }: PlannerShellProps) {
+export function PlannerShell({ header, barCenter, barActions, toolbar, banner, schedule }: PlannerShellProps) {
   const phone = usePhoneViewport();
 
   return (
@@ -37,6 +39,8 @@ export function PlannerShell({ header, toolbar, banner, schedule }: PlannerShell
             </Sidebar>
           }
           header={header}
+          barCenter={barCenter}
+          barActions={barActions}
           toolbar={toolbar}
           banner={banner}
           schedule={schedule}
