@@ -57,6 +57,7 @@ export function SavedPlansMenu({
       className="relative"
       onKeyDown={(event) => {
         if (event.key === "Escape" && open) {
+          event.preventDefault();
           event.stopPropagation();
           closeToTrigger();
         }
