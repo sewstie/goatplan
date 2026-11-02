@@ -61,8 +61,8 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
 
   return (
     <section aria-labelledby={headingId} className="flex shrink-0 flex-col">
-      <div className="flex items-end justify-between gap-8 pb-10">
-        <h2 id={headingId} className="text-11 leading-15-95 font-650">
+      <div className="flex flex-wrap items-end justify-between gap-x-8 pb-10">
+        <h2 id={headingId} className="text-11 leading-15-95 font-650 whitespace-nowrap">
           Your courses
         </h2>
         <span className="text-8 leading-13 font-450 whitespace-nowrap text-ink-muted">{count}</span>
