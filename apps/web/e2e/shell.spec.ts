@@ -16,8 +16,8 @@ test("shell regions line up at 1680 × 800", async ({ page }) => {
   const topBar = (await page.getByRole("banner").first().boundingBox())!;
   expect(topBar).toMatchObject({ x: 0, y: 0, width: 1680 });
   expect(Math.abs(sidebar.x - 1.25 * root)).toBeLessThanOrEqual(1.5);
-  expect(Math.abs(sidebar.width - 15 * root)).toBeLessThanOrEqual(1.5);
-  expect(Math.abs(details.width - 16.75 * root)).toBeLessThanOrEqual(1.5);
+  expect(Math.abs(sidebar.width - 14 * root)).toBeLessThanOrEqual(1.5);
+  expect(Math.abs(details.width - 22.5 * root)).toBeLessThanOrEqual(1.5);
   expect(Math.abs(details.x + details.width - (1680 - 1.25 * root))).toBeLessThanOrEqual(1.5);
   expect(schedule.x).toBeGreaterThan(sidebar.x + sidebar.width);
   expect(schedule.x + schedule.width).toBeLessThan(details.x);
@@ -25,39 +25,37 @@ test("shell regions line up at 1680 × 800", async ({ page }) => {
   await page.screenshot({ path: `${screenshotDir}/shell-1680.png` });
 });
 
-test("shell at 1440 keeps the desktop layout", async ({ page }) => {
+test("shell at 1440 gives the calendar the width beside the sidebar, with no page scroll", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
   const schedule = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
-  const details = await page.getByRole("complementary", { name: "Course details" }).boundingBox();
-  expect(details!.x).toBeGreaterThan(schedule!.x + schedule!.width);
-  expect(details!.width).toBe(268);
+  await expect(page.getByRole("complementary", { name: "Course details" })).toHaveCount(0);
+  expect(schedule!.x + schedule!.width).toBe(1420);
+  expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(900);
   await page.screenshot({ path: `${screenshotDir}/shell-1440.png` });
 });
 
-test("shell at 1194 (iPad landscape) keeps the panels side by side", async ({ page }) => {
+test("shell at 1194 (iPad landscape) fits the window", async ({ page }) => {
   await page.setViewportSize({ width: 1194, height: 834 });
   await page.goto("/");
-  const schedule = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
-  const details = await page.getByRole("complementary", { name: "Course details" }).boundingBox();
-  expect(details!.x).toBeGreaterThan(schedule!.x + schedule!.width);
+  await expect(page.getByRole("region", { name: "Weekly schedule" })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(834);
 });
 
 test("short screens keep a usable calendar and scroll the page", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 520 });
   await page.goto("/");
   const schedule = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
-  expect(schedule!.height).toBeGreaterThan(500);
+  expect(schedule!.height).toBeGreaterThan(400);
   const scrollHeight = await page.evaluate(() => document.documentElement.scrollHeight);
-  expect(scrollHeight).toBe(960);
+  expect(scrollHeight).toBe(576);
 });
 
-test("shell at 834 stacks the details under the calendar", async ({ page }) => {
+test("shell at 834 fits the calendar beside the sidebar", async ({ page }) => {
   await page.setViewportSize({ width: 834, height: 1194 });
   await page.goto("/");
-  const schedule = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
-  const details = await page.getByRole("complementary", { name: "Course details" }).boundingBox();
-  expect(details!.y).toBeGreaterThan(schedule!.y + schedule!.height);
+  await expect(page.getByRole("region", { name: "Weekly schedule" })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(1194);
   const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(scrollWidth).toBeLessThanOrEqual(834);
   await page.screenshot({ path: `${screenshotDir}/shell-834.png`, fullPage: true });

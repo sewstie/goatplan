@@ -24,13 +24,15 @@ for (const width of [1440, 834]) {
     await expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
     const lab = page.getByRole("button", { name: /^AE 2320 CX02, .*Thursday/ });
     await lab.click();
+    const panel = page.getByRole("complementary", { name: "Course details" });
+    await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(panel).toHaveCount(0);
     const lecture = page.getByRole("button", { name: /^AE 2410 C01, .*Tuesday/ });
     await lecture.hover();
 
     await expect(page.getByRole("tooltip")).toHaveCount(0);
     await expect(lecture).not.toContainText(/OSCAR|Rate My Professors/);
-    const panel = page.getByRole("complementary", { name: "Course details" });
-    await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: `e2e/screenshots/calendar-no-popup-hover-${width}.png`, animations: "disabled", fullPage: true });
 
@@ -40,7 +42,6 @@ for (const width of [1440, 834]) {
     await page.keyboard.press("Tab");
     await expect(lecture).toBeFocused();
     await expect(page.getByRole("tooltip")).toHaveCount(0);
-    await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
     // Not full page: Chromium's full-page capture briefly reports a 1×1 viewport, which flips the app to
     // the phone layout for a moment and drops the focus this screenshot is about.
     await expect(page).toHaveScreenshot(`calendar-no-popup-focus-${width}.png`, { animations: "disabled" });
@@ -52,6 +53,7 @@ for (const width of [1440, 834]) {
     await expect(professor.getByRole("link", { name: "View Mark Richman in OSCAR (opens in a new tab)" })).toBeVisible();
     await expect(professor).not.toContainText(/\/ 5|ratings/);
     await expect(page.getByRole("tooltip")).toHaveCount(0);
+    await page.keyboard.press("Escape");
     await lab.click();
     await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
     await expect(lab).toHaveAttribute("aria-pressed", "true");

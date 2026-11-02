@@ -304,6 +304,8 @@
   --size-details: 16.75rem;
   --size-header: 4.75rem;
   --size-topbar: 3.5rem;
+  /* The planner's toolbar: two rows, or one from the desk breakpoint up. */
+  --size-toolbar: 5.5rem;
   --size-page-footer: 2.875rem;
   --size-drawer: 29.0625rem;
   --size-modal-page: 32.75rem;
@@ -353,6 +355,12 @@
 
   html:has(dialog[open]:modal) {
     overflow: hidden;
+  }
+
+  @media (min-width: 80rem) {
+    :root {
+      --size-toolbar: 2.75rem;
+    }
   }
 
   /* The page keeps clear of the phone's bottom tab bar, which only shows while there are tabs to show. */

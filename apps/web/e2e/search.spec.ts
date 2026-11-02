@@ -44,17 +44,13 @@ const yourCourses = (page: Page) => page.getByRole("region", { name: "Your cours
 const courseRow = (page: Page, code: string) =>
   yourCourses(page).getByRole("button", { name: new RegExp(`^${code}`) });
 
-test("the term picker switches terms and the breadcrumbs follow", async ({ page }) => {
+test("the term picker switches terms", async ({ page }) => {
   await open(page, { term: "2027-C" });
   const term = page.getByRole("combobox", { name: "Term" });
   await expect(term).toHaveValue("2027-C");
   await expect(term.locator("option")).toContainText(["C Term · 2027", "D Term · 2027"]);
-  const header = page.locator("main header");
-  await expect(header.getByText("Spring 2027", { exact: true })).toBeVisible();
-  await expect(header.getByText("C Term", { exact: true })).toBeVisible();
-
   await term.selectOption("2027-D");
-  await expect(header.getByText("D Term", { exact: true })).toBeVisible();
+  await expect(term).toHaveValue("2027-D");
 });
 
 test("“cs2102” finds CS 2102, and Enter adds it with its credits", async ({ page }) => {

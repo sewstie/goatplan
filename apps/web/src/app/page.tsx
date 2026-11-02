@@ -16,7 +16,7 @@ export default function PlannerPage() {
   return (
     <>
       <PlannerShell
-        header={<h1 data-screen-heading tabIndex={-1} className="sr-only"><PlannerTitle /></h1>}
+        header={<h1 data-screen-heading tabIndex={-1} className="sr-only"><PlannerTitle badge={false} /></h1>}
         barCenter={
           <div id="tutorial-schedules" role="region" aria-label="Schedule browser" tabIndex={-1} className="rounded-control">
             <ScheduleBrowser />

@@ -451,6 +451,7 @@ test.describe("Saved plans list", () => {
     await page.getByRole("button", { name: "Open in planner Plan 1" }).click();
     await page.getByRole("dialog", { name: "Open “Plan 1”?" }).getByRole("button", { name: "Open plan" }).click();
     await expect(header(page).getByRole("button", { name: "Schedule saved", exact: true })).toBeVisible({ timeout: 30_000 });
+    await page.getByRole("group", { name: "Preferences" }).getByRole("button", { name: "1 blocked time" }).click();
     await expect(page.getByRole("group", { name: "Preferences" }).getByText("Work")).toBeVisible();
     await expect(page.getByRole("group", { name: "Tuesday" }).getByText("Work")).toBeVisible();
   });

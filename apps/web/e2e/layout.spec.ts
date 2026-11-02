@@ -71,14 +71,14 @@ test.describe("the planner fits the window", () => {
     expect(hour).toBeGreaterThanOrEqual(64);
   });
 
-  test("drawing mode shows 8 AM to 10 PM at 64 px an hour, scrolling inside its panel", async ({ page }) => {
+  test("drawing mode doesn't move the calendar's top or scroll the page", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openPlanner(page);
+    const top = (await calendar(page).boundingBox())!.y;
     await page.getByRole("button", { name: "Block a time" }).click();
-    await expect(page.getByText(/Auto-fit · 8:00 AM–10:00 PM/)).toBeVisible();
+    await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
+    expect((await calendar(page).boundingBox())!.y).toBe(top);
     expect(await pageScrolls(page)).toBe(false);
-    const grid = page.getByRole("group", { name: "Calendar time grid" });
-    await expect.poll(() => grid.evaluate((element) => element.scrollHeight - element.clientHeight)).toBeGreaterThan(0);
   });
 
   test("No set time is one row of chips, only as tall as its chips", async ({ page }) => {
@@ -109,13 +109,17 @@ test.describe("warnings stay in the toolbar", () => {
 
   test('"Showing the best N" is a small note beside the count, and doesn\'t move the calendar', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
-    await openPlanner(page, { courses: ["CS 2223", "CS 3013", "MA 1022", "PH 1110", "AE 2320", "WR 1011"] });
+    await openPlanner(page, { courses: ["MA 1023", "PH 1110"] });
+    await expect(page.getByText(/^Schedule 1 of 200$/)).toBeVisible();
+    const before = await calendar(page).boundingBox();
+    const count = await page.getByRole("group", { name: "Schedules" }).boundingBox();
     const note = page.getByRole("button", { name: "About these schedules" });
-    if ((await note.count()) === 0) test.skip(true, "This plan isn't over the shown limit in the frozen data.");
-    expect((await calendar(page).boundingBox())!.y).toBeLessThanOrEqual(140);
     await note.click();
-    await expect(page.getByText(/^Showing the best|too many combinations/i).first()).toBeVisible();
+    await expect(page.getByRole("banner").first().getByText(/^Showing the best 200 of/)).toBeVisible();
     await page.keyboard.press("Escape");
+    await expect(page.getByRole("banner").first().getByText(/^Showing the best 200 of/)).toHaveCount(0);
+    expect(await calendar(page).boundingBox()).toEqual(before);
+    expect(await page.getByRole("group", { name: "Schedules" }).boundingBox()).toEqual(count);
   });
 
   test("a course that fits nothing opens the fix panel without taking focus, and it can be reopened", async ({ page }) => {
@@ -282,7 +286,7 @@ test.describe("My degree", () => {
   test("a done tile says its term only when it has one, and never No term", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     const mid = fixtureHistory("degree-history-mid.json");
-    await openDegree(page, { ...mid, courses: mid.courses.map(({ term: _term, ...course }) => course) });
+    await openDegree(page, { ...mid, courses: mid.courses.map((course) => ({ ...course, term: undefined })) });
     await expect(page.getByRole("region", { name: "Your sheet" }).getByText("No term")).toHaveCount(0);
   });
 
@@ -314,6 +318,7 @@ test.describe("My degree", () => {
 
     const electives = page.getByRole("button", { name: /^Free elective, 3 lines left/ });
     await page.getByRole("button", { name: /^CS 3013, line/ }).dragTo(electives);
+    await page.getByRole("button", { name: "Keep pin" }).click();
     await expect.poll(async () => (await stored(page)).pins).toEqual([{ code: "CS 3013", line: 13 }]);
   });
 

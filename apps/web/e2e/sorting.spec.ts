@@ -243,7 +243,7 @@ for (const [width, height] of [
     }
     for (const other of [
       page.getByRole("group", { name: "Schedules" }),
-      header(page).getByRole("button", { name: "Saved plans" }),
+      ...(width === 834 ? [] : [header(page).getByRole("button", { name: "Saved plans" })]),
       header(page).getByRole("button", { name: "Save schedule" }),
       sort,
     ]) {

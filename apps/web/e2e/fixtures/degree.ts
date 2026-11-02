@@ -53,10 +53,9 @@ export const stored = (page: Page) => page.evaluate((key) => JSON.parse(localSto
 
 export const storedCodes = async (page: Page) => ((await stored(page)).courses as { code: string }[]).map((course) => course.code);
 
-/** The sheet folds into cards on a phone, so tiles and ticks only show after opening a section. */
+/** A phone folds the sheet into cards, wider screens fold finished sections and stack empty lines. This opens them all. */
 export async function openAllSections(page: Page) {
-  if ((page.viewportSize()?.width ?? 1440) >= 768) return;
-  const closed = page.locator('h3 button[aria-expanded="false"]');
+  const closed = page.getByRole("region", { name: "Your sheet" }).locator('button[aria-expanded="false"]:visible');
   while ((await closed.count()) > 0) await closed.first().click();
 }
 

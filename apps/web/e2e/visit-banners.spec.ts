@@ -43,8 +43,8 @@ test("state 36: finishing the guide and returning restores only the choices kept
   await settled(page);
   await expect(guide(page)).toBeHidden();
   await expect(page.getByText(/Plan restored/)).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Unlock Lab CX02", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "AE 2320 CX02", exact: false }).first().click();
+  await expect(page.getByRole("button", { name: "Unlock Lab CX02", exact: true })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: "e2e/screenshots/visit-state-36-1440.png", animations: "disabled" });
   await expect(page).toHaveScreenshot("visit-state-36-1440.png", { animations: "disabled" });
@@ -88,7 +88,7 @@ test("saved-plan URLs restore the snapshot with an empty working draft", async (
     localStorage.setItem("goatplan:draft:v1:2027-C", JSON.stringify({ version: 1, ...draft }));
   }, { saved, draft: emptyDraft() });
   await page.goto("/?view=saved&plan=plan-1");
-  await expect(page.getByRole("heading", { name: "AE 2320", exact: true }).first()).toBeVisible();
+  await expect(page.getByRole("button", { name: /^AE 2320/ }).first()).toBeVisible();
   await expect(page.getByText(/Plan restored/)).toHaveCount(0);
   await expect(guide(page)).toBeHidden();
 });
