@@ -563,7 +563,7 @@ test.describe("the left sidebar", () => {
     expect(positions).toEqual([...positions].sort((a, b) => a - b));
     await expect(sidebar.getByRole("group", { name: "Preferences" })).toHaveCount(0);
     await expect(sidebar.getByText("Saved on this device")).toHaveCount(0);
-    await expect(sidebar.getByText(/^Data [A-Z][a-z]{2} \d+$/)).toBeVisible();
+    await expect(sidebar.getByText(/^Data [A-Z][a-z]{2} \d+, \d+:\d{2}\s[AP]M$/)).toBeVisible();
     await expect(sidebar.getByRole("status", { name: "Seat freshness" })).toHaveText(/^Seats /);
     await expect(sidebar.getByRole("link", { name: "Source" })).toBeVisible();
     await expect(sidebar.getByRole("button", { name: "Guide", exact: true })).toBeVisible();
