@@ -684,7 +684,7 @@ test.describe("the calendar header", () => {
   }
 });
 
-test("the seat note lives on the Sections to register page", async ({ page }) => {
+test("no seat note on the planner or the Sections to register page", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlanner(page);
   await expect(page.getByText("Seat counts can change")).toHaveCount(0);
@@ -694,7 +694,8 @@ test("the seat note lives on the Sections to register page", async ({ page }) =>
   await page.getByRole("button", { name: /Saved plans/ }).click();
   await page.getByRole("link", { name: "All saved plans" }).click();
   await page.getByRole("link", { name: /section/i }).first().click();
-  await expect(page.getByText("Seat counts can change. Confirm sections and register in Workday.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Ready for Workday" })).toBeVisible();
+  await expect(page.getByText("Seat counts can change")).toHaveCount(0);
 });
 
 test.describe("My degree", () => {

@@ -1,7 +1,6 @@
 "use client";
 
 import { useId, type ReactNode } from "react";
-import { PageFooter } from "@/components/shell/PageFooter";
 import { useModalDialog } from "@/components/ui/useModalDialog";
 
 type SharedPageCardProps = {
@@ -25,7 +24,6 @@ export function SharedPageCard({ icon, title, onClose, children }: SharedPageCar
             {children}
           </div>
         </div>
-        <PageFooter />
       </div>
     </dialog>
   );

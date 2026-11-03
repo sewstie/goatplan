@@ -13,7 +13,6 @@ import { RegistrationTable } from "./RegistrationTable";
 import { SectionListPreview } from "./SectionListPreview";
 
 const WORKDAY_URL = "https://workday.wpi.edu";
-const SEATS_NOTE = "Seat counts can change. Confirm sections and register in Workday.";
 
 /**
  * "Ready for Workday": the table, the section list to copy and the closing note (div.app-22). The phone
@@ -51,7 +50,6 @@ export function RegistrationSheetView({ plan }: { plan: SavedPlan }) {
           </>
         )}
         <RegistrationCardList rows={rows} />
-        <p className="text-9 leading-13 text-ink-muted">{SEATS_NOTE}</p>
       </div>
     );
   }
@@ -87,7 +85,6 @@ export function RegistrationSheetView({ plan }: { plan: SavedPlan }) {
       <p className="mt-10 text-10 leading-17 text-ink-muted">
         Saving a plan in GoatPlan keeps your choices. Complete registration in Workday.
       </p>
-      <p className="text-10 leading-17 text-ink-muted">{SEATS_NOTE}</p>
     </div>
   );
 }
