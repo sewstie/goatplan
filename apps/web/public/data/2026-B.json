@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-02T19:23:40Z",
+  "generatedAt": "2026-11-03T16:56:45Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -122,7 +122,7 @@
       "level": "Undergraduate",
       "description": "This course introduces students to design of aircraft systems. Students complete a conceptual design of an aircraft in a term-long project. Students are exposed to the aircraft design process, and must establish design specifications, develop and analyze alternative designs, and optimize their designs to meet mission requirements. Students work together in teams to apply material learned in the areas of aerodynamics, aerospace materials, structures, propulsion, flight mechanics, and stability and control, to the preliminary design of an aircraft. The project requirements are selected to reflect real-life aircraft mission requirements, and teams are required to design systems which incorporate appropriate engineering standards and multiple realistic constraints. The teams present their design in a final report and oral presentation. Recommended background: aerodynamics (AE 3120 or equivalent), aerospace structures (AE 3420 or equivalent), air breathing propulsion (AE 4210 or equivalent), aircraft dynamics and control (AE 4310 or equivalent). Students may not receive credit for both AE 4510 and AE 4770.",
       "sections": [
-        {"id":"AE 4510-B01","code":"B01","type":"lecture","status":"open","enrolled":45,"capacity":85,"waitlist":{"taken":0,"capacity":10},"instructors":["Jielong Cai"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Higgins Labs 218 Discovery Classroom"}]}
+        {"id":"AE 4510-B01","code":"B01","type":"lecture","status":"open","enrolled":46,"capacity":85,"waitlist":{"taken":0,"capacity":10},"instructors":["Jielong Cai"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Higgins Labs 218 Discovery Classroom"}]}
       ],
       "options": [
         ["AE 4510-B01"]
@@ -1197,7 +1197,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course builds upon students’ understanding of statistics and introduces them to the concepts and methods for analyzing data to support business decision-making. Students will explore data sets using data mining and analytics techniques to create business intelligence, to be used for understanding and improving customers’ experiences, supply chain operations, product management, etc. During the course, students will develop an understanding of the uses of business data analytics and associated models for business decision-making, forecasting, and obtaining and maintaining a competitive advantage. Students will learn a comprehensive set of advanced spreadsheet skills, including how to design, build, test, and use spreadsheets for analyzing business decisions. Recommended background: Basic statistics, equivalent to that in MA 2611 and MA 2612.",
       "sections": [
-        {"id":"BUS 2080-B01","code":"B01","type":"lecture","status":"open","enrolled":24,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Innovation Studio 105 Active Learning Classroom"}]}
+        {"id":"BUS 2080-B01","code":"B01","type":"lecture","status":"open","enrolled":24,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Salim Eray Celik"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Innovation Studio 105 Active Learning Classroom"}]}
       ],
       "options": [
         ["BUS 2080-B01"]
@@ -8814,7 +8814,7 @@
       "level": "Undergraduate",
       "description": "Cat. I Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
-        {"id":"WPE 1019-B02","code":"B02","type":"workshop","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":5,"capacity":10},"instructors":["Brian Kelley"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Recreation Center Courts 1-2"}]}
+        {"id":"WPE 1019-B02","code":"B02","type":"workshop","status":"open","enrolled":29,"capacity":30,"waitlist":{"taken":5,"capacity":10},"instructors":["Brian Kelley"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
         ["WPE 1019-B02"]
