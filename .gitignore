@@ -26,6 +26,9 @@ watch/
 .env
 .env*.local
 
+# App screenshots (the README image is the one kept)
+docs/**/*screenshots/
+
 # Editors / OS
 .vscode/*
 !.vscode/extensions.json
