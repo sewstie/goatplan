@@ -72,7 +72,7 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   const loading = new Promise<void>((resolve) => { release = resolve; });
   await data(page, twoProfessorTerm(), loading);
   await page.goto("/");
-  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
+  await expect(guide(page).getByRole("heading", { name: "Pick your term" })).toBeFocused();
   await expect(next(page)).toHaveAttribute("aria-disabled", "true");
   await tabTo(page, next(page));
   await page.keyboard.press("Enter");
@@ -80,9 +80,9 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await capture(page, "30");
   release();
   await advance(page);
-  await expect(guide(page).getByRole("heading", { name: "Add the courses you need" })).toBeFocused();
+  await expect(guide(page).getByRole("heading", { name: "Add your courses" })).toBeFocused();
   await expect(next(page)).toHaveAttribute("aria-disabled", "true");
-  await expect(guide(page)).toContainText("Add at least one course to continue.");
+  await expect(guide(page)).toContainText("Add a course to continue.");
   await expect(page.getByText("Add your first course", { exact: true })).toBeHidden();
   await tabTo(page, page.getByRole("searchbox"));
   await page.keyboard.type("AE 2320");
@@ -90,15 +90,14 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await capture(page, "31");
   await page.keyboard.press("Enter");
   await settled(page);
-  await expect(guide(page)).toContainText("Great — press Next");
-  await expect(guide(page)).not.toContainText("Add at least one course to continue.");
+  await expect(guide(page)).not.toContainText("Add a course to continue.");
   await advance(page);
-  await expect(guide(page).getByRole("heading", { name: "A professor preference is optional" })).toBeFocused();
-  await expect(guide(page)).toContainText("Want a specific professor? Pick them here to see only their lectures. Any professor keeps every option.");
+  await expect(guide(page).getByRole("heading", { name: "Prefer a professor?" })).toBeFocused();
+  await expect(guide(page)).toContainText("Optional. Pick one to see only their lectures.");
   await expect(page.getByRole("combobox", { name: "Lecture professor" })).toHaveText("Any professor");
   await capture(page, "32");
   await advance(page);
-  await expect(guide(page)).toContainText("Press Block a time, then drag on the calendar to mark when you’re busy. Drag on a blocked time to erase it.");
+  await expect(guide(page)).toContainText("Click Block a time, then drag across your busy hours.");
   await expect(page.locator("[data-guide-target]")).toHaveAccessibleName("Block a time");
   await tabTo(page, page.getByRole("combobox", { name: "Starts after" }));
   await page.keyboard.type("9");
@@ -125,10 +124,10 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await settled(page);
   await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(600));
   await advance(page);
-  await expect(guide(page).getByRole("heading", { name: "You can finish with no matches" })).toBeVisible();
-  await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeFocused();
-  await expect(guide(page)).toContainText("Nothing fits right now. The panel shows why and offers fixes — finish the guide and pick one when you’re ready.");
-  await expect(guide(page)).toContainText("Your plan is saved in this browser.");
+  await expect(guide(page).getByRole("heading", { name: "Nothing fits yet" })).toBeVisible();
+  await expect(guide(page).getByRole("button", { name: "Done" })).toBeFocused();
+  await expect(guide(page)).toContainText("The panel shows why and suggests fixes.");
+  await expect(guide(page)).not.toContainText("Your plan is saved in this browser.");
   await expect(page.locator("[data-guide-target]")).toContainText("Ways to fix it");
   await capture(page, "35");
   await page.keyboard.press("Enter");
@@ -174,14 +173,14 @@ test("state 34: DEMO guide finishes while real professor, locks and schedule bro
   }
   await advance(page);
   await advance(page);
-  await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeFocused();
-  await expect(guide(page)).toHaveCSS("width", "296px");
+  await expect(guide(page).getByRole("button", { name: "Done" })).toBeFocused();
+  await expect(guide(page)).toHaveCSS("width", "280px");
   await capture(page, "34");
   await tabTo(page, page.getByRole("button", { name: "Next schedule", exact: true }));
   await page.keyboard.press("Enter");
   await expect(page.getByText("Schedule 2 of 3", { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Next schedule", exact: true })).toBeFocused();
-  await tabTo(page, guide(page).getByRole("button", { name: "Finish guide" }));
+  await tabTo(page, guide(page).getByRole("button", { name: "Done" }));
   await page.keyboard.press("Enter");
   await expect(guide(page)).toBeHidden();
   await page.locator('[data-course-row="DEMO 1001"]').click();
@@ -194,14 +193,14 @@ test("a lab-only course skips the professor step and keeps progress stable until
   await page.goto("/");
   await advance(page);
   await addCourse(page, "DEMO 2001");
-  await expect(guide(page)).toContainText("Getting started · 2 of 5");
+  await expect(guide(page)).toContainText("Step 2 of 5");
   await advance(page);
-  await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeFocused();
-  await expect(guide(page)).toContainText("Getting started · 3 of 4");
+  await expect(guide(page).getByRole("heading", { name: "Block busy times" })).toBeFocused();
+  await expect(guide(page)).toContainText("Step 3 of 4");
   await expect(page.getByRole("combobox", { name: "Lecture professor" })).toHaveCount(0);
   await advance(page);
-  await expect(guide(page)).toContainText("Getting started · 4 of 4");
-  await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeFocused();
+  await expect(guide(page)).toContainText("Step 4 of 4");
+  await expect(guide(page).getByRole("button", { name: "Done" })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(guide(page)).toBeHidden();
   await page.reload();
@@ -246,7 +245,7 @@ test("a guide closed after adding a course stays closed around the app, and retu
   await expect(guide(page)).toBeHidden();
   expect(await guideStatus(page)).toBe("started");
   await page.reload();
-  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeVisible();
+  await expect(guide(page).getByRole("heading", { name: "Pick your term" })).toBeVisible();
   expect(await guideStatus(page)).toBe("started");
 });
 
@@ -261,13 +260,13 @@ test("Escape in the type-a-time form on step 4 leaves the guide open", async ({ 
   await expect(page.getByRole("dialog", { name: "Block a time" })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog", { name: "Block a time" })).toBeHidden();
-  await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
+  await expect(guide(page).getByRole("heading", { name: "Block busy times" })).toBeVisible();
 });
 
-test("Skip guide stores it as done and says where to replay it", async ({ page }) => {
+test("Skip stores it as done and says where to replay it", async ({ page }) => {
   await data(page, coursePanelTerm("29"));
   await page.goto("/");
-  await guide(page).getByRole("button", { name: "Skip guide" }).click();
+  await guide(page).getByRole("button", { name: "Skip" }).click();
   await expect(guide(page)).toBeHidden();
   await expect(page.getByRole("status").filter({ hasText: "Guide closed · Replay it from How to use" })).toBeVisible();
   expect(await guideStatus(page)).toBe("dismissed");
@@ -275,7 +274,7 @@ test("Skip guide stores it as done and says where to replay it", async ({ page }
   await expect(page.getByRole("searchbox")).toBeEnabled();
   await expect(guide(page)).toBeHidden();
   await replay(page).click();
-  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
+  await expect(guide(page).getByRole("heading", { name: "Pick your term" })).toBeFocused();
 });
 
 test("the replay button restarts a finished guide without changing the plan or the stored result", async ({ page }) => {
@@ -284,15 +283,15 @@ test("the replay button restarts a finished guide without changing the plan or t
   await advance(page);
   await addCourse(page, "AE 2320");
   for (let i = 0; i < 3; i++) await advance(page);
-  await guide(page).getByRole("button", { name: "Finish guide" }).click();
+  await guide(page).getByRole("button", { name: "Done" }).click();
   await expect(guide(page)).toBeHidden();
   const draft = () => page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"));
   const before = await draft();
   await replay(page).click();
-  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
-  await expect(guide(page)).toContainText("Getting started · 1 of 5");
+  await expect(guide(page).getByRole("heading", { name: "Pick your term" })).toBeFocused();
+  await expect(guide(page)).toContainText("Step 1 of 5");
   await advance(page);
-  await expect(guide(page)).toContainText("Great — press Next");
+  await expect(next(page)).toHaveAttribute("aria-disabled", "false");
   expect(await guideStatus(page)).toBe("completed");
   await page.keyboard.press("Escape");
   await expect(guide(page)).toBeHidden();
@@ -306,7 +305,7 @@ test("the replay button on Saved plans goes back to the planner and opens the gu
   await page.goto("/plans");
   await replay(page).click();
   await expect(page).toHaveURL(/\/$/);
-  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
+  await expect(guide(page).getByRole("heading", { name: "Pick your term" })).toBeFocused();
 });
 
 test("step 4 stays off the calendar, and Escape there only leaves drawing mode", async ({ page }) => {
@@ -324,7 +323,7 @@ test("step 4 stays off the calendar, and Escape there only leaves drawing mode",
   await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("group", { name: "Drawing mode" })).toBeHidden();
-  await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
+  await expect(guide(page).getByRole("heading", { name: "Block busy times" })).toBeVisible();
 });
 
 for (const { width, height } of [{ width: 1440, height: 800 }, { width: 2560, height: 1300 }]) {
@@ -348,9 +347,44 @@ for (const { width, height } of [{ width: 1440, height: 800 }, { width: 2560, he
         };
       });
       expect(covered, await guide(page).getByRole("heading").innerText()).toEqual({ target: false, blocks: 0 });
-      if (await guide(page).getByRole("button", { name: "Finish guide" }).count()) break;
+      if (await guide(page).getByRole("button", { name: "Done" }).count()) break;
       await next(page).click();
     }
+  });
+}
+
+async function shoot(page: Page, name: string) {
+  await page.evaluate(() => document.fonts.ready);
+  await guide(page).scrollIntoViewIfNeeded();
+  const { width, height } = page.viewportSize()!;
+  const box = (await guide(page).boundingBox())!;
+  expect(box.x).toBeGreaterThanOrEqual(8);
+  expect(box.x + box.width).toBeLessThanOrEqual(width - 8);
+  expect(box.y + box.height).toBeLessThanOrEqual(height);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.screenshot({ path: `e2e/screenshots/guide-${name}-${width}.png`, animations: "disabled" });
+  await expect(page).toHaveScreenshot(`guide-${name}-${width}.png`, { animations: "disabled" });
+}
+
+for (const { width, height } of [{ width: 834, height: 1194 }, { width: 375, height: 812 }]) {
+  test(`at ${width}px the guide shows its dots, the course hint and Done on the last step`, async ({ page }) => {
+    await data(page, coursePanelTerm("07"));
+    await page.setViewportSize({ width, height });
+    await page.goto("/");
+    await expect(next(page)).toHaveAttribute("aria-disabled", "false");
+    await expect(guide(page).getByRole("button", { name: "Back" })).toHaveCount(0);
+    await shoot(page, "first");
+    await next(page).click();
+    await expect(guide(page)).toContainText("Add a course to continue.");
+    await shoot(page, "hint");
+    await page.getByRole("searchbox").fill("AE 2320");
+    await page.getByRole("searchbox").press("Enter");
+    await settled(page);
+    while (!(await guide(page).getByRole("button", { name: "Done" }).count())) await next(page).click();
+    await expect(guide(page).getByRole("heading", { name: "Compare and save" })).toBeVisible();
+    await expect(guide(page).getByRole("button", { name: "Skip" })).toHaveCount(0);
+    await expect(guide(page).getByRole("button", { name: "Done" })).toBeFocused();
+    await shoot(page, "last");
   });
 }
 
@@ -365,22 +399,21 @@ test.describe("on a phone", () => {
     await page.getByRole("searchbox").press("Enter");
     await settled(page);
     await next(page).click();
-    if (await guide(page).getByRole("heading", { name: "A professor preference is optional" }).count()) await next(page).click();
-    await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
+    if (await guide(page).getByRole("heading", { name: "Prefer a professor?" }).count()) await next(page).click();
+    await expect(guide(page).getByRole("heading", { name: "Block busy times" })).toBeVisible();
   }
 
   test("step 4 teaches drawing beside the calendar, and step 5 says how to reach sections", async ({ page }) => {
     await toAvailability(page, coursePanelTerm("07"));
-    await expect(guide(page)).toContainText("Tap Block time, then drag on the calendar to mark when you’re busy. Drag on a blocked time to erase it.");
+    await expect(guide(page)).toContainText("Tap Block time, then drag across your busy hours.");
     await expect(page.locator("[data-guide-target]")).toHaveAccessibleName("Block time");
     await page.locator("[data-guide-target]").click();
     await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
     await next(page).click();
     await expect(page.getByRole("group", { name: "Drawing mode" })).toBeHidden();
-    await expect(guide(page)).toContainText("Tap a class or a course chip to see its sections");
-    await expect(guide(page)).not.toContainText("The course panel");
-    await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeFocused();
-    await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeInViewport();
+    await expect(guide(page)).toContainText("Flip through schedules with the arrows. Save one to get section codes for Workday.");
+    await expect(guide(page).getByRole("button", { name: "Done" })).toBeFocused();
+    await expect(guide(page).getByRole("button", { name: "Done" })).toBeInViewport();
     await page.keyboard.press("Enter");
     await expect(guide(page)).toBeHidden();
   });
@@ -390,16 +423,16 @@ test.describe("on a phone", () => {
     await page.getByRole("combobox", { name: "Starts after" }).selectOption("600");
     await settled(page);
     await next(page).click();
-    await expect(guide(page)).toContainText("Nothing fits right now.");
+    await expect(guide(page)).toContainText("The panel shows why and suggests fixes.");
     await expect(page.locator("[data-guide-target]")).toContainText("Needs attention");
-    await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeFocused();
+    await expect(guide(page).getByRole("button", { name: "Done" })).toBeFocused();
   });
 
   test("the footer button replays the guide from step 1, wherever the page was", async ({ page }) => {
     await toAvailability(page, coursePanelTerm("07"));
     await guide(page).getByRole("button", { name: "Close guide" }).click();
     await page.getByRole("button", { name: /^(Guide|How to use GoatPlan)$/ }).click();
-    await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
-    await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeInViewport();
+    await expect(guide(page).getByRole("heading", { name: "Pick your term" })).toBeFocused();
+    await expect(guide(page).getByRole("heading", { name: "Pick your term" })).toBeInViewport();
   });
 });

@@ -63,9 +63,9 @@ test("first visit shows the empty week, and the first-course message once the gu
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlan(page, null);
   // The guide opens on a first visit and hides the message while it's open.
-  await expect(page.getByRole("dialog", { name: "Choose your term" })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Pick your term" })).toBeVisible();
   await expect(calendar(page).getByRole("heading", { name: "Add your first course" })).toBeHidden();
-  await page.getByRole("button", { name: "Skip guide" }).click();
+  await page.getByRole("button", { name: "Skip", exact: true }).click();
   await expect(calendar(page).getByRole("heading", { name: "Add your first course" })).toBeVisible();
   await expect(calendar(page).getByText("No timed courses yet")).toBeVisible();
   await expect(page.getByText("Add courses to start planning your term.")).toBeVisible();

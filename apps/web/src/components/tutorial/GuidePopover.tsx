@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState, type ReactNode, type RefObject } fro
 import { createPortal } from "react-dom";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { X } from "@phosphor-icons/react/ssr";
+import { GuideDots } from "./GuideDots";
 import { guidePlacement, preferredPlaces, type GuideRect } from "./guidePlacement";
 import { guideTarget } from "./GuideTargetOutline";
 import type { GuideStep } from "./tutorialSteps";
@@ -12,7 +13,6 @@ type GuidePopoverProps = {
   title: string;
   body: string;
   hint?: string;
-  note?: string;
   progress: { current: number; total: number };
   onClose(): void;
   finishRef: RefObject<HTMLButtonElement | null>;
@@ -25,7 +25,7 @@ function visibleRect(selector: string): GuideRect | undefined {
   return rect && rect.width > 0 ? rect : undefined;
 }
 
-export function GuidePopover({ step, targetId, title, body, hint, note, progress, onClose, finishRef, children }: GuidePopoverProps) {
+export function GuidePopover({ step, targetId, title, body, hint, progress, onClose, finishRef, children }: GuidePopoverProps) {
   const box = useRef<HTMLDivElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const phone = usePhoneViewport();
@@ -64,17 +64,16 @@ export function GuidePopover({ step, targetId, title, body, hint, note, progress
   }, [step, slot, phone, finishRef]);
 
   const card = <div ref={box} role="dialog" aria-labelledby="guide-heading" aria-describedby="guide-body" className={phone
-    ? "guide-popover flex flex-col gap-8 rounded-guide border border-guide-line bg-surface px-16 pt-16 pb-14 shadow-guide"
-    : `guide-popover invisible fixed z-20 flex max-h-[calc(100dvh-16px)] max-w-[calc(100vw-16px)] flex-col gap-8 overflow-y-auto rounded-guide border border-guide-line bg-surface px-20 pt-19 pb-16 shadow-guide ${step === "schedules" ? "w-296" : "w-280"}`}>
+    ? "guide-popover flex flex-col gap-8 rounded-guide border border-guide-line bg-surface p-20 shadow-guide"
+    : "guide-popover invisible fixed z-20 flex w-280 max-h-[calc(100dvh-16px)] max-w-[calc(100vw-16px)] flex-col gap-8 overflow-y-auto rounded-guide border border-guide-line bg-surface p-24 shadow-guide"}>
     <div className="flex items-center justify-between">
-      <p aria-live="polite" aria-atomic="true" className="text-9 leading-13 font-600 text-accent">Getting started · {progress.current} of {progress.total}</p>
-      <button type="button" aria-label="Close guide" onClick={onClose} className="flex size-13 cursor-pointer items-center justify-center text-ink"><X aria-hidden className="size-13" /></button>
+      <GuideDots {...progress} />
+      <button type="button" aria-label="Close guide" onClick={onClose} className="-m-6 flex size-26 cursor-pointer items-center justify-center rounded-control text-ink-muted hover:text-ink"><X aria-hidden className="size-14" /></button>
     </div>
-    <h2 id="guide-heading" ref={heading} tabIndex={-1} className="mt-3 text-17 leading-guide-title font-700 tracking-tight text-ink outline-none">{title}</h2>
-    <p id="guide-body" className="text-11 leading-guide-body text-ink-muted">{body}</p>
-    {hint && <p id="guide-hint" aria-live="polite" className="mt-2 text-10 leading-16 text-guide-hint">{hint}</p>}
+    <h2 id="guide-heading" ref={heading} tabIndex={-1} className="mt-6 text-17 font-600 text-ink outline-none">{title}</h2>
+    <p id="guide-body" className="text-10 text-ink-muted">{body}</p>
+    {hint && <p id="guide-hint" aria-live="polite" className="text-9 text-ink-muted">{hint}</p>}
     {children}
-    {note && <p className="mt-5 text-8 leading-12 text-ink-muted">{note}</p>}
   </div>;
 
   if (!phone) return card;

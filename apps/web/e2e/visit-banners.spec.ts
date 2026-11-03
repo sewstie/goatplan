@@ -26,9 +26,9 @@ test("state 36: finishing the guide and returning restores only the choices kept
   await settled(page);
   // AE 2320 has one lecture professor, so the guide skips the professor step.
   await next(page).click();
-  await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
+  await expect(guide(page).getByRole("heading", { name: "Block busy times" })).toBeVisible();
   await next(page).click();
-  await guide(page).getByRole("button", { name: "Finish guide" }).click();
+  await guide(page).getByRole("button", { name: "Done" }).click();
   await expect(guide(page)).toBeHidden();
   await page.evaluate(() => {
     const key = "goatplan:draft:v1:2027-C";
@@ -63,16 +63,16 @@ test("state 37: a failed guide write changes the open step once while planning c
   });
   await next(page).focus();
   await page.keyboard.press("Enter");
-  await expect(guide(page).getByRole("heading", { name: "Keep planning in this visit" })).toBeVisible();
+  await expect(guide(page).getByRole("heading", { name: "Can’t save in this browser" })).toBeVisible();
   await expect(page.getByRole("status").filter({ hasText: notice })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: "e2e/screenshots/visit-state-37-1440.png", animations: "disabled" });
   await expect(page).toHaveScreenshot("visit-state-37-1440.png", { animations: "disabled" });
   await next(page).click();
-  await expect(guide(page).getByRole("heading", { name: "Browse, inspect, then save if you like" })).toBeVisible();
+  await expect(guide(page).getByRole("heading", { name: "Compare and save" })).toBeVisible();
   await guide(page).getByRole("button", { name: "Back", exact: true }).click();
-  await expect(guide(page).getByRole("heading", { name: "Make room for your day" })).toBeVisible();
-  await guide(page).getByRole("button", { name: "Skip guide" }).click();
+  await expect(guide(page).getByRole("heading", { name: "Block busy times" })).toBeVisible();
+  await guide(page).getByRole("button", { name: "Skip" }).click();
   await expect(guide(page)).toBeHidden();
   await expect(page.getByRole("status").filter({ hasText: "Guide closed · Replay it from How to use" })).toBeVisible();
   await pickStartsAfter(page, 600);
@@ -103,7 +103,7 @@ test("closing with Escape doesn't store the guide as done, and the replay button
     Storage.prototype.setItem = () => { throw new DOMException("Storage blocked", "SecurityError"); };
   });
   await page.getByRole("button", { name: /^(Guide|How to use GoatPlan)$/ }).click();
-  await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
+  await expect(guide(page).getByRole("heading", { name: "Pick your term" })).toBeFocused();
 });
 
 test("storage blocked from arrival still permits finishing the guide", async ({ page }) => {
@@ -113,13 +113,13 @@ test("storage blocked from arrival still permits finishing the guide", async ({ 
   await page.goto("/");
   await expect(next(page)).toHaveAttribute("aria-disabled", "false");
   await next(page).click();
-  await expect(guide(page).getByRole("heading", { name: "Keep planning in this visit" })).toBeVisible();
+  await expect(guide(page).getByRole("heading", { name: "Can’t save in this browser" })).toBeVisible();
   await next(page).click();
   await page.getByRole("searchbox").fill("AE 2320");
   await page.getByRole("searchbox").press("Enter");
   await settled(page);
   for (let i = 0; i < 2; i++) await next(page).click();
-  await guide(page).getByRole("button", { name: "Finish guide" }).click();
+  await guide(page).getByRole("button", { name: "Done" }).click();
   await expect(guide(page)).toBeHidden();
   await expect(page.getByRole("status").filter({ hasText: notice })).toBeVisible();
 });

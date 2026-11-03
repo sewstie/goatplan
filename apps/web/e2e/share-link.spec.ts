@@ -277,7 +277,7 @@ for (const { name, data } of [
     await page.goto(`/#p=${data}`);
     const dialog = page.getByRole("dialog", { name: "We couldn’t open this plan" });
     await expect(dialog).toContainText("Your draft hasn’t changed.");
-    await expect(page.getByRole("dialog").filter({ hasText: "Getting started" })).toHaveCount(0);
+    await expect(page.getByRole("dialog").filter({ has: page.getByRole("button", { name: "Close guide" }) })).toHaveCount(0);
     await dialog.getByRole("button", { name: "Return to my planner" }).click();
     await expect(dialog).toHaveCount(0);
     await expect(page).toHaveURL("/");

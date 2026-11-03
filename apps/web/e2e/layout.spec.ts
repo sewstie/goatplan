@@ -855,8 +855,8 @@ test.describe("the phone", () => {
     await page.goto("/");
     const guide = page.locator(".guide-popover");
     await guide.getByRole("button", { name: "Next" }).click({ timeout: 30_000 });
-    await expect(guide.getByRole("heading", { name: "Add the courses you need" })).toBeVisible();
-    await expect(guide.getByRole("button", { name: "Skip guide" })).toBeVisible();
+    await expect(guide.getByRole("heading", { name: "Add your courses" })).toBeVisible();
+    await expect(guide.getByRole("button", { name: "Skip" })).toBeVisible();
     expect(await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).scrollPaddingBottom))).toBeGreaterThan(50);
   });
 

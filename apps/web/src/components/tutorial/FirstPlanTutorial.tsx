@@ -140,7 +140,7 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
   return <>
     <VisitBanner storageFailed={storageFailed} />
     <GuideTargetOutline targetId={targetId} />
-    <GuidePopover key={run} step={visit.step} targetId={targetId} finishRef={finish} note={step === "schedules" && !storageFailed ? "Your plan is saved in this browser." : undefined} title={storageWording ? "Keep planning in this visit" : content!.title} body={storageWording ? "You can continue or skip the guide. Your course and choices stay in the open plan." : content!.body} hint={storageWording ? undefined : hint} progress={guideProgress(visit)} onClose={close}>
+    <GuidePopover key={run} step={visit.step} targetId={targetId} finishRef={finish} title={storageWording ? "Can’t save in this browser" : content!.title} body={storageWording ? "Your choices last until you close this tab." : content!.body} hint={storageWording ? undefined : hint} progress={guideProgress(visit)} onClose={close}>
       <GuideButtons first={step === "term"} last={step === "schedules"} waiting={waiting} onBack={() => move(-1)} onSkip={skip} onNext={next} finishRef={finish} />
     </GuidePopover>
   </>;
