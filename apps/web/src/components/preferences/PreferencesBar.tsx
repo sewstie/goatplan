@@ -8,6 +8,7 @@ import { useHeldHeight } from "@/components/schedule/useHeldHeight";
 import { BlockedTimeChips } from "./BlockedTimeChips";
 import { BlockedTimesMenu } from "./BlockedTimesMenu";
 import { BlockTimeButton } from "./BlockTimeButton";
+import { OnlyOpenPill } from "./OnlyOpenPill";
 import { SortSelect } from "./SortSelect";
 import { StartTimeSelect } from "./StartTimeSelect";
 

@@ -85,6 +85,6 @@ export function AppShell({
         </main>
       </div>
       <PageFooter />
-    </div>
+    </>
   );
 }
