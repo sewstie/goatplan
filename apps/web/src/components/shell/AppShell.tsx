@@ -17,8 +17,8 @@ type AppShellProps = {
   scheduleLabel?: string;
   detailsLabel?: string;
   /**
-   * Below the wide breakpoint the main region has a fixed height. "content" lets it grow with longer
-   * content instead, like the registration sheet.
+   * On tablet the calendar is at least 640px tall. "content" allows a shorter panel, like the
+   * registration sheet, which scrolls inside.
    */
   scheduleFit?: "fixed" | "content";
   /** No details panel while the planner's term can't load (div.app-2.md). */
@@ -40,7 +40,7 @@ export function AppShell({
   hideDetailsOnTermError = false,
 }: AppShellProps) {
   return (
-    <div className="flex min-h-dvh flex-col wide:h-[max(100dvh,36rem)]">
+    <div className="flex min-h-dvh flex-col tablet:h-[max(100dvh,36rem)]">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-8 focus:left-8 focus:z-20 focus:rounded-control focus:bg-surface focus:px-11 focus:py-9 focus:text-11 focus:font-570 focus:text-accent focus:shadow-popover"
@@ -54,9 +54,9 @@ export function AppShell({
         <main
           id="main"
           tabIndex={-1}
-          className="flex min-w-0 flex-1 flex-col gap-(--size-gutter) outline-none wide:flex-row"
+          className="flex min-w-0 flex-1 flex-col gap-(--size-gutter) outline-none tablet:min-h-0 tablet:overflow-y-auto wide:flex-row wide:overflow-visible"
         >
-          <div className="flex min-w-0 flex-col gap-(--size-gutter) wide:flex-1">
+          <div className="flex min-w-0 flex-col gap-(--size-gutter) tablet:flex-1">
             <div className="order-2 tablet:order-none tablet:contents">{header}</div>
             <div className="order-6 tablet:order-none tablet:contents">{toolbar}</div>
             {/*
@@ -67,10 +67,9 @@ export function AppShell({
             <section
               aria-label={scheduleLabel}
               className={cx(
-                "relative order-4 flex flex-col overflow-hidden rounded-panel bg-surface tablet:order-none tablet:shrink-0 wide:min-h-0 wide:flex-1 wide:shrink",
-                // Phone: the day view grows with its content instead of leaving a fixed empty gap.
-                // Tablet and up: keep the 640px calendar (fixed), or let it grow for the plans sheet.
-                scheduleFit === "fixed" ? "tablet:h-640 wide:h-auto" : "tablet:min-h-640",
+                "relative order-4 flex flex-col overflow-hidden rounded-panel bg-surface tablet:order-none tablet:flex-1 wide:min-h-0",
+                // Tablet and up it fills the window. On tablet, if the window is too short, the main column scrolls instead of the page.
+                scheduleFit === "fixed" ? "tablet:min-h-640" : "tablet:min-h-400",
               )}
             >
               {schedule}
