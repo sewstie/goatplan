@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { cx } from "@/components/ui/cx";
 import { usePlanner } from "@/lib/store";
 
 type DetailsPanelProps = {
@@ -20,7 +21,11 @@ export function DetailsPanel({ label, hideOnTermError, children }: DetailsPanelP
     <aside
       aria-label={label}
       data-guide-hide={hideOnTermError && !hasCourses ? "" : undefined}
-      className="relative hidden flex-col rounded-panel bg-surface px-16 py-20 tablet:flex tablet:empty:hidden wide:w-(--size-details) wide:shrink-0 wide:overflow-y-auto"
+      className={cx(
+        "relative hidden flex-col rounded-panel bg-surface px-16 py-20 wide:w-(--size-details) wide:shrink-0 wide:overflow-y-auto",
+        // With no courses yet, the calendar gets the whole window on tablet.
+        hideOnTermError && !hasCourses ? "wide:flex" : "tablet:flex tablet:empty:hidden",
+      )}
     >
       {children}
     </aside>

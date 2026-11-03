@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { cx } from "@/components/ui/cx";
 import { DetailsPanel } from "./DetailsPanel";
 import { TopBar } from "./TopBar";
 
@@ -16,11 +15,6 @@ type AppShellProps = {
   /** The names screen readers give the two main regions. */
   scheduleLabel?: string;
   detailsLabel?: string;
-  /**
-   * On tablet the calendar is at least 640px tall. "content" allows a shorter panel, like the
-   * registration sheet, which scrolls inside.
-   */
-  scheduleFit?: "fixed" | "content";
   /** No details panel while the planner's term can't load (div.app-2.md). */
   hideDetailsOnTermError?: boolean;
 };
@@ -36,7 +30,6 @@ export function AppShell({
   details,
   scheduleLabel = "Weekly schedule",
   detailsLabel = "Course details",
-  scheduleFit = "fixed",
   hideDetailsOnTermError = false,
 }: AppShellProps) {
   return (
@@ -56,7 +49,7 @@ export function AppShell({
           tabIndex={-1}
           className="flex min-w-0 flex-1 flex-col gap-(--size-gutter) outline-none tablet:min-h-0 tablet:overflow-y-auto wide:flex-row wide:overflow-visible"
         >
-          <div className="flex min-w-0 flex-col gap-(--size-gutter) tablet:flex-1">
+          <div className="flex min-w-0 flex-col gap-(--size-gutter) tablet:min-h-full tablet:flex-1 tablet:shrink-0 wide:min-h-0 wide:shrink">
             <div className="order-2 tablet:order-none tablet:contents">{header}</div>
             <div className="order-6 tablet:order-none tablet:contents">{toolbar}</div>
             {/*
@@ -66,11 +59,7 @@ export function AppShell({
             <div className="order-3 tablet:order-none tablet:contents">{banner}</div>
             <section
               aria-label={scheduleLabel}
-              className={cx(
-                "relative order-4 flex flex-col overflow-hidden rounded-panel bg-surface tablet:order-none tablet:flex-1 wide:min-h-0",
-                // Tablet and up it fills the window. On tablet, if the window is too short, the main column scrolls instead of the page.
-                scheduleFit === "fixed" ? "tablet:min-h-640" : "tablet:min-h-400",
-              )}
+              className="relative order-4 flex flex-col overflow-hidden rounded-panel bg-surface tablet:order-none tablet:min-h-400 tablet:flex-1 wide:min-h-0"
             >
               {schedule}
             </section>

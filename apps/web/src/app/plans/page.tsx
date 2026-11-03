@@ -74,7 +74,6 @@ export default function PlansPage() {
             }
             scheduleLabel="Sections to register"
             detailsLabel="Plan summary"
-            scheduleFit="content"
             schedule={
               <Suspense>
                 <RegistrationSheet />
