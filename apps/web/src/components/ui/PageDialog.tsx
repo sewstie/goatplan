@@ -2,7 +2,6 @@
 
 import { useEffect, useId, useRef, type ReactNode } from "react";
 import { X } from "@phosphor-icons/react/ssr";
-import { PageFooter } from "@/components/shell/PageFooter";
 import { cx } from "./cx";
 import { useModalDialog } from "./useModalDialog";
 
@@ -17,14 +16,12 @@ type PageDialogProps = {
   footer?: ReactNode;
   /** The bigger of the two card widths, for the pin decisions. */
   wide?: boolean;
-  termId?: string;
 };
 
 /**
- * A modal that takes over the page under the top bar: the card sits on the plain page background, with
- * the footer below it. On a phone there's no card, and it reads as a page of its own.
+ * A modal that takes over the page under the top bar: the card sits on the plain page background. On a phone there's no card, and it reads as a page of its own.
  */
-export function PageDialog({ open, onClose, title, description, breadcrumb, children, footer, wide = false, termId }: PageDialogProps) {
+export function PageDialog({ open, onClose, title, description, breadcrumb, children, footer, wide = false }: PageDialogProps) {
   const titleId = useId();
   const descriptionId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
@@ -59,7 +56,6 @@ export function PageDialog({ open, onClose, title, description, breadcrumb, chil
             {footer && <div className="mt-16 flex flex-wrap justify-end gap-8 border-t border-line pt-22">{footer}</div>}
           </div>
         </div>
-        <PageFooter termId={termId} />
       </div>
     </dialog>
   );

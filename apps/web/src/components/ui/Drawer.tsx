@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { X } from "@phosphor-icons/react/ssr";
-import { PageFooter } from "@/components/shell/PageFooter";
 import { useModalDialog } from "./useModalDialog";
 
 const DRAWER_TITLE_ID = "drawer-title";
@@ -13,7 +12,7 @@ type DrawerProps = {
   children?: ReactNode;
 };
 
-/** A panel from the right, or from the bottom on a phone. The top bar and the footer stay in view around it. */
+/** A panel from the right, or from the bottom on a phone. The top bar stays in view above it. */
 export function Drawer({ open, onClose, children }: DrawerProps) {
   const { ref, handleClose, close } = useModalDialog(open, onClose);
   return (
@@ -29,7 +28,6 @@ export function Drawer({ open, onClose, children }: DrawerProps) {
           {children}
         </div>
       </div>
-      <PageFooter />
     </dialog>
   );
 }
