@@ -30,31 +30,28 @@ type GuideContext = { hasCourses?: boolean; noMatches?: boolean; phone?: boolean
 export function guideContent(step: GuideStep, { hasCourses = false, noMatches = false, phone = false }: GuideContext = {}) {
   switch (step) {
     case "term": return {
-      target: "tutorial-term", title: "Choose your term",
-      body: "Everything you add belongs to this term. Once its sections load, you can start choosing courses.",
+      target: "tutorial-term", title: "Pick your term",
+      body: "Your courses and sections come from this term.",
     };
     case "courses": return {
-      target: "tutorial-search", title: "Add the courses you need",
-      body: "Use the course search by code or professor. Adding a course finds its fitting lecture and lab combinations automatically.",
-      hint: hasCourses ? "Great — press Next" : "Add at least one course to continue.",
+      target: "tutorial-search", title: "Add your courses",
+      body: "Search by code, name or professor.",
+      hint: hasCourses ? undefined : "Add a course to continue.",
     };
     case "professor": return {
-      target: "tutorial-professor", title: "A professor preference is optional",
-      body: "Want a specific professor? Pick them here to see only their lectures. Any professor keeps every option.",
+      target: "tutorial-professor", title: "Prefer a professor?",
+      body: "Optional. Pick one to see only their lectures.",
     };
     case "availability": return {
-      target: "tutorial-block-time", title: "Make room for your day",
-      body: `${phone ? "Tap Block time" : "Press Block a time"}, then drag on the calendar to mark when you’re busy. Drag on a blocked time to erase it.`,
-      hint: "Time preferences are optional. Next keeps your current choices.",
+      target: "tutorial-block-time", title: "Block busy times",
+      body: `${phone ? "Tap Block time" : "Click Block a time"}, then drag across your busy hours.`,
     };
     case "schedules": return noMatches ? {
-      target: "tutorial-diagnosis", title: "You can finish with no matches",
-      body: "Nothing fits right now. The panel shows why and offers fixes — finish the guide and pick one when you’re ready.",
-      hint: "Finishing keeps every current preference and lock.",
+      target: "tutorial-diagnosis", title: "Nothing fits yet",
+      body: "The panel shows why and suggests fixes.",
     } : {
-      target: "tutorial-schedules", title: "Browse, inspect, then save if you like",
-      body: `Use the arrows to compare returned schedules. ${phone ? "Tap a class or a course chip to see its sections." : "The course panel lists this timetable’s lecture, lab and discussion IDs."} Save a plan to find Sections to register, where you can copy or print the codes for Workday.`,
-      hint: "Saving and registering are not required to finish.",
+      target: "tutorial-schedules", title: "Compare and save",
+      body: "Flip through schedules with the arrows. Save one to get section codes for Workday.",
     };
   }
 }
