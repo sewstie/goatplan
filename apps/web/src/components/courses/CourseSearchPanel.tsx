@@ -8,6 +8,7 @@ import { courseFit } from "./courseFit";
 import { courseCount } from "./courseSummary";
 import { NoMatchMessage } from "./NoMatchMessage";
 import { NotOfferedMessage } from "./NotOfferedMessage";
+import { FindCourseOverlay } from "./FindCourseOverlay";
 import { joinTermNames } from "./otherTerms";
 import { SearchBox } from "./SearchBox";
 import { buildSearchIndex, searchCourses, suggestCourseCode } from "./searchCourses";
