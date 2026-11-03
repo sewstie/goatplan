@@ -4,7 +4,6 @@ import { usePhoneScreen } from "./phoneScreen";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/", useRouter: () => ({ push: vi.fn() }) }));
 vi.mock("@/components/shell/Brand", () => ({ Brand: () => null }));
-vi.mock("@/components/shell/DataUpdated", () => ({ DataUpdated: () => null }));
 vi.mock("./PhoneTermSelect", () => ({ PhoneTermSelect: () => null }));
 vi.mock("./PhoneSearchScreen", () => ({ PhoneSearchScreen: () => null }));
 vi.mock("./PhonePreferencesScreen", () => ({ PhonePreferencesScreen: () => null }));

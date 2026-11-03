@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { cx } from "@/components/ui/cx";
 import { DetailsPanel } from "./DetailsPanel";
-import { PageFooter } from "./PageFooter";
 import { TopBar } from "./TopBar";
 
 type AppShellProps = {
@@ -13,8 +12,6 @@ type AppShellProps = {
   /** Full-width messages between the toolbar and the calendar, like "No schedule fits." */
   banner?: ReactNode;
   schedule: ReactNode;
-  /** One small line under the schedule. */
-  scheduleNote?: ReactNode;
   details?: ReactNode;
   /** The names screen readers give the two main regions. */
   scheduleLabel?: string;
@@ -36,7 +33,6 @@ export function AppShell({
   toolbar,
   banner,
   schedule,
-  scheduleNote,
   details,
   scheduleLabel = "Weekly schedule",
   detailsLabel = "Course details",
@@ -44,7 +40,7 @@ export function AppShell({
   hideDetailsOnTermError = false,
 }: AppShellProps) {
   return (
-    <>
+    <div className="flex min-h-dvh flex-col wide:h-[max(100dvh,36rem)]">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-8 focus:left-8 focus:z-20 focus:rounded-control focus:bg-surface focus:px-11 focus:py-9 focus:text-11 focus:font-570 focus:text-accent focus:shadow-popover"
@@ -53,14 +49,14 @@ export function AppShell({
       </a>
       <TopBar center={barCenter} actions={barActions} />
       {/* Phone: a single column with a 16px side gutter. Tablet and up: the sidebar plus the main region. */}
-      <div className="mx-auto flex min-h-0 w-full max-w-(--size-app-max) flex-1 gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:px-20 tablet:pt-20 tablet:pb-0">
+      <div className="mx-auto flex min-h-0 w-full max-w-(--size-app-max) flex-1 gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:px-20 tablet:py-20">
         <div className="contents">{sidebar}</div>
         <main
           id="main"
           tabIndex={-1}
           className="flex min-w-0 flex-1 flex-col gap-(--size-gutter) outline-none wide:flex-row"
         >
-          <div className="flex min-w-0 flex-1 flex-col gap-(--size-gutter)">
+          <div className="flex min-w-0 flex-col gap-(--size-gutter) wide:flex-1">
             <div className="order-2 tablet:order-none tablet:contents">{header}</div>
             <div className="order-6 tablet:order-none tablet:contents">{toolbar}</div>
             {/*
@@ -79,7 +75,6 @@ export function AppShell({
             >
               {schedule}
             </section>
-            {scheduleNote}
           </div>
           {/* The side details panel is hidden on a phone; the bottom sheet takes its place. */}
           {details && (
@@ -89,7 +84,6 @@ export function AppShell({
           )}
         </main>
       </div>
-      <PageFooter />
-    </>
+    </div>
   );
 }

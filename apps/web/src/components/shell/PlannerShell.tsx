@@ -7,7 +7,7 @@ import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
 import { AppShell } from "@/components/shell/AppShell";
 import { PlannerToast } from "@/components/shell/PlannerToast";
 import { Sidebar } from "@/components/shell/Sidebar";
-import { ScheduleNote } from "@/components/schedule/ScheduleNote";
+import { TermPicker } from "@/components/courses/TermPicker";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 
 type PlannerShellProps = {
@@ -35,6 +35,7 @@ export function PlannerShell({ header, barCenter, barActions, toolbar, banner, s
         <AppShell
           sidebar={
             <Sidebar>
+              <TermPicker />
               <CourseSearchPanel />
             </Sidebar>
           }
@@ -44,7 +45,6 @@ export function PlannerShell({ header, barCenter, barActions, toolbar, banner, s
           toolbar={toolbar}
           banner={banner}
           schedule={schedule}
-          scheduleNote={<ScheduleNote />}
           hideDetailsOnTermError
           details={
             <CourseDetailsPanel />
