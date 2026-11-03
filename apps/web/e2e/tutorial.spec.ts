@@ -1,4 +1,4 @@
-import { expect, test } from "./fixtures/test";
+import { expect, test, startsAfterText } from "./fixtures/test";
 import type { Locator, Page } from "@playwright/test";
 import { coursePanelTerm } from "./fixtures/coursePanel";
 import type { TermFile } from "../src/lib/data/types";
@@ -102,8 +102,8 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await expect(page.locator("[data-guide-target]")).toHaveAccessibleName("Block a time");
   await tabTo(page, page.getByRole("combobox", { name: "Starts after" }));
   await page.keyboard.type("9");
-  await page.keyboard.press("Tab");
-  await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue("540");
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(540));
   await tabTo(page, page.getByRole("button", { name: "Block a time", exact: true }));
   await page.keyboard.press("Enter");
   await tabTo(page, page.getByRole("button", { name: "Type a time instead", exact: true }));
@@ -121,9 +121,9 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await capture(page, "33");
   await tabTo(page, page.getByRole("combobox", { name: "Starts after" }));
   await page.keyboard.type("10");
-  await page.keyboard.press("Tab");
+  await page.keyboard.press("Enter");
   await settled(page);
-  await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue("600");
+  await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(600));
   await advance(page);
   await expect(guide(page).getByRole("heading", { name: "You can finish with no matches" })).toBeVisible();
   await expect(guide(page).getByRole("button", { name: "Finish guide" })).toBeFocused();
@@ -137,7 +137,7 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await page.reload();
   await settled(page);
   await expect(guide(page)).toBeHidden();
-  await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue("600");
+  await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(600));
   await page.getByRole("button", { name: /blocked time/ }).first().click();
   await expect(page.getByRole("button", { name: "Remove blocked time Lunch, Mon, Wed, Fri 12 PM–1 PM" })).toBeVisible();
 });
@@ -209,7 +209,7 @@ test("a lab-only course skips the professor step and keeps progress stable until
   await expect(guide(page)).toBeHidden();
 });
 
-const replay = (page: Page) => page.getByRole("button", { name: "How to use GoatPlan", exact: true });
+const replay = (page: Page) => page.getByRole("button", { name: /^(Guide|How to use GoatPlan)$/ });
 const guideStatus = (page: Page) => page.evaluate(() => localStorage.getItem("goatplan:tutorial:v1"));
 
 test("Escape and the × close the guide for this visit only", async ({ page }) => {
@@ -319,7 +319,7 @@ test("step 4 stays off the calendar, and Escape there only leaves drawing mode",
   await expect(block).toHaveAccessibleName("Block a time");
   const box = await guide(page).boundingBox();
   const calendar = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
-  expect(box!.x).toBeLessThan(calendar!.x);
+  expect(box!.x).toBeGreaterThanOrEqual(calendar!.x + calendar!.width);
   await block.click();
   await expect(page.getByRole("group", { name: "Drawing mode" })).toBeVisible();
   await page.keyboard.press("Escape");
@@ -398,7 +398,7 @@ test.describe("on a phone", () => {
   test("the footer button replays the guide from step 1, wherever the page was", async ({ page }) => {
     await toAvailability(page, coursePanelTerm("07"));
     await guide(page).getByRole("button", { name: "Close guide" }).click();
-    await page.getByRole("button", { name: "How to use GoatPlan", exact: true }).click();
+    await page.getByRole("button", { name: /^(Guide|How to use GoatPlan)$/ }).click();
     await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
     await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeInViewport();
   });

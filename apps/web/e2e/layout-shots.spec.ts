@@ -33,3 +33,11 @@ for (const [width, height] of [[1440, 900], [834, 1112], [375, 812]] as const) {
     await page.screenshot({ path: `e2e/screenshots/layout/degree-${width}-${stage}.png`, animations: "disabled", fullPage: true });
   });
 }
+
+test("the calendar header at 1280 when seats failed to refresh", async ({ page, context }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await context.route("**/api/seats?*", (route) => route.abort());
+  await openPlanner(page);
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: `e2e/screenshots/layout/planner-1280-seats-failed-${stage}.png`, animations: "disabled" });
+});

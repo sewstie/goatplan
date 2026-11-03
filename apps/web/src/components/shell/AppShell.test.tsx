@@ -38,10 +38,9 @@ describe("AppShell", () => {
     localStorage.removeItem(DEGREE_FLAG_KEY);
   });
 
-  it("puts the schedule switcher and the actions in the top bar", () => {
-    render(<AppShell {...parts()} barCenter={<p>switcher</p>} barActions={<p>actions</p>} />);
+  it("puts the actions in the top bar", () => {
+    render(<AppShell {...parts()} barActions={<p>actions</p>} />);
     const bar = screen.getAllByRole("banner")[0];
-    expect(bar).toHaveTextContent("switcher");
     expect(bar).toHaveTextContent("actions");
   });
 

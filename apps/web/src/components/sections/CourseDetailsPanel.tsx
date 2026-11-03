@@ -24,11 +24,13 @@ export function CourseDetailsPanel({ renderCourse = (course) => <CourseDetails k
   const busy = usePlanner((state) => state.solveStatus === "waiting" || state.solveStatus === "solving");
   const panel = useRef<HTMLDivElement>(null);
   const focused = useRef<HTMLElement | null>(null);
+  const focusedByKeyboard = useRef(false);
   const wasBusy = useRef(false);
 
   useEffect(() => {
     if (wasBusy.current && !busy && focused.current && !focused.current.isConnected && document.activeElement === document.body) {
-      panel.current?.querySelector("h2")?.focus();
+      // A mouse user keeps their place. A keyboard user needs to see where focus went.
+      panel.current?.querySelector("h2")?.focus({ preventScroll: !focusedByKeyboard.current });
     }
     wasBusy.current = busy;
   }, [busy]);
@@ -41,5 +43,5 @@ export function CourseDetailsPanel({ renderCourse = (course) => <CourseDetails k
   else if (diagnosis && (diagnosis.issues.length > 0 || diagnosis.fixes.length > 0)) content = <DiagnosisPanel course={course} diagnosis={diagnosis} locks={locks} />;
   else if (!course) content = <PanelIntro />;
   else content = renderCourse(course);
-  return <div ref={panel} onFocusCapture={(event) => { focused.current = event.target as HTMLElement; }}>{content}</div>;
+  return <div ref={panel} onFocusCapture={(event) => { focused.current = event.target as HTMLElement; focusedByKeyboard.current = focused.current.matches(":focus-visible"); }}>{content}</div>;
 }

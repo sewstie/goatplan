@@ -1,4 +1,4 @@
-import { expect, frozenTerm, test } from "./fixtures/test";
+import { expect, frozenTerm, test, startsAfterText } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft } from "../src/lib/store/types";
@@ -84,7 +84,7 @@ for (const [label, start] of [["Change to 9:00 AM", 540], ["Clear start restrict
     await page.keyboard.press("Enter");
     await settled(page);
     expect(await draft(page)).toMatchObject({ ...regular, preferences: { ...regular.preferences, startsAfter: start } });
-    await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue(String(start));
+    await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(start));
     await expect(page.getByText("Schedule 1 of 1", { exact: true })).toBeVisible();
     await expect(details(page).getByText("Needs attention")).toHaveCount(0);
   });

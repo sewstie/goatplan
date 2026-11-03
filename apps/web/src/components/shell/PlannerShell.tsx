@@ -2,19 +2,18 @@
 
 import type { ReactNode } from "react";
 import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
+import { TermPicker } from "@/components/courses/TermPicker";
 import { PhonePlanner } from "@/components/phone/PhonePlanner";
 import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
 import { AppShell } from "@/components/shell/AppShell";
 import { PlannerToast } from "@/components/shell/PlannerToast";
-import { ScheduleNote } from "@/components/schedule/ScheduleNote";
 import { Sidebar } from "@/components/shell/Sidebar";
+import { SidebarFooter } from "@/components/shell/SidebarFooter";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 
 type PlannerShellProps = {
   header: ReactNode;
-  barCenter?: ReactNode;
   barActions?: ReactNode;
-  toolbar: ReactNode;
   banner: ReactNode;
   schedule: ReactNode;
 };
@@ -39,9 +38,7 @@ export function PlannerShell({ header, barCenter, barActions, toolbar, banner, s
             </Sidebar>
           }
           header={header}
-          barCenter={barCenter}
           barActions={barActions}
-          toolbar={toolbar}
           banner={banner}
           schedule={schedule}
           scheduleNote={<ScheduleNote />}

@@ -8,6 +8,7 @@ import { DrawerFrame } from "@/components/ui/Drawer";
 import { codesOf, lineLabel, moveTargets, unavailableExample, type DegreeHistory } from "@/lib/degree";
 import { requestMove } from "./degreeActions";
 import { useDegreeUi } from "./degreeUi";
+import { focusWithinInset } from "@/components/ui/focusRing";
 import { SummaryCard } from "./SummaryCard";
 import type { DegreeView } from "./useDegreeView";
 
@@ -36,10 +37,10 @@ export function MoveLinePanel({ code, view, history }: { code: string; view: Deg
         {targets.map((target) => {
           const selected = chosen === target.line;
           return (
-            <label key={target.line} className={cx("flex min-h-73 cursor-pointer items-center gap-13 border-b border-card-line px-17 last:border-b-0", selected && "bg-notice-info outline-1 -outline-offset-1 outline-chart-planned")}>
+            <label key={target.line} className={cx("flex min-h-73 cursor-pointer items-center gap-13 border-b border-card-line px-17 last:border-b-0", focusWithinInset, selected && "bg-notice-info outline-1 -outline-offset-1 outline-chart-planned")}>
               <input type="radio" name="move-line" className="peer sr-only" checked={selected} onChange={() => setChosen(target.line)} />
               {selected ? <CheckCircle aria-hidden className="size-16 shrink-0" /> : <Circle aria-hidden className="size-16 shrink-0" />}
-              <span className="peer-focus-visible:underline">
+              <span>
                 <span className="block text-8-5 leading-17 font-650">{target.title}</span>
                 <span className="block pt-3 text-8 leading-14-4 text-ink-muted">{target.text}</span>
               </span>

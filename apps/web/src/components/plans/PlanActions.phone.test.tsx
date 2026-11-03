@@ -5,8 +5,7 @@ import { createPlan, getPlansSource } from "@/lib/plans";
 import { getPlannerStore } from "@/lib/store";
 import { PlanActions } from "./PlanActions";
 
-// On a phone the Save button keeps a short visible label ("Save" / "Saved") with its status under
-// it, and stays a 44px touch target. On a tablet and wider the full text buttons stay.
+// On a phone the Save button keeps a short visible label ("Save" / "Saved") and stays a 44px touch target. On a tablet and wider the full text buttons stay.
 // usePhoneViewport() drives the switch via window.matchMedia.
 
 vi.mock("next/link", () => ({
@@ -102,14 +101,14 @@ describe("PlanActions on a phone", () => {
     expect(screen.getByRole("button", { name: "Save" })).toHaveClass("min-h-44");
   });
 
-  it("shows Saved with a status line once the plan is saved", () => {
+  it("shows Saved once the plan is saved, with no extra status line", () => {
     mockPhoneViewport();
     setPlanner();
     withSavedPlan();
     render(<PlanActions />);
 
     expect(screen.getByRole("button", { name: "Schedule saved" })).toHaveTextContent("Saved");
-    expect(screen.getByText("Schedule saved")).toBeInTheDocument();
+    expect(screen.queryByText("Schedule saved")).not.toBeInTheDocument();
   });
 
   it("lets a layout place the menu and Save button apart", () => {

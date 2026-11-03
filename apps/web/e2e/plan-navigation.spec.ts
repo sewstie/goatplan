@@ -1,4 +1,4 @@
-import { expect, test } from "./fixtures/test";
+import { expect, test, startsAfterText } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 import { designPlan } from "../src/lib/plans/testing";
 
@@ -102,7 +102,7 @@ test("Start a new plan confirms unsaved work and saves a separate plan from an e
   const search = page.getByRole("searchbox", { name: "Search courses" });
   await expect(search).toBeFocused();
   await expect(page.getByRole("button", { name: /^Remove AE/ })).toHaveCount(0);
-  await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue("0");
+  await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(0));
   await expect(page.getByRole("switch", { name: "Only open sections" })).toBeChecked();
   await expect(page.getByRole("button", { name: "Save schedule", exact: true })).toBeDisabled();
   await page.reload();

@@ -3,15 +3,14 @@
 import { useId, type ComponentProps } from "react";
 import { CaretDown } from "@phosphor-icons/react/ssr";
 import { cx } from "./cx";
+import { focusWithin } from "./focusRing";
 
-export type SelectVariant = "field" | "box" | "pill" | "menu" | "bar";
+export type SelectVariant = "field" | "box" | "pill" | "menu";
 
 export type SelectOption = { value: string; label: string; disabled?: boolean };
 
 type SelectProps = Omit<ComponentProps<"select">, "children"> & {
   label: string;
-  /** Shown instead of the label below the desk breakpoint, where a row is tight. */
-  shortLabel?: string;
   /** The field and box variants hide their label unless this is false; then it sits above the box. */
   hideLabel?: boolean;
   options: SelectOption[];
@@ -23,20 +22,6 @@ const wrapperClasses: Record<SelectVariant, string> = {
   box: "flex min-h-35 rounded-row border border-line bg-surface",
   pill: "inline-flex min-h-32 gap-6 rounded-pill bg-surface pl-10",
   menu: "inline-flex min-w-146 gap-6 rounded-row bg-surface pl-9",
-  bar: "inline-flex rounded-row",
-};
-
-// Bordered fields get the same focus look as text inputs: a lavender border and a soft halo.
-const fieldFocus =
-  "transition-[border-color,box-shadow] has-[:focus-visible]:border-choice-line has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-accent-soft";
-const ringFocus = "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus";
-
-const focusClasses: Record<SelectVariant, string> = {
-  field: fieldFocus,
-  box: fieldFocus,
-  pill: ringFocus,
-  menu: ringFocus,
-  bar: ringFocus,
 };
 
 const labelClasses: Record<SelectVariant, string> = {
@@ -44,7 +29,6 @@ const labelClasses: Record<SelectVariant, string> = {
   box: "sr-only",
   pill: "text-9 leading-13 whitespace-nowrap text-ink-muted",
   menu: "text-9 leading-13 text-ink-muted",
-  bar: "sr-only",
 };
 
 // Only the field and box selects take their box's corners. The pill and menu selects stay square:
@@ -54,7 +38,6 @@ const selectClasses: Record<SelectVariant, string> = {
   box: "w-full rounded-[inherit] py-9 pr-28 pl-9 text-10 leading-14-5",
   pill: "field-sizing-content py-8.75 pr-28 text-10 leading-14-5 font-650",
   menu: "field-sizing-content py-7.5 pr-25 text-9 leading-13",
-  bar: "field-sizing-content py-8 pr-29 pl-6 text-9 leading-13 font-510 text-ink-soft",
 };
 
 const caretClasses: Record<SelectVariant, string> = {
@@ -62,13 +45,11 @@ const caretClasses: Record<SelectVariant, string> = {
   box: "right-9 size-11",
   pill: "right-10 size-10",
   menu: "right-9 size-10",
-  bar: "right-6 size-13",
 };
 
 export function Select({
   label,
   hideLabel = true,
-  shortLabel,
   options,
   variant = "field",
   id,
@@ -83,16 +64,16 @@ export function Select({
       htmlFor={selectId}
       className={labelAbove ? "pb-5 text-10 leading-14-5 font-650 text-ink" : labelClasses[variant]}
     >
-      {shortLabel ? <><span className="sr-only">{label}</span><span aria-hidden className="max-desk:hidden">{label}</span><span aria-hidden className="desk:hidden">{shortLabel}</span></> : label}
+      {label}
     </label>
   );
 
   const field = (
     <div
       className={cx(
-        "relative items-center text-ink transition-[border-color,box-shadow] has-[:focus-visible]:border-choice-line has-[:focus-visible]:shadow-field-focus has-[:disabled]:bg-surface-disabled has-[:disabled]:text-ink-faint",
+        "relative items-center text-ink has-[:disabled]:bg-surface-disabled has-[:disabled]:text-ink-faint",
         wrapperClasses[variant],
-        focusClasses[variant],
+        focusWithin,
         className,
       )}
     >

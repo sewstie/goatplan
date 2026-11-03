@@ -96,11 +96,11 @@ async function widthOf(page: Page, region: ReturnType<typeof sidebar>) {
 
 test.describe("fluid scaling", () => {
   for (const { width, root, sidebarWidth, detailsWidth, button } of [
-    { width: 1194, root: 16, sidebarWidth: 224, detailsWidth: null, button: 36 },
-    { width: 1440, root: 16, sidebarWidth: 224, detailsWidth: null, button: 36 },
-    { width: 2000, root: 18, sidebarWidth: 252, detailsWidth: 405, button: 40.5 },
-    { width: 2560, root: 20, sidebarWidth: 280, detailsWidth: 450, button: 45 },
-    { width: 3440, root: 20, sidebarWidth: 280, detailsWidth: 450, button: 45 },
+    { width: 1194, root: 16, sidebarWidth: 224, detailsWidth: 288, button: 36 },
+    { width: 1440, root: 16, sidebarWidth: 224, detailsWidth: 288, button: 36 },
+    { width: 2000, root: 18, sidebarWidth: 252, detailsWidth: 324, button: 40.5 },
+    { width: 2560, root: 20, sidebarWidth: 280, detailsWidth: 360, button: 45 },
+    { width: 3440, root: 20, sidebarWidth: 280, detailsWidth: 360, button: 45 },
   ]) {
     test(`at ${width} px the root font is ${root} px and the panels and controls grow with it`, async ({ page }) => {
       await page.setViewportSize({ width, height: 1000 });
@@ -118,9 +118,8 @@ test.describe("fluid scaling", () => {
     await openPlanner(page);
     const left = (await sidebar(page).boundingBox())!.x;
     const panel = (await details(page).boundingBox())!;
-    const padding = 25;
-    expect(left).toBeCloseTo((3440 - 2200) / 2 + padding, 0);
-    expect(panel.x + panel.width).toBeCloseTo((3440 + 2200) / 2 - padding, 0);
+        expect(left).toBeCloseTo((3440 - 2200) / 2, 0);
+    expect(panel.x + panel.width).toBeCloseTo((3440 + 2200) / 2, 0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(3440);
   });
 
@@ -128,8 +127,7 @@ test.describe("fluid scaling", () => {
     await page.setViewportSize({ width: 2100, height: 1000 });
     await openPlanner(page);
     const panel = (await details(page).boundingBox())!;
-    const root = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).fontSize));
-    expect(panel.x + panel.width).toBeCloseTo(2100 - 1.25 * root, 0);
+    expect(panel.x + panel.width).toBeCloseTo(2100, 0);
   });
 });
 
@@ -179,12 +177,15 @@ test("a class shows its section and full time where the block has room, and a sh
   await expect(block.getByText("CL01")).toBeHidden();
 });
 
-test("at 834 the calendar has room for a whole day and the No set time strip, without scrolling inside", async ({ page }) => {
+test("at 834 a long day scrolls inside the calendar, and the No set time strip and the details stay in view", async ({ page }) => {
   await page.setViewportSize({ width: 834, height: 1194 });
   await openPlanner(page, { courses: ["AE 2320", "AE 5131"], blocked: [{ day: "Mon", start: 1140, end: 1200 }] });
   await expect(page.getByRole("heading", { name: "No set time" })).toBeVisible();
   const grid = page.getByRole("group", { name: "Calendar time grid" });
-  await expect.poll(() => grid.evaluate((element) => element.scrollHeight - element.clientHeight)).toBeLessThanOrEqual(0);
+  await expect.poll(() => grid.evaluate((element) => element.scrollHeight - element.clientHeight)).toBeGreaterThan(0);
+  await expect(page.getByRole("heading", { name: "No set time" })).toBeInViewport();
+  await expect(page.getByRole("complementary", { name: "Course details" })).toBeInViewport();
+  expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(1194);
 });
 
 test("the early band's label stays under a blocked time in that band", async ({ page }) => {
@@ -278,7 +279,7 @@ test.describe("a block shows its code wherever the code fits", () => {
     const block = page.getByRole("button", { name: /^IMGD 1000 C01,/ }).first();
     const code = (await block.getByText("IMGD 1000", { exact: true }).boundingBox())!;
     const lock = (await block.locator("svg:visible").boundingBox())!;
-    expect(lock.y).toBeGreaterThanOrEqual(code.y + code.height - 1);
+    expect(lock.x + lock.width <= code.x || lock.x >= code.x + code.width || lock.y >= code.y + code.height - 1).toBe(true);
   });
 
   test("every short code fits the width that shows it, and every code fits the widest", async ({ page }) => {

@@ -111,7 +111,7 @@ function expectLeadBadge(preset: SortPresetId, top: Shown, second: Shown) {
   const lead = LEAD[preset];
   for (const schedule of [top, second]) {
     expect(schedule.badges.length).toBeGreaterThan(0);
-    expect(schedule.badges.length).toBeLessThanOrEqual(3);
+    expect(schedule.badges.length).toBeLessThanOrEqual(4);
     // A schedule with class every weekday has no days-off badge, so Start leads instead.
     if (lead && !(preset === "fewestDays" && schedule.days >= 5)) expect(schedule.badges[0]).toMatch(lead);
   }

@@ -10,6 +10,7 @@ import { formatTimeRange } from "@/lib/data/time";
 import { clockRange, type BlockLayout } from "./blockLayout";
 import { densityClasses } from "./blockStyles";
 import type { Density } from "./density";
+import { roomParts } from "./roomParts";
 import type { ClassItem } from "./scheduleItems";
 
 type ClassBlockProps = {
@@ -17,19 +18,20 @@ type ClassBlockProps = {
   density: Density;
   style: CSSProperties;
   selected: boolean;
-  onSelect(item: ClassItem): void;
+  onSelect(item: ClassItem, fromKeyboard: boolean): void;
   /** For a short section: one line ("CS 1101 · 9–9:30") or no text, so nothing gets cut off. */
   layout?: BlockLayout;
   /**
-   * In drawing mode a click doesn't open the details, since a drag that starts here blocks time; Enter
+   * In drawing mode a click doesn't show the details, since a drag that starts here blocks time; Enter
    * and Space still do. The block is see-through then, so a blocked time under it shows.
    */
   drawing?: boolean;
 };
 
 /** From the tablet breakpoint up, longer ones don't fit any block. The block's label and the details panel have them. */
-const MAX_ROOM_CHARS = 20;
-const MAX_LONG_ROOM_CHARS = 28;
+const MAX_ROOM_CHARS = 28;
+/** With no number to keep, a room only shows where it fits whole. */
+const MAX_WHOLE_ROOM_CHARS = 20;
 const MAX_SECTION_CHARS = 4;
 /** A code this long fits --container-block-code-short on one line. */
 const SHORT_CODE_CHARS = 7;
@@ -53,6 +55,7 @@ export function ClassBlock({ item, density, style, selected, onSelect, layout = 
   const text = densityClasses[density];
   const full = layout === "full";
   const room = item.location ? roomName(item.location) : "";
+  const { building, number } = roomParts(room);
   const label = `${item.preview ? "Preview, " : ""}${blockLabel(item)}`;
   const shortCode = item.courseCode.length <= SHORT_CODE_CHARS;
   const lineCode = item.locked
@@ -66,7 +69,7 @@ export function ClassBlock({ item, density, style, selected, onSelect, layout = 
       data-block={item.key}
       data-preview={item.preview || undefined}
       onClick={(event) => {
-        if (!drawing || event.detail === 0) onSelect(item);
+        if (!drawing || event.detail === 0) onSelect(item, event.detail === 0);
       }}
       className={cx(
         "@container absolute flex flex-col overflow-hidden rounded-block border text-left transition-[border-color,box-shadow,top,height] duration-180 motion-reduce:transition-none motion-reduce:duration-0",
@@ -103,7 +106,11 @@ export function ClassBlock({ item, density, style, selected, onSelect, layout = 
             <span className={cx("tablet:hidden", !item.choicePreview && "tablet:@block-time:inline")}>{formatTimeRange(item.start, item.end)}</span>
             <span className={cx("hidden tablet:inline", !item.choicePreview && "tablet:@block-time:hidden")}>{clockRange(item.start, item.end)}</span>
           </span>
-          {room && !item.problem && <span className={cx("truncate opacity-85", text.room, density === "regular" && room.length <= MAX_ROOM_CHARS && "tablet:@block-time:block", density === "regular" && room.length > MAX_ROOM_CHARS && room.length <= MAX_LONG_ROOM_CHARS && "tablet:@block-room-long:block")}>{room}</span>}
+          {room && !item.problem && (
+            <span className={cx("gap-3 overflow-hidden opacity-85", density === "regular" && "flex", text.room, density === "regular" && room.length <= MAX_ROOM_CHARS && (number ? "tablet:@block-room:flex" : room.length <= MAX_WHOLE_ROOM_CHARS ? "tablet:@block-time:flex" : "tablet:@block-room-long:flex"))}>
+              <span className="min-w-0 truncate">{building}</span>{number && <> <span className="shrink-0">{number}</span></>}
+            </span>
+          )}
         </>
       ) : (
         layout === "line" && (

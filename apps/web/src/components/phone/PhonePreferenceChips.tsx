@@ -7,6 +7,7 @@ import { BlockTimeButton } from "@/components/preferences/BlockTimeButton";
 import { groupBlocked, groupDays, groupTimes } from "@/components/preferences/blockedTimes";
 import { ReadOnlyPreferences } from "@/components/preferences/ReadOnlyPreferences";
 import { startsAfterOptions } from "@/components/preferences/timeOptions";
+import { focusWithin } from "@/components/ui/focusRing";
 import { Toggle } from "@/components/ui/Toggle";
 import { formatTimeShort } from "@/lib/data/time";
 import { selectSavedPlan, usePlanner } from "@/lib/store";
@@ -34,7 +35,7 @@ export function PhonePreferenceChips() {
   return (
     <div role="group" aria-label="Preferences" className="flex flex-col gap-8">
       <div className="flex flex-wrap items-center gap-6">
-        <div className={`${PILL} min-w-0 flex-auto justify-center has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus`}>
+        <div className={`${PILL} min-w-0 flex-auto justify-center ${focusWithin}`}>
           <Clock aria-hidden className="size-12 shrink-0" />
           <span aria-hidden className="truncate font-570">{startsAfter === 0 ? "Any time" : `After ${formatTimeShort(startsAfter)}`}</span>
           <CaretDown aria-hidden className="size-10 shrink-0" />
@@ -65,7 +66,7 @@ export function PhonePreferenceChips() {
       {/* While drawing, one pill stands for them all, so the calendar below doesn't move. */}
       {drawing && <BlockedTimesMenu className="self-start" />}
       {!drawing && groups.length > 0 && (
-        <div className="flex flex-wrap gap-8">
+        <div className="-my-4 flex gap-8 overflow-x-auto py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {groups.map((group) => (
             <button
               key={`${group.label}-${group.start}-${group.end}`}

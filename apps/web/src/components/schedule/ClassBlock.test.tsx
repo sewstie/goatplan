@@ -45,7 +45,7 @@ it("shows only the color when not even one line fits", () => {
   expect(screen.getByRole("button", { name: /^AE 2320 CL01,/ })).toHaveTextContent(/^$/);
 });
 
-it("doesn't open its details on a click in drawing mode, but does from the keyboard", async () => {
+it("doesn't show its details on a click in drawing mode, but does from the keyboard", async () => {
   const onSelect = vi.fn();
   render(<ClassBlock item={item} density="regular" style={{}} selected={false} onSelect={onSelect} drawing />);
   const button = screen.getByRole("button", { name: /^AE 2320 CL01,/ });
@@ -57,4 +57,22 @@ it("doesn't open its details on a click in drawing mode, but does from the keybo
   button.focus();
   await userEvent.keyboard("{Enter}");
   expect(onSelect).toHaveBeenCalledOnce();
+});
+
+it("keeps a room's number apart from its building, so a narrow block can't cut it off", () => {
+  render(<ClassBlock item={{ ...item, location: "Gordon Library 208 Art Studio" }} density="regular" style={{}} selected={false} onSelect={() => {}} />);
+  const number = screen.getByText("208");
+  expect(number.className).toContain("shrink-0");
+  expect(screen.getByText("Gordon Library").className).toContain("truncate");
+});
+
+it("says whether a keyboard or a mouse picked it", async () => {
+  const onSelect = vi.fn();
+  render(<ClassBlock item={item} density="regular" style={{}} selected={false} onSelect={onSelect} />);
+  const button = screen.getByRole("button", { name: /^AE 2320 CL01,/ });
+  await userEvent.click(button);
+  expect(onSelect).toHaveBeenLastCalledWith(item, false);
+  button.focus();
+  await userEvent.keyboard("{Enter}");
+  expect(onSelect).toHaveBeenLastCalledWith(item, true);
 });

@@ -26,8 +26,6 @@ for (const width of [1440, 834]) {
     await lab.click();
     const panel = page.getByRole("complementary", { name: "Course details" });
     await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
-    await page.keyboard.press("Escape");
-    await expect(panel).toHaveCount(0);
     const lecture = page.getByRole("button", { name: /^AE 2410 C01, .*Tuesday/ });
     await lecture.hover();
 

@@ -11,7 +11,7 @@ import { groupBlocked, groupDays, groupTimes, removeGroup } from "./blockedTimes
  * In drawing mode, all blocked times as one pill of a fixed width, "3 blocked times ⌄", with a list
  * to remove each, so drawing doesn't add pills and push the calendar down. A disclosure, not a menu.
  */
-export function BlockedTimesMenu({ className }: { className?: string }) {
+export function BlockedTimesMenu({ className, above = false }: { className?: string; above?: boolean }) {
   const blocked = usePlanner((state) => state.preferences.blocked);
   const changeBlocked = usePlanner((state) => state.changeBlocked);
   const groups = useMemo(() => groupBlocked(blocked), [blocked]);
@@ -67,7 +67,7 @@ export function BlockedTimesMenu({ className }: { className?: string }) {
         aria-controls={panelId}
         disabled={empty}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex min-h-32 w-full min-w-112 cursor-pointer items-center justify-between gap-6 rounded-pill bg-surface px-10 text-9 leading-13 whitespace-nowrap text-ink enabled:hover:bg-surface-selected disabled:cursor-default disabled:text-ink-muted"
+        className="inline-flex min-h-32 w-full min-w-112 cursor-pointer items-center justify-between gap-6 rounded-pill border border-line bg-surface px-10 text-9 leading-13 whitespace-nowrap text-ink enabled:hover:bg-surface-selected disabled:cursor-default disabled:text-ink-muted"
       >
         {empty ? "No blocked times" : count("blocked time", groups.length)}
         {!empty && <CaretDown aria-hidden className={cx("size-10 transition-transform", open && "rotate-180")} />}
@@ -75,7 +75,7 @@ export function BlockedTimesMenu({ className }: { className?: string }) {
       <div
         id={panelId}
         hidden={!open}
-        className="absolute top-[calc(100%+--spacing(6))] left-0 z-30 w-280 max-w-[calc(100vw-32px)] rounded-card border border-line-popover bg-surface p-6 shadow-popover"
+        className={cx("absolute left-0 z-30 w-280 max-w-[calc(100vw-32px)] rounded-card border border-line-popover bg-surface p-6 shadow-popover", above ? "bottom-[calc(100%+--spacing(6))]" : "top-[calc(100%+--spacing(6))]")}
       >
         <ul aria-label="Blocked times" className="flex flex-col">
           {groups.map((group, index) => {

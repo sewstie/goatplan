@@ -6,6 +6,7 @@ import { solved } from "@/lib/store/testing/fixtures";
 import { polyfillDialog, startTestPlanner, waitForSolve } from "@/components/sections/testing/plannerStore";
 import { DrawingBar } from "@/components/schedule/DrawingBar";
 import { PreferencesBar } from "./PreferencesBar";
+import { SortSelect } from "./SortSelect";
 
 vi.mock("@/lib/store", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/store")>()),
@@ -18,7 +19,7 @@ beforeAll(polyfillDialog);
 function renderWithBar() {
   render(
     <>
-      <PreferencesBar />
+      <><PreferencesBar /><SortSelect /></>
       <DrawingBar />
     </>,
   );
@@ -36,13 +37,16 @@ const work = [
 ];
 
 describe("PreferencesBar", () => {
-  it("changes the start time", async () => {
+  it("changes the start time from the same kind of list as Sort", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
-    render(<PreferencesBar />);
+    render(<><PreferencesBar /><SortSelect /></>);
 
     const select = screen.getByRole("combobox", { name: "Starts after" });
-    expect(select).toHaveDisplayValue("Any time");
-    await userEvent.selectOptions(select, "10:00 AM");
+    expect(select).toHaveTextContent("Starts afterAny time");
+    await userEvent.click(select);
+    await userEvent.click(within(screen.getByRole("listbox", { name: "Starts after" })).getByRole("option", { name: "10:00 AM" }));
+    expect(select).toHaveTextContent("Starts after10:00 AM");
+    expect(select).toHaveFocus();
 
     expect(store.getState().preferences.startsAfter).toBe(600);
     await waitForSolve(store);
@@ -53,7 +57,7 @@ describe("PreferencesBar", () => {
       courses: ["AE 2320"],
       preferences: { startsAfter: 540, blocked: work, onlyOpen: true },
     });
-    render(<PreferencesBar />);
+    render(<><PreferencesBar /><SortSelect /></>);
 
     expect(screen.getByText("Tue, Fri")).toBeInTheDocument();
     expect(screen.getByText("2 PM–4 PM")).toBeInTheDocument();
@@ -68,7 +72,7 @@ describe("PreferencesBar", () => {
       courses: ["AE 2320"],
       preferences: { startsAfter: 540, blocked: [...work, { day: "Mon", start: 720, end: 780 }], onlyOpen: true },
     });
-    render(<PreferencesBar />);
+    render(<><PreferencesBar /><SortSelect /></>);
 
     screen.getByRole("button", { name: "Remove blocked time Tue, Fri 2 PM–4 PM" }).focus();
     await userEvent.keyboard("{Enter}");
@@ -202,7 +206,7 @@ describe("PreferencesBar", () => {
 
   it("turns Only open sections off", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
-    render(<PreferencesBar />);
+    render(<><PreferencesBar /><SortSelect /></>);
 
     const toggle = screen.getByRole("switch", { name: "Only open sections" });
     expect(toggle).toBeChecked();
@@ -214,7 +218,7 @@ describe("PreferencesBar", () => {
 
   it("shows Sort with the current order and lists all six orders in table order", async () => {
     await startTestPlanner({ courses: ["AE 2320"], sortPreset: "fewestEarly" });
-    render(<PreferencesBar />);
+    render(<><PreferencesBar /><SortSelect /></>);
 
     const sort = screen.getByRole("combobox", { name: "Sort" });
     expect(sort).toHaveTextContent("SortFewest early classes");
@@ -244,7 +248,7 @@ describe("PreferencesBar", () => {
   it("picks an order from the keyboard, solves by its measure, shows schedule 1 and keeps focus on Sort", async () => {
     const { store, requests } = await startTestPlanner({ courses: ["AE 2320"], sortPreset: "fewestEarly" });
     store.getState().setScheduleIndex(1);
-    render(<PreferencesBar />);
+    render(<><PreferencesBar /><SortSelect /></>);
 
     const sort = screen.getByRole("combobox", { name: "Sort" });
     sort.focus();
@@ -274,7 +278,7 @@ describe("PreferencesBar", () => {
             : solved(request),
       },
     );
-    render(<PreferencesBar />);
+    render(<><PreferencesBar /><SortSelect /></>);
 
     await userEvent.click(screen.getByRole("combobox", { name: "Sort" }));
     await userEvent.click(screen.getByRole("option", { name: "Most compact" }));
@@ -291,7 +295,7 @@ describe("PreferencesBar", () => {
 
   it("keeps the order on Escape", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"], sortPreset: "bestOverall" });
-    render(<PreferencesBar />);
+    render(<><PreferencesBar /><SortSelect /></>);
 
     const sort = screen.getByRole("combobox", { name: "Sort" });
     sort.focus();
@@ -306,7 +310,7 @@ describe("PreferencesBar", () => {
     await startTestPlanner({ courses: ["AE 2320"] });
     render(
       <>
-        <PreferencesBar />
+        <><PreferencesBar /><SortSelect /></>
         <button type="button">After the row</button>
       </>,
     );
@@ -329,7 +333,7 @@ describe("PreferencesBar", () => {
         },
       },
     );
-    render(<PreferencesBar />);
+    render(<><PreferencesBar /><SortSelect /></>);
 
     expect(screen.queryByRole("combobox", { name: "Sort" })).not.toBeInTheDocument();
   });
@@ -345,7 +349,7 @@ describe("PreferencesBar", () => {
         },
       },
     );
-    render(<PreferencesBar />);
+    render(<><PreferencesBar /><SortSelect /></>);
     expect(screen.getByRole("combobox", { name: "Sort" })).toBeInTheDocument();
 
     store.getState().setPreferences({ startsAfter: 600 });

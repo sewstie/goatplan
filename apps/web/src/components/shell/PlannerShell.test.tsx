@@ -54,7 +54,6 @@ function renderShell() {
   return render(
     <PlannerShell
       header={<header>header</header>}
-      toolbar={<div>toolbar</div>}
       banner={<div>banner</div>}
       schedule={<div>schedule</div>}
     />,

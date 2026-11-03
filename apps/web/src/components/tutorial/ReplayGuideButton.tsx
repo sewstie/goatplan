@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useGuideSession } from "./guideSession";
 
-export function ReplayGuideButton({ className }: { className?: string }) {
+export function ReplayGuideButton({ className, label = "How to use GoatPlan" }: { className?: string; label?: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const requestReplay = useGuideSession((state) => state.requestReplay);
@@ -16,7 +16,7 @@ export function ReplayGuideButton({ className }: { className?: string }) {
         if (pathname !== "/") router.push("/");
       }}
     >
-      How to use GoatPlan
+      {label}
     </button>
   );
 }

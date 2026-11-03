@@ -17,7 +17,7 @@ import { usePhoneScreen } from "./phoneScreen";
  * search or details, and the page returns to where the schedule was left. It comes last in the DOM,
  * so lookups by ID find the open screen's copy first.
  */
-export function PhonePlanner({ banner }: { banner: ReactNode }) {
+export function PhonePlanner({ banner, notices }: { banner: ReactNode; notices?: ReactNode }) {
   const screen = usePhoneScreen((state) => state.screen);
   const main = useRef<HTMLElement>(null);
   const first = useRef(true);
@@ -69,7 +69,7 @@ export function PhonePlanner({ banner }: { banner: ReactNode }) {
         id="main"
         tabIndex={-1}
         className={cx(
-          "flex min-w-0 flex-1 flex-col px-(--size-phone-gutter) pt-14 pb-20 outline-none",
+          "flex min-w-0 flex-1 flex-col px-(--size-phone-gutter) pt-10 pb-20 outline-none",
           course && "relative min-h-0 overflow-y-auto overscroll-contain",
         )}
       >
@@ -77,7 +77,7 @@ export function PhonePlanner({ banner }: { banner: ReactNode }) {
         {course && <div data-phone-screen className="flex flex-1 flex-col"><PhoneCourseScreen /></div>}
         {screen === "preferences" && <div data-phone-screen><PhonePreferencesScreen /></div>}
         <div data-phone-screen hidden={screen !== "schedule"}>
-          <PhoneScheduleScreen banner={banner} />
+          <PhoneScheduleScreen banner={banner} notices={notices} />
         </div>
         <PhoneFooter />
       </main>

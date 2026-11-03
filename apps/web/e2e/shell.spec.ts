@@ -15,22 +15,23 @@ test("shell regions line up at 1680 × 800", async ({ page }) => {
   const details = (await page.getByRole("complementary", { name: "Course details" }).boundingBox())!;
   const topBar = (await page.getByRole("banner").first().boundingBox())!;
   expect(topBar).toMatchObject({ x: 0, y: 0, width: 1680 });
-  expect(Math.abs(sidebar.x - 1.25 * root)).toBeLessThanOrEqual(1.5);
+  expect(sidebar.x).toBe(0);
   expect(Math.abs(sidebar.width - 14 * root)).toBeLessThanOrEqual(1.5);
-  expect(Math.abs(details.width - 22.5 * root)).toBeLessThanOrEqual(1.5);
-  expect(Math.abs(details.x + details.width - (1680 - 1.25 * root))).toBeLessThanOrEqual(1.5);
+  expect(Math.abs(details.width - 18 * root)).toBeLessThanOrEqual(1.5);
+  expect(details.x + details.width).toBe(1680);
   expect(schedule.x).toBeGreaterThan(sidebar.x + sidebar.width);
   expect(schedule.x + schedule.width).toBeLessThan(details.x);
   expect(sidebar.y).toBeGreaterThanOrEqual(topBar.height);
   await page.screenshot({ path: `${screenshotDir}/shell-1680.png` });
 });
 
-test("shell at 1440 gives the calendar the width beside the sidebar, with no page scroll", async ({ page }) => {
+test("shell at 1440 keeps the details beside the calendar, with no page scroll", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
   const schedule = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
-  await expect(page.getByRole("complementary", { name: "Course details" })).toHaveCount(0);
-  expect(schedule!.x + schedule!.width).toBe(1420);
+  const details = await page.getByRole("complementary", { name: "Course details" }).boundingBox();
+  expect(schedule!.x + schedule!.width).toBeLessThan(details!.x);
+  expect(details!.x + details!.width).toBe(1440);
   expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(900);
   await page.screenshot({ path: `${screenshotDir}/shell-1440.png` });
 });

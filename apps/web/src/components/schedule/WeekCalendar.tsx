@@ -15,6 +15,7 @@ import { TimeAxis } from "./TimeAxis";
 import { hourMarks, percentOf, type TimeRange } from "./timeRange";
 import { useBlockDrag, type BlockDrag } from "./useBlockDrag";
 import { useElementHeight } from "./useElementHeight";
+import { usePointerFocus } from "./usePointerFocus";
 
 type WeekCalendarProps = {
   days: readonly Day[];
@@ -52,6 +53,7 @@ export function WeekCalendar({ days, range, caption, note, renderDay, background
   const pixelsPerHour = gridHeight === null ? null : gridHeight / hours;
   const marks = hourMarks(range);
   const { selection, announcement, surfaceProps } = useBlockDrag(days, range, phone ? undefined : drag);
+  const gridFocus = usePointerFocus<HTMLDivElement>();
 
   if (phone) {
     return (
@@ -69,7 +71,9 @@ export function WeekCalendar({ days, range, caption, note, renderDay, background
         role="group"
         aria-label="Calendar time grid"
         tabIndex={0}
-        className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
+        data-pointer-focus={gridFocus.byPointer || undefined}
+        {...gridFocus.handlers}
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain focus-visible:-outline-offset-2 data-pointer-focus:outline-none"
       >
         <div
           className="flex pt-9 pr-8 pb-8 motion-safe:transition-[height] motion-safe:duration-180"

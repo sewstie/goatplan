@@ -10,7 +10,7 @@ type CourseRowProps = {
   swatch: string;
   locked: boolean;
   selected: boolean;
-  onSelect(): void;
+  onSelect(fromKeyboard: boolean): void;
   onRemove(): void;
 };
 
@@ -22,8 +22,8 @@ export function CourseRow({ code, title, sections, swatch, locked, selected, onS
       <button
         type="button"
         aria-current={selected || undefined}
-        onClick={() => {
-          onSelect();
+        onClick={(event) => {
+          onSelect(event.detail === 0);
           showPhoneScreen("course");
         }}
         data-course-row={code}

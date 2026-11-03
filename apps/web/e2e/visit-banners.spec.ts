@@ -1,4 +1,4 @@
-import { expect, test } from "./fixtures/test";
+import { expect, test, pickStartsAfter, startsAfterText } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 import { coursePanelTerm } from "./fixtures/coursePanel";
 import { emptyDraft } from "../src/lib/store/draft";
@@ -75,9 +75,9 @@ test("state 37: a failed guide write changes the open step once while planning c
   await guide(page).getByRole("button", { name: "Skip guide" }).click();
   await expect(guide(page)).toBeHidden();
   await expect(page.getByRole("status").filter({ hasText: "Guide closed · Replay it from How to use" })).toBeVisible();
-  await page.getByRole("combobox", { name: "Starts after" }).selectOption("600");
+  await pickStartsAfter(page, 600);
   await settled(page);
-  await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue("600");
+  await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(600));
   await expect(page.getByRole("status").filter({ hasText: notice })).toBeVisible();
 });
 
@@ -102,7 +102,7 @@ test("closing with Escape doesn't store the guide as done, and the replay button
   await page.evaluate(() => {
     Storage.prototype.setItem = () => { throw new DOMException("Storage blocked", "SecurityError"); };
   });
-  await page.getByRole("button", { name: "How to use GoatPlan", exact: true }).click();
+  await page.getByRole("button", { name: /^(Guide|How to use GoatPlan)$/ }).click();
   await expect(guide(page).getByRole("heading", { name: "Choose your term" })).toBeFocused();
 });
 

@@ -56,16 +56,16 @@ export function SectionsInSchedule({ course, sections, locked, waitlist, onUnloc
           }
         }} />;
         if (section.type === "lecture" && lectures) return (
-          <LectureSectionStep key={index} choices={lectures} open={openSection === "lecture"} busy={busy}
+          <div key={index} data-section={section.id}><LectureSectionStep courseCode={course.code} choices={lectures} open={openSection === "lecture"} busy={busy}
             onOpenChange={(open) => setOpenSection(open ? "lecture" : null)} buttonRef={(button) => focusDisclosure("lecture", button)}
-            onChoose={chooseLecture}>{card}</LectureSectionStep>
+            onChoose={chooseLecture}>{card}</LectureSectionStep></div>
         );
         const choices = labs.find(({ current }) => current.id === section.id);
-        return choices ? (
-          <LabSectionStep key={index} courseCode={course.code} choices={choices} busy={busy} open={openSection === section.type} buttonRef={(button) => focusDisclosure(section.type, button)} onOpenChange={(open) => setOpenSection(open ? section.type : null)} onChoosing={(id) => { pendingFocus.current = id; }}>
+        return <div key={index} data-section={section.id}>{choices ? (
+          <LabSectionStep courseCode={course.code} choices={choices} busy={busy} open={openSection === section.type} buttonRef={(button) => focusDisclosure(section.type, button)} onOpenChange={(open) => setOpenSection(open ? section.type : null)} onChoosing={(id) => { pendingFocus.current = id; }}>
             {card}
           </LabSectionStep>
-        ) : <div key={index}>{card}</div>;
+        ) : card}</div>;
       })}
       <p role="status" aria-live="polite" aria-atomic="true" className="sr-only">
         {settled && response?.ok && chosenLecture && locked.includes(chosenLecture.id) ? `Lecture ${chosenLecture.code} locked · ${response.total} ${response.total === 1 ? "schedule fits" : "schedules fit"}` : ""}

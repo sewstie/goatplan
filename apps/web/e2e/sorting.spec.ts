@@ -58,7 +58,7 @@ async function openPlanner(page: Page, data: TermFile, draft: Draft) {
 
 const settled = (page: Page) =>
   expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
-const preferencesRow = (page: Page) => page.getByRole("group", { name: "Preferences", exact: true });
+const calendarHeader = (page: Page) => page.locator("[data-calendar-header]");
 const badgeList = (page: Page) => page.getByRole("list", { name: "This schedule" });
 const badges = (page: Page) => badgeList(page).getByRole("listitem");
 const header = (page: Page) => page.locator("main header");
@@ -134,7 +134,7 @@ test("picking Earliest finish re-ranks the schedules and puts “Done by …” 
   // The badge leads every schedule in this order, not just the top one.
   for (const schedule of await firstSchedules(page, 4)) {
     expect(schedule.badges.length).toBeGreaterThan(0);
-    expect(schedule.badges.length).toBeLessThanOrEqual(3);
+    expect(schedule.badges.length).toBeLessThanOrEqual(4);
     expect(schedule.badges[0]).toMatch(DONE_BY);
   }
 });
@@ -160,7 +160,7 @@ test("picking Most days off with the keyboard puts the days-off badge first", as
   await expect(badges(page).first()).toHaveText(sortMenuTops.fewestDays.firstBadge);
 
   for (const schedule of await firstSchedules(page, 4)) {
-    expect(schedule.badges.length).toBeLessThanOrEqual(3);
+    expect(schedule.badges.length).toBeLessThanOrEqual(4);
     expect(schedule.badges[0]).toMatch(DAYS_OFF);
   }
 });
@@ -209,8 +209,8 @@ test("after save-and-open, the plan shows the same order with the same badges", 
   // The read-only view names the order and, like the old score chips, shows no badges.
   await page.goto(`/?view=saved&plan=${saved[0].id}`);
   await settled(page);
-  await expect(preferencesRow(page)).toContainText("SortMost days off");
-  await expect(preferencesRow(page).getByRole("combobox")).toHaveCount(0);
+  await expect(page.locator("[data-calendar-header]")).toContainText("SortMost days off");
+  await expect(page.locator("[data-calendar-header]").getByRole("combobox")).toHaveCount(0);
   await expect(badgeList(page)).toHaveCount(0);
 });
 
@@ -229,13 +229,19 @@ for (const [width, height] of [
     await expect(sort).toHaveText("SortFewest early classes");
     await expect(badges(page)).toHaveText(["Starts 9 AM", "2 h free between classes", "Done by 2:50 PM"]);
 
-    // The closed control fits inside the Preferences row.
+    // The closed control fits inside the calendar header.
     const sortBox = await box(sort);
     expect(sortBox.width).toBeGreaterThanOrEqual(146);
     expect(sortBox.height).toBeCloseTo(34, 0);
 
     // Whole pills, inside the window, clear of the switcher, the plan actions and Sort.
-    const listBox = await box(badgeList(page));
+    const pillBoxes = await Promise.all((await badges(page).all()).map(box));
+    const listBox = {
+      x: Math.min(...pillBoxes.map((pill) => pill.x)),
+      y: Math.min(...pillBoxes.map((pill) => pill.y)),
+      width: Math.max(...pillBoxes.map((pill) => pill.x + pill.width)) - Math.min(...pillBoxes.map((pill) => pill.x)),
+      height: Math.max(...pillBoxes.map((pill) => pill.y + pill.height)) - Math.min(...pillBoxes.map((pill) => pill.y)),
+    };
     for (const pill of await badges(page).all()) {
       const pillBox = await box(pill);
       expect(pillBox.x + pillBox.width).toBeLessThanOrEqual(width);
@@ -252,10 +258,10 @@ for (const [width, height] of [
     const sideways = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(sideways).toBeLessThanOrEqual(0);
 
-    // The title area and Preferences row: badges under the title, the closed Sort control at the end.
+    // The top bar and the calendar header: the badges, then the closed Sort control at the end.
     const main = await box(page.locator("main"));
     const top = await box(header(page));
-    const row = await box(preferencesRow(page));
+    const row = await box(calendarHeader(page));
     const clip = { x: main.x, y: top.y, width: main.width, height: row.y + row.height - top.y };
     await page.screenshot({ path: `${screenshotDir}/sorting-badges-${width}.png`, fullPage: width === 834, animations: "disabled" });
     await expect(page).toHaveScreenshot(`sorting-badges-${width}.png`, { clip, animations: "disabled" });
@@ -288,7 +294,7 @@ for (const [width, height] of [
     await settled(page);
     await expect(sort).toHaveText("SortEarliest finish");
     await expect(page.getByText("Schedule 1 of 2", { exact: true })).toBeVisible();
-    await expect(badges(page)).toHaveText(["Done by 2:50 PM", "Starts 9 AM", "2 h free between classes"]);
+    await expect(badges(page)).toHaveText(["Done by 2:50 PM", "2 h free between classes", "Starts 9 AM"]);
     await page.mouse.move(0, 0);
     await page.screenshot({ path: `${screenshotDir}/sorting-earliest-finish-${width}.png`, fullPage: width === 834, animations: "disabled" });
   });

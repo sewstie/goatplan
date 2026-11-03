@@ -14,9 +14,8 @@ export const SORT_LABELS: Record<SortPresetId, string> = {
   fewestGaps: "Most compact",
 };
 
-/** The Sort control at the end of the Preferences row. */
-export const sortControl = (page: Page) =>
-  page.getByRole("group", { name: "Preferences", exact: true }).getByRole("combobox", { name: "Sort" });
+/** The Sort control at the end of the calendar header. */
+export const sortControl = (page: Page) => page.getByRole("combobox", { name: "Sort" });
 /** Sort's open list. */
 export const sortList = (page: Page) => page.getByRole("listbox", { name: "Sort" });
 /** One order in the open list, found by its name (the label, without the description). */
@@ -67,7 +66,7 @@ export const SORT_MENU_COURSES = ["DEMO 3101", "DEMO 3102", "DEMO 3103"];
 
 /** Each order's top schedule (DEMO 3101, 3102, 3103 lectures) and the first badge it gets. */
 export const sortMenuTops: Record<SortPresetId, { sections: [string, string, string]; firstBadge: string }> = {
-  bestOverall: { sections: ["L01", "L02", "L04"], firstBadge: "Tue, Fri off" },
+  bestOverall: { sections: ["L01", "L02", "L04"], firstBadge: "3.5 h free between classes" },
   fewestEarly: { sections: ["L01", "L02", "L04"], firstBadge: "Starts 11 AM" },
   latestStart: { sections: ["L04", "L04", "L04"], firstBadge: "Starts 2 PM" },
   earliestFinish: { sections: ["L03", "L03", "L02"], firstBadge: "Done by 11:50 AM" },

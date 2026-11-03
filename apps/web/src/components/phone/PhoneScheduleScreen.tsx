@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { PlanActions } from "@/components/plans/PlanActions";
 import { PlannerTitle } from "@/components/share/PlannerTitle";
-import { ScheduleNote } from "@/components/schedule/ScheduleNote";
+import { BarMoreMenu } from "@/components/shell/BarMoreMenu";
 import { SeatStatus } from "@/components/shell/SeatStatus";
 import { ScheduleBrowser } from "@/components/schedule/ScheduleBrowser";
 import { ScheduleSummary } from "@/components/schedule/ScheduleSummary";
@@ -20,7 +20,7 @@ import { SearchTrigger } from "./SearchTrigger";
  * week calendar. When nothing fits, the "Needs attention" card takes the calendar's place, or goes
  * under it in drawing mode.
  */
-export function PhoneScheduleScreen({ banner }: { banner: ReactNode }) {
+export function PhoneScheduleScreen({ banner, notices }: { banner: ReactNode; notices?: ReactNode }) {
   const diagnosis = useDiagnosis();
   const attention = diagnosis !== null && (diagnosis.issues.length > 0 || diagnosis.fixes.length > 0);
   const drawing = usePlanner((state) => state.drawing);
@@ -32,28 +32,50 @@ export function PhoneScheduleScreen({ banner }: { banner: ReactNode }) {
   );
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-8">
       <div data-guide-slot="term" className="empty:hidden" />
       {!shared && <SearchTrigger />}
-      {!shared && <CourseChips />}
+      {!shared && <CourseChips oneRow />}
       <PlanActions
-        layout={({ menu, save }) => (
-          <header className="flex flex-col gap-10">
-            <div className="flex items-center justify-between gap-8">
-              <h1 data-screen-heading tabIndex={-1} className="text-21 leading-30 font-700 tracking-title outline-none">
-                <PlannerTitle />
-              </h1>
-              {menu}
-            </div>
-            <div id="tutorial-schedules" role="region" aria-label="Schedule browser" tabIndex={-1} className="flex min-w-0 rounded-control empty:hidden">
+        layout={({ menu, share, exportButton, saveButton, unsaved }) => {
+          const browser = (
+            <div id="tutorial-schedules" role="region" aria-label="Schedule browser" tabIndex={-1} className="flex min-w-0 flex-1 rounded-control empty:hidden">
               <ScheduleBrowser wide />
             </div>
-            {save}
-            <div className="text-9 text-ink-muted">
-              <ScheduleSummary steady />
-            </div>
-          </header>
-        )}
+          );
+          return (
+            <header className="flex flex-col gap-8">
+              <div className="flex items-center justify-between gap-8">
+                <h1 data-screen-heading tabIndex={-1} className="text-21 leading-30 font-700 tracking-title outline-none">
+                  <PlannerTitle />
+                </h1>
+                {!shared && (
+                  <div className="flex shrink-0 items-center gap-6">
+                    {menu}
+                    <BarMoreMenu>
+                      {share}
+                      {exportButton}
+                    </BarMoreMenu>
+                  </div>
+                )}
+              </div>
+              {shared ? (
+                <>
+                  {browser}
+                  {saveButton}
+                </>
+              ) : (
+                <div className="flex items-stretch gap-8">
+                  {browser}
+                  <div className="ml-auto shrink-0">{saveButton}</div>
+                </div>
+              )}
+              <div className="text-9 text-ink-muted">
+                <ScheduleSummary steady aside={unsaved ? "Unsaved changes" : null} />
+              </div>
+            </header>
+          );
+        }}
       />
       <SeatStatus />
       <PhonePreferenceChips />
@@ -67,7 +89,7 @@ export function PhoneScheduleScreen({ banner }: { banner: ReactNode }) {
       </section>
       {/* While drawing, the week stays in view so the time that caused the problem can be erased. */}
       {attention && drawing && attentionCard}
-      <ScheduleNote />
+      {notices}
     </div>
   );
 }

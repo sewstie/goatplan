@@ -7,7 +7,7 @@ import { selectSchedules, SORT_PRESET_IDS, SORT_PRESETS, usePlanner } from "@/li
 // Every preset, in table order. The engine does the ranking; the menu only picks the preset.
 const OPTIONS: readonly ListboxOption[] = SORT_PRESET_IDS.map((id) => ({ value: id, label: SORT_PRESETS[id].label, description: SORT_PRESETS[id].description }));
 
-/** "Sort Best overall ⌄" at the end of the Preferences row. Shown only when there is more than one schedule to order. */
+/** "Sort Best overall ⌄" at the end of the calendar header. Shown only when there is more than one schedule to order. */
 export function SortSelect({ className = "ml-auto shrink-0", variant = "menu" }: { className?: string; variant?: Exclude<ListboxVariant, "field"> } = {}) {
   const sortPreset = usePlanner((state) => state.sortPreset);
   const setSortPreset = usePlanner((state) => state.setSortPreset);

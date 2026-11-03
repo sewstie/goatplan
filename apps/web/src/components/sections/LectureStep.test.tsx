@@ -7,6 +7,7 @@ import type { SolveResponse } from "@/lib/engine/types";
 import { lectureProfessorTerm } from "@/lib/store/testing/lectureProfessors";
 import { solved } from "@/lib/store/testing/fixtures";
 import { CourseDetailsPanel } from "./CourseDetailsPanel";
+import { useSectionPreview } from "./sectionPreview";
 import { startTestPlanner, waitForSolve } from "./testing/plannerStore";
 
 async function panel(draft: Partial<Draft> = {}, term = lectureProfessorTerm()) {
@@ -183,4 +184,24 @@ it("keeps incompatible rows focusable with a reason, moves only the lecture lock
   await user.keyboard("{Escape}");
   expect(disclosure).toHaveFocus();
   expect(disclosure).toHaveAttribute("aria-expanded", "false");
+});
+
+it("previews an open lecture on hover and focus, like a lab choice, and not one that can't be chosen", async () => {
+  await panel({ courses: ["AE 2320", "AE 2410"], locks: { "AE 2320": ["AE 2320-CL01", "AE 2320-CX01", "AE 2320-CD01"], "AE 2410": ["AE 2410-S01"] } });
+  const user = userEvent.setup();
+  await user.click(screen.getByRole("button", { name: "3 other lecture times · Locked" }));
+  const open = screen.getByRole("button", { name: "Choose Lecture CL02" });
+  await user.hover(open);
+  expect(useSectionPreview.getState()).toMatchObject({ courseCode: "AE 2320", sectionId: "AE 2320-CL02" });
+  expect(within(open).getByText("Previewing")).toBeInTheDocument();
+  expect(open).toHaveClass("border-dashed");
+  await user.unhover(open);
+  expect(useSectionPreview.getState().sectionId).toBeNull();
+  const blocked = screen.getByRole("button", { name: "Choose Lecture CL03" });
+  await user.hover(blocked);
+  expect(useSectionPreview.getState().sectionId).toBeNull();
+  expect(within(blocked).queryByText("Previewing")).not.toBeInTheDocument();
+  await user.unhover(blocked);
+  open.focus();
+  await waitFor(() => expect(useSectionPreview.getState().sectionId).toBe("AE 2320-CL02"));
 });

@@ -46,11 +46,14 @@ const courseRow = (page: Page, code: string) =>
 
 test("the term picker switches terms", async ({ page }) => {
   await open(page, { term: "2027-C" });
-  const term = page.getByRole("combobox", { name: "Term" });
-  await expect(term).toHaveValue("2027-C");
-  await expect(term.locator("option")).toContainText(["C Term · 2027", "D Term · 2027"]);
-  await term.selectOption("2027-D");
-  await expect(term).toHaveValue("2027-D");
+  const term = sidebar(page).getByRole("combobox", { name: "Term" });
+  await expect(term).toHaveText("C Term · 2027");
+  await term.click();
+  const list = page.getByRole("listbox", { name: "Term" });
+  await expect(list.getByRole("option")).toContainText(["C Term · 2027", "D Term · 2027"]);
+  await list.getByRole("option", { name: /^D Term/ }).click();
+  await expect(term).toHaveText("D Term · 2027");
+  await expect(term).toBeFocused();
 });
 
 test("“cs2102” finds CS 2102, and Enter adds it with its credits", async ({ page }) => {
@@ -135,7 +138,7 @@ test("a course from another term offers to switch, keeping the search", async ({
   await expect(sidebar(page).getByText("It runs in C Term.", { exact: true })).toBeVisible();
 
   await sidebar(page).getByRole("button", { name: "Switch to C Term" }).click();
-  await expect(page.getByRole("combobox", { name: "Term" })).toHaveValue("2027-C");
+  await expect(page.getByRole("combobox", { name: "Term" })).toHaveText("C Term · 2027");
   await termLoaded(page, "2027-C");
   await expect(searchBox(page)).toBeFocused();
   await expect(searchBox(page)).toHaveValue("AE 2320");
@@ -217,7 +220,7 @@ test("the term field says when there are no terms", async ({ page }) => {
   await page.goto("/");
   const term = page.getByRole("combobox", { name: "Term" });
   await expect(term).toBeDisabled();
-  await expect(term.locator("option")).toHaveText(["No terms available"]);
+  await expect(term).toHaveText("No terms available");
 });
 
 test("the no-match card shows while other terms are still being checked", async ({ page }) => {
@@ -253,7 +256,8 @@ test.describe("screenshots", () => {
       await results(page).getByRole("button", { name: /Sections/ }).click();
       await page.screenshot({ path: `${screenshotDir}/search-details-${width}.png`, fullPage: true });
 
-      await page.getByRole("combobox", { name: "Term" }).selectOption("2027-D");
+      await page.getByRole("combobox", { name: "Term" }).click();
+      await page.getByRole("listbox", { name: "Term" }).getByRole("option", { name: /^D Term/ }).click();
       await termLoaded(page, "2027-D");
       await expect(searchBox(page)).toHaveValue("ae2320");
       await expect(sidebar(page).getByRole("heading", { name: /isn’t offered in D Term/ })).toBeVisible();

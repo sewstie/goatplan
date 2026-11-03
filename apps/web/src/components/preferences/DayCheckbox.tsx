@@ -1,5 +1,6 @@
 import { DAY_NAMES } from "@/lib/data";
 import type { Day } from "@/lib/data/types";
+import { peerFocus } from "@/components/ui/focusRing";
 
 type DayCheckboxProps = {
   day: Day;
@@ -20,7 +21,7 @@ export function DayCheckbox({ day, checked, onChange }: DayCheckboxProps) {
       />
       <span
         aria-hidden
-        className="min-w-38 rounded-pill border border-line bg-surface px-9 py-6 text-center text-9 leading-13 text-ink transition-[color,background-color,border-color,box-shadow] peer-hover:bg-surface-selected peer-focus-visible:border-choice-line peer-focus-visible:shadow-field-focus peer-checked:border-accent peer-checked:bg-accent-soft peer-checked:font-650 peer-checked:text-accent peer-checked:peer-hover:bg-accent-soft peer-checked:peer-focus-visible:border-accent"
+        className={`min-w-38 rounded-pill border border-line bg-surface px-9 py-6 text-center text-9 leading-13 text-ink transition-[color,background-color,border-color] peer-hover:bg-surface-selected peer-checked:border-accent peer-checked:bg-accent-soft peer-checked:font-650 peer-checked:text-accent peer-checked:peer-hover:bg-accent-soft ${peerFocus}`}
       >
         {day}
       </span>

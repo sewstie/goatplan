@@ -104,3 +104,28 @@ test("lecture-first choices narrow real-engine results and preserve a locked lab
   expect(draft.locks).toEqual({ [code]: [`${code}-${lockedLab}`, `${code}-${nextLecture}`] });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(1440);
 });
+
+test("other lectures look like the lab choices and preview on the calendar", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.route("**/data/2027-C.json", (route) => route.fulfill({ json: coursePanelTerm("24") }));
+  await page.addInitScript(({ key, code }) => {
+    localStorage.setItem("goatplan:tutorial:v1", "completed");
+    localStorage.setItem("goatplan:term:v1", "2027-C");
+    localStorage.setItem(key, JSON.stringify({ version: 1, courses: [code], preferences: { startsAfter: 0, blocked: [], onlyOpen: true },
+      locks: {}, professorByCourse: {}, sortPreset: "fewestEarly", alternatives: {},
+    }));
+  }, { key, code });
+  await page.goto("/");
+  await settled(page);
+  await details(page).getByRole("button", { name: /other lecture time/ }).click();
+  const row = details(page).getByRole("list", { name: "Other lecture times" }).getByRole("button").first();
+  const before = await page.locator("[data-block]").count();
+  await row.hover();
+  await expect(row.getByText("Previewing")).toBeVisible();
+  await expect.poll(() => page.locator("[data-block]").count()).toBeGreaterThan(before);
+  await details(page).getByRole("heading", { name: code }).hover();
+  await expect(row.getByText("Previewing")).toHaveCount(0);
+  await expect.poll(() => page.locator("[data-block]").count()).toBe(before);
+  await row.focus();
+  await expect(row.getByText("Previewing")).toBeVisible();
+});

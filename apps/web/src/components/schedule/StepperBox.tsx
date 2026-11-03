@@ -59,7 +59,7 @@ function arrow({ label, disabled, onClick, shortcut }: StepperArrow, size: Stepp
       aria-keyshortcuts={shortcut}
       onClick={() => !disabled && onClick()}
       className={cx(
-        "flex shrink-0 cursor-pointer items-center justify-center text-accent not-aria-disabled:hover:bg-surface-selected focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none focus-visible:ring-inset aria-disabled:cursor-not-allowed aria-disabled:bg-surface-subtle aria-disabled:text-ink-faint/50",
+        "flex shrink-0 cursor-pointer items-center justify-center text-accent not-aria-disabled:hover:bg-surface-selected aria-disabled:cursor-not-allowed aria-disabled:bg-surface-subtle aria-disabled:text-ink-faint/50",
         side === "start" ? "rounded-l-row" : "rounded-r-row",
         size === "compact" ? "[&_svg]:size-10" : "[&_svg]:size-12",
         ARROW[size],
