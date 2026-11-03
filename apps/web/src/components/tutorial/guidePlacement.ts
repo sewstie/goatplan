@@ -24,7 +24,7 @@ export function preferredPlaces(step: GuideStep, targetId: string, target: Guide
     case "courses": return [{ left: beside, top: 178 }, ...(detailsRight === undefined ? [] : [{ left: detailsRight, top: 178 }])];
     case "professor": return [{ left: (details?.left ?? target.left) - size.width - GAP, top: target.top - 82 }];
     // The calendar stays clear here, since this step asks for a drag on it.
-    case "availability": return [{ left: detailsRight ?? target.left, top: target.top + target.height + GAP }];
+    case "availability": return [{ left: detailsRight ?? sidebar?.left ?? target.left, top: target.top + target.height + GAP }];
     case "schedules": {
       if (targetId === "tutorial-diagnosis") return [{ left: (details?.left ?? target.left) - size.width - GAP, top: details?.top ?? target.top }];
       const calendarBottom = calendar ? calendar.top + calendar.height : target.top + target.height + size.height;

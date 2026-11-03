@@ -1,6 +1,5 @@
 "use client";
 
-import { CaretRight } from "@phosphor-icons/react/ssr";
 import { usePlanner } from "@/lib/store";
 import type { Term } from "@/lib/data";
 
@@ -8,7 +7,7 @@ import type { Term } from "@/lib/data";
 export function TermBreadcrumbs({ shownTerm }: { shownTerm?: Pick<Term, "name" | "season" | "year"> }) {
   const current = usePlanner((state) => state.terms.find((item) => item.id === state.termId) ?? null);
   const term = shownTerm ?? current;
-  if (!term || shared) return null;
+  if (!term) return null;
 
   return (
     <>

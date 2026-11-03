@@ -9,7 +9,7 @@ import { selectSavedPlan, selectViewedCourse, usePlanner } from "@/lib/store";
 export function ViewedSavedCourses() {
   const plan = usePlanner(selectSavedPlan);
   const selected = usePlanner(selectViewedCourse);
-  const select = usePlanner((state) => state.selectCourse);
+  const selectCourse = usePlanner((state) => state.selectCourse);
   const shared = usePlanner((state) => state.temporaryPlan !== null);
   if (!plan) return null;
   return (

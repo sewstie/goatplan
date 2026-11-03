@@ -1,6 +1,5 @@
 "use client";
 
-import { useShallow } from "zustand/react/shallow";
 import { usePlanner } from "@/lib/store";
 import { BlockedSelectionBar } from "./BlockedSelectionBar";
 import { BlockedTimeMenu } from "./BlockedTimeMenu";
@@ -8,8 +7,6 @@ import { DrawingBar } from "./DrawingBar";
 import { EmptyCalendar } from "./EmptyCalendar";
 import { EngineMessage } from "./EngineMessage";
 import { LoadingCalendar } from "./LoadingCalendar";
-import { LockedFullCard } from "./LockedFullCard";
-import { selectLockedFull } from "./lockedFull";
 import { PlanCalendar } from "./PlanCalendar";
 import { TermErrorCalendar } from "./TermErrorCalendar";
 
@@ -22,7 +19,6 @@ export function ScheduleView() {
   const response = usePlanner((state) => state.response);
   const solveStatus = usePlanner((state) => state.solveStatus);
   const drawing = usePlanner((state) => state.drawing);
-  const lockedFull = usePlanner(useShallow(selectLockedFull));
 
   return (
     <>
@@ -35,7 +31,6 @@ export function ScheduleView() {
 
   function calendar() {
     if (saved) return <PlanCalendar />;
-    if (lockedFull) return <LockedFullCard locked={lockedFull} />;
     if (termStatus === "error") return <TermErrorCalendar />;
     if (termStatus !== "ready") return <LoadingCalendar />;
     // In drawing mode an empty plan gets the plain grid, so a first blocked time can be drawn before any course.

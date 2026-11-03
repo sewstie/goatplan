@@ -67,6 +67,19 @@ it("opens beside the term while it loads and keeps waiting Next focusable with a
   expect(next).toHaveAttribute("aria-disabled", "true");
 });
 
+it("keeps the first-visit guide closed while opening a shared link", async () => {
+  const originalUrl = window.location.href;
+  window.history.replaceState(null, "", "/#p=broken");
+  try {
+    start();
+    await act(async () => {});
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Getting started/)).not.toBeInTheDocument();
+  } finally {
+    window.history.replaceState(null, "", originalUrl);
+  }
+});
+
 it("moves focus through all five steps without changing the plan and finishes without saving", async () => {
   const { planner, storage, unmount } = start();
   const user = userEvent.setup();

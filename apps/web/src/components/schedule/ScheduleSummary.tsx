@@ -14,7 +14,7 @@ import { useHeldHeight } from "./useHeldHeight";
  * schedule fits, and in drawing mode keeps it to one line of text and one row of badges, so it's the
  * same height whether schedules fit or not.
  */
-export function ScheduleSummary({ steady = false }: { steady?: boolean } = {}) {
+export function ScheduleSummary({ steady = false, aside = null }: { steady?: boolean; aside?: string | null } = {}) {
   const saved = usePlanner(selectSavedPlan);
   const termStatus = usePlanner((state) => state.termStatus);
   const termName = usePlanner((state) => state.terms.find((term) => term.id === state.termId)?.name ?? null);
@@ -69,7 +69,7 @@ export function ScheduleSummary({ steady = false }: { steady?: boolean } = {}) {
         // The badge line keeps its space while schedules come and go, so the calendar below doesn't move.
         (drawing || steady) && courseCount > 0 && (
           <div aria-hidden className="invisible">
-            <ScoreChips chips={[{ text: "Starts", tone: "plain", lead: false }]} oneRow={oneRow} />
+            <ScoreChips chips={[{ text: "Starts", short: "Starts", tone: "plain", lead: false }]} oneRow={oneRow} />
           </div>
         )
       )}

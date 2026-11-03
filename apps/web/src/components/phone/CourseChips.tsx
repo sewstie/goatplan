@@ -7,7 +7,7 @@ import { selectSavedPlan, usePlanner } from "@/lib/store";
 import { usePhoneScreen } from "./phoneScreen";
 
 /** The planned courses as chips: "■ AE 2320 🔒". A tap opens the course's details screen. */
-export function CourseChips({ className }: { className?: string }) {
+export function CourseChips({ className, oneRow = false }: { className?: string; oneRow?: boolean }) {
   const codes = usePlanner((state) => selectSavedPlan(state)?.courses ?? state.courses);
   const locks = usePlanner((state) => selectSavedPlan(state)?.locks ?? state.locks);
   const selectCourse = usePlanner((state) => state.selectCourse);

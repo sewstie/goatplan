@@ -2,7 +2,6 @@
 
 import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from "react";
 import { CircleNotch, DotsThree, Warning } from "@phosphor-icons/react/ssr";
-import { SeatFailedChip } from "@/components/shell/SeatFailedChip";
 import { useDismiss } from "@/components/ui/useDismiss";
 import { wrappedHeight } from "./chipRows";
 import { ScoreChips } from "./ScoreChips";
@@ -16,30 +15,28 @@ const GAP_Y = 2;
 function useOverflows() {
   const root = useRef<HTMLDivElement>(null);
   const chips = useRef<HTMLDivElement>(null);
-  const seat = useRef<HTMLDivElement>(null);
   const [overflows, setOverflows] = useState(false);
   const check = useEffectEvent(() => {
-    if (!root.current || !chips.current || !seat.current) return;
-    const sized = [...chips.current.querySelectorAll("li"), seat.current].map((element) => ({ width: element.offsetWidth, height: element.offsetHeight })).filter((size) => size.width > 0);
+    if (!root.current || !chips.current) return;
+    const sized = [...chips.current.querySelectorAll("li")].map((element) => ({ width: element.offsetWidth, height: element.offsetHeight })).filter((size) => size.width > 0);
     setOverflows(wrappedHeight(sized, root.current.clientWidth, GAP_X, GAP_Y) > root.current.clientHeight);
   });
   useLayoutEffect(() => check());
   useEffect(() => {
-    if (!root.current || !seat.current || typeof ResizeObserver === "undefined") return;
+    if (!root.current || typeof ResizeObserver === "undefined") return;
     const observer = new ResizeObserver(() => check());
     observer.observe(root.current);
-    observer.observe(seat.current);
     void document.fonts?.ready.then(() => check());
     return () => observer.disconnect();
   }, []);
-  return { rootRef: root, chips, seat, overflows };
+  return { rootRef: root, chips, overflows };
 }
 
 /** What the shown schedule is like: badges that wrap and then fold into "⋯ details", or a warning in their place. */
 export function ToolbarSummary() {
   const { text, badges, problem } = useScheduleSummary();
   const message = useScheduleMessage();
-  const { rootRef, chips, seat, overflows } = useOverflows();
+  const { rootRef, chips, overflows } = useOverflows();
   const [open, setOpen] = useState(false);
   const warning = message?.tone === "warning" && !problem;
   const finding = message?.tone === "loading";
@@ -75,7 +72,7 @@ export function ToolbarSummary() {
         </p>
       )}
       {plainText && <p title={text ?? undefined} className="min-w-0">{text}</p>}
-      {/* The chips and the seat chip share one flow, so they wrap together. Folded chips stay mounted, out of the flow, to be measured. */}
+      {/* Folded chips stay mounted, out of the flow, to be measured. */}
       <div ref={chips} className={!showBadges ? "hidden" : collapsed ? "invisible absolute top-0 left-0 flex w-max" : "contents"}>
         <ScoreChips chips={badges} short flat />
       </div>
@@ -91,7 +88,6 @@ export function ToolbarSummary() {
           <ScoreChips chips={badges} />
         </div>
       )}
-      <div ref={seat} className="shrink-0 empty:hidden"><SeatFailedChip /></div>
     </div>
   );
 }
