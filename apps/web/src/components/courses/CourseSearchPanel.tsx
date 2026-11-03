@@ -8,7 +8,6 @@ import { courseFit } from "./courseFit";
 import { courseCount } from "./courseSummary";
 import { NoMatchMessage } from "./NoMatchMessage";
 import { NotOfferedMessage } from "./NotOfferedMessage";
-import { FindCourseOverlay } from "./FindCourseOverlay";
 import { joinTermNames } from "./otherTerms";
 import { SearchBox } from "./SearchBox";
 import { buildSearchIndex, searchCourses, suggestCourseCode } from "./searchCourses";
@@ -69,16 +68,7 @@ export function CourseSearchPanel() {
   else if (showResults && notOffered) status = `${missingCode} isn’t offered in ${termName}. It runs in ${joinTermNames(runsIn)}.`;
   else if (showResults && !waiting) status = `No course matches ‘${search}’.`;
 
-  const degreeEnabled = useDegreeEnabled();
-  const phone = usePhoneViewport();
-  const [finding, setFinding] = useState<string | null>(null);
-
   function changeQuery(value: string) {
-    if (degreeEnabled && !phone && value.trim() && !document.querySelector(".guide-popover")) {
-      setFinding(value);
-      setQuery("");
-      return;
-    }
     setQuery(value);
     setNotice("");
   }
@@ -123,7 +113,6 @@ export function CourseSearchPanel() {
 
   return (
     <>
-      {finding !== null && <FindCourseOverlay query={finding} onClose={() => setFinding(null)} />}
       <SearchBox
         inputRef={searchRef}
         value={query}

@@ -5,7 +5,7 @@ import type { SavedPlan } from "@/lib/plans";
 import { SORT_PRESETS } from "@/lib/store";
 import { groupBlocked, groupDays, groupTimes } from "./blockedTimes";
 
-export function ReadOnlyPreferences({ plan }: { plan: SavedPlan }) {
+export function ReadOnlyPreferences({ plan, withSort = true }: { plan: SavedPlan; withSort?: boolean }) {
   const { startsAfter, blocked, onlyOpen } = plan.preferences;
   const shared = plan.id === "__temporary__";
   return (
@@ -26,7 +26,7 @@ export function ReadOnlyPreferences({ plan }: { plan: SavedPlan }) {
         />
       ))}
       <OnlyOpenPill checked={onlyOpen} disabled onChange={() => {}} />
-      <Chip label="Sort" value={SORT_PRESETS[plan.sortPreset].label} className="ml-auto" />
+      {withSort && <Chip label="Sort" value={SORT_PRESETS[plan.sortPreset].label} className="ml-auto" />}
     </div>
   );
 }

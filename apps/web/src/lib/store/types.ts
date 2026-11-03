@@ -66,6 +66,8 @@ export interface BlockedChange {
   count?: number;
 }
 
+export type TemporaryPlan = OpenedPlan & { view?: SavedPlan; warnings?: string[]; missing?: MissingItem[] };
+
 export interface PlannerState extends Draft {
   savedPlans: SavedPlan[];
   savedPlanId: string | null;
@@ -94,12 +96,14 @@ export interface PlannerState extends Draft {
   blockedChange: BlockedChange | null;
   /** Drawing mode: a drag on the calendar blocks or unblocks time. Not saved with the draft or with plans. */
   drawing: boolean;
+  temporaryPlan: TemporaryPlan | null;
 }
 
 export interface PlannerActions {
   setSavedPlans(plans: SavedPlan[]): void;
   showFound(): void;
   showSaved(id?: string): void;
+  showTemporaryPlan(plan: TemporaryPlan): void;
   nextSavedPlan(): void;
   previousSavedPlan(): void;
   init(): Promise<void>;

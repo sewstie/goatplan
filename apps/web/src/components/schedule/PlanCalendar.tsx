@@ -3,7 +3,7 @@
 import { useMemo, type ReactNode } from "react";
 import { formatTimeRange } from "@/lib/data/time";
 import type { Day } from "@/lib/data/types";
-import { selectSavedPlan, selectSchedules, selectViewedCourse, selectViewedSection, usePlanner } from "@/lib/store";
+import { selectReadOnlyPlan, selectSchedules, selectViewedCourse, selectViewedSection, usePlanner } from "@/lib/store";
 import { BLOCKED_TIERS, blockHeight, blockLayout, CLASS_TIERS, NAMED_BLOCKED_TIERS } from "./blockLayout";
 import { blockPosition } from "./blockStyles";
 import { BlockedTimeBlock } from "./BlockedTimeBlock";
@@ -32,11 +32,12 @@ const CLASS_END_GAP = 3;
 const NO_PREVIEWS: readonly ClassItem[] = [];
 
 export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: readonly ClassItem[]; overlay?: ReactNode }) {
-  const saved = usePlanner(selectSavedPlan);
+  const saved = usePlanner(selectReadOnlyPlan);
+  const shared = usePlanner((state) => state.temporaryPlan !== null);
   const term = usePlanner((state) => state.term);
   const schedules = usePlanner(selectSchedules);
   const pending = usePlanner((state) => state.solveStatus === "waiting" || state.solveStatus === "solving");
-  const preferences = usePlanner((state) => selectSavedPlan(state)?.preferences ?? state.preferences);
+  const preferences = usePlanner((state) => selectReadOnlyPlan(state)?.preferences ?? state.preferences);
   const selectedCourse = usePlanner(selectViewedCourse);
   const selectedSection = usePlanner(selectViewedSection);
   const selectCourse = usePlanner((state) => state.selectCourse);
@@ -114,7 +115,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             drawing={drawingHere}
             style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN, CLASS_END_GAP)}
             selected={selected}
-            onSelect={(clicked, fromKeyboard) => {
+            onSelect={(clicked) => {
               // On a phone a tap opens the course screen with that section picked.
               if (phone && !clicked.preview) {
                 selectCourse(clicked.courseCode, clicked.sectionId);

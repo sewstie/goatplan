@@ -2,21 +2,13 @@
 
 import { useEffect } from "react";
 import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
-import { FindCourseScreen } from "@/components/courses/FindCourseScreen";
-import { useDegreeEnabled } from "@/lib/flags";
 import { BackLink } from "./BackLink";
-import { usePhoneScreen } from "./phoneScreen";
 
 /** "Find a course": the search box, its results and the planned courses (div-app-phone-4). */
 export function PhoneSearchScreen() {
-  const degreeEnabled = useDegreeEnabled();
-  const show = usePhoneScreen((state) => state.show);
-
   useEffect(() => {
     document.getElementById("tutorial-search")?.focus({ preventScroll: true });
   }, []);
-
-  if (degreeEnabled) return <FindCourseScreen searchId="tutorial-search" onBack={() => show("schedule")} />;
 
   return (
     <div className="flex flex-col">

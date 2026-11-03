@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 import { PlanActions } from "@/components/plans/PlanActions";
 import { PlannerTitle } from "@/components/share/PlannerTitle";
 import { BarMoreMenu } from "@/components/shell/BarMoreMenu";
-import { SeatStatus } from "@/components/shell/SeatStatus";
 import { ScheduleBrowser } from "@/components/schedule/ScheduleBrowser";
 import { ScheduleSummary } from "@/components/schedule/ScheduleSummary";
 import { ScheduleView } from "@/components/schedule/ScheduleView";
@@ -77,7 +76,6 @@ export function PhoneScheduleScreen({ banner, notices }: { banner: ReactNode; no
           );
         }}
       />
-      <SeatStatus />
       <PhonePreferenceChips />
       <div data-guide-slot="availability" className="empty:hidden" />
       {banner}

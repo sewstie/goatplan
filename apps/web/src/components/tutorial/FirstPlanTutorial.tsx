@@ -5,6 +5,7 @@ import { usePhoneScreen, type PhoneScreen } from "@/components/phone/phoneScreen
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { usePlanner, usePlannerStore } from "@/lib/store";
 import { browserStorage, readDraft, readLastTerm, type DraftStorage } from "@/lib/store/draft";
+import { shareData } from "@/lib/share/url";
 import { advanceGuide, guideContent, guideProgress, professorCourse, type GuideStep, type GuideVisit } from "./tutorialSteps";
 import { GuideButtons } from "./GuideButtons";
 import { GuidePopover } from "./GuidePopover";
@@ -45,6 +46,7 @@ export function FirstPlanTutorial({ storage }: { storage?: DraftStorage | null }
 
   useEffect(() => {
     persistence.current = storage === undefined ? browserStorage() : storage;
+    if (shareData(window.location.hash) !== null) return;
     let cancelled = false;
     const finished = tutorialFinished(persistence.current);
     const started = tutorialStarted(persistence.current);

@@ -10,14 +10,18 @@ import {
   termLabel,
   updatePlan,
 } from "@/lib/plans";
+import { track } from "@/lib/analytics/track";
 import { selectSavedPlan, usePlanner, usePlannerStore } from "@/lib/store";
+import { AddToCalendarButton } from "@/components/calendar/AddToCalendarButton";
+import { SaveSharedPlan } from "@/components/share/SaveSharedPlan";
+import { ShareButton } from "@/components/share/ShareButton";
 import { PlanNameDialog } from "./PlanNameDialog";
 import { SavedPlansMenu } from "./SavedPlansMenu";
 import { SaveScheduleButton } from "./SaveScheduleButton";
 import { useOpenPlan } from "./useOpenPlan";
 import { usePlanSaveState } from "./usePlanSaveState";
 
-const COULDNT_SAVE = "Couldn’t save. Browser storage is full or blocked.";
+export const COULDNT_SAVE = "Couldn’t save. Browser storage is full or blocked.";
 
 type PlanActionsLayout = (parts: { menu: ReactNode; save: ReactNode; share: ReactNode; exportButton: ReactNode; saveButton: ReactNode; unsaved: boolean }) => ReactNode;
 
@@ -34,6 +38,7 @@ const besideEachOther: PlanActionsLayout = ({ menu, save }) => (
  */
 export function PlanActions({ layout = besideEachOther }: { layout?: PlanActionsLayout } = {}) {
   const store = usePlannerStore();
+  const temporary = usePlanner((state) => state.temporaryPlan);
   const viewed = usePlanner(selectSavedPlan);
   const save = usePlanSaveState();
   const term = usePlanner((state) => state.term?.term ?? null);
@@ -59,6 +64,7 @@ export function PlanActions({ layout = besideEachOther }: { layout?: PlanActions
     const updated = updatePlan(plan, store.getState(), new Date());
     setSaving(false);
     if (updated && !getPlansSource().save(updated)) setError(COULDNT_SAVE);
+    else if (updated) track("plan_saved", save.termId ? { term: save.termId } : undefined);
   }
 
   async function saveAsNew(name: string): Promise<string | null> {
@@ -70,12 +76,28 @@ export function PlanActions({ layout = besideEachOther }: { layout?: PlanActions
     if (!plan) return "There’s no schedule to save right now.";
     const source = getPlansSource();
     if (!source.save(plan)) return COULDNT_SAVE;
+    track("plan_saved", plan.termId ? { term: plan.termId } : undefined);
     if (viewed) store.getState().showSaved(plan.id);
     else source.setCurrent(plan.termId, plan.id);
     setError(null);
     setNaming(null);
     return null;
   }
+
+  if (temporary) {
+    const saveShared = <div className="flex flex-wrap items-center gap-8 tablet:flex-nowrap tablet:gap-6"><SaveSharedPlan view={temporary.view} /></div>;
+    return <>{layout({ menu: null, save: saveShared, share: null, exportButton: null, saveButton: saveShared, unsaved: false })}</>;
+  }
+
+  const share = <ShareButton />;
+  const exportButton = <AddToCalendarButton />;
+  const saveButton = (
+    <SaveScheduleButton
+      saved={viewed !== null || save.status === "saved"}
+      disabled={viewed !== null || !save.canSave || save.busy || saving}
+      onSave={saveChanges}
+    />
+  );
 
   return (
     <>
@@ -93,12 +115,11 @@ export function PlanActions({ layout = besideEachOther }: { layout?: PlanActions
           />
         ),
         save: (
-          <SaveScheduleButton
-            saved={viewed !== null || save.status === "saved"}
-            unsaved={viewed === null && save.status === "unsaved"}
-            disabled={viewed !== null || !save.canSave || save.busy || saving}
-            onSave={saveChanges}
-          />
+          <div className="flex flex-wrap items-center gap-5">
+            {share}
+            {exportButton}
+            {saveButton}
+          </div>
         ),
         share,
         exportButton,

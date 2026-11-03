@@ -74,6 +74,7 @@ const GOOD_FINISH = 17 * 60;
 /** good is quiet green, warning is the early-start tint. lead marks the badge the sort ranks by. */
 export interface ScheduleBadge {
   text: string;
+  short: string;
   tone: "plain" | "good" | "warning";
   lead: boolean;
   /** For screen readers, since the tint alone says nothing to them. */
@@ -190,7 +191,7 @@ export function scheduleBadgeDetails(
   for (const kind of order) {
     if (badges.length >= MAX_BADGES) break;
     const text = badgeText(kind);
-    if (text !== null) badges.push({ text, lead: kind === lead, ...badgeTone(kind) });
+    if (text !== null) badges.push({ text, short: text.replace(" between classes", ""), lead: kind === lead, ...badgeTone(kind) });
   }
 
   return badges;

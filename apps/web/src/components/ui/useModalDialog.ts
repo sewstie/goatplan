@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, type MouseEvent, type PointerEvent } from "react";
 
+export const MODAL_OPEN = "dialog[open]";
+
 /** Back to what opened the dialog, or to the screen's heading when that's gone. */
 function restoreFocus(target: HTMLElement | null) {
   if (target?.isConnected) target.focus();

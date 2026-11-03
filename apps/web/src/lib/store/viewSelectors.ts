@@ -6,6 +6,10 @@ export function selectSavedPlan(state: PlannerState) {
   return state.savedPlans.find((plan) => plan.id === state.savedPlanId && plan.termId === state.termId) ?? null;
 }
 
+export function selectReadOnlyPlan(state: PlannerState) {
+  return state.temporaryPlan?.view ?? selectSavedPlan(state);
+}
+
 export function selectTermSavedPlans(state: PlannerState) {
   return state.savedPlans.filter((plan) => plan.termId === state.termId);
 }
@@ -13,7 +17,7 @@ export function selectTermSavedPlans(state: PlannerState) {
 const viewedSchedules = new WeakMap<PlannerState, SavedCourse[] | null>();
 
 export function selectViewedSchedule(state: PlannerState): SavedCourse[] | null {
-  const saved = selectSavedPlan(state);
+  const saved = selectReadOnlyPlan(state);
   if (saved) return saved.schedule;
   if (!state.term || !selectCurrentSchedule(state)) return null;
   if (viewedSchedules.has(state)) return viewedSchedules.get(state)!;

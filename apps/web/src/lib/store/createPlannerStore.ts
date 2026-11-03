@@ -17,7 +17,7 @@ import {
   type DraftStorage,
 } from "./draft";
 import { findSchedule, scheduleKey, selectChosenSections, selectCurrentSchedule, selectSchedules } from "./selectors";
-import type { AlternativeChoices, Draft, PlannerState, PlannerStore, RemovedCourse } from "./types";
+import type { AlternativeChoices, Draft, PlannerState, PlannerStore, RemovedCourse, TemporaryPlan } from "./types";
 
 /** How long the store waits after the last change before it asks the engine. */
 export const SOLVE_DELAY_MS = 200;
@@ -53,7 +53,10 @@ const initialState: PlannerState = {
   removedCourse: null,
   blockedChange: null,
   drawing: false,
+  temporaryPlan: null,
 };
+
+export const TEMPORARY_PLAN_ID = "__temporary__";
 
 type Selection = Pick<PlannerState, "selectedCourse" | "selectedSection">;
 
@@ -246,6 +249,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         lastChosenSections: {},
         selectedCourse: null,
         selectedSection: null,
+        temporaryPlan: null,
       });
       try {
         if (!isTermId(termId)) throw new Error(`There is no term ${termId}.`);
@@ -273,17 +277,27 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       setSavedPlans(savedPlans) {
         set({ savedPlans });
         const state = get();
-        if (state.savedPlanId && !savedPlans.some((plan) => plan.id === state.savedPlanId && plan.termId === state.termId)) state.showFound();
+        if (state.savedPlanId && !state.temporaryPlan && !savedPlans.some((plan) => plan.id === state.savedPlanId && plan.termId === state.termId)) state.showFound();
       },
 
       showFound() {
-        set({ savedPlanId: null, savedSelectedCourse: null, savedSelectedSection: null, drawing: false });
+        set({ savedPlanId: null, savedSelectedCourse: null, savedSelectedSection: null, drawing: false, temporaryPlan: null });
+      },
+
+      showTemporaryPlan(plan: TemporaryPlan) {
+        set({
+          savedPlanId: TEMPORARY_PLAN_ID,
+          temporaryPlan: plan,
+          savedSelectedCourse: plan.courses[0] ?? null,
+          savedSelectedSection: null,
+          drawing: false,
+        });
       },
 
       showSaved(id) {
         const state = get();
         const plan = state.savedPlans.find((plan) => plan.termId === state.termId && (id === undefined || plan.id === id));
-        if (plan) set({ savedPlanId: plan.id, savedSelectedCourse: plan.courses[0] ?? null, savedSelectedSection: null, drawing: false });
+        if (plan) set({ temporaryPlan: null, savedPlanId: plan.id, savedSelectedCourse: plan.courses[0] ?? null, savedSelectedSection: null, drawing: false });
       },
 
       nextSavedPlan() {
@@ -400,7 +414,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       selectCourse(code, sectionId = null) {
         const state = get();
         if (state.savedPlanId) {
-          const plan = state.savedPlans.find((plan) => plan.id === state.savedPlanId);
+          const plan = state.temporaryPlan?.view ?? state.savedPlans.find((plan) => plan.id === state.savedPlanId);
           if (code === null || plan?.courses.includes(code)) set({ savedSelectedCourse: code, savedSelectedSection: sectionId });
           return;
         }

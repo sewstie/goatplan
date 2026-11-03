@@ -1,7 +1,6 @@
 import { PlannerTitle } from "@/components/share/PlannerTitle";
-import { SeatRefreshNotice } from "@/components/schedule/SeatRefreshNotice";
-import { SeatStatus } from "@/components/shell/SeatStatus";
 import { PreferencesBar } from "@/components/preferences/PreferencesBar";
+import { SortSelect } from "@/components/preferences/SortSelect";
 import { ScheduleBanner } from "@/components/schedule/ScheduleBanner";
 import { ScheduleSummary } from "@/components/schedule/ScheduleSummary";
 import { ScheduleBrowser } from "@/components/schedule/ScheduleBrowser";
@@ -23,8 +22,8 @@ export default function PlannerPage() {
           </div>
         }
         barActions={<PlannerBarActions />}
-        toolbar={<><ScheduleSummary /><SeatStatus /><PreferencesBar /></>}
-        banner={<><PlannerViewSync /><FirstPlanTutorial /><SeatRefreshNotice /><ScheduleBanner /></>}
+        toolbar={<><ScheduleSummary /><PreferencesBar /><SortSelect /></>}
+        banner={<><PlannerViewSync /><FirstPlanTutorial /><ScheduleBanner /></>}
         schedule={<ScheduleView />}
       />
       <PlannerBootstrap />
