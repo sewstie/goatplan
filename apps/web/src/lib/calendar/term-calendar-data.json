@@ -1,0 +1,69 @@
+{
+  "source": {
+    "title": "WPI Academic Calendar 2026-27",
+    "revised": "July 2025",
+    "url": "https://www.wpi.edu/sites/default/files/2025-07/WPI_Academic_Calendar_2026-27_July25.pdf"
+  },
+  "terms": {
+    "2026-A": {
+      "noClass": [
+        { "date": "2026-09-07", "name": "Labor Day" },
+        { "date": "2026-09-25", "name": "Wellness Day" }
+      ],
+      "swaps": [
+        { "date": "2026-09-10", "runs": "Mon" }
+      ],
+      "notes": [
+        { "date": "2026-10-12", "text": "Oct 12–16 is the break between A and B Term. Semester classes stay on your calendar that week. Check with your professor." }
+      ]
+    },
+    "2026-B": {
+      "noClass": [
+        { "date": "2026-11-03", "name": "Wellness Day" },
+        { "date": "2026-11-25", "name": "Thanksgiving Break" },
+        { "date": "2026-11-26", "name": "Thanksgiving Break" },
+        { "date": "2026-11-27", "name": "Thanksgiving Break" }
+      ],
+      "swaps": [],
+      "notes": [
+        { "date": "2026-12-07", "text": "Dec 7 is a Reading/Makeup Day. It stays on your calendar as a class day. Check WPI's calendar." }
+      ]
+    },
+    "2027-C": {
+      "noClass": [
+        { "date": "2027-01-18", "name": "Martin Luther King, Jr. Day" },
+        { "date": "2027-02-12", "name": "Wellness Day" },
+        { "date": "2027-02-25", "name": "Academic Advising Day" }
+      ],
+      "swaps": [
+        { "date": "2027-01-13", "runs": "Mon" }
+      ],
+      "notes": [
+        { "date": "2027-03-08", "text": "Mar 8–12 is the break between C and D Term. Semester classes stay on your calendar that week. Check with your professor." }
+      ]
+    },
+    "2027-D": {
+      "noClass": [
+        { "date": "2027-03-29", "name": "Wellness Day" },
+        { "date": "2027-04-19", "name": "Patriots Day" }
+      ],
+      "swaps": [
+        { "date": "2027-03-30", "runs": "Mon" },
+        { "date": "2027-05-05", "runs": "Fri" }
+      ],
+      "notes": [
+        { "date": "2027-04-16", "text": "Apr 16 is the Undergraduate Research Projects Showcase. It stays on your calendar as a class day. Check WPI's calendar." }
+      ]
+    },
+    "2027-E1": {
+      "noClass": [
+        { "date": "2027-05-31", "name": "Memorial Day" },
+        { "date": "2027-06-18", "name": "Juneteenth" }
+      ],
+      "swaps": [
+        { "date": "2027-06-03", "runs": "Mon" }
+      ],
+      "notes": []
+    }
+  }
+}

@@ -14,8 +14,10 @@ export interface ExportSummary {
   termDates: string;
   sections: ExportSection[];
   untimed: string[];
-  holidays: string | null;
-  swaps: string | null;
+  /** "Feb 25 · Academic Advising Day", one per day. */
+  holidays: string[];
+  /** "Jan 13 follows Monday’s schedule", one per day. */
+  swaps: string[];
   notes: string[];
 }
 
@@ -32,6 +34,14 @@ const span = ({ start, end }: DateRange) => `${shortDate(start)}–${shortDate(e
 const sectionCode = (course: string, id: string) => (id.startsWith(`${course}-`) ? id.slice(course.length + 1) : id);
 
 const inRange = (date: string, { start, end }: DateRange) => start <= date && date <= end;
+
+/** "4 classes · Jan 13–Mar 5, 2027 · 1 left out", the line at the top of Export. */
+export function exportLine(summary: ExportSummary): string {
+  const count = summary.sections.length;
+  const parts = [`${count} ${count === 1 ? "class" : "classes"}`, summary.termDates];
+  if (summary.untimed.length > 0) parts.push(`${summary.untimed.length} left out`);
+  return parts.join(" · ");
+}
 
 /** What the calendar file will hold, in the words the export screen uses. */
 export function exportSummary(schedule: readonly SavedCourse[], term: DateRange, calendar: TermCalendar | null): ExportSummary {
@@ -55,8 +65,8 @@ export function exportSummary(schedule: readonly SavedCourse[], term: DateRange,
     termDates: `${span(term)}, ${term.end.slice(0, 4)}`,
     sections,
     untimed,
-    holidays: noClass.length > 0 ? noClass.map((day) => shortDate(day.date)).join(" · ") : null,
-    swaps: swaps.length > 0 ? swaps.map((day) => `${shortDate(day.date)} follows ${DAY_NAMES[day.runs] ?? day.runs}’s schedule`).join(" · ") : null,
+    holidays: noClass.map((day) => `${shortDate(day.date)} · ${day.name}`),
+    swaps: swaps.map((day) => `${shortDate(day.date)} follows ${DAY_NAMES[day.runs] ?? day.runs}’s schedule`),
     notes,
   };
 }

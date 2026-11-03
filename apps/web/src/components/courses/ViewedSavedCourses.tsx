@@ -1,6 +1,7 @@
 "use client";
 
 import { sectionsLine } from "./courseSummary";
+import { focusDetails } from "@/components/shell/detailsFocus";
 import { COURSE_COLORS, courseSlot } from "@/components/ui/courseColors";
 import { cx } from "@/components/ui/cx";
 import { selectSavedPlan, selectViewedCourse, usePlanner } from "@/lib/store";
@@ -21,7 +22,10 @@ export function ViewedSavedCourses() {
       <ul className="flex flex-col gap-5">
         {plan.courses.map((code) => {
           const course = plan.schedule.find((item) => item.code === code);
-          return <li key={code}><button type="button" aria-pressed={selected === code} onClick={() => select(code)} className={cx("flex w-full gap-9 rounded-card border border-transparent px-10 py-12 text-left", selected === code && "bg-surface-selected")}>
+          return <li key={code}><button type="button" aria-pressed={selected === code} onClick={(event) => {
+            selectCourse(code);
+            if (event.detail === 0) focusDetails();
+          }} className={cx("flex w-full gap-9 rounded-card border border-transparent px-10 py-12 text-left", selected === code && "bg-surface-selected")}>
             <span aria-hidden className={cx("mt-5 size-8 shrink-0 rounded-swatch", COURSE_COLORS[courseSlot(plan.courses, code)].swatch)} />
             <span className="flex min-w-0 flex-col gap-3">
               <span className="text-11 leading-15-95 font-700">{code}</span>

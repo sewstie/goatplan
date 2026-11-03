@@ -68,3 +68,10 @@ it("tries the sidebar when classes fill the bottom of the calendar on the last s
   const position = guidePlacement(target, size, viewport, places, [eveningClass]);
   expect(covers(position, eveningClass)).toBe(false);
 });
+
+it("keeps step 4 off the calendar when the details are under it on a tablet", () => {
+  const blockTime = { left: 390, top: 60, width: 110, height: 34 };
+  const tablet = { sidebar: { left: 20, top: 56, width: 224, height: 1044 }, calendar: { left: 256, top: 144, width: 558, height: 630 }, details: { left: 256, top: 786, width: 558, height: 314 } };
+  const [place] = preferredPlaces("availability", "tutorial-block-time", blockTime, size, tablet);
+  expect(place.left).toBe(tablet.sidebar.left);
+});

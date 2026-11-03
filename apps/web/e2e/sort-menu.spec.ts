@@ -52,7 +52,7 @@ async function openPlanner(page: Page, data: TermFile, draft: Draft) {
 
 const settled = (page: Page) =>
   expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
-const preferencesRow = (page: Page) => page.getByRole("group", { name: "Preferences", exact: true });
+const calendarHeader = (page: Page) => page.locator("[data-calendar-header]");
 const firstBadge = (page: Page) => page.getByRole("list", { name: "This schedule" }).getByRole("listitem").first();
 const storedDraft = (page: Page): Promise<Draft> => page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), DRAFT_KEY);
 const header = (page: Page) => page.locator("main header");
@@ -156,10 +156,10 @@ test("keyboard only: Tab to Sort, open with Enter, type L for Latest start, pick
   await expect(sort).toHaveText("SortLatest start");
   await expect(sort).toBeFocused();
 
-  // Sort is the last stop in the Preferences row: Tab moves out of the row without opening it.
+  // Sort is the last stop in the calendar header: Tab moves out of it without opening the list.
   await page.keyboard.press("Tab");
   await expect(list).toBeHidden();
-  expect(await preferencesRow(page).evaluate((row) => row.contains(document.activeElement))).toBe(false);
+  expect(await calendarHeader(page).evaluate((row) => row.contains(document.activeElement))).toBe(false);
 });
 
 test("the order survives a reload and a save-and-open, and a saved plan shows its label", async ({ page }) => {
@@ -202,7 +202,7 @@ test("the order survives a reload and a save-and-open, and a saved plan shows it
   // The read-only view of the saved plan names its order with the current label.
   await page.goto(`/?view=saved&plan=${saved[0].id}`);
   await settled(page);
-  const readOnly = preferencesRow(page);
+  const readOnly = calendarHeader(page);
   await expect(readOnly).toContainText("SortMost days off");
   await expect(readOnly.getByRole("combobox")).toHaveCount(0);
 });
@@ -217,15 +217,15 @@ for (const [width, height] of [
     await page.evaluate(() => document.fonts.ready);
     await page.mouse.move(0, 0);
 
-    const row = preferencesRow(page);
+    const row = calendarHeader(page).locator("> div").last();
     const sort = sortControl(page);
     await expect(sort).toHaveText("SortFewest early classes");
     const rowBox = await box(row);
     const sortBox = await box(sort);
     const items = await row.evaluate((element) =>
-      [...element.querySelectorAll(":scope > div > *")].filter((child) => child.getBoundingClientRect().width > 0).map((child) => {
+      [...element.querySelectorAll(":scope > *")].filter((child) => child.getBoundingClientRect().width > 0).map((child) => {
         const rect = child.getBoundingClientRect();
-        return { middle: rect.top + rect.height / 2, right: rect.right, isSort: child.getAttribute("role") === "combobox" };
+        return { middle: rect.top + rect.height / 2, right: rect.right, isSort: child.querySelector('[role="combobox"]') !== null };
       }),
     );
 
@@ -235,10 +235,10 @@ for (const [width, height] of [
     const rowPaddingRight = await row.evaluate((element) => parseFloat(getComputedStyle(element).paddingRight));
     expect(Math.abs(rowBox.x + rowBox.width - rowPaddingRight - (sortBox.x + sortBox.width))).toBeLessThanOrEqual(1);
     if (width !== 1440) {
-      // The row wraps, and Sort stays on its last line.
+      // The chips take a line of their own under the switcher and Sort.
       expect(new Set(items.map((item) => Math.round(item.middle))).size).toBeGreaterThan(1);
       const sortMiddle = sortBox.y + sortBox.height / 2;
-      for (const item of items) expect(sortMiddle).toBeGreaterThanOrEqual(item.middle - 1);
+      expect(Math.min(...items.map((item) => item.middle))).toBeCloseTo(sortMiddle, -1);
     }
 
     // The closed control looks like the professor field: surface fill, line border, row radius, 7 / 9 padding, gap 6,

@@ -115,7 +115,7 @@ export function AddSeveralTab({ history, tabs }: { history: DegreeHistory; tabs:
         onChange={(event) => setText(event.target.value)}
         autoComplete="off"
         spellCheck={false}
-        className="w-full resize-y rounded-card border border-card-line bg-card-field px-17 py-16 text-[1rem] leading-[1.3rem] text-ink outline-none focus-visible:border-choice-line focus-visible:shadow-field-focus tablet:text-8-5 tablet:leading-[1.3rem]"
+        className="w-full resize-y rounded-card border border-card-line bg-card-field px-17 py-16 text-[1rem] leading-[1.3rem] text-ink tablet:text-8-5 tablet:leading-[1.3rem]"
       />
       <Notice tone="private" className="mt-8">Only course information is kept. Grades and unrelated pasted information are discarded.</Notice>
     </DrawerFrame>

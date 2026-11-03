@@ -1,4 +1,4 @@
-import { expect, frozenTerm, test } from "./fixtures/test";
+import { expect, frozenTerm, test, startsAfterText } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft } from "../src/lib/store/types";
@@ -158,7 +158,7 @@ for (const [label, action] of [["by click", "click"], ["by keyboard", "keyboard"
     expect(stored.preferences.startsAfter).toBe(660);
     await expect(page.getByText(/Schedule 1 of \d/, { exact: true })).toBeVisible();
     await expect(details(page).getByText("Needs attention")).toHaveCount(0);
-    await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveValue("660");
+    await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(660));
   });
 }
 

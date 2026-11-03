@@ -66,10 +66,9 @@ describe("ticket 05: leading badge correctness", () => {
 
   it("bestOverall has no forced lead badge", () => {
     const badges = scheduleBadges(meetings, {}, "bestOverall");
-    // Default order: DaysOff (if any), Start, Gaps, Finish
-    expect(badges.length).toBeLessThanOrEqual(3);
-    // First badge is days off because there are free days
-    expect(badges[0]).toMatch(/off$/);
+    // Default order: free time, start, done by, then days off if any
+    expect(badges.length).toBeLessThanOrEqual(4);
+    expect(badges.at(-1)).toMatch(/off$/);
   });
 
   it("on #1 the lead badge is at least as good as on #2", () => {

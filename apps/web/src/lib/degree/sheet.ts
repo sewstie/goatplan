@@ -75,7 +75,7 @@ const SECTION_NAMES: Record<string, string> = {
 const SECTION_NOTES: Record<string, string> = {
   hua: "Finish five HUA courses before Inquiry. Check the sequence with your advisor.",
   wpe: "Four WPE classes share one numbered line.",
-  cs: "MQP is included below. A course counts on one line; cross-listings do not add credit.",
+  cs: "A course counts on one line; cross-listings do not add credit.",
   math: "Four 1000-level math courses maximum. Probability and statistics have separate lines.",
   science: "Check the required science distribution as well as the credit total.",
 };

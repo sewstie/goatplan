@@ -19,7 +19,7 @@ export function PageFooter({ termId }: { termId?: string }) {
           Course data updated <time dateTime={term!.generatedAt}>{updated}</time>
         </p>
       )}
-      <nav aria-label="Help" className={stacked ? "flex flex-wrap items-center gap-x-10 gap-y-2 whitespace-nowrap" : "flex items-center gap-x-13"}>
+      <nav aria-label="Help" className="flex items-center gap-x-13">
         <a href="https://courselistings.wpi.edu" target="_blank" rel="noreferrer" className="inline-flex items-center gap-5 rounded-badge underline hover:text-ink">
           Data source<span className="sr-only"> (opens in a new tab)</span>
           <ArrowSquareOut aria-hidden className="size-12 text-ink" />

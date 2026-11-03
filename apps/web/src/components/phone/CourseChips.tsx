@@ -16,11 +16,11 @@ export function CourseChips({ className }: { className?: string }) {
   if (codes.length === 0) return null;
 
   return (
-    <ul aria-label="Your courses" className={cx("flex flex-wrap gap-8", className)}>
+    <ul aria-label="Your courses" className={cx("flex gap-8", oneRow ? "-my-4 overflow-x-auto py-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" : "flex-wrap", className)}>
       {codes.map((code) => {
         const locked = (locks[code]?.length ?? 0) > 0;
         return (
-          <li key={code}>
+          <li key={code} className="shrink-0">
             <button
               type="button"
               data-course-row={code}

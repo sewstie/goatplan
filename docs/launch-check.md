@@ -98,8 +98,7 @@ unknown-course tests cover the additional notices.
 | Task | What remains |
 |---|---|
 | Umami account and test event | Create/configure the account and production website ID. Confirm one real named event, URL hash exclusion, no course/history properties and retention for months. Local tests have no production credentials and cannot prove dashboard delivery. If custom events fail, use the specified Vercel page-view fallback and record that decision. |
-| Calendar imports | Import a generated C and D term file into Google Calendar and Apple Calendar. Check Jan 13's Monday schedule, Jan 18 and Feb 12 exclusions, Mar 29 exclusion, Mar 30's Monday schedule, section dates and times across daylight saving. |
-| Feb 25 | Confirm whether classes meet on Academic Advising Day. It remains a class day with an export note. |
+| Calendar imports | Import a generated C and D term file into Google Calendar and Apple Calendar. Check Jan 13's Monday schedule, Jan 18, Feb 12 and Feb 25 (Academic Advising Day, no classes) exclusions, Mar 29 exclusion, Mar 30's Monday schedule, section dates and times across daylight saving. |
 | Workday and paste box | Provide the owner's course history, compare every line/check with Workday Academic Progress, and try the paste box on the real Workday page. The synthetic paste journey passes but does not establish a real student can finish within three minutes. |
 | Testers | Recruit 5–10 friends, including at least two on phones. Record confusion, bugs and the real time to enter courses. |
 | Academic Advising email | Ask whether non-CS Social Implications may also fill another line, how the graduate 2-for-3 rule applies, and how repeated courses count. Record the answers before changing interpretations. |

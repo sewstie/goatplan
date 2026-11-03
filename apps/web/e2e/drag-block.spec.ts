@@ -188,7 +188,7 @@ test("Done leaves drawing mode, and Type a time instead opens the form", async (
   await expect(page.getByRole("group", { name: "Drawing mode" })).toHaveCount(0);
 });
 
-test("a class block opens its details out of drawing mode, and not while drawing", async ({ page }) => {
+test("a class block shows its details out of drawing mode, and not while drawing", async ({ page }) => {
   await openPlan(page);
   const block = page.getByRole("button", { name: /^CS 1101 CL01/ }).first();
   await block.click();

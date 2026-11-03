@@ -17,8 +17,8 @@ export function LockedFullCard({ locked }: { locked: LockedFull }) {
   const waiting = section.waitlist?.taken ?? 0;
 
   return (
-    <div className="flex flex-1 items-center justify-center px-16 py-40">
-      <div className="flex w-full max-w-430 flex-col">
+    <div className="flex min-h-0 flex-1 overflow-y-auto px-16 py-40">
+      <div className="m-auto flex w-full max-w-430 flex-col">
         <Notice tone="warning" title={`${code} filled up since you saved`} large>
           The {type.toLowerCase()} is locked, and “Only open sections” is on. Both choices are still active.
         </Notice>

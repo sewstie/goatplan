@@ -27,7 +27,7 @@ export function ScheduleSummary({ steady = false }: { steady?: boolean } = {}) {
   const { classes, untimed, waitlisted } = useScheduleItems();
   const diagnosis = useDiagnosis();
   const drawing = usePlanner((state) => state.drawing);
-  const oneRow = steady && drawing;
+  const oneRow = steady;
   const [heldRef, heldStyle] = useHeldHeight<HTMLDivElement>(drawing && !oneRow);
 
   // A course has no set time only when none of its chosen sections meet.
@@ -53,11 +53,14 @@ export function ScheduleSummary({ steady = false }: { steady?: boolean } = {}) {
 
   return (
     <div ref={heldRef} style={heldStyle} className="flex flex-col gap-4">
-      <span className={cx(oneRow && "truncate")}>{text}</span>
+      <span className="flex min-w-0 justify-between gap-8">
+        <span className={cx("min-w-0", oneRow && "truncate")}>{text}</span>
+        {aside && <span className="shrink-0 font-570 text-ink-soft">{aside}</span>}
+      </span>
       {badges.length > 0 ? (
         oneRow ? (
           <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <ScoreChips chips={badges} oneRow />
+            <ScoreChips chips={badges} oneRow short />
           </div>
         ) : (
           <ScoreChips chips={badges} />

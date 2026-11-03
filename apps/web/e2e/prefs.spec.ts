@@ -1,4 +1,4 @@
-import { openCourseDetails, expect, test } from "./fixtures/test";
+import { openCourseDetails, expect, test, pickStartsAfter, startsAfterText } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 
 const screenshotDir = "e2e/screenshots";
@@ -79,9 +79,9 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   const row = preferencesRow(page);
 
   await expect(row.getByRole("button", { name: "1 blocked time" })).toBeVisible();
-  await expect(row.getByRole("combobox", { name: "Sort" })).toHaveText("SortFewest early classes");
+  await expect(page.getByRole("combobox", { name: "Sort" })).toHaveText("SortFewest early classes");
 
-  await row.getByRole("combobox", { name: "Starts after" }).selectOption({ label: "10:00 AM" });
+  await pickStartsAfter(row, 600);
   await waitForSchedules(page);
 
   await row.getByRole("button", { name: "Block a time" }).click();
@@ -112,7 +112,7 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
 
   await page.reload();
   await waitForSchedules(page);
-  await expect(row.getByRole("combobox", { name: "Starts after" })).toHaveValue("600");
+  await expect(row.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(600));
   await row.getByRole("button", { name: "1 blocked time" }).click();
   await expect(row.getByText("Lunch")).toBeVisible();
   await expect(row.getByRole("switch", { name: "Only open sections" })).toHaveAttribute("aria-checked", "false");

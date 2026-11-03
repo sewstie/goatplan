@@ -1,6 +1,8 @@
 "use client";
 
 import { DotsThree, ListDashes, Plus, SquaresFour } from "@phosphor-icons/react/ssr";
+import { TermPicker } from "@/components/courses/TermPicker";
+import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { SegmentedSwitch } from "@/components/ui/SegmentedSwitch";
@@ -15,6 +17,7 @@ export function DegreeTitle({ hasCourses }: { hasCourses: boolean }) {
   const view = useDegreeUi((state) => state.view);
   const set = useDegreeUi((state) => state.set);
   const open = useDegreeUi((state) => state.open);
+  const phone = usePhoneViewport();
 
   return (
     <header className="flex flex-col gap-14 tablet:flex-row tablet:items-start tablet:justify-between tablet:gap-20">
@@ -26,6 +29,7 @@ export function DegreeTitle({ hasCourses }: { hasCourses: boolean }) {
         <p className="pt-9 text-tile leading-16 text-ink-muted">Unofficial · Check with your advisor and Workday’s Academic Progress.</p>
       </div>
       <div className="flex items-center justify-between gap-10 tablet:justify-end">
+        {!phone && <div className="hidden tablet:block"><TermPicker inline /></div>}
         <SegmentedSwitch label="Sheet or list" options={VIEWS} value={view} onChange={(value) => set({ view: value })} />
         <div className="flex items-center gap-10">
           {hasCourses && (

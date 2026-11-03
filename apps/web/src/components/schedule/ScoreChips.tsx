@@ -10,7 +10,7 @@ const TONE: Readonly<Record<ScheduleBadge["tone"], string>> = {
 
 /**
  * What the shown schedule is like. Good news is green, an early start is orange, and the badge the sort
- * ranks by is bold. `oneRow` never wraps; the row then scrolls sideways.
+ * ranks by is bold. `oneRow` never wraps; the row then scrolls sideways. `flat` hands the chips to the parent's flow.
  */
 export function ScoreChips({ chips, oneRow = false }: { chips: readonly ScheduleBadge[]; oneRow?: boolean }) {
   const id = useId();
@@ -27,7 +27,8 @@ export function ScoreChips({ chips, oneRow = false }: { chips: readonly Schedule
               key={chip.text}
               aria-describedby={described || undefined}
               className={cx(
-                "rounded-pill px-7 py-1 text-8-5 leading-11-9 whitespace-nowrap",
+                "rounded-pill py-1 text-8-5 leading-11-9 whitespace-nowrap",
+                oneRow ? "px-5" : "px-7",
                 TONE[chip.tone],
                 chip.lead ? "font-700 ring-1 ring-current ring-inset" : "font-570",
               )}

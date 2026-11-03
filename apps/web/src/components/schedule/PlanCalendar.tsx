@@ -114,7 +114,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             drawing={drawingHere}
             style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN, CLASS_END_GAP)}
             selected={selected}
-            onSelect={(clicked) => {
+            onSelect={(clicked, fromKeyboard) => {
               // On a phone a tap opens the course screen with that section picked.
               if (phone && !clicked.preview) {
                 selectCourse(clicked.courseCode, clicked.sectionId);

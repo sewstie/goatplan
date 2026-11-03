@@ -47,7 +47,7 @@ test("saved URLs survive reload and back without changing the working draft", as
   await page.getByRole("button", { name: "Next saved plan" }).click();
   await expect(page).toHaveURL(/plan=plan-2/);
   await expect(page.getByRole("button", { name: "Next saved plan" })).toHaveAttribute("aria-disabled", "true");
-  await expect(page.getByRole("group", { name: "Preferences", exact: true })).toContainText("time block");
+  await expect(page.getByRole("group", { name: "Preferences", exact: true })).toContainText("Blocked");
   await expect(page.getByRole("button", { name: /AE 2320 CX99/ })).toBeVisible();
   await page.getByRole("button", { name: /AE 2320 CX99/ }).first().click();
   await expect(page.getByRole("link", { name: /View Ye Lu on Rate My Professors/ })).toBeVisible();

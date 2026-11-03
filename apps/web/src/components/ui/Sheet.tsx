@@ -5,6 +5,7 @@ import { X } from "@phosphor-icons/react/ssr";
 import { cx } from "./cx";
 import { IconButton } from "./IconButton";
 import { useModalDialog } from "./useModalDialog";
+import { useSwipeDown } from "./useSwipeDown";
 
 export type SheetSide = "right" | "bottom";
 
@@ -15,6 +16,8 @@ type SheetProps = {
   children?: ReactNode;
   /** Along the right edge (the default), or across the bottom of the screen, as on a phone. */
   side?: SheetSide;
+  /** A lighter backdrop, for a quick action sheet that keeps the page in view. */
+  lightScrim?: boolean;
 };
 
 const sideClasses: Record<SheetSide, { dialog: string; body: string }> = {
@@ -56,10 +59,12 @@ function keepFocusInside(event: KeyboardEvent<HTMLDialogElement>) {
   }
 }
 
-export function Sheet({ open, onClose, title, children, side = "right" }: SheetProps) {
+export function Sheet({ open, onClose, title, children, side = "right", lightScrim = false }: SheetProps) {
   const titleId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
   const { ref, handleClose, handlePointerDown, handleBackdropClick, close } = useModalDialog(open, onClose);
+  const swipe = useSwipeDown<HTMLDivElement>(close);
+  const bottom = side === "bottom";
 
   // The browser would focus the Close button; start at the heading instead, so a screen reader
   // reads the title first. This runs after useModalDialog has opened the sheet.
@@ -75,10 +80,13 @@ export function Sheet({ open, onClose, title, children, side = "right" }: SheetP
       onPointerDown={handlePointerDown}
       onClick={handleBackdropClick}
       onKeyDown={keepFocusInside}
-      className={cx("bg-surface p-0 text-ink shadow-popover backdrop:bg-scrim", sideClasses[side].dialog)}
+      style={swipe.offset > 0 ? { translate: `0 ${swipe.offset}px`, transition: "none" } : undefined}
+      className={cx("bg-surface p-0 text-ink shadow-popover", lightScrim ? "backdrop:bg-scrim-flat" : "backdrop:bg-scrim", sideClasses[side].dialog)}
     >
       <div className={cx("flex flex-col gap-12 overflow-y-auto px-16", sideClasses[side].body)}>
-        <div className="flex items-start justify-between gap-12">
+        {/* On a phone the top of the sheet can be pulled down to close it. */}
+        <div {...(bottom ? swipe.handlers : {})} className={cx("flex items-start justify-between gap-12", bottom && "relative -mt-20 touch-none pt-20")}>
+          {bottom && <span aria-hidden className="absolute top-8 left-1/2 h-4 w-36 -translate-x-1/2 rounded-pill bg-line-strong" />}
           <h2 ref={heading} id={titleId} tabIndex={-1} className="text-21 leading-25-2 font-700 tracking-heading outline-none">
             {title}
           </h2>

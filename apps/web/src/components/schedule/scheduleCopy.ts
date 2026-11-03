@@ -52,7 +52,7 @@ const SHORT_DAY: Readonly<Record<Day, string>> = {
 /** Badge category keys, in the default display order (after any lead badge). */
 type BadgeKind = "DaysOff" | "Start" | "FreeTime" | "Finish";
 
-const DEFAULT_ORDER: readonly BadgeKind[] = ["DaysOff", "Start", "FreeTime", "Finish"];
+const DEFAULT_ORDER: readonly BadgeKind[] = ["FreeTime", "Start", "Finish", "DaysOff"];
 
 /** Which badge kind leads for each sort preset. bestOverall has no lead. */
 const LEAD_BADGE: Partial<Record<SortPresetId, BadgeKind>> = {
@@ -65,7 +65,7 @@ const LEAD_BADGE: Partial<Record<SortPresetId, BadgeKind>> = {
 
 /** Breaks this long or shorter are the walk between back-to-back classes, not free time (the engine's rule). */
 const WALK_MINUTES = 10;
-const MAX_BADGES = 3;
+const MAX_BADGES = 4;
 /** With no "Starts after" set, a first class before 9 AM counts as early. */
 const COMFORT_START = 9 * 60;
 /** Done by 5 PM leaves the evening free. */
@@ -81,7 +81,7 @@ export interface ScheduleBadge {
 }
 
 /**
- * Up to three badge texts describing the shown schedule. Replaces the old scoreChips.
+ * Up to four badge texts describing the shown schedule. Replaces the old scoreChips.
  *
  * Input: the schedule's meetings (day, start, end), its engine score and the current sort preset.
  * Meetings with no set time (online/async courses) are excluded by the caller
@@ -166,7 +166,7 @@ export function scheduleBadgeDetails(
     }
   }
 
-  // ── Ordering: lead badge first, then default order, cap at 3 ──
+  // ── Ordering: lead badge first, then default order ──
   const lead = LEAD_BADGE[preset];
   const order: BadgeKind[] = lead
     ? [lead, ...DEFAULT_ORDER.filter((kind) => kind !== lead)]

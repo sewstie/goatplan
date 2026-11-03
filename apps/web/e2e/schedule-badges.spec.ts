@@ -65,7 +65,7 @@ test("flipping to the next schedule updates the badges", async ({ page }) => {
   await expect(list).toBeVisible();
   const firstBadges = await list.locator("li").allTextContents();
   expect(firstBadges.length).toBeGreaterThan(0);
-  expect(firstBadges.length).toBeLessThanOrEqual(3);
+  expect(firstBadges.length).toBeLessThanOrEqual(4);
 
   // Every badge should be non-empty and contain text.
   for (const badge of firstBadges) {
@@ -124,11 +124,6 @@ test("badges wrap without overflow at 834 px", async ({ page }) => {
 
   const list = badgeList(page);
   await expect(list).toBeVisible();
-
-  // Get the bounding box of the badge list and the parent wrapper.
-  const summaryLine = list.locator("..");
-  const parentBox = await summaryLine.boundingBox();
-  expect(parentBox).not.toBeNull();
 
   // Every badge pill should be fully visible (not clipped).
   for (const pill of await list.locator("li").all()) {

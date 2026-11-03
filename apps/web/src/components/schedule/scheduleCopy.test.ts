@@ -275,30 +275,30 @@ describe("scheduleBadges", () => {
     });
 
     it("bestOverall has no lead badge, uses default order", () => {
-      // Full week: no days off, so default order DaysOff(skip), Start, free time, Finish.
-      expect(badges(fullWeek, "bestOverall", fullWeekFree)).toEqual(["Starts 9 AM", "20 h free between classes", "Done by 3 PM"]);
+      // Full week: no days off, so free time, Start, Finish.
+      expect(badges(fullWeek, "bestOverall", fullWeekFree)).toEqual(["20 h free between classes", "Starts 9 AM", "Done by 3 PM"]);
     });
 
-    it("keeps free time third after Days off and Start", () => {
+    it("keeps free time, start and done by, with days off last", () => {
       const meetings: Meeting[] = [
         { day: "Mon", start: 540, end: 600 },
         { day: "Mon", start: 640, end: 700 },
       ];
-      expect(badges(meetings, "bestOverall", 40)).toEqual(["4 days off", "Starts 9 AM", "40 min free between classes"]);
-      expect(badges(meetings, "latestStart", 40)).toEqual(["Starts 9 AM", "4 days off", "40 min free between classes"]);
-      expect(badges(meetings, "earliestFinish", 40)).toEqual(["Done by 11:40 AM", "4 days off", "Starts 9 AM"]);
+      expect(badges(meetings, "bestOverall", 40)).toEqual(["40 min free between classes", "Starts 9 AM", "Done by 11:40 AM", "4 days off"]);
+      expect(badges(meetings, "latestStart", 40)).toEqual(["Starts 9 AM", "40 min free between classes", "Done by 11:40 AM", "4 days off"]);
+      expect(badges(meetings, "earliestFinish", 40)).toEqual(["Done by 11:40 AM", "40 min free between classes", "Starts 9 AM", "4 days off"]);
     });
   });
 
-  describe("cap of 3", () => {
-    it("returns at most 3 badges", () => {
+  describe("cap of 4", () => {
+    it("returns at most 4 badges", () => {
       // Classes only on Mon → 4 days off, with a break.
-      // All four badge types apply: DaysOff, Start, free time, Finish.
+      // All four badge types apply.
       const meetings: Meeting[] = [
         { day: "Mon", start: 540, end: 600 },
         { day: "Mon", start: 840, end: 900 },
       ];
-      expect(badges(meetings, "bestOverall", 240)).toHaveLength(3);
+      expect(badges(meetings, "bestOverall", 240)).toHaveLength(4);
     });
   });
 
@@ -336,9 +336,10 @@ describe("scheduleBadgeDetails", () => {
 
   it("warns about an 8 AM start and marks good news green", () => {
     expect(tones()).toEqual([
-      { text: "3 days off", tone: "good", lead: false },
-      { text: "Starts 8 AM", tone: "warning", lead: false },
       { text: "1 h free between classes", tone: "good", lead: false },
+      { text: "Starts 8 AM", tone: "warning", lead: false },
+      { text: "Done by 1:50 PM", tone: "good", lead: false },
+      { text: "3 days off", tone: "good", lead: false },
     ]);
   });
 

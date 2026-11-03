@@ -1,4 +1,4 @@
-import { expect, test } from "./fixtures/test";
+import { expect, test, pickStartsAfter, startsAfterText } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 import type { Section, TermFile } from "../src/lib/data/types";
 
@@ -40,8 +40,6 @@ async function addCourse(page: Page) {
   await page.getByRole("searchbox").fill(code);
   await page.getByRole("button", { name: `Add ${code}` }).click();
   await settled(page);
-  // Below 1600 px the details are a drawer that a click opens.
-  if ((page.viewportSize()?.width ?? 0) < 1600) await page.locator(`[data-course-row="${code}"]`).click();
 }
 
 async function expectSchedules(page: Page, sections: string[]) {
@@ -88,8 +86,7 @@ for (const width of [1440, 834]) {
   test(`fresh defaults allow early classes and explicit restrictions update results at ${width}`, async ({ page }) => {
     await page.setViewportSize({ width, height: width === 834 ? 1194 : 900 });
     await openFreshPlanner(page);
-    await expect(startsAfter(page)).toHaveValue("0");
-    await expect(startsAfter(page).getByRole("option", { selected: true })).toHaveText("Any time");
+    await expect(startsAfter(page)).toHaveText(startsAfterText(0));
     await expect(onlyOpen(page)).toBeChecked();
     await expect(preferences(page).getByRole("button", { name: /Remove blocked time/ })).toHaveCount(0);
     await screenshot(page, "fresh", width);
@@ -98,9 +95,9 @@ for (const width of [1440, 834]) {
     await expectSchedules(page, ["C01", "C02"]);
     await screenshot(page, "early", width);
 
-    await startsAfter(page).selectOption("540");
+    await pickStartsAfter(preferences(page), 540);
     await expectSchedules(page, ["C02"]);
-    await startsAfter(page).selectOption("0");
+    await pickStartsAfter(preferences(page), 0);
     await expectSchedules(page, ["C01", "C02"]);
 
     await blockTime(page, "Monday", "480", "540");
@@ -112,10 +109,12 @@ for (const width of [1440, 834]) {
     await expectSchedules(page, ["C03"]);
     await screenshot(page, "restricted", width);
 
-    await onlyOpen(page).click();
+    await onlyOpen(page).focus();
+    await page.keyboard.press("Space");
     await expectSchedules(page, []);
-    await expect(startsAfter(page)).toHaveValue("0");
-    await preferences(page).getByRole("button", { name: "2 blocked times" }).click();
+    await expect(startsAfter(page)).toHaveText(startsAfterText(0));
+    await preferences(page).getByRole("button", { name: "2 blocked times" }).focus();
+    await page.keyboard.press("Enter");
     await expect(preferences(page).getByRole("button", { name: /Remove blocked time/ })).toHaveCount(2);
   });
 }
@@ -132,9 +131,10 @@ test("reload, saving, and saving a copy preserve configured preferences, profess
   await page.setViewportSize({ width: 1440, height: 900 });
   await openFreshPlanner(page);
   await addCourse(page);
-  await startsAfter(page).selectOption("540");
+  await pickStartsAfter(preferences(page), 540);
   await blockTime(page, "Tuesday", "720", "780");
-  await onlyOpen(page).click();
+  await onlyOpen(page).focus();
+  await page.keyboard.press("Space");
   await chooseProfessor(page, "Ye Lu");
   await expectSchedules(page, ["C02", "C03"]);
   await details(page).getByRole("button", { name: "Lock Lecture C03", exact: true }).click();
@@ -142,7 +142,7 @@ test("reload, saving, and saving a copy preserve configured preferences, profess
 
   async function expectConfiguredPlan() {
     await settled(page);
-    await expect(startsAfter(page)).toHaveValue("540");
+    await expect(startsAfter(page)).toHaveText(startsAfterText(540));
     await expect(onlyOpen(page)).not.toBeChecked();
     await preferences(page).getByRole("button", { name: "1 blocked time" }).click();
     await expect(preferences(page).getByRole("button", { name: "Remove blocked time Tue 12 PM–1 PM" })).toBeVisible();
@@ -168,7 +168,7 @@ test("reload, saving, and saving a copy preserve configured preferences, profess
   await expect(copy).toBeHidden();
 
   for (const name of ["Mornings free", "Mornings copy"]) {
-    await startsAfter(page).selectOption("0");
+    await pickStartsAfter(preferences(page), 0);
     const blockedPill = preferences(page).getByRole("button", { name: /^\d+ blocked time/ });
     if ((await blockedPill.getAttribute("aria-expanded")) !== "true") await blockedPill.click();
     await preferences(page).getByRole("button", { name: "Remove blocked time Tue 12 PM–1 PM" }).click();

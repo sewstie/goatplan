@@ -2,6 +2,7 @@
 
 import { useId, type ComponentProps, type ReactNode } from "react";
 import { cx } from "./cx";
+import { focusWithin } from "./focusRing";
 
 type TextInputProps = Omit<ComponentProps<"input">, "size"> & {
   label: string;
@@ -31,7 +32,7 @@ export function TextInput({
       >
         {label}
       </label>
-      <div className="group flex min-h-38 items-center gap-8 rounded-control border border-line bg-surface px-9 transition-[border-color,box-shadow] has-[:focus-visible]:border-choice-line has-[:focus-visible]:shadow-field-focus has-[:disabled]:border-line-disabled has-[:disabled]:bg-surface-disabled">
+      <div className={cx("group flex min-h-38 items-center gap-8 rounded-control border border-line bg-surface px-9 has-[:disabled]:border-line-disabled has-[:disabled]:bg-surface-disabled", focusWithin)}>
         {icon && (
           <span
             aria-hidden
