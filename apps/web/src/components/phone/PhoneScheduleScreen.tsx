@@ -19,7 +19,7 @@ import { SearchTrigger } from "./SearchTrigger";
  * week calendar. When nothing fits, the "Needs attention" card takes the calendar's place, or goes
  * under it in drawing mode.
  */
-export function PhoneScheduleScreen({ banner, notices }: { banner: ReactNode; notices?: ReactNode }) {
+export function PhoneScheduleScreen({ banner, notices, menuActions }: { banner: ReactNode; notices?: ReactNode; menuActions?: ReactNode }) {
   const diagnosis = useDiagnosis();
   const attention = diagnosis !== null && (diagnosis.issues.length > 0 || diagnosis.fixes.length > 0);
   const drawing = usePlanner((state) => state.drawing);
@@ -48,12 +48,13 @@ export function PhoneScheduleScreen({ banner, notices }: { banner: ReactNode; no
                 <h1 data-screen-heading tabIndex={-1} className="text-21 leading-30 font-700 tracking-title outline-none">
                   <PlannerTitle />
                 </h1>
-                {!shared && (
+                {(!shared || menuActions) && (
                   <div className="flex shrink-0 items-center gap-6">
-                    {menu}
+                    {!shared && menu}
                     <BarMoreMenu>
-                      {share}
-                      {exportButton}
+                      {!shared && share}
+                      {!shared && exportButton}
+                      {menuActions}
                     </BarMoreMenu>
                   </div>
                 )}

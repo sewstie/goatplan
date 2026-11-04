@@ -266,6 +266,30 @@ still shows that plan's courses, preferences and summary.
   don't call it: the store owns the engine and puts its answers in `response`.
   The types follow `engine-api.md`.
 
+## Degree and theme integration
+
+`TopBar` accepts `navigation` and `appearance` alongside its existing center
+and action slots. `AppShell` and `PlannerShell` forward these as
+`barNavigation` and `barAppearance`. Appearance controls sit outside the
+planner action wrapper, which applies compact button styles.
+
+`PhoneTopBar` accepts `navigation`. `PlannerShell.phoneNavigation` forwards
+to it through `PhonePlanner`. Omit navigation slots to use `MainTabs` and
+`PhoneTabBar`. The degree restoration owns those components and the tester
+flag. Keep unavailable routes hidden until their feature is restored.
+
+`PlannerShell.phoneMenuActions` forwards to `PhonePlanner.menuActions` and
+`PhoneScheduleScreen.menuActions`. These actions use the existing More actions
+menu. They also keep that menu available in a shared preview without exposing
+draft actions. A degree page can reuse `BarMoreMenu` for its phone controls.
+
+These slots are optional and render no controls on their own. Theme work owns
+the appearance buttons and state. Keep theme values in `app/globals.css`:
+its `@theme static` block already includes surface, text, course, status,
+degree-tile, chart and focus tokens. Add dark overrides there, keep light values
+as defaults and use light tokens for print. No token consolidation is needed
+before degree restoration or theme work starts.
+
 ## Phone layout
 
 Phone is in scope at 375 px. The breakpoint is `--breakpoint-tablet: 40rem`
