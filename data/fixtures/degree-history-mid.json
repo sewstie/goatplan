@@ -1,0 +1,147 @@
+{
+  "$comment": "Test history 1: mid-degree CS student (sophomore entering 3rd year). Expected results worked out by hand from the CS-2030 tracking sheet. Each course fills exactly one line.",
+  "name": "mid-degree",
+  "major": "Computer Science",
+  "classYear": 2030,
+  "takenCourses": [
+    { "code": "CS 1102", "credits": 3, "term": "2027-A" },
+    { "code": "CS 2022", "credits": 3, "term": "2027-B" },
+    { "code": "CS 2102", "credits": 3, "term": "2027-B" },
+    { "code": "CS 2303", "credits": 3, "term": "2027-C" },
+    { "code": "CS 2223", "credits": 3, "term": "2027-C" },
+    { "code": "CS 3013", "credits": 3, "term": "2027-D" },
+    { "code": "CS 3133", "credits": 3, "term": "2028-A" },
+    { "code": "MA 1021", "credits": 3, "term": "2027-A" },
+    { "code": "MA 1022", "credits": 3, "term": "2027-B" },
+    { "code": "MA 1023", "credits": 3, "term": "2027-C" },
+    { "code": "MA 1024", "credits": 3, "term": "2027-D" },
+    { "code": "MA 2621", "credits": 3, "term": "2028-A" },
+    { "code": "PH 1110", "credits": 3, "term": "2027-A" },
+    { "code": "PH 1120", "credits": 3, "term": "2027-B" },
+    { "code": "CH 1010", "credits": 3, "term": "2027-C" },
+    { "code": "BB 1001", "credits": 3, "term": "2028-A" },
+    { "code": "EN 1001", "credits": 3, "term": "2027-A", "apIb": true },
+    { "code": "HI 1330", "credits": 3, "term": "2027-D" },
+    { "code": "PSY 1400", "credits": 3, "term": "2027-B" },
+    { "code": "GOV 1100", "credits": 3, "term": "2028-A" },
+    { "code": "WPE 1001", "credits": 0.25, "term": "2027-A" },
+    { "code": "WPE 1002", "credits": 0.25, "term": "2027-B" }
+  ],
+  "plannedCourses": [
+    { "code": "CS 3041", "credits": 3, "inProgress": true },
+    { "code": "MA 2611", "credits": 3, "inProgress": true }
+  ],
+  "confirmedManualItems": [],
+  "$reasoning": {
+    "csAllocation": "8 CS courses (7 taken + 1 planned) for 18 CS lines (16-33). Line 16: CS 1102 (intro). Lines 17-21 + 22-25 are CS 2000+ (area tags are checks, not separate filters). Best allocation puts area-relevant courses on area-tagged lines to satisfy checks. CS 3013→line 22 (Systems tag), CS 3133→line 23 (Theory tag), CS 3041→line 24 (Design tag). Remaining CS 2000+: CS 2022, CS 2102, CS 2223, CS 2303 fill lines 17-20, in code order like the complete-degree history, because the order of the list can't change the answer. Line 21 unfilled. Lines 25-33 unfilled.",
+    "mathAllocation": "6 MA courses (5 taken + 1 planned) for 7 math lines (34-40). Lines 34-37: MA 1021-1024. Line 39: MA 2621 (Probability). Line 40: MA 2611 (planned, Statistics). Line 38 (MA 2000+): unfilled — MA 2621 is better used on the specific line 39.",
+    "csNote": "CS 2022 is cross-listed with MA 2201. Used as CS here since it counts toward CS. The cross-list rule means it can only count toward one distribution area.",
+    "scienceAllocation": "4 science courses for 5 science lines. Lines 41-43 (BB/CH/GE/PH): PH 1110, PH 1120, CH 1010. Line 44 (Note 4 disciplines): BB 1001. Line 45 unfilled.",
+    "wpeNote": "WPE 1001 and WPE 1002 are each 0.25 credits. Line 7 has 4 sub-slots at 1/12 unit each. 2 of 4 filled."
+  },
+  "expectedLines": {
+    "1": { "course": "EN 1001", "state": "done" },
+    "2": { "course": "HI 1330", "state": "done" },
+    "3": { "course": null, "state": "missing" },
+    "4": { "course": null, "state": "missing" },
+    "5": { "course": null, "state": "missing" },
+    "6": { "course": null, "state": "missing" },
+    "7": {
+      "state": "partial",
+      "subSlots": [
+        { "course": "WPE 1001", "state": "done" },
+        { "course": "WPE 1002", "state": "done" },
+        { "course": null, "state": "missing" },
+        { "course": null, "state": "missing" }
+      ]
+    },
+    "8": { "course": "PSY 1400", "state": "done" },
+    "9": { "course": "GOV 1100", "state": "done" },
+    "10": { "course": null, "state": "missing" },
+    "11": { "course": null, "state": "missing" },
+    "12": { "course": null, "state": "missing" },
+    "13": { "course": null, "state": "missing" },
+    "14": { "course": null, "state": "missing" },
+    "15": { "course": null, "state": "missing" },
+    "16": { "course": "CS 1102", "state": "done" },
+    "17": { "course": "CS 2022", "state": "done" },
+    "18": { "course": "CS 2102", "state": "done" },
+    "19": { "course": "CS 2223", "state": "done" },
+    "20": { "course": "CS 2303", "state": "done" },
+    "21": { "course": null, "state": "missing" },
+    "22": { "course": "CS 3013", "state": "done" },
+    "23": { "course": "CS 3133", "state": "done" },
+    "24": { "course": "CS 3041", "state": "planned" },
+    "25": { "course": null, "state": "missing" },
+    "26": { "course": null, "state": "missing" },
+    "27": { "course": null, "state": "missing" },
+    "28": { "course": null, "state": "missing" },
+    "29": { "course": null, "state": "missing" },
+    "30": { "course": null, "state": "missing" },
+    "31": { "course": null, "state": "missing" },
+    "32": { "course": null, "state": "missing" },
+    "33": { "course": null, "state": "missing" },
+    "34": { "course": "MA 1021", "state": "done" },
+    "35": { "course": "MA 1022", "state": "done" },
+    "36": { "course": "MA 1023", "state": "done" },
+    "37": { "course": "MA 1024", "state": "done" },
+    "38": { "course": null, "state": "missing" },
+    "39": { "course": "MA 2621", "state": "done" },
+    "40": { "course": "MA 2611", "state": "planned" },
+    "41": { "course": "PH 1110", "state": "done" },
+    "42": { "course": "PH 1120", "state": "done" },
+    "43": { "course": "CH 1010", "state": "done" },
+    "44": { "course": "BB 1001", "state": "done" },
+    "45": { "course": null, "state": "missing" }
+  },
+  "expectedSections": {
+    "hua": { "done": 2, "planned": 0, "total": 6 },
+    "wpe": { "done": 2, "planned": 0, "total": 4, "$note": "sub-slots, not lines" },
+    "social-science": { "done": 2, "planned": 0, "total": 2 },
+    "iqp": { "done": 0, "planned": 0, "total": 3 },
+    "free-electives": { "done": 0, "planned": 0, "total": 3 },
+    "cs": { "done": 7, "planned": 1, "total": 18 },
+    "math": { "done": 5, "planned": 1, "total": 7 },
+    "science": { "done": 4, "planned": 0, "total": 5 }
+  },
+  "expectedChecks": {
+    "systems": { "state": "met", "courses": ["CS 3013"] },
+    "theory": { "state": "met", "courses": ["CS 3133"] },
+    "design": { "state": "planned", "courses": ["CS 3041"] },
+    "social": { "state": "not-met", "courses": [] },
+    "science-depth": {
+      "state": "met",
+      "courses": ["PH 1110", "PH 1120", "CH 1010"],
+      "$note": "3 from BB/CH/GE/PH, 2 from PH (one discipline)"
+    },
+    "hua-depth": {
+      "state": "check-yourself",
+      "$note": "Only 2 HUA courses from different groupings. Not enough for 3-course depth."
+    },
+    "hua-breadth": {
+      "state": "check-yourself",
+      "$note": "Cannot verify without a depth grouping established."
+    },
+    "hua-ap-ib-limit": {
+      "state": "met",
+      "$note": "1 AP/IB course (EN 1001), within limit of 1"
+    },
+    "residency": {
+      "state": "check-yourself",
+      "$note": "Cannot verify from course data alone"
+    },
+    "ma-1000-limit": {
+      "state": "met",
+      "$note": "4 MA 1000-level courses (MA 1021-1024), at maximum of 4"
+    },
+    "grad-equivalence": {
+      "state": "check-yourself",
+      "$note": "No graduate courses present"
+    }
+  },
+  "expectedFreeElectivePool": {
+    "courses": [],
+    "totalCredits": 0
+  },
+  "expectedExtra": []
+}

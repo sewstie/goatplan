@@ -310,3 +310,316 @@ string or `null`; the version comes back as JSON text, so version 2 gives
 | `unknownCourse`      | A course code isn't in the loaded term.                      | The code. |
 | `unknownSection`     | A section ID in `locked` or `anyOf` isn't one of that course's sections. | The section ID. |
 | `internal`           | A bug in the engine.                                         | `null` |
+
+## Audit
+
+A degree audit checks a student's courses against a requirements file and
+reports which lines are filled, which checks are met, and what's still missing.
+It's an additive part of version 1: existing requests and responses keep their
+meaning.
+
+### Recognizing an audit request
+
+A request is an audit when it has a `"requirements"` key at the top level.
+Existing requests never have this key, so every request that worked before
+still works the same way. An audit doesn't need a loaded term.
+
+### Audit request
+
+The engine matches filtered lines, "only one of" sets, cross-lists, WPE slots,
+manual items and the free elective pool, then works out the checks and what each
+candidate would close.
+
+```json
+{
+  "version": 1,
+  "requirements": "cs-2030",
+  "taken": [
+    { "code": "CS 1101", "credits": 3 },
+    { "code": "MA 1021", "credits": 3 },
+    { "code": "HU 3900", "credits": 3, "apIb": true }
+  ],
+  "planned": [
+    { "code": "CS 2102", "credits": 3 }
+  ],
+  "manual": ["iqp-1", "wpe-sports"],
+  "candidates": [
+    { "code": "CS 3733", "credits": 3 }
+  ]
+}
+```
+
+| Field          | Type                          | Default    | Meaning |
+| -------------- | ----------------------------- | ---------- | ------- |
+| `version`      | number                        | required   | Must be `1`. |
+| `requirements` | string                        | required   | The ID of a requirements file, e.g. `"cs-2030"`. |
+| `taken`        | list of course objects         | `[]`       | Courses the student has completed. |
+| `planned`      | list of course objects         | `[]`       | Courses the student is taking or plans to take. |
+| `manual`       | list of manual item IDs        | `[]`       | Confirmed manual items, such as `"iqp-1"` or `"wpe-sports"`. Unknown IDs are ignored. |
+| `candidates`   | list of course objects         | `[]`       | Courses to test for gap-closing. |
+
+Each course object has:
+
+| Field     | Type    | Default  | Meaning |
+| --------- | ------- | -------- | ------- |
+| `code`    | string  | required | The course code, e.g. `"CS 2102"`. |
+| `credits` | number  | required | Credit value of the course. |
+| `apIb`    | boolean | `false`  | Whether the course was earned through AP or IB. |
+
+Codes use uppercase subjects of two to four letters, one space, and a
+three- or four-digit number with an optional uppercase suffix. Credits must
+be finite and nonnegative. Invalid fields return `badRequest` with their
+field path. Optional lists may be omitted or `null` to use their defaults.
+
+A repeated code counts once; later copies are ignored and show as "Extra" in
+the response. Cross-listed courses (e.g. CS 2022 and MA 2201) are one course
+with several codes; listing both codes counts once, and the unused code shows
+as "Extra". The order of the lists doesn't change the response.
+
+### Audit response
+
+```json
+{
+  "ok": true,
+  "version": 1,
+  "sections": [
+    {
+      "name": "Computer Science",
+      "done": 4,
+      "planned": 1,
+      "total": 10,
+      "lines": [
+        { "id": 17, "label": "Computer Science", "state": "done", "course": "CS 2102" },
+        { "id": 22, "label": "Computer Science", "state": "planned", "course": "CS 3733" },
+        { "id": 23, "label": "Computer Science", "state": "empty", "course": null }
+      ]
+    }
+  ],
+  "checks": [
+    { "id": "systems", "label": "Systems area", "state": "met", "courses": ["CS 4513"] },
+    { "id": "hua-depth", "label": "Humanities depth", "state": "check", "courses": ["EN 1001", "EN 1002", "EN 2201"] }
+  ],
+  "freeElectives": {
+    "creditsDone": 3,
+    "creditsPlanned": 0,
+    "creditsTotal": 9,
+    "courses": ["PE 1001"]
+  },
+  "extra": ["CS 1101"],
+  "candidateResults": [
+    { "code": "CS 3733", "closesLines": [24], "closesChecks": ["design"] }
+  ]
+}
+```
+
+**Sections.** Each section from the requirements file appears once. `done` and
+`planned` count the filled lines in that section. `total` is the number of
+lines. A line with sub-slots counts each slot instead, so Wellness and Physical
+Education has a `total` of 4. Each line has:
+
+| Field   | Type              | Meaning |
+| ------- | ----------------- | ------- |
+| `id`    | number            | The line number from the requirements file. |
+| `label` | string            | A display label for the line. |
+| `state` | `"done"`, `"planned"`, `"partial"` or `"empty"` | Whether the line is filled by a taken course, a planned course, or nothing. `"partial"` means only some sub-slots are filled. |
+| `course`| string or `null`  | The course code filling this line. `null` if it's empty, has sub-slots, was filled by a manual item, or is a pool line already finished by the same course. |
+| `subSlots` | list, only on lines with sub-slots | One `{ "course", "state" }` per slot. Taken classes come first, then confirmed sports with a `null` course, then planned classes. |
+
+A pool line is `"done"` or `"planned"` once the pool's credits reach it, and
+`course` names the course that finished it.
+
+**Checks.** Each check from the requirements file appears once.
+
+| Field    | Type                                 | Meaning |
+| -------- | ------------------------------------ | ------- |
+| `id`     | string                               | The check ID from the requirements file. |
+| `label`  | string                               | A display label for the check. |
+| `state`  | `"met"`, `"planned"`, `"not-met"` or `"check"` | Whether taken courses satisfy the check, planned courses are needed to satisfy it, it isn't satisfied, or it needs manual verification ("Check this yourself"). |
+| `courses`| list of course codes                  | The courses behind this check. Empty when the state is `"not-met"`. |
+
+| Check | State |
+| ----- | ----- |
+| `systems`, `theory`, `design`, `social` | `"met"` or `"planned"` when an area course of 3 or more credits fills a Computer Science line. `courses` then lists every such course the student has, even one that ended up in the pool. |
+| `social` | With no CS course on a line, a non-CS course of 3 or more credits (GOV/ID 2314, GOV 2315, IMGD 2000, RBE 3100) gives `"check"`. It doesn't use a Computer Science line, and can fill another line it qualifies for. |
+| `science-depth` | `"met"` or `"planned"` when 2 BB/CH/GE/PH courses on Science lines share a subject. `courses` lists the first 3 BB/CH/GE/PH courses on those lines. |
+| `hua-depth` | Looks at the courses on lines 1–5, so the seminar on line 6 doesn't count. With 3 in one grouping it's `"check"` until `hua-depth-confirmation` is sent, then `"met"` or `"planned"`. Below 3, courses in more than one grouping give `"check"`, and otherwise it's `"not-met"`. |
+| `hua-breadth` | With a depth grouping, `"met"` or `"planned"` when a course on lines 1–5 is outside it, `"check"` when every course is in the modern languages grouping, and otherwise `"not-met"`. Without one, `"check"` once any course is on those lines, and otherwise `"not-met"`. |
+| `hua-ap-ib-limit` | `"check"` with more than 1 AP/IB humanities course, and otherwise `"met"`. |
+| `residency` | `"check"` once the request has any taken or planned course, and otherwise `"not-met"`. A course's code can't show whether it was taken at WPI. |
+| `ma-1000-limit` | Always `"met"`, because only 4 lines accept 1000-level courses. `courses` lists the ones on Mathematics lines. |
+| `grad-equivalence` | Always `"check"`, because the 2-for-3 rule can't be worked out here. `courses` lists the graduate courses on Computer Science lines that count as 4000+. Each counts as one course, with no bonus. Empty means no course is affected. |
+
+**Free electives.** A credit pool. Courses from 0.75 to under 3 credits, and
+unmatched courses of any size, go here by credit, taken courses first.
+`creditsDone`, `creditsPlanned` and `creditsTotal` track progress, and the two
+counts stop at the total. A course that starts below the total still counts in
+full as a course, even if it tips the pool over.
+
+**Extra.** Courses that don't count toward any line or the free elective pool:
+courses beyond a full pool, repeated codes (second and later copies), the
+unused code of a cross-list, 0-credit courses, and other courses under 0.75
+credits. WPE classes under 0.75 credits still fill WPE slots. The list is sorted.
+
+**Candidate results.** For each candidate course, the lines and checks it would
+newly close if added. A candidate closes a gap if adding it raises the number
+of filled lines outside free electives, or meets an unmet check. Candidates are
+tested on a copy of the current state, one at a time, as planned courses.
+
+`closesLines` lists the lines that are filled only with the candidate. When a
+swap moves another course, that's the line the other course moved to. A WPE
+class that fills another slot on line 7 lists line 7. `closesChecks` lists the
+checks the candidate actually meets, so it's not enough to change a state to
+`"check"`: a second humanities grouping below 3 courses closes nothing, and
+neither does anything for `residency`.
+
+### Matching rules
+
+The matcher assigns courses to lines to fill the most lines possible.
+
+- It's a max-flow over courses, "only one of" sets and lines. The set limit is
+  one capacity in the network, so only one course from a set can fill a line.
+- Taken courses match first. Planned courses augment afterward, so a planned
+  course never unseats a taken one.
+- Within each group, courses that matter to a check go first. Because an
+  augmenting path never unmatches a course, those courses stay in their section
+  whenever possible. The first course for each area, the first 2 from the leading
+  science subject, and the first 3 from the leading humanities grouping go ahead
+  of everything. Next come the first humanities course outside a depth grouping,
+  other BB/CH/GE/PH courses and 4000+ area courses.
+- The first of those groups goes by code. After that, subjects go in reverse
+  letter order and then by code, for example PSY before GOV. It's an arbitrary
+  rule that keeps the order fixed.
+- A listed course that's cross-listed with an area course tries the Computer
+  Science line first when it's the course that area depends on.
+- Lines with the same filter are interchangeable, so courses are laid out on them
+  afterward without changing what's filled. An area course goes on its area line,
+  such as CS 3013 on line 22, and the others take the plain lines first, in the
+  order above.
+- A cross-listed course is one course with several codes. Listing both codes
+  counts once. It stays on a line for a code the student listed, and moves to a
+  line for its other code only if that fills more lines. A line shows the listed
+  code that fits it, or else the code the student listed.
+- A course takes the narrowest open line that fits, such as MA 2621 on line 39
+  before line 34. Matching uses the shortest change that fills a line, so courses
+  only move when they have to.
+- Order is fully fixed, so the same input always gives the same output.
+- Courses of 3 or more credits fill one line. WPE classes fill WPE slots.
+  Other courses from 0.75 to under 3 credits and unmatched courses go to the
+  free elective pool by credit. 0-credit courses count toward nothing.
+- The `wpe-sports` manual item fills the WPE slots that taken classes leave
+  open, and any class left over goes to the pool. Other manual items fill their
+  own lines.
+- A repeated code counts once; later copies show as "Extra".
+
+### Audit errors
+
+An audit request uses the same error format as other requests. Additional
+error codes:
+
+| `code`                | When                                            | `detail` |
+| --------------------- | ----------------------------------------------- | -------- |
+| `unknownRequirements` | The `requirements` ID isn't recognized.          | The ID sent. |
+
+All other errors (`badRequest`, `unsupportedVersion`) apply as before.
+`noTerm` is never returned for an audit, because audits don't need a loaded
+term.
+
+## Requirements file format
+
+A requirements file describes one major and class year. The first file is
+`cs-2030`, Computer Science for the Class of 2030.
+
+The file holds five things: **sections**, **lines**, **checks**,
+**cross-lists** and **manual items**.
+
+### Sections
+
+A section groups related lines. It has a name and an ordered list of line IDs.
+Sections appear in the order of the official tracking sheet.
+
+### Lines
+
+Each line is a slot that one course can fill. A line has:
+
+| Field      | Meaning |
+| ---------- | ------- |
+| `id`       | A unique number, matching the tracking sheet's line numbers. |
+| `section`  | Which section this line belongs to. |
+| `filter`   | A rule for which courses can fill this line (see below). |
+| `label`    | A display label. |
+
+Line filters:
+
+- **Subject list:** the course's subject must be in the list. For example, lines 8–9 accept ECON, ENV, GOV, PSY, SD, SOC, SS, STS, DEV and ID 2050.
+- **Subject and level:** the course must be in a subject at or above a level. For example, CS 2000+ means any CS course numbered 2000 or above. Code levels are parsed carefully: a 3-digit number such as CS 502 is graduate level and counts as 4000+. Suffixes such as CS 210X are handled.
+- **Exact codes:** the course must be one of a listed set. For example, MA 2621 or MA 2631.
+- **Manual:** the line is filled by a manual item, not a course.
+
+For the CS 2030 sheet, the 45 lines are:
+
+| Lines  | Section                | Filter |
+| ------ | ---------------------- | ------ |
+| 1–5    | Humanities and Arts    | Any HUA subject |
+| 6      | Inquiry Seminar        | HU 3900 or HU 3910 |
+| 7      | Wellness / PE          | 4 slots of 1/12 unit each |
+| 8–9    | Social Science         | ECON, ENV, GOV, PSY, SD, SOC, SS, STS, DEV, ID 2050 |
+| 10–12  | IQP                    | Manual |
+| 13–15  | Free electives         | A credit pool of 9 credits |
+| 16     | Computer Science       | CS 1101, CS 1102 or CS 2000+ |
+| 17–25  | Computer Science       | CS 2000+ |
+| 26–30  | Computer Science       | CS 4000+ or graduate, except CS 5007 |
+| 31–33  | MQP                    | Manual |
+| 34–37  | Mathematics            | MA 1000+ |
+| 38     | Mathematics            | MA 2000+ |
+| 39     | Mathematics            | MA 2621 or MA 2631 |
+| 40     | Mathematics            | MA 2611 or MA 2612 |
+| 41–43  | Science                | BB, CH, GE, PH |
+| 44–45  | Science                | Note 4 disciplines, except RBE 3100 and BME 1004 |
+
+Lines 22–25 are the area lines. They match as ordinary CS 2000+ lines, and the
+four CS areas are checks (see below).
+
+CS 2119 is excluded from CS lines. "Only one of" sets are CS 2301/2303,
+CS 2102/210X/2103 and CS 1101/1102. Only one course from each set can fill a
+CS line; the others can still count toward free electives.
+
+### Checks
+
+A check is a rule that doesn't consume a line. It has an ID, a label and a
+condition. Check states are `"met"`, `"not-met"` or `"check"` ("Check this
+yourself").
+
+Examples for CS 2030:
+
+- **CS areas (4 checks):** Theory, Design, Systems, Social Implications. Each
+  passes when a matched CS course in that area is present. A non-CS Social
+  Implications course (GOV/ID 2314, GOV 2315, IMGD 2000, RBE 3100) meets the
+  Social check without counting toward CS units and can fill another line it
+  qualifies for. That reading shows `"check"`.
+- **Science discipline:** 2 of the matched BB/CH/GE/PH courses must be from
+  one discipline.
+- **Humanities depth:** the grouping with at least 3 courses. Breadth needs a
+  course outside it. All-language students pass with `"check"`. Depth also
+  needs the student's confirmation. Spanning more than one grouping shows
+  `"check"`.
+- **AP/IB limit:** more than 1 AP/IB course in humanities is flagged.
+- **Residency:** 8 units at WPI. Shows `"check"` once typed courses are
+  present.
+
+### Cross-lists
+
+A cross-list entry names two or more codes that are the same course (e.g.
+CS 2022 and MA 2201). When a student lists both, only one counts; the other
+shows as "Extra". The matcher treats cross-listed codes as one course and places
+it where it helps most, even if the student listed only one of the codes.
+
+### Manual items
+
+A manual item is a line that can't be filled by a course code. It has an ID
+and a label. The student confirms it with a tick box.
+
+Examples: each IQP line, each MQP line, WPE slots (including the sports
+option), and humanities depth confirmation.
+
+The restored engine accepts only `cs-2030`. Loading other tracking sheets is a
+separate change.

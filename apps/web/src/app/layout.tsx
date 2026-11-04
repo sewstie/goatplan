@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
+import { TesterLink } from "@/components/shell/TesterLink";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${dmSans.variable} antialiased`}>
-      <body>{children}</body>
+      <body><TesterLink />{children}</body>
     </html>
   );
 }

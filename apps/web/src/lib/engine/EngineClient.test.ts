@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { EngineClient, EngineFailureError, EngineSupersededError, type EngineWorker } from "./EngineClient";
 import type { WorkerReply, WorkerRequest } from "./protocol";
 import type {
+  AuditRequest,
+  AuditResponse,
   EngineErrorResponse,
   LoadTermResponse,
   LoadTermSuccess,
@@ -31,7 +33,7 @@ class FakeWorker implements EngineWorker {
   }
 
   /** Answers the last message the worker got. */
-  answer(response: LoadTermResponse | SolveResponse) {
+  answer(response: LoadTermResponse | SolveResponse | AuditResponse) {
     this.reply({ id: this.posted.at(-1)!.id, type: "result", response });
   }
 
@@ -51,6 +53,16 @@ function setup() {
 }
 
 const request = (...courses: string[]): SolveRequest => ({ version: 1, courses });
+const auditRequest: AuditRequest = { version: 1, requirements: "cs-2030" };
+const audited: AuditResponse = {
+  ok: true,
+  version: 1,
+  sections: [],
+  checks: [],
+  freeElectives: { creditsDone: 0, creditsPlanned: 0, creditsTotal: 9, courses: [] },
+  extra: [],
+  candidateResults: [],
+};
 const loaded = (termId: string): LoadTermSuccess => ({ ok: true, version: 1, termId, courses: 581 });
 const solved = (total: number): SolveSuccess => ({
   ok: true,
@@ -69,6 +81,44 @@ const solved = (total: number): SolveSuccess => ({
 const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
 
 describe("EngineClient", () => {
+  it("keeps running and queued audits independent from solves and term loads", async () => {
+    const { client, worker } = setup();
+    const firstAudit = client.audit(auditRequest);
+    const staleSolve = client.solve(request("A"));
+    const secondAudit = client.audit(auditRequest);
+    const load = client.loadTerm("2027-C");
+    const solve = client.solve(request("B"));
+    const thirdAudit = client.audit(auditRequest);
+    await expect(staleSolve).rejects.toBeInstanceOf(EngineSupersededError);
+
+    worker().answer(audited);
+    await expect(firstAudit).resolves.toEqual(audited);
+    expect(worker().posted.at(-1)?.kind).toBe("audit");
+    worker().answer(audited);
+    await expect(secondAudit).resolves.toEqual(audited);
+    expect(worker().posted.at(-1)?.kind).toBe("loadTerm");
+    worker().answer(loaded("2027-C"));
+    await expect(load).resolves.toEqual(loaded("2027-C"));
+    expect(worker().posted.at(-1)?.kind).toBe("solve");
+    worker().answer(solved(1));
+    await expect(solve).resolves.toEqual(solved(1));
+    worker().answer(audited);
+    await expect(thirdAudit).resolves.toEqual(audited);
+    expect(worker().posted.map(({ kind }) => kind)).toEqual([
+      "audit", "audit", "loadTerm", "solve", "audit",
+    ]);
+  });
+
+  it("an audit does not supersede a running solve", async () => {
+    const { client, worker } = setup();
+    const solve = client.solve(request("A"));
+    const audit = client.audit(auditRequest);
+    worker().answer(solved(1));
+    await expect(solve).resolves.toEqual(solved(1));
+    worker().answer(audited);
+    await expect(audit).resolves.toEqual(audited);
+  });
+
   it("sends one request at a time, with increasing ids, and starts the worker lazily", async () => {
     const { client, workers, worker } = setup();
     expect(workers).toHaveLength(0);

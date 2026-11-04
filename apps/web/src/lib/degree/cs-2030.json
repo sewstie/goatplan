@@ -1,0 +1,609 @@
+{
+  "$schema": "./degree-rules.schema.json",
+  "major": "Computer Science",
+  "classYear": 2030,
+  "catalogYear": "2026-2027",
+  "effectiveDate": "AY 2026-2027",
+  "source": "https://www.wpi.edu/sites/default/files/2026-06/CS-2030_fillable.pdf",
+  "catalogSource": "https://wpi.cleancatalog.net/computer-science/computer-science-major",
+  "totalUnits": 15,
+  "residencyUnits": 8,
+  "sections": [
+    {
+      "id": "hua",
+      "name": "Humanities and Arts",
+      "minUnits": 2,
+      "lines": [1, 2, 3, 4, 5, 6]
+    },
+    {
+      "id": "wpe",
+      "name": "Wellness and Physical Education",
+      "minUnits": 0.333333,
+      "lines": [7]
+    },
+    {
+      "id": "social-science",
+      "name": "Social Science",
+      "minUnits": 0.666667,
+      "lines": [8, 9]
+    },
+    {
+      "id": "iqp",
+      "name": "Interactive Qualifying Project",
+      "minUnits": 1,
+      "lines": [10, 11, 12]
+    },
+    {
+      "id": "free-electives",
+      "name": "Free Electives",
+      "minUnits": 1,
+      "creditPool": true,
+      "poolCredits": 9,
+      "lines": [13, 14, 15]
+    },
+    {
+      "id": "cs",
+      "name": "Computer Science",
+      "minUnits": 6,
+      "lines": [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
+    },
+    {
+      "id": "math",
+      "name": "Mathematics",
+      "minUnits": 2.333333,
+      "lines": [34, 35, 36, 37, 38, 39, 40]
+    },
+    {
+      "id": "science",
+      "name": "Basic Science and/or Engineering Science",
+      "minUnits": 1.666667,
+      "lines": [41, 42, 43, 44, 45]
+    }
+  ],
+  "lines": [
+    {
+      "line": 1,
+      "section": "hua",
+      "name": "Depth",
+      "units": 0.333333,
+      "filter": { "type": "huaSubjects" }
+    },
+    {
+      "line": 2,
+      "section": "hua",
+      "name": "Depth",
+      "units": 0.333333,
+      "filter": { "type": "huaSubjects" }
+    },
+    {
+      "line": 3,
+      "section": "hua",
+      "name": "Depth",
+      "units": 0.333333,
+      "filter": { "type": "huaSubjects" }
+    },
+    {
+      "line": 4,
+      "section": "hua",
+      "name": "Breadth",
+      "units": 0.333333,
+      "filter": { "type": "huaSubjects" }
+    },
+    {
+      "line": 5,
+      "section": "hua",
+      "name": "Humanities Elective",
+      "units": 0.333333,
+      "filter": { "type": "huaSubjects" }
+    },
+    {
+      "line": 6,
+      "section": "hua",
+      "name": "Inquiry Seminar or Practicum",
+      "units": 0.333333,
+      "filter": { "type": "courses", "courses": ["HU 3900", "HU 3910"] }
+    },
+    {
+      "line": 7,
+      "section": "wpe",
+      "name": "Wellness and Physical Education",
+      "units": 0.333333,
+      "subSlots": 4,
+      "subSlotUnits": 0.083333,
+      "filter": { "type": "wpe" }
+    },
+    {
+      "line": 8,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": ["ECON", "ENV", "GOV", "PSY", "SD", "SOC", "SS", "STS", "DEV"],
+        "additionalCourses": ["ID 2050"]
+      }
+    },
+    {
+      "line": 9,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": ["ECON", "ENV", "GOV", "PSY", "SD", "SOC", "SS", "STS", "DEV"],
+        "additionalCourses": ["ID 2050"]
+      }
+    },
+    {
+      "line": 10,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": { "type": "manual" }
+    },
+    {
+      "line": 11,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": { "type": "manual" }
+    },
+    {
+      "line": 12,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": { "type": "manual" }
+    },
+    {
+      "line": 13,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": { "type": "any" }
+    },
+    {
+      "line": 14,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": { "type": "any" }
+    },
+    {
+      "line": 15,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": { "type": "any" }
+    },
+    {
+      "line": 16,
+      "section": "cs",
+      "name": "Computer Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "csIntro",
+        "courses": ["CS 1101", "CS 1102"],
+        "minLevel": 2000,
+        "subject": "CS"
+      }
+    },
+    {
+      "line": 17,
+      "section": "cs",
+      "name": "Computer Science",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "CS", "minLevel": 2000 }
+    },
+    {
+      "line": 18,
+      "section": "cs",
+      "name": "Computer Science",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "CS", "minLevel": 2000 }
+    },
+    {
+      "line": 19,
+      "section": "cs",
+      "name": "Computer Science",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "CS", "minLevel": 2000 }
+    },
+    {
+      "line": 20,
+      "section": "cs",
+      "name": "Computer Science",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "CS", "minLevel": 2000 }
+    },
+    {
+      "line": 21,
+      "section": "cs",
+      "name": "Computer Science",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "CS", "minLevel": 2000 }
+    },
+    {
+      "line": 22,
+      "section": "cs",
+      "name": "Systems",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "CS", "minLevel": 2000 },
+      "areaTag": "systems"
+    },
+    {
+      "line": 23,
+      "section": "cs",
+      "name": "Theory & Languages",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "CS", "minLevel": 2000 },
+      "areaTag": "theory"
+    },
+    {
+      "line": 24,
+      "section": "cs",
+      "name": "Design",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "CS", "minLevel": 2000 },
+      "areaTag": "design"
+    },
+    {
+      "line": 25,
+      "section": "cs",
+      "name": "Social Implications",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "CS", "minLevel": 2000 },
+      "areaTag": "social"
+    },
+    {
+      "line": 26,
+      "section": "cs",
+      "name": "CS 4000+",
+      "units": 0.333333,
+      "filter": { "type": "cs4000plus" }
+    },
+    {
+      "line": 27,
+      "section": "cs",
+      "name": "CS 4000+",
+      "units": 0.333333,
+      "filter": { "type": "cs4000plus" }
+    },
+    {
+      "line": 28,
+      "section": "cs",
+      "name": "CS 4000+",
+      "units": 0.333333,
+      "filter": { "type": "cs4000plus" }
+    },
+    {
+      "line": 29,
+      "section": "cs",
+      "name": "CS 4000+",
+      "units": 0.333333,
+      "filter": { "type": "cs4000plus" }
+    },
+    {
+      "line": 30,
+      "section": "cs",
+      "name": "CS 4000+",
+      "units": 0.333333,
+      "filter": { "type": "cs4000plus" }
+    },
+    {
+      "line": 31,
+      "section": "cs",
+      "name": "MQP",
+      "units": 0.333333,
+      "filter": { "type": "manual" }
+    },
+    {
+      "line": 32,
+      "section": "cs",
+      "name": "MQP",
+      "units": 0.333333,
+      "filter": { "type": "manual" }
+    },
+    {
+      "line": 33,
+      "section": "cs",
+      "name": "MQP",
+      "units": 0.333333,
+      "filter": { "type": "manual" }
+    },
+    {
+      "line": 34,
+      "section": "math",
+      "name": "Mathematics",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "MA", "minLevel": 1000 }
+    },
+    {
+      "line": 35,
+      "section": "math",
+      "name": "Mathematics",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "MA", "minLevel": 1000 }
+    },
+    {
+      "line": 36,
+      "section": "math",
+      "name": "Mathematics",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "MA", "minLevel": 1000 }
+    },
+    {
+      "line": 37,
+      "section": "math",
+      "name": "Mathematics",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "MA", "minLevel": 1000 }
+    },
+    {
+      "line": 38,
+      "section": "math",
+      "name": "Mathematics",
+      "units": 0.333333,
+      "filter": { "type": "subjectMinLevel", "subject": "MA", "minLevel": 2000 }
+    },
+    {
+      "line": 39,
+      "section": "math",
+      "name": "Probability",
+      "units": 0.333333,
+      "filter": { "type": "courses", "courses": ["MA 2621", "MA 2631"] }
+    },
+    {
+      "line": 40,
+      "section": "math",
+      "name": "Statistics",
+      "units": 0.333333,
+      "filter": { "type": "courses", "courses": ["MA 2611", "MA 2612"] }
+    },
+    {
+      "line": 41,
+      "section": "science",
+      "name": "Science (BB/CH/GE/PH)",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": ["BB", "CH", "GE", "PH"]
+      }
+    },
+    {
+      "line": 42,
+      "section": "science",
+      "name": "Science (BB/CH/GE/PH)",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": ["BB", "CH", "GE", "PH"]
+      }
+    },
+    {
+      "line": 43,
+      "section": "science",
+      "name": "Science (BB/CH/GE/PH)",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": ["BB", "CH", "GE", "PH"]
+      }
+    },
+    {
+      "line": 44,
+      "section": "science",
+      "name": "Science/Engineering Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "scienceElective",
+        "subjects": ["AE", "BB", "BME", "CE", "CH", "CHE", "ECE", "ES", "GE", "ME", "PH", "RBE"],
+        "excludedCourses": ["RBE 3100", "BME 1004"]
+      }
+    },
+    {
+      "line": 45,
+      "section": "science",
+      "name": "Science/Engineering Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "scienceElective",
+        "subjects": ["AE", "BB", "BME", "CE", "CH", "CHE", "ECE", "ES", "GE", "ME", "PH", "RBE"],
+        "excludedCourses": ["RBE 3100", "BME 1004"]
+      }
+    }
+  ],
+  "exclusions": [
+    {
+      "course": "CS 2119",
+      "reason": "CS 2119 does not count toward the CS requirement"
+    },
+    {
+      "course": "CS 5007",
+      "reason": "CS 5007 does not count toward the 5/3 units of 4000+ CS requirement"
+    }
+  ],
+  "onlyOneSets": [
+    {
+      "id": "cs-intro",
+      "courses": ["CS 1101", "CS 1102"],
+      "reason": "Only one of CS 1101 and CS 1102 may count toward the CS requirement"
+    },
+    {
+      "id": "cs-systems-programming",
+      "courses": ["CS 2301", "CS 2303"],
+      "reason": "Only one of CS 2301 and CS 2303 may count toward the CS requirement"
+    },
+    {
+      "id": "cs-ood",
+      "courses": ["CS 2102", "CS 210X", "CS 2103"],
+      "reason": "Only one of CS 2102, CS 210X, and CS 2103 may count toward the CS requirement"
+    }
+  ],
+  "crossLists": [
+    ["CS 2022", "MA 2201"],
+    ["CS 4032", "MA 3257"],
+    ["CS 4033", "MA 3457"],
+    ["CS 3043", "SS 3043"],
+    ["CS 4300", "IMGD 4300"],
+    ["CS 4343", "DS 4343"],
+    ["CS 4344", "DS 4344"],
+    ["CS 4345", "DS 4345"],
+    ["CS 4433", "DS 4433"],
+    ["CS 4801", "ECE 4802"],
+    ["IMGD 4100", "CS 4100"],
+    ["GOV 2314", "ID 2314"],
+    ["BB 4190", "CH 4190"],
+    ["PH 2550", "AE 2550"],
+    ["BME 4011", "ECE 4011"],
+    ["BME 4023", "ECE 4023"],
+    ["BME 4503", "ME 4503"],
+    ["BME 4504", "ME 4504"],
+    ["BME 4606", "ME 4606"],
+    ["BME 4814", "ME 4814"],
+    ["RBE 4322", "ME 4322"],
+    ["BB 1003", "BCB 1003"],
+    ["BB 3010", "BCB 3010"],
+    ["BB 4001", "BCB 4001"],
+    ["CE 4063", "CHE 4063"]
+  ],
+  "checks": [
+    {
+      "id": "systems",
+      "name": "Systems area",
+      "type": "area",
+      "courses": ["CS 3013", "CS 4513", "CS 4515", "CS 4516", "CS 502", "CS 533", "CS 535"]
+    },
+    {
+      "id": "theory",
+      "name": "Theory & Languages area",
+      "type": "area",
+      "courses": ["CS 3133", "CS 4120", "CS 4123", "CS 4533", "CS 4536", "CS 5003", "CS 5084", "CS 503", "CS 536", "CS 544", "CS 584"]
+    },
+    {
+      "id": "design",
+      "name": "Design area",
+      "type": "area",
+      "courses": ["CS 3041", "CS 3431", "CS 3733", "CS 4233", "CS 509", "CS 542", "CS 546", "CS 561", "CS 562"]
+    },
+    {
+      "id": "social",
+      "name": "Social Implications area",
+      "type": "area",
+      "courses": ["CS 3043", "GOV 2314", "ID 2314", "GOV 2315", "IMGD 2000", "RBE 3100"],
+      "nonCsCourses": ["GOV 2314", "ID 2314", "GOV 2315", "IMGD 2000", "RBE 3100"],
+      "note": "If GOV/ID 2314, GOV 2315, IMGD 2000, or RBE 3100 is used, it does NOT count as part of the 6 units of CS"
+    },
+    {
+      "id": "science-depth",
+      "name": "Science depth",
+      "type": "scienceDepth",
+      "requiredFromBBCHGEPH": 3,
+      "requiredFromOneDiscipline": 2,
+      "disciplines": ["BB", "CH", "GE", "PH"]
+    },
+    {
+      "id": "hua-depth",
+      "name": "Humanities depth",
+      "type": "huaDepth",
+      "minCourses": 3,
+      "requiresConfirmation": true,
+      "note": "At least three thematically-related courses in the same grouping"
+    },
+    {
+      "id": "hua-breadth",
+      "name": "Humanities breadth",
+      "type": "huaBreadth",
+      "groupings": {
+        "art-drama-music": ["AR", "TH", "MU"],
+        "modern-languages": ["AB", "CN", "ISE", "GN", "SP"],
+        "literature-writing": ["EN", "WR"],
+        "history-humanities": ["HI", "HU", "INTL"],
+        "philosophy-religion": ["PY", "RE"]
+      },
+      "allLanguageException": true,
+      "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself"
+    },
+    {
+      "id": "hua-ap-ib-limit",
+      "name": "AP/IB limit in Humanities",
+      "type": "apIbLimit",
+      "section": "hua",
+      "maxApIb": 1,
+      "note": "Only 1 AP/IB course can be used toward HUA requirements"
+    },
+    {
+      "id": "residency",
+      "name": "Residency",
+      "type": "residency",
+      "minUnits": 8,
+      "note": "Minimum of 8 units must be completed at WPI; shows check-yourself once typed courses are present"
+    },
+    {
+      "id": "ma-1000-limit",
+      "name": "MA 1000-level limit",
+      "type": "mathLevelLimit",
+      "maxCourses": 4,
+      "levelCeiling": 2000,
+      "note": "At most four 1000-level Mathematics courses may be counted"
+    },
+    {
+      "id": "grad-equivalence",
+      "name": "Graduate course equivalence",
+      "type": "gradEquivalence",
+      "note": "2 graduate courses are the equivalent of 3 4000-level courses; shows check-yourself"
+    }
+  ],
+  "manualItems": [
+    {
+      "id": "iqp-1",
+      "line": 10,
+      "name": "IQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-2",
+      "line": 11,
+      "name": "IQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-3",
+      "line": 12,
+      "name": "IQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-1",
+      "line": 31,
+      "name": "MQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-2",
+      "line": 32,
+      "name": "MQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-3",
+      "line": 33,
+      "name": "MQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "wpe-sports",
+      "line": 7,
+      "name": "Club or varsity sports in place of WPE",
+      "type": "checkbox"
+    },
+    {
+      "id": "hua-depth-confirmation",
+      "name": "Humanities depth confirmation",
+      "type": "checkbox",
+      "note": "Student confirms that their 3 depth courses are thematically related"
+    }
+  ],
+  "huaSubjects": ["AR", "TH", "MU", "AB", "CN", "ISE", "GN", "SP", "EN", "WR", "HI", "HU", "INTL", "PY", "RE"],
+  "orderNote": "All 5 HUA courses must be completed before the Inquiry Seminar; shown as text, not enforced"
+}

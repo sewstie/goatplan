@@ -1,0 +1,2128 @@
+[
+  {
+    "name": "empty history",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030"
+    },
+    "sections": {
+      "Mathematics": {
+        "done": 0,
+        "planned": 0,
+        "total": 7
+      }
+    },
+    "lines": [
+      {
+        "id": 39,
+        "state": "empty",
+        "course": null
+      }
+    ]
+  },
+  {
+    "name": "augmenting paths fill constrained math lines",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "MA 2621",
+          "credits": 3
+        },
+        {
+          "code": "MA 2611",
+          "credits": 3
+        },
+        {
+          "code": "MA 2071",
+          "credits": 3
+        },
+        {
+          "code": "MA 1021",
+          "credits": 3
+        },
+        {
+          "code": "MA 1022",
+          "credits": 3
+        },
+        {
+          "code": "MA 1023",
+          "credits": 3
+        },
+        {
+          "code": "MA 1024",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Mathematics": {
+        "done": 7,
+        "planned": 0,
+        "total": 7
+      }
+    },
+    "lines": [
+      {
+        "id": 39,
+        "state": "done",
+        "course": "MA 2621"
+      },
+      {
+        "id": 40,
+        "state": "done",
+        "course": "MA 2611"
+      }
+    ]
+  },
+  {
+    "name": "more courses than available math lines",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "MA 2621",
+          "credits": 3
+        },
+        {
+          "code": "MA 2611",
+          "credits": 3
+        },
+        {
+          "code": "MA 2071",
+          "credits": 3
+        },
+        {
+          "code": "MA 1021",
+          "credits": 3
+        },
+        {
+          "code": "MA 1022",
+          "credits": 3
+        },
+        {
+          "code": "MA 1023",
+          "credits": 3
+        },
+        {
+          "code": "MA 1024",
+          "credits": 3
+        },
+        {
+          "code": "MA 3233",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Mathematics": {
+        "done": 7,
+        "planned": 0,
+        "total": 7
+      }
+    }
+  },
+  {
+    "name": "graduate course fills an advanced line",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "CS 2001",
+          "credits": 3
+        },
+        {
+          "code": "CS 2002",
+          "credits": 3
+        },
+        {
+          "code": "CS 2003",
+          "credits": 3
+        },
+        {
+          "code": "CS 2004",
+          "credits": 3
+        },
+        {
+          "code": "CS 2005",
+          "credits": 3
+        },
+        {
+          "code": "CS 2006",
+          "credits": 3
+        },
+        {
+          "code": "CS 2007",
+          "credits": 3
+        },
+        {
+          "code": "CS 2008",
+          "credits": 3
+        },
+        {
+          "code": "CS 2009",
+          "credits": 3
+        },
+        {
+          "code": "CS 2010",
+          "credits": 3
+        },
+        {
+          "code": "CS 502",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Computer Science": {
+        "done": 11,
+        "planned": 0,
+        "total": 18
+      }
+    },
+    "lines": [
+      {
+        "id": 26,
+        "state": "done",
+        "course": "CS 502"
+      }
+    ]
+  },
+  {
+    "name": "suffix course fills a 2000 level line",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "CS 1101",
+          "credits": 3
+        },
+        {
+          "code": "CS 210X",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Computer Science": {
+        "done": 2,
+        "planned": 0,
+        "total": 18
+      }
+    },
+    "lines": [
+      {
+        "id": 17,
+        "state": "done",
+        "course": "CS 210X"
+      }
+    ]
+  },
+  {
+    "name": "planned courses augment taken courses",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "MA 2621",
+          "credits": 3
+        },
+        {
+          "code": "MA 2611",
+          "credits": 3
+        },
+        {
+          "code": "MA 2071",
+          "credits": 3
+        },
+        {
+          "code": "MA 1021",
+          "credits": 3
+        },
+        {
+          "code": "MA 1022",
+          "credits": 3
+        },
+        {
+          "code": "MA 1023",
+          "credits": 3
+        }
+      ],
+      "planned": [
+        {
+          "code": "MA 1024",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Mathematics": {
+        "done": 6,
+        "planned": 1,
+        "total": 7
+      }
+    }
+  },
+  {
+    "name": "small courses do not fill ordinary lines",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "MA 1021",
+          "credits": 0.75
+        },
+        {
+          "code": "CS 210X",
+          "credits": 0
+        }
+      ]
+    },
+    "sections": {
+      "Mathematics": {
+        "done": 0,
+        "planned": 0,
+        "total": 7
+      },
+      "Computer Science": {
+        "done": 0,
+        "planned": 0,
+        "total": 18
+      }
+    }
+  },
+  {
+    "name": "CS 5007 does not fill advanced lines",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "CS 2001",
+          "credits": 3
+        },
+        {
+          "code": "CS 2002",
+          "credits": 3
+        },
+        {
+          "code": "CS 2003",
+          "credits": 3
+        },
+        {
+          "code": "CS 2004",
+          "credits": 3
+        },
+        {
+          "code": "CS 2005",
+          "credits": 3
+        },
+        {
+          "code": "CS 2006",
+          "credits": 3
+        },
+        {
+          "code": "CS 2007",
+          "credits": 3
+        },
+        {
+          "code": "CS 2008",
+          "credits": 3
+        },
+        {
+          "code": "CS 2009",
+          "credits": 3
+        },
+        {
+          "code": "CS 2010",
+          "credits": 3
+        },
+        {
+          "code": "CS 5007",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Computer Science": {
+        "done": 10,
+        "planned": 0,
+        "total": 18
+      }
+    },
+    "lines": [
+      {
+        "id": 26,
+        "state": "empty",
+        "course": null
+      }
+    ]
+  },
+  {
+    "name": "taken courses stay matched when planned courses exceed capacity",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "MA 2621",
+          "credits": 3
+        },
+        {
+          "code": "MA 2611",
+          "credits": 3
+        },
+        {
+          "code": "MA 2071",
+          "credits": 3
+        },
+        {
+          "code": "MA 1021",
+          "credits": 3
+        },
+        {
+          "code": "MA 1022",
+          "credits": 3
+        },
+        {
+          "code": "MA 1023",
+          "credits": 3
+        },
+        {
+          "code": "MA 1024",
+          "credits": 3
+        }
+      ],
+      "planned": [
+        {
+          "code": "MA 2631",
+          "credits": 3
+        },
+        {
+          "code": "MA 2612",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Mathematics": {
+        "done": 7,
+        "planned": 0,
+        "total": 7
+      }
+    }
+  },
+  {
+    "name": "taken courses take precedence over repeated planned codes",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "CS 210X",
+          "credits": 3
+        }
+      ],
+      "planned": [
+        {
+          "code": "CS 210X",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Computer Science": {
+        "done": 1,
+        "planned": 0,
+        "total": 18
+      }
+    }
+  },
+  {
+    "name": "four digit suffixes preserve their level",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "CS 4513A",
+          "credits": 3
+        },
+        {
+          "code": "CS 2001",
+          "credits": 3
+        },
+        {
+          "code": "CS 2002",
+          "credits": 3
+        },
+        {
+          "code": "CS 2003",
+          "credits": 3
+        },
+        {
+          "code": "CS 2004",
+          "credits": 3
+        },
+        {
+          "code": "CS 2005",
+          "credits": 3
+        },
+        {
+          "code": "CS 2006",
+          "credits": 3
+        },
+        {
+          "code": "CS 2007",
+          "credits": 3
+        },
+        {
+          "code": "CS 2008",
+          "credits": 3
+        },
+        {
+          "code": "CS 2009",
+          "credits": 3
+        },
+        {
+          "code": "CS 2010",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Computer Science": {
+        "done": 11,
+        "planned": 0,
+        "total": 18
+      }
+    },
+    "lines": [
+      {
+        "id": 26,
+        "state": "done",
+        "course": "CS 4513A"
+      }
+    ]
+  },
+  {
+    "name": "subject and exact code filters",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "AR 1100",
+          "credits": 3
+        },
+        {
+          "code": "HU 3900",
+          "credits": 3
+        },
+        {
+          "code": "ID 2050",
+          "credits": 3
+        },
+        {
+          "code": "RBE 1001",
+          "credits": 3
+        },
+        {
+          "code": "BME 1004",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Humanities and Arts": {
+        "done": 2,
+        "planned": 0,
+        "total": 6
+      },
+      "Social Science": {
+        "done": 1,
+        "planned": 0,
+        "total": 2
+      },
+      "Basic Science and/or Engineering Science": {
+        "done": 1,
+        "planned": 0,
+        "total": 5
+      }
+    }
+  },
+  {
+    "name": "CS 2119 is excluded from CS lines",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "CS 2119",
+          "credits": 3
+        }
+      ]
+    },
+    "sections": {
+      "Computer Science": {
+        "done": 0,
+        "planned": 0,
+        "total": 18
+      }
+    }
+  },
+  {
+    "name": "only one of a set fills a CS line and the others go to the pool",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 210X", "credits": 3 },
+        { "code": "CS 2103", "credits": 3 },
+        { "code": "CS 2102", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 1, "planned": 0, "total": 18 },
+      "Free Electives": { "done": 2, "planned": 0, "total": 3 }
+    },
+    "lines": [
+      { "id": 17, "state": "done", "course": "CS 2102" },
+      { "id": 13, "state": "done", "course": "CS 2103" },
+      { "id": 14, "state": "done", "course": "CS 210X" }
+    ],
+    "freeElectives": { "creditsDone": 6, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["CS 2103", "CS 210X"] },
+    "extra": []
+  },
+  {
+    "name": "only one of the intro set fills line 16",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 1102", "credits": 3 },
+        { "code": "CS 1101", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 1, "planned": 0, "total": 18 }
+    },
+    "lines": [
+      { "id": 16, "state": "done", "course": "CS 1101" }
+    ],
+    "freeElectives": { "creditsDone": 3, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["CS 1102"] },
+    "extra": []
+  },
+  {
+    "name": "only one of the systems programming set fills a CS line",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2303", "credits": 3 },
+        { "code": "CS 2301", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 1, "planned": 0, "total": 18 }
+    },
+    "lines": [
+      { "id": 17, "state": "done", "course": "CS 2301" }
+    ],
+    "freeElectives": { "creditsDone": 3, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["CS 2303"] },
+    "extra": []
+  },
+  {
+    "name": "a planned set member never takes the line from a taken one",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2103", "credits": 3 }
+      ],
+      "planned": [
+        { "code": "CS 2102", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 1, "planned": 0, "total": 18 },
+      "Free Electives": { "done": 0, "planned": 1, "total": 3 }
+    },
+    "lines": [
+      { "id": 17, "state": "done", "course": "CS 2103" },
+      { "id": 13, "state": "planned", "course": "CS 2102" }
+    ],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 3, "creditsTotal": 9, "courses": ["CS 2102"] },
+    "extra": []
+  },
+  {
+    "name": "a small set member leaves the set limit free",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2102", "credits": 1.5 },
+        { "code": "CS 2103", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 1, "planned": 0, "total": 18 }
+    },
+    "lines": [
+      { "id": 17, "state": "done", "course": "CS 2103" }
+    ],
+    "freeElectives": { "creditsDone": 1.5, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["CS 2102"] },
+    "extra": []
+  },
+  {
+    "name": "both codes of a cross-list count once",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "MA 2201", "credits": 3 },
+        { "code": "CS 2022", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 1, "planned": 0, "total": 18 },
+      "Mathematics": { "done": 0, "planned": 0, "total": 7 }
+    },
+    "lines": [
+      { "id": 17, "state": "done", "course": "CS 2022" }
+    ],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 0, "creditsTotal": 9, "courses": [] },
+    "extra": ["MA 2201"]
+  },
+  {
+    "name": "a taken cross-list code beats its planned twin",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "MA 2201", "credits": 3 }
+      ],
+      "planned": [
+        { "code": "CS 2022", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 0, "planned": 0, "total": 18 },
+      "Mathematics": { "done": 1, "planned": 0, "total": 7 }
+    },
+    "lines": [
+      { "id": 38, "state": "done", "course": "MA 2201" }
+    ],
+    "extra": ["CS 2022"]
+  },
+  {
+    "name": "a cross-list stays under the code the student listed when there is room",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "MA 2201", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 0, "planned": 0, "total": 18 },
+      "Mathematics": { "done": 1, "planned": 0, "total": 7 }
+    },
+    "lines": [
+      { "id": 38, "state": "done", "course": "MA 2201" }
+    ],
+    "extra": []
+  },
+  {
+    "name": "a cross-list moves to math when CS is full",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2001", "credits": 3 },
+        { "code": "CS 2002", "credits": 3 },
+        { "code": "CS 2003", "credits": 3 },
+        { "code": "CS 2004", "credits": 3 },
+        { "code": "CS 2005", "credits": 3 },
+        { "code": "CS 2006", "credits": 3 },
+        { "code": "CS 2007", "credits": 3 },
+        { "code": "CS 2008", "credits": 3 },
+        { "code": "CS 2009", "credits": 3 },
+        { "code": "CS 2022", "credits": 3 },
+        { "code": "CS 3133", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 10, "planned": 0, "total": 18 },
+      "Mathematics": { "done": 1, "planned": 0, "total": 7 }
+    },
+    "lines": [
+      { "id": 23, "state": "done", "course": "CS 3133" },
+      { "id": 38, "state": "done", "course": "CS 2022" }
+    ],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 0, "creditsTotal": 9, "courses": [] },
+    "extra": []
+  },
+  {
+    "name": "a cross-list listed both ways shows the code that fits its line",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2001", "credits": 3 },
+        { "code": "CS 2002", "credits": 3 },
+        { "code": "CS 2003", "credits": 3 },
+        { "code": "CS 2004", "credits": 3 },
+        { "code": "CS 2005", "credits": 3 },
+        { "code": "CS 2006", "credits": 3 },
+        { "code": "CS 2007", "credits": 3 },
+        { "code": "CS 2008", "credits": 3 },
+        { "code": "CS 2009", "credits": 3 },
+        { "code": "CS 2022", "credits": 3 },
+        { "code": "CS 3133", "credits": 3 },
+        { "code": "MA 2201", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 10, "planned": 0, "total": 18 },
+      "Mathematics": { "done": 1, "planned": 0, "total": 7 }
+    },
+    "lines": [
+      { "id": 38, "state": "done", "course": "MA 2201" }
+    ],
+    "extra": ["CS 2022"]
+  },
+  {
+    "name": "a cross-list moves to CS when math is full",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "MA 1021", "credits": 3 },
+        { "code": "MA 1022", "credits": 3 },
+        { "code": "MA 1023", "credits": 3 },
+        { "code": "MA 1024", "credits": 3 },
+        { "code": "MA 2071", "credits": 3 },
+        { "code": "MA 2201", "credits": 3 },
+        { "code": "MA 2611", "credits": 3 },
+        { "code": "MA 2621", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 1, "planned": 0, "total": 18 },
+      "Mathematics": { "done": 7, "planned": 0, "total": 7 }
+    },
+    "lines": [
+      { "id": 17, "state": "done", "course": "MA 2201" },
+      { "id": 38, "state": "done", "course": "MA 2071" },
+      { "id": 39, "state": "done", "course": "MA 2621" },
+      { "id": 40, "state": "done", "course": "MA 2611" }
+    ],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 0, "creditsTotal": 9, "courses": [] },
+    "extra": []
+  },
+  {
+    "name": "a planned course swaps a taken course to another line without unseating it",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2001", "credits": 3 },
+        { "code": "CS 2002", "credits": 3 },
+        { "code": "CS 2003", "credits": 3 },
+        { "code": "CS 2004", "credits": 3 },
+        { "code": "CS 2005", "credits": 3 },
+        { "code": "CS 2006", "credits": 3 },
+        { "code": "CS 2007", "credits": 3 },
+        { "code": "CS 2008", "credits": 3 },
+        { "code": "CS 2009", "credits": 3 },
+        { "code": "CS 2022", "credits": 3 }
+      ],
+      "planned": [
+        { "code": "CS 3133", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 9, "planned": 1, "total": 18 },
+      "Mathematics": { "done": 1, "planned": 0, "total": 7 }
+    },
+    "lines": [
+      { "id": 16, "state": "planned", "course": "CS 3133" },
+      { "id": 38, "state": "done", "course": "CS 2022" }
+    ],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 0, "creditsTotal": 9, "courses": [] },
+    "extra": []
+  },
+  {
+    "name": "two inquiry seminars both count and all six humanities lines fill",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "HU 3900", "credits": 3 },
+        { "code": "HU 3910", "credits": 3 },
+        { "code": "PY 1731", "credits": 3 },
+        { "code": "PY 1732", "credits": 3 },
+        { "code": "PY 1733", "credits": 3 },
+        { "code": "PY 1734", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Humanities and Arts": { "done": 6, "planned": 0, "total": 6 }
+    },
+    "extra": []
+  },
+  {
+    "name": "a specific course fills its specific line first",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "HU 3900", "credits": 3 },
+        { "code": "MA 2621", "credits": 3 },
+        { "code": "MA 2611", "credits": 3 },
+        { "code": "MA 2071", "credits": 3 },
+        { "code": "CS 4513", "credits": 3 },
+        { "code": "PH 1110", "credits": 3 }
+      ]
+    },
+    "lines": [
+      { "id": 6, "state": "done", "course": "HU 3900" },
+      { "id": 39, "state": "done", "course": "MA 2621" },
+      { "id": 40, "state": "done", "course": "MA 2611" },
+      { "id": 38, "state": "done", "course": "MA 2071" },
+      { "id": 26, "state": "done", "course": "CS 4513" },
+      { "id": 41, "state": "done", "course": "PH 1110" }
+    ],
+    "sections": {}
+  },
+  {
+    "name": "a planned course never unseats a taken course from its only line",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 1101", "credits": 3 }
+      ],
+      "planned": [
+        { "code": "CS 2001", "credits": 3 },
+        { "code": "CS 2002", "credits": 3 },
+        { "code": "CS 2003", "credits": 3 },
+        { "code": "CS 2004", "credits": 3 },
+        { "code": "CS 2005", "credits": 3 },
+        { "code": "CS 2006", "credits": 3 },
+        { "code": "CS 2007", "credits": 3 },
+        { "code": "CS 2008", "credits": 3 },
+        { "code": "CS 2009", "credits": 3 },
+        { "code": "CS 2010", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 1, "planned": 9, "total": 18 },
+      "Free Electives": { "done": 0, "planned": 1, "total": 3 }
+    },
+    "lines": [
+      { "id": 16, "state": "done", "course": "CS 1101" },
+      { "id": 13, "state": "planned", "course": "CS 2010" }
+    ],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 3, "creditsTotal": 9, "courses": ["CS 2010"] },
+    "extra": []
+  },
+  {
+    "name": "two small courses count as one free elective line",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "MA 1801", "credits": 1.5 },
+        { "code": "CS 2011", "credits": 1.5 }
+      ]
+    },
+    "sections": {
+      "Free Electives": { "done": 1, "planned": 0, "total": 3 },
+      "Computer Science": { "done": 0, "planned": 0, "total": 18 },
+      "Mathematics": { "done": 0, "planned": 0, "total": 7 }
+    },
+    "lines": [
+      { "id": 13, "state": "done", "course": "MA 1801" },
+      { "id": 14, "state": "empty", "course": null }
+    ],
+    "freeElectives": { "creditsDone": 3, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["CS 2011", "MA 1801"] },
+    "extra": []
+  },
+  {
+    "name": "one small course leaves a free elective line open",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2011", "credits": 1.5 }
+      ]
+    },
+    "sections": {
+      "Free Electives": { "done": 0, "planned": 0, "total": 3 }
+    },
+    "lines": [
+      { "id": 13, "state": "empty", "course": null }
+    ],
+    "freeElectives": { "creditsDone": 1.5, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["CS 2011"] },
+    "extra": []
+  },
+  {
+    "name": "a free elective line finished by a planned course is planned",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "MA 1801", "credits": 1.5 }
+      ],
+      "planned": [
+        { "code": "CS 2011", "credits": 1.5 }
+      ]
+    },
+    "sections": {
+      "Free Electives": { "done": 0, "planned": 1, "total": 3 }
+    },
+    "lines": [
+      { "id": 13, "state": "planned", "course": "CS 2011" }
+    ],
+    "freeElectives": { "creditsDone": 1.5, "creditsPlanned": 1.5, "creditsTotal": 9, "courses": ["MA 1801", "CS 2011"] },
+    "extra": []
+  },
+  {
+    "name": "credits from 0.75 up count by credit and smaller ones do not",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "ID 1000", "credits": 0.5 },
+        { "code": "ID 1001", "credits": 0.75 },
+        { "code": "ID 1002", "credits": 2.5 }
+      ]
+    },
+    "sections": {
+      "Free Electives": { "done": 1, "planned": 0, "total": 3 }
+    },
+    "lines": [
+      { "id": 13, "state": "done", "course": "ID 1002" }
+    ],
+    "freeElectives": { "creditsDone": 3.25, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["ID 1001", "ID 1002"] },
+    "extra": ["ID 1000"]
+  },
+  {
+    "name": "a six credit course fills two free elective lines",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "ID 3900", "credits": 6 }
+      ]
+    },
+    "sections": {
+      "Free Electives": { "done": 2, "planned": 0, "total": 3 }
+    },
+    "lines": [
+      { "id": 13, "state": "done", "course": "ID 3900" },
+      { "id": 14, "state": "done", "course": null },
+      { "id": 15, "state": "empty", "course": null }
+    ],
+    "freeElectives": { "creditsDone": 6, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["ID 3900"] },
+    "extra": []
+  },
+  {
+    "name": "zero credit courses count toward nothing",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "MA 1021", "credits": 0 },
+        { "code": "WPE 1008", "credits": 0 }
+      ]
+    },
+    "sections": {
+      "Mathematics": { "done": 0, "planned": 0, "total": 7 },
+      "Wellness and Physical Education": { "done": 0, "planned": 0, "total": 4 }
+    },
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 0, "creditsTotal": 9, "courses": [] },
+    "extra": ["MA 1021", "WPE 1008"]
+  },
+  {
+    "name": "a zero credit copy doesn't hide a real one",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2102", "credits": 0 }
+      ],
+      "planned": [
+        { "code": "CS 2102", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 0, "planned": 1, "total": 18 }
+    },
+    "lines": [
+      { "id": 17, "state": "planned", "course": "CS 2102" }
+    ],
+    "extra": ["CS 2102"]
+  },
+  {
+    "name": "courses beyond the pool are extra",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "ID 1004", "credits": 3 },
+        { "code": "ID 1003", "credits": 3 },
+        { "code": "ID 1002", "credits": 3 },
+        { "code": "ID 1001", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Free Electives": { "done": 3, "planned": 0, "total": 3 }
+    },
+    "lines": [
+      { "id": 13, "state": "done", "course": "ID 1001" },
+      { "id": 14, "state": "done", "course": "ID 1002" },
+      { "id": 15, "state": "done", "course": "ID 1003" }
+    ],
+    "freeElectives": { "creditsDone": 9, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["ID 1001", "ID 1002", "ID 1003"] },
+    "extra": ["ID 1004"]
+  },
+  {
+    "name": "the course that tips the pool over still counts and pool credits stop at the total",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "ID 1001", "credits": 1.5 },
+        { "code": "ID 1002", "credits": 3 },
+        { "code": "ID 1003", "credits": 3 }
+      ],
+      "planned": [
+        { "code": "ID 1004", "credits": 3 },
+        { "code": "ID 1005", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Free Electives": { "done": 2, "planned": 1, "total": 3 }
+    },
+    "lines": [
+      { "id": 13, "state": "done", "course": "ID 1002" },
+      { "id": 14, "state": "done", "course": "ID 1003" },
+      { "id": 15, "state": "planned", "course": "ID 1004" }
+    ],
+    "freeElectives": { "creditsDone": 7.5, "creditsPlanned": 1.5, "creditsTotal": 9, "courses": ["ID 1001", "ID 1002", "ID 1003", "ID 1004"] },
+    "extra": ["ID 1005"]
+  },
+  {
+    "name": "a planned course never pushes a taken course out of the pool",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "ID 1002", "credits": 3 },
+        { "code": "ID 1003", "credits": 3 },
+        { "code": "ID 1004", "credits": 3 }
+      ],
+      "planned": [
+        { "code": "ID 1001", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Free Electives": { "done": 3, "planned": 0, "total": 3 }
+    },
+    "freeElectives": { "creditsDone": 9, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["ID 1002", "ID 1003", "ID 1004"] },
+    "extra": ["ID 1001"]
+  },
+  {
+    "name": "repeated codes count once and later copies are extra",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2223", "credits": 3 },
+        { "code": "CS 2223", "credits": 3 }
+      ],
+      "planned": [
+        { "code": "CS 2223", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 1, "planned": 0, "total": 18 }
+    },
+    "lines": [
+      { "id": 17, "state": "done", "course": "CS 2223" }
+    ],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 0, "creditsTotal": 9, "courses": [] },
+    "extra": ["CS 2223", "CS 2223"]
+  },
+  {
+    "name": "WPE classes fill WPE slots",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "WPE 1009", "credits": 0.75 },
+        { "code": "WPE 1008", "credits": 0.75 }
+      ],
+      "planned": [
+        { "code": "WPE 1012", "credits": 0.75 }
+      ]
+    },
+    "sections": {
+      "Wellness and Physical Education": { "done": 2, "planned": 1, "total": 4 }
+    },
+    "lines": [
+      {
+        "id": 7,
+        "state": "partial",
+        "course": null,
+        "subSlots": [
+          { "course": "WPE 1008", "state": "done" },
+          { "course": "WPE 1009", "state": "done" },
+          { "course": "WPE 1012", "state": "planned" },
+          { "course": null, "state": "empty" }
+        ]
+      }
+    ],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 0, "creditsTotal": 9, "courses": [] },
+    "extra": []
+  },
+  {
+    "name": "a fifth WPE class goes to the pool",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "WPE 1008", "credits": 0.75 },
+        { "code": "WPE 1009", "credits": 0.75 },
+        { "code": "WPE 1012", "credits": 0.75 },
+        { "code": "WPE 1018", "credits": 0.75 },
+        { "code": "WPE 1019", "credits": 0.75 }
+      ]
+    },
+    "sections": {
+      "Wellness and Physical Education": { "done": 4, "planned": 0, "total": 4 }
+    },
+    "lines": [
+      { "id": 7, "state": "done", "course": null }
+    ],
+    "freeElectives": { "creditsDone": 0.75, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["WPE 1019"] },
+    "extra": []
+  },
+  {
+    "name": "a WPE line with a planned class is planned",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "WPE 1008", "credits": 0.75 },
+        { "code": "WPE 1009", "credits": 0.75 },
+        { "code": "WPE 1012", "credits": 0.75 }
+      ],
+      "planned": [
+        { "code": "WPE 1018", "credits": 0.75 }
+      ]
+    },
+    "sections": {
+      "Wellness and Physical Education": { "done": 3, "planned": 1, "total": 4 }
+    },
+    "lines": [
+      { "id": 7, "state": "planned", "course": null }
+    ]
+  },
+  {
+    "name": "confirmed manual items fill their lines",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "manual": ["mqp-1", "iqp-3", "iqp-1", "iqp-2", "iqp-2", "wpe-sports", "hua-depth-confirmation", "not-a-real-item"]
+    },
+    "sections": {
+      "Interactive Qualifying Project": { "done": 3, "planned": 0, "total": 3 },
+      "Computer Science": { "done": 1, "planned": 0, "total": 18 },
+      "Wellness and Physical Education": { "done": 4, "planned": 0, "total": 4 },
+      "Humanities and Arts": { "done": 0, "planned": 0, "total": 6 }
+    },
+    "lines": [
+      { "id": 10, "state": "done", "course": null },
+      { "id": 11, "state": "done", "course": null },
+      { "id": 12, "state": "done", "course": null },
+      { "id": 31, "state": "done", "course": null },
+      { "id": 32, "state": "empty", "course": null },
+      {
+        "id": 7,
+        "state": "done",
+        "course": null,
+        "subSlots": [
+          { "course": null, "state": "done" },
+          { "course": null, "state": "done" },
+          { "course": null, "state": "done" },
+          { "course": null, "state": "done" }
+        ]
+      }
+    ],
+    "extra": []
+  },
+  {
+    "name": "sports fill the WPE slots that classes leave open",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "WPE 1008", "credits": 0.75 }
+      ],
+      "planned": [
+        { "code": "WPE 1009", "credits": 0.75 }
+      ],
+      "manual": ["wpe-sports"]
+    },
+    "sections": {
+      "Wellness and Physical Education": { "done": 4, "planned": 0, "total": 4 }
+    },
+    "lines": [
+      {
+        "id": 7,
+        "state": "done",
+        "course": null,
+        "subSlots": [
+          { "course": "WPE 1008", "state": "done" },
+          { "course": null, "state": "done" },
+          { "course": null, "state": "done" },
+          { "course": null, "state": "done" }
+        ]
+      }
+    ],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 0.75, "creditsTotal": 9, "courses": ["WPE 1009"] },
+    "extra": []
+  },
+  {
+    "name": "a WPE class under 0.75 credits still fills a slot but never reaches the pool",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "WPE 1001", "credits": 0.25 },
+        { "code": "WPE 1002", "credits": 0.25 },
+        { "code": "WPE 1003", "credits": 0.25 },
+        { "code": "WPE 1004", "credits": 0.25 },
+        { "code": "WPE 1005", "credits": 0.25 }
+      ]
+    },
+    "sections": {
+      "Wellness and Physical Education": { "done": 4, "planned": 0, "total": 4 }
+    },
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 0, "creditsTotal": 9, "courses": [] },
+    "extra": ["WPE 1005"]
+  },
+  {
+    "name": "a cross-list with no line left goes to the pool once",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2001", "credits": 3 },
+        { "code": "CS 2002", "credits": 3 },
+        { "code": "CS 2003", "credits": 3 },
+        { "code": "CS 2004", "credits": 3 },
+        { "code": "CS 2005", "credits": 3 },
+        { "code": "CS 2006", "credits": 3 },
+        { "code": "CS 2007", "credits": 3 },
+        { "code": "CS 2008", "credits": 3 },
+        { "code": "CS 2009", "credits": 3 },
+        { "code": "CS 2010", "credits": 3 },
+        { "code": "MA 1021", "credits": 3 },
+        { "code": "MA 1022", "credits": 3 },
+        { "code": "MA 1023", "credits": 3 },
+        { "code": "MA 1024", "credits": 3 },
+        { "code": "MA 2071", "credits": 3 },
+        { "code": "MA 2611", "credits": 3 },
+        { "code": "MA 2621", "credits": 3 }
+      ],
+      "planned": [
+        { "code": "MA 2201", "credits": 3 },
+        { "code": "CS 2022", "credits": 3 }
+      ]
+    },
+    "sections": {
+      "Computer Science": { "done": 10, "planned": 0, "total": 18 },
+      "Mathematics": { "done": 7, "planned": 0, "total": 7 }
+    },
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 3, "creditsTotal": 9, "courses": ["CS 2022"] },
+    "extra": ["MA 2201"]
+  },
+  {
+    "name": "a complete degree fills every section",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 1101", "credits": 3 }, { "code": "CS 2022", "credits": 3 }, { "code": "CS 2102", "credits": 3 },
+        { "code": "CS 2103", "credits": 3 }, { "code": "CS 2223", "credits": 3 }, { "code": "CS 2303", "credits": 3 },
+        { "code": "CS 3013", "credits": 3 }, { "code": "CS 3041", "credits": 3 }, { "code": "CS 3043", "credits": 3 },
+        { "code": "CS 3133", "credits": 3 }, { "code": "CS 3431", "credits": 3 }, { "code": "CS 3733", "credits": 3 },
+        { "code": "CS 4120", "credits": 3 }, { "code": "CS 4233", "credits": 3 }, { "code": "CS 4513", "credits": 3 },
+        { "code": "CS 4516", "credits": 3 }, { "code": "CS 4341", "credits": 3 }, { "code": "GOV 2314", "credits": 3 },
+        { "code": "MA 1021", "credits": 3 }, { "code": "MA 1022", "credits": 3 }, { "code": "MA 1023", "credits": 3 },
+        { "code": "MA 1024", "credits": 3 }, { "code": "MA 2071", "credits": 3 }, { "code": "MA 2611", "credits": 3 },
+        { "code": "MA 2621", "credits": 3 }, { "code": "PH 1110", "credits": 3 }, { "code": "PH 1120", "credits": 3 },
+        { "code": "PH 1130", "credits": 3 }, { "code": "CH 1010", "credits": 3 }, { "code": "ECE 2010", "credits": 3 },
+        { "code": "EN 1001", "credits": 3 }, { "code": "EN 1002", "credits": 3 }, { "code": "EN 2201", "credits": 3 },
+        { "code": "WR 1010", "credits": 3 }, { "code": "PY 1731", "credits": 3 }, { "code": "HU 3900", "credits": 3 },
+        { "code": "PSY 1400", "credits": 3 }, { "code": "GOV 1100", "credits": 3 }, { "code": "WPE 1001", "credits": 0.25 },
+        { "code": "WPE 1002", "credits": 0.25 }, { "code": "WPE 1003", "credits": 0.25 }, { "code": "WPE 1004", "credits": 0.25 },
+        { "code": "ECON 1110", "credits": 3 }
+      ],
+      "manual": ["iqp-1", "iqp-2", "iqp-3", "mqp-1", "mqp-2", "mqp-3", "hua-depth-confirmation"]
+    },
+    "sections": {
+      "Humanities and Arts": { "done": 6, "planned": 0, "total": 6 },
+      "Wellness and Physical Education": { "done": 4, "planned": 0, "total": 4 },
+      "Social Science": { "done": 2, "planned": 0, "total": 2 },
+      "Interactive Qualifying Project": { "done": 3, "planned": 0, "total": 3 },
+      "Free Electives": { "done": 3, "planned": 0, "total": 3 },
+      "Computer Science": { "done": 18, "planned": 0, "total": 18 },
+      "Mathematics": { "done": 7, "planned": 0, "total": 7 },
+      "Basic Science and/or Engineering Science": { "done": 5, "planned": 0, "total": 5 }
+    },
+    "lines": [
+      { "id": 16, "state": "done", "course": "CS 1101" },
+      { "id": 17, "state": "done", "course": "CS 2022" },
+      { "id": 38, "state": "done", "course": "MA 2071" }
+    ]
+  },
+  {
+    "name": "an empty history meets only the rules that can't fail",
+    "request": { "version": 1, "requirements": "cs-2030" },
+    "sections": {},
+    "checks": [
+      { "id": "systems", "state": "not-met", "courses": [] },
+      { "id": "theory", "state": "not-met", "courses": [] },
+      { "id": "design", "state": "not-met", "courses": [] },
+      { "id": "social", "state": "not-met", "courses": [] },
+      { "id": "science-depth", "state": "not-met", "courses": [] },
+      { "id": "hua-depth", "state": "not-met", "courses": [] },
+      { "id": "hua-breadth", "state": "not-met", "courses": [] },
+      { "id": "hua-ap-ib-limit", "state": "met", "courses": [] },
+      { "id": "residency", "state": "not-met", "courses": [] },
+      { "id": "ma-1000-limit", "state": "met", "courses": [] },
+      { "id": "grad-equivalence", "state": "check", "courses": [] }
+    ]
+  },
+  {
+    "name": "a matched CS course meets its area and sits on its area line",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "CS 3013", "credits": 3 }] },
+    "sections": {},
+    "lines": [{ "id": 22, "state": "done", "course": "CS 3013" }, { "id": 17, "state": "empty", "course": null }],
+    "checks": [{ "id": "systems", "state": "met", "courses": ["CS 3013"] }, { "id": "theory", "state": "not-met", "courses": [] }]
+  },
+  {
+    "name": "a planned CS course makes its area planned",
+    "request": { "version": 1, "requirements": "cs-2030", "planned": [{ "code": "CS 3733", "credits": 3 }] },
+    "sections": {},
+    "lines": [{ "id": 24, "state": "planned", "course": "CS 3733" }],
+    "checks": [{ "id": "design", "state": "planned", "courses": ["CS 3733"] }]
+  },
+  {
+    "name": "a taken area course beats a planned one",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "CS 3431", "credits": 3 }], "planned": [{ "code": "CS 3041", "credits": 3 }] },
+    "sections": {},
+    "lines": [{ "id": 24, "state": "done", "course": "CS 3431" }, { "id": 17, "state": "planned", "course": "CS 3041" }],
+    "checks": [{ "id": "design", "state": "met", "courses": ["CS 3431", "CS 3041"] }]
+  },
+  {
+    "name": "an area course under 3 credits doesn't meet its area",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "CS 3013", "credits": 1.5 }] },
+    "sections": {},
+    "checks": [{ "id": "systems", "state": "not-met", "courses": [] }],
+    "freeElectives": { "creditsDone": 1.5, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["CS 3013"] }
+  },
+  {
+    "name": "an area course keeps a CS line ahead of other courses",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2001", "credits": 3 }, { "code": "CS 2002", "credits": 3 }, { "code": "CS 2003", "credits": 3 },
+        { "code": "CS 2004", "credits": 3 }, { "code": "CS 2005", "credits": 3 }, { "code": "CS 2006", "credits": 3 },
+        { "code": "CS 2007", "credits": 3 }, { "code": "CS 2008", "credits": 3 }, { "code": "CS 2009", "credits": 3 },
+        { "code": "CS 2010", "credits": 3 }, { "code": "CS 3733", "credits": 3 }
+      ]
+    },
+    "sections": { "Computer Science": { "done": 10, "planned": 0, "total": 18 } },
+    "lines": [{ "id": 24, "state": "done", "course": "CS 3733" }, { "id": 16, "state": "done", "course": "CS 2009" }, { "id": 25, "state": "done", "course": "CS 2008" }],
+    "checks": [{ "id": "design", "state": "met", "courses": ["CS 3733"] }],
+    "freeElectives": { "creditsDone": 3, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["CS 2010"] },
+    "extra": []
+  },
+  {
+    "name": "a planned area course keeps a CS line ahead of other planned courses",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "planned": [
+        { "code": "CS 2001", "credits": 3 }, { "code": "CS 2002", "credits": 3 }, { "code": "CS 2003", "credits": 3 },
+        { "code": "CS 2004", "credits": 3 }, { "code": "CS 2005", "credits": 3 }, { "code": "CS 2006", "credits": 3 },
+        { "code": "CS 2007", "credits": 3 }, { "code": "CS 2008", "credits": 3 }, { "code": "CS 2009", "credits": 3 },
+        { "code": "CS 2010", "credits": 3 }, { "code": "CS 3733", "credits": 3 }
+      ]
+    },
+    "sections": { "Computer Science": { "done": 0, "planned": 10, "total": 18 } },
+    "lines": [{ "id": 24, "state": "planned", "course": "CS 3733" }],
+    "checks": [{ "id": "design", "state": "planned", "courses": ["CS 3733"] }],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 3, "creditsTotal": 9, "courses": ["CS 2010"] },
+    "extra": []
+  },
+  {
+    "name": "a planned area course never takes a line from a taken course",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2001", "credits": 3 }, { "code": "CS 2002", "credits": 3 }, { "code": "CS 2003", "credits": 3 },
+        { "code": "CS 2004", "credits": 3 }, { "code": "CS 2005", "credits": 3 }, { "code": "CS 2006", "credits": 3 },
+        { "code": "CS 2007", "credits": 3 }, { "code": "CS 2008", "credits": 3 }, { "code": "CS 2009", "credits": 3 },
+        { "code": "CS 2010", "credits": 3 }
+      ],
+      "planned": [{ "code": "CS 3013", "credits": 3 }]
+    },
+    "sections": { "Computer Science": { "done": 10, "planned": 0, "total": 18 } },
+    "checks": [{ "id": "systems", "state": "not-met", "courses": [] }],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 3, "creditsTotal": 9, "courses": ["CS 3013"] },
+    "extra": []
+  },
+  {
+    "name": "a non-CS Social Implications course fills a social science line and shows check yourself",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "GOV 2315", "credits": 3 }] },
+    "sections": { "Computer Science": { "done": 0, "planned": 0, "total": 18 }, "Social Science": { "done": 1, "planned": 0, "total": 2 } },
+    "lines": [{ "id": 8, "state": "done", "course": "GOV 2315" }],
+    "checks": [{ "id": "social", "state": "check", "courses": ["GOV 2315"] }]
+  },
+  {
+    "name": "RBE 3100 meets the social check but no science line",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "RBE 3100", "credits": 3 }] },
+    "sections": { "Basic Science and/or Engineering Science": { "done": 0, "planned": 0, "total": 5 } },
+    "checks": [{ "id": "social", "state": "check", "courses": ["RBE 3100"] }],
+    "freeElectives": { "creditsDone": 3, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["RBE 3100"] },
+    "extra": []
+  },
+  {
+    "name": "IMGD 2000 meets the social check from the pool",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "IMGD 2000", "credits": 3 }] },
+    "sections": {},
+    "checks": [{ "id": "social", "state": "check", "courses": ["IMGD 2000"] }],
+    "freeElectives": { "creditsDone": 3, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["IMGD 2000"] },
+    "extra": []
+  },
+  {
+    "name": "ID 2314 counts through its GOV twin",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "ID 2314", "credits": 3 }] },
+    "sections": {},
+    "lines": [{ "id": 8, "state": "done", "course": "ID 2314" }],
+    "checks": [{ "id": "social", "state": "check", "courses": ["ID 2314"] }]
+  },
+  {
+    "name": "a CS social course is met even with a non-CS one listed",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "CS 3043", "credits": 3 }, { "code": "GOV 2314", "credits": 3 }] },
+    "sections": {},
+    "lines": [{ "id": 25, "state": "done", "course": "CS 3043" }, { "id": 8, "state": "done", "course": "GOV 2314" }],
+    "checks": [{ "id": "social", "state": "met", "courses": ["CS 3043", "GOV 2314"] }]
+  },
+  {
+    "name": "SS 3043 takes the CS line its area depends on",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "SS 3043", "credits": 3 }] },
+    "sections": { "Computer Science": { "done": 1, "planned": 0, "total": 18 }, "Social Science": { "done": 0, "planned": 0, "total": 2 } },
+    "lines": [{ "id": 25, "state": "done", "course": "SS 3043" }],
+    "checks": [{ "id": "social", "state": "met", "courses": ["SS 3043"] }]
+  },
+  {
+    "name": "each graduate course counts as one 4000+ course with no bonus",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "CS 502", "credits": 3 }, { "code": "CS 533", "credits": 3 }, { "code": "CS 5003", "credits": 3 }] },
+    "sections": { "Computer Science": { "done": 3, "planned": 0, "total": 18 } },
+    "lines": [
+      { "id": 26, "state": "done", "course": "CS 5003" }, { "id": 27, "state": "done", "course": "CS 502" },
+      { "id": 28, "state": "done", "course": "CS 533" }, { "id": 29, "state": "empty", "course": null }
+    ],
+    "checks": [
+      { "id": "grad-equivalence", "state": "check", "courses": ["CS 5003", "CS 502", "CS 533"] },
+      { "id": "systems", "state": "met", "courses": ["CS 502", "CS 533"] },
+      { "id": "theory", "state": "met", "courses": ["CS 5003"] }
+    ]
+  },
+  {
+    "name": "CS 5007 isn't counted as a 4000+ graduate course",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "CS 5007", "credits": 3 }] },
+    "sections": {},
+    "lines": [{ "id": 17, "state": "done", "course": "CS 5007" }],
+    "checks": [{ "id": "grad-equivalence", "state": "check", "courses": [] }]
+  },
+  {
+    "name": "science needs 2 courses from one discipline",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "PH 1110", "credits": 3 }, { "code": "PH 1120", "credits": 3 }] },
+    "sections": {},
+    "checks": [{ "id": "science-depth", "state": "met", "courses": ["PH 1110", "PH 1120"] }]
+  },
+  {
+    "name": "science from different disciplines isn't met",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "PH 1110", "credits": 3 }, { "code": "CH 1010", "credits": 3 }, { "code": "BB 1001", "credits": 3 }] },
+    "sections": {},
+    "checks": [{ "id": "science-depth", "state": "not-met", "courses": [] }]
+  },
+  {
+    "name": "science that needs a planned course is planned",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "PH 1110", "credits": 3 }], "planned": [{ "code": "PH 1120", "credits": 3 }] },
+    "sections": {},
+    "checks": [{ "id": "science-depth", "state": "planned", "courses": ["PH 1110", "PH 1120"] }]
+  },
+  {
+    "name": "engineering courses don't count toward the science discipline",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "ECE 2010", "credits": 3 }, { "code": "ECE 2011", "credits": 3 }] },
+    "sections": {},
+    "checks": [{ "id": "science-depth", "state": "not-met", "courses": [] }]
+  },
+  {
+    "name": "the science pair stays on its lines when there are too many courses",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "BB 1001", "credits": 3 }, { "code": "BB 1002", "credits": 3 }, { "code": "CH 1010", "credits": 3 },
+        { "code": "GE 2341", "credits": 3 }, { "code": "PH 1110", "credits": 3 }, { "code": "ME 1800", "credits": 3 }
+      ]
+    },
+    "sections": { "Basic Science and/or Engineering Science": { "done": 5, "planned": 0, "total": 5 } },
+    "lines": [
+      { "id": 41, "state": "done", "course": "BB 1001" }, { "id": 42, "state": "done", "course": "BB 1002" },
+      { "id": 43, "state": "done", "course": "PH 1110" }, { "id": 44, "state": "done", "course": "GE 2341" },
+      { "id": 45, "state": "done", "course": "CH 1010" }
+    ],
+    "checks": [{ "id": "science-depth", "state": "met", "courses": ["BB 1001", "BB 1002", "PH 1110"] }],
+    "freeElectives": { "creditsDone": 3, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["ME 1800"] },
+    "extra": []
+  },
+  {
+    "name": "confirmed humanities depth is met and breadth needs a course outside it",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "EN 1001", "credits": 3 }, { "code": "EN 1002", "credits": 3 }, { "code": "WR 1010", "credits": 3 }, { "code": "PY 1731", "credits": 3 }],
+      "manual": ["hua-depth-confirmation"]
+    },
+    "sections": {},
+    "lines": [
+      { "id": 1, "state": "done", "course": "EN 1001" }, { "id": 2, "state": "done", "course": "EN 1002" },
+      { "id": 3, "state": "done", "course": "WR 1010" }, { "id": 4, "state": "done", "course": "PY 1731" }
+    ],
+    "checks": [
+      { "id": "hua-depth", "state": "met", "courses": ["EN 1001", "EN 1002", "WR 1010"] },
+      { "id": "hua-breadth", "state": "met", "courses": ["PY 1731"] }
+    ]
+  },
+  {
+    "name": "unconfirmed humanities depth shows check yourself",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "EN 1001", "credits": 3 }, { "code": "EN 1002", "credits": 3 }, { "code": "WR 1010", "credits": 3 }, { "code": "PY 1731", "credits": 3 }]
+    },
+    "sections": {},
+    "checks": [
+      { "id": "hua-depth", "state": "check", "courses": ["EN 1001", "EN 1002", "WR 1010"] },
+      { "id": "hua-breadth", "state": "met", "courses": ["PY 1731"] }
+    ]
+  },
+  {
+    "name": "humanities depth that needs a planned course is planned once confirmed",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "EN 1001", "credits": 3 }, { "code": "EN 1002", "credits": 3 }],
+      "planned": [{ "code": "WR 1010", "credits": 3 }, { "code": "PY 1731", "credits": 3 }],
+      "manual": ["hua-depth-confirmation"]
+    },
+    "sections": {},
+    "checks": [
+      { "id": "hua-depth", "state": "planned", "courses": ["EN 1001", "EN 1002", "WR 1010"] },
+      { "id": "hua-breadth", "state": "planned", "courses": ["PY 1731"] }
+    ]
+  },
+  {
+    "name": "breadth isn't met with every course inside the depth grouping",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "EN 1001", "credits": 3 }, { "code": "EN 1002", "credits": 3 }, { "code": "WR 1010", "credits": 3 }, { "code": "WR 1011", "credits": 3 }]
+    },
+    "sections": {},
+    "checks": [
+      { "id": "hua-depth", "state": "check", "courses": ["EN 1001", "EN 1002", "WR 1010"] },
+      { "id": "hua-breadth", "state": "not-met", "courses": [] }
+    ]
+  },
+  {
+    "name": "the seminar on line 6 doesn't count toward breadth",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "EN 1001", "credits": 3 }, { "code": "EN 1002", "credits": 3 }, { "code": "EN 2201", "credits": 3 }, { "code": "HU 3900", "credits": 3 }]
+    },
+    "sections": {},
+    "lines": [{ "id": 6, "state": "done", "course": "HU 3900" }],
+    "checks": [{ "id": "hua-breadth", "state": "not-met", "courses": [] }]
+  },
+  {
+    "name": "all-language students pass breadth with check yourself",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "SP 1521", "credits": 3 }, { "code": "SP 1522", "credits": 3 }, { "code": "GN 1511", "credits": 3 }]
+    },
+    "sections": {},
+    "checks": [
+      { "id": "hua-depth", "state": "check", "courses": ["GN 1511", "SP 1521", "SP 1522"] },
+      { "id": "hua-breadth", "state": "check", "courses": ["GN 1511", "SP 1521", "SP 1522"] }
+    ]
+  },
+  {
+    "name": "humanities spanning groupings below 3 courses shows check yourself",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "EN 1001", "credits": 3 }, { "code": "HI 1330", "credits": 3 }] },
+    "sections": {},
+    "lines": [{ "id": 1, "state": "done", "course": "EN 1001" }, { "id": 2, "state": "done", "course": "HI 1330" }],
+    "checks": [
+      { "id": "hua-depth", "state": "check", "courses": ["EN 1001", "HI 1330"] },
+      { "id": "hua-breadth", "state": "check", "courses": [] }
+    ]
+  },
+  {
+    "name": "humanities in one grouping below 3 courses isn't met",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "EN 1001", "credits": 3 }, { "code": "EN 1002", "credits": 3 }] },
+    "sections": {},
+    "checks": [
+      { "id": "hua-depth", "state": "not-met", "courses": [] },
+      { "id": "hua-breadth", "state": "check", "courses": [] }
+    ]
+  },
+  {
+    "name": "the depth courses stay on their lines when there are too many courses",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "AR 1100", "credits": 3 }, { "code": "AR 1101", "credits": 3 }, { "code": "AR 1102", "credits": 3 },
+        { "code": "PY 1731", "credits": 3 }, { "code": "SP 1521", "credits": 3 }, { "code": "TH 1100", "credits": 3 },
+        { "code": "WR 1010", "credits": 3 }
+      ]
+    },
+    "sections": { "Humanities and Arts": { "done": 5, "planned": 0, "total": 6 } },
+    "lines": [
+      { "id": 1, "state": "done", "course": "AR 1100" }, { "id": 2, "state": "done", "course": "AR 1101" },
+      { "id": 3, "state": "done", "course": "AR 1102" }, { "id": 4, "state": "done", "course": "PY 1731" }
+    ],
+    "checks": [{ "id": "hua-depth", "state": "check", "courses": ["AR 1100", "AR 1101", "AR 1102"] }]
+  },
+  {
+    "name": "more than 1 AP/IB humanities course is flagged",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "EN 1001", "credits": 3, "apIb": true }, { "code": "HI 1330", "credits": 3, "apIb": true }]
+    },
+    "sections": {},
+    "checks": [{ "id": "hua-ap-ib-limit", "state": "check", "courses": ["EN 1001", "HI 1330"] }]
+  },
+  {
+    "name": "1 AP/IB humanities course is within the limit",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "EN 1001", "credits": 3, "apIb": true }, { "code": "PH 1110", "credits": 3, "apIb": true }, { "code": "MA 1021", "credits": 3, "apIb": true }]
+    },
+    "sections": {},
+    "checks": [{ "id": "hua-ap-ib-limit", "state": "met", "courses": ["EN 1001"] }]
+  },
+  {
+    "name": "residency shows check yourself once a course is present",
+    "request": { "version": 1, "requirements": "cs-2030", "planned": [{ "code": "ID 1000", "credits": 3 }] },
+    "sections": {},
+    "checks": [{ "id": "residency", "state": "check", "courses": [] }]
+  },
+  {
+    "name": "a candidate that fills a line and meets an area",
+    "request": { "version": 1, "requirements": "cs-2030", "taken": [{ "code": "CS 2102", "credits": 3 }], "candidates": [{ "code": "CS 3013", "credits": 3 }] },
+    "sections": {},
+    "candidateResults": [{ "code": "CS 3013", "closesLines": [22], "closesChecks": ["systems"] }]
+  },
+  {
+    "name": "a candidate closes a line by swapping a cross-listed course",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 2001", "credits": 3 }, { "code": "CS 2002", "credits": 3 }, { "code": "CS 2003", "credits": 3 },
+        { "code": "CS 2004", "credits": 3 }, { "code": "CS 2005", "credits": 3 }, { "code": "CS 2006", "credits": 3 },
+        { "code": "CS 2007", "credits": 3 }, { "code": "CS 2008", "credits": 3 }, { "code": "CS 2009", "credits": 3 },
+        { "code": "CS 2022", "credits": 3 }
+      ],
+      "candidates": [{ "code": "CS 2010", "credits": 3 }, { "code": "CS 3133", "credits": 3 }]
+    },
+    "sections": { "Mathematics": { "done": 0, "planned": 0, "total": 7 } },
+    "candidateResults": [
+      { "code": "CS 2010", "closesLines": [38], "closesChecks": [] },
+      { "code": "CS 3133", "closesLines": [38], "closesChecks": ["theory"] }
+    ]
+  },
+  {
+    "name": "a candidate that only meets a check",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "ECON 1110", "credits": 3 }, { "code": "PSY 1400", "credits": 3 }],
+      "candidates": [{ "code": "GOV 2315", "credits": 3 }]
+    },
+    "sections": {},
+    "candidateResults": [{ "code": "GOV 2315", "closesLines": [], "closesChecks": ["social"] }]
+  },
+  {
+    "name": "a free-elective-only candidate shows nothing",
+    "request": { "version": 1, "requirements": "cs-2030", "candidates": [{ "code": "ID 1000", "credits": 3 }, { "code": "BUS 2020", "credits": 3 }] },
+    "sections": {},
+    "candidateResults": [
+      { "code": "ID 1000", "closesLines": [], "closesChecks": [] },
+      { "code": "BUS 2020", "closesLines": [], "closesChecks": [] }
+    ]
+  },
+  {
+    "name": "a candidate on a full degree shows nothing",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "CS 1101", "credits": 3 }, { "code": "CS 2022", "credits": 3 }, { "code": "CS 2102", "credits": 3 },
+        { "code": "CS 2103", "credits": 3 }, { "code": "CS 2223", "credits": 3 }, { "code": "CS 2303", "credits": 3 },
+        { "code": "CS 3013", "credits": 3 }, { "code": "CS 3041", "credits": 3 }, { "code": "CS 3043", "credits": 3 },
+        { "code": "CS 3133", "credits": 3 }, { "code": "CS 3431", "credits": 3 }, { "code": "CS 3733", "credits": 3 },
+        { "code": "CS 4120", "credits": 3 }, { "code": "CS 4233", "credits": 3 }, { "code": "CS 4513", "credits": 3 },
+        { "code": "CS 4516", "credits": 3 }, { "code": "CS 4341", "credits": 3 }, { "code": "GOV 2314", "credits": 3 },
+        { "code": "MA 1021", "credits": 3 }, { "code": "MA 1022", "credits": 3 }, { "code": "MA 1023", "credits": 3 },
+        { "code": "MA 1024", "credits": 3 }, { "code": "MA 2071", "credits": 3 }, { "code": "MA 2611", "credits": 3 },
+        { "code": "MA 2621", "credits": 3 }, { "code": "PH 1110", "credits": 3 }, { "code": "PH 1120", "credits": 3 },
+        { "code": "PH 1130", "credits": 3 }, { "code": "CH 1010", "credits": 3 }, { "code": "ECE 2010", "credits": 3 },
+        { "code": "EN 1001", "credits": 3 }, { "code": "EN 1002", "credits": 3 }, { "code": "EN 2201", "credits": 3 },
+        { "code": "WR 1010", "credits": 3 }, { "code": "PY 1731", "credits": 3 }, { "code": "HU 3900", "credits": 3 },
+        { "code": "PSY 1400", "credits": 3 }, { "code": "GOV 1100", "credits": 3 }, { "code": "WPE 1001", "credits": 0.25 },
+        { "code": "WPE 1002", "credits": 0.25 }, { "code": "WPE 1003", "credits": 0.25 }, { "code": "WPE 1004", "credits": 0.25 },
+        { "code": "ECON 1110", "credits": 3 }
+      ],
+      "manual": ["iqp-1", "iqp-2", "iqp-3", "mqp-1", "mqp-2", "mqp-3", "hua-depth-confirmation"],
+      "candidates": [
+        { "code": "CS 3013", "credits": 3 }, { "code": "CS 4401", "credits": 3 }, { "code": "MA 1800", "credits": 3 },
+        { "code": "PH 2201", "credits": 3 }, { "code": "EN 3000", "credits": 3 }, { "code": "ID 2050", "credits": 3 },
+        { "code": "GOV 2315", "credits": 3 }, { "code": "IMGD 2000", "credits": 3 }, { "code": "WPE 1010", "credits": 0.25 },
+        { "code": "BUS 2020", "credits": 3 }
+      ]
+    },
+    "sections": {},
+    "candidateResults": [
+      { "code": "CS 3013", "closesLines": [], "closesChecks": [] },
+      { "code": "CS 4401", "closesLines": [], "closesChecks": [] },
+      { "code": "MA 1800", "closesLines": [], "closesChecks": [] },
+      { "code": "PH 2201", "closesLines": [], "closesChecks": [] },
+      { "code": "EN 3000", "closesLines": [], "closesChecks": [] },
+      { "code": "ID 2050", "closesLines": [], "closesChecks": [] },
+      { "code": "GOV 2315", "closesLines": [], "closesChecks": [] },
+      { "code": "IMGD 2000", "closesLines": [], "closesChecks": [] },
+      { "code": "WPE 1010", "closesLines": [], "closesChecks": [] },
+      { "code": "BUS 2020", "closesLines": [], "closesChecks": [] }
+    ]
+  },
+  {
+    "name": "a candidate already in the history shows nothing, even under its other code",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "CS 2022", "credits": 3 }, { "code": "CS 3013", "credits": 3 }],
+      "candidates": [{ "code": "MA 2201", "credits": 3 }, { "code": "CS 3013", "credits": 3 }]
+    },
+    "sections": {},
+    "candidateResults": [
+      { "code": "MA 2201", "closesLines": [], "closesChecks": [] },
+      { "code": "CS 3013", "closesLines": [], "closesChecks": [] }
+    ]
+  },
+  {
+    "name": "a candidate reaching a depth grouping closes depth",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "EN 1001", "credits": 3 }, { "code": "EN 1002", "credits": 3 }],
+      "candidates": [{ "code": "WR 1010", "credits": 3 }, { "code": "HI 1330", "credits": 3 }]
+    },
+    "sections": {},
+    "candidateResults": [
+      { "code": "WR 1010", "closesLines": [3], "closesChecks": ["hua-depth"] },
+      { "code": "HI 1330", "closesLines": [3], "closesChecks": [] }
+    ]
+  },
+  {
+    "name": "a candidate outside the depth grouping closes breadth",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "EN 1001", "credits": 3 }, { "code": "EN 1002", "credits": 3 }, { "code": "EN 2201", "credits": 3 }],
+      "candidates": [{ "code": "PY 1731", "credits": 3 }, { "code": "WR 1010", "credits": 3 }]
+    },
+    "sections": {},
+    "candidateResults": [
+      { "code": "PY 1731", "closesLines": [4], "closesChecks": ["hua-breadth"] },
+      { "code": "WR 1010", "closesLines": [4], "closesChecks": [] }
+    ]
+  },
+  {
+    "name": "a candidate completing a science pair closes the science check",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "PH 1110", "credits": 3 }],
+      "candidates": [{ "code": "PH 1120", "credits": 3 }, { "code": "CH 1010", "credits": 3 }]
+    },
+    "sections": {},
+    "candidateResults": [
+      { "code": "PH 1120", "closesLines": [42], "closesChecks": ["science-depth"] },
+      { "code": "CH 1010", "closesLines": [42], "closesChecks": [] }
+    ]
+  },
+  {
+    "name": "a WPE candidate closes the WPE line by filling a slot",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "WPE 1001", "credits": 0.25 }],
+      "candidates": [{ "code": "WPE 1002", "credits": 0.25 }]
+    },
+    "sections": {},
+    "candidateResults": [{ "code": "WPE 1002", "closesLines": [7], "closesChecks": [] }]
+  },
+  {
+    "name": "a candidate doesn't close a check already planned",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "planned": [{ "code": "CS 3013", "credits": 3 }],
+      "candidates": [{ "code": "CS 4513", "credits": 3 }]
+    },
+    "sections": {},
+    "candidateResults": [{ "code": "CS 4513", "closesLines": [26], "closesChecks": [] }]
+  },
+  {
+    "name": "a candidate under 3 credits closes nothing",
+    "request": { "version": 1, "requirements": "cs-2030", "candidates": [{ "code": "CS 3013", "credits": 1.5 }] },
+    "sections": {},
+    "candidateResults": [{ "code": "CS 3013", "closesLines": [], "closesChecks": [] }]
+  },
+  {
+    "name": "null optional lists use empty defaults",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": null,
+      "planned": null,
+      "manual": null,
+      "candidates": null
+    },
+    "sections": {
+      "Mathematics": {
+        "done": 0,
+        "planned": 0,
+        "total": 7
+      }
+    }
+  },
+  {
+    "name": "unknown requirements",
+    "request": {
+      "version": 1,
+      "requirements": "unknown"
+    },
+    "error": {
+      "code": "unknownRequirements",
+      "detail": "unknown"
+    }
+  },
+  {
+    "name": "missing credits",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "CS 2102"
+        }
+      ]
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "taken[0].credits"
+    }
+  },
+  {
+    "name": "negative credits",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "CS 2102",
+          "credits": -3
+        }
+      ]
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "taken[0].credits"
+    }
+  },
+  {
+    "name": "invalid AP flag",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "CS 2102",
+          "credits": 3,
+          "apIb": "yes"
+        }
+      ]
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "taken[0].apIb"
+    }
+  },
+  {
+    "name": "invalid code",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "CS 999999999999999999999999",
+          "credits": 3
+        }
+      ]
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "taken[0].code"
+    }
+  },
+  {
+    "name": "empty code",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "",
+          "credits": 3
+        }
+      ]
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "taken[0].code"
+    }
+  },
+  {
+    "name": "invalid requirements type",
+    "request": {
+      "version": 1,
+      "requirements": {}
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "requirements"
+    }
+  },
+  {
+    "name": "invalid taken list",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": {}
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "taken"
+    }
+  },
+  {
+    "name": "invalid planned entry",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "planned": [
+        false
+      ]
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "planned[0]"
+    }
+  },
+  {
+    "name": "invalid candidates list",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "candidates": false
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "candidates"
+    }
+  },
+  {
+    "name": "invalid manual entry",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "manual": [
+        3
+      ]
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "manual[0]"
+    }
+  },
+  {
+    "name": "unsupported version",
+    "request": {
+      "version": 2,
+      "requirements": "cs-2030"
+    },
+    "error": {
+      "code": "unsupportedVersion",
+      "detail": "2"
+    }
+  },
+  {
+    "name": "invalid version",
+    "request": {
+      "version": 1.5,
+      "requirements": "cs-2030"
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "version"
+    }
+  }
+]

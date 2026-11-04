@@ -152,6 +152,7 @@ export type EngineErrorCode =
   | "unsupportedVersion"
   | "unknownCourse"
   | "unknownSection"
+  | "unknownRequirements"
   | "internal";
 
 export interface EngineErrorResponse {
@@ -168,3 +169,65 @@ export interface EngineErrorResponse {
 export type LoadTermResponse = LoadTermSuccess | EngineErrorResponse;
 
 export type SolveResponse = SolveSuccess | EngineErrorResponse;
+
+export interface AuditCourse {
+  code: string;
+  credits: number;
+  apIb?: boolean | null;
+}
+
+export interface AuditRequest {
+  version: typeof ENGINE_API_VERSION;
+  requirements: string;
+  taken?: AuditCourse[] | null;
+  planned?: AuditCourse[] | null;
+  manual?: string[] | null;
+  candidates?: AuditCourse[] | null;
+}
+
+export interface AuditSubSlot {
+  course: string | null;
+  state: "done" | "planned" | "empty";
+}
+
+export interface AuditLine {
+  id: number;
+  label: string;
+  state: "done" | "planned" | "partial" | "empty";
+  course: string | null;
+  subSlots?: AuditSubSlot[];
+}
+
+export interface AuditSection {
+  name: string;
+  done: number;
+  planned: number;
+  total: number;
+  lines: AuditLine[];
+}
+
+export interface AuditCheck {
+  id: string;
+  label: string;
+  state: "met" | "planned" | "not-met" | "check";
+  courses: string[];
+}
+
+export interface AuditSuccess {
+  ok: true;
+  version: typeof ENGINE_API_VERSION;
+  sections: AuditSection[];
+  checks: AuditCheck[];
+  freeElectives: {
+    creditsDone: number;
+    creditsPlanned: number;
+    creditsTotal: number;
+    courses: string[];
+  };
+  extra: string[];
+  candidateResults: { code: string; closesLines: number[]; closesChecks: string[] }[];
+}
+
+export type AuditResponse = AuditSuccess | EngineErrorResponse;
+
+export type EngineResponse = LoadTermResponse | SolveResponse | AuditResponse;

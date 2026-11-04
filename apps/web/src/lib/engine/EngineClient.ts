@@ -1,5 +1,5 @@
 import type { FailureReason, WorkerReply, WorkerRequest } from "./protocol";
-import type { LoadTermResponse, SolveRequest, SolveResponse } from "./types";
+import type { AuditRequest, AuditResponse, EngineResponse, LoadTermResponse, SolveRequest, SolveResponse } from "./types";
 
 /** A newer request replaced this one; its answer is no longer wanted. */
 export class EngineSupersededError extends Error {
@@ -29,7 +29,7 @@ export interface EngineWorker {
 
 interface Pending {
   message: WorkerRequest;
-  resolve(response: LoadTermResponse | SolveResponse): void;
+  resolve(response: EngineResponse): void;
   reject(error: Error): void;
   settled: boolean;
 }
@@ -43,7 +43,7 @@ function createEngineWorker(): EngineWorker {
 
 /**
  * Talks to the engine in a Web Worker. Requests go to the worker one at a time.
- * Latest wins: a new solve settles every older solve as superseded, and a new loadTerm every older request.
+ * Latest wins for solves and term loads. Audits remain independent of both.
  * A superseded request that was already sent still finishes in the worker, but its answer is dropped.
  */
 export class EngineClient {
@@ -68,14 +68,18 @@ export class EngineClient {
     return this.enqueue({ id: this.nextId++, kind: "solve", request }) as Promise<SolveResponse>;
   }
 
+  audit(request: AuditRequest): Promise<AuditResponse> {
+    return this.enqueue({ id: this.nextId++, kind: "audit", request }) as Promise<AuditResponse>;
+  }
+
   /** Stops the worker. Unsettled requests fail with reason "workerCrashed". */
   dispose(): void {
     this.failAll("workerCrashed", "The engine was stopped.");
   }
 
-  private enqueue(message: WorkerRequest): Promise<LoadTermResponse | SolveResponse> {
-    // Loading a term also makes earlier solves stale; a solve only replaces earlier solves.
-    const replaces = (kind: WorkerRequest["kind"]) => message.kind === "loadTerm" || kind === "solve";
+  private enqueue(message: WorkerRequest): Promise<EngineResponse> {
+    const replaces = (kind: WorkerRequest["kind"]) =>
+      message.kind !== "audit" && kind !== "audit" && (message.kind === "loadTerm" || kind === "solve");
     for (const pending of [this.inFlight, ...this.waiting]) {
       if (pending && replaces(pending.message.kind)) {
         this.settle(pending, () => pending.reject(new EngineSupersededError()));
@@ -83,7 +87,7 @@ export class EngineClient {
     }
     this.waiting = this.waiting.filter((pending) => !pending.settled);
 
-    const promise = new Promise<LoadTermResponse | SolveResponse>((resolve, reject) => {
+    const promise = new Promise<EngineResponse>((resolve, reject) => {
       this.waiting.push({ message, resolve, reject, settled: false });
     });
     this.pump();

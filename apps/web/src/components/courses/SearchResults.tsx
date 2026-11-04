@@ -7,7 +7,7 @@ import { courseCount } from "./courseSummary";
 import { nextIndex } from "./listNavigation";
 import { SearchResultCard } from "./SearchResultCard";
 
-export type ShownResult = { course: Course; fit: CourseFit | null; added: boolean };
+export type ShownResult = { course: Course; fit: CourseFit | null; added: boolean; countsToward?: readonly string[] };
 
 type SearchResultsProps = {
   results: ShownResult[];
