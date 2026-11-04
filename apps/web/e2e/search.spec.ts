@@ -159,7 +159,7 @@ test("removing courses keeps focus in the list, then returns to the search box",
   await expect(yourCourses(page).getByText("2 selected · 6 credits")).toBeVisible();
   const row = (code: string) => courseRow(page, code);
   await expect(row("AE 2320")).toHaveAttribute("aria-current", "true");
-  await expect(row("AE 2320")).toContainText("Lab CX02");
+  await expect(row("AE 2320")).not.toContainText("CX02");
   await expect(row("AE 2320")).toHaveAccessibleName(/has a locked section/);
 
   await row("AE 2210").click();

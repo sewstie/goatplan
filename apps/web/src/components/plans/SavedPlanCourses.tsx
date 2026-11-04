@@ -1,5 +1,4 @@
 import { LockSimple } from "@phosphor-icons/react/ssr";
-import { sectionsLine } from "@/components/courses/courseSummary";
 import { COURSE_COLORS, courseSlot } from "@/components/ui/courseColors";
 import { cx } from "@/components/ui/cx";
 import type { SavedPlan } from "@/lib/plans";
@@ -30,12 +29,7 @@ export function SavedPlanCourses({ plan }: { plan: SavedPlan }) {
                     </>
                   )}
                 </span>
-                {course && (
-                  <>
-                    <span className="text-10 leading-16">{course.title}</span>
-                    <span className="text-9 leading-14-4 text-ink-muted">{sectionsLine(course.sections)}</span>
-                  </>
-                )}
+                {course && <span className="text-10 leading-16">{course.title}</span>}
               </div>
             </li>
           );

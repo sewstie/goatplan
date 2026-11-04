@@ -21,7 +21,6 @@ function row(overrides: Partial<Parameters<typeof CourseRow>[0]> = {}) {
       <CourseRow
         code="AE 2320"
         title="Introduction to Orbital Mechanics"
-        sections="CL01 · CX01"
         swatch="bg-course-2-swatch"
         locked={false}
         selected={false}

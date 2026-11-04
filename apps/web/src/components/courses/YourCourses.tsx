@@ -7,7 +7,7 @@ import type { Course } from "@/lib/data/types";
 import { selectChosenSections, usePlanner } from "@/lib/store";
 import { CourseListSkeleton } from "./CourseListSkeleton";
 import { CourseRow } from "./CourseRow";
-import { courseCredits, formatCredits, rowSections, sectionsLine } from "./courseSummary";
+import { courseCredits, formatCredits, rowSections } from "./courseSummary";
 
 function EmptyText({ lines }: { lines: [string, string] }) {
   return (
@@ -75,12 +75,11 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
         <EmptyText lines={["Your courses will appear here.", "Search above to get started."]} />
       ) : (
         <ul ref={listRef} className="flex flex-col gap-5">
-          {rows.map(({ course, sections }) => (
+          {rows.map(({ course }) => (
             <CourseRow
               key={course.code}
               code={course.code}
               title={course.title}
-              sections={sectionsLine(sections)}
               swatch={COURSE_COLORS[courseSlot(codes, course.code)].swatch}
               locked={(locks[course.code]?.length ?? 0) > 0}
               selected={course.code === selected}
