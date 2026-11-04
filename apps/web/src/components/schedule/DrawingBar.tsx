@@ -12,8 +12,8 @@ const LINK = "inline-flex min-h-24 cursor-pointer items-center rounded-badge fon
 const focusToggle = () => document.getElementById("tutorial-block-time")?.focus();
 
 /**
- * The slim bar above the calendar in drawing mode: "Drag on the calendar to block time · Type a time
- * instead · Done". Escape, Done, another screen or any dialog turns drawing mode off.
+ * The slim bar above the calendar in drawing mode: "Drag on the calendar to block time, or start on a
+ * blocked time to erase it · Type a time instead · Done". Escape, Done, another screen or any dialog turns drawing mode off.
  */
 export function DrawingBar() {
   const drawing = usePlanner((state) => state.drawing);
@@ -75,7 +75,7 @@ export function DrawingBar() {
           aria-label="Drawing mode"
           className="flex shrink-0 flex-wrap items-center gap-x-6 border-b border-accent-line bg-accent-soft px-12 py-3 text-9 leading-13 text-accent"
         >
-          <p className="basis-full tablet:basis-auto">Drag on the calendar to block time</p>
+          <p className="basis-full tablet:basis-auto">Drag on the calendar to block time, or start on a blocked time to erase it</p>
           <span aria-hidden className="hidden tablet:inline">·</span>
           <button
             type="button"

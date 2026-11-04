@@ -353,8 +353,8 @@ buttons (`actions`):
 The "Block a time" pill (`BlockTimeButton`, "Block time" on a phone) is a
 toggle (`aria-pressed`) for drawing mode, kept in the store as `drawing`. While
 it's on, the pill says "Drawing busy times" and a slim bar above the calendar
-(`DrawingBar`) says "Drag on the calendar to block time · Type a time instead ·
-Done". "Type a time instead" opens the Block a time form; Done and Escape turn
+(`DrawingBar`) says "Drag on the calendar to block time, or start on a blocked
+time to erase it · Type a time instead · Done". "Type a time instead" opens the Block a time form; Done and Escape turn
 the mode off and put focus back on the pill. The mode also turns off when the
 planner page goes away, the phone shows another screen or any dialog opens. The
 phone Preferences screen's "+ Add" (`AddBlockedTimeButton`) still opens the
