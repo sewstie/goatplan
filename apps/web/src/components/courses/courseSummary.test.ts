@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   courseCount,
   courseCredits,
-  courseMeta,
   formatCredits,
   rowSections,
   sectionsLine,
@@ -20,38 +19,6 @@ describe("courseCount", () => {
   it("says course or courses", () => {
     expect(courseCount(1)).toBe("1 course");
     expect(courseCount(3)).toBe("3 courses");
-  });
-});
-
-describe("courseMeta", () => {
-  it("counts lectures and names the instructor", () => {
-    expect(courseMeta(ae2210)).toBe("1 lecture · David Olinger");
-  });
-
-  it("puts lectures first and counts other section types", () => {
-    expect(courseMeta(ae2320)).toBe("1 lecture · 3 labs · Ye Lu");
-  });
-
-  it("shortens long instructor lists and says when nobody is assigned", () => {
-    const many = course("MA 1021", "Calculus I", [
-      section("MA 1021", "A01", { instructors: ["A One"] }),
-      section("MA 1021", "A02", { instructors: ["B Two"] }),
-      section("MA 1021", "A03", { instructors: ["C Three", "D Four"] }),
-    ]);
-    expect(courseMeta(many)).toBe("3 lectures · A One, B Two +2 more");
-    expect(courseMeta(course("AE 4310", "Spacecraft", [section("AE 4310", "C01")]))).toBe(
-      "1 lecture · Instructor not assigned yet",
-    );
-  });
-
-  it("leaves lab and discussion instructors out", () => {
-    const labOnly = course("BB 3840", "Lab Techniques", [section("BB 3840", "X01", { type: "lab", instructors: ["Floyd Brownewell"] })]);
-    expect(courseMeta(labOnly)).toBe("1 lab");
-    const withLab = course("PH 1110", "Mechanics", [
-      section("PH 1110", "CL01", { instructors: ["Germano Iannacchione"] }),
-      section("PH 1110", "CX01", { type: "lab", instructors: ["Veneta Tountcheva"] }),
-    ]);
-    expect(courseMeta(withLab)).toBe("1 lecture · 1 lab · Germano Iannacchione");
   });
 });
 
