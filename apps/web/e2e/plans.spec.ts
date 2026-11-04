@@ -324,7 +324,8 @@ test.describe("Sections to register", () => {
     const courses = page.getByRole("region", { name: "Your courses" });
     await expect(courses.getByRole("listitem")).toHaveCount(1);
     await expect(courses).toContainText("AE 2410");
-    await expect(courses).toContainText("C09");
+    await expect(courses).toContainText("Introduction to Aerospace Structures");
+    await expect(courses).not.toContainText("C09");
     await expect(courses.getByRole("button")).toHaveCount(0);
     const prefs = page.getByRole("group", { name: "Preferences" });
     await expect(prefs).toContainText("11:00 AM");

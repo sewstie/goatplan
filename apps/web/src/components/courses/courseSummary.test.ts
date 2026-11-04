@@ -4,7 +4,6 @@ import {
   courseCredits,
   formatCredits,
   rowSections,
-  sectionsLine,
   termFieldLabel,
 } from "./courseSummary";
 import { ae2210, ae2320, course, cs2102, section } from "./testing/courses";
@@ -22,26 +21,17 @@ describe("courseCount", () => {
   });
 });
 
-describe("rowSections and sectionsLine", () => {
-  it("describes the sections on screen: lecture by code, lab by type and code", () => {
-    const sections = rowSections(ae2320, ["AE 2320-CL01", "AE 2320-CX02"], undefined);
-    expect(sectionsLine(sections)).toBe("CL01 · Lab CX02");
+describe("rowSections", () => {
+  const ids = (sections: { id: string }[]) => sections.map((item) => item.id);
+
+  it("takes the current schedule's sections", () => {
+    expect(ids(rowSections(ae2320, ["AE 2320-CL01", "AE 2320-CX02"], undefined))).toEqual(["AE 2320-CL01", "AE 2320-CX02"]);
   });
 
   it("falls back to the only option, then to locked sections", () => {
-    expect(sectionsLine(rowSections(ae2210, undefined, undefined))).toBe("C01");
-    expect(sectionsLine(rowSections(ae2320, [], ["AE 2320-CX03"]))).toBe("Lab CX03");
-    expect(sectionsLine(rowSections(ae2320, [], undefined))).toBe("");
-  });
-
-  it("says when the instructor is still pending", () => {
-    const pending = course("AE 5231", "Air Breathing Propulsion", [section("AE 5231", "C02")]);
-    expect(sectionsLine(rowSections(pending, ["AE 5231-C02"], undefined))).toBe("C02 · Instructor pending");
-  });
-
-  it("doesn't call a lab's instructor pending, since lab instructors aren't shown", () => {
-    const labOnly = course("BB 3840", "Lab Techniques", [section("BB 3840", "X01", { type: "lab", instructors: [] })]);
-    expect(sectionsLine(rowSections(labOnly, ["BB 3840-X01"], undefined))).toBe("Lab X01");
+    expect(ids(rowSections(ae2210, undefined, undefined))).toEqual(["AE 2210-C01"]);
+    expect(ids(rowSections(ae2320, [], ["AE 2320-CX03"]))).toEqual(["AE 2320-CX03"]);
+    expect(rowSections(ae2320, [], undefined)).toEqual([]);
   });
 });
 

@@ -6,7 +6,6 @@ import { useShowPhoneScreen } from "@/components/phone/phoneScreen";
 type CourseRowProps = {
   code: string;
   title: string;
-  sections: string;
   swatch: string;
   locked: boolean;
   selected: boolean;
@@ -15,7 +14,7 @@ type CourseRowProps = {
 };
 
 /** A planned course in "Your courses" (div.app-3.md). The remove button shows on hover and keyboard focus. */
-export function CourseRow({ code, title, sections, swatch, locked, selected, onSelect, onRemove }: CourseRowProps) {
+export function CourseRow({ code, title, swatch, locked, selected, onSelect, onRemove }: CourseRowProps) {
   const showPhoneScreen = useShowPhoneScreen();
   return (
     <li className="group relative">
@@ -44,7 +43,6 @@ export function CourseRow({ code, title, sections, swatch, locked, selected, onS
             )}
           </span>
           <span className="text-10 leading-16">{title}</span>
-          {sections && <span className="text-9 leading-14-4 text-ink-muted">{sections}</span>}
         </span>
       </button>
       <span className="absolute top-15 right-10 flex opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 pointer-coarse:opacity-100">

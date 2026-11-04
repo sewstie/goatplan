@@ -1,6 +1,5 @@
 "use client";
 
-import { sectionsLine } from "./courseSummary";
 import { focusDetails } from "@/components/shell/detailsFocus";
 import { COURSE_COLORS, courseSlot } from "@/components/ui/courseColors";
 import { cx } from "@/components/ui/cx";
@@ -29,7 +28,7 @@ export function ViewedSavedCourses() {
             <span aria-hidden className={cx("mt-5 size-8 shrink-0 rounded-swatch", COURSE_COLORS[courseSlot(plan.courses, code)].swatch)} />
             <span className="flex min-w-0 flex-col gap-3">
               <span className="text-11 leading-15-95 font-700">{code}</span>
-              {course && <><span className="text-10 leading-16">{course.title}</span><span className="text-9 leading-14-4 text-ink-muted">{sectionsLine(course.sections)}</span></>}
+              {course && <span className="text-10 leading-16">{course.title}</span>}
             </span>
           </button></li>;
         })}
