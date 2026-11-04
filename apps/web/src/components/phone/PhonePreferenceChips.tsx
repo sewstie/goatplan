@@ -10,7 +10,7 @@ import { startsAfterOptions } from "@/components/preferences/timeOptions";
 import { focusWithin } from "@/components/ui/focusRing";
 import { Toggle } from "@/components/ui/Toggle";
 import { formatTimeShort } from "@/lib/data/time";
-import { selectSavedPlan, usePlanner } from "@/lib/store";
+import { selectReadOnlyPlan, usePlanner } from "@/lib/store";
 import { usePhoneScreen } from "./phoneScreen";
 
 const PILL = "relative inline-flex min-h-36 shrink-0 items-center gap-6 rounded-pill border border-line bg-surface px-8 text-9 after:absolute after:inset-x-0 after:-inset-y-4";
@@ -20,7 +20,7 @@ const PILL = "relative inline-flex min-h-36 shrink-0 items-center gap-6 rounded-
  * narrowest phones); the blocked times follow as chips that open the Preferences screen.
  */
 export function PhonePreferenceChips() {
-  const saved = usePlanner(selectSavedPlan);
+  const saved = usePlanner(selectReadOnlyPlan);
   const startsAfter = usePlanner((state) => state.preferences.startsAfter);
   const blocked = usePlanner((state) => state.preferences.blocked);
   const onlyOpen = usePlanner((state) => state.preferences.onlyOpen);

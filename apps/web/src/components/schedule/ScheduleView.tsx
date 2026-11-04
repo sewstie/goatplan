@@ -1,6 +1,6 @@
 "use client";
 
-import { usePlanner } from "@/lib/store";
+import { selectReadOnlyPlan, usePlanner } from "@/lib/store";
 import { BlockedSelectionBar } from "./BlockedSelectionBar";
 import { BlockedTimeMenu } from "./BlockedTimeMenu";
 import { DrawingBar } from "./DrawingBar";
@@ -12,7 +12,7 @@ import { TermErrorCalendar } from "./TermErrorCalendar";
 
 /** Schedule agent: the weekly calendar (div.app-6.md and the calendar states). */
 export function ScheduleView() {
-  const saved = usePlanner((state) => state.savedPlanId !== null);
+  const saved = usePlanner(selectReadOnlyPlan);
   const termStatus = usePlanner((state) => state.termStatus);
   const hasCourses = usePlanner((state) => state.courses.length > 0);
   const hasBlockedTimes = usePlanner((state) => state.preferences.blocked.length > 0);
