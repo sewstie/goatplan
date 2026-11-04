@@ -15,9 +15,9 @@ test("shell regions line up at 1680 × 800", async ({ page }) => {
   const details = (await page.getByRole("complementary", { name: "Course details" }).boundingBox())!;
   const topBar = (await page.getByRole("banner").first().boundingBox())!;
   expect(topBar).toMatchObject({ x: 0, y: 0, width: 1680 });
-  expect(sidebar.x).toBe(0);
-  expect(Math.abs(sidebar.width - 14 * root)).toBeLessThanOrEqual(1.5);
-  expect(Math.abs(details.width - 18 * root)).toBeLessThanOrEqual(1.5);
+  expect(sidebar.x).toBe(12);
+  expect(Math.abs(sidebar.width - 16.5 * root)).toBeLessThanOrEqual(1.5);
+  expect(Math.abs(details.width - 16.75 * root)).toBeLessThanOrEqual(1.5);
   expect(details.x + details.width).toBe(1680);
   expect(schedule.x).toBeGreaterThan(sidebar.x + sidebar.width);
   expect(schedule.x + schedule.width).toBeLessThan(details.x);

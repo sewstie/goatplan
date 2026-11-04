@@ -42,7 +42,7 @@ export function AppShell({
       </a>
       <TopBar center={barCenter} actions={barActions} />
       {/* Phone: a single column with a 16px side gutter. Tablet and up: the sidebar plus the main region. */}
-      <div className="mx-auto flex min-h-0 w-full max-w-(--size-app-max) flex-1 gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:px-20 tablet:py-20">
+      <div className="mx-auto flex min-h-0 w-full max-w-(--size-app-max) flex-1 gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:px-12 tablet:py-12">
         <div className="contents">{sidebar}</div>
         <main
           id="main"
