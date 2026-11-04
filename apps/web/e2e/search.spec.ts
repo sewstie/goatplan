@@ -85,7 +85,6 @@ test("search finds titles and instructors", async ({ page }) => {
 
   await searchBox(page).fill("Hamzaoui");
   await expect(results(page).getByRole("heading", { level: 3 }).first()).toHaveText("AB 1533");
-  await expect(results(page).getByText("1 lecture · Mohammed El Hamzaoui").first()).toBeVisible();
 });
 
 test("arrow keys move through the results, Escape goes back and clears", async ({ page }) => {
@@ -145,27 +144,14 @@ test("a course from another term offers to switch, keeping the search", async ({
   await expect(results(page).getByRole("heading", { level: 3 })).toHaveText(["AE 2320"]);
 });
 
-test("course details list sections with times, seats, instructors and Rate My Professors", async ({ page }) => {
+test("a result shows the course's name and credits, not its sections", async ({ page }) => {
   await open(page, { term: "2027-C" });
   await searchBox(page).fill("ae2320");
-  const toggle = results(page).getByRole("button", { name: /Sections/ });
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
-  await toggle.click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "true");
-
-  const sections = results(page).getByRole("list", { name: "Sections of AE 2320" });
-  await expect(sections.getByRole("heading", { name: "Lecture CL01" })).toBeVisible();
-  await expect(sections.getByText("Mon–Fri · 9:00 AM–9:50 AM")).toBeVisible();
-  await expect(sections.getByText(/^\d+ of 120 seats open$/)).toBeVisible();
-  await expect(sections.getByText("Ye Lu").first()).toBeVisible();
-
-  const link = results(page).getByRole("link", { name: /Rate My Professors/ });
-  await expect(link).toHaveAttribute("href", "https://www.ratemyprofessors.com/search/professors/1220?q=Ye%20Lu");
-  await expect(link).toHaveAttribute("target", "_blank");
-
-  await toggle.focus();
-  await page.keyboard.press("Enter");
-  await expect(sections).toHaveCount(0);
+  const card = results(page).getByRole("listitem").filter({ hasText: "AE 2320" });
+  await expect(card).toContainText("Orbital Mechanics");
+  await expect(card.getByText("3 credits", { exact: true })).toBeVisible();
+  await expect(card).not.toContainText(/lecture|lab/i);
+  await expect(card.getByRole("button", { name: /Sections/ })).toHaveCount(0);
 });
 
 test("removing courses keeps focus in the list, then returns to the search box", async ({ page }) => {
@@ -253,8 +239,7 @@ test.describe("screenshots", () => {
       await page.screenshot({ path: `${screenshotDir}/search-no-match-${width}.png`, fullPage: true });
 
       await searchBox(page).fill("ae2320");
-      await results(page).getByRole("button", { name: /Sections/ }).click();
-      await page.screenshot({ path: `${screenshotDir}/search-details-${width}.png`, fullPage: true });
+      await expect(results(page)).toBeVisible();
 
       await page.getByRole("combobox", { name: "Term" }).click();
       await page.getByRole("listbox", { name: "Term" }).getByRole("option", { name: /^D Term/ }).click();

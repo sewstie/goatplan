@@ -1,13 +1,10 @@
 "use client";
 
-import { useId, useState } from "react";
-import { CaretDown, Check, Plus } from "@phosphor-icons/react/ssr";
+import { Check, Plus } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
-import { cx } from "@/components/ui/cx";
 import type { Course } from "@/lib/data/types";
 import type { CourseFit } from "./courseFit";
-import { courseMeta } from "./courseSummary";
-import { CourseSections } from "./CourseSections";
+import { formatCredits } from "./courseSummary";
 import { FitBadge } from "./FitBadge";
 
 type SearchResultCardProps = {
@@ -17,11 +14,8 @@ type SearchResultCardProps = {
   onAdd(code: string): void;
 };
 
-/** A course in the search results: code, Add, title, sections summary, fit badge, and its sections on request. */
+/** A course in the search results: code, Add, title, credits and fit badge. */
 export function SearchResultCard({ course, fit, added, onAdd }: SearchResultCardProps) {
-  const [open, setOpen] = useState(false);
-  const sectionsId = useId();
-
   return (
     <li className="flex flex-col gap-4 rounded-control border border-line p-9">
       <div className="flex items-center justify-between gap-8">
@@ -39,25 +33,12 @@ export function SearchResultCard({ course, fit, added, onAdd }: SearchResultCard
         </Button>
       </div>
       <p className="text-10 leading-14-5">{course.title}</p>
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls={open ? sectionsId : undefined}
-        onClick={() => setOpen((value) => !value)}
-        className="-mx-2 flex cursor-pointer items-start justify-between gap-6 rounded-badge px-2 text-left text-9 leading-13-5 text-ink-muted hover:text-ink"
-      >
-        <span>
-          {courseMeta(course)}
-          <span className="sr-only">. Sections</span>
-        </span>
-        <CaretDown aria-hidden className={cx("mt-1 size-11 shrink-0 transition-transform", open && "rotate-180")} />
-      </button>
+      {course.credits !== null && <p className="text-9 leading-13-5 text-ink-muted">{formatCredits(course.credits)}</p>}
       {fit && (
         <div className="mt-5 flex">
           <FitBadge fit={fit} />
         </div>
       )}
-      {open && <CourseSections id={sectionsId} course={course} />}
     </li>
   );
 }

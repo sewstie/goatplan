@@ -1,5 +1,5 @@
-import { sectionTypeName, showsInstructor, uniqueInstructors } from "@/lib/data";
-import type { Course, Section, SectionType, Term } from "@/lib/data/types";
+import { sectionTypeName, showsInstructor } from "@/lib/data";
+import type { Course, Section, Term } from "@/lib/data/types";
 
 /** "C Term · Spring 2027" */
 export function termFieldLabel(term: Pick<Term, "name" | "season" | "year">): string {
@@ -9,30 +9,6 @@ export function termFieldLabel(term: Pick<Term, "name" | "season" | "year">): st
 /** "1 course", "3 courses" */
 export function courseCount(count: number): string {
   return `${count} ${count === 1 ? "course" : "courses"}`;
-}
-
-function typeCount(type: SectionType, count: number): string {
-  const name = sectionTypeName(type).toLowerCase();
-  return `${count} ${name}${count === 1 ? "" : "s"}`;
-}
-
-/** "1 lecture · David Olinger", "1 lecture · 3 labs · Ye Lu". Lectures come first. */
-export function courseMeta(course: Pick<Course, "sections">): string {
-  const counts = new Map<SectionType, number>();
-  for (const section of [...course.sections].sort((a, b) => Number(b.type === "lecture") - Number(a.type === "lecture"))) {
-    counts.set(section.type, (counts.get(section.type) ?? 0) + 1);
-  }
-  const taught = course.sections.filter(showsInstructor);
-  const names = uniqueInstructors(taught);
-  const people =
-    taught.length === 0
-      ? []
-      : names.length === 0
-        ? ["Instructor not assigned yet"]
-        : names.length <= 2
-          ? [names.join(", ")]
-          : [`${names.slice(0, 2).join(", ")} +${names.length - 2} more`];
-  return [...[...counts].map(([type, count]) => typeCount(type, count)), ...people].join(" · ");
 }
 
 /** The sections a planned course row describes: the current schedule's, else the only option, else the locked ones. */
