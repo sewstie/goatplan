@@ -170,7 +170,7 @@ describe("PreferencesBar", () => {
     expect(store.getState().drawing).toBe(true);
     expect(toggle).toHaveAccessibleName("Drawing busy times");
     expect(toggle).toHaveAttribute("aria-pressed", "true");
-    expect(screen.getByRole("group", { name: "Drawing mode" })).toHaveTextContent("Drag on the calendar to block time·Type a time instead·Done");
+    expect(screen.getByRole("group", { name: "Drawing mode" })).toHaveTextContent("Drag on the calendar to block time, or start on a blocked time to erase it·Type a time instead·Done");
 
     await userEvent.click(toggle);
     expect(store.getState().drawing).toBe(false);
