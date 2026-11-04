@@ -1,10 +1,9 @@
 "use client";
 
-import { Select } from "@/components/ui/Select";
+import { Listbox, type ListboxOption } from "@/components/ui/Listbox";
 import { usePlanner } from "@/lib/store";
-import { termFieldLabel } from "./courseSummary";
 
-/** The term field and the line under it. */
+/** The term field and the line under it, with the same list as the Sort and professor menus. */
 export function TermPicker() {
   const terms = usePlanner((state) => state.terms);
   const termId = usePlanner((state) => state.termId);
@@ -14,21 +13,28 @@ export function TermPicker() {
   // Without a term list, an error means the list itself couldn't load or no term is open.
   const noTerms = terms.length === 0 && termStatus === "error";
 
-  const options =
+  const options: ListboxOption[] =
     terms.length > 0
-      ? terms.map((term) => ({ value: term.id, label: termFieldLabel(term) }))
+      ? terms.map((term) => ({
+          value: term.id,
+          label: `${term.name} · ${term.year}`,
+          description: `${term.season} ${term.year} · ${term.courses.toLocaleString("en-US")} courses`,
+        }))
       : [{ value: "", label: noTerms ? "No terms available" : "Loading terms…" }];
 
+  // The wrapper is the guide's outline target for the term step.
   return (
     <div className="flex shrink-0 flex-col pb-15">
-      <Select
-        id="tutorial-term"
-        label="Term"
-        options={options}
-        value={current?.id ?? ""}
-        disabled={terms.length === 0}
-        onChange={(event) => void setTerm(event.target.value)}
-      />
+      <div>
+        <Listbox
+          id="tutorial-term"
+          label="Term"
+          options={options}
+          value={current?.id ?? ""}
+          disabled={terms.length === 0}
+          onChange={(value) => void setTerm(value)}
+        />
+      </div>
       <p className="min-h-18 px-2 pt-5 text-9 leading-13 text-ink-muted">
         {current && `All courses and sections in ${current.name}`}
       </p>
