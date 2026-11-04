@@ -26,7 +26,7 @@ describe("AppShell", () => {
   it("uses a phone side gutter that drops away at the tablet breakpoint", () => {
     const { container } = render(<AppShell {...parts()} />);
     const shell = container.querySelector("div.mx-auto");
-    expect(shell).toHaveClass("px-(--size-phone-gutter)", "tablet:px-20");
+    expect(shell).toHaveClass("px-(--size-phone-gutter)", "tablet:px-12");
   });
 
   it("omits the details panel when no details are given", () => {

@@ -292,7 +292,7 @@
   --size-app-max: 2200px;
   --size-registration-row: 4.2125rem;
   --size-app-padding: 0.875rem;
-  --size-gutter: 0.75rem;
+  --size-gutter: 0.5rem;
   /* The side gutter of the single-column phone layout, below the tablet breakpoint. */
   --size-phone-gutter: 1rem;
   /* The phone week calendar: one hour of grid, the time labels and the day names. */
@@ -300,7 +300,7 @@
   --size-phone-axis: 2.125rem;
   --size-phone-day-header: 2.125rem;
   --size-phone-bar: 4rem;
-  --size-sidebar: 15rem;
+  --size-sidebar: 16.5rem;
   --size-details: 16.75rem;
   --size-header: 4.75rem;
   --size-topbar: 3.5rem;
@@ -415,6 +415,7 @@ body:has(.guide-popover) [data-guide-hide] {
 
   :root {
     --size-sidebar: 224px;
+    --size-gutter: 0.75rem;
     --size-details: 284px;
     --size-time-axis: 47px;
     --size-topbar: 3.8125rem;
