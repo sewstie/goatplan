@@ -9,10 +9,10 @@ import { useDiagnosis } from "./useDiagnosis";
 import { useHeldHeight } from "./useHeldHeight";
 
 /**
- * Schedule agent: the line under the title, like "3 courses · 24 schedules fit", with the shown
- * schedule's badges on a line of their own. `steady` (the phone) keeps the badge line's space when no
- * schedule fits, and in drawing mode keeps it to one line of text and one row of badges, so it's the
- * same height whether schedules fit or not.
+ * Schedule agent: "3 courses · 24 schedules fit" with the shown schedule's badges on the same line,
+ * wrapping when there's no room. On the phone the badges get a line of their own. `steady` (the phone)
+ * keeps the badge line's space when no schedule fits, and in drawing mode keeps it to one line of text
+ * and one row of badges, so it's the same height whether schedules fit or not.
  */
 export function ScheduleSummary({ steady = false, aside = null }: { steady?: boolean; aside?: string | null } = {}) {
   const saved = usePlanner(selectSavedPlan);
@@ -52,7 +52,7 @@ export function ScheduleSummary({ steady = false, aside = null }: { steady?: boo
   const badges = showChips ? scheduleBadgeDetails(classes, schedule.score, sortPreset, startsAfter) : [];
 
   return (
-    <div ref={heldRef} style={heldStyle} className="flex flex-col gap-4">
+    <div ref={heldRef} style={heldStyle} className={oneRow ? "flex flex-col gap-4" : "flex flex-wrap items-center gap-x-12 gap-y-4"}>
       <span className="flex min-w-0 justify-between gap-8">
         <span className={cx("min-w-0", oneRow && "truncate")}>{text}</span>
         {aside && <span className="shrink-0 font-570 text-ink-soft">{aside}</span>}
