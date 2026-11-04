@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-03T16:56:45Z",
+  "generatedAt": "2026-11-04T16:59:47Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -440,8 +440,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/9 unit) Continuation of AS1001. Topics include Air Force core values, leadership principles, group leadership dynamics, and an introduction to communication skills. Leadership Laboratory is mandatory for AFROTC cadets and complements this course by providing cadets with followership experiences.",
       "sections": [
-        {"id":"AS 1002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["DeAndre Tipton"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Fuller Labs 320"}]},
-        {"id":"AS 1002-BX01","code":"BX01","type":"lab","status":"open","enrolled":20,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Jacob Fillinger","Justin Baker","DeAndre Tipton","Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"AS 1002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["DeAndre Tipton"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Fuller Labs 320"}]},
+        {"id":"AS 1002-BX01","code":"BX01","type":"lab","status":"open","enrolled":21,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Jacob Fillinger","Justin Baker","DeAndre Tipton","Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["AS 1002-BL01","AS 1002-BX01"]
@@ -8783,7 +8783,7 @@
       "description": "Cat. I (1/12 unit) Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
         {"id":"WPE 1012-B01","code":"B01","type":"workshop","status":"open","enrolled":29,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Christopher Bartley"],"delivery":"in-person","meetings":[{"days":["Mon","Fri"],"start":600,"end":650,"location":"Recreation Center Courts 1-2"}]},
-        {"id":"WPE 1012-B02","code":"B02","type":"workshop","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":2,"capacity":10},"instructors":["John Salivonchik"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]}
+        {"id":"WPE 1012-B02","code":"B02","type":"workshop","status":"waitlist","enrolled":31,"capacity":30,"waitlist":{"taken":1,"capacity":10},"instructors":["John Salivonchik"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
         ["WPE 1012-B01"],
