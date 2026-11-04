@@ -1,0 +1,180 @@
+{
+  "$comment": "Test history 2: complete-degree CS student. All 45 lines filled. Expected results worked out by hand from the CS-2030 tracking sheet. Includes interesting cases: cross-listed course (CS 2022/MA 2201), only-one-of set (took both CS 2102 and CS 2103), non-CS Social Implications course (GOV 2314), and surplus course going to free electives.",
+  "name": "complete-degree",
+  "major": "Computer Science",
+  "classYear": 2030,
+  "takenCourses": [
+    { "code": "CS 1101", "credits": 3, "term": "2027-A" },
+    { "code": "CS 2022", "credits": 3, "term": "2027-B", "$note": "Cross-listed with MA 2201; used as CS" },
+    { "code": "CS 2102", "credits": 3, "term": "2027-B" },
+    { "code": "CS 2103", "credits": 3, "term": "2027-C", "$note": "Only one of 2102/210X/2103 counts for CS; surplus to free electives" },
+    { "code": "CS 2223", "credits": 3, "term": "2027-C" },
+    { "code": "CS 2303", "credits": 3, "term": "2027-D" },
+    { "code": "CS 3013", "credits": 3, "term": "2028-A" },
+    { "code": "CS 3041", "credits": 3, "term": "2028-A" },
+    { "code": "CS 3043", "credits": 3, "term": "2028-B" },
+    { "code": "CS 3133", "credits": 3, "term": "2028-B" },
+    { "code": "CS 3431", "credits": 3, "term": "2028-C" },
+    { "code": "CS 3733", "credits": 3, "term": "2028-C" },
+    { "code": "CS 4120", "credits": 3, "term": "2028-D" },
+    { "code": "CS 4233", "credits": 3, "term": "2029-A" },
+    { "code": "CS 4513", "credits": 3, "term": "2029-A" },
+    { "code": "CS 4516", "credits": 3, "term": "2029-B" },
+    { "code": "CS 4341", "credits": 3, "term": "2029-B" },
+    { "code": "GOV 2314", "credits": 3, "term": "2028-D", "$note": "Non-CS Social Implications; does NOT count as CS unit" },
+    { "code": "MA 1021", "credits": 3, "term": "2027-A" },
+    { "code": "MA 1022", "credits": 3, "term": "2027-B" },
+    { "code": "MA 1023", "credits": 3, "term": "2027-C" },
+    { "code": "MA 1024", "credits": 3, "term": "2027-D" },
+    { "code": "MA 2071", "credits": 3, "term": "2028-A" },
+    { "code": "MA 2611", "credits": 3, "term": "2028-B" },
+    { "code": "MA 2621", "credits": 3, "term": "2028-A" },
+    { "code": "PH 1110", "credits": 3, "term": "2027-A" },
+    { "code": "PH 1120", "credits": 3, "term": "2027-B" },
+    { "code": "PH 1130", "credits": 3, "term": "2027-C" },
+    { "code": "CH 1010", "credits": 3, "term": "2027-D" },
+    { "code": "ECE 2010", "credits": 3, "term": "2028-B" },
+    { "code": "EN 1001", "credits": 3, "term": "2027-A" },
+    { "code": "EN 1002", "credits": 3, "term": "2027-B" },
+    { "code": "EN 2201", "credits": 3, "term": "2027-C" },
+    { "code": "WR 1010", "credits": 3, "term": "2027-D" },
+    { "code": "PY 1731", "credits": 3, "term": "2028-A" },
+    { "code": "HU 3900", "credits": 3, "term": "2028-B" },
+    { "code": "PSY 1400", "credits": 3, "term": "2027-B" },
+    { "code": "GOV 1100", "credits": 3, "term": "2027-C" },
+    { "code": "WPE 1001", "credits": 0.25, "term": "2027-A" },
+    { "code": "WPE 1002", "credits": 0.25, "term": "2027-B" },
+    { "code": "WPE 1003", "credits": 0.25, "term": "2027-C" },
+    { "code": "WPE 1004", "credits": 0.25, "term": "2027-D" },
+    { "code": "ECON 1110", "credits": 3, "term": "2029-A" }
+  ],
+  "plannedCourses": [],
+  "confirmedManualItems": ["iqp-1", "iqp-2", "iqp-3", "mqp-1", "mqp-2", "mqp-3", "hua-depth-confirmation"],
+  "$reasoning": {
+    "csAllocation": "17 distinct CS courses taken, but only one of CS 2102/2103 counts (only-one-of set). So 16 eligible CS courses for 15 CS course lines (16-30). GOV 2314 satisfies Social Implications check but does NOT count as CS unit. CS 2022 used as CS (cross-listed with MA 2201). Lines 31-33 filled by MQP manual items. Line 16: CS 1101. Lines 17-21: CS 2022, CS 2102, CS 2223, CS 2303, CS 3431. Lines 22-25 (area-tagged): CS 3013 (Systems), CS 3133 (Theory), CS 3041 (Design), CS 3043 (Social). Lines 26-30: CS 4120, CS 4233, CS 4513, CS 4516, CS 4341. CS 3733 is 16th eligible course → surplus → free electives. CS 2103 → only-one-of surplus → free electives.",
+    "mathAllocation": "7 MA courses for 7 math lines. Lines 34-37: MA 1021-1024. Line 38: MA 2071 (MA 2000+). Line 39: MA 2621 (Probability). Line 40: MA 2611 (Statistics).",
+    "crossListNote": "CS 2022 and MA 2201 are cross-listed. Student took CS 2022 only (not MA 2201). CS 2022 used in CS section. No double-registration issue here.",
+    "scienceAllocation": "5 science courses for 5 science lines. Lines 41-43 (BB/CH/GE/PH): PH 1110, PH 1120, PH 1130. Line 44: CH 1010 (also BB/CH/GE/PH eligible, but PH got 3 for depth). Line 45: ECE 2010 (Note 4 discipline).",
+    "huaAllocation": "6 HUA courses: EN 1001 (depth), EN 1002 (depth), EN 2201 (depth), WR 1010 (breadth), PY 1731 (elective), HU 3900 (Inquiry Seminar). Depth grouping: literature and writing/rhetoric (EN, WR). 3 EN courses in that grouping. Breadth: WR 1010 is in the SAME grouping (literature-writing includes EN and WR). So breadth needs PY 1731 which is in philosophy-religion grouping — that's outside the depth grouping.",
+    "socialImplications": "CS 3043 fills line 25 and counts as CS. GOV 2314 also satisfies the Social Implications check but does NOT count as CS units. Social Science lines 8-9 filled by PSY 1400 and GOV 1100 already. Free elective pool full with 9 credits (CS 2103, CS 3733, ECON 1110). GOV 2314 is Extra.",
+    "freeElectives": "Need 9 credits (3 lines). CS 2103 (3 credits, only-one-of surplus) + CS 3733 (3 credits, surplus CS) + ECON 1110 (3 credits). Total: 9 credits = 3 lines.",
+    "extraCourses": "GOV 2314 satisfies the Social Implications check but is surplus: CS 3043 already fills line 25, Social Science lines filled, free elective pool full."
+  },
+  "expectedLines": {
+    "1": { "course": "EN 1001", "state": "done" },
+    "2": { "course": "EN 1002", "state": "done" },
+    "3": { "course": "EN 2201", "state": "done" },
+    "4": { "course": "PY 1731", "state": "done" },
+    "5": { "course": "WR 1010", "state": "done" },
+    "6": { "course": "HU 3900", "state": "done" },
+    "7": {
+      "state": "done",
+      "subSlots": [
+        { "course": "WPE 1001", "state": "done" },
+        { "course": "WPE 1002", "state": "done" },
+        { "course": "WPE 1003", "state": "done" },
+        { "course": "WPE 1004", "state": "done" }
+      ]
+    },
+    "8": { "course": "PSY 1400", "state": "done" },
+    "9": { "course": "GOV 1100", "state": "done" },
+    "10": { "course": null, "state": "done", "$note": "Filled by manual item iqp-1" },
+    "11": { "course": null, "state": "done", "$note": "Filled by manual item iqp-2" },
+    "12": { "course": null, "state": "done", "$note": "Filled by manual item iqp-3" },
+    "13": { "course": "CS 2103", "state": "done", "$note": "Only-one-of surplus: CS 2102 used for CS, CS 2103 goes to free electives" },
+    "14": { "course": "CS 3733", "state": "done", "$note": "16th CS course is surplus, goes to free electives" },
+    "15": { "course": "ECON 1110", "state": "done" },
+    "16": { "course": "CS 1101", "state": "done" },
+    "17": { "course": "CS 2022", "state": "done" },
+    "18": { "course": "CS 2102", "state": "done" },
+    "19": { "course": "CS 2223", "state": "done" },
+    "20": { "course": "CS 2303", "state": "done" },
+    "21": { "course": "CS 3431", "state": "done" },
+    "22": { "course": "CS 3013", "state": "done" },
+    "23": { "course": "CS 3133", "state": "done" },
+    "24": { "course": "CS 3041", "state": "done" },
+    "25": { "course": "CS 3043", "state": "done" },
+    "26": { "course": "CS 4120", "state": "done" },
+    "27": { "course": "CS 4233", "state": "done" },
+    "28": { "course": "CS 4513", "state": "done" },
+    "29": { "course": "CS 4516", "state": "done" },
+    "30": { "course": "CS 4341", "state": "done" },
+    "31": { "course": null, "state": "done", "$note": "Filled by manual item mqp-1" },
+    "32": { "course": null, "state": "done", "$note": "Filled by manual item mqp-2" },
+    "33": { "course": null, "state": "done", "$note": "Filled by manual item mqp-3" },
+    "34": { "course": "MA 1021", "state": "done" },
+    "35": { "course": "MA 1022", "state": "done" },
+    "36": { "course": "MA 1023", "state": "done" },
+    "37": { "course": "MA 1024", "state": "done" },
+    "38": { "course": "MA 2071", "state": "done" },
+    "39": { "course": "MA 2621", "state": "done" },
+    "40": { "course": "MA 2611", "state": "done" },
+    "41": { "course": "PH 1110", "state": "done" },
+    "42": { "course": "PH 1120", "state": "done" },
+    "43": { "course": "PH 1130", "state": "done" },
+    "44": { "course": "CH 1010", "state": "done" },
+    "45": { "course": "ECE 2010", "state": "done" }
+  },
+  "expectedSections": {
+    "hua": { "done": 6, "planned": 0, "total": 6 },
+    "wpe": { "done": 4, "planned": 0, "total": 4, "$note": "sub-slots" },
+    "social-science": { "done": 2, "planned": 0, "total": 2 },
+    "iqp": { "done": 3, "planned": 0, "total": 3 },
+    "free-electives": { "done": 3, "planned": 0, "total": 3 },
+    "cs": { "done": 18, "planned": 0, "total": 18, "$note": "15 course lines + 3 MQP manual" },
+    "math": { "done": 7, "planned": 0, "total": 7 },
+    "science": { "done": 5, "planned": 0, "total": 5 }
+  },
+  "expectedChecks": {
+    "systems": { "state": "met", "courses": ["CS 3013", "CS 4513", "CS 4516"] },
+    "theory": { "state": "met", "courses": ["CS 3133", "CS 4120"] },
+    "design": { "state": "met", "courses": ["CS 3041", "CS 3431", "CS 3733", "CS 4233"] },
+    "social": {
+      "state": "met",
+      "courses": ["CS 3043", "GOV 2314"],
+      "$note": "CS 3043 counts as CS. GOV 2314 satisfies check but not CS units."
+    },
+    "science-depth": {
+      "state": "met",
+      "courses": ["PH 1110", "PH 1120", "PH 1130"],
+      "$note": "3 from PH (BB/CH/GE/PH), 2+ from one discipline (PH)"
+    },
+    "hua-depth": {
+      "state": "met",
+      "courses": ["EN 1001", "EN 1002", "EN 2201"],
+      "$note": "3 courses in literature-writing grouping (EN). Confirmed by manual item."
+    },
+    "hua-breadth": {
+      "state": "met",
+      "courses": ["PY 1731"],
+      "$note": "PY 1731 is in philosophy-religion, outside the literature-writing depth grouping"
+    },
+    "hua-ap-ib-limit": {
+      "state": "met",
+      "$note": "No AP/IB courses in this complete history"
+    },
+    "residency": {
+      "state": "check-yourself",
+      "$note": "Cannot verify from course data alone"
+    },
+    "ma-1000-limit": {
+      "state": "met",
+      "$note": "4 MA 1000-level courses (MA 1021-1024), at maximum of 4"
+    },
+    "grad-equivalence": {
+      "state": "check-yourself",
+      "$note": "No graduate courses present"
+    }
+  },
+  "expectedFreeElectivePool": {
+    "courses": [
+      { "code": "CS 2103", "credits": 3, "$note": "Only-one-of surplus (CS 2102 used)" },
+      { "code": "CS 3733", "credits": 3, "$note": "Surplus CS beyond 15 course lines" },
+      { "code": "ECON 1110", "credits": 3 }
+    ],
+    "totalCredits": 9
+  },
+  "expectedExtra": [
+    { "code": "GOV 2314", "$note": "Satisfies Social Implications check but not a CS unit; Social Science lines already filled; free elective pool already full" }
+  ]
+}

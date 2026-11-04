@@ -267,6 +267,7 @@
   /* Below 360 px the phone top bar has room for the logo but not the wordmark. */
   --breakpoint-narrow: 22.5rem;
   --breakpoint-wide: 68.75rem;
+  --breakpoint-desk: 80rem;
 
   /*
     The room inside a calendar block for its code wrapped, a short code on one line, any code on one line, those
@@ -300,6 +301,7 @@
   --size-phone-axis: 2.125rem;
   --size-phone-day-header: 2.125rem;
   --size-phone-bar: 4rem;
+  --size-phone-tabs: 3.5625rem;
   --size-sidebar: 16.5rem;
   --size-details: 16.75rem;
   --size-header: 4.75rem;

@@ -290,6 +290,35 @@ degree-tile, chart and focus tokens. Add dark overrides there, keep light values
 as defaults and use light tokens for print. No token consolidation is needed
 before degree restoration or theme work starts.
 
+## My degree
+
+`/degree` is available to invited testers through `/#enable-degree`. The
+`goatplan:degree:v1` browser flag controls both navigation and the page gate.
+Without it, the page redirects to the planner and search shows no degree badges.
+Restoring this feature does not open the public major launch.
+
+`lib/degree` owns history and audit state separately from the planner store.
+History stays under `goatplan:history:v1`, including courses, manual
+confirmations and pins. Existing histories and exported files keep the same
+format. Import validates the file before offering a merge or replacement.
+Failed storage writes keep changes in the open page and offer an export.
+
+`DegreeSource` sends completed and in-progress history plus the open term's
+draft courses through `EngineClient.audit`. Audits use the same worker as
+schedules but are not superseded by solves or term changes. The engine restores
+the CS Class of 2030 rules and shared native/WASM fixtures. Other majors and
+sheet selection remain separate work.
+
+`CourseGaps` supplies search badges and the Take in Term card through candidate
+audits. Search keeps the current inline results and phone screen. No gap filter
+or background-hint UI is enabled. Course display, history, pins and saved-plan
+work remain in TypeScript.
+
+The sheet retains the latest pre-deletion tiles, stacked empty lines, pins,
+checks and confirmation panels. Wide screens show insights beside it; tablets
+can scroll through the insight cards; phones use folded sections and drawers.
+The List view provides the same requirements without the tile layout.
+
 ## Phone layout
 
 Phone is in scope at 375 px. The breakpoint is `--breakpoint-tablet: 40rem`

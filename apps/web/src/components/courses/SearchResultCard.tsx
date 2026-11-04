@@ -2,6 +2,7 @@
 
 import { Check, Plus } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 import type { Course } from "@/lib/data/types";
 import type { CourseFit } from "./courseFit";
 import { formatCredits } from "./courseSummary";
@@ -11,11 +12,12 @@ type SearchResultCardProps = {
   course: Course;
   fit: CourseFit | null;
   added: boolean;
+  countsToward?: readonly string[];
   onAdd(code: string): void;
 };
 
 /** A course in the search results: code, Add, title, credits and fit badge. */
-export function SearchResultCard({ course, fit, added, onAdd }: SearchResultCardProps) {
+export function SearchResultCard({ course, fit, added, countsToward, onAdd }: SearchResultCardProps) {
   return (
     <li className="flex flex-col gap-4 rounded-control border border-line p-9">
       <div className="flex items-center justify-between gap-8">
@@ -37,6 +39,11 @@ export function SearchResultCard({ course, fit, added, onAdd }: SearchResultCard
       {fit && (
         <div className="mt-5 flex">
           <FitBadge fit={fit} />
+        </div>
+      )}
+      {countsToward && (
+        <div className="flex flex-wrap gap-4">
+          {countsToward.map((name) => <Badge key={name} tone="accent" className="whitespace-normal!">Counts toward: {name}</Badge>)}
         </div>
       )}
     </li>

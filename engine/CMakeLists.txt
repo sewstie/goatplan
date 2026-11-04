@@ -19,6 +19,7 @@ option(GOATPLAN_BUILD_TESTS "Build GoogleTest unit tests (native builds only)" O
 
 # --- Core library: the scheduling engine -----------------------------------
 add_library(goatplan_core
+    src/audit.cpp
     src/diagnose.cpp
     src/engine.cpp
     src/filters.cpp
@@ -30,6 +31,11 @@ add_library(goatplan_core
     src/week_mask.cpp
 )
 target_include_directories(goatplan_core PUBLIC include)
+set(GOATPLAN_REQUIREMENTS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/../apps/web/src/lib/degree/cs-2030.json")
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${GOATPLAN_REQUIREMENTS_FILE}")
+file(READ "${GOATPLAN_REQUIREMENTS_FILE}" GOATPLAN_REQUIREMENTS_JSON)
+configure_file(src/audit_requirements.hpp.in generated/audit_requirements.hpp @ONLY)
+target_include_directories(goatplan_core PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/generated")
 if(MSVC)
     target_compile_options(goatplan_core PRIVATE /W4)
 else()
@@ -73,6 +79,7 @@ if(GOATPLAN_BUILD_TESTS AND NOT EMSCRIPTEN)
 
     enable_testing()
     add_executable(goatplan_tests
+        tests/audit_test.cpp
         tests/diagnose_test.cpp
         tests/engine_api_test.cpp
         tests/filters_test.cpp
@@ -93,6 +100,7 @@ if(GOATPLAN_BUILD_TESTS AND NOT EMSCRIPTEN)
     cmake_path(SET GOATPLAN_FIXTURES NORMALIZE "${CMAKE_CURRENT_SOURCE_DIR}/../data/fixtures")
     target_compile_definitions(goatplan_tests PRIVATE
         GOATPLAN_FIXTURES="${GOATPLAN_FIXTURES}"
+        GOATPLAN_AUDIT_CASES="${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/audit.json"
         GOATPLAN_GOLDEN_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/golden")
 
     include(GoogleTest)
