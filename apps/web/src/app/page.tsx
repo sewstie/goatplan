@@ -22,7 +22,15 @@ export default function PlannerPage() {
           </div>
         }
         barActions={<PlannerBarActions />}
-        toolbar={<><ScheduleSummary /><PreferencesBar /><SortSelect /></>}
+        toolbar={
+          <>
+            <ScheduleSummary />
+            <div className="flex items-start gap-8">
+              <div className="min-w-0 flex-1"><PreferencesBar /></div>
+              <div className="flex h-44 shrink-0 items-center empty:hidden"><SortSelect className="shrink-0" /></div>
+            </div>
+          </>
+        }
         banner={<><PlannerViewSync /><FirstPlanTutorial /><ScheduleBanner /></>}
         schedule={<ScheduleView />}
       />
