@@ -43,7 +43,7 @@ function Row({ section }: { section: SheetSection }) {
               aria-valuetext={`${done} done, ${planned} planned, ${toGo} to go`}
               className="flex h-6 overflow-hidden rounded-pill bg-track"
             >
-              <span className="bg-accent" style={{ width: share(done, total) }} />
+              <span className="bg-chart-done" style={{ width: share(done, total) }} />
               <span className="bg-chart-planned" style={{ width: share(planned, total) }} />
             </span>
             <span className="block pt-6 text-caption leading-14-4 text-ink-muted">{done} done · {planned} planned · {toGo} to go</span>

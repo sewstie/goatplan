@@ -39,9 +39,9 @@ introduced by the theme controls.
 
 ## Release gate
 
-My degree is already available to invited testers. Ticket 12 must finish its
-degree controls, tokens and review before both features are released
-together. The user assigned degree files to the other session. Ticket 11
-does not open degree access or bypass that gate. The final combined checkout
-needs frontend and relevant browser checks after integration. Workday
-verification of the five-major launch is a separate release gate.
+Ticket 12 completes the degree controls, tokens and UI review required to
+expose degree support and Dark together. The combined checkout passed lint,
+the production build, 1,660 Vitest tests and 73 degree, history, badge and
+global theme browser checks. See [degree theme checks](degree-dark-theme.md).
+My degree remains available to invited testers. Workday verification of the
+five-major launch is a separate release gate. No public deployment was made.

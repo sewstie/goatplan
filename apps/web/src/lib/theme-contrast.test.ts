@@ -86,3 +86,26 @@ test("share-link fields and feedback stay readable in Dark", () => {
   }
   expect(contrast(dark, "on-dark", "toast-dark")).toBeGreaterThanOrEqual(4.5);
 });
+
+test("degree tiles, history fields and chart states remain readable in Dark", () => {
+  for (const surface of ["tile-done", "tile-empty", "tile-check", "card-field", "filter-surface"]) {
+    for (const ink of ["ink", "ink-muted", "ink-soft", "ink-faint", "accent"]) {
+      expect(contrast(dark, ink, surface), `${ink} on ${surface}`).toBeGreaterThanOrEqual(4.5);
+    }
+  }
+  expect(contrast(dark, "notice-warning-ink", "tile-check")).toBeGreaterThanOrEqual(4.5);
+  for (const [mark, surface] of [
+    ["tile-empty-line", "tile-empty"], ["tile-check-line", "tile-check"],
+    ["tile-planned-line", "surface"], ["tile-tick-line", "surface"],
+    ["accent", "tile-done"], ["accent", "tile-check"],
+    ["chart-planned", "surface"], ["chart-none", "surface"],
+    ["chart-grid", "surface"], ["chart-done", "surface"],
+  ]) {
+    expect(contrast(dark, mark, surface), `${mark} on ${surface}`).toBeGreaterThanOrEqual(3);
+  }
+});
+
+test("completed, planned and empty degree progress are distinguishable in Dark", () => {
+  expect(contrast(dark, "chart-planned", "track")).toBeGreaterThanOrEqual(3);
+  expect(contrast(dark, "chart-done", "chart-planned")).toBeGreaterThanOrEqual(3);
+});
