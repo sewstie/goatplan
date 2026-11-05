@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/Button";
+import { CourseBackgroundMap } from "@/components/courseMap/CourseBackgroundMap";
 import { getDegreeSource, useDegree } from "@/lib/degree";
 import { usePlanner } from "@/lib/store";
 import { DegreePanels } from "./DegreePanels";
@@ -22,6 +24,7 @@ export function DegreeContent() {
   const screen = useDegreeUi((state) => state.screen);
   const termId = usePlanner((state) => state.termId);
   const planned = usePlanner((state) => state.courses);
+  const [courseMap, setCourseMap] = useState(false);
 
   useEffect(() => {
     if (termId) getDegreeSource().planChanged();
@@ -36,8 +39,9 @@ export function DegreeContent() {
       {screen === "confirmations" && <YourConfirmations history={degree.history} />}
       {screen === "main" && (
         <div className="flex flex-col gap-18 tablet:gap-12">
-          <DegreeTitle hasCourses={degree.history.courses.length > 0} selectedSheetId={degree.selectedSheetId} />
-          <DegreeMain degree={degree} view={view} />
+          <DegreeTitle hasCourses={degree.history.courses.length > 0} selectedSheetId={degree.selectedSheetId} showSheetControls={!(courseMap && degree.selectedSheetId === "cs-2030")} />
+          {degree.selectedSheetId === "cs-2030" && <div><Button variant="secondary" aria-pressed={courseMap} onClick={() => setCourseMap(!courseMap)}>{courseMap ? "Back to degree" : "Course map"}</Button></div>}
+          {courseMap && degree.selectedSheetId === "cs-2030" ? <CourseBackgroundMap /> : <DegreeMain degree={degree} view={view} />}
         </div>
       )}
       <DegreePanels degree={degree} view={view} />

@@ -15,7 +15,7 @@ const VIEWS = [
   { value: "list", label: "List", icon: <ListDashes aria-hidden /> },
 ] as const;
 
-export function DegreeTitle({ hasCourses, selectedSheetId }: { hasCourses: boolean; selectedSheetId: string | null }) {
+export function DegreeTitle({ hasCourses, selectedSheetId, showSheetControls = true }: { hasCourses: boolean; selectedSheetId: string | null; showSheetControls?: boolean }) {
   const view = useDegreeUi((state) => state.view);
   const set = useDegreeUi((state) => state.set);
   const open = useDegreeUi((state) => state.open);
@@ -36,7 +36,7 @@ export function DegreeTitle({ hasCourses, selectedSheetId }: { hasCourses: boole
         </div>
         {sheet?.status === "beta" && <p className="text-8-5 leading-17 text-ink-muted">Not yet checked by {"AEFHILMNORSX".includes(sheet.abbreviation[0]) ? "an" : "a"} {sheet.abbreviation} student. <a className="rounded-badge underline hover:text-ink" href="https://github.com/sewstie/goatplan/issues/new?title=Degree%20sheet%20feedback" target="_blank" rel="noreferrer">Tell us if something looks wrong.</a></p>}
       </div>
-      <div className="flex items-center justify-between gap-10 tablet:justify-end">
+      {showSheetControls && <div className="flex items-center justify-between gap-10 tablet:justify-end">
         {!phone && <div className="hidden tablet:block"><TermPicker inline /></div>}
         <SegmentedSwitch label="Sheet or list" options={VIEWS} value={view} onChange={(value) => set({ view: value })} />
         <div className="flex items-center gap-10">
@@ -47,7 +47,7 @@ export function DegreeTitle({ hasCourses, selectedSheetId }: { hasCourses: boole
             <DotsThree aria-hidden weight="bold" className="size-20" />
           </button>
         </div>
-      </div>
+      </div>}
     </header>
   );
 }
