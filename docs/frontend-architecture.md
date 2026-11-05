@@ -296,9 +296,14 @@ The root layout applies `goatplan:theme:v1` before paint. Light is the default;
 only a saved `dark` value enables Dark. Storage failures allow changes for the
 current page. Dark tokens only apply to screen media, so print uses Light.
 
-Ticket 10 covers the planner palette and controls, including shared phone
-placement. Ticket 11 still owns the remaining surfaces and public release.
-Ticket 12 owns degree theme integration.
+Saved plans and registration fill the same appearance slots. The phone
+registration header uses `BarMoreMenu` with `ThemeSwitch`.
+
+Ticket 10 covers the planner palette and controls. Ticket 11 verifies the
+remaining current surfaces and theme-independent print, sharing and exports.
+Ticket 12 owns degree theme integration. Since degree is available to invited
+testers, that integration gates the combined theme release. See
+[dark theme release checks](dark-theme-release.md) for validation evidence.
 
 ## My degree
 
