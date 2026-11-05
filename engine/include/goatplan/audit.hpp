@@ -1,10 +1,19 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <string_view>
 
 namespace goatplan {
 
-std::string handleAudit(std::string_view requestJson);
+class AuditEngine {
+public:
+    AuditEngine();
+    std::string handle(std::string_view requestJson) const;
+
+private:
+    struct Impl;
+    std::shared_ptr<Impl> impl_;
+};
 
 }

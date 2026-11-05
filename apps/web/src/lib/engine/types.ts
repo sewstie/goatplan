@@ -1,6 +1,7 @@
 // The engine contract, copied from docs/engine-api.md (version 1). Change that page first, then this file.
 
 import type { Day } from "@/lib/data/types";
+import type { TrackingSheet } from "@/lib/degree/sheets";
 
 export const ENGINE_API_VERSION = 1;
 
@@ -179,6 +180,7 @@ export interface AuditCourse {
 export interface AuditRequest {
   version: typeof ENGINE_API_VERSION;
   requirements: string;
+  sheet?: TrackingSheet | null;
   taken?: AuditCourse[] | null;
   planned?: AuditCourse[] | null;
   manual?: string[] | null;

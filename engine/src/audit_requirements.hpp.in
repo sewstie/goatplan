@@ -1,9 +1,0 @@
-#pragma once
-
-#include <string_view>
-
-namespace goatplan {
-
-inline constexpr std::string_view kAuditRequirements = R"requirements(@GOATPLAN_REQUIREMENTS_JSON@)requirements";
-
-}

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Course } from "@/lib/data/types";
 import { fitsLine, type DegreeSource } from "@/lib/degree";
-import requirements from "@/lib/degree/cs-2030.json";
+import requirements from "@/lib/degree/sheets/cs-2030.json";
 import { createDegreeSource } from "@/lib/degree/degreeSource";
 import { HISTORY_KEY, type HistoryCourse } from "@/lib/degree/history";
 import type { AuditRequest, AuditResponse, AuditSuccess } from "@/lib/engine";

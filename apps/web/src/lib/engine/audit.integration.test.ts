@@ -7,6 +7,7 @@ import { createEngineHost, type GoatplanModule } from "./engineHost";
 import type { AuditRequest, AuditSuccess } from "./types";
 import type { TermFile, TermIndex } from "@/lib/data/types";
 import { buildAuditRequest, type HistoryCourse } from "@/lib/degree/history";
+import { loadSheet } from "@/lib/degree/sheets";
 
 const webRoot = fileURLToPath(new URL("../../../", import.meta.url));
 const cases = JSON.parse(readFileSync(`${webRoot}../../engine/tests/fixtures/audit.json`, "utf8")) as {
@@ -32,6 +33,11 @@ interface HandWrittenHistory {
   expectedExtra: { code: string }[];
 }
 
+const csSheet = await loadSheet("cs-2030");
+for (const item of cases) {
+  if (item.request.requirements === "cs-2030") item.request.sheet = csSheet;
+}
+
 const readHistory = (name: string) =>
   JSON.parse(readFileSync(`${webRoot}../../data/fixtures/${name}`, "utf8")) as HandWrittenHistory;
 
@@ -48,6 +54,7 @@ function historyRequest(history: HandWrittenHistory): AuditRequest {
   return {
     version: 1,
     requirements: "cs-2030",
+    sheet: csSheet,
     taken: history.takenCourses.map(courseOnly),
     planned: history.plannedCourses.map(courseOnly),
     manual: history.confirmedManualItems,
@@ -102,6 +109,39 @@ function setup() {
 }
 
 describe("audit through WebAssembly and EngineClient", () => {
+  it("checks a sheet's minimum course count through the real audit contract", async () => {
+    const { client } = setup();
+    try {
+      const sheet = structuredClone(await loadSheet("cs-2030"));
+      sheet.checks.push({ id: "two-sciences", name: "Two sciences", type: "minCourses", section: "science", minCourses: 2 });
+      const request: AuditRequest = { version: 1, requirements: sheet.id, sheet, taken: [{ code: "PH 1110", credits: 3 }] };
+      const before = await client.audit(request);
+      expect(before.ok && before.checks.at(-1)?.state).toBe("not-met");
+      const after = await client.audit({ ...request, planned: [{ code: "PH 1120", credits: 3 }] });
+      expect(after.ok && after.checks.at(-1)?.state).toBe("planned");
+    } finally {
+      client.dispose();
+    }
+  });
+
+  it("uses loaded generic rules and keeps each sheet's cached answers", async () => {
+    const { client } = setup();
+    try {
+      const first = structuredClone(await loadSheet("cs-2030"));
+      const second = structuredClone(first);
+      second.id = "another-2030";
+      second.lines[15].filter = { type: "courses", courses: ["DS 1000"] };
+      const request: AuditRequest = { version: 1, requirements: first.id, sheet: first, taken: [{ code: "DS 1000", credits: 3 }] };
+      const before = await client.audit(request);
+      const after = await client.audit({ ...request, requirements: second.id, sheet: second });
+      expect(after.ok).toBe(true);
+      if (after.ok) expect(after.sections[5].lines[0]).toMatchObject({ course: "DS 1000", state: "done" });
+      expect(await client.audit({ ...request, sheet: undefined })).toEqual(before);
+    } finally {
+      client.dispose();
+    }
+  });
+
   it("passes the native contract cases without fetching a term and repeats identical answers", async () => {
     const { client, fetchTermText } = setup();
     try {
@@ -270,7 +310,8 @@ describe("audit through WebAssembly and EngineClient", () => {
       const termId = index.terms[0].id;
       const term = JSON.parse(readFileSync(`${webRoot}public/data/${termId}.json`, "utf8")) as TermFile;
       expect((await client.loadTerm(termId)).ok).toBe(true);
-      const request: AuditRequest = { version: 1, requirements: "cs-2030", taken: [{ code: "CS 210X", credits: 3 }] };
+      const request: AuditRequest = { version: 1, requirements: "cs-2030",
+    sheet: csSheet, taken: [{ code: "CS 210X", credits: 3 }] };
       const solveRequest = { version: 1 as const, courses: [term.courses[0].code], limits: { maxSchedules: 1 } };
       const [audit, solve, repeated] = await Promise.all([
         client.audit(request), client.solve(solveRequest), client.audit(request),

@@ -440,7 +440,7 @@ namespace goatplan {
             try {
                 const auto peek = json::parse(requestJson, nullptr, false);
                 if (peek.is_object() && peek.contains("requirements")) {
-                    return handleAudit(requestJson);
+                    return audit_.handle(requestJson);
                 }
                 if (!term_) {
                     throw RequestError{"noTerm", "No term is loaded yet", nullptr};

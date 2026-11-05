@@ -1,6 +1,6 @@
 import type { AuditCheck, AuditLine, AuditSection, AuditSuccess } from "@/lib/engine/types";
 import type { LinePin } from "./history";
-import { AREA_CHECK_IDS, areaCourses, crossListed, CS_LINES, FREE_ELECTIVE_LINES, fitsLine, isCsLine, onlyOneRivals, WPE_LINE } from "./rules";
+import { AREA_CHECK_IDS, areaCourses, crossListed, MAJOR_LINES, FREE_ELECTIVE_LINES, fitsLine, isMajorLine, onlyOneRivals, WPE_LINE } from "./rules";
 
 export interface PinCourse {
   credits: number;
@@ -36,7 +36,7 @@ function checksAfter(checks: readonly AuditCheck[], lines: ReadonlyMap<number, A
   return checks.map((check) => {
     if (!AREA_CHECK_IDS.includes(check.id) || check.state === "check") return check;
     const area = areaCourses(check.id);
-    const onCs = CS_LINES.flatMap((id) => {
+    const onCs = MAJOR_LINES.flatMap((id) => {
       const course = lines.get(id)?.course;
       return course && crossListed(course).some((code) => area.includes(code)) ? [course] : [];
     });
@@ -78,9 +78,9 @@ export function applyPins(result: AuditSuccess, pins: readonly LinePin[], course
   }
 
   function clashesOnCs(code: string, line: number) {
-    if (!isCsLine(line)) return false;
+    if (!isMajorLine(line)) return false;
     const rivals = onlyOneRivals(code);
-    return CS_LINES.some((id) => id !== line && lines.get(id)?.course && rivals.includes(lines.get(id)!.course!));
+    return MAJOR_LINES.some((id) => id !== line && lines.get(id)?.course && rivals.includes(lines.get(id)!.course!));
   }
 
   const canTake = (code: string, id: number) => fitsLine(code, size(code), id) && !clashesOnCs(code, id);

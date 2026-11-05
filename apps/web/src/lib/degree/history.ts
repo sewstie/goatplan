@@ -1,7 +1,8 @@
 import { normalizeCourseCode } from "@/components/courses/courseCode";
 import type { Course } from "@/lib/data/types";
 import { ENGINE_API_VERSION, type AuditCourse, type AuditRequest } from "@/lib/engine/types";
-import { REQUIREMENTS_ID } from "./requirements";
+import { getRequirements } from "./requirements";
+import type { TrackingSheet } from "./sheets";
 
 export const HISTORY_KEY = "goatplan:history:v1";
 const HISTORY_VERSION = 1;
@@ -199,11 +200,12 @@ export function writeHistory(storage: HistoryStorage | null, history: DegreeHist
 const auditCourse = ({ code, credits, apIb }: HistoryCourse): AuditCourse =>
   apIb ? { code, credits, apIb } : { code, credits };
 
-export function buildAuditRequest({ courses, manual }: DegreeHistory, plan: readonly AuditCourse[] = []): AuditRequest {
+export function buildAuditRequest({ courses, manual }: DegreeHistory, plan: readonly AuditCourse[] = [], sheet: TrackingSheet = getRequirements()): AuditRequest {
   const known = new Set(courses.map((course) => course.code));
   return {
     version: ENGINE_API_VERSION,
-    requirements: REQUIREMENTS_ID,
+    requirements: sheet.id,
+    sheet,
     taken: courses.filter((course) => !course.inProgress).map(auditCourse),
     planned: [...courses.filter((course) => course.inProgress).map(auditCourse), ...plan.filter((course) => !known.has(course.code))],
     manual,
