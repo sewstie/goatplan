@@ -4,6 +4,7 @@ import {
   browserHistoryStorage,
   buildAuditRequest,
   HISTORY_KEY,
+  keepSheetState,
   parseCourse,
   readHistory,
   serializeHistory,
@@ -15,8 +16,8 @@ import {
   type StoredHistory,
 } from "./history";
 import { browserOpenPlan, isPlanKey, type OpenPlan } from "./openPlan";
-import { DEFAULT_SHEET_ID, type TrackingSheet } from "./sheets";
-import { loadRequirements } from "./requirements";
+import { DEFAULT_SHEET_ID, loadSheet, type TrackingSheet } from "./sheets";
+import { activateRequirements } from "./requirements";
 
 export const AUDIT_DELAY_MS = 200;
 
@@ -28,6 +29,7 @@ export interface AuditState {
 }
 
 export interface DegreeSnapshot {
+  selectedSheetId: string | null;
   sheet: TrackingSheet | null;
   history: DegreeHistory;
   damaged: boolean;
@@ -48,6 +50,7 @@ export type CourseChanges = Partial<Pick<HistoryCourse, "credits" | "term" | "in
 export type EditResult = "saved" | "invalid" | "unsaved";
 
 export interface DegreeSource {
+  selectSheet(id: string): boolean;
   subscribe(listener: () => void): () => void;
   getSnapshot(): DegreeSnapshot;
   addCourse(course: HistoryCourse): AddResult;
@@ -71,11 +74,13 @@ interface DegreeSourceDeps {
   engine: AuditEngine;
   plan?: OpenPlan;
   sheetId?: string;
+  loadSheet?: (id: string) => Promise<TrackingSheet>;
+  requireSelection?: boolean;
 }
 
 const NO_PLAN: OpenPlan = { read: async () => [], signature: () => "" };
 
-export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId = DEFAULT_SHEET_ID }: DegreeSourceDeps): DegreeSource {
+export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId = DEFAULT_SHEET_ID, loadSheet: readSheet = loadSheet, requireSelection = false }: DegreeSourceDeps): DegreeSource {
   const listeners = new Set<() => void>();
   let stored: StoredHistory | null = null;
   let loadedSheet: TrackingSheet | null = null;
@@ -105,6 +110,17 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
     timer = null;
   }
 
+  function selection(): string | null {
+    const history = current().history;
+    if (history.sheetId) return history.sheetId;
+    try {
+      const saved = getStorage()?.getItem(HISTORY_KEY);
+      return session || saved != null ? sheetId : null;
+    } catch {
+      return session ? sheetId : null;
+    }
+  }
+
   function startTimer() {
     stopTimer();
     timer = setTimeout(() => void runAudit(), AUDIT_DELAY_MS);
@@ -112,6 +128,7 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
 
   async function runAudit() {
     timer = null;
+    if (requireSelection && !selection()) return;
     auditDue = false;
     const asked = ++latest;
     const signature = plan.signature();
@@ -119,8 +136,9 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
     let nextPlan = planCourses;
     try {
       nextPlan = await plan.read();
-      const sheet = await loadRequirements(sheetId);
+      const sheet = await readSheet(current().history.sheetId ?? sheetId);
       if (asked !== latest) return;
+      activateRequirements(sheet);
       loadedSheet = sheet;
       const response = await engine.audit(buildAuditRequest(current().history, nextPlan, sheet));
       if (response.ok) next = { status: "ready", result: response };
@@ -144,6 +162,10 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
 
   function historyChanged() {
     stored = null;
+    if (loadedSheet && loadedSheet.id !== (current().history.sheetId ?? sheetId)) {
+      loadedSheet = null;
+      audit = { status: "waiting", result: null };
+    }
     auditAgain();
   }
 
@@ -157,6 +179,7 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
   }
 
   function write(history: DegreeHistory): boolean {
+    history = keepSheetState(history);
     const kept = writeHistory(getStorage(), history);
     session = kept ? null : history;
     historyChanged();
@@ -172,6 +195,15 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
   }
 
   return {
+    selectSheet(id) {
+      const history = keepSheetState(working());
+      const previousId = history.sheetId ?? sheetId;
+      const sheets = { ...history.sheets, [previousId]: { manual: history.manual, ...(history.pins?.length ? { pins: history.pins } : {}) } };
+      const state = sheets[id] ?? { manual: [] };
+      loadedSheet = null;
+      audit = { status: "waiting", result: null };
+      return write({ courses: history.courses, sheetId: id, sheets, ...state });
+    },
     subscribe(listener) {
       if (listeners.size === 0) {
         if (typeof window !== "undefined") window.addEventListener("storage", onStorage);
@@ -190,7 +222,7 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
     getSnapshot() {
       if (!snapshot) {
         const { history, damaged } = current();
-        snapshot = { sheet: loadedSheet, history, damaged, audit, planCourses, unsaved: session !== null };
+        snapshot = { selectedSheetId: selection(), sheet: loadedSheet, history, damaged, audit, planCourses, unsaved: session !== null };
       }
       return snapshot;
     },
@@ -221,7 +253,11 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
     },
     removeCourse(code) {
       const history = working();
-      return write(withPins({ ...history, courses: history.courses.filter((item) => item.code !== code) }, pinsOf(history).filter((pin) => pin.code !== code)));
+      const sheets = history.sheets ? Object.fromEntries(Object.entries(history.sheets).map(([id, state]) => {
+        const pins = (state.pins ?? []).filter((pin) => pin.code !== code);
+        return [id, { manual: state.manual, ...(pins.length ? { pins } : {}) }];
+      })) : undefined;
+      return write(withPins({ ...history, courses: history.courses.filter((item) => item.code !== code), ...(sheets ? { sheets } : {}) }, pinsOf(history).filter((pin) => pin.code !== code)));
     },
     setManualItem(id, confirmed) {
       const history = working();
@@ -229,7 +265,7 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
       return write({ ...history, manual: confirmed ? [...others, id] : others });
     },
     exportHistory() {
-      return serializeHistory(working());
+      return serializeHistory({ ...working(), sheetId: working().sheetId ?? sheetId });
     },
     replaceHistory(history) {
       return write(history);
@@ -238,6 +274,23 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
       const history = working();
       const courses = new Map(history.courses.map((course) => [course.code, course]));
       for (const course of incoming.courses) if (!courses.has(course.code)) courses.set(course.code, course);
+      if (incoming.sheetId || history.sheetId) {
+        const here = keepSheetState({ ...history, sheetId: history.sheetId ?? sheetId });
+        const there = keepSheetState({ ...incoming, sheetId: incoming.sheetId ?? sheetId });
+        const sheets = { ...here.sheets };
+        for (const [id, state] of Object.entries(there.sheets ?? {})) {
+          const current = sheets[id] ?? { manual: [] };
+          const pins = [...(current.pins ?? [])];
+          for (const pin of state.pins ?? []) if (!pins.some((item) => item.code === pin.code || item.line === pin.line)) pins.push(pin);
+          sheets[id] = { manual: [...new Set([...current.manual, ...state.manual])], ...(pins.length ? { pins } : {}) };
+        }
+        const selectedId = there.sheetId!;
+        if (selectedId !== selection()) {
+          loadedSheet = null;
+          audit = { status: "waiting", result: null };
+        }
+        return write({ courses: [...courses.values()], sheetId: selectedId, sheets, ...sheets[selectedId] });
+      }
       const pins = [...pinsOf(history)];
       for (const pin of pinsOf(incoming)) {
         if (!pins.some((item) => item.code === pin.code || item.line === pin.line)) pins.push(pin);
@@ -275,6 +328,6 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
 let shared: DegreeSource | null = null;
 
 export function getDegreeSource(): DegreeSource {
-  shared ??= createDegreeSource({ getStorage: browserHistoryStorage, engine: getEngineClient(), plan: browserOpenPlan(browserHistoryStorage) });
+  shared ??= createDegreeSource({ getStorage: browserHistoryStorage, engine: getEngineClient(), plan: browserOpenPlan(browserHistoryStorage), requireSelection: true });
   return shared;
 }

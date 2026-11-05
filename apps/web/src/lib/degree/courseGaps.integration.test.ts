@@ -7,7 +7,7 @@ import { createEngineHost, type GoatplanModule } from "@/lib/engine/engineHost";
 import { MemoryPlanStorage } from "@/lib/plans/testing";
 import { createGapSource } from "./courseGaps";
 import { createDegreeSource } from "./degreeSource";
-import { typedCourse } from "./history";
+import { typedCourse, writeHistory } from "./history";
 
 const webRoot = fileURLToPath(new URL("../../../", import.meta.url));
 
@@ -39,6 +39,7 @@ const course = (code: string, credits = 3) =>
 function setup(taken: string[]) {
   const engine = realEngine();
   const storage = new MemoryPlanStorage();
+  writeHistory(storage, { courses: [], manual: [] });
   const degree = createDegreeSource({ getStorage: () => storage, engine });
   for (const code of taken) degree.addCourse(typedCourse(code));
   const gaps = createGapSource({ degree, engine });

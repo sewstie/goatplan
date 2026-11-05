@@ -24,6 +24,11 @@ export function getRequirements(): TrackingSheet {
 
 export async function loadRequirements(id = DEFAULT_SHEET_ID): Promise<TrackingSheet> {
   const sheet = await loadSheet(id);
+  activateRequirements(sheet);
+  return sheet;
+}
+
+export function activateRequirements(sheet: TrackingSheet): void {
   selected = sheet;
   MANUAL_ITEMS = sheet.manualItems;
   SECTIONS = sheet.sections;
@@ -39,5 +44,4 @@ export async function loadRequirements(id = DEFAULT_SHEET_ID): Promise<TrackingS
   const areaSections = new Set(sheet.checks.filter((check) => check.type === "area").map((check) => check.section));
   MAJOR_LINES = sheet.sections.filter((section) => areaSections.has(section.id)).flatMap((section) => section.lines);
   AREA_CHECK_IDS = sheet.checks.filter((check) => check.type === "area").map((check) => check.id);
-  return sheet;
 }

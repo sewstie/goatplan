@@ -11,7 +11,8 @@ export type AnalyticsEvent =
   | "plan_saved"
   | "share_link_created"
   | "ics_exported"
-  | "degree_opened";
+  | "degree_opened"
+  | "degree_major_requested";
 
 /**
  * Sends a named event to Umami analytics.
