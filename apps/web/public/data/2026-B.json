@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-04T16:59:47Z",
+  "generatedAt": "2026-11-05T17:15:33Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -268,7 +268,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course focuses on the methods, procedures and techniques of creating and manipulating images through electronic and digital means. Students will develop an understanding of image alteration. Topics may include color theory, displays, modeling, shading, and visual perception. Recommended background: AR 1100.",
       "sections": [
-        {"id":"AR 1101-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":27,"capacity":24,"waitlist":{"taken":8,"capacity":12},"instructors":["Matthew Steinke"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Salisbury Labs 123 Computer Lab"}]}
+        {"id":"AR 1101-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":26,"capacity":24,"waitlist":{"taken":8,"capacity":12},"instructors":["Matthew Steinke"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Salisbury Labs 123 Computer Lab"}]}
       ],
       "options": [
         ["AR 1101-B01"]
@@ -528,7 +528,7 @@
       "level": "Undergraduate",
       "description": "BB 1004 Human Biology This course is designed for students seeking an introduction to general concepts of human biology, with particular focus on human structure and function. Concepts such as homeostasis, structure/function, and regulatory systems will be introduced. Discussion of current topics related to human health, such as personalized medicine and recent advances in cancer research and autoimmune disease will be integrated throughout the course. This course is intended for non-BBT majors. Students may not receive credit for both BB 1004 and BB 1025. Units: 1/3 Category: Category I Recommended Background: high school biology",
       "sections": [
-        {"id":"BB 1004-B01","code":"B01","type":"lecture","status":"open","enrolled":78,"capacity":80,"waitlist":{"taken":0,"capacity":20},"instructors":["Jill Rulfs"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Unity Hall 400"}]}
+        {"id":"BB 1004-B01","code":"B01","type":"lecture","status":"open","enrolled":77,"capacity":80,"waitlist":{"taken":0,"capacity":20},"instructors":["Jill Rulfs"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Unity Hall 400"}]}
       ],
       "options": [
         ["BB 1004-B01"]
@@ -2060,7 +2060,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course develops in the student an understanding of the nature and importance of problems concerning the efficiency and effectiveness of human interaction with computer-based systems. Topics include the design and evaluation of interactive computer systems, basic psychological considerations of interaction, interactive language design, interactive hardware design, and special input/output techniques. Students will be expected to complete several projects. A project might be a software evaluation, interface development, or an experiment. Recommended background: CS 2102, CS 2103, or CS 2119.",
       "sections": [
-        {"id":"CS 3041-B01","code":"B01","type":"lecture","status":"open","enrolled":35,"capacity":48,"waitlist":{"taken":0,"capacity":5},"instructors":["Erin Solovey"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Unity Hall 405"}]}
+        {"id":"CS 3041-B01","code":"B01","type":"lecture","status":"open","enrolled":34,"capacity":48,"waitlist":{"taken":0,"capacity":5},"instructors":["Erin Solovey"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Unity Hall 405"}]}
       ],
       "options": [
         ["CS 3041-B01"]
@@ -4663,7 +4663,7 @@
       "level": "Undergraduate",
       "description": "Cat II (1/3 units) - This course familiarizes students with the history of tabletop games and board games, current trends in board game design, and the fundamentals in game design through the study of and creation of board games. Students will gain critical thinking skills through the playtest and revision process of designing their own board games, and students will be exposed to the realities of publishing board games and the limits the production process imposes on design. Recommended background: None",
       "sections": [
-        {"id":"IMGD 2500-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":25,"capacity":24,"waitlist":{"taken":4,"capacity":10},"instructors":["Melissa Kagen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Fuller Labs 311"}]}
+        {"id":"IMGD 2500-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":25,"capacity":24,"waitlist":{"taken":3,"capacity":10},"instructors":["Melissa Kagen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Fuller Labs 311"}]}
       ],
       "options": [
         ["IMGD 2500-B01"]
@@ -4677,7 +4677,7 @@
       "level": "Undergraduate",
       "description": "This course will cover basic concepts of probability and data analysis as they apply to the design and analysis of interactive media and games. Students will study appropriate use of probability distributions in the design of interactive experiences, and the use of data analysis methods to understand user behavior in games and other interactive experiences. Topics will include discrete and continuous probability distributions, programming techniques to produce samples from different distributions, descriptive statistics, exploratory data analysis and using existing tools to collect and analyze data from gameplay. This course counts toward the Quantitative Science component of the university-wide Mathematics and Science Requirement for IMGD majors only. Recommended background: High school algebra",
       "sections": [
-        {"id":"IMGD 2905-B01","code":"B01","type":"lecture","status":"open","enrolled":12,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["John Domenico Calvelli"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Recreation Center 412 Class of 1961 Meeting Room 1 / Recreation Center 413 Class of 1961 Meeting Room 2"}]}
+        {"id":"IMGD 2905-B01","code":"B01","type":"lecture","status":"open","enrolled":11,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["John Domenico Calvelli"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Recreation Center 412 Class of 1961 Meeting Room 1 / Recreation Center 413 Class of 1961 Meeting Room 2"}]}
       ],
       "options": [
         ["IMGD 2905-B01"]
@@ -4942,10 +4942,10 @@
       "level": "Undergraduate",
       "description": "Cat. I, This course provides an introduction to differentiation and its applications. Topics covered include: functions and their graphs, limits, continuity, differentiation, linear approximation, chain rule, min/max problems, and applications of derivatives.Recommended background: Algebra, trigonometry and analytic geometry. Although the course will make use of computers, no programming experience is assumed.Students may not receive credit for both MA 1021 and MA 1020.",
       "sections": [
-        {"id":"MA 1021-BD01","code":"BD01","type":"discussion","status":"open","enrolled":22,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Marcel Blais"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":650,"location":"Stratton Hall 205"}]},
+        {"id":"MA 1021-BD01","code":"BD01","type":"discussion","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Marcel Blais"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":650,"location":"Stratton Hall 205"}]},
         {"id":"MA 1021-BD02","code":"BD02","type":"discussion","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Marcel Blais"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":660,"end":710,"location":"Stratton Hall 201"}]},
-        {"id":"MA 1021-BL01","code":"BL01","type":"lecture","status":"open","enrolled":34,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Marcel Blais"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Salisbury Labs 104"}]},
-        {"id":"MA 1021-BX01","code":"BX01","type":"lab","status":"open","enrolled":14,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":830,"location":"Stratton Hall 116 Computer Lab"}]},
+        {"id":"MA 1021-BL01","code":"BL01","type":"lecture","status":"open","enrolled":33,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Marcel Blais"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Salisbury Labs 104"}]},
+        {"id":"MA 1021-BX01","code":"BX01","type":"lab","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":830,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1021-BX02","code":"BX02","type":"lab","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":900,"end":950,"location":"Stratton Hall 116 Computer Lab"}]}
       ],
       "options": [
@@ -6873,7 +6873,7 @@
       "sections": [
         {"id":"MU 1100-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":26,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Mitchell Lutch"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Alden Hall B06 Janet Earle Room"}]},
         {"id":"MU 1100-B02","code":"B02","type":"lecture","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Monica Hatch Moysey"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Alden Hall B06 Janet Earle Room"}]},
-        {"id":"MU 1100-B03","code":"B03","type":"lecture","status":"open","enrolled":19,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Monica Hatch Moysey"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Alden Hall B06 Janet Earle Room"}]}
+        {"id":"MU 1100-B03","code":"B03","type":"lecture","status":"open","enrolled":18,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Monica Hatch Moysey"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Alden Hall B06 Janet Earle Room"}]}
       ],
       "options": [
         ["MU 1100-B01"],
@@ -9343,7 +9343,7 @@
         {"id":"WPE 1601-F32","code":"F32","type":"workshop","status":"closed","enrolled":35,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Lauren Buffone"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Salisbury Labs 402"}]},
         {"id":"WPE 1601-F33","code":"F33","type":"workshop","status":"closed","enrolled":40,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Jillian DiBonaventura"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Higgins Labs 154"}]},
         {"id":"WPE 1601-F34","code":"F34","type":"workshop","title":"Insight Program - Business Connections","status":"open","enrolled":32,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Walter Towner"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Fuller Labs 311"}]},
-        {"id":"WPE 1601-F35","code":"F35","type":"workshop","status":"closed","enrolled":34,"capacity":34,"waitlist":{"taken":0,"capacity":0},"instructors":["Raul Orduna Picon"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Olin Hall 126"}]},
+        {"id":"WPE 1601-F35","code":"F35","type":"workshop","status":"open","enrolled":33,"capacity":34,"waitlist":{"taken":0,"capacity":0},"instructors":["Raul Orduna Picon"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Olin Hall 126"}]},
         {"id":"WPE 1601-F36","code":"F36","type":"workshop","status":"closed","enrolled":32,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Taimoor Afzal"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Fuller Labs 320"}]},
         {"id":"WPE 1601-F37","code":"F37","type":"workshop","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Marianna Colantuono"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Fuller Labs 320"}]},
         {"id":"WPE 1601-F38","code":"F38","type":"workshop","title":"Insight Program - First Generation Connections","status":"open","enrolled":28,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Daymond Zweizig"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Stratton Hall 202"}]},
