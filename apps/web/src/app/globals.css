@@ -76,6 +76,19 @@
     --color-clash-surface: #3c2922;
     --color-clash-line: #b98269;
     --color-clash-ink: #f2b291;
+    --color-tile-done: #29283f;
+    --color-tile-empty: #1c2029;
+    --color-tile-empty-line: #748198;
+    --color-tile-check: #382e20;
+    --color-tile-check-line: #b48754;
+    --color-tile-planned-line: #aaa8ff;
+    --color-tile-tick-line: #707c91;
+    --color-chart-done: #e7e9ee;
+    --color-chart-planned: #797393;
+    --color-chart-none: #8591a7;
+    --color-chart-grid: #66738a;
+    --color-track: #272b36;
+    --color-filter-surface: #25243a;
     --color-notice-info: #29283f;
     --color-notice-warning: #3b2d20;
     --color-notice-warning-ink: #f1c187;
@@ -193,6 +206,7 @@
   --color-tile-check-line: #ecd5a8;
   --color-tile-planned-line: #8d88d6;
   --color-tile-tick-line: #e3e6ed;
+  --color-chart-done: #3432c7;
   --color-chart-planned: #8d88d6;
   --color-chart-none: #a1a8ba;
   --color-chart-grid: #e8eaf0;

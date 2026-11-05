@@ -24,7 +24,7 @@ function Bar({ bar, top, muted = false }: { bar: TermBar; top: number; muted?: b
       ) : (
         <span aria-hidden className={cx("flex w-full flex-col justify-end overflow-hidden rounded-t-swatch", isSelected && "outline-2 outline-offset-1 outline-ink")}>
           {bar.planned > 0 && <span className="w-full bg-chart-planned" style={{ height: scale(bar.planned) }} />}
-          {bar.done > 0 && <span className={cx("w-full", muted ? "bg-chart-none" : "bg-accent")} style={{ height: scale(bar.done) }} />}
+          {bar.done > 0 && <span className={cx("w-full", muted ? "bg-chart-none" : "bg-chart-done")} style={{ height: scale(bar.done) }} />}
         </span>
       )}
     </>

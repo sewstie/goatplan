@@ -301,9 +301,12 @@ registration header uses `BarMoreMenu` with `ThemeSwitch`.
 
 Ticket 10 covers the planner palette and controls. Ticket 11 verifies the
 remaining current surfaces and theme-independent print, sharing and exports.
-Ticket 12 owns degree theme integration. Since degree is available to invited
-testers, that integration gates the combined theme release. See
-[dark theme release checks](dark-theme-release.md) for validation evidence.
+My degree uses `ThemeButton` in its desktop top bar and `ThemeSwitch` in the
+phone's `BarMoreMenu`. It shares the global preference. Degree tiles, charts
+and progress states use screen-only dark tokens. `chart-done` keeps completed
+progress distinct from planned progress without changing Light. See
+[dark theme release checks](dark-theme-release.md) and
+[degree theme checks](degree-dark-theme.md) for validation evidence.
 
 ## My degree
 
