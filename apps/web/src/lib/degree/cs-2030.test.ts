@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import rules from "./cs-2030.json";
+import rules from "./sheets/cs-2030.json";
 
 describe("cs-2030 degree rules", () => {
   describe("metadata", () => {
@@ -95,7 +95,7 @@ describe("cs-2030 degree rules", () => {
   describe("HUA lines 1-6", () => {
     it("lines 1-5 accept HUA subjects", () => {
       for (let i = 0; i < 5; i++) {
-        expect(rules.lines[i].filter.type).toBe("huaSubjects");
+        expect(rules.lines[i].filter.type).toBe("subjects");
       }
     });
 
@@ -165,13 +165,9 @@ describe("cs-2030 degree rules", () => {
   describe("Computer Science lines 16-33", () => {
     it("line 16 accepts CS 1101/1102 or CS 2000+", () => {
       const line16 = rules.lines[15];
-      expect(line16.filter.type).toBe("csIntro");
-      const filter = line16.filter as {
-        courses: string[];
-        minLevel: number;
-        subject: string;
-      };
-      expect(filter.courses).toEqual(["CS 1101", "CS 1102"]);
+      expect(line16.filter.type).toBe("subjectMinLevel");
+      const filter = line16.filter;
+      expect(filter.additionalCourses).toEqual(["CS 1101", "CS 1102"]);
       expect(filter.minLevel).toBe(2000);
     });
 
@@ -197,7 +193,7 @@ describe("cs-2030 degree rules", () => {
 
     it("lines 26-30 require CS 4000+", () => {
       for (let i = 25; i < 30; i++) {
-        expect(rules.lines[i].filter.type).toBe("cs4000plus");
+        expect(rules.lines[i].filter.type).toBe("subjectMinLevel");
       }
     });
 
@@ -381,8 +377,8 @@ describe("cs-2030 degree rules", () => {
 
     it("social implications includes non-CS courses", () => {
       const social = rules.checks.find((c) => c.id === "social")!;
-      expect(social.nonCsCourses).toBeDefined();
-      expect(social.nonCsCourses).toEqual(
+      expect(social.externalCourses).toBeDefined();
+      expect(social.externalCourses).toEqual(
         expect.arrayContaining([
           "GOV 2314",
           "GOV 2315",
@@ -396,8 +392,8 @@ describe("cs-2030 degree rules", () => {
       const scienceDepth = rules.checks.find(
         (c) => c.id === "science-depth",
       )!;
-      expect(scienceDepth.requiredFromBBCHGEPH).toBe(3);
-      expect(scienceDepth.requiredFromOneDiscipline).toBe(2);
+      expect(scienceDepth.displayCourses).toBe(3);
+      expect(scienceDepth.minFromOneDiscipline).toBe(2);
     });
 
     it("has HUA depth, breadth, and AP/IB limit checks", () => {

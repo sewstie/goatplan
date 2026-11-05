@@ -88,7 +88,7 @@ export function CourseDetailsPanel({ code, history, view }: { code: string; hist
           <PushPin aria-hidden className="size-14 text-ink" />
           {tile?.pinned ? `Pinned to ${lineName(tile.line)}` : "No manual assignment"}
         </p>
-        <button type="button" onClick={() => open({ kind: "move", code: course.code })} className="cursor-pointer rounded-badge text-8 leading-14-4 font-600 text-accent hover:underline">Move to line…</button>
+        <button type="button" disabled={!view} onClick={() => open({ kind: "move", code: course.code })} className="cursor-pointer rounded-badge text-8 leading-14-4 font-600 text-accent hover:underline">Move to line…</button>
       </div>
     </DrawerFrame>
   );

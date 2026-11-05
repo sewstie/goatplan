@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
+    "test:degree-sheets": "vitest run src/lib/degree/sheets",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -28,6 +29,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.1.2",
+    "ajv": "^6.15.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
     "jsdom": "^30.1.3",

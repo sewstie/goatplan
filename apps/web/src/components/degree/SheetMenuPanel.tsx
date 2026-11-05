@@ -7,10 +7,10 @@ import { downloadHistory, resetPins } from "./degreeActions";
 import { useDegreeUi } from "./degreeUi";
 import type { DegreeView } from "./useDegreeView";
 
-function Item({ icon, onClick, children }: { icon: ReactNode; onClick(): void; children: ReactNode }) {
+function Item({ icon, onClick, children, disabled = false }: { icon: ReactNode; onClick(): void; children: ReactNode; disabled?: boolean }) {
   return (
     <li>
-      <button type="button" onClick={onClick} className="flex min-h-44 w-full cursor-pointer items-center gap-11 rounded-row text-9 leading-15 hover:text-accent [&_svg]:size-16 [&_svg]:text-ink">
+      <button type="button" disabled={disabled} onClick={onClick} className="flex min-h-44 w-full cursor-pointer items-center gap-11 rounded-row text-9 leading-15 hover:text-accent disabled:cursor-default disabled:opacity-50 [&_svg]:size-16 [&_svg]:text-ink">
         {icon}
         {children}
       </button>
@@ -18,7 +18,7 @@ function Item({ icon, onClick, children }: { icon: ReactNode; onClick(): void; c
   );
 }
 
-export function SheetMenuPanel({ view }: { view: DegreeView | null }) {
+export function SheetMenuPanel({ view, sheetReady = true }: { view: DegreeView | null; sheetReady?: boolean }) {
   const close = useDegreeUi((state) => state.close);
   const open = useDegreeUi((state) => state.open);
   const set = useDegreeUi((state) => state.set);
@@ -32,9 +32,9 @@ export function SheetMenuPanel({ view }: { view: DegreeView | null }) {
           <Item icon={<BookOpen aria-hidden />} onClick={() => open({ kind: "history", tab: "history" })}>Course history</Item>
           <Item icon={<DownloadSimple aria-hidden />} onClick={downloadHistory}>Export history &amp; pins</Item>
           <Item icon={<UploadSimple aria-hidden />} onClick={() => open({ kind: "transfer" })}>Import history</Item>
-          <Item icon={<Scales aria-hidden />} onClick={() => set({ panel: null, screen: "how" })}>How your courses count</Item>
+          <Item disabled={!sheetReady} icon={<Scales aria-hidden />} onClick={() => set({ panel: null, screen: "how" })}>How your courses count</Item>
           <div className="tablet:hidden">
-            <Item icon={<ListChecks aria-hidden />} onClick={() => set({ panel: null, screen: "confirmations" })}>Your confirmations</Item>
+            <Item disabled={!sheetReady} icon={<ListChecks aria-hidden />} onClick={() => set({ panel: null, screen: "confirmations" })}>Your confirmations</Item>
           </div>
         </ul>
         <div className="mt-10 border-t border-line pt-10">

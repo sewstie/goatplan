@@ -15,6 +15,8 @@ import {
   type StoredHistory,
 } from "./history";
 import { browserOpenPlan, isPlanKey, type OpenPlan } from "./openPlan";
+import { DEFAULT_SHEET_ID, type TrackingSheet } from "./sheets";
+import { loadRequirements } from "./requirements";
 
 export const AUDIT_DELAY_MS = 200;
 
@@ -26,6 +28,7 @@ export interface AuditState {
 }
 
 export interface DegreeSnapshot {
+  sheet: TrackingSheet | null;
   history: DegreeHistory;
   damaged: boolean;
   audit: AuditState;
@@ -67,13 +70,15 @@ interface DegreeSourceDeps {
   getStorage(): HistoryStorage | null;
   engine: AuditEngine;
   plan?: OpenPlan;
+  sheetId?: string;
 }
 
 const NO_PLAN: OpenPlan = { read: async () => [], signature: () => "" };
 
-export function createDegreeSource({ getStorage, engine, plan = NO_PLAN }: DegreeSourceDeps): DegreeSource {
+export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId = DEFAULT_SHEET_ID }: DegreeSourceDeps): DegreeSource {
   const listeners = new Set<() => void>();
   let stored: StoredHistory | null = null;
+  let loadedSheet: TrackingSheet | null = null;
   // What the browser refused to keep. It stays usable until the page closes or a save succeeds.
   let session: DegreeHistory | null = null;
   let audit: AuditState = { status: "waiting", result: null };
@@ -114,7 +119,10 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN }: Degre
     let nextPlan = planCourses;
     try {
       nextPlan = await plan.read();
-      const response = await engine.audit(buildAuditRequest(current().history, nextPlan));
+      const sheet = await loadRequirements(sheetId);
+      if (asked !== latest) return;
+      loadedSheet = sheet;
+      const response = await engine.audit(buildAuditRequest(current().history, nextPlan, sheet));
       if (response.ok) next = { status: "ready", result: response };
     } catch {
       // The failed state already says so, and offers another try.
@@ -182,7 +190,7 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN }: Degre
     getSnapshot() {
       if (!snapshot) {
         const { history, damaged } = current();
-        snapshot = { history, damaged, audit, planCourses, unsaved: session !== null };
+        snapshot = { sheet: loadedSheet, history, damaged, audit, planCourses, unsaved: session !== null };
       }
       return snapshot;
     },

@@ -21,11 +21,140 @@ using json = nlohmann::json;
 
 namespace {
 
-json cases() {
-    std::ifstream input(GOATPLAN_AUDIT_CASES);
+json trackingSheet() {
+    std::ifstream input(GOATPLAN_TEST_SHEET);
     return json::parse(input);
 }
 
+json cases() {
+    std::ifstream input(GOATPLAN_AUDIT_CASES);
+    auto result = json::parse(input);
+    for (auto& item : result) {
+        if (item.at("request").contains("requirements") && item.at("request").at("requirements") == "cs-2030") item["request"]["sheet"] = trackingSheet();
+    }
+    return result;
+}
+
+}
+
+TEST(Audit, UsesTheLoadedSheetInsteadOfEmbeddedCsRules) {
+    const Engine engine;
+    auto sheet = trackingSheet();
+    sheet["id"] = "test-loaded";
+    sheet["lines"][15]["filter"] = {{"type", "courses"}, {"courses", {"CS 2119"}}};
+    const json request = {{"version", 1}, {"requirements", "test-loaded"}, {"sheet", sheet},
+                          {"taken", {{{"code", "CS 2119"}, {"credits", 3}}}}};
+    const auto response = json::parse(engine.handle(request.dump()));
+    ASSERT_EQ(response.at("ok"), true) << response;
+    EXPECT_EQ(response.at("sections")[5].at("lines")[0].at("course"), "CS 2119");
+    EXPECT_EQ(response.at("sections")[5].at("lines")[0].at("state"), "done");
+}
+
+TEST(Audit, UsesTheSheetsConfirmationIdForAnUnresolvedDepthCheck) {
+    const Engine engine;
+    auto sheet = trackingSheet();
+    sheet["checks"][5]["confirmation"] = "related-courses";
+    sheet["manualItems"][7]["id"] = "related-courses";
+    json request = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", sheet},
+                    {"taken", {{{"code", "HI 1311"}, {"credits", 3}},
+                               {{"code", "HI 1312"}, {"credits", 3}},
+                               {{"code", "HI 1332"}, {"credits", 3}}}}};
+    auto response = json::parse(engine.handle(request.dump()));
+    ASSERT_EQ(response.at("ok"), true) << response;
+    EXPECT_EQ(response.at("checks")[5].at("state"), "check");
+    request["manual"] = {"related-courses"};
+    response = json::parse(engine.handle(request.dump()));
+    ASSERT_EQ(response.at("ok"), true) << response;
+    EXPECT_EQ(response.at("checks")[5].at("state"), "met");
+}
+
+TEST(Audit, GenericFiltersUseTheSheetsSubjectsAdditionalCoursesAndExclusions) {
+    const Engine engine;
+    auto sheet = trackingSheet();
+    sheet["lines"][15]["filter"] = {{"type", "subjectMinLevel"}, {"subject", "DS"},
+                                   {"minLevel", 3000}, {"additionalCourses", {"DS 1000"}},
+                                   {"excludedCourses", {"DS 3999"}}};
+    const json request = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", sheet},
+                          {"taken", {{{"code", "DS 1000"}, {"credits", 3}}, {{"code", "DS 3999"}, {"credits", 3}}}}};
+    const auto response = json::parse(engine.handle(request.dump()));
+    ASSERT_EQ(response.at("ok"), true) << response;
+    EXPECT_EQ(response.at("sections")[5].at("lines")[0].at("course"), "DS 1000");
+}
+
+TEST(Audit, SheetsDoNotInheritCsExclusionsOrSectionNames) {
+    const Engine engine;
+    auto sheet = trackingSheet();
+    for (auto& line : sheet["lines"]) {
+        if (line["section"] == "cs") line["section"] = "major";
+    }
+    sheet["sections"][5]["id"] = "major";
+    sheet["lines"][15]["filter"] = {{"type", "subjectMinLevel"}, {"subject", "CS"}, {"minLevel", 2000}, {"priority", 0}};
+    for (auto& check : sheet["checks"]) {
+        if (check["type"] == "area") check["section"] = "major";
+    }
+    const json request = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", sheet},
+                          {"taken", {{{"code", "CS 2119"}, {"credits", 3}}, {{"code", "CS 3013"}, {"credits", 3}}}}};
+    const auto response = json::parse(engine.handle(request.dump()));
+    ASSERT_EQ(response.at("ok"), true) << response;
+    EXPECT_EQ(response.at("sections")[5].at("lines")[0].at("course"), "CS 2119");
+    EXPECT_EQ(response.at("checks")[0].at("state"), "met");
+}
+
+TEST(Audit, CachesRulesBySheetAndRejectsBadReplacementsWithoutLosingThem) {
+    const Engine engine;
+    auto first = trackingSheet();
+    first["id"] = "first";
+    auto second = first;
+    second["id"] = "second";
+    second["lines"][15]["filter"] = {{"type", "courses"}, {"courses", {"DS 1000"}}};
+    json request = {{"version", 1}, {"requirements", "first"}, {"sheet", first},
+                    {"taken", {{{"code", "DS 1000"}, {"credits", 3}}}}};
+    const auto firstAnswer = engine.handle(request.dump());
+    request["requirements"] = "second";
+    request["sheet"] = second;
+    const auto secondAnswer = engine.handle(request.dump());
+    EXPECT_NE(firstAnswer, secondAnswer);
+    request.erase("sheet");
+    EXPECT_EQ(engine.handle(request.dump()), secondAnswer);
+    request["requirements"] = "first";
+    EXPECT_EQ(engine.handle(request.dump()), firstAnswer);
+    request["sheet"] = {{"id", 7}};
+    auto error = json::parse(engine.handle(request.dump()));
+    EXPECT_EQ(error.at("error").at("code"), "badRequest");
+    EXPECT_EQ(error.at("error").at("detail"), "sheet");
+    request.erase("sheet");
+    EXPECT_EQ(engine.handle(request.dump()), firstAnswer);
+    const Engine fresh;
+    EXPECT_EQ(json::parse(fresh.handle(request.dump())).at("error").at("code"), "unknownRequirements");
+}
+
+TEST(Audit, MinimumCourseChecksCountTakenAndPlannedPlacements) {
+    const Engine engine;
+    auto sheet = trackingSheet();
+    sheet["checks"].push_back({{"id", "two-sciences"}, {"name", "Two sciences"},
+                               {"type", "minCourses"}, {"section", "science"}, {"minCourses", 2}});
+    json request = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", sheet},
+                    {"taken", {{{"code", "PH 1110"}, {"credits", 3}}}}};
+    EXPECT_EQ(json::parse(engine.handle(request.dump())).at("checks").back().at("state"), "not-met");
+    request["planned"] = {{{"code", "PH 1120"}, {"credits", 3}}};
+    EXPECT_EQ(json::parse(engine.handle(request.dump())).at("checks").back().at("state"), "planned");
+    request["taken"].push_back({{"code", "PH 1120"}, {"credits", 3}});
+    request.erase("planned");
+    EXPECT_EQ(json::parse(engine.handle(request.dump())).at("checks").back().at("state"), "met");
+}
+
+TEST(Audit, RejectsMalformedRulesBeforeReplacingTheCachedSheet) {
+    const Engine engine;
+    auto sheet = trackingSheet();
+    json request = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", sheet}};
+    const auto original = engine.handle(request.dump());
+    sheet["sections"][4].erase("poolCredits");
+    request["sheet"] = sheet;
+    const auto rejected = json::parse(engine.handle(request.dump()));
+    EXPECT_EQ(rejected.at("error").at("code"), "badRequest");
+    EXPECT_EQ(rejected.at("error").at("detail"), "sheet");
+    request.erase("sheet");
+    EXPECT_EQ(engine.handle(request.dump()), original);
 }
 
 TEST(Audit, SharedContractCasesWithoutLoadedTerm) {
@@ -140,7 +269,7 @@ TEST(Audit, HandWrittenHistoriesMatchTheirExpectedAnswersExactly) {
             }
             return result;
         };
-        const json request = {{"version", 1}, {"requirements", "cs-2030"}, {"taken", list(history.at("takenCourses"))},
+        const json request = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", trackingSheet()}, {"taken", list(history.at("takenCourses"))},
                               {"planned", list(history.at("plannedCourses"))}, {"manual", history.at("confirmedManualItems")}};
         const auto response = json::parse(engine.handle(request.dump()));
         ASSERT_EQ(response.at("ok"), true) << response;
@@ -216,7 +345,7 @@ TEST(Audit, CandidatesLeaveTheRestOfTheResponseAlone) {
 
 TEST(Audit, CandidatesAreReportedInTheOrderTheyWereSent) {
     const Engine engine;
-    const json request = {{"version", 1}, {"requirements", "cs-2030"},
+    const json request = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", trackingSheet()},
                           {"candidates", {{{"code", "PH 1110"}, {"credits", 3}}, {{"code", "CS 3013"}, {"credits", 3}}, {{"code", "PH 1110"}, {"credits", 3}}}}};
     const auto results = json::parse(engine.handle(request.dump())).at("candidateResults");
     ASSERT_EQ(results.size(), 3u);
@@ -227,7 +356,7 @@ TEST(Audit, CandidatesAreReportedInTheOrderTheyWereSent) {
 
 TEST(Audit, AboutFiveHundredEightyCandidatesRunUnnoticed) {
     const Engine engine;
-    const auto subjects = {"CS", "MA", "PH", "CH", "BB", "GE", "EN", "HI", "PY", "SP", "GOV", "PSY", "ECE", "ME", "RBE", "BME", "AE", "ID", "BUS", "DS"};
+    const auto subjects = {"CS", "MA", "PH", "CH", "BB", "GE", "EN", "HI", "PY", "SP", "GOV", "PSY", "ECE", "DS", "RBE", "BME", "AE", "ID", "BUS", "DS"};
     json candidates = json::array();
     for (int number = 1000; candidates.size() < 580; number += 7) {
         for (const auto* subject : subjects) {
@@ -241,13 +370,13 @@ TEST(Audit, AboutFiveHundredEightyCandidatesRunUnnoticed) {
     for (const auto& entry : history.at("takenCourses")) taken.push_back({{"code", entry.at("code")}, {"credits", entry.at("credits")}});
     json planned = json::array();
     for (const auto& entry : history.at("plannedCourses")) planned.push_back({{"code", entry.at("code")}, {"credits", entry.at("credits")}});
-    const json midRequest = {{"version", 1}, {"requirements", "cs-2030"}, {"taken", taken}, {"planned", planned}, {"candidates", candidates}};
+    const json midRequest = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", trackingSheet()}, {"taken", taken}, {"planned", planned}, {"candidates", candidates}};
 
     std::ifstream fullInput(std::string(GOATPLAN_FIXTURES) + "/degree-history-complete.json");
     const auto full = json::parse(fullInput);
     json fullTaken = json::array();
     for (const auto& entry : full.at("takenCourses")) fullTaken.push_back({{"code", entry.at("code")}, {"credits", entry.at("credits")}});
-    const json fullRequest = {{"version", 1}, {"requirements", "cs-2030"}, {"taken", fullTaken}, {"manual", full.at("confirmedManualItems")}, {"candidates", candidates}};
+    const json fullRequest = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", trackingSheet()}, {"taken", fullTaken}, {"manual", full.at("confirmedManualItems")}, {"candidates", candidates}};
 
     for (const auto& [name, request] : {std::pair<std::string, json>{"mid-degree", midRequest}, {"full-degree", fullRequest}}) {
         const auto text = request.dump();
@@ -322,7 +451,7 @@ TEST(Audit, RandomHistoriesKeepTakenCoursesAndSetLimits) {
         std::shuffle(codes.begin(), codes.end(), random);
         const auto takenCount = static_cast<std::ptrdiff_t>(random() % codes.size());
         const auto split = codes.begin() + takenCount;
-        const json takenOnly = {{"version", 1}, {"requirements", "cs-2030"}, {"taken", courseList(codes.begin(), split)}};
+        const json takenOnly = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", trackingSheet()}, {"taken", courseList(codes.begin(), split)}};
         auto both = takenOnly;
         both["planned"] = courseList(split, codes.end());
         std::set<std::string> seatedBefore;

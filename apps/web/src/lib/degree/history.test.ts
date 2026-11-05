@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { getRequirements } from "./requirements";
 import { MemoryPlanStorage } from "@/lib/plans/testing";
 import {
   buildAuditRequest,
@@ -284,6 +285,7 @@ describe("buildAuditRequest", () => {
     expect(request).toEqual({
       version: 1,
       requirements: "cs-2030",
+      sheet: getRequirements(),
       taken: [{ code: "CS 2102", credits: 3 }, { code: "EN 1001", credits: 1.5, apIb: true }],
       planned: [{ code: "MA 1021", credits: 3 }],
       manual: ["iqp-1"],

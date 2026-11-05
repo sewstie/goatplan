@@ -2,7 +2,7 @@
 
 Source: [CS-2030 tracking sheet (PDF)](https://www.wpi.edu/sites/default/files/2026-06/CS-2030_fillable.pdf)
 Catalog: [2026-27 catalog, CS major](https://wpi.cleancatalog.net/computer-science/computer-science-major)
-Rules file: `apps/web/src/lib/degree/cs-2030.json`
+Rules file: `apps/web/src/lib/degree/sheets/cs-2030.json`
 Test histories: `data/fixtures/degree-history-mid.json`, `data/fixtures/degree-history-complete.json`
 
 ## Catalog differences
@@ -44,19 +44,19 @@ The spec says: "A cross-listed course is one course with several codes. Listing 
 
 The sheet says CS 5007 does not count toward the 5/3 units of 4000+ CS courses. It could still count as a general CS 2000+ course on lines 17-25.
 
-**Decision:** CS 5007 is listed in exclusions with a note about the 4000+ requirement. The `cs4000plus` filter type (lines 26-30) excludes it. It can still match CS 2000+ lines 17-25.
+**Decision:** CS 5007 is listed in exclusions with a note about the 4000+ requirement. The `subjectMinLevel` filter type (lines 26-30) excludes it. It can still match CS 2000+ lines 17-25.
 
 ### 5. Graduate course level parsing
 
 The spec says: "a 3-digit number such as CS 502 is graduate level and counts as 4000+, even though 502 is less than 4000." The sheet lists CS 502, CS 533, CS 535 for Systems; CS 5003, CS 5084, CS 503, etc. for Theory.
 
-**Decision:** The `cs4000plus` filter type must parse course numbers correctly: 3-digit codes ≥ 500 and 4-digit codes starting with 5+ are graduate and count as 4000+. This is handled by the matcher, not the rules file.
+**Decision:** The `subjectMinLevel` filter type must parse course numbers correctly: 3-digit codes ≥ 500 and 4-digit codes starting with 5+ are graduate and count as 4000+. This is handled by the matcher, not the rules file.
 
 ### 6. Graduate 2-for-3 equivalence
 
 The sheet says: "2 graduate courses are the equivalent of 3 4000-level courses." The v1 spec says: "Each graduate course counts as one 4000+ course with no 2-for-3 bonus, and shows 'Check this yourself'."
 
-**Decision:** Graduate courses count one-for-one in the `cs4000plus` filter. The 2-for-3 bonus is flagged as "check-yourself" via the `grad-equivalence` check.
+**Decision:** Graduate courses count one-for-one in the `subjectMinLevel` filter. The 2-for-3 bonus is flagged as "check-yourself" via the `grad-equivalence` check.
 
 ### 7. MA 1000-level limit (Note 5)
 

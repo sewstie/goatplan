@@ -2,6 +2,8 @@ import type { Course } from "@/lib/data/types";
 import { getEngineClient, type AuditRequest, type AuditSuccess } from "@/lib/engine";
 import { AUDIT_DELAY_MS, getDegreeSource, type AuditEngine, type DegreeSource } from "./degreeSource";
 import { buildAuditRequest, foundCourse, type DegreeHistory } from "./history";
+import { DEFAULT_SHEET_ID, type TrackingSheet } from "./sheets";
+import { loadRequirements } from "./requirements";
 
 export interface OpenTerm {
   courses: readonly Course[];
@@ -30,8 +32,8 @@ const asAuditCourse = (course: Course) => {
   return { code, credits };
 };
 
-function buildGapRequest(history: DegreeHistory, { courses, planned }: OpenTerm): AuditRequest {
-  const request = buildAuditRequest(history);
+function buildGapRequest(history: DegreeHistory, { courses, planned }: OpenTerm, sheet: TrackingSheet): AuditRequest {
+  const request = buildAuditRequest(history, [], sheet);
   const listed = new Set(history.courses.map((course) => course.code));
   const plan = courses.filter((course) => planned.includes(course.code) && !listed.has(course.code));
   return {
@@ -92,7 +94,9 @@ export function createGapSource({ degree, engine }: GapSourceDeps): GapSource {
     const asked = ++latest;
     let next: CourseGaps = { status: "failed", closes: null };
     try {
-      const response = await engine.audit(buildGapRequest(degree.getSnapshot().history, term));
+      const sheet = await loadRequirements(DEFAULT_SHEET_ID);
+      if (asked !== latest) return;
+      const response = await engine.audit(buildGapRequest(degree.getSnapshot().history, term, sheet));
       if (response.ok) next = { status: "ready", closes: readAnswers(response), details: readDetails(response) };
     } catch {
       // Search carries on without badges.

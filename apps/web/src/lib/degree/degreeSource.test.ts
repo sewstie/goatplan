@@ -23,7 +23,10 @@ function setup(audit: AuditEngine["audit"] = async (request) => answer(request.t
   return { storage, engine, source, stop };
 }
 
-const pause = () => vi.advanceTimersByTimeAsync(AUDIT_DELAY_MS);
+const pause = async () => {
+  await vi.advanceTimersByTimeAsync(AUDIT_DELAY_MS);
+  await vi.dynamicImportSettled();
+};
 
 beforeEach(() => {
   vi.useFakeTimers();
@@ -34,6 +37,18 @@ afterEach(() => {
 });
 
 describe("the history", () => {
+  it("audits against the loaded sheet document", async () => {
+    let sheet: unknown;
+    const { source, stop } = setup(async (request) => {
+      sheet = request.sheet;
+      return answer(0);
+    });
+    await pause();
+    expect(sheet).toMatchObject({ id: "cs-2030", major: "Computer Science", classYear: 2030, totalUnits: 15 });
+    expect(source.getSnapshot().audit.status).toBe("ready");
+    stop();
+  });
+
   it("stores an added course and lists it", () => {
     const { source, storage } = setup();
     expect(source.addCourse(typedCourse("CS 9999"))).toBe("added");
@@ -356,6 +371,7 @@ describe("the audit", () => {
     await vi.advanceTimersByTimeAsync(AUDIT_DELAY_MS - 1);
     expect(engine.audit).not.toHaveBeenCalled();
     await vi.advanceTimersByTimeAsync(1);
+    await vi.dynamicImportSettled();
     expect(engine.audit).toHaveBeenCalledTimes(1);
     expect(engine.audit.mock.calls[0][0].taken).toHaveLength(2);
   });

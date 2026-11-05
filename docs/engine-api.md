@@ -326,6 +326,13 @@ still works the same way. An audit doesn't need a loaded term.
 
 ### Audit request
 
+The engine contains no tracking sheet. The caller loads a selected sheet from
+the registry and sends its JSON in `sheet`. Parsed rules are cached per engine
+and sheet id. Omitting `sheet` reuses rules already loaded by that engine;
+an unknown id returns `unknownRequirements`. A changed document replaces the
+cached rules for that id. A malformed sheet or mismatched id returns
+`badRequest` with detail `sheet`, leaving the previous rules usable.
+
 The engine matches filtered lines, "only one of" sets, cross-lists, WPE slots,
 manual items and the free elective pool, then works out the checks and what each
 candidate would close.
@@ -353,6 +360,7 @@ candidate would close.
 | -------------- | ----------------------------- | ---------- | ------- |
 | `version`      | number                        | required   | Must be `1`. |
 | `requirements` | string                        | required   | The ID of a requirements file, e.g. `"cs-2030"`. |
+| `sheet`        | tracking-sheet object          | cached     | Rules for `requirements`. Its `id` must match. Send it on every app audit so a restarted worker has the rules. |
 | `taken`        | list of course objects         | `[]`       | Courses the student has completed. |
 | `planned`      | list of course objects         | `[]`       | Courses the student is taking or plans to take. |
 | `manual`       | list of manual item IDs        | `[]`       | Confirmed manual items, such as `"iqp-1"` or `"wpe-sports"`. Unknown IDs are ignored. |
@@ -531,6 +539,21 @@ A requirements file describes one major and class year. The first file is
 
 The file holds five things: **sections**, **lines**, **checks**,
 **cross-lists** and **manual items**.
+
+Sheets live in `apps/web/src/lib/degree/sheets/`. The registry records official
+sources, official line numbers, beta status and student verification. Only the
+requested sheet is dynamically imported. CI validates every registered sheet
+against `degree-rules.schema.json` and checks references, totals and cross-lists.
+Overlapping checks do not add units to the numbered lines.
+
+Filters use `courses`, `subjects`, `subjectMinLevel`, `manual` or `any`.
+`additionalCourses` and `excludedCourses` belong to the filter. `priority`
+preserves allocation order; `advanced` marks courses needing equivalence review.
+Checks use `area`, `disciplineCount`, `groupDepth`, `groupBreadth`, `apIbLimit`,
+`residency`, `levelLimit`, `graduateEquivalence`, `minCourses` or `manual`.
+Section references, grouping order, language exceptions and confirmation ids
+come from the document. A manual check stays unresolved until its confirmation
+is supplied. The engine does not select rules by major name.
 
 ### Sections
 

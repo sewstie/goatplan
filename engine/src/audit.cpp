@@ -11,7 +11,8 @@
 
 #include <nlohmann/json.hpp>
 
-#include "audit_requirements.hpp"
+#include <memory>
+#include <set>
 
 namespace goatplan {
 namespace {
@@ -52,13 +53,11 @@ int indexOf(const std::vector<std::string>& values, const std::string& text) {
     return it == values.end() ? kNone : static_cast<int>(it - values.begin());
 }
 
-int filterWidth(const json& filter, const json& requirements) {
+int filterWidth(const json& filter) {
+    if (filter.contains("priority")) return filter.at("priority").get<int>();
     const auto type = filter.at("type").get<std::string>();
     if (type == "courses") return 0;
-    if (type == "cs4000plus") return 1;
     if (type == "subjectMinLevel") return 6000 - filter.at("minLevel").get<int>();
-    if (type == "csIntro") return 6001 - filter.at("minLevel").get<int>();
-    if (type == "huaSubjects") return static_cast<int>(requirements.at("huaSubjects").size()) + 2;
     return filter.contains("subjects") ? static_cast<int>(filter.at("subjects").size()) + 2 : 0;
 }
 
@@ -85,23 +84,80 @@ struct Rules {
     std::size_t scienceFromOne = 0;
     std::size_t apIbLimit = 0;
     int mathCeiling = 0;
+    std::string disciplineSection;
+    std::string groupingSection;
+    std::vector<int> groupingLines;
+    std::string levelSection;
+    std::string graduateSection;
+    std::string exceptionGrouping;
+    std::vector<std::string> areaSections;
 
-    Rules() : document(json::parse(kAuditRequirements)) {
+    explicit Rules(json sheet) : document(std::move(sheet)) {
+        const auto& sectionRules = document.at("sections");
+        const auto& lineRules = document.at("lines");
+        if (!sectionRules.is_array() || sectionRules.empty() || !lineRules.is_array() || lineRules.empty() || lineRules.size() > 256) {
+            throw badRequest("sheet", "must contain sections and lines");
+        }
+        std::set<std::string> sectionIds;
+        std::set<int> lineIds;
+        std::size_t pools = 0;
+        for (const auto& section : sectionRules) {
+            if (!sectionIds.insert(section.at("id").get<std::string>()).second) throw badRequest("sheet", "has duplicate sections");
+            if (!section.at("name").is_string() || !section.at("lines").is_array() || section.at("lines").empty()) throw badRequest("sheet", "has an invalid section");
+            if (section.value("creditPool", false)) {
+                ++pools;
+                if (section.at("poolCredits").get<double>() <= 0) throw badRequest("sheet", "has invalid pool credits");
+            }
+        }
+        if (pools != 1) throw badRequest("sheet", "must contain one credit pool");
+        for (const auto& line : lineRules) {
+            if (!lineIds.insert(line.at("line").get<int>()).second) throw badRequest("sheet", "has duplicate lines");
+            if (!sectionIds.contains(line.at("section").get<std::string>()) || !line.at("name").is_string()) throw badRequest("sheet", "has an invalid line");
+            if (line.value("subSlots", 0) < 0 || line.value("subSlots", 0) > 16) throw badRequest("sheet", "has invalid sub-slots");
+            const auto& filter = line.at("filter");
+            const auto type = filter.at("type").get<std::string>();
+            if (type == "courses") filter.at("courses").get<std::vector<std::string>>();
+            else if (type == "subjects") filter.at("subjects").get<std::vector<std::string>>();
+            else if (type == "subjectMinLevel") {
+                filter.at("subject").get<std::string>();
+                filter.at("minLevel").get<int>();
+            }
+            else if (type != "manual" && type != "any") throw badRequest("sheet", "has an unknown filter");
+        }
+        for (const auto& section : sectionRules) {
+            for (const auto& id : section.at("lines")) if (!lineIds.contains(id.get<int>())) throw badRequest("sheet", "references an unknown line");
+        }
+        for (const auto& item : document.at("manualItems")) {
+            if (item.contains("line") && !lineIds.contains(item.at("line").get<int>())) throw badRequest("sheet", "references an unknown manual line");
+        }
         for (const auto& check : document.at("checks")) {
             const auto type = check.at("type").get<std::string>();
-            if (type == "area") areaIds.push_back(check.at("id").get<std::string>());
-            if (type == "scienceDepth") {
-                disciplines = check.at("disciplines").get<std::vector<std::string>>();
-                scienceListed = check.at("requiredFromBBCHGEPH").get<std::size_t>();
-                scienceFromOne = check.at("requiredFromOneDiscipline").get<std::size_t>();
+            if (type == "area") {
+                areaIds.push_back(check.at("id").get<std::string>());
+                areaSections.push_back(check.at("section").get<std::string>());
             }
-            if (type == "huaDepth") depthCourses = check.at("minCourses").get<std::size_t>();
+            if (type == "disciplineCount") {
+                disciplineSection = check.at("section").get<std::string>();
+                disciplines = check.at("disciplines").get<std::vector<std::string>>();
+                scienceListed = check.at("displayCourses").get<std::size_t>();
+                scienceFromOne = check.at("minFromOneDiscipline").get<std::size_t>();
+            }
+            if (type == "groupDepth") {
+                depthCourses = check.at("minCourses").get<std::size_t>();
+                groupingSection = check.at("section").get<std::string>();
+                groupingLines = check.at("lines").get<std::vector<int>>();
+            }
             if (type == "apIbLimit") apIbLimit = check.at("maxApIb").get<std::size_t>();
-            if (type == "mathLevelLimit") mathCeiling = check.at("levelCeiling").get<int>();
-            if (type == "huaBreadth") {
-                for (const auto& [name, subjects] : check.at("groupings").items()) {
-                    groupingNames.push_back(name);
-                    groupings.push_back(&subjects);
+            if (type == "levelLimit") {
+                mathCeiling = check.at("levelCeiling").get<int>();
+                levelSection = check.at("section").get<std::string>();
+            }
+            if (type == "graduateEquivalence") graduateSection = check.at("section").get<std::string>();
+            if (type == "groupBreadth") {
+                exceptionGrouping = check.value("exceptionGrouping", std::string{});
+                for (const auto& name : check.at("groupingOrder")) {
+                    groupingNames.push_back(name.get<std::string>());
+                    groupings.push_back(&check.at("groupings").at(name.get<std::string>()));
                 }
             }
         }
@@ -114,9 +170,10 @@ struct Rules {
                              line.contains("areaTag") ? indexOf(areaIds, line.at("areaTag").get<std::string>()) : kNone,
                              owner->contains("creditPool")});
         }
+        if (areaIds.size() > 31) throw badRequest("sheet", "has too many area checks");
         for (std::size_t i = 0; i < lines.size(); ++i) narrowestFirst.push_back(i);
         std::stable_sort(narrowestFirst.begin(), narrowestFirst.end(), [&](std::size_t a, std::size_t b) {
-            return filterWidth(*lines[a].filter, document) < filterWidth(*lines[b].filter, document);
+            return filterWidth(*lines[a].filter) < filterWidth(*lines[b].filter);
         });
         for (std::size_t i = 0; i < lines.size(); ++i) {
             const auto group = std::find_if(sameFilter.begin(), sameFilter.end(), [&](const auto& members) {
@@ -128,10 +185,6 @@ struct Rules {
     }
 };
 
-const Rules& rules() {
-    static const Rules value;
-    return value;
-}
 
 struct ParsedCode {
     std::string subject;
@@ -162,27 +215,22 @@ struct CodeFacts {
     int set = kNone;
     const json* crossList = nullptr;
     unsigned areas = 0;
-    unsigned nonCsAreas = 0;
+    unsigned externalAreas = 0;
     const std::string* areaTwin = nullptr;
     int discipline = kNone;
     int grouping = kNone;
     bool exactLine = false;
     bool advanced = false;
+    bool slotCourse = false;
 };
 
-bool fits(const std::string& code, const ParsedCode& parsed, const json& filter, const json& requirements) {
+bool fits(const std::string& code, const ParsedCode& parsed, const json& filter) {
     const auto& type = filter.at("type").get_ref<const std::string&>();
+    if (filter.contains("excludedCourses") && contains(filter.at("excludedCourses"), code)) return false;
+    if (filter.contains("additionalCourses") && contains(filter.at("additionalCourses"), code)) return true;
     if (type == "courses") return contains(filter.at("courses"), code);
-    if (type == "huaSubjects") return contains(requirements.at("huaSubjects"), parsed.subject);
-    if (type == "subjects" || type == "scienceElective") {
-        if (filter.contains("excludedCourses") && contains(filter.at("excludedCourses"), code)) return false;
-        return contains(filter.at("subjects"), parsed.subject) ||
-               (filter.contains("additionalCourses") && contains(filter.at("additionalCourses"), code));
-    }
-    if (code == "CS 2119") return false;
-    if (type == "cs4000plus") return parsed.subject == "CS" && parsed.level >= 4000 && code != "CS 5007";
-    if (type == "csIntro" && contains(filter.at("courses"), code)) return true;
-    if (type == "subjectMinLevel" || type == "csIntro") {
+    if (type == "subjects") return contains(filter.at("subjects"), parsed.subject);
+    if (type == "subjectMinLevel") {
         return parsed.subject == filter.at("subject").get_ref<const std::string&>() && parsed.level >= filter.at("minLevel").get<int>();
     }
     return false;
@@ -190,6 +238,7 @@ bool fits(const std::string& code, const ParsedCode& parsed, const json& filter,
 
 class CodeBook {
 public:
+    explicit CodeBook(const Rules& all) : all_(all) {}
     const CodeFacts* lookUp(const std::string& code) {
         const auto known = facts_.find(code);
         if (known != facts_.end()) return &known->second;
@@ -199,16 +248,21 @@ public:
     }
 
 private:
-    static CodeFacts build(const std::string& code, const ParsedCode& parsed) {
-        const auto& all = rules();
-        CodeFacts facts{code, parsed, {}, kNone, nullptr, 0, 0, nullptr, kNone, kNone, false, false};
+    CodeFacts build(const std::string& code, const ParsedCode& parsed) {
+        const auto& all = all_;
+        CodeFacts facts{code, parsed, {}, kNone, nullptr, 0, 0, nullptr, kNone, kNone, false, false, false};
         for (std::size_t i = 0; i < all.lines.size(); ++i) {
             const auto& filter = *all.lines[i].filter;
-            if (!fits(code, parsed, filter, all.document)) continue;
+            if (!fits(code, parsed, filter)) continue;
+            if (all.lines[i].subSlots > 0) {
+                facts.slotCourse = true;
+                continue;
+            }
+            if (all.lines[i].pool) continue;
             facts.lines.push_back(i);
             const auto& type = filter.at("type").get_ref<const std::string&>();
             if (type == "courses") facts.exactLine = true;
-            if (type == "cs4000plus") facts.advanced = true;
+            if (filter.value("advanced", false)) facts.advanced = true;
         }
         const auto& sets = all.document.at("onlyOneSets");
         for (std::size_t i = 0; i < sets.size(); ++i) {
@@ -221,8 +275,8 @@ private:
         for (const auto& check : all.document.at("checks")) {
             if (check.at("type") != "area") continue;
             const auto bit = 1U << area++;
-            const auto& nonCs = check.contains("nonCsCourses") ? check.at("nonCsCourses") : json::array();
-            if (contains(nonCs, code)) facts.nonCsAreas |= bit;
+            const auto& nonCs = check.contains("externalCourses") ? check.at("externalCourses") : json::array();
+            if (contains(nonCs, code)) facts.externalAreas |= bit;
             else if (contains(check.at("courses"), code)) facts.areas |= bit;
             if (!facts.crossList) continue;
             for (const auto& twin : *facts.crossList) {
@@ -247,6 +301,7 @@ private:
         return facts;
     }
 
+    const Rules& all_;
     std::unordered_map<std::string, CodeFacts> facts_;
 };
 
@@ -365,15 +420,15 @@ struct Listing {
         for (const auto& course : codes) result |= course.facts->areas;
         return result;
     }
-    unsigned nonCsAreas() const {
+    unsigned externalAreas() const {
         unsigned result = 0;
-        for (const auto& course : codes) result |= course.facts->nonCsAreas;
+        for (const auto& course : codes) result |= course.facts->externalAreas;
         return result;
     }
 };
 
-bool isWpe(const Course& course) {
-    return course.facts->parsed.subject == "WPE";
+bool isSlotCourse(const Course& course) {
+    return course.facts->slotCourse;
 }
 
 std::vector<Listing> groupCopies(std::vector<Course> history, std::vector<std::string>& extra) {
@@ -385,7 +440,7 @@ std::vector<Listing> groupCopies(std::vector<Course> history, std::vector<std::s
     });
     std::vector<Listing> listings;
     for (const auto& course : history) {
-        if (course.credits == 0 || (!isWpe(course) && course.credits < kMinimumCredits)) {
+        if (course.credits == 0 || (!isSlotCourse(course) && course.credits < kMinimumCredits)) {
             extra.push_back(course.code());
             continue;
         }
@@ -407,8 +462,7 @@ std::vector<Listing> groupCopies(std::vector<Course> history, std::vector<std::s
     return listings;
 }
 
-void rankWindow(const std::vector<Listing>& listings, std::size_t begin, std::size_t end, std::vector<int>& tiers) {
-    const auto& all = rules();
+void rankWindow(const Rules& all, const std::vector<Listing>& listings, std::size_t begin, std::size_t end, std::vector<int>& tiers) {
     const auto mark = [&](std::size_t i, int tier) {
         if (i >= begin && i < end) tiers[i] = std::min(tiers[i], tier);
     };
@@ -424,7 +478,7 @@ void rankWindow(const std::vector<Listing>& listings, std::size_t begin, std::si
             }
         }
         for (std::size_t i = 0; i < end && !found; ++i) {
-            if (!listings[i].fillsLines() || !(listings[i].nonCsAreas() & bit)) continue;
+            if (!listings[i].fillsLines() || !(listings[i].externalAreas() & bit)) continue;
             mark(i, kFirstTier);
             found = true;
         }
@@ -469,10 +523,10 @@ void rankWindow(const std::vector<Listing>& listings, std::size_t begin, std::si
     }
 }
 
-std::vector<std::size_t> seatingOrder(const std::vector<Listing>& listings, std::size_t takenEnd) {
+std::vector<std::size_t> seatingOrder(const Rules& all, const std::vector<Listing>& listings, std::size_t takenEnd) {
     std::vector<int> tiers(listings.size(), kLastTier);
-    rankWindow(listings, 0, takenEnd, tiers);
-    rankWindow(listings, takenEnd, listings.size(), tiers);
+    rankWindow(all, listings, 0, takenEnd, tiers);
+    rankWindow(all, listings, takenEnd, listings.size(), tiers);
     std::vector<std::size_t> order;
     for (std::size_t i = 0; i < listings.size(); ++i) order.push_back(i);
     std::stable_sort(order.begin(), order.end(), [&](std::size_t a, std::size_t b) {
@@ -484,8 +538,7 @@ std::vector<std::size_t> seatingOrder(const std::vector<Listing>& listings, std:
     return order;
 }
 
-std::vector<int> matchLines(const std::vector<Listing>& listings, const std::vector<std::size_t>& order, std::size_t takenEnd, CodeBook& book) {
-    const auto& all = rules();
+std::vector<int> matchLines(const Rules& all, const std::vector<Listing>& listings, const std::vector<std::size_t>& order, std::size_t takenEnd, CodeBook& book) {
     const auto lineCount = all.lines.size();
     const auto setCount = all.document.at("onlyOneSets").size();
     const auto lineStart = listings.size();
@@ -543,8 +596,7 @@ std::vector<int> matchLines(const std::vector<Listing>& listings, const std::vec
     return holders;
 }
 
-void layOutLines(const std::vector<Listing>& listings, const std::vector<std::size_t>& order, std::vector<int>& holders) {
-    const auto& all = rules();
+void layOutLines(const Rules& all, const std::vector<Listing>& listings, const std::vector<std::size_t>& order, std::vector<int>& holders) {
     std::vector<std::size_t> rank(listings.size(), 0);
     for (std::size_t i = 0; i < order.size(); ++i) rank[order[i]] = i;
     for (const auto& group : all.sameFilter) {
@@ -604,6 +656,7 @@ struct Slot {
 struct Manual {
     std::vector<bool> lines;
     bool depthConfirmed = false;
+    std::vector<std::string> confirmations;
 };
 
 struct Placement {
@@ -621,13 +674,12 @@ CheckState takenOrPlanned(bool anyPlanned) {
     return anyPlanned ? CheckState::Planned : CheckState::Met;
 }
 
-CheckResult areaCheck(const Placement& placement, std::size_t area) {
-    const auto& all = rules();
+CheckResult areaCheck(const Rules& all, const Placement& placement, std::size_t area) {
     const auto bit = 1U << area;
     auto taken = false;
     auto planned = false;
     for (std::size_t i = 0; i < all.lines.size(); ++i) {
-        if (all.lines[i].section != "cs" || placement.holders[i] == kNone) continue;
+        if (all.lines[i].section != all.areaSections[area] || placement.holders[i] == kNone) continue;
         const auto& listing = placement.listings[static_cast<std::size_t>(placement.holders[i])];
         if (!(listing.areas() & bit)) continue;
         (listing.taken() ? taken : planned) = true;
@@ -636,21 +688,20 @@ CheckResult areaCheck(const Placement& placement, std::size_t area) {
     auto nonCs = false;
     for (const auto& listing : placement.listings) {
         if (!listing.fillsLines()) continue;
-        if (listing.nonCsAreas() & bit) nonCs = true;
-        if ((listing.areas() | listing.nonCsAreas()) & bit) codes.push_back(listing.first().code);
+        if (listing.externalAreas() & bit) nonCs = true;
+        if ((listing.areas() | listing.externalAreas()) & bit) codes.push_back(listing.first().code);
     }
     if (taken || planned) return {takenOrPlanned(!taken), std::move(codes), true};
     if (nonCs) return {CheckState::Check, std::move(codes), true};
     return {CheckState::NotMet, {}, false};
 }
 
-CheckResult scienceCheck(const Placement& placement) {
-    const auto& all = rules();
+CheckResult scienceCheck(const Rules& all, const Placement& placement) {
     std::vector<std::size_t> takenCount(all.disciplines.size(), 0);
     std::vector<std::size_t> anyCount(all.disciplines.size(), 0);
     std::vector<std::string> codes;
     for (std::size_t i = 0; i < all.lines.size(); ++i) {
-        if (all.lines[i].section != "science" || placement.holders[i] == kNone) continue;
+        if (all.lines[i].section != all.disciplineSection || placement.holders[i] == kNone) continue;
         const auto discipline = placement.shown[i]->discipline;
         if (discipline == kNone) continue;
         const auto index = static_cast<std::size_t>(discipline);
@@ -670,19 +721,17 @@ struct HumanitiesCourse {
     bool taken;
 };
 
-std::vector<HumanitiesCourse> humanitiesCourses(const Placement& placement) {
-    const auto& all = rules();
+std::vector<HumanitiesCourse> humanitiesCourses(const Rules& all, const Placement& placement) {
     std::vector<HumanitiesCourse> result;
     for (std::size_t i = 0; i < all.lines.size(); ++i) {
-        if (placement.holders[i] == kNone || all.lines[i].filter->at("type") != "huaSubjects") continue;
+        if (placement.holders[i] == kNone || std::find(all.groupingLines.begin(), all.groupingLines.end(), all.lines[i].id) == all.groupingLines.end() || placement.shown[i]->grouping == kNone) continue;
         const auto& listing = placement.listings[static_cast<std::size_t>(placement.holders[i])];
         result.push_back({placement.shown[i]->code, placement.shown[i]->grouping, listing.taken()});
     }
     return result;
 }
 
-int depthGrouping(const std::vector<HumanitiesCourse>& courses) {
-    const auto& all = rules();
+int depthGrouping(const Rules& all, const std::vector<HumanitiesCourse>& courses) {
     for (std::size_t group = 0; group < all.groupings.size(); ++group) {
         const auto count = std::count_if(courses.begin(), courses.end(), [&](const HumanitiesCourse& course) {
             return course.grouping == static_cast<int>(group);
@@ -692,10 +741,9 @@ int depthGrouping(const std::vector<HumanitiesCourse>& courses) {
     return kNone;
 }
 
-CheckResult depthCheck(const Placement& placement, const Manual& manual) {
-    const auto& all = rules();
-    auto courses = humanitiesCourses(placement);
-    const auto depth = depthGrouping(courses);
+CheckResult depthCheck(const Rules& all, const Placement& placement, const Manual& manual) {
+    auto courses = humanitiesCourses(all, placement);
+    const auto depth = depthGrouping(all, courses);
     if (depth == kNone) {
         const auto spans = !courses.empty() && std::any_of(courses.begin(), courses.end(), [&](const HumanitiesCourse& course) {
             return course.grouping != courses.front().grouping;
@@ -720,10 +768,9 @@ CheckResult depthCheck(const Placement& placement, const Manual& manual) {
     return {manual.depthConfirmed ? takenOrPlanned(anyPlanned) : CheckState::Check, std::move(codes), true};
 }
 
-CheckResult breadthCheck(const Placement& placement) {
-    const auto& all = rules();
-    auto courses = humanitiesCourses(placement);
-    const auto depth = depthGrouping(courses);
+CheckResult breadthCheck(const Rules& all, const Placement& placement) {
+    auto courses = humanitiesCourses(all, placement);
+    const auto depth = depthGrouping(all, courses);
     if (depth == kNone) {
         if (courses.empty()) return {CheckState::NotMet, {}, false};
         return {CheckState::Check, {}, false};
@@ -740,13 +787,13 @@ CheckResult breadthCheck(const Placement& placement) {
         if (course.taken) anyTaken = true;
     }
     if (!outside.empty()) return {takenOrPlanned(!anyTaken), std::move(outside), true};
-    if (all.groupingNames[static_cast<std::size_t>(depth)] != "modern-languages") return {CheckState::NotMet, {}, false};
+    if (all.groupingNames[static_cast<std::size_t>(depth)] != all.exceptionGrouping) return {CheckState::NotMet, {}, false};
     std::vector<std::string> codes;
     for (const auto& course : courses) codes.push_back(course.code);
     return {CheckState::Check, std::move(codes), true};
 }
 
-CheckResult apIbCheck(const Placement& placement) {
+CheckResult apIbCheck(const Rules& all, const Placement& placement) {
     std::vector<std::string> codes;
     for (const auto& listing : placement.listings) {
         const auto flagged = std::any_of(listing.codes.begin(), listing.codes.end(), [](const Course& course) {
@@ -754,25 +801,23 @@ CheckResult apIbCheck(const Placement& placement) {
         });
         if (flagged) codes.push_back(listing.first().code);
     }
-    const auto state = codes.size() > rules().apIbLimit ? CheckState::Check : CheckState::Met;
+    const auto state = codes.size() > all.apIbLimit ? CheckState::Check : CheckState::Met;
     return {state, std::move(codes), true};
 }
 
-CheckResult mathLimitCheck(const Placement& placement) {
-    const auto& all = rules();
+CheckResult mathLimitCheck(const Rules& all, const Placement& placement) {
     std::vector<std::string> codes;
     for (std::size_t i = 0; i < all.lines.size(); ++i) {
-        if (all.lines[i].section != "math" || placement.holders[i] == kNone) continue;
+        if (all.lines[i].section != all.levelSection || placement.holders[i] == kNone) continue;
         if (placement.shown[i]->parsed.level < all.mathCeiling) codes.push_back(placement.shown[i]->code);
     }
     return {CheckState::Met, std::move(codes), true};
 }
 
-CheckResult graduateCheck(const Placement& placement) {
-    const auto& all = rules();
+CheckResult graduateCheck(const Rules& all, const Placement& placement) {
     std::vector<bool> onCsLine(placement.listings.size(), false);
     for (std::size_t i = 0; i < all.lines.size(); ++i) {
-        if (all.lines[i].section == "cs" && placement.holders[i] != kNone) onCsLine[static_cast<std::size_t>(placement.holders[i])] = true;
+        if (all.lines[i].section == all.graduateSection && placement.holders[i] != kNone) onCsLine[static_cast<std::size_t>(placement.holders[i])] = true;
     }
     std::vector<std::string> codes;
     for (std::size_t i = 0; i < placement.listings.size(); ++i) {
@@ -785,32 +830,51 @@ CheckResult graduateCheck(const Placement& placement) {
     return {CheckState::Check, std::move(codes), true};
 }
 
-std::vector<CheckResult> evaluateChecks(const Placement& placement, const Manual& manual, bool anyCourses) {
+CheckResult minimumCoursesCheck(const Rules& all, const Placement& placement, const json& check) {
+    std::vector<std::string> codes;
+    std::size_t taken = 0;
+    for (std::size_t i = 0; i < all.lines.size(); ++i) {
+        if (all.lines[i].section != check.at("section").get_ref<const std::string&>() || placement.holders[i] == kNone) continue;
+        const auto& listing = placement.listings[static_cast<std::size_t>(placement.holders[i])];
+        codes.push_back(placement.shown[i]->code);
+        if (listing.taken()) ++taken;
+    }
+    const auto minimum = check.at("minCourses").get<std::size_t>();
+    if (codes.size() < minimum) return {CheckState::NotMet, std::move(codes), false};
+    return {taken >= minimum ? CheckState::Met : CheckState::Planned, std::move(codes), true};
+}
+
+std::vector<CheckResult> evaluateChecks(const Rules& all, const Placement& placement, const Manual& manual, bool anyCourses) {
     std::vector<CheckResult> results;
     std::size_t area = 0;
-    for (const auto& check : rules().document.at("checks")) {
+    for (const auto& check : all.document.at("checks")) {
         const auto& type = check.at("type").get_ref<const std::string&>();
-        if (type == "area") results.push_back(areaCheck(placement, area++));
-        else if (type == "scienceDepth") results.push_back(scienceCheck(placement));
-        else if (type == "huaDepth") results.push_back(depthCheck(placement, manual));
-        else if (type == "huaBreadth") results.push_back(breadthCheck(placement));
-        else if (type == "apIbLimit") results.push_back(apIbCheck(placement));
+        if (type == "area") results.push_back(areaCheck(all, placement, area++));
+        else if (type == "disciplineCount") results.push_back(scienceCheck(all, placement));
+        else if (type == "groupDepth") results.push_back(depthCheck(all, placement, manual));
+        else if (type == "groupBreadth") results.push_back(breadthCheck(all, placement));
+        else if (type == "apIbLimit") results.push_back(apIbCheck(all, placement));
         else if (type == "residency") results.push_back({anyCourses ? CheckState::Check : CheckState::NotMet, {}, false});
-        else if (type == "mathLevelLimit") results.push_back(mathLimitCheck(placement));
-        else results.push_back(graduateCheck(placement));
+        else if (type == "levelLimit") results.push_back(mathLimitCheck(all, placement));
+        else if (type == "minCourses") results.push_back(minimumCoursesCheck(all, placement, check));
+        else if (type == "manual") {
+            const auto confirmed = indexOf(manual.confirmations, check.at("confirmation").get<std::string>()) != kNone;
+            results.push_back({confirmed ? CheckState::Met : CheckState::Check, {}, confirmed});
+        }
+        else if (type == "graduateEquivalence") results.push_back(graduateCheck(all, placement));
+        else throw badRequest("sheet", "contains an unknown check type");
     }
     return results;
 }
 
-Placement place(const std::vector<Course>& history, const Manual& manual, CodeBook& book) {
-    const auto& all = rules();
+Placement place(const Rules& all, const std::vector<Course>& history, const Manual& manual, CodeBook& book) {
     Placement result;
     result.listings = groupCopies(history, result.extra);
     const auto& listings = result.listings;
     const auto takenEnd = static_cast<std::size_t>(std::count_if(listings.begin(), listings.end(), [](const Listing& listing) { return listing.taken(); }));
-    const auto order = seatingOrder(listings, takenEnd);
-    result.holders = matchLines(listings, order, takenEnd, book);
-    layOutLines(listings, order, result.holders);
+    const auto order = seatingOrder(all, listings, takenEnd);
+    result.holders = matchLines(all, listings, order, takenEnd, book);
+    layOutLines(all, listings, order, result.holders);
 
     result.placed.assign(listings.size(), false);
     const auto seatCourse = [&](std::size_t listing, const std::string& code) {
@@ -841,7 +905,7 @@ Placement place(const std::vector<Course>& history, const Manual& manual, CodeBo
         const auto fill = [&](bool taken) {
             for (std::size_t c = 0; c < listings.size() && slots.size() < count; ++c) {
                 const auto& course = listings[c].codes.front();
-                if (!isWpe(course) || course.taken != taken) continue;
+                if (!isSlotCourse(course) || course.taken != taken || !fits(course.code(), course.facts->parsed, *all.lines[i].filter)) continue;
                 slots.push_back({static_cast<int>(c), taken ? "done" : "planned"});
                 seatCourse(c, course.code());
             }
@@ -857,15 +921,14 @@ Placement place(const std::vector<Course>& history, const Manual& manual, CodeBo
     for (std::size_t i = 0; i < lineCount; ++i) {
         if (all.lines[i].pool) result.filled[i] = 0;
     }
-    result.checks = evaluateChecks(result, manual, !history.empty());
+    result.checks = evaluateChecks(all, result, manual, !history.empty());
     return result;
 }
 
-json candidateResult(const Course& candidate, const std::vector<Course>& history, const Placement& base, const Manual& manual, CodeBook& book) {
+json candidateResult(const Rules& all, const Course& candidate, const std::vector<Course>& history, const Placement& base, const Manual& manual, CodeBook& book) {
     auto trial = history;
     trial.push_back(candidate);
-    const auto after = place(trial, manual, book);
-    const auto& all = rules();
+    const auto after = place(all, trial, manual, book);
     const auto total = [](const Placement& placement) {
         int sum = 0;
         for (const auto count : placement.filled) sum += count;
@@ -885,16 +948,34 @@ json candidateResult(const Course& candidate, const std::vector<Course>& history
     return {{"code", candidate.code()}, {"closesLines", std::move(lines)}, {"closesChecks", std::move(checks)}};
 }
 
-json respond(const json& root) {
+json respond(const json& root, std::unordered_map<std::string, std::unique_ptr<Rules>>& cache) {
     const auto* version = find(root, "version");
     if (!version) throw badRequest("version", "is missing");
     if (!version->is_number_integer()) throw badRequest("version", "must be a whole number");
     if (*version != 1) throw AuditError{"unsupportedVersion", "This engine understands version 1", version->dump()};
     const auto* id = find(root, "requirements");
     if (!id || !id->is_string()) throw badRequest("requirements", "must be a string");
-    if (*id != "cs-2030") throw AuditError{"unknownRequirements", "Unknown requirements: " + id->get<std::string>(), *id};
+    const auto key = id->get<std::string>();
+    const auto* sheet = find(root, "sheet");
+    if (sheet) {
+        if (!sheet->is_object() || !sheet->contains("id") || !sheet->at("id").is_string() || sheet->at("id") != *id) {
+            throw badRequest("sheet", "must match requirements");
+        }
+        const auto found = cache.find(key);
+        if (found == cache.end() || found->second->document != *sheet) {
+            try {
+                auto parsed = std::make_unique<Rules>(*sheet);
+                cache[key] = std::move(parsed);
+            } catch (...) {
+                throw badRequest("sheet", "must be a tracking sheet");
+            }
+        }
+    }
+    const auto loaded = cache.find(key);
+    if (loaded == cache.end()) throw AuditError{"unknownRequirements", "Unknown requirements: " + key, *id};
+    const auto& all = *loaded->second;
 
-    CodeBook book;
+    CodeBook book(all);
     auto history = courses(root, "taken", true, book);
     const auto planned = courses(root, "planned", false, book);
     history.insert(history.end(), planned.begin(), planned.end());
@@ -909,19 +990,21 @@ json respond(const json& root) {
     }
     const auto& confirmed = manualList ? *manualList : emptyList;
 
-    const auto& all = rules();
     const auto& requirements = all.document;
     Manual manual;
+    manual.confirmations = confirmed.get<std::vector<std::string>>();
     manual.lines.assign(all.lines.size(), false);
     for (const auto& item : requirements.at("manualItems")) {
         if (!contains(confirmed, item.at("id").get<std::string>())) continue;
-        if (item.at("id") == "hua-depth-confirmation") manual.depthConfirmed = true;
+        for (const auto& check : requirements.at("checks")) {
+            if (check.value("confirmation", std::string{}) == item.at("id").get<std::string>()) manual.depthConfirmed = true;
+        }
         if (!item.contains("line")) continue;
         const auto line = std::find_if(all.lines.begin(), all.lines.end(), [&](const LineRule& rule) { return item.at("line") == rule.id; });
         manual.lines[static_cast<std::size_t>(line - all.lines.begin())] = true;
     }
 
-    auto placement = place(history, manual, book);
+    auto placement = place(all, history, manual, book);
     const auto& listings = placement.listings;
     auto& extra = placement.extra;
     const auto& lines = requirements.at("lines");
@@ -1024,7 +1107,7 @@ json respond(const json& root) {
     }
     json candidateResults = json::array();
     for (const auto& candidate : candidates) {
-        candidateResults.push_back(candidateResult(candidate, history, placement, manual, book));
+        candidateResults.push_back(candidateResult(all, candidate, history, placement, manual, book));
     }
     return {{"ok", true}, {"version", 1}, {"sections", std::move(sections)}, {"checks", std::move(checks)},
             {"freeElectives", {{"creditsDone", creditsDone}, {"creditsPlanned", creditsPlanned},
@@ -1034,10 +1117,16 @@ json respond(const json& root) {
 
 }
 
-std::string handleAudit(std::string_view requestJson) {
+struct AuditEngine::Impl {
+    std::unordered_map<std::string, std::unique_ptr<Rules>> rules;
+};
+
+AuditEngine::AuditEngine() : impl_(std::make_shared<Impl>()) {}
+
+std::string AuditEngine::handle(std::string_view requestJson) const {
     try {
         const auto root = json::parse(requestJson);
-        return respond(root).dump(-1, ' ', false, json::error_handler_t::replace);
+        return respond(root, impl_->rules).dump(-1, ' ', false, json::error_handler_t::replace);
     } catch (const AuditError& error) {
         return json({{"ok", false}, {"version", 1},
                      {"error", {{"code", error.code}, {"message", error.message}, {"detail", error.detail}}}})

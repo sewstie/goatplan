@@ -3,6 +3,7 @@
 #include <string>
 #include <string_view>
 #include "goatplan/model.hpp"
+#include "goatplan/audit.hpp"
 
 namespace goatplan {
 
@@ -16,6 +17,7 @@ public:
 
 private:
     std::optional<Term> term_;
+    AuditEngine audit_;
 };
 
 }
