@@ -6,8 +6,8 @@ a bottom sheet on phones. The selected major appears beside Change.
 
 The registry controls availability. Checked sheets can appear in the public
 picker when the degree release gate opens. Beta sheets require the existing
-tester invitation. CS is currently the only registered sheet. The other
-launch majors remain Coming soon until their own tickets add them.
+tester invitation. CS and RBE are registered beta sheets. The other launch
+majors remain Coming soon until their own tickets add them.
 
 The request action sends `degree_major_requested` with a `major` field.
 It sends no course history, pins or confirmations.

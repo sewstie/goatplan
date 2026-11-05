@@ -1,0 +1,1282 @@
+{
+  "id": "rbe-2030",
+  "$schema": "./degree-rules.schema.json",
+  "major": "Robotics Engineering",
+  "classYear": 2030,
+  "catalogYear": "2026-2027",
+  "effectiveDate": "AY 2026-2027",
+  "source": "https://www.wpi.edu/sites/default/files/2026-05/RBE-2030_fillable.pdf",
+  "catalogSource": "https://wpi.cleancatalog.net/robotics-engineering/robotics-engineering-major",
+  "totalUnits": 15.333333333333334,
+  "residencyUnits": 8,
+  "crossLists": [
+    [
+      "CS 2022",
+      "MA 2201"
+    ],
+    [
+      "CS 4032",
+      "MA 3257"
+    ],
+    [
+      "CS 4033",
+      "MA 3457"
+    ],
+    [
+      "CS 3043",
+      "SS 3043"
+    ],
+    [
+      "CS 4300",
+      "IMGD 4300"
+    ],
+    [
+      "CS 4343",
+      "DS 4343"
+    ],
+    [
+      "CS 4344",
+      "DS 4344"
+    ],
+    [
+      "CS 4345",
+      "DS 4345"
+    ],
+    [
+      "CS 4433",
+      "DS 4433"
+    ],
+    [
+      "CS 4801",
+      "ECE 4802"
+    ],
+    [
+      "IMGD 4100",
+      "CS 4100"
+    ],
+    [
+      "GOV 2314",
+      "ID 2314"
+    ],
+    [
+      "BME 4011",
+      "ECE 4011"
+    ],
+    [
+      "BME 4023",
+      "ECE 4023"
+    ],
+    [
+      "RBE 4322",
+      "ME 4322"
+    ]
+  ],
+  "huaSubjects": [
+    "AR",
+    "TH",
+    "MU",
+    "AB",
+    "CN",
+    "ISE",
+    "GN",
+    "SP",
+    "EN",
+    "WR",
+    "HI",
+    "HU",
+    "INTL",
+    "PY",
+    "RE"
+  ],
+  "orderNote": "All 5 HUA courses must be completed before the Inquiry Seminar; shown as text, not enforced",
+  "sections": [
+    {
+      "id": "hua",
+      "name": "Humanities and Arts",
+      "minUnits": 2,
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "note": "Finish five HUA courses before Inquiry. Check the theme and sequence with your advisor."
+    },
+    {
+      "id": "wpe",
+      "name": "Wellness and Physical Education",
+      "minUnits": 0.333333,
+      "lines": [
+        7
+      ]
+    },
+    {
+      "id": "social-science",
+      "name": "Social Science",
+      "minUnits": 0.666667,
+      "lines": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "iqp",
+      "name": "Interactive Qualifying Project",
+      "minUnits": 1,
+      "lines": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "id": "free-electives",
+      "name": "Free Electives",
+      "minUnits": 1,
+      "creditPool": true,
+      "poolCredits": 9,
+      "lines": [
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "id": "math",
+      "name": "Mathematics",
+      "minUnits": 2.3333333333333335,
+      "lines": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "note": "Seven math courses, including calculus, differential equations, linear algebra and probability.",
+      "displayName": "Mathematics"
+    },
+    {
+      "id": "science",
+      "name": "Basic Science",
+      "minUnits": 1.3333333333333333,
+      "lines": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "note": "Two physics courses and two BB, CH, GE or PH courses. Physics examples are recommendations.",
+      "displayName": "Basic Science"
+    },
+    {
+      "id": "entrepreneurship",
+      "name": "Entrepreneurship",
+      "minUnits": 0.3333333333333333,
+      "lines": [
+        27
+      ],
+      "note": "ETR courses or BUS 2001; confirm other approved equivalents with your advisor.",
+      "displayName": "Entrepreneurship"
+    },
+    {
+      "id": "robotics",
+      "name": "Robotics Engineering",
+      "minUnits": 1.6666666666666667,
+      "lines": [
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "note": "RBE 2020, RBE 300X and RBE 3100 do not fill these five robotics lines. Confirm approved substitutions.",
+      "displayName": "Robotics Engineering"
+    },
+    {
+      "id": "computing",
+      "name": "Computer Science",
+      "minUnits": 1.0,
+      "lines": [
+        33,
+        34,
+        35
+      ],
+      "note": "Three courses including object-oriented programming and software engineering.",
+      "displayName": "Computer Science"
+    },
+    {
+      "id": "electrical",
+      "name": "Electrical and Computer Engineering",
+      "minUnits": 0.6666666666666666,
+      "lines": [
+        36,
+        37
+      ],
+      "note": "Two courses including embedded systems.",
+      "displayName": "Electrical and Computer Engineering"
+    },
+    {
+      "id": "engineering",
+      "name": "Engineering Science",
+      "minUnits": 0.6666666666666666,
+      "lines": [
+        38,
+        39
+      ],
+      "note": "Statics and classical controls. RBE 502 cannot meet controls.",
+      "displayName": "Engineering Science"
+    },
+    {
+      "id": "design-electives",
+      "name": "Engineering Science and Design Electives",
+      "minUnits": 1.0,
+      "lines": [
+        40,
+        41,
+        42
+      ],
+      "note": "Confirm that these three courses are approved engineering science and design electives, with two at 4000-level or higher.",
+      "displayName": "Engineering Science and Design Electives"
+    },
+    {
+      "id": "social-implications",
+      "name": "Social Implications",
+      "minUnits": 0.3333333333333333,
+      "lines": [
+        43
+      ],
+      "note": "GOV 2302 or GOV/ID 2314 may overlap social science. If line 43 is empty, confirm approved shared credit here, then review total academic credit in Requirement checks. Shared credit counts once.",
+      "displayName": "Social Implications"
+    },
+    {
+      "id": "mqp",
+      "name": "Major Qualifying Project",
+      "minUnits": 1.0,
+      "lines": [
+        44,
+        45,
+        46
+      ],
+      "note": "Confirm a completed capstone design experience in Robotics Engineering.",
+      "displayName": "Major Qualifying Project"
+    }
+  ],
+  "lines": [
+    {
+      "line": 1,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ]
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 2,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ]
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 3,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ]
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 4,
+      "section": "hua",
+      "name": "Inquiry Seminar or Practicum",
+      "units": 0.333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "HU 3900",
+          "HU 3910"
+        ]
+      },
+      "displayName": "Inquiry / Practicum"
+    },
+    {
+      "line": 5,
+      "section": "hua",
+      "name": "Humanities breadth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ]
+      },
+      "displayName": "Humanities breadth"
+    },
+    {
+      "line": 6,
+      "section": "hua",
+      "name": "Humanities elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ]
+      },
+      "displayName": "Humanities elective"
+    },
+    {
+      "line": 7,
+      "section": "wpe",
+      "name": "Wellness and Physical Education",
+      "units": 0.333333,
+      "subSlots": 4,
+      "subSlotUnits": 0.083333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "WPE"
+        ]
+      },
+      "displayName": "WPE"
+    },
+    {
+      "line": 8,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECON",
+          "ENV",
+          "GOV",
+          "PSY",
+          "SD",
+          "SOC",
+          "SS",
+          "STS",
+          "DEV"
+        ],
+        "additionalCourses": [
+          "ID 2050"
+        ],
+        "priority": -1
+      },
+      "displayName": "Social science"
+    },
+    {
+      "line": 9,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECON",
+          "ENV",
+          "GOV",
+          "PSY",
+          "SD",
+          "SOC",
+          "SS",
+          "STS",
+          "DEV"
+        ],
+        "additionalCourses": [
+          "ID 2050"
+        ],
+        "priority": -1
+      },
+      "displayName": "Social science"
+    },
+    {
+      "line": 10,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 11,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 12,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 13,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 14,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 15,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 16,
+      "section": "math",
+      "name": "MA 1021",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 1021"
+        ]
+      }
+    },
+    {
+      "line": 17,
+      "section": "math",
+      "name": "MA 1022",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 1022"
+        ]
+      }
+    },
+    {
+      "line": 18,
+      "section": "math",
+      "name": "MA 1023",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 1023"
+        ]
+      }
+    },
+    {
+      "line": 19,
+      "section": "math",
+      "name": "MA 1024",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 1024"
+        ]
+      }
+    },
+    {
+      "line": 20,
+      "section": "math",
+      "name": "MA 2051",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 2051"
+        ]
+      }
+    },
+    {
+      "line": 21,
+      "section": "math",
+      "name": "MA 2071",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 2071"
+        ]
+      }
+    },
+    {
+      "line": 22,
+      "section": "math",
+      "name": "Probability (MA 2621 or MA 2631)",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 2621",
+          "MA 2631"
+        ]
+      }
+    },
+    {
+      "line": 23,
+      "section": "science",
+      "name": "Physics",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "PH"
+        ]
+      }
+    },
+    {
+      "line": 24,
+      "section": "science",
+      "name": "Physics",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "PH"
+        ]
+      }
+    },
+    {
+      "line": 25,
+      "section": "science",
+      "name": "Other science",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "BB",
+          "CH",
+          "GE",
+          "PH"
+        ]
+      }
+    },
+    {
+      "line": 26,
+      "section": "science",
+      "name": "Other science",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "BB",
+          "CH",
+          "GE",
+          "PH"
+        ]
+      }
+    },
+    {
+      "line": 27,
+      "section": "entrepreneurship",
+      "name": "Entrepreneurship",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ETR"
+        ],
+        "additionalCourses": [
+          "BUS 2001"
+        ]
+      }
+    },
+    {
+      "line": 28,
+      "section": "robotics",
+      "name": "RBE 1001",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "RBE 1001"
+        ]
+      }
+    },
+    {
+      "line": 29,
+      "section": "robotics",
+      "name": "RBE 2001",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "RBE 2001"
+        ]
+      }
+    },
+    {
+      "line": 30,
+      "section": "robotics",
+      "name": "RBE 2002",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "RBE 2002"
+        ]
+      }
+    },
+    {
+      "line": 31,
+      "section": "robotics",
+      "name": "RBE 3001",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "RBE 3001"
+        ]
+      }
+    },
+    {
+      "line": 32,
+      "section": "robotics",
+      "name": "RBE 3002",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "RBE 3002"
+        ]
+      }
+    },
+    {
+      "line": 33,
+      "section": "computing",
+      "name": "Computer science elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "CS"
+        ]
+      }
+    },
+    {
+      "line": 34,
+      "section": "computing",
+      "name": "Object-oriented programming",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2102",
+          "CS 2103",
+          "CS 2119"
+        ]
+      }
+    },
+    {
+      "line": 35,
+      "section": "computing",
+      "name": "Software engineering",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 3733",
+          "RBE 300X"
+        ]
+      }
+    },
+    {
+      "line": 36,
+      "section": "electrical",
+      "name": "Electrical and computer engineering",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECE"
+        ]
+      }
+    },
+    {
+      "line": 37,
+      "section": "electrical",
+      "name": "Embedded systems",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "ECE 2049",
+          "RBE 2020"
+        ]
+      }
+    },
+    {
+      "line": 38,
+      "section": "engineering",
+      "name": "Statics",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "ES 2501"
+        ]
+      }
+    },
+    {
+      "line": 39,
+      "section": "engineering",
+      "name": "Classical controls",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "ES 3011",
+          "ME 3703",
+          "ECE 3012",
+          "AE 2310"
+        ]
+      }
+    },
+    {
+      "line": 40,
+      "section": "design-electives",
+      "name": "Engineering science and design elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "BME",
+          "CE",
+          "CHE",
+          "CS",
+          "ECE",
+          "ES",
+          "ME",
+          "RBE"
+        ],
+        "excludedCourses": [
+          "RBE 3100",
+          "CS 3043"
+        ]
+      }
+    },
+    {
+      "line": 41,
+      "section": "design-electives",
+      "name": "Engineering science and design elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "BME",
+          "CE",
+          "CHE",
+          "CS",
+          "ECE",
+          "ES",
+          "ME",
+          "RBE"
+        ],
+        "excludedCourses": [
+          "RBE 3100",
+          "CS 3043"
+        ]
+      }
+    },
+    {
+      "line": 42,
+      "section": "design-electives",
+      "name": "Engineering science and design elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "BME",
+          "CE",
+          "CHE",
+          "CS",
+          "ECE",
+          "ES",
+          "ME",
+          "RBE"
+        ],
+        "excludedCourses": [
+          "RBE 3100",
+          "CS 3043"
+        ]
+      }
+    },
+    {
+      "line": 43,
+      "section": "social-implications",
+      "name": "Social implications",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 3043",
+          "SS 3043",
+          "GOV 2302",
+          "GOV 2314",
+          "ID 2314",
+          "RBE 3100"
+        ]
+      }
+    },
+    {
+      "line": 44,
+      "section": "mqp",
+      "name": "MQP",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 45,
+      "section": "mqp",
+      "name": "MQP",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 46,
+      "section": "mqp",
+      "name": "MQP",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "hua-depth",
+      "name": "Humanities depth",
+      "type": "groupDepth",
+      "minCourses": 3,
+      "requiresConfirmation": true,
+      "note": "At least three thematically-related courses in the same grouping",
+      "confirmation": "hua-depth-confirmation",
+      "section": "hua",
+      "lines": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "hua-breadth",
+      "name": "Humanities breadth",
+      "type": "groupBreadth",
+      "groupings": {
+        "art-drama-music": [
+          "AR",
+          "TH",
+          "MU"
+        ],
+        "modern-languages": [
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP"
+        ],
+        "literature-writing": [
+          "EN",
+          "WR"
+        ],
+        "history-humanities": [
+          "HI",
+          "HU",
+          "INTL"
+        ],
+        "philosophy-religion": [
+          "PY",
+          "RE"
+        ]
+      },
+      "allLanguageException": true,
+      "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",
+      "groupingOrder": [
+        "art-drama-music",
+        "modern-languages",
+        "literature-writing",
+        "history-humanities",
+        "philosophy-religion"
+      ],
+      "section": "hua",
+      "exceptionGrouping": "modern-languages",
+      "depthCheck": "hua-depth"
+    },
+    {
+      "id": "hua-ap-ib-limit",
+      "name": "AP/IB limit in Humanities",
+      "type": "apIbLimit",
+      "section": "hua",
+      "maxApIb": 1,
+      "note": "Only 1 AP/IB course can be used toward HUA requirements"
+    },
+    {
+      "id": "residency",
+      "name": "Residency",
+      "type": "residency",
+      "minUnits": 8,
+      "note": "Minimum of 8 units must be completed at WPI; shows check-yourself once typed courses are present"
+    },
+    {
+      "id": "math-equivalents",
+      "name": "Mathematics and equivalents",
+      "type": "manual",
+      "confirmation": "math-equivalents-confirmation",
+      "note": "Confirm the seven math courses and any approved calculus substitutions against Workday.",
+      "help": "Confirm the seven math courses and any approved calculus substitutions against Workday.",
+      "lines": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "robotics-equivalents",
+      "name": "Robotics substitutions",
+      "type": "manual",
+      "confirmation": "robotics-equivalents-confirmation",
+      "note": "Confirm five robotics courses including the four unified robotics courses. RBE 2020, RBE 300X and RBE 3100 cannot fill this group. An advanced RBE course can replace RBE 1001 with approval.",
+      "help": "Confirm five robotics courses including the four unified robotics courses. RBE 2020, RBE 300X and RBE 3100 cannot fill this group. An advanced RBE course can replace RBE 1001 with approval.",
+      "lines": [
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "programming-equivalents",
+      "name": "Programming and engineering equivalents",
+      "type": "manual",
+      "confirmation": "programming-equivalents-confirmation",
+      "note": "Confirm object-oriented programming, software engineering, embedded systems and statics, including any approved alternatives.",
+      "help": "Confirm object-oriented programming, software engineering, embedded systems and statics, including any approved alternatives.",
+      "lines": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "classical-controls",
+      "name": "Classical controls",
+      "type": "manual",
+      "confirmation": "classical-controls-confirmation",
+      "note": "The sheet lists ME 3703; the catalog lists AE 2310. Confirm that your selected course meets classical controls. RBE 502 does not qualify.",
+      "help": "The sheet lists ME 3703; the catalog lists AE 2310. Confirm that your selected course meets classical controls. RBE 502 does not qualify.",
+      "lines": [
+        39
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "design-distribution",
+      "name": "Design elective distribution",
+      "type": "manual",
+      "confirmation": "design-distribution-confirmation",
+      "note": "Confirm three approved engineering science and design electives, with at least two at 4000-level or above. Department prefixes alone do not establish approval.",
+      "help": "Confirm three approved engineering science and design electives, with at least two at 4000-level or above. Department prefixes alone do not establish approval.",
+      "lines": [
+        40,
+        41,
+        42
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "social-overlap",
+      "name": "Social implications and shared credit",
+      "type": "manual",
+      "confirmation": "social-overlap-confirmation",
+      "note": "Only GOV 2302 or GOV/ID 2314 may overlap social science and social implications. Confirm the allocation and total academic credit with your advisor; never count that credit twice.",
+      "help": "Only GOV 2302 or GOV/ID 2314 may overlap social science and social implications. Confirm the allocation and total academic credit with your advisor; never count that credit twice.",
+      "lines": [
+        43
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "entrepreneurship-equivalents",
+      "name": "Entrepreneurship approval",
+      "type": "manual",
+      "confirmation": "entrepreneurship-equivalents-confirmation",
+      "note": "Confirm an ETR course, BUS 2001 or an approved equivalent meets entrepreneurship.",
+      "help": "Confirm an ETR course, BUS 2001 or an approved equivalent meets entrepreneurship.",
+      "lines": [
+        27
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "hua-sequence",
+      "name": "Humanities level and sequence",
+      "type": "manual",
+      "confirmation": "hua-sequence-confirmation",
+      "note": "Confirm at least one depth course is at 2000-level or above, and all five HUA courses preceded the seminar. The modern-language exception also needs advisor review.",
+      "help": "Confirm at least one depth course is at 2000-level or above, and all five HUA courses preceded the seminar. The modern-language exception also needs advisor review.",
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "capstone-design",
+      "name": "Robotics capstone design",
+      "type": "manual",
+      "confirmation": "capstone-design-confirmation",
+      "note": "Confirm that your MQP is a completed capstone design experience in Robotics Engineering.",
+      "help": "Confirm that your MQP is a completed capstone design experience in Robotics Engineering."
+    }
+  ],
+  "manualItems": [
+    {
+      "id": "iqp-1",
+      "line": 10,
+      "name": "IQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-2",
+      "line": 11,
+      "name": "IQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-3",
+      "line": 12,
+      "name": "IQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "wpe-sports",
+      "line": 7,
+      "name": "Club or varsity sports in place of WPE",
+      "type": "checkbox"
+    },
+    {
+      "id": "hua-depth-confirmation",
+      "name": "Humanities depth confirmation",
+      "type": "checkbox",
+      "note": "Student confirms that their 3 depth courses are thematically related"
+    },
+    {
+      "id": "mqp-1",
+      "line": 44,
+      "name": "MQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-2",
+      "line": 45,
+      "name": "MQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-3",
+      "line": 46,
+      "name": "MQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "math-equivalents-confirmation",
+      "name": "Mathematics and equivalents",
+      "type": "checkbox",
+      "note": "Confirm the seven math courses and any approved calculus substitutions against Workday."
+    },
+    {
+      "id": "robotics-equivalents-confirmation",
+      "name": "Robotics substitutions",
+      "type": "checkbox",
+      "note": "Confirm five robotics courses including the four unified robotics courses. RBE 2020, RBE 300X and RBE 3100 cannot fill this group. An advanced RBE course can replace RBE 1001 with approval."
+    },
+    {
+      "id": "programming-equivalents-confirmation",
+      "name": "Programming and engineering equivalents",
+      "type": "checkbox",
+      "note": "Confirm object-oriented programming, software engineering, embedded systems and statics, including any approved alternatives."
+    },
+    {
+      "id": "classical-controls-confirmation",
+      "name": "Classical controls",
+      "type": "checkbox",
+      "note": "The sheet lists ME 3703; the catalog lists AE 2310. Confirm that your selected course meets classical controls. RBE 502 does not qualify."
+    },
+    {
+      "id": "design-distribution-confirmation",
+      "name": "Design elective distribution",
+      "type": "checkbox",
+      "note": "Confirm three approved engineering science and design electives, with at least two at 4000-level or above. Department prefixes alone do not establish approval."
+    },
+    {
+      "id": "social-overlap-confirmation",
+      "name": "Social implications and shared credit",
+      "type": "checkbox",
+      "note": "Only GOV 2302 or GOV/ID 2314 may overlap social science and social implications. Confirm the allocation and total academic credit with your advisor; never count that credit twice."
+    },
+    {
+      "id": "entrepreneurship-equivalents-confirmation",
+      "name": "Entrepreneurship approval",
+      "type": "checkbox",
+      "note": "Confirm an ETR course, BUS 2001 or an approved equivalent meets entrepreneurship."
+    },
+    {
+      "id": "hua-sequence-confirmation",
+      "name": "Humanities level and sequence",
+      "type": "checkbox",
+      "note": "Confirm at least one depth course is at 2000-level or above, and all five HUA courses preceded the seminar. The modern-language exception also needs advisor review."
+    },
+    {
+      "id": "capstone-design-confirmation",
+      "name": "Robotics capstone design",
+      "type": "checkbox",
+      "note": "Confirm that your MQP is a completed capstone design experience in Robotics Engineering."
+    },
+    {
+      "id": "social-shared-credit",
+      "line": 43,
+      "name": "Approved GOV 2302 or GOV/ID 2314 overlap",
+      "type": "checkbox",
+      "note": "Only confirm if GOV 2302 or GOV/ID 2314 already meets Social Science. Confirm the minimum 15 academic units separately; shared credit counts once."
+    }
+  ],
+  "exclusions": [],
+  "onlyOneSets": []
+}

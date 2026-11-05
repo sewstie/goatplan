@@ -68,6 +68,28 @@ TEST(Audit, UsesTheSheetsConfirmationIdForAnUnresolvedDepthCheck) {
     EXPECT_EQ(response.at("checks")[5].at("state"), "met");
 }
 
+TEST(Audit, UnrelatedManualChecksDoNotConfirmHumanitiesDepth) {
+    const Engine engine;
+    auto sheet = trackingSheet();
+    sheet["checks"].push_back({{"id", "approval"}, {"name", "Approval"},
+                               {"type", "manual"}, {"confirmation", "approval-confirmation"}});
+    sheet["manualItems"].push_back({{"id", "approval-confirmation"}, {"name", "Approval"}, {"type", "checkbox"}});
+    json request = {{"version", 1}, {"requirements", "cs-2030"}, {"sheet", sheet},
+                    {"taken", {{{"code", "HI 1311"}, {"credits", 3}},
+                               {{"code", "HI 1312"}, {"credits", 3}},
+                               {{"code", "HI 1332"}, {"credits", 3}}}},
+                    {"manual", {"approval-confirmation"}}};
+    auto response = json::parse(engine.handle(request.dump()));
+    ASSERT_EQ(response.at("ok"), true) << response;
+    EXPECT_EQ(response.at("checks")[5].at("state"), "check");
+    EXPECT_EQ(response.at("checks").back().at("state"), "met");
+    request["manual"].push_back("hua-depth-confirmation");
+    response = json::parse(engine.handle(request.dump()));
+    ASSERT_EQ(response.at("ok"), true) << response;
+    EXPECT_EQ(response.at("checks")[5].at("state"), "met");
+    EXPECT_EQ(response.at("checks").back().at("state"), "met");
+}
+
 TEST(Audit, GenericFiltersUseTheSheetsSubjectsAdditionalCoursesAndExclusions) {
     const Engine engine;
     auto sheet = trackingSheet();

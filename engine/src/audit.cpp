@@ -997,7 +997,7 @@ json respond(const json& root, std::unordered_map<std::string, std::unique_ptr<R
     for (const auto& item : requirements.at("manualItems")) {
         if (!contains(confirmed, item.at("id").get<std::string>())) continue;
         for (const auto& check : requirements.at("checks")) {
-            if (check.value("confirmation", std::string{}) == item.at("id").get<std::string>()) manual.depthConfirmed = true;
+            if (check.at("type") == "groupDepth" && check.value("confirmation", std::string{}) == item.at("id").get<std::string>()) manual.depthConfirmed = true;
         }
         if (!item.contains("line")) continue;
         const auto line = std::find_if(all.lines.begin(), all.lines.end(), [&](const LineRule& rule) { return item.at("line") == rule.id; });

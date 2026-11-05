@@ -1,0 +1,423 @@
+{
+  "sheetId": "rbe-2030",
+  "description": "Hand-worked complete history from the numbered official RBE 2030 sheet. Equivalent slots assert completion without requiring a particular course order; interpretation checks remain unresolved.",
+  "takenCourses": [
+    {
+      "code": "EN 1001",
+      "credits": 3
+    },
+    {
+      "code": "EN 1002",
+      "credits": 3
+    },
+    {
+      "code": "EN 2201",
+      "credits": 3
+    },
+    {
+      "code": "HU 3900",
+      "credits": 3
+    },
+    {
+      "code": "HI 1333",
+      "credits": 3
+    },
+    {
+      "code": "MU 1611",
+      "credits": 3
+    },
+    {
+      "code": "ECON 1110",
+      "credits": 3
+    },
+    {
+      "code": "PSY 1400",
+      "credits": 3
+    },
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "MA 1022",
+      "credits": 3
+    },
+    {
+      "code": "MA 1023",
+      "credits": 3
+    },
+    {
+      "code": "MA 1024",
+      "credits": 3
+    },
+    {
+      "code": "MA 2051",
+      "credits": 3
+    },
+    {
+      "code": "MA 2071",
+      "credits": 3
+    },
+    {
+      "code": "MA 2621",
+      "credits": 3
+    },
+    {
+      "code": "PH 1110",
+      "credits": 3
+    },
+    {
+      "code": "PH 1120",
+      "credits": 3
+    },
+    {
+      "code": "CH 1010",
+      "credits": 3
+    },
+    {
+      "code": "BB 1001",
+      "credits": 3
+    },
+    {
+      "code": "ETR 1100",
+      "credits": 3
+    },
+    {
+      "code": "RBE 1001",
+      "credits": 3
+    },
+    {
+      "code": "RBE 2001",
+      "credits": 3
+    },
+    {
+      "code": "RBE 2002",
+      "credits": 3
+    },
+    {
+      "code": "RBE 3001",
+      "credits": 3
+    },
+    {
+      "code": "RBE 3002",
+      "credits": 3
+    },
+    {
+      "code": "CS 1005",
+      "credits": 3
+    },
+    {
+      "code": "CS 2102",
+      "credits": 3
+    },
+    {
+      "code": "CS 3733",
+      "credits": 3
+    },
+    {
+      "code": "ECE 2010",
+      "credits": 3
+    },
+    {
+      "code": "RBE 2020",
+      "credits": 3
+    },
+    {
+      "code": "ES 2501",
+      "credits": 3
+    },
+    {
+      "code": "ES 3011",
+      "credits": 3
+    },
+    {
+      "code": "RBE 4322",
+      "credits": 3
+    },
+    {
+      "code": "ECE 4801",
+      "credits": 3
+    },
+    {
+      "code": "ME 1800",
+      "credits": 3
+    },
+    {
+      "code": "RBE 3100",
+      "credits": 3
+    },
+    {
+      "code": "BUS 1010",
+      "credits": 3
+    },
+    {
+      "code": "BUS 1020",
+      "credits": 3
+    },
+    {
+      "code": "BUS 2020",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [],
+  "confirmedManualItems": [
+    "iqp-1",
+    "iqp-2",
+    "iqp-3",
+    "mqp-1",
+    "mqp-2",
+    "mqp-3",
+    "wpe-sports",
+    "hua-depth-confirmation"
+  ],
+  "expectedLines": {
+    "1": {
+      "state": "done"
+    },
+    "2": {
+      "state": "done"
+    },
+    "3": {
+      "state": "done"
+    },
+    "4": {
+      "state": "done",
+      "course": "HU 3900"
+    },
+    "5": {
+      "state": "done"
+    },
+    "6": {
+      "state": "done"
+    },
+    "8": {
+      "state": "done"
+    },
+    "9": {
+      "state": "done"
+    },
+    "16": {
+      "state": "done",
+      "course": "MA 1021"
+    },
+    "17": {
+      "state": "done",
+      "course": "MA 1022"
+    },
+    "18": {
+      "state": "done",
+      "course": "MA 1023"
+    },
+    "19": {
+      "state": "done",
+      "course": "MA 1024"
+    },
+    "20": {
+      "state": "done",
+      "course": "MA 2051"
+    },
+    "21": {
+      "state": "done",
+      "course": "MA 2071"
+    },
+    "22": {
+      "state": "done",
+      "course": "MA 2621"
+    },
+    "23": {
+      "state": "done"
+    },
+    "24": {
+      "state": "done"
+    },
+    "25": {
+      "state": "done"
+    },
+    "26": {
+      "state": "done"
+    },
+    "27": {
+      "state": "done",
+      "course": "ETR 1100"
+    },
+    "28": {
+      "state": "done",
+      "course": "RBE 1001"
+    },
+    "29": {
+      "state": "done",
+      "course": "RBE 2001"
+    },
+    "30": {
+      "state": "done",
+      "course": "RBE 2002"
+    },
+    "31": {
+      "state": "done",
+      "course": "RBE 3001"
+    },
+    "32": {
+      "state": "done",
+      "course": "RBE 3002"
+    },
+    "33": {
+      "state": "done"
+    },
+    "34": {
+      "state": "done",
+      "course": "CS 2102"
+    },
+    "35": {
+      "state": "done",
+      "course": "CS 3733"
+    },
+    "36": {
+      "state": "done"
+    },
+    "37": {
+      "state": "done",
+      "course": "RBE 2020"
+    },
+    "38": {
+      "state": "done",
+      "course": "ES 2501"
+    },
+    "39": {
+      "state": "done",
+      "course": "ES 3011"
+    },
+    "40": {
+      "state": "done"
+    },
+    "41": {
+      "state": "done"
+    },
+    "42": {
+      "state": "done"
+    },
+    "43": {
+      "state": "done",
+      "course": "RBE 3100"
+    },
+    "7": {
+      "state": "done",
+      "course": null
+    },
+    "10": {
+      "state": "done",
+      "course": null
+    },
+    "11": {
+      "state": "done",
+      "course": null
+    },
+    "12": {
+      "state": "done",
+      "course": null
+    },
+    "44": {
+      "state": "done",
+      "course": null
+    },
+    "45": {
+      "state": "done",
+      "course": null
+    },
+    "46": {
+      "state": "done",
+      "course": null
+    }
+  },
+  "expectedSections": {
+    "Humanities and Arts": {
+      "done": 6,
+      "planned": 0,
+      "total": 6
+    },
+    "Wellness and Physical Education": {
+      "done": 4,
+      "planned": 0,
+      "total": 4
+    },
+    "Social Science": {
+      "done": 2,
+      "planned": 0,
+      "total": 2
+    },
+    "Interactive Qualifying Project": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    },
+    "Free Electives": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    },
+    "Mathematics": {
+      "done": 7,
+      "planned": 0,
+      "total": 7
+    },
+    "Basic Science": {
+      "done": 4,
+      "planned": 0,
+      "total": 4
+    },
+    "Entrepreneurship": {
+      "done": 1,
+      "planned": 0,
+      "total": 1
+    },
+    "Robotics Engineering": {
+      "done": 5,
+      "planned": 0,
+      "total": 5
+    },
+    "Computer Science": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    },
+    "Electrical and Computer Engineering": {
+      "done": 2,
+      "planned": 0,
+      "total": 2
+    },
+    "Engineering Science": {
+      "done": 2,
+      "planned": 0,
+      "total": 2
+    },
+    "Engineering Science and Design Electives": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    },
+    "Social Implications": {
+      "done": 1,
+      "planned": 0,
+      "total": 1
+    },
+    "Major Qualifying Project": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    }
+  },
+  "expectedChecks": {
+    "hua-depth": "met",
+    "hua-breadth": "met",
+    "hua-ap-ib-limit": "met",
+    "residency": "check",
+    "math-equivalents": "check",
+    "robotics-equivalents": "check",
+    "programming-equivalents": "check",
+    "classical-controls": "check",
+    "design-distribution": "check",
+    "social-overlap": "check",
+    "entrepreneurship-equivalents": "check",
+    "hua-sequence": "check",
+    "capstone-design": "check"
+  }
+}

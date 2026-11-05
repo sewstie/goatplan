@@ -6,6 +6,7 @@ import { DrawerFrame } from "@/components/ui/Drawer";
 import { canConfirmDepth, checkRows, DEPTH_CONFIRMATION, getDegreeSource, type DegreeHistory } from "@/lib/degree";
 import { useDegreeUi } from "./degreeUi";
 import type { DegreeView } from "./useDegreeView";
+import { loadedRequirements } from "@/lib/degree/requirements";
 
 const BADGES = {
   met: { tone: "success", word: "Met" },
@@ -24,11 +25,22 @@ export function ChecksPanel({ view, history }: { view: DegreeView; history: Degr
       <ul>
         {checkRows(view.result.checks, history).map((row) => {
           const { tone, word } = BADGES[row.status];
+          const rule = loadedRequirements()?.checks.find((check) => check.id === row.id);
+          const confirmation = rule?.type === "manual" ? rule.confirmation : undefined;
           return (
             <li key={row.id} className="flex items-start justify-between gap-14 border-b border-line py-14 last:border-b-0">
               <div className="min-w-0">
                 <h3 className="text-8-5 leading-16 font-650">{row.name}</h3>
                 <p className="pt-5 text-8 leading-17 text-ink-muted">{row.text}</p>
+                {confirmation && (
+                  <CheckField
+                    className="pt-10"
+                    label={`I confirmed ${row.name}`}
+                    labelClassName="text-8 leading-16 font-510"
+                    checked={history.manual.includes(confirmation)}
+                    onChange={(event) => getDegreeSource().setManualItem(confirmation, event.target.checked)}
+                  />
+                )}
                 {row.id === "hua-depth" && depth && canConfirmDepth(depth) && (
                   <CheckField
                     className="pt-10"

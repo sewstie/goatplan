@@ -39,7 +39,7 @@ export function YourConfirmations({ history }: { history: DegreeHistory }) {
         <p className="pt-10 text-10 leading-17-5 text-ink-muted">Only confirm work you’ve completed. Your selections are stored on this device.</p>
         <div className="flex flex-col gap-20 border-b border-line py-20">
           <CheckField label="IQP completed" description="Leave unchecked while your project is in progress." labelClassName="text-10 leading-16-5 font-600" checked={iqp} onChange={(event) => setIqp(event.target.checked)} />
-          <CheckField label="MQP completed" description="MQP is part of the computer science requirement." labelClassName="text-10 leading-16-5 font-600" checked={mqp} onChange={(event) => setMqp(event.target.checked)} />
+          <CheckField label="MQP completed" description="Confirm the capstone requirement for your selected major." labelClassName="text-10 leading-16-5 font-600" checked={mqp} onChange={(event) => setMqp(event.target.checked)} />
         </div>
         <div className="border-b border-line py-20">
           <h3 className="pb-14 text-10 leading-16-5 font-650">Wellness &amp; physical education</h3>

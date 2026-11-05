@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { describe, expect, it, vi } from "vitest";
 import { EngineClient, type EngineWorker } from "./EngineClient";
@@ -109,6 +110,66 @@ function setup() {
 }
 
 describe("audit through WebAssembly and EngineClient", () => {
+  it("keeps humanities depth unresolved when an unrelated requirement is confirmed", async () => {
+    const { client } = setup();
+    try {
+      const sheet = await loadSheet("rbe-2030");
+      const response = await client.audit({ version: 1, requirements: sheet.id, sheet, taken: ["EN 1001", "EN 1002", "EN 2201"].map((code) => ({ code, credits: 3 })), manual: ["classical-controls-confirmation"] });
+      expect(response.ok).toBe(true);
+      if (!response.ok) return;
+      expect(response.checks.find((check) => check.id === "hua-depth")?.state).toBe("check");
+      expect(response.checks.find((check) => check.id === "classical-controls")?.state).toBe("met");
+    } finally {
+      client.dispose();
+    }
+  });
+  it("counts approved social implications overlap once and keeps the credit check unresolved", async () => {
+    const { client } = setup();
+    try {
+      const sheet = await loadSheet("rbe-2030");
+      const response = await client.audit({ version: 1, requirements: sheet.id, sheet, taken: [{ code: "GOV 2302", credits: 3 }], manual: ["social-shared-credit"] });
+      expect(response.ok).toBe(true);
+      if (!response.ok) return;
+      const lines = response.sections.flatMap((section) => section.lines);
+      expect(lines.find((line) => line.id === 43)).toMatchObject({ state: "done", course: null });
+      expect(lines.filter((line) => line.course === "GOV 2302")).toHaveLength(1);
+      expect(response.sections.find((section) => section.name === "Social Science")?.done).toBe(1);
+      expect(response.checks.find((check) => check.id === "social-overlap")?.state).toBe("check");
+    } finally {
+      client.dispose();
+    }
+  });
+  for (const name of ["mid", "complete"]) {
+    for (const runtime of ["WebAssembly", "native"] as const) {
+      it.skipIf(runtime === "native" && !process.env.GOATPLAN_NATIVE_CLI)(`matches the hand-worked RBE ${name} history through ${runtime}`, async () => {
+        const fixture = JSON.parse(readFileSync(`${webRoot}../../data/fixtures/rbe-2030-${name}.json`, "utf8")) as {
+          takenCourses: AuditRequest["taken"];
+          plannedCourses: AuditRequest["planned"];
+          confirmedManualItems: string[];
+          expectedLines: Record<string, { state: string; course: string | null }>;
+          expectedSections: Record<string, { done: number; planned: number; total: number }>;
+          expectedChecks: Record<string, string>;
+        };
+        const sheet = await loadSheet("rbe-2030");
+        const request: AuditRequest = { version: 1, requirements: sheet.id, sheet, taken: fixture.takenCourses, planned: fixture.plannedCourses, manual: fixture.confirmedManualItems };
+        const { client } = setup();
+        try {
+          const response = runtime === "native"
+            ? JSON.parse(execFileSync(process.env.GOATPLAN_NATIVE_CLI!, [`${webRoot}public/data/2027-C.json`, "-"], { input: JSON.stringify(request), encoding: "utf8" })) as Awaited<ReturnType<EngineClient["audit"]>>
+            : await client.audit(request);
+          expect(response.ok).toBe(true);
+          if (!response.ok) return;
+          const lines = response.sections.flatMap((section) => section.lines);
+          for (const [id, expected] of Object.entries(fixture.expectedLines)) expect(lines.find((line) => line.id === Number(id)), `line ${id}`).toMatchObject(expected);
+          for (const [name, expected] of Object.entries(fixture.expectedSections)) expect(response.sections.find((section) => section.name === name), name).toMatchObject(expected);
+          for (const [id, state] of Object.entries(fixture.expectedChecks)) expect(response.checks.find((check) => check.id === id), id).toMatchObject({ state });
+        } finally {
+          client.dispose();
+        }
+      });
+    }
+  }
+
   it("checks a sheet's minimum course count through the real audit contract", async () => {
     const { client } = setup();
     try {
