@@ -116,6 +116,13 @@ export function buildSheet(
   openTerm: TermName | null,
 ): Sheet {
   const doubted = coursesInDoubt(result.checks);
+  for (const check of result.checks) {
+    const rule = loadedRequirements()?.checks.find((item) => item.id === check.id);
+    if (check.state !== "check" || !rule?.affectsLines) continue;
+    for (const line of result.sections.flatMap((section) => section.lines)) {
+      if (line.course && rule.lines?.includes(line.id)) doubted.add(line.course);
+    }
+  }
   const sections = SECTIONS.map((definition): SheetSection => {
     const audited = result.sections.find((section) => section.name === definition.name);
     const lines = audited?.lines ?? [];
@@ -123,9 +130,9 @@ export function buildSheet(
     const last = definition.lines[definition.lines.length - 1];
     const base = {
       id: definition.id,
-      name: SECTION_NAMES[definition.id] ?? definition.name,
+      name: definition.displayName ?? SECTION_NAMES[definition.id] ?? definition.name,
       lineRange: first === last ? `Line ${lineNumber(first)}` : `Lines ${lineNumber(first)}–${lineNumber(last)}`,
-      note: SECTION_NOTES[definition.id] ?? null,
+      note: definition.note ?? SECTION_NOTES[definition.id] ?? null,
     };
     if (definition.id === "wpe") return { ...base, ...wpeSection(lines[0], history) };
     const tiles = lines.map((line) => tileFor(line, history, doubted, pinned, openTerm));
@@ -148,7 +155,7 @@ export function buildSheet(
 function tileFor(line: AuditLine, history: DegreeHistory, doubted: ReadonlySet<string>, pinned: ReadonlyMap<number, string>, openTerm: TermName | null): SheetTile {
   const shared = { key: String(line.id), line: line.id, number: lineNumber(line.id), label: lineLabel(line.id) };
   const manual = manualItemForLine(line.id);
-  if (manual) {
+  if (manual && !line.course) {
     return { ...shared, kind: "tick", course: null, detail: null, pinned: false, manualId: manual.id, checked: history.manual.includes(manual.id), term: null };
   }
   const state = lineState(line, doubted);

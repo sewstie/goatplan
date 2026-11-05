@@ -29,10 +29,10 @@ test("requesting a major sends one event containing only its name", async ({ pag
   await openDegree(page);
   await page.getByRole("button", { name: "Change major" }).click();
   await page.getByRole("combobox", { name: "Major", exact: true }).click();
-  await page.getByRole("option", { name: "Robotics Engineering · Coming soon", exact: true }).click();
+  await page.getByRole("option", { name: "Mechanical Engineering · Coming soon", exact: true }).click();
   await page.getByRole("button", { name: "Request this major" }).click();
   await expect(page.getByRole("button", { name: "Request this major" })).toBeDisabled();
-  expect(await page.evaluate(() => (window as unknown as { degreeEvents: { name: string; data: unknown }[] }).degreeEvents.filter((event) => event.name === "degree_major_requested"))).toEqual([{ name: "degree_major_requested", data: { major: "Robotics Engineering" } }]);
+  expect(await page.evaluate(() => (window as unknown as { degreeEvents: { name: string; data: unknown }[] }).degreeEvents.filter((event) => event.name === "degree_major_requested"))).toEqual([{ name: "degree_major_requested", data: { major: "Mechanical Engineering" } }]);
 });
 
 test("switches sheets by pointer and keyboard, retaining independent state and loading only the selected sheet", async ({ page }, testInfo) => {

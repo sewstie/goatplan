@@ -3,6 +3,7 @@ import type { DegreeHistory, HistoryCourse } from "./history";
 import { lineNumber, lineName, sectionNameOfLine, type Sheet, type SheetSection } from "./sheet";
 import { areaCourses, crossListed, fitsLine, onlyOneRivals } from "./rules";
 import { unitLabel } from "./units";
+import { loadedRequirements } from "./requirements";
 import { compareTerms, nextTerm, parseTerm, termLong, termShort, termsBetween, type TermName } from "./terms";
 
 export interface TermBar {
@@ -86,9 +87,10 @@ export interface PlanningItem {
 export function planningFirst(sheet: Sheet, checks: readonly AuditCheck[]): PlanningItem[] {
   const tiles = sheet.sections.flatMap((section) => section.tiles);
   const items: PlanningItem[] = [];
-  const inquiry = tiles.find((tile) => tile.line === 6);
-  if (inquiry?.kind === "empty") items.push({ title: "Inquiry seminar", text: "After five humanities courses.", aside: `Line ${lineNumber(6)}` });
-  const projects = tiles.filter((tile) => tile.kind === "tick" && tile.line !== 7 && !tile.checked).length;
+  const inquiryLine = loadedRequirements()?.lines.find((line) => line.filter.courses?.includes("HU 3900"))?.line;
+  const inquiry = tiles.find((tile) => tile.line === inquiryLine);
+  if (inquiry?.kind === "empty") items.push({ title: "Inquiry seminar", text: "After five humanities courses.", aside: `Line ${lineNumber(inquiry.line)}` });
+  const projects = tiles.filter((tile) => tile.kind === "tick" && /^(iqp|mqp)-[1-3]$/.test(tile.manualId ?? "") && !tile.checked).length;
   if (projects > 0) items.push({ title: "IQP & MQP", text: "Make room for the projects.", aside: `${projects} ${projects === 1 ? "line" : "lines"}` });
   const open = [["systems", "Systems"], ["theory", "Theory"], ["design", "Design"], ["social", "Social implications"]].filter(([id]) => checks.find((check) => check.id === id)?.state === "not-met");
   if (open.length > 0) items.push({ title: "CS area checks", text: `${open.map(([, name]) => name).join(", ")}.`, aside: `${open.length} ${open.length === 1 ? "check" : "checks"}` });
@@ -186,8 +188,6 @@ export function historyForLine(line: number, history: DegreeHistory, sections: r
     .filter((fit) => !fit.text.endsWith(`line ${line}`));
 }
 
-const AREA_LINES: Record<number, string> = { 22: "systems", 23: "theory", 24: "design", 25: "social" };
-
 export interface MoveTarget {
   line: number;
   title: string;
@@ -197,7 +197,10 @@ export interface MoveTarget {
 
 export function moveTargets(code: string, credits: number, sheet: Sheet): MoveTarget[] {
   const names = crossListed(code);
-  const belongsTo = (line: number) => (AREA_LINES[line] ? areaCourses(AREA_LINES[line]).some((name) => names.includes(name)) : line !== 16 || names.some((name) => name === "CS 1101" || name === "CS 1102"));
+  const belongsTo = (line: number) => {
+    const area = loadedRequirements()?.lines.find((item) => item.line === line)?.areaTag;
+    return !area || areaCourses(area).some((name) => names.includes(name));
+  };
   const tiles = sheet.sections.flatMap((section) => section.tiles).filter((tile) => {
     if (tile.kind === "tick" || !fitsLine(code, credits, tile.line)) return false;
     return (tile.course !== null && names.includes(tile.course)) || belongsTo(tile.line);
@@ -313,7 +316,13 @@ export function checkRows(checks: readonly AuditCheck[], history: DegreeHistory)
   if (graduate && graduate.courses.length > 0) {
     rows.push({ id: "grad-equivalence", name: "Graduate courses", status: "check", text: "Each graduate course counts here as one 4000+ course. The sheet’s 2-for-3 rule may give you more." });
   }
-  return rows;
+  const visible = rows.filter((row) => row.id === "transfer" || find(row.id === "ap-ib" ? "hua-ap-ib-limit" : row.id));
+  for (const check of checks) {
+    if (visible.some((row) => row.id === check.id || (row.id === "ap-ib" && check.id === "hua-ap-ib-limit"))) continue;
+    const rule = loadedRequirements()?.checks.find((item) => item.id === check.id);
+    visible.push({ id: check.id, name: check.label, status: STATUS[check.state], text: rule?.help ?? rule?.note ?? areaText(check, "No matching course is counted.") });
+  }
+  return visible;
 }
 
 export interface AllocationRow {

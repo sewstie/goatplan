@@ -25,9 +25,20 @@ export const SHEETS: readonly SheetMetadata[] = [{
   status: "beta",
   verification: null,
   officialLines: Array.from({ length: 45 }, (_, index) => index + 1),
+}, {
+  id: "rbe-2030",
+  major: "Robotics Engineering",
+  abbreviation: "RBE",
+  classYear: 2030,
+  source: "https://www.wpi.edu/sites/default/files/2026-05/RBE-2030_fillable.pdf",
+  catalogSource: "https://wpi.cleancatalog.net/robotics-engineering/robotics-engineering-major",
+  status: "beta",
+  verification: null,
+  officialLines: Array.from({ length: 46 }, (_, index) => index + 1),
 }];
 
 const loaders: Record<string, () => Promise<TrackingSheet>> = {
+  "rbe-2030": async () => (await import("./rbe-2030.json")).default as TrackingSheet,
   "cs-2030": async () => (await import("./cs-2030.json")).default as TrackingSheet,
 };
 const loaded = new Map<string, Promise<TrackingSheet>>();
