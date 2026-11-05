@@ -14,6 +14,7 @@ import { RegistrationSummary } from "@/components/plans/RegistrationSummary";
 import { SavedPlanPill } from "@/components/plans/SavedPlanPill";
 import { AppShell } from "@/components/shell/AppShell";
 import { PlannerBootstrap } from "@/components/shell/PlannerBootstrap";
+import { ThemeButton } from "@/components/shell/ThemeButton";
 import { WorkspaceHeader } from "@/components/shell/WorkspaceHeader";
 
 export const metadata: Metadata = {
@@ -37,6 +38,7 @@ export default function PlansPage() {
           }
         >
           <AppShell
+            barAppearance={<ThemeButton />}
             sidebar={
               <Suspense>
                 <PlansSidebarWrapper />

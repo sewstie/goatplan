@@ -4,6 +4,8 @@ import Link from "next/link";
 import { CaretLeft } from "@phosphor-icons/react/ssr";
 import { PhoneFooter } from "@/components/phone/PhoneFooter";
 import { PhoneTopBar } from "@/components/phone/PhoneTopBar";
+import { BarMoreMenu } from "@/components/shell/BarMoreMenu";
+import { ThemeSwitch } from "@/components/shell/ThemeSwitch";
 import { countLabel, sectionCount, termLabel } from "@/lib/plans";
 import { RegistrationSheet } from "./RegistrationSheet";
 import { useSelectedPlan } from "./useSelectedPlan";
@@ -24,7 +26,9 @@ export function PhonePlans() {
       >
         Skip to main content
       </a>
-      <PhoneTopBar />
+      <PhoneTopBar>
+        <BarMoreMenu><ThemeSwitch /></BarMoreMenu>
+      </PhoneTopBar>
       <main id="main" tabIndex={-1} className="flex min-w-0 flex-1 flex-col gap-12 px-(--size-phone-gutter) pt-14 pb-20 outline-none">
         <Link href={back.href} className="-ml-4 inline-flex min-h-44 items-center gap-6 self-start rounded-badge px-4 text-9 text-ink-muted hover:text-ink">
           <CaretLeft aria-hidden className="size-12" />

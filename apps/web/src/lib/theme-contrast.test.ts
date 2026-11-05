@@ -76,3 +76,13 @@ test("planner notices and status chips remain readable in Dark", () => {
     expect(contrast(dark, ink, surface), `${ink} on ${surface}`).toBeGreaterThanOrEqual(4.5);
   }
 });
+
+test("share-link fields and feedback stay readable in Dark", () => {
+  for (const ink of ["ink", "ink-soft", "ink-muted"]) {
+    expect(contrast(dark, ink, "card-field"), `${ink} on share-link field`).toBeGreaterThanOrEqual(4.5);
+  }
+  for (const surface of ["surface", "card-field"]) {
+    expect(contrast(dark, "card-line", surface), `share-link boundary on ${surface}`).toBeGreaterThanOrEqual(3);
+  }
+  expect(contrast(dark, "on-dark", "toast-dark")).toBeGreaterThanOrEqual(4.5);
+});
