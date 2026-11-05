@@ -10,6 +10,8 @@ import { PlannerBootstrap } from "@/components/shell/PlannerBootstrap";
 import { PlannerShell } from "@/components/shell/PlannerShell";
 import { PlannerBarActions } from "@/components/shell/PlannerBarActions";
 import { FirstPlanTutorial } from "@/components/tutorial/FirstPlanTutorial";
+import { ThemeButton } from "@/components/shell/ThemeButton";
+import { ThemeSwitch } from "@/components/shell/ThemeSwitch";
 
 export default function PlannerPage() {
   return (
@@ -22,6 +24,8 @@ export default function PlannerPage() {
           </div>
         }
         barActions={<PlannerBarActions />}
+        barAppearance={<ThemeButton />}
+        phoneMenuActions={<ThemeSwitch />}
         toolbar={
           <>
             <ScheduleSummary />

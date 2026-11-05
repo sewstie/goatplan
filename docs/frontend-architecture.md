@@ -290,6 +290,16 @@ degree-tile, chart and focus tokens. Add dark overrides there, keep light values
 as defaults and use light tokens for print. No token consolidation is needed
 before degree restoration or theme work starts.
 
+The planner fills the appearance slots with `ThemeButton` and `ThemeSwitch`.
+`lib/theme` reads the document theme and keeps mounted controls in sync.
+The root layout applies `goatplan:theme:v1` before paint. Light is the default;
+only a saved `dark` value enables Dark. Storage failures allow changes for the
+current page. Dark tokens only apply to screen media, so print uses Light.
+
+Ticket 10 covers the planner palette and controls, including shared phone
+placement. Ticket 11 still owns the remaining surfaces and public release.
+Ticket 12 owns degree theme integration.
+
 ## My degree
 
 `/degree` is available to invited testers through `/#enable-degree`. The

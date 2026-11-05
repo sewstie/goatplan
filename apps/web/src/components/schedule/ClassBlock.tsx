@@ -73,14 +73,14 @@ export function ClassBlock({ item, density, style, selected, onSelect, layout = 
       }}
       className={cx(
         "@container absolute flex flex-col overflow-hidden rounded-block border text-left transition-[border-color,box-shadow,top,height] duration-180 motion-reduce:transition-none motion-reduce:duration-0",
-        drawing ? "cursor-crosshair opacity-70" : "cursor-pointer",
+        drawing ? "cursor-crosshair opacity-(--opacity-course-drawing)" : "cursor-pointer",
         full ? text.box : "justify-center px-5 tablet:px-4",
         item.choicePreview
           ? "border-dashed border-accent bg-preview-surface text-accent"
           : item.problem
           ? "border-clash-line bg-clash-surface text-clash-ink"
           : cx(
-              "border-transparent hover:shadow-block-hover",
+              "hover:shadow-block-hover",
               COURSE_COLORS[item.slot].block,
               // A phone opens the course screen on tap, so the block keeps its course color there.
               selected && "tablet:border-dashed tablet:border-ink-muted tablet:bg-surface-raised tablet:text-ink tablet:shadow-block-hover tablet:hover:border-ink-muted",
