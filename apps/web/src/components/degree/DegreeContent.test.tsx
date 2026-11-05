@@ -112,6 +112,7 @@ describe("the first visit", () => {
   });
 
   it("says so when the audit fails, and tries again", async () => {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify({ version: 1, courses: [], manual: [] }));
     let failing = true;
     const engine = vi.fn(async (request: AuditRequest): Promise<AuditResponse> => {
       if (failing) throw new Error("no engine");

@@ -4,6 +4,10 @@ import { MemoryPlanStorage } from "@/lib/plans/testing";
 import { AUDIT_DELAY_MS, createDegreeSource, type AuditEngine } from "./degreeSource";
 import { foundCourse, HISTORY_KEY, parseHistoryFile, typedCourse, writeHistory } from "./history";
 import type { OpenPlan } from "./openPlan";
+import cs from "./sheets/cs-2030.json";
+import type { TrackingSheet } from "./sheets";
+import fixture from "../../../e2e/fixtures/degree-major-sheet.json";
+import { createGapSource } from "./courseGaps";
 
 const answer = (done: number): AuditSuccess => ({
   ok: true,
@@ -37,6 +41,40 @@ afterEach(() => {
 });
 
 describe("the history", () => {
+  it("distinguishes a first visit from a legacy CS history and backs up the migrated selection", () => {
+    const storage = new MemoryPlanStorage();
+    const engine = { audit: async () => answer(0) };
+    const fresh = createDegreeSource({ getStorage: () => storage, engine });
+    expect(fresh.getSnapshot().selectedSheetId).toBeNull();
+    writeHistory(storage, { courses: [typedCourse("MA 1021")], manual: ["iqp-1"], pins: [{ code: "MA 1021", line: 34 }] });
+    const legacy = createDegreeSource({ getStorage: () => storage, engine });
+    expect(legacy.getSnapshot().selectedSheetId).toBe("cs-2030");
+    expect(JSON.parse(legacy.exportHistory())).toMatchObject({ sheetId: "cs-2030", sheets: { "cs-2030": { manual: ["iqp-1"], pins: [{ code: "MA 1021", line: 34 }] } } });
+  });
+  it("switches independent sheets while sharing courses and restoring each sheet's pins and confirmations", async () => {
+    const storage = new MemoryPlanStorage();
+    const second = fixture as TrackingSheet;
+    const source = createDegreeSource({ getStorage: () => storage, engine: { audit: async () => answer(0) }, loadSheet: async (id) => id === second.id ? second : cs as TrackingSheet });
+    source.subscribe(() => {});
+    expect(source.selectSheet("cs-2030")).toBe(true);
+    source.addCourse(typedCourse("MA 1021"));
+    source.setPin({ code: "MA 1021", line: 34 });
+    source.setManualItem("iqp-1", true);
+    source.selectSheet("fixture-2030");
+    await pause();
+    expect(source.getSnapshot()).toMatchObject({ sheet: { id: "fixture-2030" }, history: { courses: [typedCourse("MA 1021")], manual: [] } });
+    expect(source.getSnapshot().history.pins ?? []).toEqual([]);
+    source.setManualItem("project", true);
+    source.setPin({ code: "MA 1021", line: 35 });
+    source.selectSheet("cs-2030");
+    await pause();
+    expect(source.getSnapshot().history.manual).toEqual(["iqp-1"]);
+    expect(source.getSnapshot().history.pins).toEqual([{ code: "MA 1021", line: 34 }]);
+    source.selectSheet("fixture-2030");
+    expect(source.getSnapshot().history.manual).toEqual(["project"]);
+    expect(source.getSnapshot().history.pins).toEqual([{ code: "MA 1021", line: 35 }]);
+  });
+
   it("audits against the loaded sheet document", async () => {
     let sheet: unknown;
     const { source, stop } = setup(async (request) => {
@@ -264,6 +302,37 @@ describe("editing a course", () => {
 });
 
 describe("export and import", () => {
+  it.each([
+    { sheetId: 42, sheets: {} },
+    { sheetId: "../cs", sheets: {} },
+    { sheetId: "cs-2030", sheets: { "cs-2030": { manual: [42] } } },
+    { sheetId: "cs-2030", sheets: { "cs-2030": { manual: [], pins: [{ code: "MA 1021", line: "34" }] } } },
+    { sheetId: "cs-2030", sheets: { "cs-2030": { manual: [], pins: [{ code: "MA 1021", line: -1 }] } } },
+    { sheetId: "cs-2030", sheets: [] },
+  ])("rejects a backup with invalid sheet state: %j", (state) => {
+    expect(parseHistoryFile(JSON.stringify({ version: 1, courses: [], manual: [], ...state }))).toEqual({ ok: false, reason: "broken" });
+  });
+  it("merges a complete backup and restores the selected sheet and all sheet state after reload", () => {
+    const { source } = setup();
+    source.selectSheet("cs-2030");
+    source.addCourse(typedCourse("MA 1021"));
+    source.setManualItem("iqp-1", true);
+    source.setPin({ code: "MA 1021", line: 34 });
+    source.selectSheet("fixture-2030");
+    source.setManualItem("project", true);
+    const parsed = parseHistoryFile(source.exportHistory());
+    if (!parsed.ok) throw new Error("the backup should be valid");
+    const other = setup();
+    other.source.addCourse(typedCourse("CS 1101"));
+    other.source.mergeHistory(parsed.history);
+    const reloaded = createDegreeSource({ getStorage: () => other.storage, engine: other.engine });
+    expect(reloaded.getSnapshot().selectedSheetId).toBe("fixture-2030");
+    expect(reloaded.getSnapshot().history.manual).toEqual(["project"]);
+    expect(reloaded.getSnapshot().history.courses.map(({ code }) => code)).toEqual(["CS 1101", "MA 1021"]);
+    reloaded.selectSheet("cs-2030");
+    expect(reloaded.getSnapshot().history.manual).toEqual(["iqp-1"]);
+    expect(reloaded.getSnapshot().history.pins).toEqual([{ code: "MA 1021", line: 34 }]);
+  });
   it("restores an identical history on another device", () => {
     const { source } = setup();
     source.addCourse(foundCourse({ code: "MA 1021", title: "Calculus I", credits: 3 }));
@@ -275,7 +344,7 @@ describe("export and import", () => {
     const other = setup();
     if (!parsed.ok) throw new Error("the export should read back");
     expect(other.source.replaceHistory(parsed.history)).toBe(true);
-    expect(other.source.getSnapshot().history).toEqual(before);
+    expect(other.source.getSnapshot().history).toMatchObject(before);
     expect(other.source.exportHistory()).toBe(source.exportHistory());
   });
 
@@ -322,6 +391,16 @@ describe("export and import", () => {
 });
 
 describe("pins", () => {
+  it("removing a shared course removes its pins on every sheet", () => {
+    const { source } = setup();
+    source.selectSheet("cs-2030");
+    source.addCourse(typedCourse("MA 1021"));
+    source.setPin({ code: "MA 1021", line: 34 });
+    source.selectSheet("fixture-2030");
+    source.removeCourse("MA 1021");
+    source.selectSheet("cs-2030");
+    expect(source.getSnapshot().history.pins ?? []).toEqual([]);
+  });
   it("keeps one pin per course and per line", () => {
     const { source } = setup();
     source.setPin({ code: "CS 2022", line: 38 });
@@ -348,6 +427,80 @@ describe("pins", () => {
 });
 
 describe("the audit", () => {
+  it("clears search badges when another tab removes the saved selection", async () => {
+    const { source, storage, engine } = setup();
+    source.selectSheet("cs-2030");
+    const gaps = createGapSource({ degree: source, engine });
+    gaps.subscribe(() => {});
+    gaps.setOpenTerm({ courses: [], planned: [] });
+    await pause();
+    expect(gaps.getSnapshot().closes).not.toBeNull();
+    storage.removeItem(HISTORY_KEY);
+    window.dispatchEvent(new StorageEvent("storage", { key: HISTORY_KEY }));
+    expect(gaps.getSnapshot()).toMatchObject({ status: "waiting", closes: null });
+  });
+  it("waits for a selection before downloading a sheet for search", async () => {
+    const storage = new MemoryPlanStorage();
+    const engine = { audit: vi.fn(async () => answer(0)) };
+    const source = createDegreeSource({ getStorage: () => storage, engine, requireSelection: true });
+    const gaps = createGapSource({ degree: source, engine });
+    gaps.subscribe(() => {});
+    gaps.setOpenTerm({ courses: [], planned: [] });
+    await pause();
+    expect(engine.audit).not.toHaveBeenCalled();
+  });
+  it("clears search badges while another major is being audited", async () => {
+    const { source, engine } = setup();
+    source.selectSheet("cs-2030");
+    const gaps = createGapSource({ degree: source, engine });
+    gaps.subscribe(() => {});
+    gaps.setOpenTerm({ courses: [], planned: [] });
+    await pause();
+    expect(gaps.getSnapshot().closes).not.toBeNull();
+    source.selectSheet("fixture-2030");
+    expect(gaps.getSnapshot()).toMatchObject({ status: "waiting", closes: null });
+  });
+  it("uses the selected sheet for course-search audits too", async () => {
+    const storage = new MemoryPlanStorage();
+    const requests: string[] = [];
+    const engine = { audit: async (request: Parameters<AuditEngine["audit"]>[0]) => { requests.push(request.requirements!); return answer(0); } };
+    const source = createDegreeSource({ getStorage: () => storage, engine, loadSheet: async () => fixture as TrackingSheet });
+    source.subscribe(() => {});
+    source.selectSheet("fixture-2030");
+    await pause();
+    const gaps = createGapSource({ degree: source, engine });
+    gaps.subscribe(() => {});
+    gaps.setOpenTerm({ courses: [], planned: [] });
+    await pause();
+    expect(requests).toEqual(["fixture-2030", "fixture-2030"]);
+  });
+  it("drops a pending answer from the previous major", async () => {
+    const replies: ((response: AuditResponse) => void)[] = [];
+    const requests: string[] = [];
+    const storage = new MemoryPlanStorage();
+    const source = createDegreeSource({ getStorage: () => storage, loadSheet: async (id) => id === fixture.id ? fixture as TrackingSheet : cs as TrackingSheet, engine: { audit: (request) => {
+      requests.push(request.requirements!);
+      return new Promise((resolve) => replies.push(resolve));
+    } } });
+    source.subscribe(() => {});
+    source.selectSheet("cs-2030");
+    await pause();
+    source.selectSheet("fixture-2030");
+    await pause();
+    expect(requests).toEqual(["cs-2030", "fixture-2030"]);
+    replies[1](answer(2));
+    await vi.advanceTimersByTimeAsync(0);
+    replies[0](answer(1));
+    await vi.advanceTimersByTimeAsync(0);
+    expect(source.getSnapshot().audit).toEqual({ status: "ready", result: answer(2) });
+  });
+  it("clears the old sheet immediately when a replacement backup selects another major", async () => {
+    const { source } = setup();
+    await pause();
+    source.replaceHistory({ courses: [], manual: [], sheetId: "fixture-2030" });
+    expect(source.getSnapshot().sheet).toBeNull();
+    expect(source.getSnapshot().audit).toEqual({ status: "waiting", result: null });
+  });
   it("starts waiting, then shows the engine's answer", async () => {
     const { source } = setup();
     expect(source.getSnapshot().audit).toEqual({ status: "waiting", result: null });

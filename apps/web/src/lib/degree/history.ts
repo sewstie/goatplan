@@ -34,10 +34,20 @@ export interface LinePin {
   line: number;
 }
 
-export interface DegreeHistory {
-  courses: HistoryCourse[];
+export interface SheetHistory {
   manual: string[];
   pins?: LinePin[];
+}
+
+export interface DegreeHistory extends SheetHistory {
+  courses: HistoryCourse[];
+  sheetId?: string;
+  sheets?: Record<string, SheetHistory>;
+}
+
+export function keepSheetState(history: DegreeHistory): DegreeHistory {
+  if (!history.sheetId) return history;
+  return { ...history, sheets: { ...history.sheets, [history.sheetId]: { manual: history.manual, ...(history.pins?.length ? { pins: history.pins } : {}) } } };
 }
 
 export interface StoredHistory {
@@ -88,12 +98,28 @@ export function parseCourse(value: unknown): HistoryCourse | null {
 }
 
 function parsePin(value: unknown): LinePin | null {
-  if (!isObject(value) || typeof value.code !== "string" || !Number.isInteger(value.line)) return null;
+  if (!isObject(value) || typeof value.code !== "string" || !Number.isInteger(value.line) || (value.line as number) < 1) return null;
   const code = cleanCourseCode(value.code);
   return code ? { code, line: value.line as number } : null;
 }
 
 const parsePins = (value: unknown): LinePin[] => (Array.isArray(value) ? value.map(parsePin).filter((pin) => pin !== null) : []);
+
+const isSheetId = (value: unknown): value is string => typeof value === "string" && /^[a-z][a-z0-9-]{0,59}-\d{4}$/.test(value);
+
+function parseSheetState(value: unknown): SheetHistory | null {
+  if (!isObject(value) || !Array.isArray(value.manual) || !value.manual.every(isManualItem)) return null;
+  if (value.pins !== undefined && (!Array.isArray(value.pins) || value.pins.some((pin) => !parsePin(pin)))) return null;
+  const pins = parsePins(value.pins);
+  if (new Set(pins.map((pin) => pin.code)).size !== pins.length || new Set(pins.map((pin) => pin.line)).size !== pins.length) return null;
+  return { manual: [...new Set(value.manual as string[])], ...(pins.length ? { pins } : {}) };
+}
+
+function validSheetFields(value: Record<string, unknown>): boolean {
+  if (value.sheetId !== undefined && !isSheetId(value.sheetId)) return false;
+  if (value.sheets === undefined) return true;
+  return isSheetId(value.sheetId) && isObject(value.sheets) && Object.entries(value.sheets).every(([id, state]) => isSheetId(id) && parseSheetState(state) !== null);
+}
 
 export function parseHistory(value: unknown): StoredHistory {
   if (!isObject(value) || value.version !== HISTORY_VERSION || !Array.isArray(value.courses)) {
@@ -108,11 +134,15 @@ export function parseHistory(value: unknown): StoredHistory {
   }
   const manual = Array.isArray(value.manual) ? value.manual.filter((item) => typeof item === "string") : [];
   const pins = parsePins(value.pins);
-  return { history: { courses: [...courses.values()], manual, ...(pins.length > 0 ? { pins } : {}) }, damaged };
+  const sheets = isObject(value.sheets) ? Object.fromEntries(Object.entries(value.sheets).flatMap(([id, state]) => {
+    const clean = parseSheetState(state);
+    return isSheetId(id) && clean ? [[id, clean]] : [];
+  })) : undefined;
+  return { history: { courses: [...courses.values()], manual, ...(pins.length > 0 ? { pins } : {}), ...(isSheetId(value.sheetId) ? { sheetId: value.sheetId } : {}), ...(sheets ? { sheets } : {}) }, damaged: damaged || !validSheetFields(value) };
 }
 
 export function serializeHistory(history: DegreeHistory): string {
-  return JSON.stringify({ version: HISTORY_VERSION, ...history }, null, 2);
+  return JSON.stringify({ version: HISTORY_VERSION, ...keepSheetState(history) }, null, 2);
 }
 
 const hasEveryField = (value: unknown): boolean =>
@@ -159,6 +189,7 @@ export function parseHistoryFile(text: string): HistoryFile {
   const { courses, manual } = value;
   if (!Array.isArray(courses) || !courses.every(hasEveryField)) return broken;
   if (!Array.isArray(manual) || !manual.every(isManualItem)) return broken;
+  if (!validSheetFields(value) || !parseSheetState(value)) return broken;
   const { history, damaged } = parseHistory(value);
   if (damaged || history.courses.length !== courses.length) return broken;
   return { ok: true, history };

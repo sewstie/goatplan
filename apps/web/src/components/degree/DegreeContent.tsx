@@ -14,6 +14,7 @@ import { StorageBlockedDialog } from "./StorageBlockedDialog";
 import { useDegreeUi } from "./degreeUi";
 import { useDegreeView } from "./useDegreeView";
 import { YourConfirmations } from "./YourConfirmations";
+import { MajorPicker } from "./MajorPicker";
 
 export function DegreeContent() {
   const degree = useDegree();
@@ -27,6 +28,7 @@ export function DegreeContent() {
   }, [termId, planned]);
 
   if (!degree) return null;
+  if (degree.selectedSheetId === null) return <MajorPicker selected={null} />;
 
   return (
     <>
@@ -34,7 +36,7 @@ export function DegreeContent() {
       {screen === "confirmations" && <YourConfirmations history={degree.history} />}
       {screen === "main" && (
         <div className="flex flex-col gap-18 tablet:gap-12">
-          <DegreeTitle hasCourses={degree.history.courses.length > 0} />
+          <DegreeTitle hasCourses={degree.history.courses.length > 0} selectedSheetId={degree.selectedSheetId} />
           <DegreeMain degree={degree} view={view} />
         </div>
       )}

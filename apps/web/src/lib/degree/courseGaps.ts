@@ -2,8 +2,7 @@ import type { Course } from "@/lib/data/types";
 import { getEngineClient, type AuditRequest, type AuditSuccess } from "@/lib/engine";
 import { AUDIT_DELAY_MS, getDegreeSource, type AuditEngine, type DegreeSource } from "./degreeSource";
 import { buildAuditRequest, foundCourse, type DegreeHistory } from "./history";
-import { DEFAULT_SHEET_ID, type TrackingSheet } from "./sheets";
-import { loadRequirements } from "./requirements";
+import { DEFAULT_SHEET_ID, loadSheet, type TrackingSheet } from "./sheets";
 
 export interface OpenTerm {
   courses: readonly Course[];
@@ -66,6 +65,7 @@ export function createGapSource({ degree, engine }: GapSourceDeps): GapSource {
   const listeners = new Set<() => void>();
   let open: OpenTerm | null = null;
   let history: DegreeHistory | null = null;
+  let selectedSheetId: string | null = null;
   let gaps: CourseGaps = { status: "waiting", closes: null };
   let timer: ReturnType<typeof setTimeout> | null = null;
   let due = true;
@@ -94,7 +94,9 @@ export function createGapSource({ degree, engine }: GapSourceDeps): GapSource {
     const asked = ++latest;
     let next: CourseGaps = { status: "failed", closes: null };
     try {
-      const sheet = await loadRequirements(DEFAULT_SHEET_ID);
+      const snapshot = degree.getSnapshot();
+      if (snapshot.selectedSheetId === null) return;
+      const sheet = snapshot.sheet ?? await loadSheet(snapshot.history.sheetId ?? DEFAULT_SHEET_ID);
       if (asked !== latest) return;
       const response = await engine.audit(buildGapRequest(degree.getSnapshot().history, term, sheet));
       if (response.ok) next = { status: "ready", closes: readAnswers(response), details: readDetails(response) };
@@ -120,8 +122,11 @@ export function createGapSource({ degree, engine }: GapSourceDeps): GapSource {
   }
 
   function historyMoved(): boolean {
-    const now = degree.getSnapshot().history;
+    const snapshot = degree.getSnapshot();
+    const now = snapshot.history;
     if (now === history) return false;
+    if (selectedSheetId !== snapshot.selectedSheetId) gaps = { status: "waiting", closes: null, details: null };
+    selectedSheetId = snapshot.selectedSheetId;
     history = now;
     return true;
   }

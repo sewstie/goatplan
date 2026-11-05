@@ -4,7 +4,7 @@ import type { AuditRequest, AuditResponse, AuditSuccess } from "@/lib/engine";
 import { MemoryPlanStorage } from "@/lib/plans/testing";
 import { createGapSource } from "./courseGaps";
 import { AUDIT_DELAY_MS, createDegreeSource, type AuditEngine } from "./degreeSource";
-import { typedCourse } from "./history";
+import { typedCourse, writeHistory } from "./history";
 
 const course = (code: string, credits: number | null = 3, level: Course["level"] = "Undergraduate") =>
   ({ code, subject: code.split(" ")[0], title: code, credits, level, description: "", sections: [], options: [] }) as Course;
@@ -33,6 +33,7 @@ const candidatesOnly = (request: AuditRequest) => request.candidates != null;
 
 function setup(audit: AuditEngine["audit"] = async (request) => answer(request)) {
   const storage = new MemoryPlanStorage();
+  writeHistory(storage, { courses: [], manual: [] });
   const engine = { audit: vi.fn(audit) };
   const degree = createDegreeSource({ getStorage: () => storage, engine });
   const gaps = createGapSource({ degree, engine });

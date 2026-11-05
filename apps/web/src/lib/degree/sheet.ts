@@ -1,7 +1,7 @@
 import type { AuditCheck, AuditLine, AuditSuccess } from "@/lib/engine/types";
 import type { DegreeHistory, HistoryCourse } from "./history";
 import { coursesInDoubt, lineState, manualItemForLine } from "./progress";
-import { SECTIONS, SPORTS_ITEM } from "./requirements";
+import { loadedRequirements, SECTIONS, SPORTS_ITEM } from "./requirements";
 import { crossListed, WPE_LINE } from "./rules";
 import { parseTerm, PRIOR_CREDIT, termLong, termShort, type TermName } from "./terms";
 
@@ -79,34 +79,18 @@ const WPE_SLOT_DETAILS = ["7a", "7b", "7c", "7d"];
 export const WPE_SLOTS = WPE_SLOT_DETAILS.map((slot, index) => `wpe-${index + 1}`);
 
 export function lineLabel(line: number): string {
-  if (line <= 3) return "HUA depth";
-  if (line === 4) return "HUA breadth";
-  if (line === 5) return "HUA elective";
-  if (line === 6) return "Inquiry / Practicum";
-  if (line === 7) return "WPE";
-  if (line <= 9) return "Social science";
-  if (line <= 12) return "IQP";
-  if (line <= 15) return "Free elective";
-  if (line === 16) return "Introductory CS";
-  if (line <= 21) return "CS 2000+";
-  if (line === 22) return "Systems";
-  if (line === 23) return "Theory & languages";
-  if (line === 24) return "Design";
-  if (line === 25) return "Social implications";
-  if (line <= 30) return "CS 4000+";
-  if (line <= 33) return "MQP";
-  if (line <= 37) return "Math 1000+";
-  if (line === 38) return "Math 2000+";
-  if (line === 39) return "Probability";
-  if (line === 40) return "Statistics";
-  return "Science";
+  const definition = loadedRequirements()?.lines.find((item) => item.line === line);
+  return definition?.displayName ?? definition?.name ?? "";
 }
 
 export const lineNumber = (line: number) => String(line).padStart(2, "0");
 
 const sectionOfLine = (line: number) => SECTIONS.find((section) => section.lines.includes(line));
 
-export const sectionNameOfLine = (line: number) => SECTION_NAMES[sectionOfLine(line)?.id ?? ""] ?? "";
+export const sectionNameOfLine = (line: number) => {
+  const section = sectionOfLine(line);
+  return section?.displayName ?? SECTION_NAMES[section?.id ?? ""] ?? section?.name ?? "";
+};
 
 export const lineName = (line: number) => `${sectionNameOfLine(line)}, line ${line}`;
 
@@ -271,8 +255,8 @@ export function checkPills(result: AuditSuccess, history: DegreeHistory): CheckP
   const state = (id: string) => pillState(result.checks.find((check) => check.id === id)?.state ?? "not-met");
   const typed = history.courses.some((course) => course.source === "typed");
   return [
-    ...AREA_PILLS.map(({ id, name }) => ({ id, name, state: state(id) })),
-    { id: "hua-depth", name: "HUA theme", state: state("hua-depth") },
+    ...result.checks.filter((check) => loadedRequirements()?.checks.some((item) => item.id === check.id && item.type === "area")).map((check) => ({ id: check.id, name: AREA_PILLS.find((pill) => pill.id === check.id)?.name ?? check.label.replace(/ area$/, ""), state: state(check.id) })),
+    ...(result.checks.some((check) => check.id === "hua-depth") ? [{ id: "hua-depth", name: "HUA theme", state: state("hua-depth") }] : []),
     { id: "transfer", name: "Transfer record", state: typed ? "review" : history.courses.length > 0 ? "met" : "missing" },
   ];
 }

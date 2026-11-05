@@ -32,13 +32,13 @@ test.describe("who can reach it", () => {
   test("the tester link turns My degree on for this browser and opens the page", async ({ page }) => {
     await page.goto("/#enable-degree");
     await expect(page).toHaveURL("/degree");
-    await expect(page.getByRole("heading", { level: 1, name: "My degree" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "What's your major?" })).toBeVisible();
     expect(await flagValue(page)).toBe("on");
     const nav = page.getByRole("navigation", { name: "Main" });
     await expect(nav.getByRole("link", { name: "Planner" })).toBeVisible();
     await expect(nav.getByRole("link", { name: "My degree" })).toHaveAttribute("aria-current", "page");
     await page.reload();
-    await expect(page.getByRole("heading", { level: 1, name: "My degree" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "What's your major?" })).toBeVisible();
   });
 
   test("the tabs switch between the planner and the degree page by keyboard", async ({ page }) => {

@@ -39,6 +39,7 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
   const search = useRef({ text: "", time: 0 });
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
+  const [portal, setPortal] = useState<HTMLElement | null>(null);
   const selected = Math.max(0, options.findIndex((option) => option.value === value));
 
   useEffect(() => {
@@ -82,9 +83,10 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
         aria-controls={popupId}
         aria-activedescendant={open ? `${id}-option-${active}` : undefined}
         className={cx(triggerClasses[variant], className)}
-        onClick={() => { setActive(selected); setOpen(!open); }}
+        onClick={(event) => { setPortal(event.currentTarget.closest("dialog")); setActive(selected); setOpen(!open); }}
         onBlur={() => setOpen(false)}
         onKeyDown={(event) => {
+          setPortal(event.currentTarget.closest("dialog"));
           if (!open || event.key.length !== 1) search.current.text = "";
           if (event.key === "Escape" && open) {
             event.preventDefault();
@@ -155,7 +157,7 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
               </div>
             );
           })}
-        </div>, document.body,
+        </div>, portal ?? document.body,
       )}
     </>
   );
