@@ -35,9 +35,20 @@ export const SHEETS: readonly SheetMetadata[] = [{
   status: "beta",
   verification: null,
   officialLines: Array.from({ length: 46 }, (_, index) => index + 1),
+}, {
+  id: "me-2030",
+  major: "Mechanical Engineering",
+  abbreviation: "ME",
+  classYear: 2030,
+  source: "https://www.wpi.edu/sites/default/files/2026-06/ME-2030_fillable.pdf",
+  catalogSource: "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/mechanical-engineering-major",
+  status: "beta",
+  verification: null,
+  officialLines: Array.from({ length: 45 }, (_, index) => index + 1),
 }];
 
 const loaders: Record<string, () => Promise<TrackingSheet>> = {
+  "me-2030": async () => (await import("./me-2030.json")).default as TrackingSheet,
   "rbe-2030": async () => (await import("./rbe-2030.json")).default as TrackingSheet,
   "cs-2030": async () => (await import("./cs-2030.json")).default as TrackingSheet,
 };

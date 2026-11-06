@@ -30,7 +30,7 @@ for (const width of [1440, 834, 375]) {
     await page.getByRole("button", { name: "Change major" }).click();
     await expect(page.getByRole("dialog", { name: "What's your major?" })).toBeVisible();
     await page.getByRole("combobox", { name: "Major", exact: true }).click();
-    await page.getByRole("option", { name: "Mechanical Engineering · Coming soon", exact: true }).click();
+    await page.getByRole("option", { name: "Another major · Coming soon", exact: true }).click();
     await expect(page.getByRole("button", { name: "Request this major" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Continue", exact: true })).toHaveCount(0);
     await page.screenshot({ path: `e2e/screenshots/degree-major-change-${width}.png`, fullPage: true, animations: "disabled" });
