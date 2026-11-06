@@ -45,9 +45,20 @@ export const SHEETS: readonly SheetMetadata[] = [{
   status: "beta",
   verification: null,
   officialLines: Array.from({ length: 45 }, (_, index) => index + 1),
+}, {
+  id: "ece-2030",
+  major: "Electrical and Computer Engineering",
+  abbreviation: "ECE",
+  classYear: 2030,
+  source: "https://www.wpi.edu/sites/default/files/2026-07/ECE-2030_fillable.pdf",
+  catalogSource: "https://wpi.cleancatalog.net/electrical-and-computer-engineering/electrical-and-computer-engineering-major",
+  status: "beta",
+  verification: null,
+  officialLines: Array.from({ length: 45 }, (_, index) => index + 1),
 }];
 
 const loaders: Record<string, () => Promise<TrackingSheet>> = {
+  "ece-2030": async () => (await import("./ece-2030.json")).default as TrackingSheet,
   "me-2030": async () => (await import("./me-2030.json")).default as TrackingSheet,
   "rbe-2030": async () => (await import("./rbe-2030.json")).default as TrackingSheet,
   "cs-2030": async () => (await import("./cs-2030.json")).default as TrackingSheet,

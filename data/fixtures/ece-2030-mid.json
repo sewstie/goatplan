@@ -1,0 +1,232 @@
+{
+  "sheetId": "ece-2030",
+  "description": "Hand-worked from the numbered 2030 ECE PDF. Eighteen completed courses and two planned. No project, WPE or interpretation confirmations. CS 1004 fills only a free elective. ECE 2799 alone cannot confirm the placement-dependent engineering design check.",
+  "takenCourses": [
+    {
+      "code": "EN 1001",
+      "credits": 3
+    },
+    {
+      "code": "EN 1002",
+      "credits": 3
+    },
+    {
+      "code": "EN 2201",
+      "credits": 3
+    },
+    {
+      "code": "ECON 1110",
+      "credits": 3
+    },
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "MA 1022",
+      "credits": 3
+    },
+    {
+      "code": "MA 1023",
+      "credits": 3
+    },
+    {
+      "code": "MA 2051",
+      "credits": 3
+    },
+    {
+      "code": "MA 2621",
+      "credits": 3
+    },
+    {
+      "code": "PH 1110",
+      "credits": 3
+    },
+    {
+      "code": "PH 1120",
+      "credits": 3
+    },
+    {
+      "code": "CH 1010",
+      "credits": 3
+    },
+    {
+      "code": "ECE 2112",
+      "credits": 3
+    },
+    {
+      "code": "ECE 2201",
+      "credits": 3
+    },
+    {
+      "code": "ECE 2029",
+      "credits": 3
+    },
+    {
+      "code": "ECE 2010",
+      "credits": 3
+    },
+    {
+      "code": "ECE 2799",
+      "credits": 3
+    },
+    {
+      "code": "CS 1004",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "ECE 2039",
+      "credits": 3
+    },
+    {
+      "code": "ECE 2049",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedLines": {
+    "4": {
+      "state": "empty",
+      "course": null
+    },
+    "7": {
+      "state": "empty",
+      "course": null
+    },
+    "16": {
+      "state": "done",
+      "course": "MA 1021"
+    },
+    "17": {
+      "state": "done",
+      "course": "MA 1022"
+    },
+    "18": {
+      "state": "done",
+      "course": "MA 2051"
+    },
+    "19": {
+      "state": "done",
+      "course": "MA 2621"
+    },
+    "25": {
+      "state": "done",
+      "course": "CH 1010"
+    },
+    "28": {
+      "state": "empty",
+      "course": null
+    },
+    "29": {
+      "state": "empty",
+      "course": null
+    },
+    "30": {
+      "state": "empty",
+      "course": null
+    },
+    "31": {
+      "state": "planned",
+      "course": "ECE 2039"
+    },
+    "35": {
+      "state": "done",
+      "course": "ECE 2029"
+    },
+    "36": {
+      "state": "planned",
+      "course": "ECE 2049"
+    }
+  },
+  "expectedSections": {
+    "Humanities and Arts": {
+      "done": 3,
+      "planned": 0,
+      "total": 6
+    },
+    "Wellness and Physical Education": {
+      "done": 0,
+      "planned": 0,
+      "total": 4
+    },
+    "Social Science": {
+      "done": 1,
+      "planned": 0,
+      "total": 2
+    },
+    "Interactive Qualifying Project": {
+      "done": 0,
+      "planned": 0,
+      "total": 3
+    },
+    "Free Electives": {
+      "done": 1,
+      "planned": 0,
+      "total": 3
+    },
+    "Mathematics": {
+      "done": 5,
+      "planned": 0,
+      "total": 7
+    },
+    "Physics": {
+      "done": 2,
+      "planned": 0,
+      "total": 2
+    },
+    "Chemistry or Biology": {
+      "done": 1,
+      "planned": 0,
+      "total": 1
+    },
+    "Additional Mathematics and Basic Science": {
+      "done": 0,
+      "planned": 0,
+      "total": 2
+    },
+    "Major Qualifying Project": {
+      "done": 0,
+      "planned": 0,
+      "total": 3
+    },
+    "Computational Engineering": {
+      "done": 0,
+      "planned": 1,
+      "total": 1
+    },
+    "Electrical Engineering": {
+      "done": 2,
+      "planned": 0,
+      "total": 3
+    },
+    "Digital Circuit Design": {
+      "done": 1,
+      "planned": 0,
+      "total": 1
+    },
+    "Embedded Computing": {
+      "done": 0,
+      "planned": 1,
+      "total": 1
+    },
+    "Additional Electrical and Computer Engineering": {
+      "done": 2,
+      "planned": 0,
+      "total": 7
+    },
+    "Additional Engineering Science and Design": {
+      "done": 0,
+      "planned": 0,
+      "total": 2
+    }
+  },
+  "expectedChecks": {
+    "hua-depth": "check",
+    "hua-breadth": "not-met",
+    "hua-ap-ib-limit": "met",
+    "residency": "check",
+    "engineering-design": "check"
+  }
+}
