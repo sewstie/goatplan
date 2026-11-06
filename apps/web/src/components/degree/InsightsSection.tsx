@@ -36,7 +36,7 @@ export function InsightsSection({ view, degree }: { view: DegreeView; degree: De
         <CreditsCard view={view} degree={degree} />
         <PaceCard view={view} />
         <PlanningFirstCard view={view} />
-        <TakeThisTermCard history={degree.history} />
+        <TakeThisTermCard />
       </div>
       <div aria-hidden className="flex justify-center gap-4 tablet:hidden">
         {Array.from({ length: CARD_COUNT }, (_, index) => (

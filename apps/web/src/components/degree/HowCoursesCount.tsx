@@ -5,15 +5,14 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Notice } from "@/components/ui/Notice";
 import { allocationReview, type DegreeHistory } from "@/lib/degree";
-import type { AuditCourse } from "@/lib/engine/types";
 import { useDegreeUi } from "./degreeUi";
 import type { DegreeView } from "./useDegreeView";
 
 const TONES = { counted: "success", kept: "success", skipped: "neutral", small: "accent", elective: "neutral", extra: "neutral" } as const;
 
-export function HowCoursesCount({ history, view, planCourses }: { history: DegreeHistory; view: DegreeView | null; planCourses: readonly AuditCourse[] }) {
+export function HowCoursesCount({ history, view }: { history: DegreeHistory; view: DegreeView | null }) {
   const set = useDegreeUi((state) => state.set);
-  const rows = view ? allocationReview(history, planCourses, view.sheet, view.result) : [];
+  const rows = view ? allocationReview(history, view.sheet, view.result) : [];
   return (
     <div className="mx-auto flex w-full max-w-1020 flex-col gap-16">
       <header className="flex flex-col gap-12 tablet:flex-row tablet:items-start tablet:justify-between">

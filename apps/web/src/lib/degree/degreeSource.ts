@@ -1,5 +1,5 @@
 import { getEngineClient, type AuditSuccess, type EngineClient } from "@/lib/engine";
-import type { AuditCourse } from "@/lib/engine/types";
+import { isSheetAvailable } from "@/lib/flags";
 import {
   browserHistoryStorage,
   buildAuditRequest,
@@ -15,7 +15,6 @@ import {
   type LinePin,
   type StoredHistory,
 } from "./history";
-import { browserOpenPlan, isPlanKey, type OpenPlan } from "./openPlan";
 import { DEFAULT_SHEET_ID, loadSheet, type TrackingSheet } from "./sheets";
 import { activateRequirements } from "./requirements";
 
@@ -34,7 +33,6 @@ export interface DegreeSnapshot {
   history: DegreeHistory;
   damaged: boolean;
   audit: AuditState;
-  planCourses: AuditCourse[];
   unsaved: boolean;
 }
 
@@ -45,7 +43,7 @@ export interface AddManyResult {
   added: number;
 }
 
-export type CourseChanges = Partial<Pick<HistoryCourse, "credits" | "term" | "inProgress" | "apIb" | "creditSource">>;
+export type CourseChanges = Partial<Pick<HistoryCourse, "credits" | "term" | "status" | "apIb" | "creditSource">>;
 
 export type EditResult = "saved" | "invalid" | "unsaved";
 
@@ -65,30 +63,25 @@ export interface DegreeSource {
   removePin(code: string): boolean;
   clearPins(): boolean;
   saveAgain(): boolean;
-  planChanged(): void;
   retryAudit(): void;
 }
 
 interface DegreeSourceDeps {
   getStorage(): HistoryStorage | null;
   engine: AuditEngine;
-  plan?: OpenPlan;
   sheetId?: string;
   loadSheet?: (id: string) => Promise<TrackingSheet>;
   requireSelection?: boolean;
+  canSelectSheet?: (id: string) => boolean;
 }
 
-const NO_PLAN: OpenPlan = { read: async () => [], signature: () => "" };
-
-export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId = DEFAULT_SHEET_ID, loadSheet: readSheet = loadSheet, requireSelection = false }: DegreeSourceDeps): DegreeSource {
+export function createDegreeSource({ getStorage, engine, sheetId = DEFAULT_SHEET_ID, loadSheet: readSheet = loadSheet, requireSelection = false, canSelectSheet = () => true }: DegreeSourceDeps): DegreeSource {
   const listeners = new Set<() => void>();
   let stored: StoredHistory | null = null;
   let loadedSheet: TrackingSheet | null = null;
   // What the browser refused to keep. It stays usable until the page closes or a save succeeds.
   let session: DegreeHistory | null = null;
   let audit: AuditState = { status: "waiting", result: null };
-  let planCourses: AuditCourse[] = [];
-  let auditedPlan: string | null = null;
   let snapshot: DegreeSnapshot | null = null;
   let timer: ReturnType<typeof setTimeout> | null = null;
   let auditDue = true;
@@ -112,7 +105,7 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
 
   function selection(): string | null {
     const history = current().history;
-    if (history.sheetId) return history.sheetId;
+    if (history.sheetId) return canSelectSheet(history.sheetId) ? history.sheetId : null;
     try {
       const saved = getStorage()?.getItem(HISTORY_KEY);
       return session || saved != null ? sheetId : null;
@@ -131,24 +124,19 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
     if (requireSelection && !selection()) return;
     auditDue = false;
     const asked = ++latest;
-    const signature = plan.signature();
     let next: AuditState = { status: "failed", result: null };
-    let nextPlan = planCourses;
     try {
-      nextPlan = await plan.read();
       const sheet = await readSheet(current().history.sheetId ?? sheetId);
       if (asked !== latest) return;
       activateRequirements(sheet);
       loadedSheet = sheet;
-      const response = await engine.audit(buildAuditRequest(current().history, nextPlan, sheet));
+      const response = await engine.audit(buildAuditRequest(current().history, sheet));
       if (response.ok) next = { status: "ready", result: response };
     } catch {
       // The failed state already says so, and offers another try.
     }
     if (asked !== latest) return;
     audit = next;
-    planCourses = nextPlan;
-    auditedPlan = signature;
     notify();
   }
 
@@ -171,7 +159,6 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
 
   function onStorage(event: StorageEvent) {
     if (event.key === null || event.key === HISTORY_KEY) historyChanged();
-    else if (isPlanKey(event.key)) auditAgain();
   }
 
   function working(): DegreeHistory {
@@ -207,8 +194,6 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
     subscribe(listener) {
       if (listeners.size === 0) {
         if (typeof window !== "undefined") window.addEventListener("storage", onStorage);
-        // The planner may have changed the plan while this screen was closed.
-        if (auditedPlan !== null && auditedPlan !== plan.signature()) auditAgain();
       }
       listeners.add(listener);
       if (auditDue && !timer) startTimer();
@@ -222,7 +207,7 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
     getSnapshot() {
       if (!snapshot) {
         const { history, damaged } = current();
-        snapshot = { selectedSheetId: selection(), sheet: loadedSheet, history, damaged, audit, planCourses, unsaved: session !== null };
+        snapshot = { selectedSheetId: selection(), sheet: loadedSheet, history, damaged, audit, unsaved: session !== null };
       }
       return snapshot;
     },
@@ -315,9 +300,6 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
       notify();
       return true;
     },
-    planChanged() {
-      if (auditedPlan !== plan.signature()) auditAgain();
-    },
     retryAudit() {
       audit = { status: "waiting", result: null };
       auditAgain();
@@ -328,6 +310,6 @@ export function createDegreeSource({ getStorage, engine, plan = NO_PLAN, sheetId
 let shared: DegreeSource | null = null;
 
 export function getDegreeSource(): DegreeSource {
-  shared ??= createDegreeSource({ getStorage: browserHistoryStorage, engine: getEngineClient(), plan: browserOpenPlan(browserHistoryStorage), requireSelection: true });
+  shared ??= createDegreeSource({ getStorage: browserHistoryStorage, engine: getEngineClient(), requireSelection: true, canSelectSheet: isSheetAvailable });
   return shared;
 }

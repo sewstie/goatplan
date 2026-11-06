@@ -7,8 +7,7 @@ import { DrawerFrame } from "@/components/ui/Drawer";
 import { Notice } from "@/components/ui/Notice";
 import { Select } from "@/components/ui/Select";
 import { TextInput } from "@/components/ui/TextInput";
-import { cleanCourseCode, getDegreeSource, parseTerm, parseUnits, PRIOR_CREDIT, typedCourse, type CreditSource } from "@/lib/degree";
-import { usePlanner } from "@/lib/store";
+import { cleanCourseCode, getDegreeSource, parseUnits, typedCourse, type CreditSource } from "@/lib/degree";
 import { useDegreeUi } from "./degreeUi";
 import { termChoices } from "./termChoices";
 
@@ -21,13 +20,12 @@ const SOURCES: { value: CreditSource; label: string }[] = [
 export function ManualCoursePanel({ initialCode = "" }: { initialCode?: string }) {
   const close = useDegreeUi((state) => state.close);
   const open = useDegreeUi((state) => state.open);
-  const termId = usePlanner((state) => state.termId);
   const [code, setCode] = useState(initialCode);
   const [units, setUnits] = useState("1/3");
   const [title, setTitle] = useState("");
-  const [term, setTerm] = useState(PRIOR_CREDIT);
+  const [term, setTerm] = useState("");
   const [source, setSource] = useState<CreditSource>("transfer");
-  const [inProgress, setInProgress] = useState(false);
+  const [status, setStatus] = useState<"taken" | "planned">("taken");
   const [apIb, setApIb] = useState(false);
   const [problem, setProblem] = useState<{ field: "code" | "units" | "form"; text: string } | null>(null);
 
@@ -42,7 +40,7 @@ export function ManualCoursePanel({ initialCode = "" }: { initialCode?: string }
       setProblem({ field: "units", text: "Enter WPI units, like 1/3 or 1/6." });
       return;
     }
-    const result = getDegreeSource().addCourse({ ...typedCourse(clean), title: title.trim(), credits, inProgress, apIb, creditSource: source, ...(term ? { term } : {}) });
+    const result = getDegreeSource().addCourse({ ...typedCourse(clean), title: title.trim(), credits, status, apIb, creditSource: source, ...(term ? { term } : {}) });
     if (result === "duplicate") {
       setProblem({ field: "code", text: `${clean} is already in your history.` });
       return;
@@ -72,11 +70,11 @@ export function ManualCoursePanel({ initialCode = "" }: { initialCode?: string }
       </div>
       <TextInput label="Course title (optional)" hideLabel={false} autoComplete="off" value={title} onChange={(event) => setTitle(event.target.value)} className="pt-14" />
       <div className="grid grid-cols-2 gap-16 pt-16">
-        <Select label="Term" hideLabel={false} variant="box" options={termChoices(parseTerm(termId), term)} value={term} onChange={(event) => setTerm(event.target.value)} />
+        <Select label="Term" hideLabel={false} variant="box" options={termChoices()} value={term} onChange={(event) => setTerm(event.target.value)} />
         <Select label="Credit source" hideLabel={false} variant="box" options={SOURCES} value={source} onChange={(event) => setSource(event.target.value as CreditSource)} />
       </div>
       <div className="flex flex-col gap-18 pt-22 pb-14">
-        <CheckField label="In progress" description="Completed courses count as done." checked={inProgress} onChange={(event) => setInProgress(event.target.checked)} />
+        <Select label="Status" hideLabel={false} variant="box" options={[{ value: "taken", label: "Taken" }, { value: "planned", label: "Planned" }]} value={status} onChange={(event) => setStatus(event.target.value as "taken" | "planned")} />
         <CheckField label="AP / IB credit" description="Use this only for an AP or IB award." checked={apIb} onChange={(event) => setApIb(event.target.checked)} />
       </div>
       <Notice title="Needs your review">A manual code may not match a specific requirement. We’ll keep it in history and flag uncertain allocations.</Notice>

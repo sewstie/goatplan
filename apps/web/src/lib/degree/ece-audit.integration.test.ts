@@ -57,7 +57,7 @@ describe("ECE audit through EngineClient and WebAssembly", () => {
     const sheet = await loadSheet("ece-2030");
     activateRequirements(sheet);
     const client = clientForAudit();
-    const history = { courses: [{ code: "ECE 2799", credits: 3, title: "", source: "found" as const, inProgress: false, apIb: false }], manual: [] };
+    const history = { courses: [{ code: "ECE 2799", credits: 3, title: "", source: "found" as const, status: "taken" as const, apIb: false }], manual: [] };
     try {
       const request: AuditRequest = { version: 1, requirements: sheet.id, sheet, taken: history.courses };
       const result = await client.audit(request);

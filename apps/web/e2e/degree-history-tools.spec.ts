@@ -37,8 +37,8 @@ test("a student adds courses from a Workday paste, keeping only what counts", as
   await auditReady(page);
   const history = await stored(page);
   expect(history.courses.map((course: { code: string }) => course.code)).toEqual(["CS 1101", "MA 1021", "MA 1022", "PH 1110", "WR 1011", "CS 2102"]);
-  expect(history.courses.find((course: { code: string }) => course.code === "CS 2102")).toMatchObject({ term: "C Term 2027", inProgress: true });
-  expect(history.courses.find((course: { code: string }) => course.code === "MA 1022")).toMatchObject({ term: "B Term 2026", inProgress: false });
+  expect(history.courses.find((course: { code: string }) => course.code === "CS 2102")).toMatchObject({ term: "C Term 2027", status: "taken" });
+  expect(history.courses.find((course: { code: string }) => course.code === "MA 1022")).toMatchObject({ term: "B Term 2026", status: "taken" });
   const text = JSON.stringify(history);
   for (const detail of ["SecretGradeMarker", "NR", "08/21", "Room"]) expect(text).not.toContain(detail);
 });
@@ -80,19 +80,19 @@ test("a course already in the history can't be added twice", async ({ page }) =>
   await expect(review.getByText("Already in history · duplicate will not be added")).toBeVisible();
 });
 
-test("in-progress, units and term stick after a reload, and reach the real audit", async ({ page }) => {
+test("planned status, units and term stick after a reload, and reach the real audit", async ({ page }) => {
   await openDegree(page, { courses: [savedCourse({ code: "MA 1021", credits: 3 })] });
   const history = await openHistory(page);
   await history.getByRole("button", { name: "MA 1021 details" }).click();
   const details = panel(page, "Course details");
   await details.getByRole("textbox", { name: "Units" }).fill("1/6");
   await details.getByRole("combobox", { name: "Term" }).selectOption("A Term 2026");
-  await details.getByRole("checkbox", { name: "In progress" }).check({ force: true });
+  await details.getByRole("combobox", { name: "Status" }).selectOption("planned");
   await details.getByRole("button", { name: "Save changes" }).click();
   await auditReady(page);
   await page.reload();
   await auditReady(page);
-  expect((await stored(page)).courses[0]).toMatchObject({ credits: 1.5, term: "A Term 2026", inProgress: true });
+  expect((await stored(page)).courses[0]).toMatchObject({ credits: 1.5, term: "A Term 2026", status: "planned" });
 });
 
 test("AP/IB goes to the engine with the audit request", async ({ page }) => {
@@ -167,8 +167,8 @@ test("a restored pin that isn't allowed is reported without losing the history",
 const badFiles: [string, string, string][] = [
   ["broken JSON", "{broken", "It isn’t a GoatPlan history."],
   ["wrong version", JSON.stringify({ version: 99, courses: [], manual: [] }), "It’s from a different version of GoatPlan."],
-  ["hostile credits", JSON.stringify({ version: 1, courses: [{ code: "CS 1101", title: "", credits: 1e9, inProgress: false, apIb: false, source: "found" }], manual: [] }), "One record has an invalid credit amount."],
-  ["hostile code", JSON.stringify({ version: 1, courses: [{ code: "<img src=x>", title: "", credits: 3, inProgress: false, apIb: false, source: "found" }], manual: [] }), "One record can’t be read."],
+  ["hostile credits", JSON.stringify({ version: 1, courses: [{ code: "CS 1101", title: "", credits: 1e9, status: "taken", apIb: false, source: "found" }], manual: [] }), "One record has an invalid credit amount."],
+  ["hostile code", JSON.stringify({ version: 1, courses: [{ code: "<img src=x>", title: "", credits: 3, status: "taken", apIb: false, source: "found" }], manual: [] }), "One record can’t be read."],
   ["hostile prototype", '{"version":1,"courses":[],"manual":[],"__proto__":{"polluted":true}}', ""],
 ];
 

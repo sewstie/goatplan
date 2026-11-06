@@ -6,6 +6,7 @@ import type { DegreeHistory, ImportPreview, LinePin, MoveOutcome, FileProblem, S
 export type HistoryTab = "history" | "search" | "several";
 
 export type Panel =
+  | { kind: "suggest"; line?: number }
   | { kind: "options"; code: string }
   | { kind: "move"; code: string }
   | { kind: "fill"; line: number }

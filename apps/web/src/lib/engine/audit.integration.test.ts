@@ -392,20 +392,19 @@ describe("audit through WebAssembly and EngineClient", () => {
 });
 
 describe("the degree module's requests through WebAssembly", () => {
-  const saved = (code: string, extra: Partial<HistoryCourse> = {}): HistoryCourse => ({ code, title: "", credits: 3, inProgress: false, apIb: false, source: "found", ...extra });
+  const saved = (code: string, extra: Partial<HistoryCourse> = {}): HistoryCourse => ({ code, title: "", credits: 3, status: "taken", apIb: false, source: "found", ...extra });
   const lineOf = (response: AuditSuccess, id: number) => response.sections.flatMap((section) => section.lines).find((line) => line.id === id);
   const checkOf = (response: AuditSuccess, id: string) => response.checks.find((check) => check.id === id);
 
-  async function ask(history: { courses: HistoryCourse[]; manual?: string[] }, plan: { code: string; credits: number }[] = []) {
+  async function ask(history: { courses: HistoryCourse[]; manual?: string[] }) {
     const { client } = setup();
-    const response = await client.audit(buildAuditRequest({ manual: [], ...history }, plan));
+    const response = await client.audit(buildAuditRequest({ manual: [], ...history }));
     if (!response.ok) throw new Error(response.error.code);
     return response;
   }
 
-  it("shows a course from the plan as planned, and removing it undoes that", async () => {
-    const plan = [{ code: "CS 2102", credits: 3 }];
-    const withPlan = await ask({ courses: [] }, plan);
+  it("shows a course explicitly added as planned, and removing it undoes that", async () => {
+    const withPlan = await ask({ courses: [saved("CS 2102", { status: "planned" })] });
     expect(withPlan.sections.find((section) => section.name === "Computer Science")).toMatchObject({ done: 0, planned: 1 });
     expect(lineOf(withPlan, 16)).toMatchObject({ state: "empty" });
     expect(lineOf(withPlan, 17)).toMatchObject({ state: "planned", course: "CS 2102" });
@@ -414,14 +413,14 @@ describe("the degree module's requests through WebAssembly", () => {
     expect(without.sections.find((section) => section.name === "Computer Science")).toMatchObject({ done: 0, planned: 0 });
   });
 
-  it("counts a course that's both taken and in the plan as taken, with nothing left over", async () => {
-    const response = await ask({ courses: [saved("CS 2102")] }, [{ code: "CS 2102", credits: 3 }]);
+  it("counts a taken course without leaving extra planned credit", async () => {
+    const response = await ask({ courses: [saved("CS 2102")] });
     expect(lineOf(response, 17)).toMatchObject({ state: "done", course: "CS 2102" });
     expect(response.extra).toEqual([]);
   });
 
-  it("keeps a taken course when the plan has the other code of its cross-list", async () => {
-    const response = await ask({ courses: [saved("CS 2022")] }, [{ code: "MA 2201", credits: 3 }]);
+  it("keeps a taken course when a planned record has the other code of its cross-list", async () => {
+    const response = await ask({ courses: [saved("CS 2022"), saved("MA 2201", { status: "planned" })] });
     expect(lineOf(response, 17)).toMatchObject({ state: "done", course: "CS 2022" });
     expect(response.sections.find((section) => section.name === "Mathematics")).toMatchObject({ planned: 0 });
     expect(response.extra).toEqual(["MA 2201"]);

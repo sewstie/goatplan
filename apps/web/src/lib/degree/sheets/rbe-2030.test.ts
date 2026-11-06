@@ -28,7 +28,7 @@ describe("RBE Class of 2030", () => {
     const sheet = await loadSheet("rbe-2030");
     activateRequirements(sheet);
     const result: AuditSuccess = { ok: true, version: 1, checks: [{ id: "classical-controls", label: "Classical controls", state: "check", courses: [] }], sections: [{ name: "Engineering Science", done: 1, planned: 0, total: 2, lines: [{ id: 39, label: "Classical controls", course: "ME 3703", state: "done" }] }], freeElectives: { creditsDone: 0, creditsPlanned: 0, creditsTotal: 9, courses: [] }, extra: [], candidateResults: [] };
-    const history = { courses: [{ code: "ME 3703", credits: 3, title: "", inProgress: false, apIb: false, source: "found" as const }], manual: [] };
+    const history = { courses: [{ code: "ME 3703", credits: 3, title: "", status: "taken" as const, apIb: false, source: "found" as const }], manual: [] };
     const tile = () => buildSheet(result, history, new Map(), null).sections.flatMap((section) => section.tiles).find((line) => line.line === 39);
     expect(tile()?.kind).toBe("check");
     result.checks[0].state = "met";

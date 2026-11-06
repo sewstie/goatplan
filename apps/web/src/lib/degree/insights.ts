@@ -1,5 +1,5 @@
-import type { AuditCheck, AuditCourse } from "@/lib/engine/types";
-import type { DegreeHistory, HistoryCourse } from "./history";
+import type { AuditCheck } from "@/lib/engine/types";
+import { hasRegistrationCode, type DegreeHistory, type HistoryCourse } from "./history";
 import { lineNumber, lineName, sectionNameOfLine, type Sheet, type SheetSection } from "./sheet";
 import { areaCourses, crossListed, fitsLine, onlyOneRivals } from "./rules";
 import { unitLabel } from "./units";
@@ -32,9 +32,8 @@ function withoutRepeats(courses: readonly HistoryCourse[]): HistoryCourse[] {
   });
 }
 
-export function creditsPerTerm(history: DegreeHistory, plan: readonly AuditCourse[], openTerm: TermName | null): CreditsPerTerm {
+export function creditsPerTerm(history: DegreeHistory, openTerm: TermName | null): CreditsPerTerm {
   const courses = withoutRepeats(history.courses);
-  const known = new Set(courses.flatMap((course) => crossListed(course.code)));
   const buckets = new Map<string, { term: TermName; done: number; planned: number }>();
   const bucket = (term: TermName) => {
     const key = termShort(term);
@@ -46,8 +45,8 @@ export function creditsPerTerm(history: DegreeHistory, plan: readonly AuditCours
   let datedDone = 0;
   let undated = 0;
   for (const course of courses) {
-    const term = parseTerm(course.term) ?? (course.inProgress ? openTerm : null);
-    if (course.inProgress) {
+    const term = parseTerm(course.term);
+    if (course.status === "planned") {
       if (term) bucket(term).planned += course.credits;
       else noTerm.planned += course.credits;
     } else if (term) {
@@ -56,11 +55,6 @@ export function creditsPerTerm(history: DegreeHistory, plan: readonly AuditCours
     } else {
       noTerm.done += course.credits;
       undated += 1;
-    }
-  }
-  if (openTerm) {
-    for (const course of plan) {
-      if (!known.has(course.code)) bucket(openTerm).planned += course.credits;
     }
   }
   const dated = [...buckets.values()].map((item) => item.term).sort(compareTerms);
@@ -235,6 +229,7 @@ export interface NotOnALine {
 export function notOnALine(extra: readonly string[], history: DegreeHistory, sheet: Sheet): NotOnALine[] {
   const tiles = sheet.sections.flatMap((section) => section.tiles);
   return extra.map((code) => {
+    if (!hasRegistrationCode(code)) return { code, text: "Needs a numbered WPI course code before it can count. Kept in history." };
     const partner = tiles.find((tile) => tile.course !== null && crossListed(code).includes(tile.course));
     if (partner) return { code, text: `Duplicate record · already counted on line ${partner.line}` };
     const course = history.courses.find((item) => item.code === code);
@@ -265,7 +260,7 @@ function joined(codes: readonly string[]): string {
 export function checkRows(checks: readonly AuditCheck[], history: DegreeHistory): CheckRowText[] {
   const find = (id: string) => checks.find((check) => check.id === id);
   const statusOf = (id: string): CheckStatus => STATUS[find(id)?.state ?? "not-met"];
-  const taken = new Set(history.courses.filter((course) => !course.inProgress).map((course) => course.code));
+  const taken = new Set(history.courses.filter((course) => course.status === "taken").map((course) => course.code));
   const typed = history.courses.some((course) => course.source === "typed");
   const science = find("science-depth");
   const scienceDone = science?.courses.filter((code) => taken.has(code)) ?? [];
@@ -332,7 +327,7 @@ export interface AllocationRow {
   badge: string;
 }
 
-export function allocationReview(history: DegreeHistory, plan: readonly AuditCourse[], sheet: Sheet, result: { freeElectives: { courses: string[] }; extra: string[] }): AllocationRow[] {
+export function allocationReview(history: DegreeHistory, sheet: Sheet, result: { freeElectives: { courses: string[] }; extra: string[] }): AllocationRow[] {
   const rows: AllocationRow[] = [];
   const tiles = sheet.sections.flatMap((section) => section.tiles);
   const repeatsDone = new Set<string>();
@@ -343,8 +338,8 @@ export function allocationReview(history: DegreeHistory, plan: readonly AuditCou
     const tile = tiles.find((item) => item.course !== null && names.includes(item.course));
     rows.push({ kind: "counted", title: names.join(" / "), text: `${tile ? `Allocated to ${sectionNameOfLine(tile.line)}.` : "Kept in history."} The cross-listed entry shares the same credit.`, badge: "Counted once" });
   }
-  const taken = new Set(history.courses.filter((course) => !course.inProgress).map((course) => course.code));
-  for (const course of [...history.courses.filter((item) => item.inProgress), ...plan]) {
+  const taken = new Set(history.courses.filter((course) => course.status === "taken").map((course) => course.code));
+  for (const course of history.courses.filter((item) => item.status === "planned")) {
     const rival = onlyOneRivals(course.code).find((code) => taken.has(code));
     if (rival) rows.push({ kind: "kept", title: `${rival} completed + ${course.code} planned`, text: "The completed alternative takes priority. The planned alternative adds no credit to this requirement.", badge: "Taken course kept" });
   }

@@ -25,7 +25,7 @@ vi.mock("@/lib/degree/catalog", async (original) => ({
 }));
 
 const course = (code: string, title: string, credits = 3) => ({ code, subject: code.split(" ")[0], title, credits, level: "Undergraduate", description: "", sections: [], options: [] }) as Course;
-const saved = (code: string, extra: Partial<HistoryCourse> = {}): HistoryCourse => ({ code, title: "", credits: 3, inProgress: false, apIb: false, source: "found", ...extra });
+const saved = (code: string, extra: Partial<HistoryCourse> = {}): HistoryCourse => ({ code, title: "", credits: 3, status: "taken", apIb: false, source: "found", ...extra });
 
 function answer(request: AuditRequest): AuditSuccess {
   const taken = request.taken ?? [];
@@ -131,7 +131,7 @@ describe("the first visit", () => {
 });
 
 describe("the sheet", () => {
-  const someCourses = () => [saved("CS 1101", { term: "A Term 2026" }), saved("MA 1021", { term: "Prior credit" }), saved("MA 2621", { inProgress: true, term: "C Term 2027" }), saved("XFER 1000", { source: "typed", creditSource: "transfer" })];
+  const someCourses = () => [saved("CS 1101", { term: "A Term 2026" }), saved("MA 1021"), saved("MA 2621", { status: "planned", term: "C Term 2027" }), saved("XFER 1000", { source: "typed", creditSource: "transfer" })];
 
   it("counts done, planned, to go and to check", async () => {
     await setup(someCourses());
@@ -145,7 +145,7 @@ describe("the sheet", () => {
   it("shows each state in words as well as color, with when it was taken", async () => {
     await setup(someCourses());
     expect(tile(/^CS 1101, line 16, done, A Term 2026/)).toBeVisible();
-    expect(tile(/^MA 1021, line 34, done, Prior/)).toBeVisible();
+    expect(tile(/^MA 1021, line 34, done/)).toBeVisible();
     expect(tile(/^MA 2621, line \d+, planned/)).toBeVisible();
   });
 
@@ -365,7 +365,7 @@ describe("course history", () => {
     await user.type(panel.getByRole("textbox", { name: "Units" }), "1/6");
     await user.type(panel.getByRole("textbox", { name: "Course title (optional)" }), "Transferred science elective");
     await user.click(panel.getByRole("button", { name: "Add to history" }));
-    expect(stored().courses[0]).toMatchObject({ code: "XFER 1040", credits: 1.5, title: "Transferred science elective", term: "Prior credit", creditSource: "transfer", source: "typed" });
+    expect(stored().courses[0]).toMatchObject({ code: "XFER 1040", credits: 1.5, title: "Transferred science elective", creditSource: "transfer", source: "typed" });
   });
 
   it("refuses text that isn't shaped like a course code", async () => {
@@ -388,13 +388,13 @@ describe("course history", () => {
     const panel = within(await screen.findByRole("region", { name: "Review detected courses" }));
     expect(panel.getByText("Nothing has been saved yet.", { exact: false })).toBeVisible();
     expect(panel.getByRole("checkbox", { name: "Add CS 1101" })).toBeDisabled();
-    expect(panel.getByText("A Term 2026 · ⅓ unit · completed")).toBeVisible();
-    expect(panel.getByText("C Term 2027 · ⅓ unit · in progress")).toBeVisible();
+    expect(panel.getByText("A Term 2026 · ⅓ unit · taken")).toBeVisible();
+    expect(panel.getByText("C Term 2027 · ⅓ unit · taken")).toBeVisible();
     await user.click(panel.getByRole("button", { name: "Add 2 courses" }));
     const courses = stored().courses as HistoryCourse[];
     expect(courses.map((item) => item.code)).toEqual(["CS 1101", "MA 1021", "CS 2102"]);
-    expect(courses[1]).toMatchObject({ term: "A Term 2026", inProgress: false });
-    expect(courses[2]).toMatchObject({ term: "C Term 2027", inProgress: true });
+    expect(courses[1]).toMatchObject({ term: "A Term 2026", status: "taken" });
+    expect(courses[2]).toMatchObject({ term: "C Term 2027", status: "taken" });
     expect(JSON.stringify(courses)).not.toContain("Grade");
   });
 });

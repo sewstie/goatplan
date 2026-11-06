@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { CourseBackgroundMap } from "@/components/courseMap/CourseBackgroundMap";
-import { getDegreeSource, useDegree } from "@/lib/degree";
-import { usePlanner } from "@/lib/store";
+import { useDegree } from "@/lib/degree";
 import { DegreePanels } from "./DegreePanels";
 import { DegreeTitle } from "./DegreeTitle";
 import { DegreeToastBar } from "./DegreeToastBar";
@@ -22,20 +21,14 @@ export function DegreeContent() {
   const degree = useDegree();
   const view = useDegreeView(degree);
   const screen = useDegreeUi((state) => state.screen);
-  const termId = usePlanner((state) => state.termId);
-  const planned = usePlanner((state) => state.courses);
   const [courseMap, setCourseMap] = useState(false);
-
-  useEffect(() => {
-    if (termId) getDegreeSource().planChanged();
-  }, [termId, planned]);
 
   if (!degree) return null;
   if (degree.selectedSheetId === null) return <MajorPicker selected={null} />;
 
   return (
     <>
-      {screen === "how" && <HowCoursesCount history={degree.history} view={view} planCourses={degree.planCourses} />}
+      {screen === "how" && <HowCoursesCount history={degree.history} view={view} />}
       {screen === "confirmations" && <YourConfirmations history={degree.history} />}
       {screen === "main" && (
         <div className="flex flex-col gap-18 tablet:gap-12">

@@ -3,7 +3,6 @@ import type { AuditResponse, AuditSuccess } from "@/lib/engine";
 import { MemoryPlanStorage } from "@/lib/plans/testing";
 import { AUDIT_DELAY_MS, createDegreeSource, type AuditEngine } from "./degreeSource";
 import { foundCourse, HISTORY_KEY, parseHistoryFile, typedCourse, writeHistory } from "./history";
-import type { OpenPlan } from "./openPlan";
 import cs from "./sheets/cs-2030.json";
 import type { TrackingSheet } from "./sheets";
 import fixture from "../../../e2e/fixtures/degree-major-sheet.json";
@@ -19,10 +18,10 @@ const answer = (done: number): AuditSuccess => ({
   candidateResults: [],
 });
 
-function setup(audit: AuditEngine["audit"] = async (request) => answer(request.taken?.length ?? 0), plan?: OpenPlan) {
+function setup(audit: AuditEngine["audit"] = async (request) => answer(request.taken?.length ?? 0)) {
   const storage = new MemoryPlanStorage();
   const engine = { audit: vi.fn(audit) };
-  const source = createDegreeSource({ getStorage: () => storage, engine, plan });
+  const source = createDegreeSource({ getStorage: () => storage, engine });
   const stop = source.subscribe(() => {});
   return { storage, engine, source, stop };
 }
@@ -187,7 +186,7 @@ describe("adding several courses", () => {
     await pause();
     engine.audit.mockClear();
     const write = vi.spyOn(storage, "setItem");
-    expect(source.addCourses([typedCourse("CS 9999"), { ...typedCourse("MA 1021"), inProgress: true }])).toEqual({ status: "added", added: 2 });
+    expect(source.addCourses([typedCourse("CS 9999"), { ...typedCourse("MA 1021"), status: "planned" }])).toEqual({ status: "added", added: 2 });
     expect(write).toHaveBeenCalledTimes(1);
     await pause();
     expect(engine.audit).toHaveBeenCalledTimes(1);
@@ -197,9 +196,9 @@ describe("adding several courses", () => {
 
   it("skips courses already there, or listed twice, and leaves the old copy alone", () => {
     const { source } = setup();
-    source.addCourse({ ...typedCourse("CS 9999"), term: "A 2025" });
+    source.addCourse({ ...typedCourse("CS 9999"), term: "A 2026" });
     expect(source.addCourses([typedCourse("CS 9999"), typedCourse("MA 1021"), typedCourse("MA 1021")])).toEqual({ status: "added", added: 1 });
-    expect(source.getSnapshot().history.courses.map((course) => [course.code, course.term])).toEqual([["CS 9999", "A 2025"], ["MA 1021", undefined]]);
+    expect(source.getSnapshot().history.courses.map((course) => [course.code, course.term])).toEqual([["CS 9999", "A 2026"], ["MA 1021", undefined]]);
   });
 
   it("adds nothing if one of them is broken", () => {
@@ -232,8 +231,8 @@ describe("editing a course", () => {
 
   it("adds, tidies and clears a term", () => {
     const { source } = withCourses();
-    source.editCourse("MA 1021", { term: "  A 2025 " });
-    expect(saved(source, "MA 1021")?.term).toBe("A 2025");
+    source.editCourse("MA 1021", { term: "  A 2026 " });
+    expect(saved(source, "MA 1021")?.term).toBe("A 2026");
     source.editCourse("MA 1021", { term: "   " });
     expect(saved(source, "MA 1021")).not.toHaveProperty("term");
   });
@@ -276,8 +275,8 @@ describe("editing a course", () => {
     storage.setItem = () => {
       throw new Error("full");
     };
-    expect(source.editCourse("MA 1021", { inProgress: true })).toBe("unsaved");
-    expect(saved(source, "MA 1021")?.inProgress).toBe(true);
+    expect(source.editCourse("MA 1021", { status: "planned" })).toBe("unsaved");
+    expect(saved(source, "MA 1021")?.status).toBe("planned");
     expect(source.getSnapshot().unsaved).toBe(true);
   });
 
@@ -285,7 +284,7 @@ describe("editing a course", () => {
     const { source, engine } = withCourses();
     await pause();
     engine.audit.mockClear();
-    source.editCourse("MA 1021", { inProgress: true });
+    source.editCourse("MA 1021", { status: "planned" });
     await pause();
     expect(engine.audit.mock.lastCall?.[0].planned).toEqual([{ code: "MA 1021", credits: 3 }]);
     expect(engine.audit.mock.lastCall?.[0].taken).toEqual([{ code: "EN 1000", credits: 3 }]);
@@ -294,7 +293,7 @@ describe("editing a course", () => {
     await pause();
     expect(engine.audit.mock.lastCall?.[0].taken).toEqual([{ code: "EN 1000", credits: 1.5, apIb: true }]);
 
-    source.editCourse("MA 1021", { inProgress: false });
+    source.editCourse("MA 1021", { status: "taken" });
     await pause();
     expect(engine.audit.mock.lastCall?.[0].planned).toEqual([]);
     expect(engine.audit.mock.lastCall?.[0].taken).toContainEqual({ code: "MA 1021", credits: 3 });
@@ -337,7 +336,7 @@ describe("export and import", () => {
     const { source } = setup();
     source.addCourse(foundCourse({ code: "MA 1021", title: "Calculus I", credits: 3 }));
     source.addCourse({ ...typedCourse("EN 1000"), apIb: true, term: "AP" });
-    source.editCourse("MA 1021", { inProgress: true, credits: 1.5, term: "A 2025" });
+    source.editCourse("MA 1021", { status: "planned", credits: 1.5, term: "A 2026" });
     const before = source.getSnapshot().history;
 
     const parsed = parseHistoryFile(source.exportHistory());
@@ -629,67 +628,15 @@ describe("tick boxes", () => {
   });
 });
 
-describe("the open term's plan", () => {
-  function planned(courses: { code: string; credits: number }[] = [{ code: "MA 1021", credits: 3 }]) {
-    const plan = { courses, version: "a" };
-    const open: OpenPlan = { read: async () => plan.courses, signature: () => plan.version };
-    return { plan, open };
-  }
-
-  it("counts its courses as planned and shares them on the snapshot", async () => {
-    const { open } = planned();
-    const { source, engine } = setup(undefined, open);
+describe("planner independence", () => {
+  it("ignores planner storage changes and only audits explicit history", async () => {
+    const { source, engine } = setup();
+    source.addCourse({ ...typedCourse("MA 1021"), status: "planned", term: "A Term 2030" });
     await pause();
-    expect(engine.audit.mock.calls[0][0].planned).toEqual([{ code: "MA 1021", credits: 3 }]);
-    expect(source.getSnapshot().planCourses).toEqual([{ code: "MA 1021", credits: 3 }]);
-  });
-
-  it("asks again when the plan changes in another tab", async () => {
-    const { plan, open } = planned();
-    const { engine } = setup(undefined, open);
-    await pause();
+    expect(engine.audit.mock.calls.at(-1)?.[0].planned).toEqual([{ code: "MA 1021", credits: 3 }]);
     engine.audit.mockClear();
-    plan.courses = [];
-    window.dispatchEvent(new StorageEvent("storage", { key: "goatplan:draft:v1:2027-C" }));
-    await pause();
-    expect(engine.audit.mock.calls[0][0].planned).toEqual([]);
-  });
-
-  it("asks again when the open term changes in another tab", async () => {
-    const { open } = planned();
-    const { engine } = setup(undefined, open);
-    await pause();
-    engine.audit.mockClear();
-    window.dispatchEvent(new StorageEvent("storage", { key: "goatplan:term:v1" }));
-    await pause();
-    expect(engine.audit).toHaveBeenCalledTimes(1);
-  });
-
-  it("asks again on coming back when the plan changed while the screen was closed", async () => {
-    const { plan, open } = planned();
-    const { source, engine, stop } = setup(undefined, open);
-    await pause();
-    stop();
-    engine.audit.mockClear();
-    plan.courses = [];
-    plan.version = "b";
-    const back = source.subscribe(() => {});
-    expect(source.getSnapshot().audit.status).toBe("waiting");
-    await pause();
-    expect(engine.audit.mock.calls[0][0].planned).toEqual([]);
-    expect(source.getSnapshot().audit.status).toBe("ready");
-    back();
-  });
-
-  it("doesn't ask again on coming back when the plan is the same", async () => {
-    const { open } = planned();
-    const { source, engine, stop } = setup(undefined, open);
-    await pause();
-    stop();
-    engine.audit.mockClear();
-    const back = source.subscribe(() => {});
+    for (const key of ["goatplan:draft:v1:2027-C", "goatplan:term:v1"]) window.dispatchEvent(new StorageEvent("storage", { key }));
     await pause();
     expect(engine.audit).not.toHaveBeenCalled();
-    back();
   });
 });

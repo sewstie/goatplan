@@ -92,7 +92,7 @@ describe("ME audit through EngineClient and WebAssembly", () => {
     try {
       const sheet = await loadSheet("me-2030");
       activateRequirements(sheet);
-      const history = { courses: [{ code: "ME 1800", credits: 3, title: "", source: "found" as const, inProgress: false, apIb: false }], manual: [] };
+      const history = { courses: [{ code: "ME 1800", credits: 3, title: "", source: "found" as const, status: "taken" as const, apIb: false }], manual: [] };
       const request: AuditRequest = { version: 1, requirements: sheet.id, sheet, taken: history.courses };
       const response = await client.audit(request);
       expect(response.ok).toBe(true);

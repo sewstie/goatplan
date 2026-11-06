@@ -1,7 +1,7 @@
 import type { Course } from "@/lib/data/types";
 import { getEngineClient, type AuditRequest, type AuditSuccess } from "@/lib/engine";
 import { AUDIT_DELAY_MS, getDegreeSource, type AuditEngine, type DegreeSource } from "./degreeSource";
-import { buildAuditRequest, foundCourse, type DegreeHistory } from "./history";
+import { buildAuditRequest, foundCourse, hasRegistrationCode, type DegreeHistory } from "./history";
 import { DEFAULT_SHEET_ID, loadSheet, type TrackingSheet } from "./sheets";
 
 export interface OpenTerm {
@@ -31,14 +31,11 @@ const asAuditCourse = (course: Course) => {
   return { code, credits };
 };
 
-function buildGapRequest(history: DegreeHistory, { courses, planned }: OpenTerm, sheet: TrackingSheet): AuditRequest {
-  const request = buildAuditRequest(history, [], sheet);
-  const listed = new Set(history.courses.map((course) => course.code));
-  const plan = courses.filter((course) => planned.includes(course.code) && !listed.has(course.code));
+function buildGapRequest(history: DegreeHistory, { courses }: OpenTerm, sheet: TrackingSheet): AuditRequest {
+  const request = buildAuditRequest(history, sheet);
   return {
     ...request,
-    planned: [...(request.planned ?? []), ...plan.map(asAuditCourse)],
-    candidates: courses.filter((course) => course.level === "Undergraduate").map(asAuditCourse),
+    candidates: courses.filter((course) => course.level === "Undergraduate" && hasRegistrationCode(course.code)).map(asAuditCourse),
   };
 }
 

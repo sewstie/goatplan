@@ -9,7 +9,7 @@ const fixtures = path.join(__dirname, "../../../../data/fixtures");
 
 export type FixtureCourse = { code: string; credits: number; term?: string; apIb?: boolean };
 
-export const savedCourse = (course: FixtureCourse, inProgress = false) => ({ title: "", apIb: false, source: "found", ...course, inProgress });
+export const savedCourse = (course: FixtureCourse, planned = false) => ({ title: "", apIb: false, source: "found", ...course, status: planned ? "planned" : "taken" });
 
 export function readFixture(name: string) {
   return JSON.parse(readFileSync(path.join(fixtures, name), "utf8")) as {

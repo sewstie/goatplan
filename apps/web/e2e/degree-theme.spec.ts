@@ -44,7 +44,7 @@ for (const width of [1440, 834]) {
         ...history,
         courses: [
           ...history.courses.map((course, index) => ({ ...course, term: index % 2 ? "A Term 2026" : "B Term 2026" })),
-          { code: "CS 2999", credits: 3, title: "", source: "typed", apIb: false, inProgress: false },
+          { code: "CS 2999", credits: 3, title: "", source: "typed", apIb: false, status: "taken" },
         ],
         pins: [{ code: "CS 2022", line: 38 }],
       });
@@ -65,10 +65,7 @@ for (const width of [1440, 834]) {
       await expect(page.getByRole("button", { name: /^CS 2022, line 38, done, pinned/ })).toBeVisible();
       await expect(page.getByRole("button", { name: /^CS 3041, line \d+, planned/ })).toBeVisible();
       await expect(page.getByRole("button", { name: /^CS 2999, line \d+, check this yourself/ })).toBeVisible();
-      await page.getByRole("combobox", { name: "Term", exact: true }).click();
-      await expect(page.getByRole("listbox", { name: "Term", exact: true })).toBeVisible();
-      await capture("term");
-      await page.keyboard.press("Escape");
+      await expect(page.getByRole("combobox", { name: "Term", exact: true })).toHaveCount(0);
       await openHistory(page);
       await capture("history");
       await panel(page, "Course history").getByRole("button", { name: "CS 2022 details" }).click();

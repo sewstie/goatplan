@@ -29,6 +29,7 @@ export function SheetMenuPanel({ view, sheetReady = true }: { view: DegreeView |
       <div className="rounded-card border border-card-line px-17 py-16">
         <h3 className="pb-8 text-9 leading-15 font-650">Sheet options</h3>
         <ul>
+          <Item disabled={!sheetReady} icon={<ListChecks aria-hidden />} onClick={() => open({ kind: "suggest" })}>Suggest courses</Item>
           <Item icon={<BookOpen aria-hidden />} onClick={() => open({ kind: "history", tab: "history" })}>Course history</Item>
           <Item icon={<DownloadSimple aria-hidden />} onClick={downloadHistory}>Export history &amp; pins</Item>
           <Item icon={<UploadSimple aria-hidden />} onClick={() => open({ kind: "transfer" })}>Import history</Item>

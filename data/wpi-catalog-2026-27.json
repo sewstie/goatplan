@@ -1,0 +1,6420 @@
+{
+  "source": "https://wpi.cleancatalog.net/classes",
+  "academicYear": "2026–27",
+  "courses": [
+    {
+      "code": "AB 1531",
+      "title": "Elementary Arabic I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AB 1532",
+      "title": "Elementary Arabic II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AB 1533",
+      "title": "Elementary Arabic III",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AB 1600",
+      "title": "Moroccan Colloquial Arabic",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AB 2531",
+      "title": "Intermediate Arabic I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AB 2532",
+      "title": "Intermediate Arabic II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AB 2533",
+      "title": "Intermediate Arabic III",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ACC 2060",
+      "title": "Financial Statements for Decision Making",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ACC 2101",
+      "title": "Management Accounting",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 2110",
+      "title": "Introduction to Incompressible Fluid Dynamics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 2210",
+      "title": "Introduction to Thermal Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 2310",
+      "title": "Introduction to Aerospace Control Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 2320",
+      "title": "Introduction to Orbital Mechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 2330",
+      "title": "Introduction to Dynamics for Aerospace Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 2410",
+      "title": "Introduction to Aerospace Structures",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 3010",
+      "title": "Experimentation and Data Science with Aerospace Engineering  Applications",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 3110",
+      "title": "Fundamentals of Compressible Fluid Dynamics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 3120",
+      "title": "Fundamentals of Aerodynamics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 3310",
+      "title": "Fundamentals of Navigation and Communication",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 3420",
+      "title": "Fundamentals of Aerospace Structures",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 3430",
+      "title": "Fundamentals of Composite Materials",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 4210",
+      "title": "Fundamentals of Air-Breathing Propulsion",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 4220",
+      "title": "Fundamentals of Rocket Propulsion",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 4310",
+      "title": "Fundamentals of Aircraft Dynamics and Control",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 4320",
+      "title": "Fundamentals of Spacecraft Dynamics and Control",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 4410",
+      "title": "Fundamentals of Structural Dynamics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 4510",
+      "title": "Aircraft Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 4520",
+      "title": "Spacecraft and Mission Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 1100",
+      "title": "Essentials of Art",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 1101",
+      "title": "Digital Imaging and Computer Art",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 1111",
+      "title": "Introduction to Art History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 1400",
+      "title": "Digital Photography",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2048",
+      "title": "Technical Art and Character Rigging",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2048",
+      "title": "Technical Art and Character Rigging",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2101",
+      "title": "3D Modeling I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2101",
+      "title": "3D Modeling I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2111",
+      "title": "Modern Art",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2114",
+      "title": "Modern Architecture in the American Era, 1750-2001 and Beyond",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2115",
+      "title": "Topics in Architecture Since 1960",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2202",
+      "title": "Figure Drawing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2222",
+      "title": "2D Animation I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2222",
+      "title": "2D Animation I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2301",
+      "title": "Graphic Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2333",
+      "title": "3D Animation I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2333",
+      "title": "3D Animation I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2401",
+      "title": "Video Production",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2700",
+      "title": "Digital Painting",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2700",
+      "title": "Digital Painting",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2740",
+      "title": "3D Environmental Modeling",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2740",
+      "title": "3D Environmental Modeling",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 2750",
+      "title": "Topics in Studio Art",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 3101",
+      "title": "3D Modeling II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3101",
+      "title": "3D Modeling II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 3112",
+      "title": "Modernism, Mass Culture, and the Avant-Garde",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 3150",
+      "title": "Light, Vision and Understanding",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 3150",
+      "title": "Light, Vision and Understanding",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 3200",
+      "title": "Interactive Electronic Arts",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3200",
+      "title": "Interactive Electronic Arts",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 3210",
+      "title": "Human Figure in Motion",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3210",
+      "title": "Human Figure in Motion",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 3222",
+      "title": "2D Animation II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3222",
+      "title": "2D Animation II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 3333",
+      "title": "3D Animation II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3333",
+      "title": "3D Animation II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AR 3700",
+      "title": "Concept Art and Creative Illustration",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3700",
+      "title": "Concept Art and Creative Illustration",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 2002",
+      "title": "Architectural Design I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 2004",
+      "title": "Architectural Design II - Light and Lighting Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 2023",
+      "title": "Introduction to Architectural Engineering Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 2025",
+      "title": "Building Electrical Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 3002",
+      "title": "Architectural Design III",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 3003",
+      "title": "Principles of HVAC Design for Buildings",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 3005",
+      "title": "Lighting Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 3006",
+      "title": "Advanced HVAC System Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 3020",
+      "title": "Architectural Design IV - Building Energy Simulation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 3022",
+      "title": "Architectural Design V - Building Envelope Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 3024",
+      "title": "Building Physics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 3025",
+      "title": "Building Energy Simulation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AREN 4010",
+      "title": "Professional Engagement",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 1001",
+      "title": "Heritage and Values I (General Military Course)",
+      "credits": 1.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 1002",
+      "title": "Heritage and Values II (General Military Course)",
+      "credits": 1.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 1003",
+      "title": "Heritage and Values III (General Military Course)",
+      "credits": 1.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 1004",
+      "title": "Heritage and Values IV (General Military Course)",
+      "credits": 1.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 2001",
+      "title": "Team and Leadership Fundamentals I (General Military Course)",
+      "credits": 1.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 2002",
+      "title": "Team and Leadership Fundamentals II (General Military Course)",
+      "credits": 1.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 2003",
+      "title": "Team and Leadership Fundamentals III (General Military Course)",
+      "credits": 1.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 2004",
+      "title": "Team and Leadership Fundamentals IV (General Military Course)",
+      "credits": 1.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 3001",
+      "title": "Leading People and Effective Communication I (Professional Officer Course)",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 3002",
+      "title": "Leading People and Effective Communication II (Professional Officer Course)",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 3003",
+      "title": "Leading People and Effective Communication III (Professional Officer Course)",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 3004",
+      "title": "Leading People and Effective Communication IV (Professional Officer Course)",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 4001",
+      "title": "National Security/Commissioning Preparation I (Professional Officer Course)",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 4002",
+      "title": "National Security/Commissioning Preparation II (Professional Officer Course)",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 4003",
+      "title": "National Security/Commissioning Preparation III (Professional Officer Course)",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AS 4004",
+      "title": "National Security/Commissioning Preparation IV (Professional Officer Course)",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 1001",
+      "title": "Introduction to Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 1002",
+      "title": "Environmental Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 1003",
+      "title": "Exploring Bioinformatics and Computational Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BCB 1003",
+      "title": "Exploring Bioinformatics and Computational Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 1004",
+      "title": "Human Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 1101",
+      "title": "Foundations of Cellular and Molecular Biotechnology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 1102",
+      "title": "Foundations of Ecology and Environmental Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 1801",
+      "title": "Foundations of Biology and Biotechnology Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2002",
+      "title": "Microbiology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2003",
+      "title": "Fundamentals of Microbiology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2030",
+      "title": "Plant Diversity",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2040",
+      "title": "Principles of Ecology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2101",
+      "title": "Foundations of Physiology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2550",
+      "title": "Cell Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2802",
+      "title": "Enzymes, Proteins, and Purification Laboratory",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2803",
+      "title": "Anatomy and Physiology Laboratory",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2804",
+      "title": "Ecology, Environment, and Animal Behavior Laboratory",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2815",
+      "title": "Microbial and Molecular Investigations Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 2920",
+      "title": "Genetics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3003",
+      "title": "Medical Microbiology: Plagues of the Modern World, a Case Study Approach",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3010",
+      "title": "Simulation in Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BCB 3010",
+      "title": "Simulation in Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3060",
+      "title": "Animal Behavior",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3080",
+      "title": "Neurobiology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3101",
+      "title": "Human Anatomy & Physiology: Movement and Communication",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3102",
+      "title": "Human Anatomy & Physiology: Transport and Maintenance",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3120",
+      "title": "Plant Physiology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3140",
+      "title": "Evolution: Pattern and Process",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3519",
+      "title": "Protein Purification",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3620",
+      "title": "Developmental Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3813",
+      "title": "Animal Cell Culture Techniques Laboratory",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3815",
+      "title": "Physiologic Systems Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3821",
+      "title": "Microscopy Laboratory",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3825",
+      "title": "Plant Physiology Laboratory",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3827",
+      "title": "Molecular Biology and Genetic Engineering Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3830",
+      "title": "Immunotherapies Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3840",
+      "title": "Design and Expression of Biomolecules Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3870",
+      "title": "Cell Culture Models Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3920",
+      "title": "Immunology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 3950",
+      "title": "Molecular Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 4001",
+      "title": "Bioinformatics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BCB 4001",
+      "title": "Bioinformatics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 4050",
+      "title": "Cancer Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 4150",
+      "title": "Environmental Change: Problems and Approaches",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 4190",
+      "title": "Regulation of Gene Expression",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4190",
+      "title": "Regulation of Gene Expression",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 4260",
+      "title": "Synthetic Biology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BB 4900",
+      "title": "Advanced Topics in Biology and Biotechnology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BCB 4004",
+      "title": "Statistical Methods in Genetics and Bioinformatics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4603",
+      "title": "Statistical Methods in Genetics and Bioinformatics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 1001",
+      "title": "Introduction to Biomedical Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 1004",
+      "title": "Introduction to Programming in Matlab",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 2001",
+      "title": "Introduction to Biomaterials",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 2210",
+      "title": "Biomedical Signals, Instruments and Measurements",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 2211",
+      "title": "Biomedical Data Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 2502",
+      "title": "Introduction to Biomechanics: Stress Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 2610",
+      "title": "Introduction to Bioprocess Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3012",
+      "title": "Biomedical Sensors Laboratory: Techniques",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3013",
+      "title": "Biomedical Instrumentation Laboratory: Techniques",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3014",
+      "title": "Physiological Signals Laboratory: Techniques",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3112",
+      "title": "Human Physiology for Biomedical Engineers",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3113",
+      "title": "Medical Devices Laboratory: Techniques",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3300",
+      "title": "Biomedical Engineering Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3505",
+      "title": "Solid Biomechanics Laboratory: Techniques",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3507",
+      "title": "Skeletal Biomechanics Laboratory: Techniques",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3607",
+      "title": "Biotransport Lab: Techniques",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3610",
+      "title": "Transport Analysis in Bioengineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3811",
+      "title": "Biomaterials Laboratory: Techniques",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 3813",
+      "title": "Cellular Engineering Laboratory: Techniques",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4011",
+      "title": "Biomedical Signal Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4011",
+      "title": "Biomedical Signal Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4012",
+      "title": "Biomedical Sensors and Instrumentation Laboratory: Applications",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4023",
+      "title": "Biomedical Instrumentation Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4023",
+      "title": "Biomedical Instrumentation Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4201",
+      "title": "Biomedical Imaging",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4300",
+      "title": "MQP Capstone Design",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4301",
+      "title": "Biomedical Capstone - Design from the Margins",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4503",
+      "title": "Computational Biomechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4503",
+      "title": "Computational Biomechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4504",
+      "title": "Biomechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4504",
+      "title": "Biomechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4505",
+      "title": "Solid Biomechanics Laboratory: Applications",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4507",
+      "title": "Skeletal Biomechanics Laboratory: Applications",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4606",
+      "title": "Biofluids",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4606",
+      "title": "Biofluids",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4607",
+      "title": "Biotransport Laboratory: Applications",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4701",
+      "title": "Cell and Molecular Bioengineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4811",
+      "title": "Biomaterials Laboratory: Applications",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4813",
+      "title": "Cellular Engineering Laboratory: Applications",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4814",
+      "title": "Biomaterials",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4814",
+      "title": "Biomaterials",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4828",
+      "title": "Biomaterials-Tissue Interactions",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BME 4831",
+      "title": "Drug Delivery",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BUS 1020",
+      "title": "Global Environment of Business Decisions",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BUS 2001",
+      "title": "WPI Means Business",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BUS 2020",
+      "title": "The Legal Environment of Business Decisions",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BUS 2080",
+      "title": "Data Analysis for Decision Making",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "BUS 4300",
+      "title": "Senior Seminar",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 2000",
+      "title": "Analytical Mechanics I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 2001",
+      "title": "Analytical Mechanics II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 2002",
+      "title": "Introduction to Analysis and Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 2020",
+      "title": "Land Surveying",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 2030",
+      "title": "Civil and Environmental Engineering: Professional Opportunities and Skills",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3006",
+      "title": "Design of Steel Structures",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3008",
+      "title": "Design of Reinforced Concrete Structures",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3010",
+      "title": "Structural Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3020",
+      "title": "Project Management",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3022",
+      "title": "Legal Aspects of Professional Practice",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3025",
+      "title": "Project Evaluation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3026",
+      "title": "Materials of Construction",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3030",
+      "title": "Fundamentals of Civil Engineering Autocad",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3031",
+      "title": "Building Information Modeling: Software Tools and Principles",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3041",
+      "title": "Soil Mechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3050",
+      "title": "Traffic Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3051",
+      "title": "Pavement Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3059",
+      "title": "Environmental Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3060",
+      "title": "Water Treatment",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3061",
+      "title": "Sustainable Wastewater Engineering: Treatment and Reuse",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3062",
+      "title": "Hydraulics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3063",
+      "title": "Environmental Engineering Laboratory I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3070",
+      "title": "Urban and Environmental Planning",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 3074",
+      "title": "Environmental Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 4007",
+      "title": "Matrix Analysis of Structures",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 4044",
+      "title": "Foundation Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 4061",
+      "title": "Hydrology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 4063",
+      "title": "Transport & Transformations in the Environment",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 4063",
+      "title": "Transport & Transformations in the Environment",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 4071",
+      "title": "Land Use Development and Controls",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 4600",
+      "title": "Hazardous and Industrial Waste Management",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 4610",
+      "title": "Solid Waste Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CE 4620",
+      "title": "Environmental Engineering Laboratory II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 516",
+      "title": "Fundamentals and Applications of Chemical Spectroscopies",
+      "credits": 0.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 536",
+      "title": "Theory and Applications of NMR Spectroscopy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 538",
+      "title": "Medicinal Chemistry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 1001",
+      "title": "Exploring Majors and Careers in Chemistry and Biochemistry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 1010",
+      "title": "Chemical Properties, Bonding, and Forces",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 1020",
+      "title": "Chemical Reactions",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 1030",
+      "title": "Kinetics, Equilibrium and Thermodynamics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 1040",
+      "title": "Spectroscopy in Organic and Polymer Chemistry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 2310",
+      "title": "Organic Chemistry I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 2320",
+      "title": "Organic Chemistry II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 2330",
+      "title": "Organic Chemistry III",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 2360",
+      "title": "Organic Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 2640",
+      "title": "Experimental Chemistry I: Instrumental Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 2650",
+      "title": "Modern Physical Chemistry Methods",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 2660",
+      "title": "Organic Synthesis and Analysis Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 2670",
+      "title": "Investigation of Coordination Complexes Through Inquiry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 3310",
+      "title": "Advanced Organic Chemistry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 3410",
+      "title": "Structure, Bonding, and Reactivity in Inorganic Chemistry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 3510",
+      "title": "Chemical Thermodynamics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 3520",
+      "title": "Fundamentals of Applying Mathematical Methods in Chemistry  and Biochemistry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 3530",
+      "title": "Quantum Chemistry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 3550",
+      "title": "Chemical Dynamics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4110",
+      "title": "Protein Structure and Function",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4120",
+      "title": "Lipids and Biomembrane Functions",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4130",
+      "title": "Nucleic Acids and Bioinformation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4140",
+      "title": "Metabolism and Disease",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4150",
+      "title": "Enzymology and Protein Characterization Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4160",
+      "title": "Membrane Biophysics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4170",
+      "title": "Experimental Genetic Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4210",
+      "title": "AI in Molecular Life Sciences",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4330",
+      "title": "Organic Synthesis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4420",
+      "title": "Principles and Applications of Group Theory in Chemistry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CH 4520",
+      "title": "Chemical Statistical Mechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 1011",
+      "title": "Introduction to Chemical Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 2011",
+      "title": "Chemical Engineering Fundamentals",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 2012",
+      "title": "Elementary Chemical Processes",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 2013",
+      "title": "Applied Chemical Engineering Thermodynamics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 2014",
+      "title": "Advanced Chemical Processes",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 3201",
+      "title": "Kinetics and Reactor Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 3301",
+      "title": "Introduction to Biological Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 3501",
+      "title": "Applied Mathematics in Chemical Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 3702",
+      "title": "Energy Challenges in the 21st Century",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 3722",
+      "title": "Bioenergy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 4401",
+      "title": "Unit Operations of Chemical Engineering I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 4402",
+      "title": "Unit Operations of Chemical Engineering II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 4403",
+      "title": "Chemical Engineering Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 4404",
+      "title": "Chemical Plant Design Project",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 4405",
+      "title": "Chemical Process Dynamics and Control Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CHE 4410",
+      "title": "Chemical Process Safety Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 1541",
+      "title": "Elementary Chinese I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 1542",
+      "title": "Elementary Chinese II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 1543",
+      "title": "Elementary Chinese III",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 2541",
+      "title": "Intermediate Chinese I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 2542",
+      "title": "Intermediate Chinese II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 2543",
+      "title": "Intermediate Chinese III",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 2544",
+      "title": "Intermediate Chinese IV",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 3541",
+      "title": "Advanced Chinese I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 3542",
+      "title": "Advanced Chinese II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 3543",
+      "title": "Advanced Chinese III",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 3561",
+      "title": "Business Chinese",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CN 3571",
+      "title": "Contemporary China: Culture and Trends",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 1004",
+      "title": "Introduction to Programming for Non-Majors",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 1005",
+      "title": "Programming for Engineers",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 1101",
+      "title": "Introduction to Program Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 1102",
+      "title": "Accelerated Introduction to Program Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 2011",
+      "title": "Introduction to Machine Organization and Assembly Language",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 2022",
+      "title": "Discrete Mathematics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2201",
+      "title": "Discrete Mathematics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 2102",
+      "title": "Object-Oriented Design Concepts",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 2103",
+      "title": "Accelerated Object-Oriented Design Concepts",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 2119",
+      "title": "Application Building with Object-Oriented Concepts",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 2223",
+      "title": "Algorithms",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 2301",
+      "title": "Systems Programming for Non-Majors",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 2303",
+      "title": "Systems Programming Concepts",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 3013",
+      "title": "Operating Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 3041",
+      "title": "Human-Computer Interaction",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 3043",
+      "title": "Social Implications of Information Processing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SS 3043",
+      "title": "Social Implications of Information Processing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 3133",
+      "title": "Foundations of Computer Science",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 3404",
+      "title": "Introduction to Security",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 3431",
+      "title": "Database Systems I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 3516",
+      "title": "Computer Networks",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 3733",
+      "title": "Software Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4032",
+      "title": "Numerical Methods for Linear and Nonlinear Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3257",
+      "title": "Numerical Methods for Linear and Nonlinear Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4033",
+      "title": "Numerical Methods for Calculus and Differential Equations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3457",
+      "title": "Numerical Methods for Calculus and Differential Equations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4099",
+      "title": "Special Topics in Computer Science",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4120",
+      "title": "Analysis of Algorithms",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4123",
+      "title": "Theory of Computation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4233",
+      "title": "Object-Oriented Analysis and Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4241",
+      "title": "Webware: Computational Technology for Network Information Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4300",
+      "title": "Graphics, Simulation, and Aesthetics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4300",
+      "title": "Graphics, Simulation, and Aesthetics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4341",
+      "title": "Introduction to Artificial Intelligence",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4342",
+      "title": "Machine Learning",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4343",
+      "title": "Deep Learning",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DS 4343",
+      "title": "Deep Learning",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4344",
+      "title": "Natural Language Processing: From Foundations to Large Language Models",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DS 4344",
+      "title": "Natural Language Processing: From Foundations to Large Language Models",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4345",
+      "title": "Multi-Agent Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DS 4345",
+      "title": "Multi-Agent Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4401",
+      "title": "Software Security",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4402",
+      "title": "Reverse Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4403",
+      "title": "Web Application Security",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4404",
+      "title": "Network Security",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4405",
+      "title": "Digital Forensics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4432",
+      "title": "Database Systems II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4433",
+      "title": "Big Data Management and Analytics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DS 4433",
+      "title": "Big Data Management and Analytics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4445",
+      "title": "Data Mining and Knowledge Discovery in Databases",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4513",
+      "title": "Distributed Computing Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4515",
+      "title": "Computer Architecture",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4516",
+      "title": "Advanced Computer Networks",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4518",
+      "title": "Mobile and Ubiquitous Computing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4533",
+      "title": "Techniques of Programming Language Translation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4536",
+      "title": "Programming Languages",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4731",
+      "title": "Computer Graphics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4732",
+      "title": "Computer Animation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4801",
+      "title": "Introduction to Cryptography and Communication Security",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4802",
+      "title": "Introduction to Cryptography and Communication Security",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4804",
+      "title": "Data Visualization",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DEV 1200",
+      "title": "International Development and Society",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DEV 2200",
+      "title": "Case Studies in International Development Policy and Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DS 1010",
+      "title": "Data Science I: Introduction to Data Science and Artificial Intelligence",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DS 2010",
+      "title": "Data Science II: Statistical Modeling and Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DS 3010",
+      "title": "Data Science III: Computational Methods",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DS 4099",
+      "title": "Special Topics in Data Science",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "DS 4635",
+      "title": "Data Analytics and Statistical Learning",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4635",
+      "title": "Data Analytics and Statistical Learning",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 1799",
+      "title": "Frontiers and Current Issues of Electrical and Computer Engineering",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2010",
+      "title": "Introduction to Electrical and Computer Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2019",
+      "title": "Sensors, Circuits, and Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2029",
+      "title": "Introduction to Digital Circuit Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2039",
+      "title": "Computational Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2049",
+      "title": "Embedded Computing in Engineering Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2112",
+      "title": "Electromagnetic Fields",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2201",
+      "title": "Microelectronic Circuits I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2305",
+      "title": "Introduction to Communications and Networks",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2311",
+      "title": "Continuous-Time Signal and System Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2312",
+      "title": "Discrete-Time Signal and System Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 2799",
+      "title": "Electrical and Computer Engineering Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 3012",
+      "title": "Introduction to Control Systems Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 3113",
+      "title": "Introduction to RF Circuit Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 3204",
+      "title": "Microelectronic Circuits II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 3308",
+      "title": "Introduction to Wireless Networks",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 3311",
+      "title": "Principles of Communication Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 3405",
+      "title": "Foundations and Trends in Machine Learning for Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 3500",
+      "title": "Electric Power and Renewable Energy Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 3501",
+      "title": "Electromechanical Energy Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 3829",
+      "title": "Advanced Digital System Design with FPGAs",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 3849",
+      "title": "Real-Time Embedded Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4305",
+      "title": "Software-Defined Radio Systems and Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4503",
+      "title": "Power Electronics And Power Management",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4576",
+      "title": "Introduction to Hardware Security",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4703",
+      "title": "Real-Time Digital Signal Processing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4801",
+      "title": "Computer Organization and Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4803",
+      "title": "Machine Learning in Cybersecurity",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4901",
+      "title": "CMOS Fundamentals",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4902",
+      "title": "Analog Integrated Circuit Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECE 4904",
+      "title": "Semiconductor Devices",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 1110",
+      "title": "Introductory Microeconomics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 1120",
+      "title": "Introductory Macroeconomics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 1800",
+      "title": "Special Topics in Economics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 2110",
+      "title": "Intermediate Microeconomics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 2120",
+      "title": "Intermediate Macroeconomics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 2126",
+      "title": "Public Economics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 2130",
+      "title": "Econometric Modeling",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 2135",
+      "title": "Information Economics and Policy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 2145",
+      "title": "Behavioral Economics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 2155",
+      "title": "Experimental Economics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 2800",
+      "title": "Special Topics in Economics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 3100",
+      "title": "Economics of Climate Change",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 3117",
+      "title": "Environmental Economics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 3125",
+      "title": "Development Economics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 3800",
+      "title": "Special Topics in Economics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 4800",
+      "title": "Special Topics in Economics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EDU 2200",
+      "title": "Community Engagement & Pre-Practicum in Teaching",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EDU 2300",
+      "title": "Teaching K-12 STEM in the Community",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EDU 3200",
+      "title": "Sheltered English Immersion Endorsement Course for Teachers",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EDU 3300",
+      "title": "Supporting Diverse Learners in STEM Education",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 3300",
+      "title": "Supporting Diverse Learners in STEM Education",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EDU 4000",
+      "title": "Topics in Teacher Preparation: Practicum Seminar",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EDU 4100",
+      "title": "Teaching Methods in Science, Technology, Engineering, and Mathematics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EDU 4200",
+      "title": "Senior Seminar",
+      "credits": 0.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EDU 4500",
+      "title": "Special Topics in Education",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 1219",
+      "title": "Introduction to Creative Writing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 1222",
+      "title": "Shakespeare in the Age of Elizabeth",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 1251",
+      "title": "Introduction to Literature",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 1257",
+      "title": "Introduction to African American Literature and Culture",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 1259",
+      "title": "Introduction to Contemporary Chicana/o Literature",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 1439",
+      "title": "Introduction to Poetry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2219",
+      "title": "Creative Writing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2225",
+      "title": "The Literature of Sin",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2226",
+      "title": "Infected Shakespeare: Venereal Disease, Madness, Plague",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2234",
+      "title": "Modern American Novel",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2237",
+      "title": "Literature and the Environment",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2242",
+      "title": "Popular Fiction: Reading in Installments",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2243",
+      "title": "Modern British Literature",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2244",
+      "title": "19th-Century English Literature",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2251",
+      "title": "Moral Issues in the Modern Novel",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2252",
+      "title": "Science and Scientists in Modern Literature",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2271",
+      "title": "American Literary Histories",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2281",
+      "title": "World Literatures",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 3219",
+      "title": "Advanced Creative Writing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 3226",
+      "title": "Strange and Strangers",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 3231",
+      "title": "Supernatural Literatures",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 3234",
+      "title": "Modern American Poetry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 3238",
+      "title": "American Authors",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 3248",
+      "title": "The English Novel",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 3257",
+      "title": "Topics in African American Literature",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 3271",
+      "title": "American Literary Topics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 1100",
+      "title": "Introduction to Environmental Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 1500",
+      "title": "Introduction to Geographical Information Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2110",
+      "title": "Regenerative Sustainability: Living Landscapes, Planetary Resources, and Policies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2120",
+      "title": "Documentary Filmmaking for Advocacy and Policy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2201",
+      "title": "Planning for Sustainable Communities",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2310",
+      "title": "Environmental Governance and Innovation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2500",
+      "title": "Psychology for Sustainability",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2500",
+      "title": "Psychology for Sustainability",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2600",
+      "title": "Environmental Problems in the Developing World",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2700",
+      "title": "Social Media, Social Movements, and the Environment",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2710",
+      "title": "Designing for Climate Resilience and Justice",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2720",
+      "title": "Artificial Intelligence and the Environment",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2800",
+      "title": "Special Topics in Environmental and Sustainability Studies",
+      "credits": null,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2900",
+      "title": "The Green Economy and Models for Alternative Forms of Development",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 3100",
+      "title": "Adventures in Sustainable Urbanism",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 3500",
+      "title": "Women and the Environment",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 4800",
+      "title": "Special Topics in Environmental and Sustainability Studies",
+      "credits": null,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 1020",
+      "title": "Introduction to Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 1310",
+      "title": "Introduction to Computer Aided Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 1500",
+      "title": "Fundamentals of Systems Thinking",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 2001",
+      "title": "Introduction to Materials Science",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 2501",
+      "title": "Introduction to Static Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 2502",
+      "title": "Stress Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 2503",
+      "title": "Introduction to Dynamic Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 2800",
+      "title": "Environmental Impacts of Engineering Decisions",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 3001",
+      "title": "Introduction to Thermodynamics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 3002",
+      "title": "Mass Transfer",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 3003",
+      "title": "Heat Transfer",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 3004",
+      "title": "Fluid Mechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 3011",
+      "title": "Control Engineering I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 3323",
+      "title": "Advanced Computer Aided Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ES 3501",
+      "title": "A Project-Based Introduction to Systems Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ETR 1100",
+      "title": "Engineering Innovation and Entrepreneurship",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ETR 2900",
+      "title": "Social Entrepreneurship",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ETR 2910",
+      "title": "Economics and Entrepreneurship",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ECON 2910",
+      "title": "Economics and Entrepreneurship",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ETR 3633",
+      "title": "Entrepreneurial Selling",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ETR 3915",
+      "title": "Entrepreneurial Business Models",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ETR 4930",
+      "title": "Growing and Managing New Ventures",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FIN 1250",
+      "title": "Personal Finance",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FIN 2070",
+      "title": "Risk Analysis for Decision Making",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FIN 3300",
+      "title": "Finance & Technology (FinTech)",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FIN 3310",
+      "title": "Financial Markets and Digital Currencies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FIN 3330",
+      "title": "Financial Analytics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FP 3070",
+      "title": "Introduction to Fire Protection Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FP 3080",
+      "title": "Introduction to Building Fires Safety System Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FP 4000",
+      "title": "Fire Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FP 4001",
+      "title": "Fire, Risk, and Sustainability",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FY 1100",
+      "title": "The Great Problems Seminars",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FY 1101",
+      "title": "The Great Problems Seminars",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "FY 1800",
+      "title": "Discovering Majors and Careers",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GE 2341",
+      "title": "Geology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 1511",
+      "title": "Elementary German I: Identities and Communities",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 1512",
+      "title": "Elementary German II: Navigating Everyday Life in German-speaking Contexts",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 2511",
+      "title": "Intermediate German I: Cultural Practices and Products of the German-Speaking World",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 2512",
+      "title": "Intermediate German II: Pasts, Presents, and Futures of the German-Speaking World",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 2517",
+      "title": "Topics in Modern German Cultural History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2517",
+      "title": "Topics in Modern German Cultural History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 3511",
+      "title": "Advanced German I: Exploration and Innovation in the German-Speaking World",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 3512",
+      "title": "Advanced German II: National Identities and Stories",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 3513",
+      "title": "Survey of German Civilization and Culture from 1871 to the Present",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 3514",
+      "title": "Seminar on Selected Topics in German Literature",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 3515",
+      "title": "Topics in German History Through Visual Culture",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3515",
+      "title": "Topics in German History Through Visual Culture",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GN 3516",
+      "title": "German Film",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 1301",
+      "title": "U.S. Government",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 1303",
+      "title": "American Public Policy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 1310",
+      "title": "Law, Courts, and Politics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 1320",
+      "title": "Topics in International Politics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 1400",
+      "title": "International Relations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 2100",
+      "title": "Engineering and Public Policy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 2302",
+      "title": "Science-Technology Policy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 2310",
+      "title": "Constitutional Law: Foundations of Government",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 2311",
+      "title": "Environmental Policy and Law",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 2313",
+      "title": "Intellectual Property Law",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 2314",
+      "title": "Cyberlaw and Policy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 2314",
+      "title": "Cyberlaw and Policy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 2315",
+      "title": "Privacy: Laws, Policy, Technology, and How They Fit Together",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 2319",
+      "title": "Global Environmental Politics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ENV 2319",
+      "title": "Global Environmental Politics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 2320",
+      "title": "Constitutional Law: Civil Rights and Liberties",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 3000",
+      "title": "Psychology and Law",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 3000",
+      "title": "Psychology and Law",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "GOV 3312",
+      "title": "International Environmental Policy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 1001",
+      "title": "Introductory Topics in Historical Thinking",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 1311",
+      "title": "Introduction to American Urban History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 1313",
+      "title": "The US and the World",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 1314",
+      "title": "Introduction to Early American History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 1322",
+      "title": "Introduction to European History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 1330",
+      "title": "Introduction to the History of Science and Technology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 1333",
+      "title": "Introduction to American Histories of Protest and Power",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 1345",
+      "title": "Atlantic Worlds",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 1350",
+      "title": "Introduction to Environmental History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2310",
+      "title": "Topics in Urban History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2311",
+      "title": "American Colonial History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2313",
+      "title": "American History, 1789-1877",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2314",
+      "title": "American History, 1877-1920",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2315",
+      "title": "The Shaping of Post-1920 America",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2316",
+      "title": "Twentieth Century American Foreign Relations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2318",
+      "title": "Topics in Law, Justice and American Society",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2320",
+      "title": "Modern European History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2328",
+      "title": "History of Revolutions in the Twentieth Century and Beyond",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2329",
+      "title": "European Empires",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2335",
+      "title": "Topics in the History of American Science and Technology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2341",
+      "title": "Contemporary World Issues in Historical Perspective",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2343",
+      "title": "East Asia: China at the Center",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2344",
+      "title": "East Asia and World Order",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2350",
+      "title": "Topics in the History of Science",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2351",
+      "title": "History of Ecology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2400",
+      "title": "Topics in Environmental History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2401",
+      "title": "U.S. Environmental History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2403",
+      "title": "Global Environmental History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2510",
+      "title": "Topics in American Political History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2900",
+      "title": "Topics in Gender and History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2913",
+      "title": "Capitalism and Its Discontents",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2921",
+      "title": "Topics in Modern European History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 2930",
+      "title": "Topics in Latin American History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3310",
+      "title": "Topics in Urban History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3312",
+      "title": "Topics in American Social History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3314",
+      "title": "The American Revolution",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3317",
+      "title": "Topics in Environmental History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3331",
+      "title": "Topics in the History of European Science and Technology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3333",
+      "title": "Topics in American Technological Development",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3334",
+      "title": "Topics in the History of American Science and Technology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3335",
+      "title": "Topics in the History of Non-Western Science and Technology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3341",
+      "title": "Topics in Imperial and Postcolonial History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3343",
+      "title": "Topics in Asian History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3344",
+      "title": "Pacific Worlds",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HI 3510",
+      "title": "Topics in American Political History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 1222",
+      "title": "Introduction to Medical Humanities",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 1411",
+      "title": "Introduction to American Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 1500",
+      "title": "Introduction to Gender, Sexuality & Women’s Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 2222",
+      "title": "Topics in Medical Humanities",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 2251",
+      "title": "Introduction to Film Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 2258",
+      "title": "World Cinemas",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 2501",
+      "title": "STEM-inism",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 2502",
+      "title": "Global Feminisms",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 2900",
+      "title": "Humanities and Arts Project Preparation",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 2901",
+      "title": "Topics in Sexuality and LGBTQ+ Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 2910",
+      "title": "Project Center Experiential Learning",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 3500",
+      "title": "Topics in Feminist and Queer Theory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 3570",
+      "title": "Topics in Film Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 3900",
+      "title": "Inquiry Seminar in Humanities and Arts",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU 3910",
+      "title": "Practicum in Humanities and Arts",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "HU—AAS-50",
+      "title": "American Antiquarian Seminar",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 2000",
+      "title": "Mapping Your Mission",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 2050",
+      "title": "Social Science Research for the IQP",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SS 2050",
+      "title": "Social Science Research for the IQP",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 2100",
+      "title": "Disease Detectives: an Introduction to Epidemiology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 3525",
+      "title": "Latin American Films: Identity, History and Culture",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3525",
+      "title": "Latin American Films: Identity, History and Culture",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 3526",
+      "title": "Comparative Business Environments: Political Economies in Latin America",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3526",
+      "title": "Comparative Business Environments: Political Economies in Latin America",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 3527",
+      "title": "Spanish for Business: Enhancing Global Communication",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3527",
+      "title": "Spanish for Business: Enhancing Global Communication",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 3529",
+      "title": "Caribbeanness: Writing the Spanish Caribbean",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3529",
+      "title": "Caribbeanness: Writing the Spanish Caribbean",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 3530",
+      "title": "Narratives on Screen: Contemporary Spain through Films",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3530",
+      "title": "Narratives on Screen: Contemporary Spain through Films",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ID 3531",
+      "title": "Contemporary U.S. Latino Literature & Culture: Race, Identity and Belonging",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3531",
+      "title": "Contemporary U.S. Latino Literature & Culture: Race, Identity and Belonging",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 1000",
+      "title": "Critical Studies of Interactive Media and Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 1001",
+      "title": "The Game Development Process",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 1002",
+      "title": "Storytelling in Interactive Media and Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2000",
+      "title": "Social Issues in Interactive Media and Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2002",
+      "title": "Critical AI Literacy in the Designed World",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2030",
+      "title": "Game Audio I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2450",
+      "title": "Narrative Design for Interactive Media and Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 2450",
+      "title": "Narrative Design for Interactive Media and Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2500",
+      "title": "Design of Tabletop Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2900",
+      "title": "Digital Game Design I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2901",
+      "title": "Design Methods for Interactive Experiences",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2905",
+      "title": "Data Analysis for Game Development",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3000",
+      "title": "Technical Game Development I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3030",
+      "title": "Game Audio II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3042",
+      "title": "Technical Art Scripting and Automation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3100",
+      "title": "Novel Interfaces for Interactive Environments",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3450",
+      "title": "Writing Characters for Interactive Media & Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 3450",
+      "title": "Writing Characters for Interactive Media & Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3500",
+      "title": "Artistic Game Development I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 3900",
+      "title": "Digital Game Design II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4000",
+      "title": "Technical Game Development II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4030",
+      "title": "Advanced Topics in Interactive Audio",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4099",
+      "title": "Special Topics in IMGD",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4100",
+      "title": "Artificial Intelligence for Interactive Media and Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "CS 4100",
+      "title": "Artificial Intelligence for Interactive Media and Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4200",
+      "title": "History and Future of Immersive and Interactive Media",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4403",
+      "title": "Motion Capture Techniques",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4500",
+      "title": "Artistic Game Development II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4600",
+      "title": "Serious Games",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4700",
+      "title": "Level Design and Environmental Storytelling",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 4900",
+      "title": "Digital Game Design Studio",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 5000",
+      "title": "Game Design Studio",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 5200",
+      "title": "History and Future of Immersive and Interactive Media",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 1100",
+      "title": "Introduction to International and Global Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 2100",
+      "title": "Approaches to Global Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 2110",
+      "title": "Global Justice",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 2210",
+      "title": "Popular Culture and Social Change in Asia",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 2220",
+      "title": "East Asia: Traditions and Modernity",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 2310",
+      "title": "Modern Latin America",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 2320",
+      "title": "Environmental Justice in the Global Caribbean and Latin America",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 2410",
+      "title": "Modern Africa",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 2420",
+      "title": "Middle East, North Africa and Mediterranean",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 2510",
+      "title": "Contemporary Europe",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 2910",
+      "title": "Topics in Global Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "INTL 3100",
+      "title": "Reflections on Global Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ISE 1800",
+      "title": "Introduction to Academic Reading and Writing for Non-Native Speakers of English",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ISE 1801",
+      "title": "Composition for Non-Native Speakers of English",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ISE 1803",
+      "title": "Oral Communication for Non-Native Speakers of English",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ISE 2800",
+      "title": "College Writing for Non-Native Speakers of English",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ISE 2820",
+      "title": "Critical Reading of our World",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ISE 3800",
+      "title": "Loaded Language: Discourse and Power in International English",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ISU",
+      "title": "Special Topics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ISU BB",
+      "title": "Special Topics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 0995",
+      "title": "Algebra, Analytic Geometry, and Trigonometry",
+      "credits": 0.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 1020",
+      "title": "Calculus I with Preliminary Topics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 1021",
+      "title": "Calculus I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 1022",
+      "title": "Calculus II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 1023",
+      "title": "Calculus III",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 1024",
+      "title": "Calculus IV",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 1033",
+      "title": "Theoretical Calculus III",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 1034",
+      "title": "Theoretical Calculus IV",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 1120",
+      "title": "Calculus II (Semester Version)",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 1801",
+      "title": "Denksport",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 1971",
+      "title": "Bridge to Higher Mathematics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2051",
+      "title": "Ordinary Differential Equations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2071",
+      "title": "Matrices and Linear Algebra I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2072",
+      "title": "Accelerated Matrices and Linear Algebra I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2073",
+      "title": "Matrices and Linear Algebra II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2210",
+      "title": "Mathematical Methods in Decision Making",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2211",
+      "title": "Theory of Interest I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2212",
+      "title": "Theory of Interest II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2251",
+      "title": "Vector and Tensor Calculus",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2271",
+      "title": "Graph Theory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2273",
+      "title": "Combinatorics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2431",
+      "title": "Mathematical Modeling with Ordinary Differential Equations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2610",
+      "title": "Applied Statistics for the Life Sciences",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2611",
+      "title": "Applied Statistics I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2612",
+      "title": "Applied Statistics II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2621",
+      "title": "Probability for Applications",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 2631",
+      "title": "Probability Theory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3212",
+      "title": "Actuarial Mathematics I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3213",
+      "title": "Actuarial Mathematics II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3231",
+      "title": "Linear Programming",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3233",
+      "title": "Discrete Optimization",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3471",
+      "title": "Advanced Ordinary Differential Equations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3475",
+      "title": "Calculus of Variations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3625",
+      "title": "Introduction to Regression Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3627",
+      "title": "Introduction to the Design and Analysis of Experiments",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3631",
+      "title": "Mathematical Statistics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3823",
+      "title": "Group Theory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3825",
+      "title": "Rings and Fields",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3831",
+      "title": "Principles of Real Analysis I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3832",
+      "title": "Principles of Real Analysis II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 3843",
+      "title": "Topology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4213",
+      "title": "Loss Models I - Risk Theory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4214",
+      "title": "Loss Models II - Survival Models",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4216",
+      "title": "Actuarial Seminar",
+      "credits": null,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4222",
+      "title": "Top Algorithms in Applied Mathematics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4235",
+      "title": "Nonlinear Optimization",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4237",
+      "title": "Probabilistic Methods in Operations Research",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4291",
+      "title": "Applied Complex Variables",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4411",
+      "title": "Numerical Analysis of Differential Equations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4451",
+      "title": "Boundary Value Problems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4473",
+      "title": "Partial Differential Equations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4631",
+      "title": "Probability and Mathematical Statistics I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4632",
+      "title": "Probability and Mathematical Statistics II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4644",
+      "title": "Introduction to Time Series Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4891",
+      "title": "Topics in Mathematics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4892",
+      "title": "Topics in Actuarial Mathematics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MA 4895",
+      "title": "Differential Geometry",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 1520",
+      "title": "The Technology of Alpine Skiing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 1800",
+      "title": "Manufacturing Science, Prototyping, and Computer-Controlled Machining",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 2300",
+      "title": "Introduction to Engineering Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 2312",
+      "title": "Introduction to Computational Solutions for Engineering Problems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 2820",
+      "title": "Materials Processing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 3310",
+      "title": "Kinematics of Mechanisms",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 3311",
+      "title": "Dynamics of Mechanisms and Machines",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 3320",
+      "title": "Design of Machine Elements",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 3411",
+      "title": "Intermediate Fluid Mechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 3501",
+      "title": "Elementary Continuum Mechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 3506",
+      "title": "Rehabilitation Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 3820",
+      "title": "Computer-Aided Manufacturing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 3901",
+      "title": "Engineering Experimentation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 3902",
+      "title": "Project-Based Engineering Experimentation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4320",
+      "title": "Advanced Engineering Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4323",
+      "title": "Fundamentals of Drivetrain Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4324",
+      "title": "Integrated Design of Mechanical Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4422",
+      "title": "Design and Optimization of Thermal Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4429",
+      "title": "Thermofluid Application and Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4430",
+      "title": "Integrated Thermomechanical Design and Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4506",
+      "title": "Mechanical Vibrations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4512",
+      "title": "Introduction to the Finite Element Method",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4813",
+      "title": "Ceramics and Glasses for Engineering Applications",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4821",
+      "title": "Plastics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4829",
+      "title": "Sustainable Recycling and Production of Metals",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4832",
+      "title": "Corrosion and Corrosion Control",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4840",
+      "title": "Physical Metallurgy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4875",
+      "title": "Introduction to Nanomaterials and Nanotechnology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MTE 575",
+      "title": "Introduction to Nanomaterials and Nanotechnology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 5105",
+      "title": "Renewable Energy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MFE 510",
+      "title": "Control and Monitoring of Manufacturing Processes",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MFE 511",
+      "title": "Application of Industrial Robotics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MFE 520",
+      "title": "Axiomatic Design of Manufacturing Processes",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MFE 531",
+      "title": "Computer Integrated Manufacturing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MFE 541",
+      "title": "Design for Manufacturability",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MFE 598",
+      "title": "Independent Study Project",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MIS 2300",
+      "title": "Business Applications of Blockchain",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MIS 3010",
+      "title": "Creating Value Through Innovation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MIS 3720",
+      "title": "Business Data Management",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MIS 3730",
+      "title": "Artificial Intelligence with Business Application",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MIS 3787",
+      "title": "Business Applications of Machine Learning",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MIS 4084",
+      "title": "Business Intelligence",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MIS 4720",
+      "title": "Systems Analysis and Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MIS 4741",
+      "title": "User Experience and Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MKT 1100",
+      "title": "Principles of Marketing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MKT 2620",
+      "title": "Marketing Research",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MKT 2630",
+      "title": "Sales Management and Analytics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MKT 2640",
+      "title": "Consumer Behavior and Analytics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MKT 3620",
+      "title": "E-Commerce and Web Analytics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MKT 3630",
+      "title": "Digital and Social Media Marketing Analytics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MKT 3640",
+      "title": "Management of Process and Product Innovation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MKT 3650",
+      "title": "Consumer Behavior",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MKT 4030",
+      "title": "Marketing Strategy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MKT 4040",
+      "title": "Marketing Analytics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 1011",
+      "title": "Foundations of Officership I",
+      "credits": 0.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 1012",
+      "title": "Foundations of Officership II",
+      "credits": 1.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 1021",
+      "title": "Basic Leadership I",
+      "credits": 0.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 1022",
+      "title": "Basic Leadership II",
+      "credits": 1.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 2011",
+      "title": "Individual Leadership Studies I",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 2012",
+      "title": "Individual Leadership Studies II",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 2021",
+      "title": "Leadership and Teamwork I",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 2022",
+      "title": "Leadership and Teamwork II",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 3011",
+      "title": "Leadership and Problem Solving I",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 3012",
+      "title": "Leadership and Problem Solving II",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 3021",
+      "title": "Leadership and Ethics I",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 3022",
+      "title": "Leadership and Ethics II",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 4011",
+      "title": "Leadership and Management I",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 4022",
+      "title": "Leadership and Management II",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 4023",
+      "title": "Officership",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ML 4024",
+      "title": "Transition to Lieutenant",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 1000",
+      "title": "Music and Its Makers",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 1100",
+      "title": "Foundations of Music Theory and Aural Skills",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2001",
+      "title": "History of Western Art Music Before 1750",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2002",
+      "title": "History of Western Art Music After 1750",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2010",
+      "title": "Jazz History",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2020",
+      "title": "History of American Popular Music",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2100",
+      "title": "Music Composition",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2101",
+      "title": "Arranging and Orchestration",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2300",
+      "title": "Foundations of Music Technology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2301",
+      "title": "Making Music with Machines",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2401",
+      "title": "Glee Club",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2402",
+      "title": "Alden Voices",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2403",
+      "title": "Chamber Choir",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2410",
+      "title": "Jazz Combo",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2411",
+      "title": "Jazz Ensemble",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2412",
+      "title": "Stage Band",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2413",
+      "title": "African Drumming Ensemble",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2420",
+      "title": "Orchestra",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2421",
+      "title": "String Quartet",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2430",
+      "title": "Concert Band",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2431",
+      "title": "Brass Ensemble",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2440",
+      "title": "Percussion Ensemble",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2450",
+      "title": "Independent Instruction (Lessons) in Music",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2451",
+      "title": "Conducting",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2501",
+      "title": "Music and Mind",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2501",
+      "title": "Music and Mind",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2502",
+      "title": "Making Music with Science",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 2611",
+      "title": "Fundamentals of Music II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 3110",
+      "title": "Jazz Theory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 3201",
+      "title": "Music in Time of Conflict",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 3230",
+      "title": "World Music",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 3300",
+      "title": "Electronic Music Composition",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 3301",
+      "title": "Topics in MIDI",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 3302",
+      "title": "Topics in Digital Sound",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "MU 3303",
+      "title": "Topics in Interactive Programming",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OBC 1010",
+      "title": "Leadership Practice",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OBC 3354",
+      "title": "Organizational Behavior and Change",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OBC 4367",
+      "title": "Leadership, Ethics, and Social Responsibility",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 2081",
+      "title": "Introduction to Prescriptive Analytics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 2600",
+      "title": "Scripting for Process and Productivity Improvement",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 2850",
+      "title": "Engineering Economics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 3020",
+      "title": "Achieving Effective Operations",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 3405",
+      "title": "Work Systems and Facilities Planning",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 3410",
+      "title": "Materials Management in Supply Chains",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 3420",
+      "title": "Quality Planning, Design and Control",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 3460",
+      "title": "Simulation Modeling and Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 3510",
+      "title": "Stochastic Models",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 4410",
+      "title": "Case Studies in Industrial Engineering",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 4430",
+      "title": "Advanced Prescriptive Analytics: From Data to Impact",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "OIE 4460",
+      "title": "Global Planning and Logistics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 1110",
+      "title": "General Physics—Mechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 1111",
+      "title": "Principles of Physics—Mechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 1120",
+      "title": "General Physics—Electricity and Magnetism",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 1121",
+      "title": "Principles of Physics—Electricity and Magnetism",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 1130",
+      "title": "Modern Physics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 1140",
+      "title": "Oscillations and Waves",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 1150",
+      "title": "Introductory Physics of Living Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2101",
+      "title": "Principles of Thermodynamics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2201",
+      "title": "Intermediate Mechanics I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2202",
+      "title": "Intermediate Mechanics II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2501",
+      "title": "Photonics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2502",
+      "title": "Lasers",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2510",
+      "title": "Atomic Force Microscopy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2520",
+      "title": "Introduction to Astrophysics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2540",
+      "title": "Solar Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2550",
+      "title": "Atmospheric and Space Environments",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "AE 2550",
+      "title": "Atmospheric and Space Environments",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2601",
+      "title": "Photonics Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 2651",
+      "title": "Intermediate Physics Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 3206",
+      "title": "Statistical Physics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 3300",
+      "title": "Electromagnetic Theory I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 3301",
+      "title": "Electromagnetic Theory II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 3401",
+      "title": "Quantum Mechanics I",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 3402",
+      "title": "Quantum Mechanics II",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 3501",
+      "title": "Relativity",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 3502",
+      "title": "Solid State Physics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 3503",
+      "title": "Nuclear Physics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 3504",
+      "title": "Optics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 4201",
+      "title": "Advanced Classical Mechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 511",
+      "title": "Advanced Classical Mechanics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 4301",
+      "title": "Electromagnetic Theory III",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 4430",
+      "title": "Introduction to Quantum Information",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 4500",
+      "title": "Special Topics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PH 4601",
+      "title": "Quantum Optics Laboratory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 1400",
+      "title": "Introduction to Psychological Science",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 1500",
+      "title": "The Science of Creativity",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 1504",
+      "title": "Strategies for Improving Cognitive Skills",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 1800",
+      "title": "Special Topics in Psychological Science",
+      "credits": null,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2401",
+      "title": "The Psychology of Education",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2402",
+      "title": "Social Psychology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2403",
+      "title": "Cognitive Psychology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2404",
+      "title": "Developmental Psychology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2406",
+      "title": "Cross-Cultural Psychology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2411",
+      "title": "Social Neuroscience",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2412",
+      "title": "Mental Health",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2503",
+      "title": "The Psychology of AI and Emerging Technologies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2800",
+      "title": "Special Topics in Psychological Science",
+      "credits": null,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 2900",
+      "title": "Introduction to Research in Psychological Science",
+      "credits": 0.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 3211",
+      "title": "Positive Psychology: The Science and Practice of Well-Being",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 3407",
+      "title": "Psychology of Gender",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 3408",
+      "title": "Health Psychology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 3504",
+      "title": "Human Sexuality",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 3800",
+      "title": "Special Topics in Psychological Science",
+      "credits": null,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 3900",
+      "title": "Research in Psychological Science",
+      "credits": 0.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 4100",
+      "title": "School Psychology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 4110",
+      "title": "Psychophysiology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 4400",
+      "title": "Survey Design and Methodology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SS 4400",
+      "title": "Survey Design and Methodology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 4500",
+      "title": "Experimental Design and Analysis",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 4800",
+      "title": "Special Topics in Psychological Science",
+      "credits": null,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PSY 4900",
+      "title": "Advanced Research in Psychological Science",
+      "credits": 0.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 1731",
+      "title": "Introduction to Philosophy and Religion",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RE 1731",
+      "title": "Introduction to Philosophy and Religion",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 2711",
+      "title": "Epistemology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 2712",
+      "title": "Social and Political Philosophy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 2713",
+      "title": "Bioethics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 2716",
+      "title": "Gender, Race, and Class",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RE 2716",
+      "title": "Gender, Race, and Class",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 2717",
+      "title": "Philosophy and the Environment",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 2718",
+      "title": "Existentialism and Phenomenology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 2719",
+      "title": "Philosophy of Science",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 2731",
+      "title": "Ethics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RE 2731",
+      "title": "Ethics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 2734",
+      "title": "Philosophy and Spirituality",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 3711",
+      "title": "Topics in Philosophy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RE 3711",
+      "title": "Topics in Philosophy",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 3712",
+      "title": "Philosophy of Religion",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "PY 3721",
+      "title": "Topics in Religion",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RE 3721",
+      "title": "Topics in Religion",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 1001",
+      "title": "Introduction to Robotics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 2001",
+      "title": "Unified Robotics I: Mechanical Applications in Robotics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 2002",
+      "title": "Unified Robotics II: Sensing and Perception in Robotics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 2020",
+      "title": "Embedded Systems for Robotics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 3001",
+      "title": "Unified Robotics III: Manipulation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 3002",
+      "title": "Unified Robotics IV: Navigation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 3100",
+      "title": "Social Implications of Robotics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 4322",
+      "title": "Modeling and Analysis of Mechatronic Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "ME 4322",
+      "title": "Modeling and Analysis of Mechatronic Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 4540",
+      "title": "Vision-based Robotic Manipulation",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 4601",
+      "title": "Human Factors and Human-Robot Interface",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 4701",
+      "title": "Artificial Intelligence for Robotics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 4744",
+      "title": "Deep Learning for Perception",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RBE 4815",
+      "title": "Industrial Robotics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RE 2721",
+      "title": "Religion and Culture",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RE 2722",
+      "title": "Modern Problems of Belief",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RE 2726",
+      "title": "Global Religions",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RE 2727",
+      "title": "Topics in Religion and Storytelling",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "RE 3723",
+      "title": "Religion, Gender & Sexuality",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SD 1510",
+      "title": "Introduction to System Dynamics Modeling",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SD 2520",
+      "title": "Modeling Economic and Social Systems",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SD 2530",
+      "title": "Advanced Topics in System Dynamics Modeling",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SD 3550",
+      "title": "System Dynamics Seminar",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SOC 1202",
+      "title": "Introduction to Sociology and Cultural Diversity",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SOC 1500",
+      "title": "The Sociology of Race",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SOC 3500",
+      "title": "African American Political Thought",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 1523",
+      "title": "Elementary Spanish I: Building the Basics",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 1524",
+      "title": "Elementary Spanish II: Developing Your Skills",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 2521",
+      "title": "Intermediate Spanish I: Expanding Language Proficiency",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 2522",
+      "title": "Intermediate Spanish II: Elevate Your Spanish",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3521",
+      "title": "Advanced Spanish I: Exploring Complex Language and Culture",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3522",
+      "title": "Advanced Spanish II: Perfecting Proficiency",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3523",
+      "title": "Latin America Cultures: A Journey from Pre-Columbian to Contemporary Times",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3524",
+      "title": "Latin American Literary Landscapes: Narratives and Culture",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3528",
+      "title": "Spain Through the Ages: A Cultural Exploration",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3532",
+      "title": "Voices of Spain: Exploring Classic and Modern Spanish Literature",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3533",
+      "title": "Ecocrítica: Environmental Cultural Production in Latin America",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3534",
+      "title": "Intersections of Science, Engineering, Art, Literature, and Film in Latin America and the Caribbean",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SP 3535",
+      "title": "Cross-Cultural Dialogues: Selected Topics in Spanish",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "SS 1505",
+      "title": "Games for Understanding Complexity",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "STS 1200",
+      "title": "Fundamentals of Global Health",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "STS 4000",
+      "title": "Senior Seminar in Global Public Health",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 1221",
+      "title": "Introduction to Theatre on Page and Stage",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 1800",
+      "title": "Club Theatre Production",
+      "credits": 1.5,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 2100",
+      "title": "Fundamentals of Acting",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 2400",
+      "title": "Fundamentals of Theatrical Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 2510",
+      "title": "Fundamentals of Technical Theatre: Scenery, Lighting, Sound, Projections",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 2520",
+      "title": "Fundamentals of Technical Theatre: Props, Costumes, Paint, Hair & Makeup",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 2800",
+      "title": "Departmental Theatre Production",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 3200",
+      "title": "Special Topics in Dramatic Literature",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 3220",
+      "title": "Shakespeare in Performance",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 3240",
+      "title": "Playwriting",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 3300",
+      "title": "Special Topics in Theatre Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 3400",
+      "title": "Lighting Design",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 3500",
+      "title": "Special Topics in Design/Production",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 3510",
+      "title": "Scenic Fabrication",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 3600",
+      "title": "Stage Management",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "TH 3800",
+      "title": "Minor Capstone",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1003",
+      "title": "Introduction to Badminton",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1007",
+      "title": "Basic Water Safety",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1008",
+      "title": "Rowing for Fitness",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1009",
+      "title": "Walking for Fitness",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1011",
+      "title": "Touch Football",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1012",
+      "title": "Basketball",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1013",
+      "title": "Softball",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1017",
+      "title": "Beginning Swimming",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1018",
+      "title": "Volleyball",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1019",
+      "title": "Soccer",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1054",
+      "title": "Plyometrics",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1055",
+      "title": "Physical Conditioning",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1059",
+      "title": "Weight Training for Beginners",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1070",
+      "title": "Leisure Education: Redefining Social Norms",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1077",
+      "title": "Swimming for Fitness",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1078",
+      "title": "Aquatic Conditioning",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1080",
+      "title": "Aquatic Games",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1099",
+      "title": "Healthy Alternative Physical Education Courses",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1200",
+      "title": "Club Sport - Miscellaneous",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1201",
+      "title": "Club Sport - Alpine Ski Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1202",
+      "title": "Club Sport - Badminton",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1203",
+      "title": "Club Sport - Ballroom Dancing",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1204",
+      "title": "Club Sport - Dance Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1205",
+      "title": "Club Sport - Fencing Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1206",
+      "title": "Club Sport - Men's Ice Hockey",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1207",
+      "title": "Club Sport - Karate",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1208",
+      "title": "Club Sport - Men’s Rugby Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1209",
+      "title": "Club Sport - Women’s Rugby Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1210",
+      "title": "Club Sport - Men’s Ultimate Frisbee Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1211",
+      "title": "Club Sport - Women’s Ultimate Frisbee Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1212",
+      "title": "Club Sport - Men’s Lacrosse Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1213",
+      "title": "Club Sport - Women’s Lacrosse Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1214",
+      "title": "Club Sport - Men’s Volleyball Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1215",
+      "title": "Club Sport - Outing: Bouldering",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1216",
+      "title": "Club Sport - Pep Band",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1217",
+      "title": "Club Sport - Sailing",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1218",
+      "title": "Club Sport - Social Dance",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1219",
+      "title": "Club Sport - SOMA (Society of Martial Arts)",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1220",
+      "title": "Club Sport - SMAS: Boffer Games",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1221",
+      "title": "Club Sport - Running",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1222",
+      "title": "Club Sport - Men's Soccer",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1223",
+      "title": "Club Sport - Women's Soccer",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1224",
+      "title": "Club Sport - Cheerleading",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1225",
+      "title": "Club Sport - Scuba Co-Ed",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1226",
+      "title": "Water Polo",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1227",
+      "title": "Club Sport - Tennis",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1228",
+      "title": "Club Sport - Cycling",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1229",
+      "title": "Club Sport - Men's Rugby",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1230",
+      "title": "Club Sport - Competitive Climbing Co-Ed",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1231",
+      "title": "Club Sport - Freestyle Wrestling",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1232",
+      "title": "Club Sport - Equestrian",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1233",
+      "title": "Club Sport - Men's Basketball",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1234",
+      "title": "Club Sport – Women’s Basketball",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1235",
+      "title": "Club Sport – Women’s Volleyball",
+      "credits": 0.9,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1236",
+      "title": "Club Sport – Women’s Ice Hockey",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1237",
+      "title": "Club Sport – Outing Club: Climbing",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1238",
+      "title": "Club Sport – Rangeela: Bollywood Bhangra Fusion",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1239",
+      "title": "Club Sport – Powerlifting",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1601",
+      "title": "Insight Program",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1610",
+      "title": "Approaches to Holistic Well-Being",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1611",
+      "title": "Introduction to Mindfulness",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1612",
+      "title": "Introductory Yoga",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1613",
+      "title": "Succeeding as an Introvert",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1614",
+      "title": "Exploring the Impact of Nutrition on Brain, Body and Planet",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1699",
+      "title": "Special Topics in Holistic Well-Being",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1711",
+      "title": "Mindfulness 2.0",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 1712",
+      "title": "Intermediate Yoga",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2001",
+      "title": "Varsity Football Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2002",
+      "title": "Varsity Men’s Soccer Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2003",
+      "title": "Varsity Women’s Soccer Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2004",
+      "title": "Varsity Field Hockey Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2005",
+      "title": "Varsity Women’s Volleyball Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2006",
+      "title": "Varsity Men’s & Women’ Cross Country Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2007",
+      "title": "Varsity Wrestling Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2008",
+      "title": "Varsity Men’s Basketball Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2009",
+      "title": "Varsity Women’s Basketball Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2010",
+      "title": "Varsity Men’s & Women’s Swim Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2011",
+      "title": "Varsity Men’s & Women’s Indoor Track Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2012",
+      "title": "Varsity Baseball Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2013",
+      "title": "Varsity Softball Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2014",
+      "title": "Varsity Men’s & Women’s Outdoor Track Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2015",
+      "title": "Varsity Men’s Crew Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WPE 2016",
+      "title": "Varsity Women’s Crew Team",
+      "credits": 0.75,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 1010",
+      "title": "Elements of Writing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 1011",
+      "title": "Writing About Science & Technology",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 1020",
+      "title": "Introduction to Rhetoric",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 2010",
+      "title": "Elements of Style",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 2020",
+      "title": "Topics in Rhetoric",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 2111",
+      "title": "Designing Effective and Ethical Research Studies",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 2200",
+      "title": "AI in Writing and Communication",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "IMGD 2200",
+      "title": "AI in Writing and Communication",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 2210",
+      "title": "Business Writing and Communication",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 2300",
+      "title": "Intercultural Communication",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 2310",
+      "title": "Visual Rhetoric",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 2410",
+      "title": "Screenwriting",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "EN 2410",
+      "title": "Screenwriting",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 2500",
+      "title": "Writing in the Life Sciences",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 3011",
+      "title": "Teaching Writing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 3112",
+      "title": "Rhetorical Theory",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 3210",
+      "title": "Technical Writing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 3214",
+      "title": "Writing About Disease & Public Health",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 4210",
+      "title": "Medical Writing",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    },
+    {
+      "code": "WR 4500",
+      "title": "Senior Seminar in Writing and Rhetoric",
+      "credits": 3.0,
+      "level": "Undergraduate"
+    }
+  ]
+}

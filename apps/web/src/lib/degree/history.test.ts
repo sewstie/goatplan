@@ -23,7 +23,7 @@ const course = (code: string, extra: Partial<HistoryCourse> = {}): HistoryCourse
   code,
   title: "",
   credits: 3,
-  inProgress: false,
+  status: "taken",
   apIb: false,
   source: "found",
   ...extra,
@@ -75,14 +75,14 @@ describe("new courses", () => {
 
 describe("parseHistory", () => {
   it("reads a good history", () => {
-    const history = { courses: [course("CS 2102", { term: "2027-C", inProgress: true, apIb: true })], manual: ["iqp-1"] };
+    const history = { courses: [course("CS 2102", { term: "2027-C", status: "planned", apIb: true })], manual: ["iqp-1"] };
     expect(parseHistory({ version: 1, ...history })).toEqual({ history, damaged: false });
   });
 
   it.each([
     ["null", null],
     ["a list", []],
-    ["another version", { version: 2, courses: [], manual: [] }],
+    ["another version", { version: 3, courses: [], manual: [] }],
     ["no version", { courses: [], manual: [] }],
     ["courses that aren't a list", { version: 1, courses: "CS 2102", manual: [] }],
   ])("treats %s as an empty, damaged history", (_name, value) => {
@@ -189,9 +189,9 @@ describe("parseCredits", () => {
 describe("history files", () => {
   const full: DegreeHistory = {
     courses: [
-      course("CS 2102", { title: "Object-Oriented Design Concepts", term: "B 2025" }),
+      course("CS 2102", { title: "Object-Oriented Design Concepts", term: "B 2026" }),
       course("EN 1000", { source: "typed", apIb: true, credits: 1.5 }),
-      course("MA 1023", { title: "Calculus \"III\" <b>", inProgress: true, credits: 0.75 }),
+      course("MA 1023", { title: "Calculus \"III\" <b>", status: "planned", credits: 0.75 }),
     ],
     manual: ["iqp-1", "wpe-sports"],
   };
@@ -241,7 +241,7 @@ describe("history files", () => {
     ["a very long title", withCourse({ title: "x".repeat(301) })],
     ["a term that isn't text", withCourse({ term: 2025 })],
     ["a very long term", withCourse({ term: "x".repeat(41) })],
-    ["an in-progress flag that isn't true or false", withCourse({ inProgress: "yes" })],
+    ["an in-progress flag that isn't true or false", withCourse({ status: "unknown" })],
     ["an AP/IB flag that isn't true or false", withCourse({ apIb: 1 })],
     ["an unknown source", withCourse({ source: "hacked" })],
     ["a repeated code", file({ courses: [course("CS 2102"), course("cs2102")] })],
@@ -252,7 +252,7 @@ describe("history files", () => {
     expect(parseHistoryFile(text)).toEqual({ ok: false, reason: "broken" });
   });
 
-  it.each([0, 2, 1.5, -1, 999])("says version %s is a different version", (version) => {
+  it.each([0, 3, 1.5, -1, 999])("says version %s is a different version", (version) => {
     expect(parseHistoryFile(file({ version }))).toEqual({ ok: false, reason: "version" });
   });
 
@@ -279,7 +279,7 @@ describe("history files", () => {
 describe("buildAuditRequest", () => {
   it("sends finished courses as taken and in-progress courses as planned", () => {
     const request = buildAuditRequest({
-      courses: [course("CS 2102"), course("MA 1021", { inProgress: true }), course("EN 1001", { apIb: true, credits: 1.5 })],
+      courses: [course("CS 2102"), course("MA 1021", { status: "planned" }), course("EN 1001", { apIb: true, credits: 1.5 })],
       manual: ["iqp-1"],
     });
     expect(request).toEqual({
@@ -292,24 +292,47 @@ describe("buildAuditRequest", () => {
     });
   });
 
-  it("adds the open term's plan to the planned courses", () => {
-    const request = buildAuditRequest({ courses: [course("CS 2102")], manual: [] }, [{ code: "MA 1021", credits: 3 }]);
-    expect(request.planned).toEqual([{ code: "MA 1021", credits: 3 }]);
-  });
-
-  it("counts a course that's both taken and in the plan as taken", () => {
-    const request = buildAuditRequest({ courses: [course("CS 2102")], manual: [] }, [{ code: "CS 2102", credits: 3 }]);
-    expect(request.taken).toEqual([{ code: "CS 2102", credits: 3 }]);
-    expect(request.planned).toEqual([]);
-  });
-
-  it("sends a course that's both in progress and in the plan once", () => {
-    const request = buildAuditRequest({ courses: [course("CS 2102", { inProgress: true, credits: 2 })], manual: [] }, [{ code: "CS 2102", credits: 3 }]);
-    expect(request.planned).toEqual([{ code: "CS 2102", credits: 2 }]);
-  });
-
   it("works from the stored copy alone, for a course no term file lists", () => {
     const { history } = parseHistory({ version: 1, courses: [course("CS 1005", { title: "Retired course" })], manual: [] });
     expect(buildAuditRequest(history).taken).toEqual([{ code: "CS 1005", credits: 3 }]);
+  });
+});
+
+describe("standalone history migration", () => {
+  it("migrates in-progress records to planned and preserves other records as taken", () => {
+    const legacy = { version: 1, manual: ["iqp-1"], courses: [
+      { code: "CS 2102", title: "Design", credits: 3, inProgress: true, apIb: false, source: "found", term: "C Term 2027" },
+      { code: "MA 1021", title: "Calculus", credits: 3, inProgress: false, apIb: false, source: "found", term: "A Term 2025" },
+      { code: "EN 1000", title: "Transfer", credits: 3, apIb: true, source: "typed" },
+    ] };
+    const migrated = parseHistory(legacy);
+    expect(migrated.damaged).toBe(false);
+    expect(migrated.history.courses).toEqual([
+      course("CS 2102", { title: "Design", status: "planned", term: "C Term 2027" }),
+      course("MA 1021", { title: "Calculus" }),
+      course("EN 1000", { title: "Transfer", apIb: true, source: "typed" }),
+    ]);
+    expect(JSON.parse(serializeHistory(migrated.history))).toMatchObject({ version: 2 });
+    expect(serializeHistory(migrated.history)).not.toContain("inProgress");
+  });
+
+  it("accepts all regular terms through 2030 without consulting published data", () => {
+    const history = { courses: [course("CS 2102", { status: "planned", term: "D Term 2030" })], manual: [] };
+    expect(parseHistoryFile(serializeHistory(history))).toEqual({ ok: true, history });
+    for (const term of ["E Term 2027", "A Term 2025", "B Term 2031", "anything"]) {
+      expect(parseHistoryFile(serializeHistory({ ...history, courses: [course("CS 2102", { term })] }))).toEqual({ ok: false, reason: "broken" });
+    }
+  });
+});
+
+describe("catalog identifiers", () => {
+  it("keeps unnumbered catalog entries for review without sending invalid codes to the audit", () => {
+    for (const code of ["ISU", "ISU BB", "HU—AAS-50"]) {
+      const entry = foundCourse({ code, title: "Catalog entry", credits: 3 });
+      expect(entry.source).toBe("typed");
+      const history = { courses: [entry, course("MA 1021")], manual: [] };
+      expect(parseHistoryFile(serializeHistory(history))).toEqual({ ok: true, history });
+      expect(buildAuditRequest(history).taken).toEqual([{ code: "MA 1021", credits: 3 }]);
+    }
   });
 });
