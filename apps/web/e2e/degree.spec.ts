@@ -126,14 +126,13 @@ test.describe("the real audit", () => {
     await expect(tile(page, /^MA 1021, line 34/)).toBeVisible({ timeout: 30_000 });
   });
 
-  test("search covers every published term, not just one", async ({ page }) => {
+  test("search uses the full course catalog without a planner term scope", async ({ page }) => {
     await openDegree(page);
     await page.getByRole("button", { name: "Add one course" }).click();
     const search = panel(page, "Add to course history");
     await search.getByRole("textbox", { name: "Course code or title" }).fill("CS 2102");
     await expect(search.getByRole("button", { name: "Use CS 2102" })).toBeVisible();
-    await search.getByRole("combobox", { name: "Search in" }).selectOption("2027-D");
-    await expect(search.getByLabel("Search in")).toHaveValue("2027-D");
+    await expect(search.getByRole("combobox", { name: "Search in" })).toHaveCount(0);
   });
 
   test("a typed code counts by its code and is flagged, and other text is refused", async ({ page }) => {
@@ -202,11 +201,11 @@ test.describe("the real audit", () => {
 test.describe("the plan", () => {
   const draft = (courses: string[]) => JSON.stringify({ version: 1, courses, preferences: { startsAfter: 0, blocked: [], onlyOpen: true }, locks: {}, professorByCourse: {}, sortPreset: "bestOverall", alternatives: {} });
 
-  test("the open term's plan counts as planned", async ({ page }) => {
+  test("the open term's plan does not count as planned", async ({ page }) => {
     await page.addInitScript((value) => localStorage.setItem("goatplan:draft:v1:2027-C", value), draft(["CS 3043"]));
     await openDegree(page);
-    await expect(tile(page, /^CS 3043, line \d+, planned, C Term 2027/)).toBeVisible();
-    await expect(page.getByRole("button", { name: /^1 Planned/ })).toBeVisible();
+    await expect(tile(page, /^CS 3043, line \d+, planned/)).toHaveCount(0);
+    await expect(page.getByRole("button", { name: /^0 Planned/ })).toBeVisible();
   });
 
   test("a course both taken and in the plan counts as taken, and other terms' plans don't count", async ({ page }) => {
@@ -219,15 +218,21 @@ test.describe("the plan", () => {
     await expect(page.getByRole("button", { name: /^0 Planned/ })).toBeVisible();
   });
 
-  test("Take in C Term adds a course to the plan, and it shows as planned", async ({ page }) => {
-    await openDegree(page, { courses: [savedCourse({ code: "CS 1101", credits: 3, term: "A Term 2026" }), savedCourse({ code: "MA 1021", credits: 3, term: "B Term 2026" })] });
-    const card = page.getByRole("article").filter({ hasText: "Take in C Term" });
-    const add = card.getByRole("button", { name: /^Add .* to plan$/ }).first();
-    await expect(add).toBeVisible({ timeout: 30_000 });
-    const code = (await add.getAttribute("aria-label"))!.replace("Add ", "").replace(" to plan", "");
+  test("suggestions are added explicitly as planned without changing the planner", async ({ page }) => {
+    await openDegree(page, { courses: [savedCourse({ code: "CS 1101", credits: 3 })] });
+    await page.getByRole("button", { name: "Sheet options" }).click();
+    await page.getByRole("dialog").getByRole("button", { name: "Suggest courses", exact: true }).click();
+    const suggestions = panel(page, "Suggest courses");
+    await suggestions.getByRole("combobox", { name: "Term to plan for" }).selectOption("C Term 2027");
+    const add = suggestions.getByRole("button", { name: /^Plan .* for C Term 2027$/ }).first();
+    await expect(add).toBeVisible({ timeout: 60_000 });
+    const code = (await add.getAttribute("aria-label"))!.replace(/^Plan /, "").replace(/ for C Term 2027$/, "");
     await add.click();
+    await page.keyboard.press("Escape");
     await auditReady(page);
-    await expect(tile(page, new RegExp(`^${code}, line \\d+, planned`))).toBeVisible({ timeout: 30_000 });
+    await openAllSections(page);
+    await expect(tile(page, new RegExp(`^${code}, line \\d+, planned`))).toBeVisible();
+    expect(await page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"))).toBeNull();
   });
 });
 
@@ -241,7 +246,7 @@ test.describe("pins", () => {
   };
 
   test("a course moves to an allowed line and stays pinned through a reload, and Undo takes it back", async ({ page }) => {
-    await openDegree(page, { courses: [savedCourse({ code: "CS 2022", credits: 3, term: "Prior credit" })] });
+    await openDegree(page, { courses: [savedCourse({ code: "CS 2022", credits: 3 })] });
     await moveTo(page, /^CS 2022, line \d+/, /Mathematics · 38/);
     await expect(page.getByText("CS 2022 moved to Math 38 and pinned.")).toBeVisible();
     await expect(tile(page, /^CS 2022, line 38, done, pinned/)).toBeVisible();
@@ -283,7 +288,7 @@ test.describe("pins", () => {
     await tile(page, /^CS 2000\+, line 18, empty/).click();
     const fill = panel(page, "Courses that fit line 18");
     await expect(fill.getByText("Currently pinned to Mathematics, line 38")).toBeVisible();
-    await expect(fill.getByText("Offered in C Term")).toBeVisible({ timeout: 30_000 });
+    await expect(fill.getByRole("button", { name: "Suggest courses for this line" })).toBeVisible();
     await fill.getByRole("button", { name: "Move CS 2022 here" }).click();
     await expect(tile(page, /^CS 2022, line 18, done, pinned/)).toBeVisible();
   });

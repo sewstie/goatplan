@@ -1,10 +1,10 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import type { Course } from "@/lib/data/types";
+import type { CatalogCourse } from "@/lib/degree/catalog";
 import { loadCatalog, type Catalog } from "@/lib/degree";
 
-const NO_COURSES: Course[] = [];
+const NO_COURSES: CatalogCourse[] = [];
 
 export function useCourseCatalog() {
   const [catalog, setCatalog] = useState<Catalog | null>(null);
@@ -19,5 +19,5 @@ export function useCourseCatalog() {
     return loading.current;
   }, []);
 
-  return { courses: catalog?.courses ?? NO_COURSES, ready: catalog !== null, load };
+  return { courses: catalog?.courses ?? NO_COURSES, ready: catalog?.complete === true, failed: catalog?.complete === false, load };
 }

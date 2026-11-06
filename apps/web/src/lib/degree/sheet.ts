@@ -102,7 +102,7 @@ export function findHistoryCourse(history: DegreeHistory, code: string): History
 function courseDetail(course: HistoryCourse | undefined, openTerm: TermName | null): { detail: string | null; term: string | null } {
   const open = openTerm ? termShort(openTerm) : null;
   if (!course) return { detail: openTerm ? termLong(openTerm) : "Planned", term: open };
-  const named = parseTerm(course.term) ?? (course.inProgress ? openTerm : null);
+  const named = parseTerm(course.term);
   const term = named ? termShort(named) : null;
   if (course.creditSource === "transfer") return { detail: "Transfer", term };
   if (named) return { detail: termLong(named), term };

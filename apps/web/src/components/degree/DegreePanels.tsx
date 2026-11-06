@@ -2,6 +2,7 @@
 
 import { Drawer } from "@/components/ui/Drawer";
 import type { DegreeSnapshot } from "@/lib/degree";
+import { SuggestCoursesPanel } from "./SuggestCoursesPanel";
 import { ChecksPanel } from "./ChecksPanel";
 import { CourseDetailsPanel } from "./CourseDetailsPanel";
 import { CourseOptionsPanel } from "./CourseOptionsPanel";
@@ -23,6 +24,7 @@ export function DegreePanels({ degree, view }: { degree: DegreeSnapshot; view: D
   const close = useDegreeUi((state) => state.close);
   return (
     <Drawer open={panel !== null} onClose={close}>
+      {panel?.kind === "suggest" && <SuggestCoursesPanel history={degree.history} line={panel.line} />}
       {panel?.kind === "menu" && <SheetMenuPanel view={view} sheetReady={degree.sheet !== null} />}
       {panel?.kind === "checks" && view && <ChecksPanel view={view} history={degree.history} />}
       {panel?.kind === "options" && view && <CourseOptionsPanel code={panel.code} view={view} />}

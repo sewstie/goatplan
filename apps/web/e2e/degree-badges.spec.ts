@@ -31,7 +31,7 @@ test("history, progress and search badges use the same degree audit", async ({ p
   await expect(page.locator('[data-course-row="CS 3013"]')).toBeVisible();
   await expect(page.getByRole("checkbox", { name: FILTER })).toHaveCount(0);
   await nav(page, "My degree").click();
-  await expect(page.getByRole("button", { name: /^CS 3013, line \d+, planned/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^CS 3013, line \d+, planned/ })).toHaveCount(0);
 });
 
 test("without the flag, search stays in the sidebar with no badges or filter", async ({ page }) => {

@@ -1,34 +1,27 @@
-import { loadTerm, loadTermIndex } from "@/lib/data/load";
-import type { Course, TermFile, TermIndex } from "@/lib/data/types";
+import type { Course } from "@/lib/data/types";
+
+export interface CatalogCourse extends Course {
+  offeredThisYear: boolean;
+  termLetters: string[];
+}
 
 export interface Catalog {
-  courses: Course[];
+  courses: CatalogCourse[];
   complete: boolean;
 }
 
-interface CatalogDeps {
-  loadTermIndex(): Promise<TermIndex>;
-  loadTerm(termId: string): Promise<TermFile>;
-}
-
-export async function loadCatalog(deps: CatalogDeps = { loadTermIndex, loadTerm }): Promise<Catalog> {
-  let terms: TermIndex["terms"];
+export async function loadCatalog(read: typeof fetch = fetch): Promise<Catalog> {
   try {
-    ({ terms } = await deps.loadTermIndex());
+    const response = await read("/data/catalog.json");
+    if (!response.ok) throw new Error("Catalog unavailable");
+    const { courses } = await response.json() as { courses: Omit<CatalogCourse, "subject" | "description" | "sections" | "options">[] };
+    return {
+      courses: courses.map((course) => ({ ...course, subject: course.code.split(" ")[0], description: "", sections: [], options: [] })),
+      complete: true,
+    };
   } catch {
     return { courses: [], complete: false };
   }
-  const newestFirst = [...terms].sort((a, b) => b.start.localeCompare(a.start));
-  const files = await Promise.allSettled(newestFirst.map((term) => deps.loadTerm(term.id)));
-
-  const courses = new Map<string, Course>();
-  for (const file of files) {
-    if (file.status !== "fulfilled") continue;
-    for (const course of file.value.courses) {
-      if (!courses.has(course.code)) courses.set(course.code, course);
-    }
-  }
-  return { courses: [...courses.values()], complete: files.every((file) => file.status === "fulfilled") };
 }
 
 export function findCourse(courses: readonly Course[], code: string): Course | undefined {

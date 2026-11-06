@@ -6,7 +6,7 @@ import { Listbox } from "@/components/ui/Listbox";
 import { track } from "@/lib/analytics/track";
 import { getDegreeSource } from "@/lib/degree";
 import { SHEETS } from "@/lib/degree/sheets";
-import { isDegreeEnabled } from "@/lib/flags";
+import { isSheetAvailable } from "@/lib/flags";
 import { useDegreeUi } from "./degreeUi";
 
 const MAJORS = ["Computer Science", "Robotics Engineering", "Mechanical Engineering", "Electrical and Computer Engineering", "Data Science"];
@@ -15,7 +15,7 @@ export function MajorPickerFields({ selected, onDone }: { selected: string | nul
   const [value, setValue] = useState(selected ?? "");
   const [other, setOther] = useState("");
   const [requested, setRequested] = useState(false);
-  const available = SHEETS.filter((sheet) => sheet.classYear === 2030 && (sheet.status === "checked" || isDegreeEnabled()));
+  const available = SHEETS.filter((sheet) => sheet.classYear === 2030 && isSheetAvailable(sheet.id));
   const options = [
     { value: "", label: "Choose your major" },
     ...available.map((sheet) => ({ value: sheet.id, label: sheet.major })),

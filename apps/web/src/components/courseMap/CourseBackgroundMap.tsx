@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ListDashes, Graph } from "@phosphor-icons/react/ssr";
 import { SegmentedSwitch } from "@/components/ui/SegmentedSwitch";
 import { buildCourseMap } from "@/lib/courseMap/courseMap";
-import { useCourseCatalog } from "@/components/degree/useCourseCatalog";
+import { useMapOfferings } from "./useMapOfferings";
 import { CourseMapDiagram } from "./CourseMapDiagram";
 import { CourseMapList } from "./CourseMapList";
 import { MapCourseDetails } from "./MapCourseDetails";
@@ -15,7 +15,7 @@ export function CourseBackgroundMap() {
   const [mode, setMode] = useState<"map" | "list">("map");
   const [selected, setSelected] = useState<string | null>(null);
   const [details, setDetails] = useState(false);
-  const { courses, ready, load } = useCourseCatalog();
+  const { courses, ready, load } = useMapOfferings();
   useEffect(() => { void load(); }, [load]);
   const map = buildCourseMap(courses);
   const select = (code: string) => { setSelected(code); setDetails(true); };

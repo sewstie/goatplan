@@ -1,11 +1,12 @@
 import { normalizeCourseCode } from "@/components/courses/courseCode";
 import type { Course } from "@/lib/data/types";
 import { ENGINE_API_VERSION, type AuditCourse, type AuditRequest } from "@/lib/engine/types";
+import { parseTerm } from "./terms";
 import { getRequirements } from "./requirements";
 import type { TrackingSheet } from "./sheets";
 
 export const HISTORY_KEY = "goatplan:history:v1";
-const HISTORY_VERSION = 1;
+const HISTORY_VERSION = 2;
 export const DEFAULT_CREDITS = 3;
 const MAX_CREDITS = 30;
 const MAX_TITLE_LENGTH = 300;
@@ -20,7 +21,7 @@ export interface HistoryCourse {
   title: string;
   credits: number;
   term?: string;
-  inProgress: boolean;
+  status: "taken" | "planned";
   apIb: boolean;
   source: "found" | "typed";
   creditSource?: CreditSource;
@@ -59,14 +60,21 @@ export const EMPTY_HISTORY: DegreeHistory = { courses: [], manual: [] };
 
 export type HistoryFile = { ok: true; history: DegreeHistory } | { ok: false; reason: "broken" | "version" };
 
-export const cleanCourseCode = normalizeCourseCode;
+const CATALOG_IDENTIFIERS = ["ISU", "ISU BB", "HU—AAS-50"];
+
+export function cleanCourseCode(text: string): string | null {
+  const code = text.trim().toUpperCase().replace(/[—–]/g, "-");
+  return normalizeCourseCode(text) ?? CATALOG_IDENTIFIERS.find((item) => item.replace("—", "-") === code) ?? null;
+}
+
+export const hasRegistrationCode = (code: string): boolean => normalizeCourseCode(code) !== null;
 
 export function typedCourse(code: string): HistoryCourse {
-  return { code, title: "", credits: DEFAULT_CREDITS, inProgress: false, apIb: false, source: "typed" };
+  return { code, title: "", credits: DEFAULT_CREDITS, status: "taken", apIb: false, source: "typed" };
 }
 
 export function foundCourse({ code, title, credits }: Pick<Course, "code" | "title" | "credits">): HistoryCourse {
-  return { code, title, credits: credits ?? DEFAULT_CREDITS, inProgress: false, apIb: false, source: "found" };
+  return { code, title, credits: credits ?? DEFAULT_CREDITS, status: "taken", apIb: false, source: hasRegistrationCode(code) ? "found" : "typed" };
 }
 
 export function parseCredits(text: string): number | null {
@@ -79,18 +87,25 @@ export function parseCredits(text: string): number | null {
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 
+export function validHistoryTerm(text: string): boolean {
+  const term = parseTerm(text);
+  return !!term && term.letter !== "E" && term.year >= 2026 && term.year <= 2030;
+}
+
 export function parseCourse(value: unknown): HistoryCourse | null {
   if (!isObject(value) || typeof value.code !== "string" || typeof value.title !== "string") return null;
   const code = cleanCourseCode(value.code);
   const { credits, term } = value;
   if (!code || typeof credits !== "number" || !Number.isFinite(credits) || credits < 0 || credits > MAX_CREDITS) return null;
   if (value.title.length > MAX_TITLE_LENGTH || (typeof term === "string" && term.length > MAX_TERM_LENGTH)) return null;
+  if (value.status !== undefined && value.status !== "taken" && value.status !== "planned") return null;
+  if (value.status !== undefined && term !== undefined && (typeof term !== "string" || !validHistoryTerm(term))) return null;
   return {
     code,
     title: value.title,
     credits,
-    ...(typeof term === "string" ? { term } : {}),
-    inProgress: value.inProgress === true,
+    ...(typeof term === "string" && validHistoryTerm(term) ? { term } : {}),
+    status: value.status === "planned" || (value.status === undefined && value.inProgress === true) ? "planned" : "taken",
     apIb: value.apIb === true,
     source: value.source === "found" ? "found" : "typed",
     ...(CREDIT_SOURCES.includes(value.creditSource as CreditSource) ? { creditSource: value.creditSource as CreditSource } : {}),
@@ -122,13 +137,14 @@ function validSheetFields(value: Record<string, unknown>): boolean {
 }
 
 export function parseHistory(value: unknown): StoredHistory {
-  if (!isObject(value) || value.version !== HISTORY_VERSION || !Array.isArray(value.courses)) {
+  if (!isObject(value) || ![1, HISTORY_VERSION].includes(value.version as number) || !Array.isArray(value.courses)) {
     return { history: EMPTY_HISTORY, damaged: true };
   }
   const courses = new Map<string, HistoryCourse>();
   let damaged = false;
   for (const item of value.courses) {
-    const course = parseCourse(item);
+    const legacy = value.version === 1 && isObject(item) && typeof item.term === "string" && item.term.length <= MAX_TERM_LENGTH && !validHistoryTerm(item.term) ? { ...item, term: undefined } : item;
+    const course = value.version === HISTORY_VERSION && (!isObject(item) || (item.status !== "taken" && item.status !== "planned")) ? null : parseCourse(legacy);
     if (!course) damaged = true;
     else if (!courses.has(course.code)) courses.set(course.code, course);
   }
@@ -147,7 +163,7 @@ export function serializeHistory(history: DegreeHistory): string {
 
 const hasEveryField = (value: unknown): boolean =>
   isObject(value) &&
-  typeof value.inProgress === "boolean" &&
+  (value.status === "taken" || value.status === "planned" || (value.status === undefined && typeof value.inProgress === "boolean")) &&
   typeof value.apIb === "boolean" &&
   (value.source === "found" || value.source === "typed") &&
   (value.term === undefined || typeof value.term === "string");
@@ -185,9 +201,10 @@ export function parseHistoryFile(text: string): HistoryFile {
     return broken;
   }
   if (!isObject(value) || typeof value.version !== "number") return broken;
-  if (value.version !== HISTORY_VERSION) return { ok: false, reason: "version" };
+  if (![1, HISTORY_VERSION].includes(value.version as number)) return { ok: false, reason: "version" };
   const { courses, manual } = value;
   if (!Array.isArray(courses) || !courses.every(hasEveryField)) return broken;
+  if (value.version === HISTORY_VERSION && courses.some((course) => !isObject(course) || (course.status !== "taken" && course.status !== "planned"))) return broken;
   if (!Array.isArray(manual) || !manual.every(isManualItem)) return broken;
   if (!validSheetFields(value) || !parseSheetState(value)) return broken;
   const { history, damaged } = parseHistory(value);
@@ -212,7 +229,10 @@ export function readHistory(storage: HistoryStorage | null): StoredHistory {
   }
   if (text === null) return { history: EMPTY_HISTORY, damaged: false };
   try {
-    return parseHistory(JSON.parse(text));
+    const value: unknown = JSON.parse(text);
+    const parsed = parseHistory(value);
+    if (isObject(value) && value.version === 1 && !parsed.damaged) writeHistory(storage, parsed.history);
+    return parsed;
   } catch {
     return { history: EMPTY_HISTORY, damaged: true };
   }
@@ -231,14 +251,13 @@ export function writeHistory(storage: HistoryStorage | null, history: DegreeHist
 const auditCourse = ({ code, credits, apIb }: HistoryCourse): AuditCourse =>
   apIb ? { code, credits, apIb } : { code, credits };
 
-export function buildAuditRequest({ courses, manual }: DegreeHistory, plan: readonly AuditCourse[] = [], sheet: TrackingSheet = getRequirements()): AuditRequest {
-  const known = new Set(courses.map((course) => course.code));
+export function buildAuditRequest({ courses, manual }: DegreeHistory, sheet: TrackingSheet = getRequirements()): AuditRequest {
   return {
     version: ENGINE_API_VERSION,
     requirements: sheet.id,
     sheet,
-    taken: courses.filter((course) => !course.inProgress).map(auditCourse),
-    planned: [...courses.filter((course) => course.inProgress).map(auditCourse), ...plan.filter((course) => !known.has(course.code))],
+    taken: courses.filter((course) => course.status === "taken" && hasRegistrationCode(course.code)).map(auditCourse),
+    planned: courses.filter((course) => course.status === "planned" && hasRegistrationCode(course.code)).map(auditCourse),
     manual,
   };
 }

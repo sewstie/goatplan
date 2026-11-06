@@ -1,8 +1,6 @@
 "use client";
 
 import { DotsThree, ListDashes, Plus, SquaresFour } from "@phosphor-icons/react/ssr";
-import { TermPicker } from "@/components/courses/TermPicker";
-import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { SegmentedSwitch } from "@/components/ui/SegmentedSwitch";
@@ -19,7 +17,6 @@ export function DegreeTitle({ hasCourses, selectedSheetId, showSheetControls = t
   const view = useDegreeUi((state) => state.view);
   const set = useDegreeUi((state) => state.set);
   const open = useDegreeUi((state) => state.open);
-  const phone = usePhoneViewport();
   const sheet = SHEETS.find((item) => item.id === selectedSheetId);
 
   return (
@@ -37,7 +34,6 @@ export function DegreeTitle({ hasCourses, selectedSheetId, showSheetControls = t
         {sheet?.status === "beta" && <p className="text-8-5 leading-17 text-ink-muted">Not yet checked by {"AEFHILMNORSX".includes(sheet.abbreviation[0]) ? "an" : "a"} {sheet.abbreviation} student. <a className="rounded-badge underline hover:text-ink" href="https://github.com/sewstie/goatplan/issues/new?title=Degree%20sheet%20feedback" target="_blank" rel="noreferrer">Tell us if something looks wrong.</a></p>}
       </div>
       {showSheetControls && <div className="flex items-center justify-between gap-10 tablet:justify-end">
-        {!phone && <div className="hidden tablet:block"><TermPicker inline /></div>}
         <SegmentedSwitch label="Sheet or list" options={VIEWS} value={view} onChange={(value) => set({ view: value })} />
         <div className="flex items-center gap-10">
           {hasCourses && (

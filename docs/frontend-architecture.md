@@ -316,21 +316,20 @@ Without it, the page redirects to the planner and search shows no degree badges.
 Restoring this feature does not open the public major launch.
 
 `lib/degree` owns history and audit state separately from the planner store.
-History stays under `goatplan:history:v1`, including courses, manual
-confirmations and pins. Existing histories and exported files keep the same
-format. Import validates the file before offering a merge or replacement.
-Failed storage writes keep changes in the open page and offer an export.
+History stays under `goatplan:history:v1`. Version 2 records have an explicit
+`taken` or `planned` status and an optional A/B/C/D term from 2026–2030. Version 1
+imports migrate in-progress records to planned and all others to taken.
 
-`DegreeSource` sends completed and in-progress history plus the open term's
-draft courses through `EngineClient.audit`. Audits use the same worker as
-schedules but are not superseded by solves or term changes. The engine restores
-the CS Class of 2030 rules and shared native/WASM fixtures. Other majors and
-sheet selection remain separate work.
+`DegreeSource` sends only degree history through `EngineClient.audit`. It does
+not read planner drafts or subscribe to planner changes. My degree has no global
+Term picker. Search reads the persistent `/data/catalog.json` catalog.
 
-`CourseGaps` supplies search badges and the Take in Term card through candidate
-audits. Search keeps the current inline results and phone screen. No gap filter
-or background-hint UI is enabled. Course display, history, pins and saved-plan
-work remain in TypeScript.
+`CourseGaps` supplies search badges and the Suggest courses panel through
+candidate audits. The panel has its own term choice. Published offerings support
+explicit schedule additions; unpublished terms use observed term letters.
+Planner courses reach degree history only through the planner’s ⋯ action.
+See [the tracking sheet spec](degree-tracking-sheet.md) for migration, catalog
+updates, paste review and the explicit planner connections.
 
 The sheet retains the latest pre-deletion tiles, stacked empty lines, pins,
 checks and confirmation panels. Wide screens show insights beside it; tablets

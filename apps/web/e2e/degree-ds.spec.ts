@@ -1,14 +1,18 @@
 import { expect, test } from "./fixtures/test";
 import { auditReady, openAllSections, openDegree, savedCourse } from "./fixtures/degree";
 
-test("DS history drives search badges and Take in C Term actions", async ({ page }) => {
+test("DS history drives search badges and explicit course suggestions", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await openDegree(page, JSON.stringify({ version: 1, sheetId: "ds-2030", courses: [savedCourse({ code: "DS 1010", credits: 3, term: "A Term 2026" }), savedCourse({ code: "MA 1021", credits: 3, term: "B Term 2026" })], manual: [] }));
-  const suggestions = page.getByRole("article").filter({ hasText: "Take in C Term" });
-  const add = suggestions.getByRole("button", { name: /^Add .* to plan$/ }).first();
-  await expect(add).toBeVisible({ timeout: 30_000 });
-  const code = (await add.getAttribute("aria-label"))!.slice(4, -8);
+  await page.getByRole("button", { name: "Sheet options" }).click();
+  await page.getByRole("dialog").getByRole("button", { name: "Suggest courses", exact: true }).click();
+  const suggestions = page.getByRole("region", { name: "Suggest courses", exact: true });
+  await suggestions.getByRole("combobox", { name: "Term to plan for" }).selectOption("C Term 2027");
+  const add = suggestions.getByRole("button", { name: /^Plan .* for C Term 2027$/ }).first();
+  await expect(add).toBeVisible({ timeout: 60_000 });
+  const code = (await add.getAttribute("aria-label"))!.replace(/^Plan /, "").replace(/ for C Term 2027$/, "");
   await add.click();
+  await page.keyboard.press("Escape");
   await auditReady(page);
   await openAllSections(page);
   await expect(page.getByRole("button", { name: new RegExp(`^${code}, line \\d+, planned`) })).toBeVisible();
@@ -20,7 +24,7 @@ test("DS history drives search badges and Take in C Term actions", async ({ page
   await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "My degree", exact: true }).click();
   await auditReady(page);
   await openAllSections(page);
-  await expect(page.getByRole("button", { name: /^DS 2010, line 17, planned/ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^DS 2010, line 17, planned/ })).toHaveCount(0);
 });
 
 for (const width of [1440, 834]) {

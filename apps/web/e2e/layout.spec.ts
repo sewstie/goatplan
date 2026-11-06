@@ -705,13 +705,13 @@ test.describe("My degree", () => {
     await expect(page.getByText("MQP is included below")).toHaveCount(0);
     const tile = (await page.getByRole("button", { name: /^CS 1102, line 16/ }).boundingBox())!;
     expect(tile.width).toBeGreaterThanOrEqual(160);
-    await expect(page.getByRole("combobox", { name: "Term" })).toBeVisible();
+    await expect(page.getByRole("combobox", { name: "Term" })).toHaveCount(0);
   });
 
-  test("at 1440×900 the ring, Pace and Take in C Term show without scrolling, and the page is compact", async ({ page }) => {
+  test("at 1440×900 the ring, Pace and Suggest courses show without scrolling, and the page is compact", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openDegree(page, midHistory());
-    for (const heading of ["Pace & what-if", "Take in C Term"]) {
+    for (const heading of ["Pace & what-if", "Suggest courses"]) {
       const box = (await page.getByRole("heading", { name: heading }).boundingBox())!;
       expect(box.y + box.height).toBeLessThanOrEqual(900);
     }
@@ -814,7 +814,7 @@ test.describe("My degree", () => {
 
   test("pasted courses can get a term in review, and Units per term and Pace fill in afterwards", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
-    await openDegree(page, { courses: [{ code: "WR 1011", title: "", credits: 3, apIb: false, source: "found", inProgress: false }] });
+    await openDegree(page, { courses: [{ code: "WR 1011", title: "", credits: 3, apIb: false, source: "found", status: "taken" }] });
     await page.getByRole("button", { name: "Add courses" }).click();
     await page.getByRole("tab", { name: /several/i }).click();
     await page.getByRole("textbox", { name: "Workday course text" }).fill("CS 1101\nMA 1021\nCS 2102");
@@ -833,7 +833,7 @@ test.describe("My degree", () => {
 
   test("term headings in the pasted text fill in each course's term", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
-    await openDegree(page, { courses: [{ code: "WR 1011", title: "", credits: 3, apIb: false, source: "found", inProgress: false }] });
+    await openDegree(page, { courses: [{ code: "WR 1011", title: "", credits: 3, apIb: false, source: "found", status: "taken" }] });
     await page.getByRole("button", { name: "Add courses" }).click();
     await page.getByRole("tab", { name: /several/i }).click();
     await page.getByRole("textbox", { name: "Workday course text" }).fill("A Term 2026\nCS 1101\nB Term 2026\nMA 1021");

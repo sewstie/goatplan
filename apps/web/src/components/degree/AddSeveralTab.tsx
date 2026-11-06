@@ -6,8 +6,8 @@ import { CheckField } from "@/components/ui/CheckField";
 import { Select } from "@/components/ui/Select";
 import { DrawerFrame } from "@/components/ui/Drawer";
 import { Notice } from "@/components/ui/Notice";
-import { findCourse, foundCourse, getDegreeSource, parsePastedCourses, parseTerm, typedCourse, unitLabel, type DegreeHistory, type HistoryCourse } from "@/lib/degree";
-import { usePlanner } from "@/lib/store";
+import { validHistoryTerm } from "@/lib/degree/history";
+import { findCourse, foundCourse, getDegreeSource, parsePastedCourses, typedCourse, unitLabel, type DegreeHistory, type HistoryCourse } from "@/lib/degree";
 import { useDegreeUi } from "./degreeUi";
 import { termChoices } from "./termChoices";
 import { UNKNOWN_COURSE_NOTE } from "./unknownCourseNote";
@@ -19,7 +19,7 @@ const count = (number: number) => `${number} ${number === 1 ? "course" : "course
 
 function rowText({ course, already }: Row): string {
   if (already) return "Already in history · duplicate will not be added";
-  const parts = [...(course.term ? [course.term] : []), unitLabel(course.credits), course.inProgress ? "in progress" : "completed"];
+  const parts = [...(course.term ? [course.term] : []), unitLabel(course.credits), course.status === "planned" ? "planned" : "taken"];
   return parts.join(" · ");
 }
 
@@ -28,10 +28,11 @@ export function AddSeveralTab({ history, tabs }: { history: DegreeHistory; tabs:
   const open = useDegreeUi((state) => state.open);
   const catalog = useCourseCatalog();
   const textId = useId();
+  const [problem, setProblem] = useState("");
   const [text, setText] = useState("");
   const [rows, setRows] = useState<Row[] | null>(null);
   const [termForSelected, setTermForSelected] = useState("");
-  const termId = usePlanner((state) => state.termId);
+  const [status, setStatus] = useState<"taken" | "planned">("taken");
   const found = parsePastedCourses(text);
 
   async function review() {
@@ -39,7 +40,7 @@ export function AddSeveralTab({ history, tabs }: { history: DegreeHistory; tabs:
     const known = new Set(history.courses.map((course) => course.code));
     setRows(found.map(({ code, term, inProgress }) => {
       const match = findCourse(courses, code);
-      const course: HistoryCourse = { ...(match ? foundCourse(match) : typedCourse(code)), inProgress, ...(term ? { term } : {}) };
+      const course: HistoryCourse = { ...(match ? foundCourse(match) : typedCourse(code)), status: inProgress ? "planned" : "taken", ...(term && validHistoryTerm(term) ? { term } : {}) };
       const already = known.has(code);
       return { course, already, ticked: !already };
     }));
@@ -58,7 +59,7 @@ export function AddSeveralTab({ history, tabs }: { history: DegreeHistory; tabs:
   }
 
   if (rows) {
-    const termOptions = termChoices(parseTerm(termId)).map((option) => (option.value === "" ? { ...option, label: "None" } : option));
+    const termOptions = termChoices().map((option) => (option.value === "" ? { ...option, label: "None" } : option));
     const chosen = rows.filter((row) => row.ticked);
     const already = rows.filter((row) => row.already).length;
     return (
@@ -74,7 +75,9 @@ export function AddSeveralTab({ history, tabs }: { history: DegreeHistory; tabs:
               className="min-h-40"
               disabled={chosen.length === 0}
               onClick={() => {
-                getDegreeSource().addCourses(chosen.map((row) => row.course));
+                const result = getDegreeSource().addCourses(chosen.map((row) => ({ ...row.course, status })));
+                if (result.status === "invalid") { setProblem("These courses couldn’t be added. Check their details and try again."); return; }
+                if (result.status === "unsaved") useDegreeUi.getState().set({ toast: { message: "Courses added for this visit. Browser storage is unavailable." } });
                 open({ kind: "history", tab: "history" });
               }}
             >
@@ -83,8 +86,10 @@ export function AddSeveralTab({ history, tabs }: { history: DegreeHistory; tabs:
           </>
         }
       >
+        {problem && <p role="alert" className="pb-12 text-8 text-warning-ink">{problem}</p>}
         <p className="pb-20 text-8-5 leading-17 text-ink-muted">Choose which detected courses to add. Nothing has been saved yet.</p>
         <div className="pb-14">
+          <Select label="These are" hideLabel={false} variant="box" options={[{ value: "taken", label: "Taken" }, { value: "planned", label: "Planned" }]} value={status} onChange={(event) => setStatus(event.target.value as "taken" | "planned")} />
           <Select variant="field" hideLabel={false} label="Term for selected" options={termOptions} value={termForSelected} onChange={(event) => applyTerm(event.target.value)} />
         </div>
         <div className="flex items-center justify-between gap-12 border-b border-line pb-11">
@@ -97,7 +102,7 @@ export function AddSeveralTab({ history, tabs }: { history: DegreeHistory; tabs:
               <CheckField
                 label={row.course.code}
                 labelClassName="text-8-5 leading-16 font-650"
-                description={<>{rowText(row)}{!row.already && row.course.source === "typed" && <><br />{UNKNOWN_COURSE_NOTE}</>}</>}
+                description={<>{rowText({ ...row, course: { ...row.course, status } })}{!row.already && row.course.source === "typed" && <><br />{UNKNOWN_COURSE_NOTE}</>}</>}
                 aria-label={`Add ${row.course.code}`}
                 checked={row.ticked}
                 disabled={row.already}

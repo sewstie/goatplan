@@ -3,10 +3,8 @@ import { DegreeContent } from "@/components/degree/DegreeContent";
 import { DegreeLayout } from "@/components/degree/DegreeLayout";
 import { DegreeOpenedEvent } from "@/components/degree/DegreeOpenedEvent";
 import { PhoneTopBar } from "@/components/phone/PhoneTopBar";
-import { PhoneTermSelect } from "@/components/phone/PhoneTermSelect";
 import { DegreeGate } from "@/components/shell/DegreeGate";
 import { PageFooter } from "@/components/shell/PageFooter";
-import { PlannerBootstrap } from "@/components/shell/PlannerBootstrap";
 import { SkipToMain } from "@/components/shell/SkipToMain";
 import { TopBar } from "@/components/shell/TopBar";
 import { ThemeButton } from "@/components/shell/ThemeButton";
@@ -21,14 +19,12 @@ export default function DegreePage() {
   return (
     <DegreeGate>
       <DegreeOpenedEvent />
-      <PlannerBootstrap />
       <div className="flex min-h-dvh flex-col bg-canvas">
         <SkipToMain />
         <DegreeLayout
           phone={
             <PhoneTopBar>
               <div className="flex items-center gap-8">
-                <PhoneTermSelect />
                 <BarMoreMenu><ThemeSwitch /></BarMoreMenu>
               </div>
             </PhoneTopBar>

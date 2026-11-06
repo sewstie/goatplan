@@ -1,10 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { isDegreeReleased, SHEETS } from "./degree/sheets";
 
 export const DEGREE_FLAG_KEY = "goatplan:degree:v1";
 
 const ON = "on";
+
+export function isDegreeAvailable(): boolean {
+  return isDegreeReleased() || isDegreeEnabled();
+}
+
+export function isSheetAvailable(id: string): boolean {
+  const sheet = SHEETS.find((item) => item.id === id);
+  return !!sheet && (isDegreeEnabled() || (isDegreeReleased() && sheet.status === "checked"));
+}
 
 export function isDegreeEnabled(): boolean {
   try {
@@ -37,7 +47,7 @@ export function useDegreeEnabled(): boolean {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const sync = () => setEnabled(isDegreeEnabled());
+    const sync = () => setEnabled(isDegreeAvailable());
     sync();
 
     if (typeof window === "undefined") return;

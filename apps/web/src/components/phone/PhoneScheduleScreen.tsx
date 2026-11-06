@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { AddPlanToDegree } from "@/components/degree/AddPlanToDegree";
 import { PlanActions } from "@/components/plans/PlanActions";
 import { PlannerTitle } from "@/components/share/PlannerTitle";
 import { BarMoreMenu } from "@/components/shell/BarMoreMenu";
@@ -54,6 +55,7 @@ export function PhoneScheduleScreen({ banner, notices, menuActions }: { banner: 
                     <BarMoreMenu>
                       {!shared && share}
                       {!shared && exportButton}
+                      {!shared && <AddPlanToDegree />}
                       {menuActions}
                     </BarMoreMenu>
                   </div>

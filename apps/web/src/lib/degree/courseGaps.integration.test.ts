@@ -94,19 +94,19 @@ describe("badge answers from the real audit", () => {
     engine.dispose();
   });
 
-  it("stops naming a check once the history or the plan meets it", async () => {
+  it("stops naming a check once explicit planned history meets it", async () => {
     const { degree, gaps, answers, engine } = setup(["CS 2102"]);
     const courses = [course("CS 3013"), course("CS 4513")];
     gaps.setOpenTerm({ courses, planned: [] });
     expect((await answers())?.get("CS 4513")).toEqual(["Computer Science", "Systems"]);
 
-    gaps.setOpenTerm({ courses, planned: ["CS 3013"] });
+    degree.addCourse({ ...typedCourse("CS 3013"), status: "planned" });
     expect(gaps.getSnapshot().status).toBe("waiting");
     const planned = await answers();
     expect(planned?.get("CS 4513")).toEqual(["Computer Science"]);
     expect(planned?.has("CS 3013")).toBe(false);
 
-    gaps.setOpenTerm({ courses, planned: [] });
+    degree.removeCourse("CS 3013");
     degree.addCourse(typedCourse("CS 4513"));
     const taken = await answers();
     expect(taken?.get("CS 3013")).toEqual(["Computer Science"]);

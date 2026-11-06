@@ -9,10 +9,10 @@ import type { DegreeView } from "./useDegreeView";
 
 type Group = { key: string; title: string; term: TermName | null; courses: HistoryCourse[] };
 
-function groupCourses(courses: readonly HistoryCourse[], openTerm: TermName | null): Group[] {
+function groupCourses(courses: readonly HistoryCourse[]): Group[] {
   const groups = new Map<string, Group>();
   for (const course of courses) {
-    const term = parseTerm(course.term) ?? (course.inProgress ? openTerm : null);
+    const term = parseTerm(course.term);
     const key = term ? termLong(term) : "No term";
     const group = groups.get(key) ?? { key, title: key, term, courses: [] };
     group.courses.push(course);
@@ -25,7 +25,7 @@ function groupCourses(courses: readonly HistoryCourse[], openTerm: TermName | nu
   });
 }
 
-export function HistoryList({ degree, view }: { degree: DegreeSnapshot; view: DegreeView | null }) {
+export function HistoryList({ degree }: { degree: DegreeSnapshot; view: DegreeView | null }) {
   const open = useDegreeUi((state) => state.open);
   const { courses } = degree.history;
   const seen = new Set<string>();
@@ -46,7 +46,7 @@ export function HistoryList({ degree, view }: { degree: DegreeSnapshot; view: De
         </div>
       </div>
       {courses.length === 0 && <p className="py-20 text-center text-8-5 leading-16 text-ink-muted">No courses yet. Add the ones you’ve taken to see your sheet fill up.</p>}
-      {groupCourses(courses, view?.openTerm ?? null).map((group) => (
+      {groupCourses(courses).map((group) => (
         <section key={group.key} aria-label={group.title} className="pb-16">
           <div className="flex items-center justify-between gap-12 border-b border-line pb-9">
             <h3 className="text-8-5 leading-16 font-650">{group.title}</h3>
@@ -55,7 +55,7 @@ export function HistoryList({ degree, view }: { degree: DegreeSnapshot; view: De
           <ul>
             {group.courses.map((course) => {
               const repeat = repeats.has(course.code);
-              const subtitle = repeat ? "Duplicate record · no extra credit" : course.inProgress ? (course.title ? `${course.title} · In progress` : "In progress") : course.title || (course.source === "typed" ? UNKNOWN_COURSE_NOTE : "");
+              const subtitle = repeat ? "Duplicate record · no extra credit" : course.status === "planned" ? (course.title ? `${course.title} · Planned` : "Planned") : course.title || (course.source === "typed" ? UNKNOWN_COURSE_NOTE : "");
               return (
                 <li key={course.code} className="border-b border-line last:border-b-0">
                   <button type="button" aria-label={`${course.code} details`} onClick={() => open({ kind: "details", code: course.code })} className="flex w-full cursor-pointer items-center justify-between gap-12 py-14 text-left hover:bg-surface-subtle">

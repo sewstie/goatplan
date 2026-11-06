@@ -79,7 +79,7 @@ export function DegreeMain({ degree, view }: DegreeMainProps) {
       >
         <DegreeProgressCard view={view} />
         {!empty && <PaceCard view={view} />}
-        {!empty && <TakeThisTermCard history={degree.history} />}
+        {!empty && <TakeThisTermCard />}
         {!empty && <PlanningFirstCard view={view} />}
         {!empty && <CreditsCard view={view} degree={degree} />}
       </div>

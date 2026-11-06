@@ -69,10 +69,10 @@ describe("what the audit is asked", () => {
     expect(asked()[0].candidates).toEqual([{ code: "CS 3013", credits: 3 }]);
   });
 
-  it("counts in-progress courses and the plan as planned, and a course both taken and planned as taken", async () => {
+  it("counts only explicit history as planned", async () => {
     const { degree, gaps, asked } = setup();
     degree.addCourse(typedCourse("MA 1021"));
-    degree.addCourse({ ...typedCourse("MA 1022"), inProgress: true });
+    degree.addCourse({ ...typedCourse("MA 1022"), status: "planned" });
     gaps.subscribe(() => {});
     gaps.setOpenTerm({
       courses: [course("MA 1021"), course("MA 1022"), course("MA 1023", 1.5)],
@@ -80,7 +80,7 @@ describe("what the audit is asked", () => {
     });
     await pause();
     expect(asked()[0].taken).toEqual([{ code: "MA 1021", credits: 3 }]);
-    expect(asked()[0].planned).toEqual([{ code: "MA 1022", credits: 3 }, { code: "MA 1023", credits: 1.5 }]);
+    expect(asked()[0].planned).toEqual([{ code: "MA 1022", credits: 3 }]);
   });
 
   it("doesn't ask until a term is open", async () => {
@@ -204,7 +204,7 @@ describe("when answers go stale", () => {
     expect(asked()).toEqual([]);
     await vi.advanceTimersByTimeAsync(1);
     expect(asked()).toHaveLength(1);
-    expect(asked()[0].planned).toHaveLength(2);
+    expect(asked()[0].planned).toHaveLength(0);
   });
 
   it("drops an older answer that arrives after a newer change", async () => {
