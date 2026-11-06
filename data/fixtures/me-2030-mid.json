@@ -1,0 +1,344 @@
+{
+  "sheetId": "me-2030",
+  "description": "Hand-worked from the ME 2030 numbered PDF: 17 completed courses and two planned. Equivalent science and elective slots assert state rather than an arbitrary assignment. All interpretations remain unresolved.",
+  "takenCourses": [
+    {
+      "code": "EN 1001",
+      "credits": 3
+    },
+    {
+      "code": "EN 1002",
+      "credits": 3
+    },
+    {
+      "code": "EN 2201",
+      "credits": 3
+    },
+    {
+      "code": "ECON 1110",
+      "credits": 3
+    },
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "MA 1022",
+      "credits": 3
+    },
+    {
+      "code": "MA 1023",
+      "credits": 3
+    },
+    {
+      "code": "MA 1024",
+      "credits": 3
+    },
+    {
+      "code": "CH 1010",
+      "credits": 3
+    },
+    {
+      "code": "PH 1110",
+      "credits": 3
+    },
+    {
+      "code": "PH 1120",
+      "credits": 3
+    },
+    {
+      "code": "CS 1005",
+      "credits": 3
+    },
+    {
+      "code": "ES 2001",
+      "credits": 3
+    },
+    {
+      "code": "ECE 2010",
+      "credits": 3
+    },
+    {
+      "code": "ES 2501",
+      "credits": 3
+    },
+    {
+      "code": "ME 1800",
+      "credits": 3
+    },
+    {
+      "code": "ME 2300",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "ES 2502",
+      "credits": 3
+    },
+    {
+      "code": "ES 3001",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedLines": {
+    "1": {
+      "state": "done",
+      "course": "EN 1001"
+    },
+    "2": {
+      "state": "done",
+      "course": "EN 1002"
+    },
+    "3": {
+      "state": "done",
+      "course": "EN 2201"
+    },
+    "4": {
+      "state": "empty",
+      "course": null
+    },
+    "5": {
+      "state": "empty",
+      "course": null
+    },
+    "6": {
+      "state": "empty",
+      "course": null
+    },
+    "7": {
+      "state": "empty",
+      "course": null
+    },
+    "8": {
+      "state": "done",
+      "course": "ECON 1110"
+    },
+    "9": {
+      "state": "empty",
+      "course": null
+    },
+    "10": {
+      "state": "empty",
+      "course": null
+    },
+    "11": {
+      "state": "empty",
+      "course": null
+    },
+    "12": {
+      "state": "empty",
+      "course": null
+    },
+    "13": {
+      "state": "empty",
+      "course": null
+    },
+    "14": {
+      "state": "empty",
+      "course": null
+    },
+    "15": {
+      "state": "empty",
+      "course": null
+    },
+    "16": {
+      "state": "done",
+      "course": "MA 1021"
+    },
+    "17": {
+      "state": "done",
+      "course": "MA 1022"
+    },
+    "18": {
+      "state": "done",
+      "course": "MA 1023"
+    },
+    "19": {
+      "state": "done",
+      "course": "MA 1024"
+    },
+    "20": {
+      "state": "empty",
+      "course": null
+    },
+    "21": {
+      "state": "empty",
+      "course": null
+    },
+    "22": {
+      "state": "done",
+      "course": "CH 1010"
+    },
+    "23": {
+      "state": "done"
+    },
+    "24": {
+      "state": "done"
+    },
+    "25": {
+      "state": "empty",
+      "course": null
+    },
+    "26": {
+      "state": "empty",
+      "course": null
+    },
+    "27": {
+      "state": "done",
+      "course": "ES 2501"
+    },
+    "28": {
+      "state": "planned",
+      "course": "ES 2502"
+    },
+    "29": {
+      "state": "empty",
+      "course": null
+    },
+    "30": {
+      "state": "empty",
+      "course": null
+    },
+    "31": {
+      "state": "planned",
+      "course": "ES 3001"
+    },
+    "32": {
+      "state": "empty",
+      "course": null
+    },
+    "33": {
+      "state": "empty",
+      "course": null
+    },
+    "34": {
+      "state": "empty",
+      "course": null
+    },
+    "35": {
+      "state": "done",
+      "course": "ES 2001"
+    },
+    "36": {
+      "state": "done",
+      "course": "ECE 2010"
+    },
+    "37": {
+      "state": "empty",
+      "course": null
+    },
+    "38": {
+      "state": "done",
+      "course": "CS 1005"
+    },
+    "39": {
+      "state": "empty",
+      "course": null
+    },
+    "40": {
+      "state": "empty",
+      "course": null
+    },
+    "41": {
+      "state": "empty",
+      "course": null
+    },
+    "42": {
+      "state": "done"
+    },
+    "43": {
+      "state": "done"
+    },
+    "44": {
+      "state": "empty",
+      "course": null
+    },
+    "45": {
+      "state": "empty",
+      "course": null
+    }
+  },
+  "expectedSections": {
+    "Humanities and Arts": {
+      "done": 3,
+      "planned": 0,
+      "total": 6
+    },
+    "Wellness and Physical Education": {
+      "done": 0,
+      "planned": 0,
+      "total": 4
+    },
+    "Social Science": {
+      "done": 1,
+      "planned": 0,
+      "total": 2
+    },
+    "Interactive Qualifying Project": {
+      "done": 0,
+      "planned": 0,
+      "total": 3
+    },
+    "Free Electives": {
+      "done": 0,
+      "planned": 0,
+      "total": 3
+    },
+    "Mathematics": {
+      "done": 4,
+      "planned": 0,
+      "total": 6
+    },
+    "Basic Science": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    },
+    "Additional Mathematics and Basic Science": {
+      "done": 0,
+      "planned": 0,
+      "total": 2
+    },
+    "Mechanical Systems": {
+      "done": 1,
+      "planned": 1,
+      "total": 4
+    },
+    "Thermal Systems": {
+      "done": 0,
+      "planned": 1,
+      "total": 4
+    },
+    "Other Engineering Courses": {
+      "done": 3,
+      "planned": 0,
+      "total": 4
+    },
+    "Major Qualifying Project": {
+      "done": 0,
+      "planned": 0,
+      "total": 3
+    },
+    "Engineering Electives": {
+      "done": 2,
+      "planned": 0,
+      "total": 4
+    }
+  },
+  "expectedChecks": {
+    "hua-depth": "check",
+    "hua-breadth": "not-met",
+    "hua-ap-ib-limit": "met",
+    "residency": "check",
+    "elective-distribution": "check",
+    "thermodynamics-credit": "check",
+    "math-equivalents": "check",
+    "science-approval": "check",
+    "programming-approval": "check",
+    "hua-sequence": "check",
+    "capstone-design": "check",
+    "academic-credit": "check"
+  }
+}
