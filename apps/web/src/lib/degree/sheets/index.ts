@@ -55,9 +55,20 @@ export const SHEETS: readonly SheetMetadata[] = [{
   status: "beta",
   verification: null,
   officialLines: Array.from({ length: 45 }, (_, index) => index + 1),
+}, {
+  id: "ds-2030",
+  major: "Data Science",
+  abbreviation: "DS",
+  classYear: 2030,
+  source: "https://www.wpi.edu/sites/default/files/2026-06/DS-2030_fillable.pdf",
+  catalogSource: "https://wpi.cleancatalog.net/data-science/data-science-major",
+  status: "beta",
+  verification: null,
+  officialLines: Array.from({ length: 45 }, (_, index) => index + 1),
 }];
 
 const loaders: Record<string, () => Promise<TrackingSheet>> = {
+  "ds-2030": async () => (await import("./ds-2030.json")).default as TrackingSheet,
   "ece-2030": async () => (await import("./ece-2030.json")).default as TrackingSheet,
   "me-2030": async () => (await import("./me-2030.json")).default as TrackingSheet,
   "rbe-2030": async () => (await import("./rbe-2030.json")).default as TrackingSheet,

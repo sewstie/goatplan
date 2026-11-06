@@ -1,0 +1,1873 @@
+{
+  "id": "ds-2030",
+  "$schema": "./degree-rules.schema.json",
+  "major": "Data Science",
+  "classYear": 2030,
+  "catalogYear": "2026-2027",
+  "effectiveDate": "AY 2026-2027",
+  "source": "https://www.wpi.edu/sites/default/files/2026-06/DS-2030_fillable.pdf",
+  "catalogSource": "https://wpi.cleancatalog.net/data-science/data-science-major",
+  "totalUnits": 15,
+  "residencyUnits": 8,
+  "crossLists": [
+    [
+      "CS 2022",
+      "MA 2201"
+    ],
+    [
+      "CS 4032",
+      "MA 3257"
+    ],
+    [
+      "CS 4033",
+      "MA 3457"
+    ],
+    [
+      "CS 3043",
+      "SS 3043"
+    ],
+    [
+      "CS 4300",
+      "IMGD 4300"
+    ],
+    [
+      "CS 4343",
+      "DS 4343"
+    ],
+    [
+      "CS 4344",
+      "DS 4344"
+    ],
+    [
+      "CS 4345",
+      "DS 4345"
+    ],
+    [
+      "CS 4433",
+      "DS 4433"
+    ],
+    [
+      "CS 4801",
+      "ECE 4802"
+    ],
+    [
+      "IMGD 4100",
+      "CS 4100"
+    ],
+    [
+      "GOV 2314",
+      "ID 2314"
+    ],
+    [
+      "BME 4011",
+      "ECE 4011"
+    ],
+    [
+      "BME 4023",
+      "ECE 4023"
+    ],
+    [
+      "RBE 4322",
+      "ME 4322"
+    ],
+    [
+      "BCB 4004",
+      "MA 4603"
+    ],
+    [
+      "DS 4635",
+      "MA 4635"
+    ],
+    [
+      "PH 2550",
+      "AE 2550"
+    ],
+    [
+      "BB 1003",
+      "BCB 1003"
+    ],
+    [
+      "BB 3010",
+      "BCB 3010"
+    ],
+    [
+      "BB 4001",
+      "BCB 4001"
+    ],
+    [
+      "BB 4190",
+      "CH 4190"
+    ],
+    [
+      "BME 4503",
+      "ME 4503"
+    ],
+    [
+      "BME 4504",
+      "ME 4504"
+    ],
+    [
+      "BME 4606",
+      "ME 4606"
+    ],
+    [
+      "BME 4814",
+      "ME 4814"
+    ],
+    [
+      "CE 4063",
+      "CHE 4063"
+    ],
+    [
+      "CS 4342",
+      "DS 4342"
+    ],
+    [
+      "CS 4802",
+      "BCB 4002"
+    ],
+    [
+      "CS 4803",
+      "BCB 4003"
+    ],
+    [
+      "PY 2731",
+      "RE 2731"
+    ]
+  ],
+  "huaSubjects": [
+    "AR",
+    "TH",
+    "MU",
+    "AB",
+    "CN",
+    "ISE",
+    "GN",
+    "SP",
+    "EN",
+    "WR",
+    "HI",
+    "HU",
+    "INTL",
+    "PY",
+    "RE"
+  ],
+  "orderNote": "All 5 HUA courses must be completed before the Inquiry Seminar; shown as text, not enforced",
+  "exclusions": [],
+  "onlyOneSets": [
+    {
+      "id": "calculus-i",
+      "courses": [
+        "MA 1020",
+        "MA 1021"
+      ],
+      "reason": "No credit for both calculus I alternatives"
+    },
+    {
+      "id": "calculus-ii",
+      "courses": [
+        "MA 1022",
+        "MA 1120"
+      ],
+      "reason": "No credit for both calculus II alternatives"
+    }
+  ],
+  "sections": [
+    {
+      "id": "hua",
+      "name": "Humanities and Arts",
+      "minUnits": 2,
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "note": "Finish five HUA courses before Inquiry. Check the theme and sequence with your advisor."
+    },
+    {
+      "id": "wpe",
+      "name": "Wellness and Physical Education",
+      "minUnits": 0.333333,
+      "lines": [
+        7
+      ]
+    },
+    {
+      "id": "social-science",
+      "name": "Social Science",
+      "minUnits": 0.666667,
+      "lines": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "iqp",
+      "name": "Interactive Qualifying Project",
+      "minUnits": 1,
+      "lines": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "id": "free-electives",
+      "name": "Free Electives",
+      "minUnits": 1,
+      "creditPool": true,
+      "poolCredits": 9,
+      "lines": [
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "id": "ds",
+      "name": "Data Science Core",
+      "minUnits": 1.0,
+      "lines": [
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "id": "cs-foundation",
+      "name": "Computer Science Foundation",
+      "minUnits": 1.0,
+      "lines": [
+        19,
+        20,
+        21
+      ],
+      "note": "Algorithms and two introductory or approved elective courses. At most one 1000-level course."
+    },
+    {
+      "id": "math",
+      "name": "Mathematical Sciences Foundation",
+      "minUnits": 1.6666666666666667,
+      "lines": [
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "note": "Statistics I and II, linear algebra, and two calculus or approved mathematics elective courses."
+    },
+    {
+      "id": "business",
+      "name": "Business Foundation",
+      "minUnits": 0.6666666666666666,
+      "lines": [
+        27,
+        28
+      ]
+    },
+    {
+      "id": "electives",
+      "name": "Disciplinary Electives",
+      "minUnits": 3.6666666666666665,
+      "lines": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "note": "Eleven approved electives, including four at 4000-level or above and one in each required category. Review differences between the sheet and catalog with your advisor."
+    },
+    {
+      "id": "ethics",
+      "name": "Data Privacy and Ethics",
+      "minUnits": 0.3333333333333333,
+      "lines": [
+        40
+      ],
+      "note": "If ethics also counts as social science, an extra free elective is required. Ask your advisor to review that placement; this audit counts each course once."
+    },
+    {
+      "id": "science",
+      "name": "Natural or Engineering Sciences",
+      "minUnits": 0.6666666666666666,
+      "lines": [
+        41,
+        42
+      ]
+    },
+    {
+      "id": "mqp",
+      "name": "Major Qualifying Project",
+      "minUnits": 1.0,
+      "lines": [
+        43,
+        44,
+        45
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "line": 1,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ]
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 2,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ]
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 3,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ]
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 4,
+      "section": "hua",
+      "name": "Inquiry Seminar or Practicum",
+      "units": 0.333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "HU 3900",
+          "HU 3910"
+        ]
+      },
+      "displayName": "Inquiry / Practicum"
+    },
+    {
+      "line": 5,
+      "section": "hua",
+      "name": "Humanities breadth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ]
+      },
+      "displayName": "Humanities breadth"
+    },
+    {
+      "line": 6,
+      "section": "hua",
+      "name": "Humanities elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ]
+      },
+      "displayName": "Humanities elective"
+    },
+    {
+      "line": 7,
+      "section": "wpe",
+      "name": "Wellness and Physical Education",
+      "units": 0.333333,
+      "subSlots": 4,
+      "subSlotUnits": 0.083333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "WPE"
+        ]
+      },
+      "displayName": "WPE"
+    },
+    {
+      "line": 8,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECON",
+          "ENV",
+          "GOV",
+          "PSY",
+          "SD",
+          "SOC",
+          "SS",
+          "STS",
+          "DEV"
+        ],
+        "additionalCourses": [
+          "ID 2050"
+        ],
+        "priority": -1
+      },
+      "displayName": "Social science"
+    },
+    {
+      "line": 9,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECON",
+          "ENV",
+          "GOV",
+          "PSY",
+          "SD",
+          "SOC",
+          "SS",
+          "STS",
+          "DEV"
+        ],
+        "additionalCourses": [
+          "ID 2050"
+        ],
+        "priority": -1
+      },
+      "displayName": "Social science"
+    },
+    {
+      "line": 10,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 11,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 12,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 13,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 14,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 15,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 16,
+      "section": "ds",
+      "name": "DS 1010",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "DS 1010"
+        ],
+        "priority": 0
+      }
+    },
+    {
+      "line": 17,
+      "section": "ds",
+      "name": "DS 2010",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "DS 2010"
+        ],
+        "priority": 0
+      }
+    },
+    {
+      "line": 18,
+      "section": "ds",
+      "name": "DS 3010",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "DS 3010"
+        ],
+        "priority": 0
+      }
+    },
+    {
+      "line": 19,
+      "section": "cs-foundation",
+      "name": "Algorithms",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2223"
+        ],
+        "priority": 0
+      }
+    },
+    {
+      "line": 20,
+      "section": "cs-foundation",
+      "name": "Computer Science Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 3041",
+          "CS 3133",
+          "CS 3431",
+          "CS 3733",
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "CS 1004",
+          "CS 1101",
+          "CS 1102",
+          "CS 2102",
+          "CS 2103",
+          "CS 2119"
+        ],
+        "priority": 2
+      }
+    },
+    {
+      "line": 21,
+      "section": "cs-foundation",
+      "name": "Computer Science Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 3041",
+          "CS 3133",
+          "CS 3431",
+          "CS 3733",
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "CS 2102",
+          "CS 2103",
+          "CS 2119"
+        ],
+        "priority": 2
+      }
+    },
+    {
+      "line": 22,
+      "section": "math",
+      "name": "Mathematical Sciences Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 2611"
+        ],
+        "priority": 0
+      }
+    },
+    {
+      "line": 23,
+      "section": "math",
+      "name": "Mathematical Sciences Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 2612"
+        ],
+        "priority": 0
+      }
+    },
+    {
+      "line": 24,
+      "section": "math",
+      "name": "Mathematical Sciences Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 2071",
+          "MA 2072"
+        ],
+        "priority": 0
+      }
+    },
+    {
+      "line": 25,
+      "section": "math",
+      "name": "Mathematical Sciences Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 1020",
+          "MA 1021",
+          "MA 1022",
+          "MA 1120",
+          "MA 1023",
+          "MA 1024",
+          "MA 1033",
+          "MA 1034",
+          "MA 2051",
+          "MA 2073",
+          "MA 2201",
+          "MA 2210",
+          "MA 2431",
+          "MA 2621",
+          "MA 2631",
+          "MA 3231",
+          "MA 3233",
+          "MA 3257",
+          "MA 3627",
+          "MA 3631",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644"
+        ],
+        "priority": 3
+      }
+    },
+    {
+      "line": 26,
+      "section": "math",
+      "name": "Mathematical Sciences Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 1020",
+          "MA 1021",
+          "MA 1022",
+          "MA 1120",
+          "MA 1023",
+          "MA 1024",
+          "MA 1033",
+          "MA 1034",
+          "MA 2051",
+          "MA 2073",
+          "MA 2201",
+          "MA 2210",
+          "MA 2431",
+          "MA 2621",
+          "MA 2631",
+          "MA 3231",
+          "MA 3233",
+          "MA 3257",
+          "MA 3627",
+          "MA 3631",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644"
+        ],
+        "priority": 3
+      }
+    },
+    {
+      "line": 27,
+      "section": "business",
+      "name": "Business Analysis",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "BUS 2080",
+          "OIE 2081"
+        ],
+        "priority": 0
+      }
+    },
+    {
+      "line": 28,
+      "section": "business",
+      "name": "Entrepreneurship and Innovation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "OBC 1010",
+          "ETR 1100",
+          "MIS 3010",
+          "ETR 3633"
+        ],
+        "priority": 0
+      }
+    },
+    {
+      "line": 29,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 10
+      }
+    },
+    {
+      "line": 30,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 10
+      }
+    },
+    {
+      "line": 31,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 10
+      }
+    },
+    {
+      "line": 32,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 10
+      }
+    },
+    {
+      "line": 33,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2022",
+          "CS 2301",
+          "CS 2303",
+          "CS 3041",
+          "CS 3133",
+          "CS 3431",
+          "CS 3733",
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 1023",
+          "MA 1024",
+          "MA 1033",
+          "MA 1034",
+          "MA 2051",
+          "MA 2073",
+          "MA 2201",
+          "MA 2210",
+          "MA 2431",
+          "MA 2621",
+          "MA 2631",
+          "MA 3231",
+          "MA 3233",
+          "MA 3257",
+          "MA 3627",
+          "MA 3631",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 3720",
+          "MKT 3650",
+          "OIE 3460",
+          "MIS 3787",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 5000
+      }
+    },
+    {
+      "line": 34,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2022",
+          "CS 2301",
+          "CS 2303",
+          "CS 3041",
+          "CS 3133",
+          "CS 3431",
+          "CS 3733",
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 1023",
+          "MA 1024",
+          "MA 1033",
+          "MA 1034",
+          "MA 2051",
+          "MA 2073",
+          "MA 2201",
+          "MA 2210",
+          "MA 2431",
+          "MA 2621",
+          "MA 2631",
+          "MA 3231",
+          "MA 3233",
+          "MA 3257",
+          "MA 3627",
+          "MA 3631",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 3720",
+          "MKT 3650",
+          "OIE 3460",
+          "MIS 3787",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 5000
+      }
+    },
+    {
+      "line": 35,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2022",
+          "CS 2301",
+          "CS 2303",
+          "CS 3041",
+          "CS 3133",
+          "CS 3431",
+          "CS 3733",
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 1023",
+          "MA 1024",
+          "MA 1033",
+          "MA 1034",
+          "MA 2051",
+          "MA 2073",
+          "MA 2201",
+          "MA 2210",
+          "MA 2431",
+          "MA 2621",
+          "MA 2631",
+          "MA 3231",
+          "MA 3233",
+          "MA 3257",
+          "MA 3627",
+          "MA 3631",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 3720",
+          "MKT 3650",
+          "OIE 3460",
+          "MIS 3787",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 5000
+      }
+    },
+    {
+      "line": 36,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2022",
+          "CS 2301",
+          "CS 2303",
+          "CS 3041",
+          "CS 3133",
+          "CS 3431",
+          "CS 3733",
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 1023",
+          "MA 1024",
+          "MA 1033",
+          "MA 1034",
+          "MA 2051",
+          "MA 2073",
+          "MA 2201",
+          "MA 2210",
+          "MA 2431",
+          "MA 2621",
+          "MA 2631",
+          "MA 3231",
+          "MA 3233",
+          "MA 3257",
+          "MA 3627",
+          "MA 3631",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 3720",
+          "MKT 3650",
+          "OIE 3460",
+          "MIS 3787",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 5000
+      }
+    },
+    {
+      "line": 37,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2022",
+          "CS 2301",
+          "CS 2303",
+          "CS 3041",
+          "CS 3133",
+          "CS 3431",
+          "CS 3733",
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 1023",
+          "MA 1024",
+          "MA 1033",
+          "MA 1034",
+          "MA 2051",
+          "MA 2073",
+          "MA 2201",
+          "MA 2210",
+          "MA 2431",
+          "MA 2621",
+          "MA 2631",
+          "MA 3231",
+          "MA 3233",
+          "MA 3257",
+          "MA 3627",
+          "MA 3631",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 3720",
+          "MKT 3650",
+          "OIE 3460",
+          "MIS 3787",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 5000
+      }
+    },
+    {
+      "line": 38,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2022",
+          "CS 2301",
+          "CS 2303",
+          "CS 3041",
+          "CS 3133",
+          "CS 3431",
+          "CS 3733",
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 1023",
+          "MA 1024",
+          "MA 1033",
+          "MA 1034",
+          "MA 2051",
+          "MA 2073",
+          "MA 2201",
+          "MA 2210",
+          "MA 2431",
+          "MA 2621",
+          "MA 2631",
+          "MA 3231",
+          "MA 3233",
+          "MA 3257",
+          "MA 3627",
+          "MA 3631",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 3720",
+          "MKT 3650",
+          "OIE 3460",
+          "MIS 3787",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 5000
+      }
+    },
+    {
+      "line": 39,
+      "section": "electives",
+      "name": "Disciplinary Elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2022",
+          "CS 2301",
+          "CS 2303",
+          "CS 3041",
+          "CS 3133",
+          "CS 3431",
+          "CS 3733",
+          "CS 4120",
+          "CS 4233",
+          "CS 4241",
+          "CS 4341",
+          "CS 4342",
+          "CS 4432",
+          "CS 4433",
+          "CS 4445",
+          "CS 4804",
+          "CS 4802",
+          "CS 4803",
+          "CS 4343",
+          "CS 4344",
+          "CS 4345",
+          "MA 1023",
+          "MA 1024",
+          "MA 1033",
+          "MA 1034",
+          "MA 2051",
+          "MA 2073",
+          "MA 2201",
+          "MA 2210",
+          "MA 2431",
+          "MA 2621",
+          "MA 2631",
+          "MA 3231",
+          "MA 3233",
+          "MA 3257",
+          "MA 3627",
+          "MA 3631",
+          "MA 4213",
+          "MA 4214",
+          "MA 4222",
+          "MA 4235",
+          "MA 4237",
+          "MA 4603",
+          "MA 4631",
+          "MA 4632",
+          "MA 4635",
+          "MA 4644",
+          "MIS 3720",
+          "MKT 3650",
+          "OIE 3460",
+          "MIS 3787",
+          "MIS 4084",
+          "MIS 4720",
+          "MIS 4741",
+          "OIE 4430",
+          "DS 4099"
+        ],
+        "priority": 5000
+      }
+    },
+    {
+      "line": 40,
+      "section": "ethics",
+      "name": "Data Privacy and Ethics",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 3043",
+          "GOV 2313",
+          "GOV 2314",
+          "GOV 2315",
+          "GOV 2320",
+          "PY 2713",
+          "PY 2731",
+          "RBE 3100"
+        ],
+        "priority": -1
+      }
+    },
+    {
+      "line": 41,
+      "section": "science",
+      "name": "Natural or Engineering Science",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "AREN",
+          "BB",
+          "BME",
+          "CHE",
+          "CE",
+          "CH",
+          "ECE",
+          "ES",
+          "GE",
+          "ME",
+          "PH",
+          "RBE"
+        ]
+      }
+    },
+    {
+      "line": 42,
+      "section": "science",
+      "name": "Natural or Engineering Science",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "AREN",
+          "BB",
+          "BME",
+          "CHE",
+          "CE",
+          "CH",
+          "ECE",
+          "ES",
+          "GE",
+          "ME",
+          "PH",
+          "RBE"
+        ]
+      }
+    },
+    {
+      "line": 43,
+      "section": "mqp",
+      "name": "MQP",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 44,
+      "section": "mqp",
+      "name": "MQP",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 45,
+      "section": "mqp",
+      "name": "MQP",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "hua-depth",
+      "name": "Humanities depth",
+      "type": "groupDepth",
+      "minCourses": 3,
+      "requiresConfirmation": true,
+      "note": "At least three thematically-related courses in the same grouping",
+      "confirmation": "hua-depth-confirmation",
+      "section": "hua",
+      "lines": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "hua-breadth",
+      "name": "Humanities breadth",
+      "type": "groupBreadth",
+      "groupings": {
+        "art-drama-music": [
+          "AR",
+          "TH",
+          "MU"
+        ],
+        "modern-languages": [
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP"
+        ],
+        "literature-writing": [
+          "EN",
+          "WR"
+        ],
+        "history-humanities": [
+          "HI",
+          "HU",
+          "INTL"
+        ],
+        "philosophy-religion": [
+          "PY",
+          "RE"
+        ]
+      },
+      "allLanguageException": true,
+      "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",
+      "groupingOrder": [
+        "art-drama-music",
+        "modern-languages",
+        "literature-writing",
+        "history-humanities",
+        "philosophy-religion"
+      ],
+      "section": "hua",
+      "exceptionGrouping": "modern-languages",
+      "depthCheck": "hua-depth"
+    },
+    {
+      "id": "hua-ap-ib-limit",
+      "name": "AP/IB limit in Humanities",
+      "type": "apIbLimit",
+      "section": "hua",
+      "maxApIb": 1,
+      "note": "Only 1 AP/IB course can be used toward HUA requirements"
+    },
+    {
+      "id": "residency",
+      "name": "Residency",
+      "type": "residency",
+      "minUnits": 8,
+      "note": "Minimum of 8 units must be completed at WPI; shows check-yourself once typed courses are present"
+    },
+    {
+      "id": "data-management",
+      "name": "Data access and management",
+      "type": "area",
+      "section": "electives",
+      "courses": [
+        "CS 3431",
+        "MIS 3720",
+        "CS 4432",
+        "CS 4433"
+      ]
+    },
+    {
+      "id": "data-mining",
+      "name": "Data mining and machine learning",
+      "type": "area",
+      "section": "electives",
+      "courses": [
+        "CS 4445",
+        "CS 4342"
+      ]
+    },
+    {
+      "id": "business-modeling",
+      "name": "Business modeling and prediction",
+      "type": "area",
+      "section": "electives",
+      "courses": [
+        "MIS 4084",
+        "OIE 4430"
+      ]
+    },
+    {
+      "id": "ds-source-review",
+      "name": "DS elective source differences",
+      "type": "manual",
+      "confirmation": "ds-source-review-confirmation",
+      "note": "The 2030 sheet includes CS 4343, CS 4344, CS 4345, CS 4802 and CS 4803 and their cross-lists, which the catalog elective list omits. Confirm these choices and any substitutions with your advisor.",
+      "help": "The 2030 sheet includes CS 4343, CS 4344, CS 4345, CS 4802 and CS 4803 and their cross-lists, which the catalog elective list omits. Confirm these choices and any substitutions with your advisor.",
+      "lines": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "ds-credit-review",
+      "name": "DS credit and ethics overlap",
+      "type": "manual",
+      "confirmation": "ds-credit-review-confirmation",
+      "note": "Confirm 135 academic credits and at least 15 units. If ethics also counts as social science or humanities, confirm an extra free elective with your advisor. The audit counts each course once. MA 1020/1021 and MA 1022/1120 cannot both earn credit; a redundant calculus course shown as a free elective must be replaced.",
+      "help": "Confirm 135 academic credits and at least 15 units. If ethics also counts as social science or humanities, confirm an extra free elective with your advisor. The audit counts each course once. MA 1020/1021 and MA 1022/1120 cannot both earn credit; a redundant calculus course shown as a free elective must be replaced."
+    },
+    {
+      "id": "ds-mqp-advisor",
+      "name": "DS MQP advisor",
+      "type": "manual",
+      "confirmation": "ds-mqp-advisor-confirmation",
+      "note": "Confirm your MQP faculty advisor has a formal collaborative appointment in Data Science.",
+      "help": "Confirm your MQP faculty advisor has a formal collaborative appointment in Data Science.",
+      "lines": [
+        43,
+        44,
+        45
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "ds-foundation-review",
+      "name": "Foundation substitutions",
+      "type": "manual",
+      "confirmation": "ds-foundation-review-confirmation",
+      "note": "Confirm CS foundation substitutions at 3000-level or above. The PDF lists additional 2000-level electives while the catalog substitution rule specifies 3000-level or above. Review calculus substitutions and any unlisted courses with your advisor.",
+      "help": "Confirm CS foundation substitutions at 3000-level or above. The PDF lists additional 2000-level electives while the catalog substitution rule specifies 3000-level or above. Review calculus substitutions and any unlisted courses with your advisor.",
+      "lines": [
+        19,
+        20,
+        21,
+        25,
+        26
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "hua-sequence",
+      "name": "Humanities level and sequence",
+      "type": "manual",
+      "confirmation": "hua-sequence-confirmation",
+      "note": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
+      "help": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "affectsLines": true
+    }
+  ],
+  "manualItems": [
+    {
+      "id": "iqp-1",
+      "line": 10,
+      "name": "IQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-2",
+      "line": 11,
+      "name": "IQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-3",
+      "line": 12,
+      "name": "IQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "wpe-sports",
+      "line": 7,
+      "name": "Club or varsity sports in place of WPE",
+      "type": "checkbox"
+    },
+    {
+      "id": "hua-depth-confirmation",
+      "name": "Humanities depth confirmation",
+      "type": "checkbox",
+      "note": "Student confirms that their 3 depth courses are thematically related"
+    },
+    {
+      "id": "mqp-1",
+      "line": 43,
+      "name": "MQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-2",
+      "line": 44,
+      "name": "MQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-3",
+      "line": 45,
+      "name": "MQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "ds-source-review-confirmation",
+      "name": "DS elective source differences",
+      "type": "checkbox",
+      "note": "The 2030 sheet includes CS 4343, CS 4344, CS 4345, CS 4802 and CS 4803 and their cross-lists, which the catalog elective list omits. Confirm these choices and any substitutions with your advisor."
+    },
+    {
+      "id": "ds-credit-review-confirmation",
+      "name": "DS credit and ethics overlap",
+      "type": "checkbox",
+      "note": "Confirm 135 academic credits and at least 15 units. If ethics also counts as social science or humanities, confirm an extra free elective with your advisor. The audit counts each course once. MA 1020/1021 and MA 1022/1120 cannot both earn credit; a redundant calculus course shown as a free elective must be replaced."
+    },
+    {
+      "id": "ds-mqp-advisor-confirmation",
+      "name": "DS MQP advisor",
+      "type": "checkbox",
+      "note": "Confirm your MQP faculty advisor has a formal collaborative appointment in Data Science."
+    },
+    {
+      "id": "ds-foundation-review-confirmation",
+      "name": "Foundation substitutions",
+      "type": "checkbox",
+      "note": "Confirm CS foundation substitutions at 3000-level or above. The PDF lists additional 2000-level electives while the catalog substitution rule specifies 3000-level or above. Review calculus substitutions and any unlisted courses with your advisor."
+    },
+    {
+      "id": "hua-sequence-confirmation",
+      "name": "Humanities level and sequence",
+      "type": "checkbox",
+      "note": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor."
+    }
+  ]
+}
