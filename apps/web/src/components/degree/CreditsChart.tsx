@@ -48,8 +48,9 @@ function Bar({ bar, top, muted = false }: { bar: TermBar; top: number; muted?: b
 }
 
 export function CreditsChart({ credits }: { credits: CreditsPerTerm }) {
-  const { bars, noTerm, average } = credits;
-  const largest = Math.max(...bars.map((bar) => bar.done + bar.planned), noTerm.done + noTerm.planned, CREDITS_PER_UNIT) / CREDITS_PER_UNIT;
+  const { bars, noTerm, prior, average } = credits;
+  const aside = [prior, noTerm].filter((bar) => bar.done + bar.planned > 0);
+  const largest = Math.max(...bars.map((bar) => bar.done + bar.planned), ...aside.map((bar) => bar.done + bar.planned), CREDITS_PER_UNIT) / CREDITS_PER_UNIT;
   const top = Math.ceil(largest);
   const position = (units: number) => (units / top) * CHART_HEIGHT;
   const minWidth = Math.max(260, bars.length * 56 + 75);
@@ -72,9 +73,11 @@ export function CreditsChart({ credits }: { credits: CreditsPerTerm }) {
           <div className="relative flex w-3/4 items-end justify-around gap-6 px-8">
             {bars.map((bar) => <div key={bar.label} className="w-full max-w-48"><Bar bar={bar} top={top} /></div>)}
           </div>
-          <div className="relative flex w-1/4 items-end justify-center border-l border-dashed border-tile-empty-line px-10 tablet:px-16" style={{ height: CHART_HEIGHT }}>
-            <div className="w-full max-w-48"><Bar bar={noTerm} top={top} muted /></div>
-          </div>
+          {aside.length > 0 && (
+            <div className="relative flex w-1/4 items-end justify-around gap-6 border-l border-dashed border-tile-empty-line px-8" style={{ height: CHART_HEIGHT }}>
+              {aside.map((bar) => <div key={bar.label} className="w-full max-w-48"><Bar bar={bar} top={top} muted /></div>)}
+            </div>
+          )}
         </div>
       </div>
       <div className="flex pl-24" style={{ minWidth }}>
@@ -84,7 +87,11 @@ export function CreditsChart({ credits }: { credits: CreditsPerTerm }) {
           </div>
 
         </div>
-        <div className="w-1/4 border-l border-dashed border-tile-empty-line pt-9 text-center text-caption leading-14-4 text-ink-soft tablet:text-8">No term</div>
+        {aside.length > 0 && (
+          <div className="flex w-1/4 justify-around gap-6 border-l border-dashed border-tile-empty-line px-8 pt-9 text-center text-caption leading-14-4 text-ink-soft tablet:text-8">
+            {aside.map((bar) => <span key={bar.label} className="w-full max-w-48 whitespace-nowrap">{bar.axis}</span>)}
+          </div>
+        )}
       </div>
     </figure>
   );

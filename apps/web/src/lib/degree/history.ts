@@ -71,6 +71,9 @@ export function cleanCourseCode(text: string): string | null {
 
 export const hasRegistrationCode = (code: string): boolean => normalizeCourseCode(code) !== null;
 
+export const isPriorCredit = (course: Pick<HistoryCourse, "apIb" | "creditSource">): boolean =>
+  course.apIb || course.creditSource === "ap" || course.creditSource === "ib" || course.creditSource === "transfer" || course.creditSource === "other";
+
 export function typedCourse(code: string): HistoryCourse {
   return { code, title: "", credits: DEFAULT_CREDITS, status: "taken", apIb: false, source: "typed" };
 }

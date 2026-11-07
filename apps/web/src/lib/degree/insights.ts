@@ -1,5 +1,5 @@
 import type { AuditCheck } from "@/lib/engine/types";
-import { hasRegistrationCode, type DegreeHistory, type HistoryCourse } from "./history";
+import { hasRegistrationCode, isPriorCredit, type DegreeHistory, type HistoryCourse } from "./history";
 import { lineNumber, lineName, sectionNameOfLine, type Sheet, type SheetSection } from "./sheet";
 import { areaCourses, crossListed, fitsLine, onlyOneRivals } from "./rules";
 import { unitLabel } from "./units";
@@ -18,6 +18,7 @@ export interface TermBar {
 export interface CreditsPerTerm {
   bars: TermBar[];
   noTerm: TermBar;
+  prior: TermBar;
   average: number | null;
   datedDone: number;
   undated: number;
@@ -42,11 +43,14 @@ export function creditsPerTerm(history: DegreeHistory, openTerm: TermName | null
     return found;
   };
   const noTerm: TermBar = { key: null, label: "No term", axis: "No term", year: null, done: 0, planned: 0 };
+  const prior: TermBar = { key: null, label: "AP, IB and transfer", axis: "AP, IB, transfer", year: null, done: 0, planned: 0 };
   let datedDone = 0;
   let undated = 0;
   for (const course of courses) {
     const term = parseTerm(course.term);
-    if (course.status === "planned") {
+    if (!term && isPriorCredit(course)) {
+      prior[course.status === "planned" ? "planned" : "done"] += course.credits;
+    } else if (course.status === "planned") {
       if (term) bucket(term).planned += course.credits;
       else noTerm.planned += course.credits;
     } else if (term) {
@@ -67,7 +71,7 @@ export function creditsPerTerm(history: DegreeHistory, openTerm: TermName | null
   });
   const finished = bars.filter((bar) => bar.done > 0);
   const average = datedDone >= 2 && finished.length > 0 ? finished.reduce((sum, bar) => sum + bar.done, 0) / finished.length : null;
-  return { bars, noTerm, average, datedDone, undated };
+  return { bars, noTerm, prior, average, datedDone, undated };
 }
 
 export const hasEnoughDates = (credits: CreditsPerTerm) => credits.datedDone >= 2;
