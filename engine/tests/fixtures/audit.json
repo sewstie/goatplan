@@ -1728,14 +1728,41 @@
     "checks": [{ "id": "hua-depth", "state": "check", "courses": ["AR 1100", "AR 1101", "AR 1102"] }]
   },
   {
-    "name": "more than 1 AP/IB humanities course is flagged",
+    "name": "only 1 AP/IB course fills a humanities line, and the next goes to free electives and is flagged",
     "request": {
       "version": 1,
       "requirements": "cs-2030",
       "taken": [{ "code": "EN 1001", "credits": 3, "apIb": true }, { "code": "HI 1330", "credits": 3, "apIb": true }]
     },
-    "sections": {},
-    "checks": [{ "id": "hua-ap-ib-limit", "state": "check", "courses": ["EN 1001", "HI 1330"] }]
+    "sections": { "Humanities and Arts": { "done": 1, "planned": 0, "total": 6 } },
+    "lines": [{ "id": 1, "state": "done", "course": "EN 1001" }, { "id": 13, "state": "done", "course": "HI 1330" }],
+    "freeElectives": { "creditsDone": 3, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["HI 1330"] },
+    "checks": [{ "id": "hua-ap-ib-limit", "state": "check", "courses": ["HI 1330"] }]
+  },
+  {
+    "name": "AP/IB humanities courses past the limit stay off humanities lines while regular courses fill them",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "EN 1001", "credits": 3, "apIb": true }, { "code": "EN 2238", "credits": 3, "apIb": true },
+        { "code": "EN 1231", "credits": 3 }, { "code": "EN 2235", "credits": 3 }
+      ]
+    },
+    "sections": { "Humanities and Arts": { "done": 3, "planned": 0, "total": 6 } },
+    "freeElectives": { "creditsDone": 3, "creditsPlanned": 0, "creditsTotal": 9, "courses": ["EN 2238"] },
+    "checks": [{ "id": "hua-ap-ib-limit", "state": "check", "courses": ["EN 2238"] }]
+  },
+  {
+    "name": "a planned AP/IB course past the limit is kept off humanities lines too",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [{ "code": "EN 1001", "credits": 3, "apIb": true }],
+      "planned": [{ "code": "HI 1330", "credits": 3, "apIb": true }]
+    },
+    "sections": { "Humanities and Arts": { "done": 1, "planned": 0, "total": 6 } },
+    "checks": [{ "id": "hua-ap-ib-limit", "state": "check", "courses": ["HI 1330"] }]
   },
   {
     "name": "1 AP/IB humanities course is within the limit",
@@ -1745,7 +1772,7 @@
       "taken": [{ "code": "EN 1001", "credits": 3, "apIb": true }, { "code": "PH 1110", "credits": 3, "apIb": true }, { "code": "MA 1021", "credits": 3, "apIb": true }]
     },
     "sections": {},
-    "checks": [{ "id": "hua-ap-ib-limit", "state": "met", "courses": ["EN 1001"] }]
+    "checks": [{ "id": "hua-ap-ib-limit", "state": "met", "courses": [] }]
   },
   {
     "name": "residency shows check yourself once a course is present",

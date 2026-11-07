@@ -452,7 +452,7 @@ A pool line is `"done"` or `"planned"` once the pool's credits reach it, and
 | `science-depth` | `"met"` or `"planned"` when 2 BB/CH/GE/PH courses on Science lines share a subject. `courses` lists the first 3 BB/CH/GE/PH courses on those lines. |
 | `hua-depth` | Looks at the courses on lines 1–5, so the seminar on line 6 doesn't count. With 3 in one grouping it's `"check"` until `hua-depth-confirmation` is sent, then `"met"` or `"planned"`. Below 3, courses in more than one grouping give `"check"`, and otherwise it's `"not-met"`. |
 | `hua-breadth` | With a depth grouping, `"met"` or `"planned"` when a course on lines 1–5 is outside it, `"check"` when every course is in the modern languages grouping, and otherwise `"not-met"`. Without one, `"check"` once any course is on those lines, and otherwise `"not-met"`. |
-| `hua-ap-ib-limit` | `"check"` with more than 1 AP/IB humanities course, and otherwise `"met"`. |
+| `hua-ap-ib-limit` | Only 1 AP/IB course may fill a humanities line. Any others are kept off those lines and listed in `courses`, with `"check"`. Otherwise `"met"` with no courses. |
 | `residency` | `"check"` once the request has any taken or planned course, and otherwise `"not-met"`. A course's code can't show whether it was taken at WPI. |
 | `ma-1000-limit` | Always `"met"`, because only 4 lines accept 1000-level courses. `courses` lists the ones on Mathematics lines. |
 | `grad-equivalence` | Always `"check"`, because the 2-for-3 rule can't be worked out here. `courses` lists the graduate courses on Computer Science lines that count as 4000+. Each counts as one course, with no bonus. Empty means no course is affected. |
@@ -518,6 +518,9 @@ The matcher assigns courses to lines to fill the most lines possible.
   open, and any class left over goes to the pool. Other manual items fill their
   own lines.
 - A repeated code counts once; later copies show as "Extra".
+- An `apIbLimit` check caps how many AP/IB courses can fill lines in its
+  section. Courses are counted in seating order, and the ones past the cap
+  never connect to that section's lines.
 
 ### Audit errors
 
@@ -625,7 +628,8 @@ Examples for CS 2030:
   course outside it. All-language students pass with `"check"`. Depth also
   needs the student's confirmation. Spanning more than one grouping shows
   `"check"`.
-- **AP/IB limit:** more than 1 AP/IB course in humanities is flagged.
+- **AP/IB limit:** only 1 AP/IB course fills a humanities line. Any others go
+  to another line they fit or the free electives, and the check lists them.
 - **Residency:** 8 units at WPI. Shows `"check"` once typed courses are
   present.
 

@@ -83,6 +83,8 @@ struct Rules {
     std::size_t scienceListed = 0;
     std::size_t scienceFromOne = 0;
     std::size_t apIbLimit = 0;
+    bool limitsApIb = false;
+    std::string apIbSection;
     int mathCeiling = 0;
     std::string disciplineSection;
     std::string groupingSection;
@@ -147,7 +149,11 @@ struct Rules {
                 groupingSection = check.at("section").get<std::string>();
                 groupingLines = check.at("lines").get<std::vector<int>>();
             }
-            if (type == "apIbLimit") apIbLimit = check.at("maxApIb").get<std::size_t>();
+            if (type == "apIbLimit") {
+                apIbLimit = check.at("maxApIb").get<std::size_t>();
+                apIbSection = check.value("section", std::string{});
+                limitsApIb = true;
+            }
             if (type == "levelLimit") {
                 mathCeiling = check.at("levelCeiling").get<int>();
                 levelSection = check.at("section").get<std::string>();
@@ -538,7 +544,27 @@ std::vector<std::size_t> seatingOrder(const Rules& all, const std::vector<Listin
     return order;
 }
 
-std::vector<int> matchLines(const Rules& all, const std::vector<Listing>& listings, const std::vector<std::size_t>& order, std::size_t takenEnd, CodeBook& book) {
+bool fitsSection(const Rules& all, const CodeFacts& facts, const std::string& section) {
+    return std::any_of(facts.lines.begin(), facts.lines.end(), [&](std::size_t line) { return all.lines[line].section == section; });
+}
+
+std::vector<bool> overApIbLimit(const Rules& all, const std::vector<Listing>& listings, const std::vector<std::size_t>& order) {
+    std::vector<bool> over(listings.size(), false);
+    if (!all.limitsApIb) return over;
+    std::size_t kept = 0;
+    for (const auto i : order) {
+        const auto& codes = listings[i].codes;
+        const auto counts = listings[i].fillsLines() && std::any_of(codes.begin(), codes.end(), [&](const Course& course) {
+            return course.apIb && fitsSection(all, *course.facts, all.apIbSection);
+        });
+        if (!counts) continue;
+        if (kept < all.apIbLimit) ++kept;
+        else over[i] = true;
+    }
+    return over;
+}
+
+std::vector<int> matchLines(const Rules& all, const std::vector<Listing>& listings, const std::vector<std::size_t>& order, std::size_t takenEnd, const std::vector<bool>& overApIb, CodeBook& book) {
     const auto lineCount = all.lines.size();
     const auto setCount = all.document.at("onlyOneSets").size();
     const auto lineStart = listings.size();
@@ -555,6 +581,7 @@ std::vector<int> matchLines(const Rules& all, const std::vector<Listing>& listin
         auto fitted = facts.lines;
         std::sort(fitted.begin(), fitted.end(), [&](std::size_t a, std::size_t b) { return narrowness[a] < narrowness[b]; });
         for (const auto line : fitted) {
+            if (overApIb[listing] && all.lines[line].section == all.apIbSection) continue;
             if (facts.set == kNone) {
                 network.connect(listing, lineStart + line);
             } else {
@@ -667,6 +694,7 @@ struct Placement {
     std::vector<std::vector<Slot>> slots;
     std::vector<int> filled;
     std::vector<bool> placed;
+    std::vector<bool> overApIb;
     std::vector<CheckResult> checks;
 };
 
@@ -793,15 +821,12 @@ CheckResult breadthCheck(const Rules& all, const Placement& placement) {
     return {CheckState::Check, std::move(codes), true};
 }
 
-CheckResult apIbCheck(const Rules& all, const Placement& placement) {
+CheckResult apIbCheck(const Placement& placement) {
     std::vector<std::string> codes;
-    for (const auto& listing : placement.listings) {
-        const auto flagged = std::any_of(listing.codes.begin(), listing.codes.end(), [](const Course& course) {
-            return course.apIb && course.facts->grouping != kNone;
-        });
-        if (flagged) codes.push_back(listing.first().code);
+    for (std::size_t i = 0; i < placement.listings.size(); ++i) {
+        if (placement.overApIb[i]) codes.push_back(placement.listings[i].first().code);
     }
-    const auto state = codes.size() > all.apIbLimit ? CheckState::Check : CheckState::Met;
+    const auto state = codes.empty() ? CheckState::Met : CheckState::Check;
     return {state, std::move(codes), true};
 }
 
@@ -853,7 +878,7 @@ std::vector<CheckResult> evaluateChecks(const Rules& all, const Placement& place
         else if (type == "disciplineCount") results.push_back(scienceCheck(all, placement));
         else if (type == "groupDepth") results.push_back(depthCheck(all, placement, manual));
         else if (type == "groupBreadth") results.push_back(breadthCheck(all, placement));
-        else if (type == "apIbLimit") results.push_back(apIbCheck(all, placement));
+        else if (type == "apIbLimit") results.push_back(apIbCheck(placement));
         else if (type == "residency") results.push_back({anyCourses ? CheckState::Check : CheckState::NotMet, {}, false});
         else if (type == "levelLimit") results.push_back(mathLimitCheck(all, placement));
         else if (type == "minCourses") results.push_back(minimumCoursesCheck(all, placement, check));
@@ -873,7 +898,8 @@ Placement place(const Rules& all, const std::vector<Course>& history, const Manu
     const auto& listings = result.listings;
     const auto takenEnd = static_cast<std::size_t>(std::count_if(listings.begin(), listings.end(), [](const Listing& listing) { return listing.taken(); }));
     const auto order = seatingOrder(all, listings, takenEnd);
-    result.holders = matchLines(all, listings, order, takenEnd, book);
+    result.overApIb = overApIbLimit(all, listings, order);
+    result.holders = matchLines(all, listings, order, takenEnd, result.overApIb, book);
     layOutLines(all, listings, order, result.holders);
 
     result.placed.assign(listings.size(), false);
