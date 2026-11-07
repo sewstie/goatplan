@@ -12,6 +12,7 @@ export {
   CREDIT_SOURCES,
   describeBadFile,
   foundCourse,
+  isPriorCredit,
   MAX_HISTORY_FILE_LENGTH,
   MAX_TERM_LENGTH,
   parseCredits,

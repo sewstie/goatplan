@@ -14,7 +14,7 @@ export function CreditsTable({ credits }: { credits: CreditsPerTerm }) {
         </tr>
       </thead>
       <tbody>
-        {[...credits.bars, credits.noTerm].map((bar) => (
+        {[...credits.bars, credits.prior, credits.noTerm].filter((bar) => bar.key !== null || bar.done + bar.planned > 0).map((bar) => (
           <tr key={bar.label} className="border-b border-line">
             <th scope="row" className="px-4 py-11 font-400">{bar.label}</th>
             <td className="px-4 py-11">{amount(bar.done)}</td>

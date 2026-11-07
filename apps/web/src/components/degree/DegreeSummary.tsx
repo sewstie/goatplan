@@ -60,7 +60,7 @@ export function DegreeProgressCard({ view }: { view: DegreeView }) {
 
 export function DegreeSummary({ view }: { view: DegreeView }) {
   const { done, planned, total } = view.sheet.summary;
-  const credits = view.credits.bars.reduce((sum, bar) => sum + bar.done, view.credits.noTerm.done);
+  const credits = view.credits.bars.reduce((sum, bar) => sum + bar.done, view.credits.noTerm.done + view.credits.prior.done);
   return (
     <section aria-label="Your progress" className="degree-progress rounded-panel border border-card-line bg-surface">
       <div className="degree-progress-total">

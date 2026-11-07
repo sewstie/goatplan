@@ -1,9 +1,7 @@
 "use client";
 
-import { unitLabel, type HistoryCourse, type TermName } from "@/lib/degree";
+import { isPriorCredit, unitLabel, type HistoryCourse, type TermName } from "@/lib/degree";
 import { PlanCourseChip } from "./PlanCourseChip";
-
-const isPriorCredit = (course: HistoryCourse) => course.apIb || course.creditSource === "ap" || course.creditSource === "ib" || course.creditSource === "transfer" || course.creditSource === "other";
 
 const count = (courses: readonly HistoryCourse[]) => `${courses.length} ${courses.length === 1 ? "course" : "courses"} · ${unitLabel(courses.reduce((sum, course) => sum + course.credits, 0))}`;
 

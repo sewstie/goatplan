@@ -15,11 +15,13 @@ function Row({ label, credits, tone, largest }: { label: string; credits: number
 export function CreditsNoDates({ credits }: { credits: CreditsPerTerm }) {
   const planned = credits.bars.filter((bar) => bar.planned > 0);
   const noTerm = credits.noTerm.done + credits.noTerm.planned;
-  const largest = Math.max(noTerm, ...planned.map((bar) => bar.planned), 1);
+  const prior = credits.prior.done + credits.prior.planned;
+  const largest = Math.max(noTerm, prior, ...planned.map((bar) => bar.planned), 1);
   return (
     <div className="px-8 pt-22">
       <ul className="flex flex-col gap-30">
-        <Row label="No term" credits={noTerm} tone="bg-chart-none" largest={largest} />
+        {prior > 0 && <Row label="AP, IB and transfer" credits={prior} tone="bg-chart-none" largest={largest} />}
+        {(noTerm > 0 || prior === 0) && <Row label="No term" credits={noTerm} tone="bg-chart-none" largest={largest} />}
         {planned.map((bar) => <Row key={bar.label} label={`${bar.label} (planned)`} credits={bar.planned} tone="bg-chart-planned" largest={largest} />)}
       </ul>
       <p className="pt-30 pb-16 text-8 leading-14-4 text-ink-muted">Average unavailable · add completed-course terms</p>
