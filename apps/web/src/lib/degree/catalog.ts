@@ -1,7 +1,8 @@
 import type { Course } from "@/lib/data/types";
+import { parseTerm, termLong } from "./terms";
 
 export interface CatalogCourse extends Course {
-  offeredThisYear: boolean;
+  lastOffered: string | null;
   termLetters: string[];
 }
 
@@ -22,6 +23,16 @@ export async function loadCatalog(read: typeof fetch = fetch): Promise<Catalog> 
   } catch {
     return { courses: [], complete: false };
   }
+}
+
+const yearLabel = (year: number) => `${year}–${String(year + 1).slice(-2)}`;
+
+export function offeringNote(course: Pick<CatalogCourse, "lastOffered">, today = new Date()): string | null {
+  const thisYear = today.getMonth() >= 7 ? today.getFullYear() : today.getFullYear() - 1;
+  const last = parseTerm(course.lastOffered);
+  if (!last) return `Not offered in ${yearLabel(thisYear)}`;
+  const lastYear = last.letter === "A" || last.letter === "B" ? last.year : last.year - 1;
+  return lastYear < thisYear ? `Last offered in ${termLong(last)}` : null;
 }
 
 export function findCourse(courses: readonly Course[], code: string): Course | undefined {

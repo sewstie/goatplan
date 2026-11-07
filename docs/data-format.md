@@ -408,6 +408,6 @@ week is over.
 ## Degree course catalog
 
 `data/catalog.json` is the persistent catalog served at `/data/catalog.json`.
-It keeps codes, titles, credits, level, `offeredThisYear` and `termLetters`.
+It keeps codes, titles, credits, level, `lastOffered` and `termLetters`.
 The daily job merges published terms without deleting earlier courses. See
 [My degree tracking sheet](degree-tracking-sheet.md) for the source and rules.
