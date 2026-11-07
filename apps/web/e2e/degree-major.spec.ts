@@ -23,7 +23,7 @@ for (const width of [1440, 834, 375]) {
     await page.getByRole("button", { name: "Continue", exact: true }).click();
     await auditReady(page);
     await expect(page.getByText("Computer Science · Class of 2030 · Beta", { exact: true })).toBeVisible();
-    await expect(page.getByText("Not yet checked by a CS student. Tell us if something looks wrong.")).toBeVisible();
+    await expect(page.getByRole("link", { name: /^CS 2030 tracking sheet/ })).toBeVisible();
     await page.reload();
     await auditReady(page);
     await expect(page.getByRole("heading", { name: "What's your major?" })).toHaveCount(0);

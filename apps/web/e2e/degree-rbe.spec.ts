@@ -39,7 +39,7 @@ for (const width of [1440, 834]) {
     await page.getByRole("button", { name: "Continue", exact: true }).click();
     await auditReady(page);
     await expect(page.getByText("Robotics Engineering · Class of 2030 · Beta", { exact: true })).toBeVisible();
-    await expect(page.getByText("Not yet checked by an RBE student. Tell us if something looks wrong.")).toBeVisible();
+    await expect(page.getByRole("link", { name: /^RBE 2030 tracking sheet/ })).toBeVisible();
     await openAllSections(page);
     await expect(page.getByRole("button", { name: /^RBE 2001, line 29,/ })).toBeVisible();
     await page.screenshot({ path: `e2e/screenshots/degree-rbe-${width}.png`, fullPage: true });

@@ -39,7 +39,7 @@ for (const width of [1440, 834]) {
     await page.getByRole("button", { name: "Continue", exact: true }).click();
     await auditReady(page);
     await expect(page.getByText("Electrical and Computer Engineering · Class of 2030 · Beta", { exact: true })).toBeVisible();
-    await expect(page.getByText("Not yet checked by an ECE student. Tell us if something looks wrong.")).toBeVisible();
+    await expect(page.getByRole("link", { name: /^ECE 2030 tracking sheet/ })).toBeVisible();
     await openAllSections(page);
     await expect(page.getByRole("button", { name: /^ECE 2799, line 37,/ })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);

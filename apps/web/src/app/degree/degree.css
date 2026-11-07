@@ -3,6 +3,7 @@
 }
 .degree-page > header { padding-inline: 30px; height: 59px; }
 .degree-page > main { max-width: 1600px; padding: 28px 42px 30px; }
+.degree-footer > div { max-width: 1600px; margin-inline: auto; padding: 16px 42px; }
 .degree-page .degree-title { align-items: flex-end; min-height: 100px; margin-bottom: 16px; }
 .degree-title h1 { font-size: 38px; line-height: 46px; letter-spacing: -1.5px; }
 .degree-title > div > p:last-child { margin-top: 9px; font-size: 11px; }
@@ -26,10 +27,6 @@
 .degree-page .degree-planning-first { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
 .degree-planning-first > li { border: 0; border-left: 2px solid var(--color-choice-line); padding-left: 10px; }
 .degree-page article > div:first-child > h3 { font-size: 16px; line-height: 22px; }
-.degree-footer { display: flex; justify-content: space-between; gap: 16px; padding: 16px 24px; border-top: 1px solid var(--color-line); background: var(--color-surface); font-size: 10px; color: var(--color-ink-muted); }
-.degree-footer p, .degree-footer a { display: flex; align-items: center; gap: 6px; }
-.degree-footer svg { width: 12px; height: 12px; flex-shrink: 0; }
-.degree-footer a { color: var(--color-accent); text-decoration: underline; }
 .degree-suggestions > h2 { margin-top: 12px; }
 .degree-suggestions > ul { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
 .degree-suggestions > ul > li { position: relative; border: 1px solid var(--color-card-line); background: var(--color-surface); border-radius: 8px; padding: 18px 16px; }
@@ -39,6 +36,7 @@
 .degree-page dialog { --size-drawer: 520px; }
 @media (max-width: 1099px) {
   .degree-page > main { padding-inline: 28px; }
+  .degree-footer > div { padding-inline: 28px; }
   .degree-title h1 { font-size: 28px; line-height: 36px; }
   .degree-page .degree-progress { flex-wrap: wrap; }
   .degree-progress-total { min-width: 170px; }
@@ -46,6 +44,7 @@
 }
 @media (max-width: 767px) {
   .degree-page > main { padding: 16px 13px 20px; }
+  .degree-footer > div { padding: 14px 16px; }
   .degree-page > header { padding-inline: 16px; height: 51px; }
   .degree-page .degree-title { margin-bottom: 0; gap: 14px; align-items: stretch; }
   .degree-title h1 { font-size: 25px; line-height: 32px; letter-spacing: -0.7px; }
@@ -55,7 +54,6 @@
   .degree-tab svg { display: none; }
   .degree-page .degree-planning-first { display: flex; }
   .degree-sheet-controls { flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
-  .degree-footer { flex-direction: column; padding: 14px 16px; font-size: 10px; }
 }
 .degree-plan-insights { display: grid; grid-template-columns: 1.2fr 1fr; gap: 14px; }
 .degree-plan-insights article { padding: 18px; }
@@ -114,7 +112,6 @@
 .degree-page section[aria-label="Your sheet"] h2, .degree-page section[aria-label="Your requirements"] h2 { font-size: 17px; line-height: 24px; }
 .degree-page .degree-planning-first { grid-template-columns: repeat(4,minmax(0,1fr)); }
 .degree-plan-insights article:has(.pace-slider) p.text-20 { font-size: 28px; line-height: 34px; color: var(--color-ink-soft); }
-.degree-footer p a { text-decoration: none; color: inherit; }
 @media(max-width:1099px) { .degree-page .degree-title { position: relative; padding-right: 265px; min-height: 100px; } .degree-page .degree-title > div:last-child { position: absolute; right: 0; top: 0; } }
 @media(max-width:767px) { .degree-page .degree-title { padding-right: 0; } .degree-page .degree-title > div:last-child { position: static; } .degree-page .degree-planning-first { display: flex; } }
 .degree-page { --color-canvas: #f6f7fc; --color-card-line: #d9dff0; --color-line: #d9dff0; --color-ink: #1c2138; --color-ink-muted: #56617e; --color-success-soft: #e7f4ef; --color-success-ink: #1b6b55; }
