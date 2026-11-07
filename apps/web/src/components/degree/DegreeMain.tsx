@@ -4,18 +4,14 @@ import { ShieldCheck } from "@phosphor-icons/react/ssr";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { Button } from "@/components/ui/Button";
 import { getDegreeSource, type DegreeSnapshot } from "@/lib/degree";
-import { CreditsCard } from "./CreditsCard";
 import { DegreeSkeleton } from "./DegreeSkeleton";
-import { DegreeProgressCard, DegreeSummary } from "./DegreeSummary";
+import { DegreeSummary } from "./DegreeSummary";
 import { FilterBar } from "./FilterBar";
 import { FirstVisitPanel } from "./FirstVisitPanel";
 import { InsightsSection } from "./InsightsSection";
-import { NotOnALineRow } from "./NotOnALineRow";
-import { PaceCard } from "./PaceCard";
 import { PlanningFirstCard } from "./PlanningFirstCard";
 import { RequirementsList } from "./RequirementsList";
 import { SheetPanel } from "./SheetPanel";
-import { TakeThisTermCard } from "./TakeThisTermCard";
 import { useDegreeUi } from "./degreeUi";
 import type { DegreeView } from "./useDegreeView";
 
@@ -44,7 +40,7 @@ export function DegreeMain({ degree, view }: DegreeMainProps) {
     <>
       {empty && <FirstVisitPanel />}
       <FilterBar view={view} />
-      {layout === "sheet" ? <SheetPanel view={view} history={degree.history} /> : <RequirementsList view={view} />}
+      {layout === "sheet" ? <SheetPanel view={view} history={degree.history} /> : <RequirementsList view={view} history={degree.history} />}
       {empty && (
         <p className="flex items-center justify-center gap-10 py-8 text-center text-8-5 leading-16 text-ink-muted">
           <ShieldCheck aria-hidden className="size-16 shrink-0 text-ink" />
@@ -63,31 +59,17 @@ export function DegreeMain({ degree, view }: DegreeMainProps) {
         <DegreeSummary view={view} />
         {sheet}
         {!empty && !filter && <InsightsSection view={view} degree={degree} />}
-        {!empty && !filter && <NotOnALineRow view={view} history={degree.history} />}
       </div>
     );
   }
 
   return (
-    <div aria-busy={status === "waiting"} className="flex flex-col gap-14 desk:grid desk:grid-cols-[minmax(0,65fr)_minmax(0,35fr)] desk:items-start desk:gap-16">
+    <div aria-busy={status === "waiting"} className="degree-sheet-view flex min-w-0 flex-col gap-16">
       {auditStatus}
-      <div
-        role="group"
-        aria-label="Your progress and what to do next"
-        tabIndex={0}
-        className="flex items-start gap-12 overflow-x-auto rounded-panel pb-4 *:w-352 *:shrink-0 desk:sticky desk:top-[calc(var(--size-topbar)+0.75rem)] desk:order-last desk:max-h-[calc(100dvh-var(--size-topbar)-1.5rem)] desk:flex-col desk:overflow-x-hidden desk:overflow-y-auto desk:pb-0 desk:*:w-full"
-      >
-        <DegreeProgressCard view={view} />
-        {!empty && <PaceCard view={view} />}
-        {!empty && <TakeThisTermCard />}
-        {!empty && <PlanningFirstCard view={view} />}
-        {!empty && <CreditsCard view={view} degree={degree} />}
-      </div>
-      <div className="flex min-w-0 flex-col gap-14">
-        {damaged}
-        {sheet}
-        {!empty && !filter && <NotOnALineRow view={view} history={degree.history} />}
-      </div>
+      <DegreeSummary view={view} />
+      {damaged}
+      {sheet}
+      {!empty && !filter && <PlanningFirstCard view={view} />}
     </div>
   );
 }

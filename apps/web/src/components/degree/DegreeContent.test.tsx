@@ -86,7 +86,7 @@ beforeAll(() => {
 beforeEach(() => {
   localStorage.clear();
   catalog.courses = [course("MA 1021", "Calculus I"), course("CS 2102", "Object-Oriented Design Concepts"), course("CS 2103", "Accelerated Object-Oriented Design Concepts")];
-  useDegreeUi.setState({ panel: null, view: "sheet", screen: "main", filter: null, selectedTerm: null, keepPin: null, restored: null, toast: null, whatIf: { perTerm: 3, summer: false, bsMs: false } });
+  useDegreeUi.setState({ panel: null, view: "sheet", filter: null, selectedTerm: null, addingTerm: null, lastAddTerm: null, keepPin: null, toast: null, whatIf: { perTerm: 3, summer: false } });
 });
 
 afterEach(() => vi.restoreAllMocks());
@@ -96,16 +96,16 @@ describe("the first visit", () => {
     await setup();
     expect(screen.getByText("Beta")).toBeVisible();
     expect(screen.getByText("Unofficial · Check with your advisor and Workday’s Academic Progress.")).toBeVisible();
-    expect(screen.getByText("Based on the Class of 2030 sheet")).toBeVisible();
+    expect(screen.getByText("Class of 2030")).toBeVisible();
   });
 
   it("starts with an empty sheet of 45 lines and a way to add courses", async () => {
     await setup();
     expect(screen.getByText("0 of 45")).toBeVisible();
     expect(screen.getByRole("heading", { name: "Your sheet starts here" })).toBeVisible();
-    expect(screen.getByRole("button", { name: "Add several courses" })).toBeVisible();
-    expect(screen.getByRole("button", { name: "Add one course" })).toBeVisible();
-    expect(screen.queryByRole("button", { name: "Add courses" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Find your courses" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Add AP or IB credit" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Add courses" })).toBeVisible();
     expect(screen.queryByRole("heading", { name: "Insights" })).not.toBeInTheDocument();
     expect(screen.getByText(/Course history stays in this browser/)).toBeVisible();
     expect(tile(/^Introductory CS, line 16, empty/)).toBeVisible();
@@ -158,8 +158,7 @@ describe("the sheet", () => {
   it("filters the sheet to planned lines and clears the filter", async () => {
     const { user } = await setup(someCourses());
     await user.click(screen.getByRole("button", { name: /^1 Planned/ }));
-    expect(screen.getByText("Showing only planned coursework")).toBeVisible();
-    expect(screen.getByText("Planned · 1 lines")).toBeVisible();
+    expect(screen.getByText("Planned · 1 line")).toBeVisible();
     expect(screen.queryByRole("button", { name: /^CS 1101/ })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Insights" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Clear filter" }));
@@ -188,11 +187,22 @@ describe("the sheet", () => {
   it("shows the same lines as a list with a progress bar per section", async () => {
     const { user } = await setup(someCourses());
     await user.click(screen.getByRole("button", { name: "List" }));
-    expect(screen.getByRole("heading", { name: "Your requirements" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Your sheet" })).toBeVisible();
     const math = screen.getByRole("progressbar", { name: "Mathematics: 1 of 7" });
     expect(math).toHaveAttribute("aria-valuetext", "1 done, 1 planned, 5 to go");
-    await user.click(screen.getByRole("button", { name: /^Mathematics/ }));
-    expect(screen.getByRole("button", { name: "MA 1021 → Mathematics, line 34" })).toBeVisible();
+    const list = within(screen.getByRole("region", { name: "Your requirements" }));
+    expect(list.getByRole("button", { name: /^MA 1021, line 34, done/ })).toBeVisible();
+    expect(list.getByRole("button", { name: /^Math 2000\+, line 38, empty/ })).toHaveTextContent("Add a course");
+    expect(list.getByRole("button", { name: /^MA 2621, line \d+, planned/ })).toHaveTextContent("Planned");
+  });
+
+  it("keeps planned lines visible when showing what is left", async () => {
+    const { user } = await setup([saved("CS 1101"), saved("MA 1021", { status: "planned" })]);
+    await user.click(screen.getByRole("checkbox", { name: /^What’s left/ }));
+    expect(tile(/^MA 1021, line 34, planned/)).toBeVisible();
+    expect(screen.queryByRole("button", { name: /^CS 1101, line/ })).not.toBeInTheDocument();
+    await user.click(screen.getByRole("checkbox", { name: /^What’s left/ }));
+    expect(tile(/^CS 1101, line/)).toBeVisible();
   });
 
   it("opens the checks from a pill", async () => {
@@ -208,7 +218,8 @@ describe("insights", () => {
   const dated = () => [saved("CS 1101", { term: "A Term 2026" }), saved("MA 1021", { term: "B Term 2026" }), saved("MA 1022")];
 
   it("asks for terms until two finished courses have them", async () => {
-    await setup([saved("CS 1101"), saved("MA 1021")]);
+    const { user } = await setup([saved("CS 1101"), saved("MA 1021")]);
+    await user.click(screen.getByRole("button", { name: "Plan ahead" }));
     expect(screen.getAllByText("Add terms to see your pace").length).toBeGreaterThan(0);
     expect(screen.getByRole("button", { name: "Add course terms" })).toBeVisible();
     expect(screen.getByText("Average unavailable · add completed-course terms")).toBeVisible();
@@ -217,6 +228,7 @@ describe("insights", () => {
 
   it("can show the credits as a table", async () => {
     const { user } = await setup(dated());
+    await user.click(screen.getByRole("button", { name: "Plan ahead" }));
     await user.click(screen.getByRole("button", { name: "Show as table" }));
     const table = screen.getByRole("table");
     expect(within(table).getByRole("rowheader", { name: "No term" })).toBeVisible();
@@ -274,15 +286,6 @@ describe("moving a course", () => {
     expect(stored().pins).toBeUndefined();
   });
 
-  it("resets every pin from the sheet options, keeping the history", async () => {
-    const { user } = await setup([saved("CS 2022")], { pins: [{ code: "CS 2022", line: 38 }] });
-    await user.click(screen.getByRole("button", { name: "Sheet options" }));
-    await user.click(screen.getByRole("button", { name: "Reset to best fit" }));
-    expect(stored().pins).toBeUndefined();
-    expect(stored().courses).toHaveLength(1);
-    expect(screen.getByText("Sheet reset to best fit.")).toBeVisible();
-  });
-
   it("offers courses from the history for an empty line", async () => {
     const { user } = await setup([saved("CS 2022")], { pins: [{ code: "CS 2022", line: 38 }] });
     await user.click(tile(/^CS 2000\+, 5 lines left, lines 17 to 21/));
@@ -296,48 +299,53 @@ describe("moving a course", () => {
 });
 
 describe("course history", () => {
+  beforeEach(() => vi.useFakeTimers({ toFake: ["Date"], now: new Date(2026, 10, 6) }));
+  afterEach(() => vi.useRealTimers());
+
   const openHistory = async (user: ReturnType<typeof userEvent.setup>) => {
-    await user.click(screen.getByRole("button", { name: "Sheet options" }));
     await user.click(screen.getByRole("button", { name: "Course history" }));
     return within(screen.getByRole("region", { name: "Course history" }));
   };
 
   it("groups courses by term, newest first, with the courses without a term last", async () => {
-    const { user } = await setup([saved("PSY 1400", { title: "Psychology" }), saved("CS 1101", { term: "A Term 2026" }), saved("CS 2102", { term: "B Term 2026" })]);
+    const { user } = await setup([saved("PSY 1400", { title: "Psychology" }), saved("CS 1101", { term: "A Term 2026" }), saved("CS 2102", { term: "B Term 2026", status: "planned" })]);
     const panel = await openHistory(user);
     expect(panel.getAllByRole("heading", { level: 3 }).map((heading) => heading.textContent)).toEqual(["B Term 2026", "A Term 2026", "No term"]);
-    expect(panel.getByText("Psychology")).toBeVisible();
-    expect(panel.getByText("3 records · 3 courses")).toBeVisible();
+    expect(panel.getByText("Psychology · ⅓ unit")).toBeVisible();
+    expect(panel.getByText("3 courses · Newest terms first. Courses without a term are last.")).toBeVisible();
+    expect(within(panel.getByRole("button", { name: "Edit CS 2102" })).getByText("In progress")).toBeVisible();
+    expect(within(panel.getByRole("button", { name: "Edit CS 1101" })).getByText("Taken")).toBeVisible();
   });
 
-  it("edits a course's units and term", async () => {
+  it("edits a course's units and term with the term grid", async () => {
     const { user } = await setup([saved("CS 2102")]);
     const panel = await openHistory(user);
-    await user.click(panel.getByRole("button", { name: "CS 2102 details" }));
-    const details = within(screen.getByRole("region", { name: "Course details" }));
-    await user.clear(details.getByRole("textbox", { name: "Units" }));
-    await user.type(details.getByRole("textbox", { name: "Units" }), "1/6");
-    await user.click(details.getByRole("button", { name: "Save changes" }));
-    expect(stored().courses[0].credits).toBe(1.5);
+    await user.click(panel.getByRole("button", { name: "Edit CS 2102" }));
+    const edit = within(screen.getByRole("region", { name: "Edit course" }));
+    await user.click(edit.getByRole("radio", { name: "⅙" }));
+    await user.click(edit.getByRole("button", { name: /^Term \(optional\)/ }));
+    await user.click(screen.getByRole("button", { name: "C Term 2027" }));
+    expect(edit.getByRole("button", { name: "Planned" })).toHaveAttribute("aria-pressed", "true");
+    await user.click(edit.getByRole("button", { name: "Save changes" }));
+    expect(stored().courses[0]).toMatchObject({ credits: 1.5, term: "C Term 2027", status: "planned" });
   });
 
   it("refuses units it can't read", async () => {
     const { user } = await setup([saved("CS 2102")]);
     const panel = await openHistory(user);
-    await user.click(panel.getByRole("button", { name: "CS 2102 details" }));
-    const details = within(screen.getByRole("region", { name: "Course details" }));
-    await user.clear(details.getByRole("textbox", { name: "Units" }));
-    await user.type(details.getByRole("textbox", { name: "Units" }), "lots");
-    await user.click(details.getByRole("button", { name: "Save changes" }));
-    expect(details.getByRole("alert")).toHaveTextContent("Enter WPI units, like 1/3 or 1/6.");
+    await user.click(panel.getByRole("button", { name: "Edit CS 2102" }));
+    const edit = within(screen.getByRole("region", { name: "Edit course" }));
+    await user.click(edit.getByRole("radio", { name: "Other" }));
+    await user.type(edit.getByRole("textbox", { name: "Units" }), "lots");
+    await user.click(edit.getByRole("button", { name: "Save changes" }));
+    expect(edit.getByRole("alert")).toHaveTextContent("Enter WPI units, like 1/3 or 1/6.");
     expect(stored().courses[0].credits).toBe(3);
   });
 
   it("removes a course with its pin, and Undo brings both back", async () => {
     const { user } = await setup([saved("CS 2022")], { pins: [{ code: "CS 2022", line: 38 }] });
     const panel = await openHistory(user);
-    await user.click(panel.getByRole("button", { name: "CS 2022 details" }));
-    await user.click(screen.getByRole("button", { name: "Remove course" }));
+    await user.click(panel.getByRole("button", { name: "Remove CS 2022" }));
     expect(stored().courses).toEqual([]);
     expect(stored().pins).toBeUndefined();
     expect(screen.getByText("CS 2022 removed from history.")).toBeVisible();
@@ -346,104 +354,86 @@ describe("course history", () => {
     expect(stored().pins).toEqual([{ code: "CS 2022", line: 38 }]);
   });
 
-  it("finds a course across terms and adds it", async () => {
+  it("adds searched courses to the last finished term, and the status follows the term", async () => {
     const { user } = await setup();
-    await user.click(screen.getByRole("button", { name: "Add one course" }));
-    const panel = within(screen.getByRole("region", { name: "Add to course history" }));
-    await user.type(panel.getByRole("textbox", { name: "Course code or title" }), "CS 2102");
-    await user.click(await panel.findByRole("button", { name: "Use CS 2102" }));
-    expect(stored().courses[0]).toMatchObject({ code: "CS 2102", title: "Object-Oriented Design Concepts", source: "found" });
+    await user.click(screen.getByRole("button", { name: "Find your courses" }));
+    const panel = within(screen.getByRole("region", { name: "Add courses" }));
+    expect(panel.getByRole("button", { name: /^Adding to A Term 2026/ })).toBeVisible();
+    await user.type(panel.getByRole("combobox", { name: "Course code or title" }), "CS 2102");
+    await user.click(await panel.findByRole("button", { name: "Add CS 2102" }));
+    expect(stored().courses[0]).toMatchObject({ code: "CS 2102", title: "Object-Oriented Design Concepts", source: "found", term: "A Term 2026", status: "taken" });
+    expect(panel.getByText("CS 2102 added to A Term 2026 as taken.")).toBeVisible();
+
+    await user.click(panel.getByRole("button", { name: "In progress" }));
+    expect(panel.getByRole("button", { name: /^Adding to B Term 2026/ })).toBeVisible();
+    const box = panel.getByRole("combobox", { name: "Course code or title" });
+    await user.clear(box);
+    await user.type(box, "MA 1021");
+    await panel.findByRole("button", { name: "Add MA 1021" });
+    await user.keyboard("{Enter}");
+    expect(stored().courses[1]).toMatchObject({ code: "MA 1021", term: "B Term 2026", status: "planned" });
+    await user.click(panel.getByRole("button", { name: "Undo" }));
+    expect(stored().courses.map((course: HistoryCourse) => course.code)).toEqual(["CS 2102"]);
   });
 
-  it("adds a retired course by hand, in WPI units", async () => {
+  it("adds a WPI course by hand, in WPI units, with the same term choice as search", async () => {
     const { user } = await setup();
-    await user.click(screen.getByRole("button", { name: "Add one course" }));
-    await user.click(screen.getByRole("button", { name: "Enter a course manually" }));
-    const panel = within(screen.getByRole("region", { name: "Add a manual course" }));
-    await user.type(panel.getByRole("textbox", { name: "Course code" }), "xfer 1040");
-    await user.clear(panel.getByRole("textbox", { name: "Units" }));
-    await user.type(panel.getByRole("textbox", { name: "Units" }), "1/6");
-    await user.type(panel.getByRole("textbox", { name: "Course title (optional)" }), "Transferred science elective");
+    await user.click(screen.getByRole("button", { name: "Find your courses" }));
+    await user.click(screen.getByRole("button", { name: "Add manual credit" }));
+    const panel = within(screen.getByRole("region", { name: "Add manual credit" }));
+    expect(panel.getAllByRole("radio").slice(0, 3).map((radio) => radio.textContent)).toEqual(["WPI", "AP", "IB"]);
+    expect(panel.getByRole("button", { name: /^Adding to A Term 2026/ })).toBeVisible();
+    await user.type(panel.getByRole("textbox", { name: "Course code" }), "cs 1005");
+    await user.click(panel.getByRole("radio", { name: "⅙" }));
+    await user.type(panel.getByRole("textbox", { name: "Course title (optional)" }), "A retired course");
     await user.click(panel.getByRole("button", { name: "Add to history" }));
-    expect(stored().courses[0]).toMatchObject({ code: "XFER 1040", credits: 1.5, title: "Transferred science elective", creditSource: "transfer", source: "typed" });
+    expect(stored().courses[0]).toMatchObject({ code: "CS 1005", credits: 1.5, title: "A retired course", creditSource: "wpi", source: "typed", status: "taken", term: "A Term 2026" });
+    expect(panel.getByText("CS 1005 added to A Term 2026 as taken.")).toBeVisible();
+    expect(panel.getByRole("textbox", { name: "Course code" })).toHaveValue("");
+  });
+
+  it("turns an AP exam and score into the WPI courses it earns", async () => {
+    const { user } = await setup([saved("MA 1021")]);
+    await user.click(screen.getByRole("button", { name: "Course history" }));
+    await user.click(screen.getByRole("button", { name: "Manual credit" }));
+    const panel = within(screen.getByRole("region", { name: "Add manual credit" }));
+    await user.click(panel.getByRole("radio", { name: "AP" }));
+    await user.click(panel.getByRole("combobox", { name: "AP exam" }));
+    await user.click(screen.getByRole("option", { name: "Calculus BC" }));
+    await user.click(panel.getByRole("radio", { name: "5" }));
+    const earns = within(panel.getByRole("region", { name: "What this exam earns" }));
+    expect(earns.getByText("MA 1022")).toBeVisible();
+    expect(earns.getByText("MA 1021 is already in your history.")).toBeVisible();
+    expect(panel.getByRole("button", { name: /^Adding to No term/ })).toBeVisible();
+    await user.click(panel.getByRole("button", { name: "Add 2 courses" }));
+    expect(panel.getByText("MA 1022, MA 1023 added to your history as taken.")).toBeVisible();
+    expect(stored().courses.slice(1)).toEqual([
+      expect.objectContaining({ code: "MA 1022", apIb: true, creditSource: "ap", status: "taken" }),
+      expect.objectContaining({ code: "MA 1023", apIb: true, creditSource: "ap", status: "taken" }),
+    ]);
   });
 
   it("refuses text that isn't shaped like a course code", async () => {
     const { user } = await setup();
-    await user.click(screen.getByRole("button", { name: "Add one course" }));
-    await user.click(screen.getByRole("button", { name: "Enter a course manually" }));
-    const panel = within(screen.getByRole("region", { name: "Add a manual course" }));
+    await user.click(screen.getByRole("button", { name: "Find your courses" }));
+    await user.click(screen.getByRole("button", { name: "Add manual credit" }));
+    const panel = within(screen.getByRole("region", { name: "Add manual credit" }));
     await user.type(panel.getByRole("textbox", { name: "Course code" }), "not a code");
     await user.click(panel.getByRole("button", { name: "Add to history" }));
     expect(panel.getByRole("alert")).toHaveTextContent("That doesn’t look like a course code.");
     expect(stored().courses).toEqual([]);
   });
 
-  it("keeps only course details from pasted text, and asks before adding", async () => {
-    const { user } = await setup([saved("CS 1101")]);
+  it("says so when Enter picks a course that's already in history", async () => {
+    const { user } = await setup([saved("CS 2102")]);
     await user.click(screen.getByRole("button", { name: "Add courses" }));
-    await user.click(screen.getByRole("tab", { name: "Add several" }));
-    await user.type(screen.getByRole("textbox", { name: "Workday course text" }), "CS 1101 Grade A{enter}MA 1021 · Calculus I{enter}A Term 2026 · Grade A{enter}CS 2102{enter}C Term 2027 · In progress");
-    await user.click(screen.getByRole("button", { name: "Review 3 courses" }));
-    const panel = within(await screen.findByRole("region", { name: "Review detected courses" }));
-    expect(panel.getByText("Nothing has been saved yet.", { exact: false })).toBeVisible();
-    expect(panel.getByRole("checkbox", { name: "Add CS 1101" })).toBeDisabled();
-    expect(panel.getByText("A Term 2026 · ⅓ unit · taken")).toBeVisible();
-    expect(panel.getByText("C Term 2027 · ⅓ unit · taken")).toBeVisible();
-    await user.click(panel.getByRole("button", { name: "Add 2 courses" }));
-    const courses = stored().courses as HistoryCourse[];
-    expect(courses.map((item) => item.code)).toEqual(["CS 1101", "MA 1021", "CS 2102"]);
-    expect(courses[1]).toMatchObject({ term: "A Term 2026", status: "taken" });
-    expect(courses[2]).toMatchObject({ term: "C Term 2027", status: "taken" });
-    expect(JSON.stringify(courses)).not.toContain("Grade");
-  });
-});
-
-describe("moving history between devices", () => {
-  const file = (body: object, name = "GoatPlan-history.json") => new File([JSON.stringify(body)], name, { type: "application/json" });
-  const openTransfer = async (user: ReturnType<typeof userEvent.setup>) => {
-    await user.click(screen.getByRole("button", { name: "Sheet options" }));
-    await user.click(screen.getByRole("button", { name: "Import history" }));
-  };
-
-  it("shows what a file would add before adding it, then merges", async () => {
-    const { user } = await setup([saved("CS 1101")]);
-    await openTransfer(user);
-    await user.upload(screen.getByLabelText("History file"), file({ version: 1, courses: [saved("CS 1101"), saved("MA 1021")], manual: [] }));
-    const panel = within(await screen.findByRole("region", { name: "Review history import" }));
-    expect(panel.getByText("Valid GoatPlan export · 2 courses")).toBeVisible();
-    expect(panel.getByText("1 course is already on this device.", { exact: false })).toBeVisible();
-    expect(stored().courses).toHaveLength(1);
-    await user.click(panel.getByRole("button", { name: "Import 1 course" }));
-    expect((stored().courses as HistoryCourse[]).map((item) => item.code)).toEqual(["CS 1101", "MA 1021"]);
+    const panel = within(screen.getByRole("region", { name: "Add courses" }));
+    await user.type(panel.getByRole("combobox", { name: "Course code or title" }), "CS 2102");
+    await panel.findByText("In history");
+    await user.keyboard("{Enter}");
+    expect(panel.getByText("CS 2102 is already in your history.")).toBeVisible();
   });
 
-  it("reviews pins as well, and reports one it can't restore without losing the rest", async () => {
-    const { user } = await setup();
-    await openTransfer(user);
-    await user.upload(screen.getByLabelText("History file"), file({ version: 1, courses: [saved("CS 2022"), saved("CS 2119")], manual: [], pins: [{ code: "CS 2022", line: 38 }, { code: "CS 2119", line: 18 }] }));
-    await user.click(within(await screen.findByRole("region", { name: "Review history import" })).getByRole("button", { name: "Import 2 courses" }));
-    const review = within(screen.getByRole("region", { name: "Review history & pins" }));
-    expect(review.getByText("2 course records · 2 manual pins")).toBeVisible();
-    expect(review.getByText("Not allowed")).toBeVisible();
-    expect(stored().courses).toEqual([]);
-    await user.click(review.getByRole("button", { name: "Import history & pins" }));
-    expect(stored().pins).toEqual([{ code: "CS 2022", line: 38 }]);
-    expect(stored().courses).toHaveLength(2);
-    const dialog = screen.getByRole("dialog", { name: "Review a restored pin" });
-    expect(dialog).toHaveTextContent("CS 2119 is not allowed on Computer science, line 18.");
-    expect(dialog).toHaveTextContent("Pin kept");
-  });
-
-  it("says what's wrong with a bad file and changes nothing", async () => {
-    const { user } = await setup([saved("CS 1101")]);
-    await openTransfer(user);
-    await user.upload(screen.getByLabelText("History file"), file({ version: 1, courses: [{ ...saved("MA 1021"), credits: -1 }], manual: [] }, "my-course-history.json"));
-    const panel = within(await screen.findByRole("region", { name: "Your history is unchanged" }));
-    expect(panel.getByText("my-course-history.json")).toBeVisible();
-    expect(panel.getByText(/One record has an invalid credit amount\. Nothing was imported; your 1 existing course is unchanged\./)).toBeVisible();
-    expect(stored().courses).toHaveLength(1);
-  });
 });
 
 describe("when the browser won't keep a change", () => {
@@ -464,15 +454,3 @@ describe("when the browser won't keep a change", () => {
   });
 });
 
-describe("how courses count", () => {
-  it("explains a cross-listed course and goes back", async () => {
-    const { user } = await setup([saved("CS 2022")]);
-    await user.click(screen.getByRole("button", { name: "Sheet options" }));
-    await user.click(screen.getByRole("button", { name: "How your courses count" }));
-    expect(await screen.findByRole("heading", { name: "How your courses count" })).toBeVisible();
-    expect(screen.getByText("CS 2022 / MA 2201")).toBeVisible();
-    expect(screen.getByText("Counted once")).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Back to My degree" }));
-    expect(screen.getByRole("heading", { name: "My degree" })).toBeVisible();
-  });
-});

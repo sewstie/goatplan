@@ -7,7 +7,6 @@ import { Notice } from "@/components/ui/Notice";
 import type { DegreeHistory } from "@/lib/degree";
 import { undoTo } from "./degreeActions";
 import { useDegreeUi } from "./degreeUi";
-import { HistoryTabs } from "./HistoryPanel";
 
 export function RemovedPanel({ code, previous }: { code: string; previous: DegreeHistory }) {
   const close = useDegreeUi((state) => state.close);
@@ -16,8 +15,12 @@ export function RemovedPanel({ code, previous }: { code: string; previous: Degre
     <DrawerFrame
       title="Course history"
       onClose={close}
-      tabs={<HistoryTabs tab="history" />}
-      footer={<Button size="md" className="min-h-40" onClick={close}>Back to the sheet</Button>}
+      footer={
+        <>
+          <Button variant="secondary" size="md" className="min-h-40" onClick={() => open({ kind: "history", tab: "history" })}>Course history</Button>
+          <Button size="md" className="ml-auto min-h-40" onClick={close}>Back to the sheet</Button>
+        </>
+      }
     >
       <div role="status" className="flex items-center gap-10 rounded-card bg-toast-dark px-15 py-12 text-8-5 leading-16 text-on-dark shadow-guide">
         <CheckCircle aria-hidden className="size-16 shrink-0" />

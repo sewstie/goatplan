@@ -1,0 +1,131 @@
+.degree-page {
+  --size-drawer: 520px;
+}
+.degree-page > header { padding-inline: 30px; height: 59px; }
+.degree-page > main { max-width: 1600px; padding: 28px 42px 30px; }
+.degree-page .degree-title { align-items: flex-end; min-height: 100px; margin-bottom: 16px; }
+.degree-title h1 { font-size: 38px; line-height: 46px; letter-spacing: -1.5px; }
+.degree-title > div > p:last-child { margin-top: 9px; font-size: 11px; }
+.degree-title .degree-major { padding-top: 8px; }
+.degree-major > button { min-height: 24px; padding: 0; border: 0; background: transparent; color: var(--color-accent); box-shadow: none; }
+.degree-title > div:last-child { gap: 8px; }
+.degree-tabs { display: flex; gap: 22px; border-bottom: 1px solid var(--color-line-strong); margin-bottom: 4px; }
+.degree-tab { display: flex; align-items: center; gap: 8px; padding: 14px 3px 17px; margin-bottom: -1px; border-bottom: 2px solid transparent; color: var(--color-ink-muted); font-size: 13px; font-weight: 650; cursor: pointer; }
+.degree-tab svg { width: 15px; height: 15px; }
+.degree-tab-active { color: var(--color-accent); border-bottom-color: var(--color-accent); }
+.degree-page section[aria-label="Your progress"] { box-shadow: none; }
+.degree-page .degree-progress { min-height: 104px; display: flex; align-items: center; gap: 24px; padding: 20px; }
+.degree-progress-total { display: flex; align-items: center; gap: 14px; min-width: 220px; }
+.degree-progress-counts { flex: 1; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); }
+.degree-residency { border-left: 1px solid var(--color-line); padding-left: 16px; width: 226px; }
+.degree-residency p:first-child { font-size: 13px; font-weight: 650; }
+.degree-residency p:last-child { margin-top: 6px; font-size: 10px; color: var(--color-ink-muted); }
+.degree-residency-track { display: flex; height: 5px; margin-top: 8px; overflow: hidden; border-radius: 4px; background: var(--color-track); }
+.degree-residency-track span { background: var(--color-chart-done); }
+.degree-page section[aria-label="Your sheet"], .degree-page section[aria-label="Your requirements"] { padding: 16px 18px 18px; }
+.degree-page .degree-planning-first { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+.degree-planning-first > li { border: 0; border-left: 2px solid var(--color-choice-line); padding-left: 10px; }
+.degree-page article > div:first-child > h3 { font-size: 16px; line-height: 22px; }
+.degree-footer { display: flex; justify-content: space-between; gap: 16px; padding: 16px 24px; border-top: 1px solid var(--color-line); background: var(--color-surface); font-size: 10px; color: var(--color-ink-muted); }
+.degree-footer p, .degree-footer a { display: flex; align-items: center; gap: 6px; }
+.degree-footer svg { width: 12px; height: 12px; flex-shrink: 0; }
+.degree-footer a { color: var(--color-accent); text-decoration: underline; }
+.degree-suggestions > h2 { margin-top: 12px; }
+.degree-suggestions > ul { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.degree-suggestions > ul > li { position: relative; border: 1px solid var(--color-card-line); background: var(--color-surface); border-radius: 8px; padding: 18px 16px; }
+.degree-suggestions > ul > li > h3 { font-size: 13px; }
+.degree-suggestions > ul > li > div { justify-content: flex-end; }
+.degree-suggestions > div:has(> label) { max-width: 240px; }
+.degree-page dialog { --size-drawer: 520px; }
+@media (max-width: 1099px) {
+  .degree-page > main { padding-inline: 28px; }
+  .degree-title h1 { font-size: 28px; line-height: 36px; }
+  .degree-page .degree-progress { flex-wrap: wrap; }
+  .degree-progress-total { min-width: 170px; }
+  .degree-residency { width: 100%; padding-top: 12px; padding-left: 0; border-left: 0; border-top: 1px solid var(--color-line); }
+}
+@media (max-width: 767px) {
+  .degree-page > main { padding: 16px 13px 20px; }
+  .degree-page > header { padding-inline: 16px; height: 51px; }
+  .degree-page .degree-title { margin-bottom: 0; gap: 14px; align-items: stretch; }
+  .degree-title h1 { font-size: 25px; line-height: 32px; letter-spacing: -0.7px; }
+  .degree-title > div:last-child { justify-content: flex-start; }
+  .degree-tabs { gap: 0; justify-content: space-between; }
+  .degree-tab { padding: 12px 0; font-size: 10px; }
+  .degree-tab svg { display: none; }
+  .degree-page .degree-planning-first { display: flex; }
+  .degree-sheet-controls { flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+  .degree-footer { flex-direction: column; padding: 14px 16px; font-size: 10px; }
+}
+.degree-plan-insights { display: grid; grid-template-columns: 1.2fr 1fr; gap: 14px; }
+.degree-plan-insights article { padding: 18px; }
+@media(max-width: 767px) { .degree-plan-insights { grid-template-columns: 1fr; } }
+.degree-page dialog[data-degree-dialog="centered"] { padding: 26px 16px; overflow-y: auto; }
+.degree-page dialog[data-degree-dialog="centered"] > div { min-height: 100%; display: block; }
+.degree-page dialog[data-degree-dialog="centered"] > div > div:first-child { position: fixed; inset: 0; z-index: -1; }
+.degree-page dialog[data-degree-dialog="centered"] > div > div:last-child { width: min(550px,100%); max-height: calc(100dvh - 110px); margin: 0 auto; border-radius: 11px; border: 1px solid var(--color-card-line); }
+.degree-page dialog[data-degree-dialog="centered"]:has(section[aria-label="Your sheet"]) > div > div:last-child { width: min(670px,100%); }
+.degree-page dialog section[aria-labelledby="drawer-title"] > div:first-child { padding: 20px; }
+.degree-page dialog #drawer-title { font-size: 20px; line-height: 26px; }
+.degree-page dialog #drawer-title:focus { outline: none; }
+.degree-page dialog section[aria-labelledby="drawer-title"] > div:first-child > div:first-child p { font-size: 12px; color: var(--color-accent); font-weight: 650; letter-spacing: 1px; }
+.degree-page dialog section[aria-labelledby="drawer-title"] > div:first-child > div:last-child { padding-top: 16px; }
+.degree-page dialog section[aria-labelledby="drawer-title"] > div:last-child:not(:first-child) { margin-inline: 20px; padding-block: 14px; justify-content: flex-end; }
+@media(max-width:767px) { .degree-page dialog[data-degree-dialog="centered"] { padding: 16px 13px; } }
+.degree-map-layout { display: grid; grid-template-columns: minmax(0,1fr); gap: 14px; align-items: start; }
+.degree-map-selected { grid-template-columns: minmax(0,2.8fr) minmax(270px,1fr); }
+.degree-map-surface, .degree-map-details { border: 1px solid var(--color-card-line); border-radius: 10px; background: var(--color-surface); padding: 14px; min-width: 0; }
+.degree-map-details { padding: 18px; }
+.degree-map-legend { font-size: 10px; color: var(--color-ink-muted); padding-bottom: 12px; }
+.degree-map-bands { overflow: hidden; border: 1px solid var(--color-line); border-radius: 7px; background: var(--color-canvas); }
+.degree-map-band { display: grid; grid-template-columns: 110px minmax(0,1fr); border-bottom: 1px solid var(--color-line); padding: 14px; }
+.degree-map-band:last-child { border-bottom: 0; }
+.degree-map-band h3 { font-size: 10px; font-weight: 650; color: var(--color-ink-muted); padding-top: 12px; }
+.degree-map-nodes { position: relative; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px 28px; }
+.degree-map-node { min-height: 53px; border: 1px solid var(--color-line-button); background: var(--color-surface); border-radius: 6px; padding: 8px; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+.degree-map-node strong { font-size: 12px; font-weight: 650; }
+.degree-map-node span { font-size: 10px; color: var(--color-ink-muted); }
+.degree-map-taken { color: var(--color-success-ink); border-color: var(--color-success-soft); background: var(--color-success-soft); }
+.degree-map-planned { color: var(--color-accent); border-color: var(--color-tile-planned-line); border-style: dashed; background: var(--color-accent-soft); }
+.degree-map-node-selected { outline: 2px solid var(--color-accent); outline-offset: -1px; background: var(--color-accent-soft); }
+.degree-map-arrows { display: none; }
+.degree-map-list .degree-map-nodes { display: flex; flex-direction: column; gap: 0; }
+.degree-map-list .degree-map-node { border: 0; border-radius: 0; background: transparent; border-bottom: 1px solid var(--color-line); padding-block: 12px; }
+.degree-eyebrow { font-size: 10px; font-weight: 650; letter-spacing: 1px; color: var(--color-accent); text-transform: uppercase; }
+@media(max-width:1099px) { .degree-map-selected { grid-template-columns: 1fr; } .degree-map-band { grid-template-columns: 95px minmax(0,1fr); } .degree-map-nodes { gap: 12px; } }
+@media(max-width:767px) { .degree-map-band { display: block; padding: 10px; } .degree-map-band h3 { padding-top: 0; padding-bottom: 10px; } .degree-map-nodes { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+.degree-map-diagram { overflow-x: auto; border: 1px solid var(--color-line); border-radius: 7px; background: var(--color-canvas); }
+.degree-map-diagram-inner { position: relative; min-width: 580px; }
+.degree-map-diagram-band { position: absolute; inset-inline: 0; border-bottom: 1px solid var(--color-line); padding: 28px 14px; font-size: 10px; font-weight: 650; color: var(--color-ink-muted); }
+.degree-map-positioned { position: absolute; height: 53px; }
+.degree-map-connections { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--color-chart-planned); pointer-events: none; }
+.degree-major-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.degree-major-option { display: flex; align-items: center; gap: 10px; min-height: 64px; border: 1px solid var(--color-card-line); border-radius: 7px; padding: 12px; cursor: pointer; }
+.degree-major-option strong { font-size: 12px; line-height: 17px; font-weight: 650; }
+.degree-major-option small { display: block; font-size: 10px; margin-top: 4px; color: var(--color-ink-muted); }
+.degree-major-option-selected { border-color: var(--color-choice-line); background: var(--color-accent-soft); color: var(--color-accent); }
+.degree-page dialog:has(.degree-major-options) { width: 670px; }
+.degree-major-setup { margin-top: 0; }
+@media(max-width:767px) { .degree-major-options { grid-template-columns: 1fr; } }
+.degree-page { --radius-panel: 10px; }
+.degree-page > header a[aria-label="GoatPlan"] > span { display: inline; }
+.degree-page > header a[aria-label="GoatPlan"] img { width: 30px; height: 30px; }
+.degree-page .degree-title > div:last-child { padding-bottom: 0; }
+.degree-page section[aria-label="Your sheet"] h2, .degree-page section[aria-label="Your requirements"] h2 { font-size: 17px; line-height: 24px; }
+.degree-page .degree-planning-first { grid-template-columns: repeat(4,minmax(0,1fr)); }
+.degree-plan-insights article:has(.pace-slider) p.text-20 { font-size: 28px; line-height: 34px; color: var(--color-ink-soft); }
+.degree-footer p a { text-decoration: none; color: inherit; }
+@media(max-width:1099px) { .degree-page .degree-title { position: relative; padding-right: 265px; min-height: 100px; } .degree-page .degree-title > div:last-child { position: absolute; right: 0; top: 0; } }
+@media(max-width:767px) { .degree-page .degree-title { padding-right: 0; } .degree-page .degree-title > div:last-child { position: static; } .degree-page .degree-planning-first { display: flex; } }
+.degree-page { --color-canvas: #f6f7fc; --color-card-line: #d9dff0; --color-line: #d9dff0; --color-ink: #1c2138; --color-ink-muted: #56617e; --color-success-soft: #e7f4ef; --color-success-ink: #1b6b55; }
+:root[data-theme="dark"] .degree-page { --color-canvas: #15182a; --color-surface: #1d2135; --color-card-line: #373e5a; --color-line: #373e5a; --color-ink: #eeedf7; --color-ink-muted: #bdc2d9; --color-success-soft: #203d39; --color-success-ink: #a5d9cc; --color-accent-soft: #302a56; }
+.degree-page .degree-title { margin-bottom: 0; }
+.degree-page .degree-progress-total > span { width: 62px; height: 62px; }
+.degree-page .degree-progress-total > span > span { color: var(--color-ink); }
+.degree-plan-insights { grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); }
+.degree-plan-insights > article { min-width: 0; }
+@media(max-width:767px) { .degree-plan-insights { grid-template-columns: minmax(0,1fr); } }
+.degree-page > header a[aria-label="GoatPlan"] > span { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; }
+@keyframes term-picker-in { from { opacity: 0; transform: translateY(-4px); } }
+.term-picker { animation: term-picker-in 120ms ease-out; }
+@media (prefers-reduced-motion: reduce) { .term-picker { animation: none; } }

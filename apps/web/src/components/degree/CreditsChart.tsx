@@ -52,11 +52,11 @@ export function CreditsChart({ credits }: { credits: CreditsPerTerm }) {
   const largest = Math.max(...bars.map((bar) => bar.done + bar.planned), noTerm.done + noTerm.planned, CREDITS_PER_UNIT) / CREDITS_PER_UNIT;
   const top = Math.ceil(largest);
   const position = (units: number) => (units / top) * CHART_HEIGHT;
-  const years = [...new Set(bars.map((bar) => bar.year))];
+  const minWidth = Math.max(260, bars.length * 56 + 75);
 
   return (
-    <figure className="flex flex-col pt-20" aria-label="Units per term chart">
-      <div className="flex">
+    <figure className="flex flex-col overflow-x-auto pt-20" aria-label="Units per term chart">
+      <div className="flex" style={{ minWidth }}>
         <div aria-hidden className="relative w-24 shrink-0" style={{ height: CHART_HEIGHT }}>
           {ticks(top).map((tick) => (
             <span key={tick} className="absolute right-8 -translate-y-1/2 text-caption leading-14-4 text-ink-muted tablet:text-8" style={{ bottom: position(tick) - 14 }}>{tick}</span>
@@ -77,14 +77,12 @@ export function CreditsChart({ credits }: { credits: CreditsPerTerm }) {
           </div>
         </div>
       </div>
-      <div className="flex pl-24">
+      <div className="flex pl-24" style={{ minWidth }}>
         <div className="w-3/4 pt-9">
           <div className="flex justify-around gap-6 px-8 text-caption leading-14-4 text-ink-soft tablet:text-8">
-            {bars.map((bar) => <span key={bar.label} className="w-full max-w-48 text-center whitespace-nowrap">{bar.axis}</span>)}
+            {bars.map((bar) => <span key={bar.label} className="w-full max-w-48 text-center whitespace-nowrap">{bar.axis[0]} {String(bar.year).slice(-2)}</span>)}
           </div>
-          <div className="flex justify-around pt-8 text-micro leading-13 text-ink-muted tablet:text-caption">
-            {years.map((year) => <span key={year}>{year}</span>)}
-          </div>
+
         </div>
         <div className="w-1/4 border-l border-dashed border-tile-empty-line pt-9 text-center text-caption leading-14-4 text-ink-soft tablet:text-8">No term</div>
       </div>

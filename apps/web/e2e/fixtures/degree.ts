@@ -62,7 +62,6 @@ export async function openAllSections(page: Page) {
 export const panel = (page: Page, name: string) => page.getByRole("region", { name, exact: true });
 
 export async function openHistory(page: Page) {
-  await page.getByRole("button", { name: "Sheet options" }).click();
-  await page.getByRole("button", { name: "Course history" }).click();
+  await page.getByRole("button", { name: "Course history", exact: true }).first().click();
   return panel(page, "Course history");
 }

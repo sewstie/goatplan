@@ -7,9 +7,10 @@ import { CreditsCard } from "./CreditsCard";
 import { PaceCard } from "./PaceCard";
 import { PlanningFirstCard } from "./PlanningFirstCard";
 import { TakeThisTermCard } from "./TakeThisTermCard";
+import { SUGGESTIONS_ON } from "./degreeFeatures";
 import type { DegreeView } from "./useDegreeView";
 
-const CARD_COUNT = 4;
+const CARD_COUNT = SUGGESTIONS_ON ? 4 : 3;
 
 export function InsightsSection({ view, degree }: { view: DegreeView; degree: DegreeSnapshot }) {
   const scroller = useRef<HTMLDivElement>(null);
@@ -36,7 +37,7 @@ export function InsightsSection({ view, degree }: { view: DegreeView; degree: De
         <CreditsCard view={view} degree={degree} />
         <PaceCard view={view} />
         <PlanningFirstCard view={view} />
-        <TakeThisTermCard />
+        {SUGGESTIONS_ON && <TakeThisTermCard />}
       </div>
       <div aria-hidden className="flex justify-center gap-4 tablet:hidden">
         {Array.from({ length: CARD_COUNT }, (_, index) => (

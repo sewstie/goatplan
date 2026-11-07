@@ -1,5 +1,8 @@
 import { expect, frozenTerm, test } from "./fixtures/test";
 import { openDegree, stored } from "./fixtures/degree";
+import { COURSE_MAP_ON } from "../src/components/degree/degreeFeatures";
+
+test.skip(!COURSE_MAP_ON, "The course map is paused");
 
 test("students explore sourced CS background by map and keyboard list without changing their degree", async ({ page }) => {
   await openDegree(page);

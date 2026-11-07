@@ -1,6 +1,7 @@
 import { expect, test } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 import { auditReady, DEGREE_FLAG_KEY, fixtureHistory, HISTORY_KEY, openAllSections, openDegree, openHistory, panel, readFixture, savedCourse, stored, storedCodes } from "./fixtures/degree";
+import { SUGGESTIONS_ON } from "../src/components/degree/degreeFeatures";
 
 test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -102,11 +103,11 @@ test.describe("the real audit", () => {
   test("adding a course by hand fills a line, and the whole sheet updates", async ({ page }) => {
     await openDegree(page);
     await expect(page.getByText("0 of 45")).toBeVisible();
-    await page.getByRole("button", { name: "Add one course" }).click();
-    const search = panel(page, "Add to course history");
-    await search.getByRole("textbox", { name: "Course code or title" }).fill("MA 1021");
-    await search.getByRole("button", { name: "Use MA 1021" }).click();
-    await search.getByRole("button", { name: "Cancel" }).click();
+    await page.getByRole("button", { name: "Find your courses" }).click();
+    const search = panel(page, "Add courses");
+    await search.getByRole("combobox", { name: "Course code or title" }).fill("MA 1021");
+    await search.getByRole("button", { name: "Add MA 1021" }).click();
+    await page.keyboard.press("Escape");
     await expect(tile(page, /^MA 1021, line 34, done/)).toBeVisible({ timeout: 30_000 });
     await expect(page.getByText("1 of 45")).toBeVisible();
     await expect(page.getByRole("heading", { name: "Units per term" })).toBeVisible();
@@ -115,31 +116,31 @@ test.describe("the real audit", () => {
 
   test("the first steps work by keyboard", async ({ page }) => {
     await openDegree(page);
-    await page.getByRole("button", { name: "Add one course" }).focus();
+    await page.getByRole("button", { name: "Find your courses" }).focus();
     await page.keyboard.press("Enter");
-    const search = panel(page, "Add to course history");
-    await search.getByRole("textbox", { name: "Course code or title" }).fill("MA 1021");
-    await search.getByRole("button", { name: "Use MA 1021" }).focus();
+    const search = panel(page, "Add courses");
+    await search.getByRole("combobox", { name: "Course code or title" }).fill("MA 1021");
+    await search.getByRole("button", { name: "Add MA 1021" }).focus();
     await page.keyboard.press("Enter");
     await page.keyboard.press("Escape");
-    await expect(panel(page, "Add to course history")).toHaveCount(0);
+    await expect(panel(page, "Add courses")).toHaveCount(0);
     await expect(tile(page, /^MA 1021, line 34/)).toBeVisible({ timeout: 30_000 });
   });
 
   test("search uses the full course catalog without a planner term scope", async ({ page }) => {
     await openDegree(page);
-    await page.getByRole("button", { name: "Add one course" }).click();
-    const search = panel(page, "Add to course history");
-    await search.getByRole("textbox", { name: "Course code or title" }).fill("CS 2102");
-    await expect(search.getByRole("button", { name: "Use CS 2102" })).toBeVisible();
+    await page.getByRole("button", { name: "Find your courses" }).click();
+    const search = panel(page, "Add courses");
+    await search.getByRole("combobox", { name: "Course code or title" }).fill("CS 2102");
+    await expect(search.getByRole("button", { name: "Add CS 2102" })).toBeVisible();
     await expect(search.getByRole("combobox", { name: "Search in" })).toHaveCount(0);
   });
 
   test("a typed code counts by its code and is flagged, and other text is refused", async ({ page }) => {
     await openDegree(page);
-    await page.getByRole("button", { name: "Add one course" }).click();
-    await page.getByRole("button", { name: "Enter a course manually" }).click();
-    const manual = panel(page, "Add a manual course");
+    await page.getByRole("button", { name: "Find your courses" }).click();
+    await page.getByRole("button", { name: "Add manual credit" }).click();
+    const manual = panel(page, "Add manual credit");
     await manual.getByRole("textbox", { name: "Course code" }).fill("nothing good");
     await manual.getByRole("button", { name: "Add to history" }).click();
     await expect(manual.getByRole("alert")).toContainText("doesn’t look like a course code");
@@ -187,15 +188,6 @@ test.describe("the real audit", () => {
     await expect(checks.getByText("You confirmed these courses are related.")).toBeVisible();
   });
 
-  test("a small course goes to free electives, and a repeat of a cross-listed course doesn't count twice", async ({ page }) => {
-    await openDegree(page, { courses: [savedCourse({ code: "MU 1511", credits: 1 }), savedCourse({ code: "CS 2022", credits: 3 }), savedCourse({ code: "MA 2201", credits: 3 })] });
-    await expect(page.getByRole("region", { name: "Not on a line" })).toContainText("Duplicate record");
-    await page.getByRole("button", { name: "Sheet options" }).click();
-    await page.getByRole("button", { name: "How your courses count" }).click();
-    await expect(page.getByRole("heading", { name: "How your courses count" })).toBeVisible();
-    await expect(page.getByText("Counted once")).toBeVisible();
-    await expect(page.getByText("Duplicate skipped")).toBeVisible();
-  });
 });
 
 test.describe("the plan", () => {
@@ -219,6 +211,7 @@ test.describe("the plan", () => {
   });
 
   test("suggestions are added explicitly as planned without changing the planner", async ({ page }) => {
+    test.skip(!SUGGESTIONS_ON, "Suggestions are paused");
     await openDegree(page, { courses: [savedCourse({ code: "CS 1101", credits: 3 })] });
     await page.getByRole("button", { name: "Sheet options" }).click();
     await page.getByRole("dialog").getByRole("button", { name: "Suggest courses", exact: true }).click();
@@ -272,23 +265,13 @@ test.describe("pins", () => {
     expect((await stored(page)).pins).toEqual([{ code: "CS 2022", line: 38 }]);
   });
 
-  test("Reset to best fit clears the pins and can be undone", async ({ page }) => {
-    await openDegree(page, { courses: [savedCourse({ code: "CS 2022", credits: 3 })], pins: [{ code: "CS 2022", line: 38 }] });
-    await page.getByRole("button", { name: "Sheet options" }).click();
-    await page.getByRole("button", { name: "Reset to best fit" }).click();
-    await expect(page.getByText("Sheet reset to best fit.")).toBeVisible();
-    await expect(tile(page, /^CS 2022, line 38/)).toHaveCount(0);
-    await page.getByRole("button", { name: "Undo" }).click();
-    await expect(tile(page, /^CS 2022, line 38, done, pinned/)).toBeVisible();
-  });
-
   test("an empty line offers what fits", async ({ page }) => {
     await openDegree(page, { courses: [savedCourse({ code: "CS 2022", credits: 3 })], pins: [{ code: "CS 2022", line: 38 }] });
     await tile(page, /^CS 2000\+, 5 lines left/).click();
     await tile(page, /^CS 2000\+, line 18, empty/).click();
     const fill = panel(page, "Courses that fit line 18");
     await expect(fill.getByText("Currently pinned to Mathematics, line 38")).toBeVisible();
-    await expect(fill.getByRole("button", { name: "Suggest courses for this line" })).toBeVisible();
+    await expect(fill.getByRole("button", { name: "Suggest courses for this line" })).toHaveCount(SUGGESTIONS_ON ? 1 : 0);
     await fill.getByRole("button", { name: "Move CS 2022 here" }).click();
     await expect(tile(page, /^CS 2022, line 18, done, pinned/)).toBeVisible();
   });
@@ -315,16 +298,15 @@ test.describe("insights", () => {
   test("the what-if slider changes the estimate here and in the summary", async ({ page }) => {
     await openDegree(page, dated);
     const summary = page.getByRole("article").filter({ hasText: "Pace & what-if" });
-    await expect(summary).toContainText("Estimated credit finish");
+    await expect(summary).toContainText("Estimated graduation");
     const before = await summary.textContent();
     const slider = page.getByRole("slider", { name: "Courses per term" });
     await slider.focus();
     await page.keyboard.press("ArrowRight");
     await expect(summary).toContainText("At 4 courses per term");
     expect(await summary.textContent()).not.toBe(before);
-    await expect(page.getByText(/regular terms? earlier than 3 per term/)).toBeVisible();
-    await page.getByRole("checkbox", { name: "I plan a BS/MS" }).check({ force: true });
-    await expect(page.getByRole("link", { name: /WPI BS\/MS information/ })).toBeVisible();
+    await expect(page.getByText(/semesters? earlier than 3 per term/)).toBeVisible();
+    await expect(page.getByRole("checkbox", { name: "I plan a BS/MS" })).toHaveCount(0);
   });
 
   test("selecting a term lights up its courses, and the chart has a table", async ({ page }) => {
