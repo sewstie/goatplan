@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { applyPins, buildSheet, checkPills, crossListed, creditsPerTerm, estimatePace, hasEnoughDates, parseTerm, type DegreeHistory, type DegreeSnapshot, type PinCourses, type TermName } from "@/lib/degree";
+import { applyPins, buildSheet, DEFAULT_SEMESTER_LOAD, checkPills, crossListed, creditsPerTerm, estimatePace, hasEnoughDates, parseTerm, type DegreeHistory, type DegreeSnapshot, type PinCourses, type TermName } from "@/lib/degree";
 import type { AuditSuccess } from "@/lib/engine/types";
 import { hasRegistrationCode } from "@/lib/degree/history";
 import { useDegreeUi } from "./degreeUi";
@@ -41,8 +41,8 @@ export function useDegreeView(degree: DegreeSnapshot | null): DegreeView | null 
     const credits = creditsPerTerm(degree.history, openTerm);
     const pace = openTerm && hasEnoughDates(credits)
       ? {
-          ...estimatePace({ linesToGo: sheet.summary.toGo, coursesPerTerm: whatIf.perTerm, summer: whatIf.summer, openTerm }),
-          base: estimatePace({ linesToGo: sheet.summary.toGo, coursesPerTerm: 3, summer: whatIf.summer, openTerm }),
+          ...estimatePace({ linesToGo: sheet.summary.toGo, coursesPerSemester: whatIf.perSemester, summer: whatIf.summer, openTerm }),
+          base: estimatePace({ linesToGo: sheet.summary.toGo, coursesPerSemester: DEFAULT_SEMESTER_LOAD, summer: whatIf.summer, openTerm }),
         }
       : null;
     return { result, engineResult, courses, pinnedLines: pinned, sheet, pills: checkPills(result, degree.history), openTerm, credits, pace };

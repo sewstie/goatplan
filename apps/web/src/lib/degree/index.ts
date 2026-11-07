@@ -25,7 +25,7 @@ export {
 } from "./history";
 export { CREDITS_PER_UNIT, formatUnits, parseUnits, unitLabel } from "./units";
 export * from "./terms";
-export { earlierThan, estimatePace, type PaceEstimate } from "./pace";
+export { DEFAULT_SEMESTER_LOAD, earlierThan, estimatePace, SEMESTER_LOADS, type PaceEstimate } from "./pace";
 export { fitsLine, crossListed } from "./rules";
 export { applyPins, filledLines, moveOutcome, type MoveOutcome, type PinCourses, type PinnedAudit } from "./pins";
 export * from "./sheet";

@@ -295,17 +295,18 @@ test.describe("insights", () => {
     await expect(page.getByText("Average unavailable · add completed-course terms")).toBeVisible();
   });
 
-  test("the what-if slider changes the estimate here and in the summary", async ({ page }) => {
+  test("a heavier semester load changes the estimate", async ({ page }) => {
     await openDegree(page, dated);
     const summary = page.getByRole("article").filter({ hasText: "Pace & what-if" });
     await expect(summary).toContainText("Estimated graduation");
+    const slider = page.getByRole("slider", { name: "Credits per semester" });
+    await expect(slider).toHaveValue("6");
     const before = await summary.textContent();
-    const slider = page.getByRole("slider", { name: "Courses per term" });
     await slider.focus();
     await page.keyboard.press("ArrowRight");
-    await expect(summary).toContainText("At 4 courses per term");
+    await expect(summary).toContainText("At 21 credits a semester");
     expect(await summary.textContent()).not.toBe(before);
-    await expect(page.getByText(/semesters? earlier than 3 per term/)).toBeVisible();
+    await expect(summary.getByText(/semesters? earlier than 18 credits|Same graduation as 18 credits/)).toBeVisible();
     await expect(page.getByRole("checkbox", { name: "I plan a BS/MS" })).toHaveCount(0);
   });
 

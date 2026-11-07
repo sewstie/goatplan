@@ -86,7 +86,7 @@ beforeAll(() => {
 beforeEach(() => {
   localStorage.clear();
   catalog.courses = [course("MA 1021", "Calculus I"), course("CS 2102", "Object-Oriented Design Concepts"), course("CS 2103", "Accelerated Object-Oriented Design Concepts")];
-  useDegreeUi.setState({ panel: null, view: "sheet", filter: null, selectedTerm: null, addingTerm: null, lastAddTerm: null, keepPin: null, toast: null, whatIf: { perTerm: 3, summer: false } });
+  useDegreeUi.setState({ panel: null, view: "sheet", filter: null, selectedTerm: null, addingTerm: null, lastAddTerm: null, keepPin: null, toast: null, whatIf: { perSemester: 6, summer: false } });
 });
 
 afterEach(() => vi.restoreAllMocks());

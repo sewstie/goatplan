@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from "zustand";
-import type { DegreeHistory, LinePin, MoveOutcome, SheetFilter } from "@/lib/degree";
+import { DEFAULT_SEMESTER_LOAD, type DegreeHistory, type LinePin, type MoveOutcome, type SheetFilter } from "@/lib/degree";
 
 export type HistoryTab = "history" | "search";
 
@@ -33,7 +33,7 @@ interface DegreeUi {
   selectedTerm: string | null;
   addingTerm: string | null;
   lastAddTerm: string | null;
-  whatIf: { perTerm: number; summer: boolean };
+  whatIf: { perSemester: number; summer: boolean };
   keepPin: KeepPinAsk | null;
   toast: DegreeToast | null;
   open(panel: Panel): void;
@@ -41,7 +41,6 @@ interface DegreeUi {
   set(changes: Partial<Omit<DegreeUi, "open" | "close" | "set">>): void;
 }
 
-export const DEFAULT_PACE = 3;
 
 export const useDegreeUi = create<DegreeUi>((set) => ({
   panel: null,
@@ -50,7 +49,7 @@ export const useDegreeUi = create<DegreeUi>((set) => ({
   selectedTerm: null,
   addingTerm: null,
   lastAddTerm: null,
-  whatIf: { perTerm: DEFAULT_PACE, summer: false },
+  whatIf: { perSemester: DEFAULT_SEMESTER_LOAD, summer: false },
   keepPin: null,
   toast: null,
   open: (panel) => set({ panel }),
