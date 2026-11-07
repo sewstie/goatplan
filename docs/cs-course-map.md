@@ -1,21 +1,29 @@
-# CS course background map
+# CS course map
 
-The first map covers undergraduate CS courses in the 2026–27 WPI catalog. Open My degree with the existing invitation, choose Computer Science, and select Course map. Other majors and expandable elective groups belong to later tickets.
+The Course map tab on My degree shows how CS courses build on each other, from CS 1101/1102 at the top to 4000-level electives at the bottom. It follows the layout of the [WPI CS Major Flowchart](https://wpi.cleancatalog.net/sites/default/files/2025-05/CS%20Major%20Flowchart.png): course-number bands from top to bottom, topic columns (networks and systems on the left, design and data in the middle, theory on the right), area colors, and "or" groups.
 
-The visual reference is the [WPI CS Major Flowchart](https://wpi.cleancatalog.net/sites/default/files/2025-05/CS%20Major%20Flowchart.png). Its horizontal course-number bands and selectable connections inform the map. The reference was inspected during implementation. Its May 2025 publication path does not establish current academic relationships.
+## Where the data comes from
 
-Relationships come from the [2026–27 CS catalog](https://wpi.cleancatalog.net/computer-science). Each curated entry stores its course URL, original background wording and a structured expression of course alternatives and experience notes. These are recommended backgrounds, not enforced prerequisites. Course-number bands are not academic years or terms. The map does not assess readiness, change history or confirm requirements.
+- `apps/web/src/lib/courseMap/cs-background.json` holds the "Recommended background" text from each course page of the [2026–27 CS catalog](https://wpi.cleancatalog.net/computer-science), with a structured version of it. It was checked against the live catalog on 2026-11-07, and nothing had changed.
+- `apps/web/src/lib/courseMap/csLayout.ts` places each course in a grid cell, lists the interchangeable pairs (1101/1102, 2102/2103, 2303/2301) and tags the four required areas and the Cybersecurity concentration. The area lists come from the catalog's CS major and Cybersecurity concentration pages.
+- CS 1004, CS 1005 and CS 2119 are not placed because they don't count toward the CS major. The page footer names them.
 
-Only relevant background statements create arrows. Credit exclusions, equivalent cross-list names, descriptive course mentions and suggested examples do not create extra requirements. Cross-listed names refer to one map node. Ambiguous wording, such as the and/or in CS 2303, stays visible in the source text and its note. No CS background statement in this catalog specifies instructor approval. The relationship output supports such notes and tests them with an explicitly synthetic source.
+## How arrows are made
 
-Connected courses outside CS remain visible even without offering data. Their own background has not been curated in this slice. The source link on those nodes identifies the CS statement that references them. Missing details never mean a course lacks background or will not be offered.
+`flowchart.ts` turns each background statement into arrows:
 
-Map and list use the same public relationship output. Selecting a course shows incoming and outgoing connections, original wording and catalog source. Available descriptions come from the existing term catalog. The list retains the source wording and connection information. Both views use ordinary keyboard controls and the existing details sheet with Escape and focus restoration.
+- A pair that appears as a choice ("CS 1101 or CS 1102") sends one arrow from the pair.
+- Other choices between several CS courses become dashed arrows ("one of several options").
+- Courses outside CS (MA, ECE, IMGD, DS) are written on the card instead of drawn.
+- Notes such as "substantial prior programming experience" and suggested background don't create arrows.
+- An arrow is dropped when a longer chain of required arrows already connects the two courses. A dashed arrow never counts as part of such a chain. The details panel and the list still show every course that the catalog names.
 
-## Verification
+`routing.ts` draws the arrows. Lines run only in the gaps between cards. They leave a course from its bottom and enter the next row from the top, or travel down a column gap and enter from the side. Each course gets its own lane in each gap, so lines from different courses never run on top of each other. Tests check that no line crosses a card or an "or" badge, and that no arrow points up.
 
-The public relationship tests cover nested AND/OR choices, experience alternatives, same-band links, cross-listed offering lookup, absent offering data and a synthetic reverse-band connection with instructor approval. The production browser tests cover map/list selection, source text, preserved history, Escape focus restoration and following related courses with the keyboard.
+## Using it
 
-Lint, all 1,681 Vitest tests and the standard production build pass. Six map browser checks pass at 1440px and 834px in both themes. The preceding map and degree regression run passed 39 checks. The UI reviewer found no blocking issues after the source interpretation, connection routing and keyboard fixes. Screenshots are saved under apps/web/e2e/screenshots/course-map-*.png.
+Selecting a course highlights every course before it and after it, and dims the rest. Hovering previews the same thing. The details bar above the map shows direct background, what it leads to, the catalog wording and a source link, plus Plan this. The map fits the width by default. Ctrl + scroll or a pinch zooms around the cursor, dragging moves the map, and on a focused map +, - and 0 zoom in, zoom out and fit. List view shows the same information by level. Escape clears the selection.
 
-The checkout has no design frame PNGs. Visual comparison used the supplied WPI flowchart and existing GoatPlan styling. Expandable elective groups and the remaining majors are separate tickets.
+These are WPI's recommendations, not enforced prerequisites. The map doesn't decide readiness or change degree requirements.
+
+The tab is behind `COURSE_MAP_ON` in `apps/web/src/components/degree/degreeFeatures.ts`.

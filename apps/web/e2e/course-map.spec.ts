@@ -1,80 +1,86 @@
-import { expect, frozenTerm, test } from "./fixtures/test";
-import { openDegree, stored } from "./fixtures/degree";
+import type { Page } from "@playwright/test";
+import { expect, test } from "./fixtures/test";
+import { fixtureHistory, openDegree, stored } from "./fixtures/degree";
 import { COURSE_MAP_ON } from "../src/components/degree/degreeFeatures";
 
 test.skip(!COURSE_MAP_ON, "The course map is paused");
 
-test("students explore sourced CS background by map and keyboard list without changing their degree", async ({ page }) => {
-  await openDegree(page);
+const card = (page: Page, code: string) => page.getByRole("region", { name: "Course map diagram" }).getByRole("button", { name: new RegExp(`^${code},`) });
+const details = (page: Page) => page.getByRole("complementary", { name: "Selected course" });
+
+async function openMap(page: Page) {
+  await page.getByRole("navigation", { name: "Degree views" }).getByRole("button", { name: "Course map", exact: true }).click();
+  await expect(page.getByRole("region", { name: "Course map diagram" })).toBeVisible();
+}
+
+test("selecting a course lights up the chain before and after it without changing the degree", async ({ page }) => {
+  await openDegree(page, fixtureHistory("degree-history-mid.json"));
   const history = await stored(page);
-  await page.getByRole("button", { name: "Course map", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "CS course background" })).toBeVisible();
-  await page.getByRole("button", { name: "CS 2223", exact: true }).click();
-  const details = page.getByRole("dialog", { name: "CS 2223" });
-  await expect(details.getByText("CS 2102 or CS 2103, and CS 2022.", { exact: true })).toBeVisible();
-  await expect(details.getByRole("link", { name: "Catalog source" })).toHaveAttribute("href", "https://wpi.cleancatalog.net/computer-science/cs-2223");
-  await expect(details.getByRole("button", { name: "CS 2022", exact: true })).toBeVisible();
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("button", { name: "CS 2223", exact: true })).toBeFocused();
-  await expect(page.getByRole("img", { name: "CS 2102 → CS 2223" })).toBeVisible();
-  await page.getByRole("button", { name: "List view", exact: true }).click();
-  const course = page.getByRole("button", { name: "CS 2011", exact: true });
-  await course.focus();
-  await course.press("Enter");
-  await expect(page.getByRole("dialog", { name: "CS 2011" }).getByText("CS 2301 or CS 2303, or a significant knowledge of C/C++.", { exact: true })).toBeVisible();
-  await page.keyboard.press("Escape");
-  await expect(course).toBeFocused();
+  await openMap(page);
+  for (const band of [1000, 2000, 3000, 4000]) await expect(page.getByText(`${band} level`, { exact: true })).toBeVisible();
+  await card(page, "CS 2223").click();
+  await expect(card(page, "CS 2223")).toHaveAttribute("aria-pressed", "true");
+  await expect(details(page).getByRole("heading", { name: "CS 2223" })).toBeVisible();
+  await expect(details(page).getByText("CS 2102 or CS 2103, and CS 2022.", { exact: true })).toBeVisible();
+  await expect(details(page).getByRole("link", { name: "Open in WPI catalog" })).toHaveAttribute("href", "https://wpi.cleancatalog.net/computer-science/cs-2223");
+  await expect(page.locator('[data-edge="CS 2022 → CS 2223"]')).toHaveClass(/flow-line-lit/);
+  await expect(page.locator('[data-edge="CS 2223 → CS 3133"]')).toHaveClass(/flow-line-lit/);
+  await expect(page.locator('[data-edge="CS 3013 → CS 4401"]')).toHaveClass(/flow-dimmed/);
+  await expect(card(page, "CS 4401")).toHaveClass(/flow-dimmed/);
+  await expect(card(page, "CS 1101")).not.toHaveClass(/flow-dimmed/);
   expect(await stored(page)).toEqual(history);
 });
 
-test("following a background connection announces the new course and keeps keyboard focus", async ({ page }) => {
+test("the map works with the keyboard and follows links from the details", async ({ page }) => {
   await openDegree(page);
-  await page.getByRole("button", { name: "Course map", exact: true }).click();
-  const trigger = page.getByRole("button", { name: "CS 2223", exact: true });
-  await trigger.click();
-  const related = page.getByRole("dialog", { name: "CS 2223" }).getByRole("button", { name: "CS 2022", exact: true });
-  await related.focus();
-  await related.press("Enter");
-  await expect(page.getByRole("dialog", { name: "CS 2022" }).getByRole("heading", { name: "CS 2022", exact: true })).toBeFocused();
+  await openMap(page);
+  const algorithms = card(page, "CS 2223");
+  await algorithms.focus();
+  await algorithms.press("Enter");
+  const next = details(page).getByRole("region", { name: "What it leads to" }).getByRole("button", { name: "CS 3133", exact: true });
+  await next.focus();
+  await next.press("Enter");
+  await expect(details(page).getByRole("heading", { name: "CS 3133" })).toBeFocused();
+  await expect(card(page, "CS 3133")).toHaveAttribute("aria-pressed", "true");
+  await card(page, "CS 3133").focus();
   await page.keyboard.press("Escape");
-  await expect(trigger).toBeFocused();
+  await expect(details(page).getByRole("heading", { name: "Pick a course" })).toBeVisible();
+  await expect(card(page, "CS 4401")).not.toHaveClass(/flow-dimmed/);
+});
+
+test("the list shows the same background and planning a course marks it on the map", async ({ page }) => {
+  await openDegree(page, fixtureHistory("degree-history-mid.json"));
+  await openMap(page);
+  await page.getByRole("button", { name: "List", exact: true }).click();
+  await page.getByRole("button", { name: "CS 4342 Machine Learning", exact: true }).click();
+  await expect(details(page).getByText("Outside CS: + MA 1024/1034, MA 2071, MA 2621/2631")).toBeVisible();
+  await page.getByRole("button", { name: "Map", exact: true }).click();
+  await card(page, "CS 4123").click();
+  await details(page).getByRole("button", { name: "Plan this" }).click();
+  await page.getByRole("dialog", { name: "Plan CS 4123" }).getByRole("button", { name: "Plan for C Term 2027" }).click();
+  await expect(card(page, "CS 4123")).toHaveClass(/flow-planned/);
+  expect((await stored(page)).courses).toContainEqual(expect.objectContaining({ code: "CS 4123", status: "planned", term: "C Term 2027" }));
 });
 
 for (const width of [1440, 834]) {
   for (const theme of ["light", "dark"]) {
-    test(`CS map and list preserve missing courses at ${width}px in ${theme}`, async ({ page }) => {
+    test(`course map fits the page at ${width}px in ${theme}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 1000 });
       await page.addInitScript((value) => localStorage.setItem("goatplan:theme:v1", value), theme);
-      await page.route(/\/data\/\d{4}-[^/]+\.json$/, async (route) => {
-        const term = frozenTerm(new URL(route.request().url()).pathname.split("/").pop()!.replace(".json", ""));
-        await route.fulfill({ json: { ...term, courses: term.courses.filter((course) => course.code !== "MA 2071") } });
-      });
-      await openDegree(page);
-      await page.getByRole("button", { name: "Course map", exact: true }).click();
-      const map = page.getByRole("region", { name: "Course-number map" });
-      for (const band of [1000, 2000, 3000, 4000]) await expect(map.getByRole("region", { name: `${band}-level courses` })).toBeAttached();
-      await page.getByRole("button", { name: "CS 2011", exact: true }).click();
-      await page.keyboard.press("Escape");
-      await expect(page.getByRole("img", { name: "CS 2303 → CS 2011" })).toBeAttached();
-      await expect(page.getByRole("img", { name: "CS 2011 → CS 3013" })).toBeAttached();
-      await page.screenshot({ path: `${__dirname}/screenshots/course-map-${width}-${theme}.png`, fullPage: true });
-      await page.getByRole("button", { name: "MA 2071", exact: true }).click();
-      const details = page.getByRole("dialog", { name: "MA 2071", exact: true });
-      await expect(details.getByText(/Offering details are unavailable/)).toBeVisible();
-      await expect(details.getByText(/does not mean the course has no background or will not be offered/)).toBeVisible();
-      await expect(details.getByRole("button", { name: "CS 4032", exact: true })).toBeVisible();
-      await page.screenshot({ path: `${__dirname}/screenshots/course-map-details-${width}-${theme}.png`, fullPage: true });
-      await page.keyboard.press("Escape");
-      await page.getByRole("button", { name: "List view", exact: true }).click();
-      const cs = page.getByRole("button", { name: "CS 4342", exact: true });
-      await cs.focus();
-      await cs.press("Enter");
-      await expect(page.getByRole("dialog", { name: "CS 4342" }).getByRole("region", { name: "Recommended background" }).getByText(/Multivariate Calculus/)).toBeVisible();
-      await page.keyboard.press("Escape");
-      await expect(cs).toBeFocused();
-      await page.screenshot({ path: `${__dirname}/screenshots/course-map-list-${width}-${theme}.png` });
-      await page.getByRole("button", { name: "Back to degree", exact: true }).click();
-      await expect(page.getByRole("region", { name: "Your sheet", exact: true })).toBeVisible();
+      await openDegree(page, fixtureHistory("degree-history-mid.json"));
+      await openMap(page);
+      const diagram = page.getByRole("region", { name: "Course map diagram" });
+      await expect(page.getByText("Ctrl + scroll to zoom")).toBeVisible();
+      const box = (await diagram.boundingBox())!;
+      await page.mouse.move(box.x + box.width / 2, box.y + 200);
+      await page.keyboard.down("Control");
+      await page.mouse.wheel(0, -200);
+      await page.keyboard.up("Control");
+      await expect(page.getByRole("button", { name: "Fit", exact: true })).toBeVisible();
+      await page.getByRole("button", { name: "Fit", exact: true }).click();
+      await expect(page.getByText("Ctrl + scroll to zoom")).toBeVisible();
+      await card(page, "CS 3133").click();
+      await page.screenshot({ path: `${__dirname}/screenshots/course-map-${width}-${theme}.png`, fullPage: true, animations: "disabled" });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     });
   }

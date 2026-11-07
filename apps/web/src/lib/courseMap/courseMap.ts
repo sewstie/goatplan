@@ -23,9 +23,9 @@ export interface CourseMap {
   connections: { from: string; to: string }[];
 }
 
-const sources = csBackground as MapSource[];
+export const sources = csBackground as MapSource[];
 
-function courseCodes(background: Background | null): string[] {
+export function courseCodes(background: Background | null): string[] {
   if (!background || "note" in background) return [];
   if ("course" in background) return [background.course];
   return ("all" in background ? background.all : background.any).flatMap(courseCodes);

@@ -8,17 +8,17 @@ for (const width of [1440, 834]) {
     await openDegree(page, fixtureHistory("degree-history-mid.json"));
     const navigation = page.getByRole("navigation", { name: "Degree views" });
     await expect(navigation.getByRole("button")).toHaveCount(2 + Number(SUGGESTIONS_ON) + Number(COURSE_MAP_ON));
-    await page.screenshot({ path: `apps/web/e2e/screenshots/degree-reference-sheet-${width}.png`, fullPage: true });
+    await page.screenshot({ path: `${__dirname}/screenshots/degree-reference-sheet-${width}.png`, fullPage: true });
     await navigation.getByRole("button", { name: "Plan ahead", exact: true }).click();
     await expect(page.getByRole("region", { name: "Four-year plan", exact: true })).toBeVisible();
     await expect(page.getByRole("region", { name: "A Term 2026", exact: true })).toBeVisible();
-    await page.screenshot({ path: `apps/web/e2e/screenshots/degree-reference-plan-${width}.png`, fullPage: true });
+    await page.screenshot({ path: `${__dirname}/screenshots/degree-reference-plan-${width}.png`, fullPage: true });
     if (COURSE_MAP_ON) {
       await navigation.getByRole("button", { name: "Course map", exact: true }).click();
-      await page.getByRole("button", { name: "CS 2103", exact: true }).click();
-      await expect(page.getByText("Selected course", { exact: true })).toBeVisible();
-      await expect(page.getByRole("link", { name: "Recommended background · WPI" })).toBeVisible();
-      await page.screenshot({ path: `apps/web/e2e/screenshots/degree-reference-map-${width}.png`, fullPage: true });
+      await page.getByRole("region", { name: "Course map diagram" }).getByRole("button", { name: /^CS 2103,/ }).click();
+      await expect(page.getByRole("complementary", { name: "Selected course" }).getByRole("heading", { name: "CS 2103" })).toBeVisible();
+      await expect(page.getByRole("link", { name: "Open in WPI catalog" })).toBeVisible();
+      await page.screenshot({ path: `${__dirname}/screenshots/degree-reference-map-${width}.png`, fullPage: true });
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   });
@@ -54,7 +54,7 @@ test("phone keeps a readable plan", async ({ page }) => {
   await openDegree(page, fixtureHistory("degree-history-mid.json"));
   await page.getByRole("navigation", { name: "Degree views" }).getByRole("button", { name: "Plan ahead" }).click();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-  await page.screenshot({ path: "apps/web/e2e/screenshots/degree-reference-plan-375.png", fullPage: true });
+  await page.screenshot({ path: `${__dirname}/screenshots/degree-reference-plan-375.png`, fullPage: true });
   await page.getByRole("button", { name: "Switch to dark theme" }).click();
-  await page.screenshot({ path: "apps/web/e2e/screenshots/degree-reference-plan-dark-375.png", fullPage: true });
+  await page.screenshot({ path: `${__dirname}/screenshots/degree-reference-plan-dark-375.png`, fullPage: true });
 });
