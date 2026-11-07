@@ -10,6 +10,7 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: "GoatPlan",
+  icons: { icon: "/brand/favicon.ico" },
   description:
     "Course planner for WPI students: pick courses, compare sections and professors, build a conflict-free term schedule.",
 };

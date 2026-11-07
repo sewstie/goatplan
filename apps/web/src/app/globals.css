@@ -3,6 +3,12 @@
 :root { color-scheme: light; }
 
 @media screen {
+  :root[data-theme="dark"] .brand-logo {
+    filter: brightness(0) invert(1);
+  }
+}
+
+@media screen {
   :root[data-theme="dark"] {
     color-scheme: dark;
     --opacity-course-drawing: 0.85;
