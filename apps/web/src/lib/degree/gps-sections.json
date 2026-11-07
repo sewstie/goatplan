@@ -1,0 +1,108 @@
+{
+  "checked": "2026-11-06",
+  "source": "https://www.wpi.edu/academics/undergraduate/great-problems-seminar",
+  "courses": [
+    "FY 1100",
+    "FY 1101"
+  ],
+  "sections": [
+    {
+      "id": "green-worcester",
+      "name": "Green Worcester: Sustainability in Action",
+      "credits": [
+        {
+          "code": "ES 1000",
+          "credits": 3
+        },
+        {
+          "code": "SS 1000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "heal-the-world",
+      "name": "Heal the World: Disease, Medicine & Technology",
+      "credits": [
+        {
+          "code": "BB 1000",
+          "credits": 3
+        },
+        {
+          "code": "SS 1000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "games-for-hopeful-ai-futures",
+      "name": "Games for Hopeful AI Futures",
+      "credits": [
+        {
+          "code": "BUS 1000",
+          "credits": 3
+        },
+        {
+          "code": "IMGD 2002",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "climate-present-climate-futures",
+      "name": "Climate Present, Climate Futures",
+      "credits": [
+        {
+          "code": "BB 1000",
+          "credits": 3
+        },
+        {
+          "code": "INTL 1000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "recover-reuse-recycle",
+      "name": "Recover, Reuse, Recycle",
+      "credits": [
+        {
+          "code": "ES 1000",
+          "credits": 3
+        },
+        {
+          "code": "HU 1100",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "shelter-the-world",
+      "name": "Shelter the World",
+      "credits": [
+        {
+          "code": "ES 1000",
+          "credits": 3
+        },
+        {
+          "code": "SSPS 1000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "biodiversity-conservation",
+      "name": "Biodiversity, Conservation, and Human-Nature Interactions",
+      "credits": [
+        {
+          "code": "BB 1000",
+          "credits": 3
+        },
+        {
+          "code": "INTL 1000",
+          "credits": 3
+        }
+      ]
+    }
+  ]
+}

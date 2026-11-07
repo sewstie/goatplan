@@ -15,6 +15,7 @@ import {
   type LinePin,
   type StoredHistory,
 } from "./history";
+import { applyHuaPath, detectHuaPath, huaPathId, parseHuaPath, type HuaPath, type HuaPathGuess } from "./humanities";
 import { DEFAULT_SHEET_ID, loadSheet, type TrackingSheet } from "./sheets";
 import { activateRequirements } from "./requirements";
 
@@ -34,6 +35,7 @@ export interface DegreeSnapshot {
   damaged: boolean;
   audit: AuditState;
   unsaved: boolean;
+  hua: HuaPathGuess;
 }
 
 export type AddResult = "added" | "duplicate" | "invalid" | "unsaved";
@@ -43,7 +45,7 @@ export interface AddManyResult {
   added: number;
 }
 
-export type CourseChanges = Partial<Pick<HistoryCourse, "credits" | "term" | "status" | "apIb" | "creditSource">>;
+export type CourseChanges = Partial<Pick<HistoryCourse, "credits" | "term" | "status" | "creditSource">>;
 
 export type EditResult = "saved" | "invalid" | "unsaved";
 
@@ -56,6 +58,7 @@ export interface DegreeSource {
   editCourse(code: string, changes: CourseChanges): EditResult;
   removeCourse(code: string): boolean;
   setManualItem(id: string, confirmed: boolean): boolean;
+  setHuaPath(path: HuaPath | null): boolean;
   exportHistory(): string;
   replaceHistory(history: DegreeHistory): boolean;
   mergeHistory(history: DegreeHistory): boolean;
@@ -126,7 +129,8 @@ export function createDegreeSource({ getStorage, engine, sheetId = DEFAULT_SHEET
     const asked = ++latest;
     let next: AuditState = { status: "failed", result: null };
     try {
-      const sheet = await readSheet(current().history.sheetId ?? sheetId);
+      const history = current().history;
+      const sheet = applyHuaPath(await readSheet(history.sheetId ?? sheetId), huaOf(history).path);
       if (asked !== latest) return;
       activateRequirements(sheet);
       loadedSheet = sheet;
@@ -174,6 +178,8 @@ export function createDegreeSource({ getStorage, engine, sheetId = DEFAULT_SHEET
   }
 
   const pinsOf = (history: DegreeHistory) => history.pins ?? [];
+  const huaOf = (history: DegreeHistory) => detectHuaPath(history.courses, parseHuaPath(history.huaPath));
+  const keepHuaPath = (history: DegreeHistory) => (history.huaPath ? { huaPath: history.huaPath } : {});
 
   function withPins(history: DegreeHistory, pins: readonly LinePin[]): DegreeHistory {
     const next = { ...history };
@@ -189,7 +195,7 @@ export function createDegreeSource({ getStorage, engine, sheetId = DEFAULT_SHEET
       const state = sheets[id] ?? { manual: [] };
       loadedSheet = null;
       audit = { status: "waiting", result: null };
-      return write({ courses: history.courses, sheetId: id, sheets, ...state });
+      return write({ courses: history.courses, sheetId: id, sheets, ...state, ...keepHuaPath(history) });
     },
     subscribe(listener) {
       if (listeners.size === 0) {
@@ -207,7 +213,7 @@ export function createDegreeSource({ getStorage, engine, sheetId = DEFAULT_SHEET
     getSnapshot() {
       if (!snapshot) {
         const { history, damaged } = current();
-        snapshot = { selectedSheetId: selection(), sheet: loadedSheet, history, damaged, audit, unsaved: session !== null };
+        snapshot = { selectedSheetId: selection(), sheet: loadedSheet, history, damaged, audit, unsaved: session !== null, hua: huaOf(history) };
       }
       return snapshot;
     },
@@ -231,7 +237,7 @@ export function createDegreeSource({ getStorage, engine, sheetId = DEFAULT_SHEET
     editCourse(code, changes) {
       const history = working();
       const course = history.courses.find((item) => item.code === code);
-      if (!course || (changes.apIb && course.source !== "typed")) return "invalid";
+      if (!course) return "invalid";
       const edited = parseCourse({ ...course, ...changes, term: (changes.term ?? course.term)?.trim() || undefined });
       if (!edited) return "invalid";
       return write({ ...history, courses: history.courses.map((item) => (item === course ? edited : item)) }) ? "saved" : "unsaved";
@@ -248,6 +254,11 @@ export function createDegreeSource({ getStorage, engine, sheetId = DEFAULT_SHEET
       const history = working();
       const others = history.manual.filter((item) => item !== id);
       return write({ ...history, manual: confirmed ? [...others, id] : others });
+    },
+    setHuaPath(path) {
+      const history = { ...working() };
+      delete history.huaPath;
+      return write(path ? { ...history, huaPath: huaPathId(path) } : history);
     },
     exportHistory() {
       return serializeHistory({ ...working(), sheetId: working().sheetId ?? sheetId });
@@ -274,13 +285,13 @@ export function createDegreeSource({ getStorage, engine, sheetId = DEFAULT_SHEET
           loadedSheet = null;
           audit = { status: "waiting", result: null };
         }
-        return write({ courses: [...courses.values()], sheetId: selectedId, sheets, ...sheets[selectedId] });
+        return write({ courses: [...courses.values()], sheetId: selectedId, sheets, ...sheets[selectedId], ...keepHuaPath(history.huaPath ? history : incoming) });
       }
       const pins = [...pinsOf(history)];
       for (const pin of pinsOf(incoming)) {
         if (!pins.some((item) => item.code === pin.code || item.line === pin.line)) pins.push(pin);
       }
-      return write(withPins({ ...history, courses: [...courses.values()], manual: [...new Set([...history.manual, ...incoming.manual])] }, pins));
+      return write(withPins({ ...history, ...keepHuaPath(history.huaPath ? history : incoming), courses: [...courses.values()], manual: [...new Set([...history.manual, ...incoming.manual])] }, pins));
     },
     setPin(pin) {
       const history = working();

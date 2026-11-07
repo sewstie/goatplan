@@ -86,6 +86,40 @@ describe("the history", () => {
     stop();
   });
 
+  it("audits humanities on the path the first humanities course points to, and the student's choice wins", async () => {
+    const sheets: TrackingSheet[] = [];
+    const { source, stop } = setup(async (request) => {
+      sheets.push(request.sheet as TrackingSheet);
+      return answer(0);
+    });
+    const seminar = () => sheets.at(-1)!.lines.find((line) => line.line === 6)!.filter;
+    source.addCourse({ ...foundCourse({ code: "SP 1521", title: "Elementary Spanish I", credits: 3 }), term: "A Term 2026" });
+    await pause();
+    expect(source.getSnapshot().hua).toEqual({ path: { kind: "language", subject: "SP" }, chosen: false, first: "SP 1521", alsoPossible: null });
+    expect(seminar()).toEqual({ type: "subjectMinLevel", subject: "SP", minLevel: 3000 });
+    expect(source.setHuaPath({ kind: "depth-breadth" })).toBe(true);
+    await pause();
+    expect(source.getSnapshot().hua).toMatchObject({ path: { kind: "depth-breadth" }, chosen: true });
+    expect(seminar()).toEqual({ type: "courses", courses: ["HU 3900", "HU 3910"] });
+    source.setHuaPath(null);
+    await pause();
+    expect(source.getSnapshot().history.huaPath).toBeUndefined();
+    expect(source.getSnapshot().hua.chosen).toBe(false);
+    stop();
+  });
+
+  it("keeps the humanities choice when switching majors, since humanities are the same for everyone", () => {
+    const storage = new MemoryPlanStorage();
+    const source = createDegreeSource({ getStorage: () => storage, engine: { audit: async () => answer(0) }, loadSheet: async () => cs as TrackingSheet });
+    source.selectSheet("cs-2030");
+    source.setHuaPath({ kind: "language", subject: "GN" });
+    source.selectSheet("fixture-2030");
+    expect(source.getSnapshot().history.huaPath).toBe("language:GN");
+    expect(JSON.parse(source.exportHistory()).huaPath).toBe("language:GN");
+    expect(parseHistoryFile(source.exportHistory())).toMatchObject({ ok: true, history: { huaPath: "language:GN" } });
+    expect(parseHistoryFile(JSON.stringify({ version: 1, courses: [], manual: [], huaPath: "language:AB" }))).toEqual({ ok: true, history: { courses: [], manual: [] } });
+  });
+
   it("stores an added course and lists it", () => {
     const { source, storage } = setup();
     expect(source.addCourse(typedCourse("CS 9999"))).toBe("added");
@@ -249,19 +283,11 @@ describe("editing a course", () => {
     expect(saved(source, "MA 1021")).toEqual(before);
   });
 
-  it("only lets a typed course be marked AP/IB", () => {
-    const { source } = withCourses();
-    expect(source.editCourse("EN 1000", { apIb: true })).toBe("saved");
-    expect(source.editCourse("MA 1021", { apIb: true })).toBe("invalid");
-    expect(saved(source, "EN 1000")?.apIb).toBe(true);
-    expect(saved(source, "MA 1021")?.apIb).toBe(false);
-  });
-
-  it("lets a found course from an imported file be unmarked", () => {
+  it("keeps a course's AP/IB mark through edits", () => {
     const { source } = setup();
-    source.replaceHistory({ courses: [{ ...foundCourse({ code: "MA 1021", title: "", credits: 3 }), apIb: true }], manual: [] });
-    expect(source.editCourse("MA 1021", { apIb: false })).toBe("saved");
-    expect(saved(source, "MA 1021")?.apIb).toBe(false);
+    source.replaceHistory({ courses: [{ ...foundCourse({ code: "EN 1100", title: "English Elective", credits: 3 }), apIb: true }], manual: [] });
+    expect(source.editCourse("EN 1100", { credits: 1.5, status: "planned" })).toBe("saved");
+    expect(saved(source, "EN 1100")).toMatchObject({ credits: 1.5, status: "planned", apIb: true });
   });
 
   it("can't change a course that isn't there, or its code", () => {
@@ -280,7 +306,7 @@ describe("editing a course", () => {
     expect(source.getSnapshot().unsaved).toBe(true);
   });
 
-  it("sends in-progress and AP/IB changes to the audit", async () => {
+  it("sends in-progress changes and AP/IB marks to the audit", async () => {
     const { source, engine } = withCourses();
     await pause();
     engine.audit.mockClear();
@@ -289,9 +315,9 @@ describe("editing a course", () => {
     expect(engine.audit.mock.lastCall?.[0].planned).toEqual([{ code: "MA 1021", credits: 3 }]);
     expect(engine.audit.mock.lastCall?.[0].taken).toEqual([{ code: "EN 1000", credits: 3 }]);
 
-    source.editCourse("EN 1000", { apIb: true, credits: 1.5 });
+    source.addCourse({ ...foundCourse({ code: "EN 1100", title: "English Elective", credits: 3 }), apIb: true });
     await pause();
-    expect(engine.audit.mock.lastCall?.[0].taken).toEqual([{ code: "EN 1000", credits: 1.5, apIb: true }]);
+    expect(engine.audit.mock.lastCall?.[0].taken).toContainEqual({ code: "EN 1100", credits: 3, apIb: true });
 
     source.editCourse("MA 1021", { status: "taken" });
     await pause();

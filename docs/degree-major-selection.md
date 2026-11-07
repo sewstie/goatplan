@@ -20,6 +20,10 @@ by sheet id. The top-level `manual` and `pins` fields reflect the selected
 sheet for the existing degree interface. Writes and exports update that
 sheet's entry in `sheets`.
 
+`huaPath` holds the humanities path the student picked. It isn't stored per
+sheet, because humanities are the same for every major. See
+[Humanities path](degree-tracking-sheet.md#humanities-path).
+
 A history without `sheetId` opens CS without another picker prompt. Its
 existing confirmations and pins belong to CS. Switching or exporting records
 that association explicitly.
