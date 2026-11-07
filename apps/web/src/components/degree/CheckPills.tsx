@@ -16,7 +16,7 @@ export function CheckPills({ pills }: { pills: readonly CheckPill[] }) {
   const open = useDegreeUi((state) => state.open);
   return (
     <div className="flex flex-col gap-8 tablet:flex-row tablet:items-center tablet:gap-12">
-      <p className="text-caption leading-14-4 text-ink-muted">Checks</p>
+      <p className="text-8 leading-16 text-ink-muted">Checks</p>
       <ul className="flex flex-wrap gap-6">
         {pills.map((pill) => {
           const { word, Icon, box, word_ } = LOOK[pill.state];
@@ -24,8 +24,8 @@ export function CheckPills({ pills }: { pills: readonly CheckPill[] }) {
             <li key={pill.id}>
               <button type="button" aria-label={`${pill.name}: ${word}. See the courses behind it`} onClick={() => open({ kind: "checks" })} className={cx("flex min-h-30 cursor-pointer items-center gap-7 rounded-row border px-10 hover:brightness-98", box)}>
                 <Icon aria-hidden className="size-13 shrink-0 text-ink" />
-                <span className="text-micro leading-13 font-600 tablet:text-caption">{pill.name}</span>
-                <span className={cx("text-micro leading-13", word_)}>{word}</span>
+                <span className="text-8 leading-16 font-600 tablet:text-8">{pill.name}</span>
+                <span className={cx("text-8 leading-16", word_)}>{word}</span>
               </button>
             </li>
           );

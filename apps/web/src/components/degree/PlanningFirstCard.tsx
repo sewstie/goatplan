@@ -9,7 +9,7 @@ export function PlanningFirstCard({ view }: { view: DegreeView }) {
   const items = planningFirst(view.sheet, view.result.checks);
   return (
     <InsightCard title="What needs planning first">
-      <ol className="flex flex-col pl-10 tablet:pl-0">
+      <ol className="degree-planning-first flex flex-col pl-10 tablet:pl-0">
         {items.map((item, index) => (
           <li key={item.title} className="flex gap-7 border-b border-line py-12 tablet:py-6 last:border-b-0">
             <span className="text-tile leading-14-4 text-ink-muted">{index + 1}.</span>

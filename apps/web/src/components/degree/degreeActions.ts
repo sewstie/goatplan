@@ -33,13 +33,6 @@ export function unpin(code: string) {
   useDegreeUi.getState().set({ panel: null, toast: { message: `${code} unpinned. It’s back on its best fit.`, undo: previous } });
 }
 
-export function resetPins() {
-  const source = getDegreeSource();
-  const previous = source.getSnapshot().history;
-  source.clearPins();
-  useDegreeUi.getState().set({ panel: null, toast: { message: "Sheet reset to best fit.", undo: previous } });
-}
-
 export function removeCourse(code: string) {
   const source = getDegreeSource();
   const previous = source.getSnapshot().history;

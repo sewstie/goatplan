@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/Button";
 import { DrawerFrame } from "@/components/ui/Drawer";
@@ -15,7 +16,11 @@ import { useDegreeUi } from "./degreeUi";
 import { termChoices } from "./termChoices";
 import { OpenInPlanner } from "./OpenInPlanner";
 
-export function SuggestCoursesPanel({ history, line }: { history: DegreeHistory; line?: number }) {
+function SuggestFrame({ inline, close, children }: { inline: boolean; close(): void; children: ReactNode }) {
+  return inline ? <section aria-label="Suggestions" className="degree-suggestions"><h2 className="text-17 font-650">Suggestions</h2>{children}</section> : <DrawerFrame title="Suggest courses" onClose={close}>{children}</DrawerFrame>;
+}
+
+export function SuggestCoursesPanel({ history, line, inline = false }: { history: DegreeHistory; line?: number; inline?: boolean }) {
   const close = useDegreeUi((state) => state.close);
   const catalog = useCourseCatalog();
   const { load } = catalog;
@@ -47,9 +52,9 @@ export function SuggestCoursesPanel({ history, line }: { history: DegreeHistory;
   const offered = file?.term.id === termId ? file : null;
 
   return (
-    <DrawerFrame title="Suggest courses" onClose={close}>
-      <p className="pb-16 text-8-5 leading-17 text-ink-muted">Courses that close missing lines or checks on your sheet. Free electives are left out.</p>
-      <Select label="Term to plan for" hideLabel={false} variant="box" options={termChoices().filter((option) => option.value)} value={term} onChange={(event) => { setTerm(event.target.value); setFailed(false); }} />
+    <SuggestFrame inline={inline} close={close}>
+      <p className="pb-16 text-8-5 leading-17 text-ink-muted">Courses that fill an open line or check.</p>
+      <Select label={inline ? "Registration term" : "Term to plan for"} hideLabel={false} variant="box" options={termChoices().filter((option) => option.value)} value={term} onChange={(event) => { setTerm(event.target.value); setFailed(false); }} />
       {catalog.failed && <div role="alert"><p className="py-8 text-8 text-ink-muted">The course catalog couldn’t be loaded.</p><Button variant="secondary" onClick={() => void load()}>Try again</Button></div>}
       {publishedTerms.status === "failed" && <div role="alert"><p className="py-8 text-8 text-ink-muted">Published terms couldn’t be loaded.</p><Button variant="secondary" onClick={publishedTerms.retry}>Try again</Button></div>}
       {failed && <Button variant="secondary" onClick={() => { setFailed(false); setOfferingAttempt((value) => value + 1); }}>Retry offerings</Button>}
@@ -78,6 +83,6 @@ export function SuggestCoursesPanel({ history, line }: { history: DegreeHistory;
         })}
       </ul>
       {details && details.size > limit && <Button variant="secondary" onClick={() => setLimit(limit + 30)}>Show more courses</Button>}
-    </DrawerFrame>
+    </SuggestFrame>
   );
 }

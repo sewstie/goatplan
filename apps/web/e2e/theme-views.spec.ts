@@ -1,7 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { expect, openMoreActions, test } from "./fixtures/test";
 import { seedThemePlan, selectTheme } from "./fixtures/theme";
-import { auditReady, openDegree, savedCourse } from "./fixtures/degree";
 
 test("saved plans and registration retain the global theme and offer a keyboard toggle", async ({ page }) => {
   const plan = await seedThemePlan(page);
@@ -111,34 +110,3 @@ for (const width of [1440, 834, 375]) {
   });
 }
 
-test("history backups retain courses, confirmations and pins independently of theme", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await openDegree(page, {
-    courses: [savedCourse({ code: "CS 2022", credits: 3, term: "A Term 2026" })],
-    manual: ["iqp-1"],
-    pins: [{ code: "CS 2022", line: 38 }],
-  });
-  const backups: string[] = [];
-  for (const theme of ["light", "dark"] as const) {
-    await page.goto("/");
-    await expect(page.getByRole("button", { name: /Switch to (light|dark) theme/ })).toBeVisible();
-    await selectTheme(page, theme, 1440);
-    await page.getByRole("link", { name: "My degree", exact: true }).click();
-    await auditReady(page);
-    await page.getByRole("button", { name: "Sheet options" }).click();
-    await page.getByRole("button", { name: "Import history", exact: true }).click();
-    const [download] = await Promise.all([
-      page.waitForEvent("download"),
-      page.getByRole("button", { name: "Download JSON" }).click(),
-    ]);
-    expect(download.suggestedFilename()).toBe("GoatPlan-history.json");
-    backups.push(await readFile(await download.path(), "utf8"));
-  }
-  expect(backups[1]).toBe(backups[0]);
-  expect(JSON.parse(backups[0])).toMatchObject({
-    courses: [expect.objectContaining({ code: "CS 2022", credits: 3, term: "A Term 2026" })],
-    manual: ["iqp-1"],
-    pins: [{ code: "CS 2022", line: 38 }],
-  });
-  expect(backups[0]).not.toMatch(/theme|colorScheme/i);
-});

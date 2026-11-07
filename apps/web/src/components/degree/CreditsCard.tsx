@@ -16,7 +16,7 @@ export function CreditsCard({ view, degree }: { view: DegreeView; degree: Degree
   const undated = credits.undated;
   return (
     <InsightCard
-      title="Units per term"
+      title="Credits per term"
       action={
         <button type="button" onClick={() => setTable(!table)} className="flex cursor-pointer items-center gap-5 rounded-badge text-caption leading-14-4 font-600 text-accent hover:underline tablet:text-8">
           {table ? <ChartBar aria-hidden className="size-13 text-ink" /> : <Rows aria-hidden className="size-13 text-ink" />}

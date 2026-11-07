@@ -14,7 +14,7 @@ for (const width of [1440, 834, 375]) {
     await expect(page.getByRole("heading", { name: "What's your major?" })).toBeVisible();
     await expect(page.getByText("Class of 2030", { exact: true })).toBeVisible();
     await expect(page.getByText("Minors and double majors aren't supported yet")).toBeVisible();
-    await expect(page.getByRole("button", { name: "Add one course" })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Find your courses" })).toHaveCount(0);
     await page.screenshot({ path: `e2e/screenshots/degree-major-picker-${width}.png`, fullPage: true, animations: "disabled" });
     const picker = page.getByRole("combobox", { name: "Major", exact: true });
     await picker.focus();

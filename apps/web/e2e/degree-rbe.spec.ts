@@ -1,7 +1,9 @@
 import { expect, test } from "./fixtures/test";
 import { auditReady, openAllSections, openDegree, savedCourse } from "./fixtures/degree";
+import { SUGGESTIONS_ON } from "../src/components/degree/degreeFeatures";
 
 test("RBE history drives search badges and explicit course suggestions", async ({ page }) => {
+  test.skip(!SUGGESTIONS_ON, "Suggestions are paused");
   await page.setViewportSize({ width: 1440, height: 1000 });
   await openDegree(page, JSON.stringify({ version: 1, sheetId: "rbe-2030", courses: [savedCourse({ code: "RBE 1001", credits: 3, term: "A Term 2026" }), savedCourse({ code: "MA 1021", credits: 3, term: "B Term 2026" })], manual: [] }));
   await page.getByRole("button", { name: "Sheet options" }).click();

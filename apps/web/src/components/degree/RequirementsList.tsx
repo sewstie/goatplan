@@ -1,93 +1,67 @@
 "use client";
 
-import { useId, useState } from "react";
-import { CheckCircle, Circle, CircleDashed, Info } from "@phosphor-icons/react/ssr";
+import { useState } from "react";
+import { CaretDown, Info } from "@phosphor-icons/react/ssr";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
-import { lineName, sectionsWithMqp, tileMatchesFilter, type SheetSection, type SheetTile } from "@/lib/degree";
+import { cx } from "@/components/ui/cx";
+import { isTileStack, sectionFinished, sectionsWithMqp, stackEmptyTiles, tileMatchesFilter, type DegreeHistory, type SheetSection, type TermName } from "@/lib/degree";
 import { CheckPills } from "./CheckPills";
+import { RequirementLine, RequirementStack } from "./RequirementLine";
+import { SectionProgress } from "./SectionProgress";
+import { SheetControls } from "./SheetControls";
 import { useDegreeUi } from "./degreeUi";
+import { useCurrentTerm } from "./useCurrentTerm";
 import type { DegreeView } from "./useDegreeView";
 
-const share = (count: number, total: number) => (total > 0 ? `${Math.min(100, (count / total) * 100)}%` : "0%");
-
-function tileWord(tile: SheetTile) {
-  if (tile.kind === "planned") return { word: "Planned", Icon: CircleDashed };
-  if (tile.kind === "check") return { word: "Check this yourself", Icon: Info };
-  if (tile.kind === "done" || (tile.kind === "tick" && tile.checked)) return { word: "Done", Icon: CheckCircle };
-  return { word: "Missing", Icon: Circle };
-}
-
-function Row({ section }: { section: SheetSection }) {
-  const [open, setOpen] = useState(false);
-  const panelId = useId();
+function Section({ section, history, current }: { section: SheetSection; history: DegreeHistory; current: TermName | null }) {
   const filter = useDegreeUi((state) => state.filter);
-  const openPanel = useDegreeUi((state) => state.open);
-  const { name, lineRange, done, planned, total, tiles } = section;
-  const toGo = total - done - planned;
-  const shown = filter ? tiles.filter((tile) => tileMatchesFilter(tile, filter)) : tiles;
+  const finished = sectionFinished(section) && filter === null;
+  const [shown, setShown] = useState(!finished);
+  const lines = filter ? section.tiles.filter((tile) => tileMatchesFilter(tile, filter)) : section.tiles;
+  const visible = shown || !finished;
   return (
-    <li className="border-t border-line">
-      <h3>
-        <button type="button" aria-expanded={open} aria-controls={panelId} onClick={() => setOpen(!open)} className="flex w-full cursor-pointer flex-col gap-8 py-14 text-left tablet:flex-row tablet:items-center tablet:gap-20">
-          <span className="w-190 shrink-0">
-            <span className="block text-9 leading-15 font-650">{name}</span>
-            <span className="block pt-4 text-caption leading-14-4 text-ink-muted">{lineRange}</span>
-          </span>
-          <span className="min-w-0 flex-1">
-            <span
-              role="progressbar"
-              aria-label={`${name}: ${done} of ${total}`}
-              aria-valuemin={0}
-              aria-valuemax={total}
-              aria-valuenow={done}
-              aria-valuetext={`${done} done, ${planned} planned, ${toGo} to go`}
-              className="flex h-6 overflow-hidden rounded-pill bg-track"
-            >
-              <span className="bg-chart-done" style={{ width: share(done, total) }} />
-              <span className="bg-chart-planned" style={{ width: share(planned, total) }} />
-            </span>
-            <span className="block pt-6 text-caption leading-14-4 text-ink-muted">{done} done · {planned} planned · {toGo} to go</span>
-          </span>
-          <span className="shrink-0 text-right text-8-5 leading-16 font-650 tablet:w-40">{done}/{total}</span>
-        </button>
-      </h3>
-      <div id={panelId} hidden={!open}>
-        {open && (
-          <ul className="pb-12 tablet:pl-210">
-            {shown.map((tile) => {
-              const { word, Icon } = tileWord(tile);
-              const text = `${tile.course ? `${tile.course} → ` : ""}${tile.number ? lineName(tile.line) : `${tile.label}, line 7`}`;
-              return (
-                <li key={tile.key} className="flex items-center justify-between gap-12 border-t border-line py-7 first:border-t-0">
-                  {tile.course ? (
-                    <button type="button" onClick={() => openPanel({ kind: "options", code: tile.course! })} className="cursor-pointer rounded-badge text-left text-8-5 leading-16 hover:text-accent">{text}</button>
-                  ) : tile.kind === "empty" ? (
-                    <button type="button" onClick={() => openPanel({ kind: "fill", line: tile.line })} className="cursor-pointer rounded-badge text-left text-8-5 leading-16 text-ink-muted hover:text-accent">{text}</button>
-                  ) : (
-                    <span className="text-8-5 leading-16 text-ink-muted">{text}</span>
-                  )}
-                  <span className="flex shrink-0 items-center gap-4 text-caption leading-14-4 font-570 text-ink-soft"><Icon aria-hidden className="size-13" />{word}</span>
-                </li>
-              );
-            })}
-          </ul>
+    <li className="border-t border-line py-14">
+      <div className="flex flex-wrap items-center gap-x-20 gap-y-8">
+        <h3 className="w-full text-17 font-650 tablet:w-180">{section.name}</h3>
+        <SectionProgress section={section} className="min-w-0 flex-1 tablet:max-w-320" />
+        {finished && (
+          <button type="button" aria-expanded={visible} onClick={() => setShown(!shown)} className="ml-auto flex cursor-pointer items-center gap-5 rounded-badge text-8 leading-16 font-570 text-accent hover:underline">
+            {visible ? "Hide lines" : `Show ${section.tiles.length} lines`}
+            <CaretDown aria-hidden className={cx("size-11 transition-transform motion-reduce:transition-none", visible && "rotate-180")} />
+          </button>
         )}
       </div>
+      {visible && (
+        <>
+          <ul className="mt-10 flex flex-col">
+            {stackEmptyTiles(lines).map((item) => <li key={item.key} className="border-t border-line first:border-t-0">
+              {isTileStack(item) ? <RequirementStack stack={item} /> : <RequirementLine tile={item} history={history} current={current} />}
+            </li>)}
+          </ul>
+          {section.note && <p className="flex items-start gap-5 pt-8 pl-6 text-8 leading-16 text-ink-muted"><Info aria-hidden className="mt-1 size-12 shrink-0" />{section.note}</p>}
+        </>
+      )}
     </li>
   );
 }
 
-export function RequirementsList({ view }: { view: DegreeView }) {
+export function RequirementsList({ view, history }: { view: DegreeView; history: DegreeHistory }) {
   const phone = usePhoneViewport();
-  const sections = phone ? view.sheet.sections : sectionsWithMqp(view.sheet.sections);
+  const current = useCurrentTerm();
+  const all = phone ? view.sheet.sections : sectionsWithMqp(view.sheet.sections);
+  const filter = useDegreeUi((state) => state.filter);
+  const sections = filter ? all.filter((section) => section.tiles.some((tile) => tileMatchesFilter(tile, filter))) : all;
   return (
-    <section aria-label="Your requirements" className="rounded-panel border border-card-line bg-surface px-16 pt-18 pb-14 tablet:px-22">
-      <div className="flex items-center justify-between gap-12 pb-16">
-        <h2 className="text-12 leading-19-2 font-650">Your requirements</h2>
-        <p className="text-caption leading-14-4 text-ink-muted">Same 45 lines · list view</p>
+    <section aria-label="Your requirements" className="rounded-panel border border-card-line bg-surface px-16 pt-18 pb-14 tablet:px-20">
+      <div className="flex flex-wrap items-center justify-between gap-12 pb-12">
+        <h2 className="text-12 leading-19-2 font-650">Your sheet</h2>
+        <SheetControls view={view} />
+      </div>
+      <div aria-hidden className="hidden grid-cols-[2rem_minmax(0,10rem)_minmax(0,1fr)_minmax(0,7rem)_7.25rem] gap-x-14 border-t border-line px-6 pt-10 pb-2 text-8 leading-16 font-570 tracking-[0.04em] text-ink-muted uppercase tablet:grid">
+        <span>Line</span><span>Requirement</span><span>Course</span><span>When</span><span>Status</span>
       </div>
       <ul>
-        {sections.map((section) => <Row key={section.id} section={section} />)}
+        {sections.map((section) => <Section key={section.id} section={section} history={history} current={current} />)}
       </ul>
       <div className="border-t border-line pt-14">
         <CheckPills pills={view.pills} />

@@ -68,10 +68,11 @@ for (const width of [1440, 834]) {
       await expect(page.getByRole("combobox", { name: "Term", exact: true })).toHaveCount(0);
       await openHistory(page);
       await capture("history");
-      await panel(page, "Course history").getByRole("button", { name: "CS 2022 details" }).click();
-      const details = panel(page, "Course details");
+      await panel(page, "Course history").getByRole("button", { name: "Edit CS 2022" }).click();
+      const details = panel(page, "Edit course");
       await expect(details).toBeVisible();
       await capture("details");
+      await details.getByRole("radio", { name: "Other" }).click();
       await details.getByRole("textbox", { name: "Units", exact: true }).fill("invalid");
       await details.getByRole("button", { name: "Save changes" }).click();
       await expect(details.getByText("Enter WPI units, like 1/3 or 1/6.")).toBeVisible();
@@ -112,8 +113,8 @@ for (const theme of ["light", "dark"]) {
     await openDegree(page);
     await expect(page.getByRole("heading", { name: "Your sheet starts here" })).toBeVisible();
     await page.screenshot({ path: `e2e/screenshots/degree-theme-first-visit-${theme}-1440.png`, animations: "disabled", fullPage: true });
-    await page.getByRole("button", { name: "Add several courses" }).click();
-    await expect(panel(page, "Paste courses from Workday")).toBeVisible();
-    await page.screenshot({ path: `e2e/screenshots/degree-theme-paste-${theme}-1440.png`, animations: "disabled" });
+    await page.getByRole("button", { name: "Add AP or IB credit" }).click();
+    await expect(panel(page, "Add manual credit")).toBeVisible();
+    await page.screenshot({ path: `e2e/screenshots/degree-theme-manual-${theme}-1440.png`, animations: "disabled" });
   });
 }

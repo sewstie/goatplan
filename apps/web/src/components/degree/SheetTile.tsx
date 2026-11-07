@@ -1,10 +1,11 @@
 "use client";
 
-import { Check, CircleDashed, Info, Plus, PushPin } from "@phosphor-icons/react/ssr";
+import { PushPin } from "@phosphor-icons/react/ssr";
 import { CheckBox } from "@/components/ui/CheckField";
 import { cx } from "@/components/ui/cx";
-import { getDegreeSource, type DegreeHistory, type SheetTile as Tile } from "@/lib/degree";
+import { getDegreeSource, type DegreeHistory, type SheetTile as Tile, type TermName } from "@/lib/degree";
 import { useDegreeUi } from "./degreeUi";
+import { TILE_LOOK, tileState } from "./tileState";
 import { DRAG_TYPE, lineDropProps } from "./tileDrag";
 import type { DegreeView } from "./useDegreeView";
 
@@ -12,35 +13,45 @@ type SheetTileProps = {
   tile: Tile;
   view: DegreeView;
   history: DegreeHistory;
+  current: TermName | null;
 };
 
-const BOX = "group relative flex min-h-43 w-full items-center gap-7 rounded-row border py-5 pr-9 pl-25 text-left";
+export const TILE_BOX = "degree-tile group relative flex min-h-56 w-full min-w-0 flex-col justify-center gap-2 rounded-row border py-8 pl-10 text-left transition-colors motion-reduce:transition-none";
 
-export function SheetTile({ tile, view, history }: SheetTileProps) {
+function Corner({ number, pinned }: { number: string; pinned?: boolean }) {
+  if (!number && !pinned) return null;
+  return (
+    <span aria-hidden className="absolute top-6 right-7 flex items-center gap-3 text-8 leading-16 text-ink-faint tabular-nums">
+      {pinned && <PushPin weight="fill" className="size-10 text-ink" />}
+      {number}
+    </span>
+  );
+}
+
+export function SheetTile({ tile, view, history, current }: SheetTileProps) {
   const open = useDegreeUi((state) => state.open);
   const selectedTerm = useDegreeUi((state) => state.selectedTerm);
   const highlighted = selectedTerm !== null && tile.term === selectedTerm;
-
-  const number = tile.number && <span aria-hidden className="absolute top-4 left-6 text-micro leading-13 text-ink-faint">{tile.number}</span>;
-  const outline = cx(highlighted && "outline-2 -outline-offset-1 outline-accent", tile.pinned && !highlighted && "border-accent! border-[1.5px]");
+  const state = tileState(tile, history, current);
+  const { word, Icon, box, ink } = TILE_LOOK[state];
+  const outline = cx(highlighted && "outline-2 -outline-offset-1 outline-accent", tile.pinned && !highlighted && "border-accent");
 
   if (tile.kind === "tick") {
     const manualId = tile.manualId;
-    const isSlot = tile.number === "";
     return (
-      <label className={cx(BOX, "border-tile-tick-line bg-surface", manualId ? "cursor-pointer" : "cursor-default", isSlot ? "min-h-50 pl-12" : "")}>
-        {number}
-        <CheckBox
-          small
-          aria-label={`${tile.label}${tile.number ? `, line ${tile.line}` : ""}`}
-          checked={tile.checked}
-          disabled={!manualId}
-          onChange={(event) => manualId && getDegreeSource().setManualItem(manualId, event.target.checked)}
-        />
-        <span className="min-w-0 pl-2">
-          <span className="block truncate text-caption leading-14-4 font-510">{tile.label}</span>
-          {tile.detail && <span className="block text-micro leading-13 text-ink-muted">{tile.detail}</span>}
+      <label className={cx(TILE_BOX, "pr-26", box, manualId ? "cursor-pointer hover:border-line-strong" : "cursor-default")}>
+        <Corner number={tile.number} />
+        <span className="flex min-w-0 items-center gap-7">
+          <CheckBox
+            small
+            aria-label={`${tile.label}${tile.number ? `, line ${tile.line}` : ""}`}
+            checked={tile.checked}
+            disabled={!manualId}
+            onChange={(event) => manualId && getDegreeSource().setManualItem(manualId, event.target.checked)}
+          />
+          <span className={cx("truncate text-9 leading-14-4 font-600", tile.checked ? ink : "text-ink")}>{tile.label}</span>
         </span>
+        <span className="truncate pl-20 text-8 leading-16 text-ink-muted">{tile.detail ?? (tile.checked ? "Done" : "Tick when done")}</span>
       </label>
     );
   }
@@ -49,16 +60,19 @@ export function SheetTile({ tile, view, history }: SheetTileProps) {
 
   if (tile.kind === "empty") {
     return (
-      <button type="button" {...dropProps} aria-label={`${tile.label}, line ${tile.line}, empty. Find courses that fit`} onClick={() => open({ kind: "fill", line: tile.line })} className={cx(BOX, "cursor-pointer border-dashed border-tile-empty-line bg-tile-empty hover:border-tile-planned-line")}>
-        {number}
-        <Plus aria-hidden className="size-13 shrink-0 text-ink" />
-        <span className="line-clamp-2 min-w-0 text-caption leading-14-4 text-ink-soft">{tile.label}</span>
+      <button type="button" {...dropProps} aria-label={`${tile.label}, line ${tile.line}, empty. Find courses that fit`} onClick={() => open({ kind: "fill", line: tile.line })} className={cx(TILE_BOX, "pr-26", box, "cursor-pointer hover:border-tile-planned-line hover:bg-accent-soft")}>
+        <Corner number={tile.number} />
+        <span className="flex min-w-0 items-center gap-6">
+          <Icon aria-hidden weight="bold" className="size-12 shrink-0 text-ink-soft group-hover:text-accent" />
+          <span className="truncate text-9 leading-14-4 font-600 text-ink-soft group-hover:text-accent">{tile.label}</span>
+        </span>
+        <span className="truncate pl-18 text-8 leading-16 text-ink-muted group-hover:text-accent">Add a course</span>
       </button>
     );
   }
 
   const code = tile.course;
-  const words = tile.kind === "planned" ? "planned" : tile.kind === "check" ? "check this yourself" : "done";
+  const words = state === "progress" ? "in progress" : tile.kind === "planned" ? "planned" : tile.kind === "check" ? "check this yourself" : "done";
   return (
     <button
       type="button"
@@ -69,24 +83,14 @@ export function SheetTile({ tile, view, history }: SheetTileProps) {
       {...(code ? dropProps : {})}
       aria-label={`${code ?? tile.label}, line ${tile.line}, ${words}${tile.pinned ? ", pinned" : ""}${tile.detail ? `, ${tile.detail}` : ""}. Course options`}
       onClick={() => code && open({ kind: "options", code })}
-      className={cx(
-        BOX,
-        "cursor-pointer",
-        tile.kind === "done" && "border-transparent bg-tile-done",
-        tile.kind === "check" && "border-tile-check-line bg-tile-check",
-        tile.kind === "planned" && "border-dashed border-tile-planned-line bg-surface",
-        outline,
-      )}
+      className={cx(TILE_BOX, "pr-26", box, "cursor-pointer hover:brightness-97", outline)}
     >
-      {number}
-      <span aria-hidden className={cx("flex shrink-0 self-start pt-0.5 [&_svg]:size-13", tile.kind === "planned" ? "text-ink-soft" : "text-ink")}>
-        {tile.kind === "check" ? <Info /> : tile.kind === "planned" ? <CircleDashed /> : <Check />}
+      <Corner number={tile.number} pinned={tile.pinned} />
+      <span className="flex min-w-0 items-center gap-6">
+        <Icon aria-hidden weight="bold" className={cx("size-12 shrink-0", ink)} />
+        <span className={cx("truncate text-10 leading-15 font-650", ink)}>{code ?? tile.label}</span>
       </span>
-      <span className="min-w-0 flex-1">
-        <span className={cx("block truncate text-10 leading-17 font-650", tile.kind === "planned" ? "text-accent" : "text-ink")}>{code ?? tile.label}</span>
-        {tile.detail && <span className="block text-micro leading-13 text-ink-muted">{tile.detail}</span>}
-      </span>
-      {tile.pinned && <PushPin aria-hidden className="size-13 shrink-0 text-ink" />}
+      <span className="truncate pl-18 text-8 leading-16 text-ink-muted">{tile.detail ?? (tile.kind === "check" ? "Check this yourself" : word)}</span>
     </button>
   );
 }

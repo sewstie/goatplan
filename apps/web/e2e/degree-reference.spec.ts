@@ -1,0 +1,60 @@
+import { expect, test } from "@playwright/test";
+import { fixtureHistory, openDegree, stored } from "./fixtures/degree";
+import { COURSE_MAP_ON, SUGGESTIONS_ON } from "../src/components/degree/degreeFeatures";
+
+for (const width of [1440, 834]) {
+  test(`degree reference layouts at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await openDegree(page, fixtureHistory("degree-history-mid.json"));
+    const navigation = page.getByRole("navigation", { name: "Degree views" });
+    await expect(navigation.getByRole("button")).toHaveCount(2 + Number(SUGGESTIONS_ON) + Number(COURSE_MAP_ON));
+    await page.screenshot({ path: `apps/web/e2e/screenshots/degree-reference-sheet-${width}.png`, fullPage: true });
+    await navigation.getByRole("button", { name: "Plan ahead", exact: true }).click();
+    await expect(page.getByRole("region", { name: "Four-year plan", exact: true })).toBeVisible();
+    await expect(page.getByRole("region", { name: "A Term 2026", exact: true })).toBeVisible();
+    await page.screenshot({ path: `apps/web/e2e/screenshots/degree-reference-plan-${width}.png`, fullPage: true });
+    if (COURSE_MAP_ON) {
+      await navigation.getByRole("button", { name: "Course map", exact: true }).click();
+      await page.getByRole("button", { name: "CS 2103", exact: true }).click();
+      await expect(page.getByText("Selected course", { exact: true })).toBeVisible();
+      await expect(page.getByRole("link", { name: "Recommended background · WPI" })).toBeVisible();
+      await page.screenshot({ path: `apps/web/e2e/screenshots/degree-reference-map-${width}.png`, fullPage: true });
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+}
+
+test("plan course edits persist in the existing history", async ({ page }) => {
+  await openDegree(page, fixtureHistory("degree-history-mid.json"));
+  await page.getByRole("navigation", { name: "Degree views" }).getByRole("button", { name: "Plan ahead" }).click();
+  await page.getByRole("button", { name: /^Edit CS 1102,/ }).click();
+  await page.getByRole("button", { name: /^Term \(optional\)/ }).click();
+  await page.getByRole("button", { name: "D Term 2027", exact: true }).click();
+  await page.getByRole("button", { name: "Save changes" }).click();
+  expect((await stored(page)).courses.find((course: { code: string }) => course.code === "CS 1102").term).toBe("D Term 2027");
+  await expect(page.getByRole("region", { name: "D Term 2027", exact: true }).getByRole("button", { name: /^Edit CS 1102,/ })).toBeVisible();
+});
+
+test("project blocks reserve a term without changing degree credit", async ({ page }) => {
+  await openDegree(page, fixtureHistory("degree-history-mid.json"));
+  const before = await stored(page);
+  await page.getByRole("navigation", { name: "Degree views" }).getByRole("button", { name: "Plan ahead" }).click();
+  await page.getByRole("button", { name: "Add project block", exact: true }).click();
+  const dialog = page.getByRole("dialog", { name: "Add project block" });
+  await dialog.getByRole("button", { name: "Add project block", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Remove IQP project block from B Term 2028" })).toBeVisible();
+  expect(await stored(page)).toEqual(before);
+  await page.reload();
+  await page.getByRole("navigation", { name: "Degree views" }).getByRole("button", { name: "Plan ahead" }).click();
+  await expect(page.getByRole("button", { name: "Remove IQP project block from B Term 2028" })).toBeVisible();
+});
+
+test("phone keeps a readable plan", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await openDegree(page, fixtureHistory("degree-history-mid.json"));
+  await page.getByRole("navigation", { name: "Degree views" }).getByRole("button", { name: "Plan ahead" }).click();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.screenshot({ path: "apps/web/e2e/screenshots/degree-reference-plan-375.png", fullPage: true });
+  await page.getByRole("button", { name: "Switch to dark theme" }).click();
+  await page.screenshot({ path: "apps/web/e2e/screenshots/degree-reference-plan-dark-375.png", fullPage: true });
+});

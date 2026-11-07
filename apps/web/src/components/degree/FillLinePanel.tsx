@@ -7,6 +7,7 @@ import { DrawerFrame } from "@/components/ui/Drawer";
 import { TextInput } from "@/components/ui/TextInput";
 import { cleanCourseCode, findCourse, foundCourse, getDegreeSource, historyForLine, lineLabel, loadCatalog, sectionNameOfLine, typedCourse, type DegreeHistory } from "@/lib/degree";
 import { requestMove } from "./degreeActions";
+import { SUGGESTIONS_ON } from "./degreeFeatures";
 import { useDegreeUi } from "./degreeUi";
 import { SummaryCard } from "./SummaryCard";
 import type { DegreeView } from "./useDegreeView";
@@ -55,9 +56,11 @@ export function FillLinePanel({ line, view, history }: { line: number; view: Deg
           </ul>
         </section>
       )}
-      <div className="border-b border-line py-18">
-        <Button variant="secondary" onClick={() => open({ kind: "suggest", line })}>Suggest courses for this line</Button>
-      </div>
+      {SUGGESTIONS_ON && (
+        <div className="border-b border-line py-18">
+          <Button variant="secondary" onClick={() => open({ kind: "suggest", line })}>Suggest courses for this line</Button>
+        </div>
+      )}
       <form onSubmit={(event) => void addTyped(event)} noValidate className="pt-18">
         <h3 className="pb-14 text-8-5 leading-16 font-650">Type a code</h3>
         <TextInput

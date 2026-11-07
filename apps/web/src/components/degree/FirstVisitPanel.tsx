@@ -1,6 +1,6 @@
 "use client";
 
-import { ClipboardText, GraduationCap, Plus } from "@phosphor-icons/react/ssr";
+import { GraduationCap, MagnifyingGlass, Plus } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
 import { useDegreeUi } from "./degreeUi";
 
@@ -16,8 +16,8 @@ export function FirstVisitPanel() {
         </div>
       </div>
       <div className="flex flex-wrap gap-8">
-        <Button icon={<ClipboardText aria-hidden />} className="min-h-38 px-14" onClick={() => open({ kind: "history", tab: "several" })}>Add several courses</Button>
-        <Button variant="secondary" icon={<Plus aria-hidden />} className="min-h-38 px-14" onClick={() => open({ kind: "history", tab: "search" })}>Add one course</Button>
+        <Button icon={<MagnifyingGlass aria-hidden />} className="min-h-38 px-14" onClick={() => open({ kind: "history", tab: "search" })}>Find your courses</Button>
+        <Button variant="secondary" icon={<Plus aria-hidden />} className="min-h-38 px-14" onClick={() => open({ kind: "manual" })}>Add AP or IB credit</Button>
       </div>
     </section>
   );

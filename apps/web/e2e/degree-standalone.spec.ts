@@ -1,5 +1,6 @@
 import { expect, test } from "./fixtures/test";
 import { auditReady, fixtureHistory, openDegree, openHistory, panel, savedCourse, stored } from "./fixtures/degree";
+import { SUGGESTIONS_ON } from "../src/components/degree/degreeFeatures";
 
 for (const width of [1440, 834, 375]) {
   test(`standalone degree sheet and suggestions at ${width}px`, async ({ page }) => {
@@ -9,6 +10,7 @@ for (const width of [1440, 834, 375]) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: `e2e/screenshots/degree-standalone-${width}.png`, fullPage: true, animations: "disabled" });
+    if (!SUGGESTIONS_ON) return;
     await page.getByRole("button", { name: "Sheet options" }).focus();
     await page.keyboard.press("Enter");
     await page.getByRole("dialog").getByRole("button", { name: "Suggest courses", exact: true }).focus();
@@ -26,37 +28,22 @@ for (const width of [1440, 834, 375]) {
 
 test("catalog-only courses can be planned for unpublished terms", async ({ page }) => {
   await openDegree(page);
-  await page.getByRole("button", { name: "Add one course" }).click();
-  await page.getByRole("textbox", { name: "Course code or title" }).fill("CS 4120");
-  await expect(page.getByText("Not offered in 2026–27").first()).toBeVisible();
-  await page.getByRole("combobox", { name: "Status", exact: true }).selectOption("planned");
-  await page.getByRole("combobox", { name: "Term (optional)" }).selectOption("D Term 2030");
-  await page.getByRole("button", { name: "Use CS 4120", exact: true }).click();
+  await page.getByRole("button", { name: "Find your courses" }).click();
+  await page.getByRole("button", { name: /^Adding to/ }).click();
+  await page.getByRole("button", { name: "D Term 2030", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Planned", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("combobox", { name: "Course code or title" }).fill("CS 4120");
+  await expect(page.getByText(/^Not offered in \d{4}–\d{2}$/).first()).toBeVisible();
+  await page.getByRole("button", { name: "Add CS 4120", exact: true }).click();
   await page.keyboard.press("Escape");
   await auditReady(page);
   expect((await stored(page)).courses).toEqual([expect.objectContaining({ code: "CS 4120", title: "Analysis of Algorithms", status: "planned", term: "D Term 2030" })]);
   const history = await openHistory(page);
-  await history.getByRole("button", { name: "CS 4120 details" }).click();
+  await history.getByRole("button", { name: "Edit CS 4120" }).click();
   await expect(page.getByRole("button", { name: "Open in planner", exact: true })).toHaveCount(0);
   await page.reload();
   await auditReady(page);
   expect((await stored(page)).courses[0].status).toBe("planned");
-});
-
-test("pasted courses use the explicit review status and selected term", async ({ page }) => {
-  await openDegree(page);
-  await page.getByRole("button", { name: "Add several courses" }).click();
-  await page.getByRole("textbox", { name: "Workday course text" }).fill("CS 2102 A Term 2025 In progress\nMA 1021 B Term 2026");
-  await page.getByRole("button", { name: "Review 2 courses" }).click();
-  const review = panel(page, "Review detected courses");
-  await review.getByRole("combobox", { name: "These are", exact: true }).selectOption("planned");
-  await review.getByRole("combobox", { name: "Term for selected" }).selectOption("D Term 2030");
-  await expect(review.getByText("D Term 2030 · ⅓ unit · planned")).toHaveCount(2);
-  await review.getByRole("button", { name: "Add 2 courses" }).click();
-  expect((await stored(page)).courses).toEqual([
-    expect.objectContaining({ code: "CS 2102", status: "planned", term: "D Term 2030" }),
-    expect.objectContaining({ code: "MA 1021", status: "planned", term: "D Term 2030" }),
-  ]);
 });
 
 test("planner courses reach My degree only through the explicit menu action", async ({ page }) => {
@@ -73,13 +60,14 @@ test("planner courses reach My degree only through the explicit menu action", as
   await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "My degree", exact: true }).click();
   await auditReady(page);
   const history = await openHistory(page);
-  await history.getByRole("button", { name: "CS 2303 details" }).click();
+  await history.getByRole("button", { name: "Edit CS 2303" }).click();
   await page.getByRole("button", { name: "Open in planner", exact: true }).click();
   await expect(page).toHaveURL(/\/$/);
   expect((await stored(page)).courses).toHaveLength(2);
 });
 
 test("future suggestions use only observed term letters and leave the planner alone", async ({ page }) => {
+  test.skip(!SUGGESTIONS_ON, "Suggestions are paused");
   await openDegree(page, { courses: [savedCourse({ code: "CS 1101", credits: 3 })] });
   await page.getByRole("button", { name: "Sheet options" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Suggest courses", exact: true }).click();
@@ -94,6 +82,7 @@ test("future suggestions use only observed term letters and leave the planner al
 });
 
 test("Add to schedule opens the selected published term without adding degree history", async ({ page }) => {
+  test.skip(!SUGGESTIONS_ON, "Suggestions are paused");
   await openDegree(page, { courses: [savedCourse({ code: "CS 1101", credits: 3 })] });
   await page.getByRole("button", { name: "Sheet options" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Suggest courses", exact: true }).click();
@@ -126,21 +115,23 @@ test("catalog failures offer a retry without losing degree progress", async ({ p
   let failed = true;
   await page.route("**/data/catalog.json", (route) => failed ? route.fulfill({ status: 503 }) : route.fallback());
   await openDegree(page);
-  await page.getByRole("button", { name: "Add one course" }).click();
+  await page.getByRole("button", { name: "Find your courses" }).click();
   await expect(page.getByText("The course catalog couldn’t be loaded.")).toBeVisible();
   failed = false;
   await page.getByRole("dialog").getByRole("button", { name: "Try again", exact: true }).click();
-  await page.getByRole("textbox", { name: "Course code or title" }).fill("CS 4120");
-  await expect(page.getByRole("button", { name: "Use CS 4120", exact: true })).toBeVisible();
+  await page.getByRole("combobox", { name: "Course code or title" }).fill("CS 4120");
+  await expect(page.getByRole("button", { name: "Add CS 4120", exact: true })).toBeVisible();
 });
 
 test("unusual catalog identifiers stay in history for review without breaking the audit", async ({ page }) => {
   await openDegree(page);
-  await page.getByRole("button", { name: "Add one course" }).click();
-  await page.getByRole("textbox", { name: "Course code or title" }).fill("American Antiquarian Seminar");
-  await page.getByRole("button", { name: "Use HU—AAS-50", exact: true }).click();
+  await page.getByRole("button", { name: "Find your courses" }).click();
+  await page.getByRole("combobox", { name: "Course code or title" }).fill("American Antiquarian Seminar");
+  await page.getByRole("button", { name: "Add HU—AAS-50", exact: true }).click();
   await page.keyboard.press("Escape");
   await auditReady(page);
   expect((await stored(page)).courses[0]).toMatchObject({ code: "HU—AAS-50", title: "American Antiquarian Seminar" });
-  await expect(page.getByText("Needs a numbered WPI course code before it can count. Kept in history.")).toBeVisible();
+  const history = await openHistory(page);
+  await history.getByRole("button", { name: "Edit HU—AAS-50" }).click();
+  await expect(panel(page, "Edit course")).toContainText("needs a numbered WPI course code before it can count");
 });

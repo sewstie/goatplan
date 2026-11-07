@@ -1,8 +1,6 @@
 import { termLong } from "@/lib/degree";
+import { planTerms } from "@/lib/degree/planGrid";
 
-export function termChoices() {
-  const terms = Array.from({ length: 5 }, (_, index) => 2026 + index).flatMap((year) =>
-    (["A", "B", "C", "D"] as const).map((letter) => termLong({ letter, year })),
-  );
-  return [{ value: "", label: "No term" }, ...terms.map((term) => ({ value: term, label: term }))];
+export function termChoices(startYear = 2026) {
+  return [{ value: "", label: "No term" }, ...planTerms(startYear).map((term) => ({ value: termLong(term), label: termLong(term) }))];
 }
