@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-05T17:15:33Z",
+  "generatedAt": "2026-11-07T15:35:21Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -8798,7 +8798,7 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/12 unit) Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
-        {"id":"WPE 1018-B01","code":"B01","type":"workshop","status":"open","enrolled":27,"capacity":28,"waitlist":{"taken":1,"capacity":10},"instructors":["Mickey Cahoon"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]},
+        {"id":"WPE 1018-B01","code":"B01","type":"workshop","status":"waitlist","enrolled":28,"capacity":28,"waitlist":{"taken":0,"capacity":10},"instructors":["Mickey Cahoon"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]},
         {"id":"WPE 1018-B02","code":"B02","type":"workshop","status":"waitlist","enrolled":29,"capacity":28,"waitlist":{"taken":6,"capacity":10},"instructors":["Cherise Galasso"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":890,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
