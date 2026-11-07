@@ -113,6 +113,16 @@
     --color-course-4-swatch: #a99bd7;
     --color-course-4-line: #a99bd7;
     --color-course-4-hover-line: #cbbcf4;
+    --color-area-systems: #d9bd5c;
+    --color-area-systems-soft: #332d1b;
+    --color-area-theory: #7fa9e3;
+    --color-area-theory-soft: #1d2a3d;
+    --color-area-design: #e3898c;
+    --color-area-design-soft: #3a2325;
+    --color-area-social: #c09ce3;
+    --color-area-social-soft: #2e2339;
+    --color-area-cyber: #7cc796;
+    --color-area-cyber-soft: #1c3326;
     --shadow-block-hover: 0 2px 5px 0 rgb(0 0 0 / 0.25);
     --shadow-popover: 0 4px 14px 0 rgb(0 0 0 / 0.3);
     --shadow-guide: 0 8px 30px 0 rgb(0 0 0 / 0.35);
@@ -245,6 +255,16 @@
   --color-course-4-swatch: #b9b1e9;
   --color-course-4-hover-line: #8b86b0;
   --color-course-4-line: transparent;
+  --color-area-systems: #b8941c;
+  --color-area-systems-soft: #fdf5d3;
+  --color-area-theory: #3f78c4;
+  --color-area-theory-soft: #e6effb;
+  --color-area-design: #c4555a;
+  --color-area-design-soft: #fce9e9;
+  --color-area-social: #8d5cc0;
+  --color-area-social-soft: #f3eafb;
+  --color-area-cyber: #2f8a52;
+  --color-area-cyber-soft: #e4f4e9;
 
   --text-*: initial;
   --text-25: 1.75rem;
