@@ -39,7 +39,7 @@ for (const width of [1440, 834]) {
     await page.getByRole("button", { name: "Continue", exact: true }).click();
     await auditReady(page);
     await expect(page.getByText("Data Science · Class of 2030 · Beta", { exact: true })).toBeVisible();
-    await expect(page.getByText("Not yet checked by a DS student. Tell us if something looks wrong.")).toBeVisible();
+    await expect(page.getByRole("link", { name: /^DS 2030 tracking sheet/ })).toBeVisible();
     await openAllSections(page);
     await expect(page.getByRole("button", { name: /^DS 1010, line 16,/ })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
