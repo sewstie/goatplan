@@ -3,7 +3,10 @@
 export { SHEET_CLASS_YEAR } from "./requirements";
 export { getGapSource, type CourseGaps } from "./courseGaps";
 export { useCourseGaps } from "./useCourseGaps";
-export { findCourse, loadCatalog, type Catalog } from "./catalog";
+export { findCourse, loadCatalog, offeringNote, type Catalog } from "./catalog";
+export { GPS_COURSES, GPS_SECTIONS, gpsCountsForHumanities, isGpsCourse, planGpsCredit, type GpsCreditPlan, type GpsPick, type GpsSection } from "./gps";
+export { applyHuaPath, detectHuaPath, HUA_GROUPINGS, HUA_SUBJECTS, humanitiesCourses, huaPathId, LANGUAGE_PATH_SUBJECTS, parseHuaPath, SEMINAR_CODES, type HuaPath, type HuaPathGuess } from "./humanities";
+export { EXAM_PROGRAMS, EXAMS, examAward, examLabel, examScores, findExam, planExamCredit, type Exam, type ExamCourse, type ExamCreditPlan, type ExamPick, type ExamProgram } from "./examCredit";
 export {
   cleanCourseCode,
   CREDIT_SOURCES,
@@ -20,7 +23,6 @@ export {
   type HistoryCourse,
   type LinePin,
 } from "./history";
-export { parsePastedCodes, parsePastedCourses, type PastedCourse } from "./paste";
 export { CREDITS_PER_UNIT, formatUnits, parseUnits, unitLabel } from "./units";
 export * from "./terms";
 export { earlierThan, estimatePace, type PaceEstimate } from "./pace";

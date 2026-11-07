@@ -316,10 +316,12 @@ describe("standalone history migration", () => {
     expect(serializeHistory(migrated.history)).not.toContain("inProgress");
   });
 
-  it("accepts all regular terms through 2030 without consulting published data", () => {
+  it("accepts all terms through 2030, summer included, without consulting published data", () => {
     const history = { courses: [course("CS 2102", { status: "planned", term: "D Term 2030" })], manual: [] };
     expect(parseHistoryFile(serializeHistory(history))).toEqual({ ok: true, history });
-    for (const term of ["E Term 2027", "A Term 2025", "B Term 2031", "anything"]) {
+    const summer = { ...history, courses: [course("CS 2102", { status: "planned", term: "E Term 2027" })] };
+    expect(parseHistoryFile(serializeHistory(summer))).toEqual({ ok: true, history: summer });
+    for (const term of ["A Term 2025", "B Term 2031", "anything"]) {
       expect(parseHistoryFile(serializeHistory({ ...history, courses: [course("CS 2102", { term })] }))).toEqual({ ok: false, reason: "broken" });
     }
   });

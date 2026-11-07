@@ -1,0 +1,719 @@
+{
+  "checked": "2026-11-06",
+  "programs": {
+    "AP": {
+      "source": "https://www.wpi.edu/offices/registrar/policies-procedures/ap-credit",
+      "scores": [
+        1,
+        5
+      ],
+      "minScore": 4
+    },
+    "IB": {
+      "source": "https://www.wpi.edu/offices/registrar/policies-procedures/ib-credit",
+      "scores": [
+        1,
+        7
+      ],
+      "minScore": 6,
+      "level": "HL"
+    }
+  },
+  "exams": [
+    {
+      "id": "ap-african-american-studies",
+      "program": "AP",
+      "name": "African American Studies",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "title": "Humanities Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-art-history",
+      "program": "AP",
+      "name": "Art History",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "title": "Humanities Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-art-studio-art-2d-design",
+      "program": "AP",
+      "name": "Art: Studio Art 2D Design",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "title": "Humanities Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-art-studio-art-3d-design",
+      "program": "AP",
+      "name": "Art: Studio Art 3D Design",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "title": "Humanities Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-art-studio-drawing",
+      "program": "AP",
+      "name": "Art: Studio Drawing",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "title": "Humanities Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-biology",
+      "program": "AP",
+      "name": "Biology",
+      "courses": [
+        {
+          "code": "BB 1000",
+          "title": "Biology Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-calculus-ab",
+      "program": "AP",
+      "name": "Calculus AB",
+      "courses": [
+        {
+          "code": "MA 1021",
+          "title": "Calculus I",
+          "credits": 3
+        },
+        {
+          "code": "MA 1022",
+          "title": "Calculus II",
+          "credits": 3,
+          "minScore": 5
+        }
+      ]
+    },
+    {
+      "id": "ap-calculus-ab-subscore",
+      "program": "AP",
+      "name": "Calculus AB Subscore",
+      "courses": [
+        {
+          "code": "MA 1021",
+          "title": "Calculus I",
+          "credits": 3
+        },
+        {
+          "code": "MA 1022",
+          "title": "Calculus II",
+          "credits": 3,
+          "minScore": 5
+        }
+      ]
+    },
+    {
+      "id": "ap-calculus-bc",
+      "program": "AP",
+      "name": "Calculus BC",
+      "courses": [
+        {
+          "code": "MA 1021",
+          "title": "Calculus I",
+          "credits": 3
+        },
+        {
+          "code": "MA 1022",
+          "title": "Calculus II",
+          "credits": 3
+        },
+        {
+          "code": "MA 1023",
+          "title": "Calculus III",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-chemistry",
+      "program": "AP",
+      "name": "Chemistry",
+      "courses": [
+        {
+          "code": "CH 1010",
+          "title": "Chemical Properties, Bonding, and Forces",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-chinese-language-culture",
+      "program": "AP",
+      "name": "Chinese Language & Culture",
+      "courses": [
+        {
+          "code": "CN 1541",
+          "title": "Elementary Chinese I",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-computer-science-a",
+      "program": "AP",
+      "name": "Computer Science A",
+      "courses": [
+        {
+          "code": "CS 1000",
+          "title": "Computer Science Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-cybersecurity",
+      "program": "AP",
+      "name": "Cybersecurity",
+      "courses": [
+        {
+          "code": "CS 1000",
+          "title": "Computer Science Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-economics-macroeconomics",
+      "program": "AP",
+      "name": "Economics: Macroeconomics",
+      "courses": [
+        {
+          "code": "ECON 1120",
+          "title": "Introductory Macroeconomics",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-economics-microeconomics",
+      "program": "AP",
+      "name": "Economics: Microeconomics",
+      "courses": [
+        {
+          "code": "ECON 1110",
+          "title": "Introductory Microeconomics",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-english-language-composition",
+      "program": "AP",
+      "name": "English Language & Composition",
+      "courses": [
+        {
+          "code": "EN 1000",
+          "title": "English Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-english-literature-composition",
+      "program": "AP",
+      "name": "English Literature & Composition",
+      "courses": [
+        {
+          "code": "EN 1100",
+          "title": "English Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-environmental-science",
+      "program": "AP",
+      "name": "Environmental Science",
+      "courses": [
+        {
+          "code": "ENV 1000",
+          "title": "Environmental Studies Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-european-history",
+      "program": "AP",
+      "name": "European History",
+      "courses": [
+        {
+          "code": "HI 1100",
+          "title": "History Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-french-language",
+      "program": "AP",
+      "name": "French Language",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "title": "Humanities Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-german-language",
+      "program": "AP",
+      "name": "German Language",
+      "courses": [
+        {
+          "code": "GN 1511",
+          "title": "Elementary German I",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-government-politics-comparative",
+      "program": "AP",
+      "name": "Government & Politics: Comparative",
+      "courses": [
+        {
+          "code": "GOV 1000",
+          "title": "Government, Political Science and Law Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-government-politics-us",
+      "program": "AP",
+      "name": "Government & Politics: US",
+      "courses": [
+        {
+          "code": "GOV 1000",
+          "title": "Government, Political Science and Law Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-human-geography",
+      "program": "AP",
+      "name": "Human Geography",
+      "courses": [
+        {
+          "code": "EL 1000",
+          "title": "General Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-japanese-language-culture",
+      "program": "AP",
+      "name": "Japanese Language & Culture",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "title": "Humanities Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-latin",
+      "program": "AP",
+      "name": "Latin",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "title": "Humanities Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-music-theory",
+      "program": "AP",
+      "name": "Music Theory",
+      "courses": [
+        {
+          "code": "MU 1110",
+          "title": "Music Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-physics-c-electricity-magnetism",
+      "program": "AP",
+      "name": "Physics C - Electricity & Magnetism",
+      "courses": [
+        {
+          "code": "PH 1120",
+          "title": "General Physics: Electricity and Magnetism",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-physics-c-mechanics",
+      "program": "AP",
+      "name": "Physics C - Mechanics",
+      "courses": [
+        {
+          "code": "PH 1110",
+          "title": "General Physics: Mechanics",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-psychology",
+      "program": "AP",
+      "name": "Psychology",
+      "courses": [
+        {
+          "code": "PSY 1400",
+          "title": "Introduction to Psychological Science",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-spanish-language",
+      "program": "AP",
+      "name": "Spanish Language",
+      "courses": [
+        {
+          "code": "SP 1523",
+          "title": "Elementary Spanish I",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-spanish-literature",
+      "program": "AP",
+      "name": "Spanish Literature",
+      "courses": [
+        {
+          "code": "SP 1000",
+          "title": "Spanish Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-statistics",
+      "program": "AP",
+      "name": "Statistics",
+      "courses": [
+        {
+          "code": "MA 2611",
+          "title": "Applied Statistics I",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-united-states-history",
+      "program": "AP",
+      "name": "United States History",
+      "courses": [
+        {
+          "code": "HI 1000",
+          "title": "History Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ap-world-history",
+      "program": "AP",
+      "name": "World History",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "title": "Humanities Elective",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-english-language-a-literature",
+      "program": "IB",
+      "name": "English Language A: Literature",
+      "courses": [
+        {
+          "code": "EN 1100",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-english-language-a-language-literature",
+      "program": "IB",
+      "name": "English Language A: Language & Literature",
+      "courses": [
+        {
+          "code": "EN 1100",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-classical-languages-latin-or-classical-greek",
+      "program": "IB",
+      "name": "Classical Languages (Latin or Classical Greek)",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-history",
+      "program": "IB",
+      "name": "History",
+      "courses": [
+        {
+          "code": "HU 1100",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-philosophy",
+      "program": "IB",
+      "name": "Philosophy",
+      "courses": [
+        {
+          "code": "PY 1100",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-music",
+      "program": "IB",
+      "name": "Music",
+      "courses": [
+        {
+          "code": "MU 1110",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-theatre",
+      "program": "IB",
+      "name": "Theatre",
+      "courses": [
+        {
+          "code": "TH 1100",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-visual-arts",
+      "program": "IB",
+      "name": "Visual Arts",
+      "courses": [
+        {
+          "code": "AR 1100",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-biology",
+      "program": "IB",
+      "name": "Biology",
+      "courses": [
+        {
+          "code": "BB 1000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-chemistry",
+      "program": "IB",
+      "name": "Chemistry",
+      "courses": [
+        {
+          "code": "CH 1010",
+          "credits": 3
+        },
+        {
+          "code": "CH 1020",
+          "credits": 3,
+          "minScore": 7
+        }
+      ]
+    },
+    {
+      "id": "ib-computer-science",
+      "program": "IB",
+      "name": "Computer Science",
+      "courses": [
+        {
+          "code": "CS 1000",
+          "credits": 3
+        },
+        {
+          "code": "CS 2000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-physics",
+      "program": "IB",
+      "name": "Physics",
+      "courses": [
+        {
+          "code": "PH 1110",
+          "credits": 3
+        },
+        {
+          "code": "PH 1120",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-business-management",
+      "program": "IB",
+      "name": "Business Management",
+      "courses": [
+        {
+          "code": "BUS 1000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-economics",
+      "program": "IB",
+      "name": "Economics",
+      "courses": [
+        {
+          "code": "ECON 1110",
+          "credits": 3
+        },
+        {
+          "code": "ECON 1000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-global-politics",
+      "program": "IB",
+      "name": "Global Politics",
+      "courses": [
+        {
+          "code": "GOV 1320",
+          "credits": 3
+        },
+        {
+          "code": "SS 1000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-information-technology-in-a-global-society",
+      "program": "IB",
+      "name": "Information Technology in a Global Society",
+      "courses": [
+        {
+          "code": "GOV 1320",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-psychology",
+      "program": "IB",
+      "name": "Psychology",
+      "courses": [
+        {
+          "code": "PSY 1400",
+          "credits": 3
+        },
+        {
+          "code": "PSY 1000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-mathematics",
+      "program": "IB",
+      "name": "Mathematics",
+      "courses": [
+        {
+          "code": "MA 1000",
+          "credits": 3
+        },
+        {
+          "code": "MA 1000",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-mathematics-analysis-and-approaches",
+      "program": "IB",
+      "name": "Mathematics: Analysis and Approaches",
+      "courses": [
+        {
+          "code": "MA 1021",
+          "credits": 3
+        },
+        {
+          "code": "MA 1022",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "id": "ib-sports-exercise-and-health-science",
+      "program": "IB",
+      "name": "Sports, Exercise and Health Science",
+      "courses": [
+        {
+          "code": "BB 3101",
+          "credits": 3
+        }
+      ]
+    }
+  ]
+}

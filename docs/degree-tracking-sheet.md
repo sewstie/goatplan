@@ -27,7 +27,8 @@ Duplicates keep their existing record.
 
 ## Catalog
 
-`data/catalog.json` stores course codes, titles, credits, level, `offeredThisYear`
+`data/catalog.json` stores course codes, titles, credits, level, `lastOffered`
+(the latest term the course was seen in, like `2027-D`, or null if never seen)
 and observed `termLetters`. It is served at `/data/catalog.json`. Degree search
 loads this catalog without loading planner term files.
 
@@ -43,10 +44,81 @@ manually when known.
 
 `npm run data:catalog` merges published terms into the saved catalog. The daily
 job runs it after normalization and commits the catalog with the term updates.
-Existing courses and observed term letters are never deleted. The 2026–27
-availability flag records offerings seen in 2026 A/B or 2027 C/D/E. Courses not
-seen in that academic year show “Not offered in 2026–27” in search and can still
-be added to the sheet.
+Existing courses and observed term letters are never deleted, so a course that
+stops being offered can still be found and added. If a later term file has a new
+title or credit value for a course, that one wins. Search works out the label
+from today’s date: a course never seen shows “Not offered in 2026–27” (the
+current academic year), and a course last seen in an earlier year shows “Last
+offered in D Term 2027”.
+
+## AP and IB credit
+
+`apps/web/src/lib/degree/exam-credit.json` lists every exam in WPI’s
+[AP credit table](https://www.wpi.edu/offices/registrar/policies-procedures/ap-credit)
+and [IB credit table](https://www.wpi.edu/offices/registrar/policies-procedures/ib-credit),
+copied on 2026-11-06. Check those pages and update the file by hand when WPI
+changes them. WPI’s IB table says BU 1000 for Business Management, but WPI’s
+business subject is BUS, so the file uses BUS 1000. AP credit needs a 4 or 5. IB credit needs an HL score of 6 or 7.
+A few courses need more, like MA 1022 for AP Calculus AB (5) or CH 1020 for IB
+Chemistry (7).
+
+Picking an exam and a score adds the courses WPI gives for it as taken AP/IB
+transfer credit with no term. That is the only way a course gets the AP/IB
+mark. The manual course form and the course details no longer have an AP/IB
+switch. Older histories keep their marks. WPI counts at most 1 AP/IB course
+toward humanities, and the audit applies that: one AP/IB course can fill a
+humanities line, and any others count somewhere else, with a note saying so. Elective codes like CS 1000 or BUS 1000 fill
+whatever line they fit, and the student can pin them to another line. A course
+already in the history, or given by another exam, is skipped and reported, so
+it never counts twice. See repeated elective codes below.
+
+## Humanities path
+
+Humanities and Arts work the same for every major, so the subjects and
+groupings live once in `apps/web/src/lib/degree/humanities.ts`. A test fails if
+a sheet’s copy drifts from them. The rules come from WPI’s
+[HUA tracking sheet](https://www.wpi.edu/sites/default/files/2026-08/HUA-2030_fillable.pdf)
+and the [humanities guide](https://web.wpi.edu/Images/CMS/HUA/HumanitiesFAQ_FINAL.pdf).
+There are two paths:
+
+- **Depth and breadth:** 3 related courses in one grouping, one of them at the
+  2000 level or above, then HU 3900 or HU 3910. Add a course from another
+  grouping and one humanities elective.
+- **Language:** all six courses in one language. The last one is an advanced
+  course (3000 or above) that takes the place of the seminar, and no breadth
+  course is needed. Chinese, German, Spanish and ISE have advanced courses.
+  Arabic doesn’t, so Arabic is only part of depth and breadth.
+
+The first humanities course picks the path. A Spanish course starts the Spanish
+path, and a history course starts depth and breadth. Courses are ordered by
+term. Taken courses with no term (like AP credit) come first, and planned ones
+with no term come last. A later course outside that language, or an HU 3900 or
+HU 3910, moves the student to depth and breadth. ISE could go either way, so it
+stays on depth and breadth and offers the ISE path as an option. A path the
+student picks always wins. It is saved as `huaPath` (`"depth-breadth"` or
+`"language:SP"`) at the top of the history, so it stays the same across majors.
+
+On the language path, the six humanities lines take only that language, the
+seminar line takes a 3000+ course in it, and the depth and breadth checks and
+the depth confirmation are left out. The engine audits that changed sheet as it
+is, so it needs no special rule for languages.
+
+## Great Problems Seminar
+
+A GPS (FY 1100 and FY 1101) is posted as two credits that depend on the section.
+`apps/web/src/lib/degree/gps-sections.json` lists the
+[current sections](https://www.wpi.edu/academics/undergraduate/great-problems-seminar),
+copied on 2026-11-06. Three of them give a humanities credit: Climate Present,
+Climate Futures and Biodiversity give INTL 1000, and Recover, Reuse, Recycle
+gives HU 1100. Picking a section adds its two credits. FY 1100 or FY 1101 already
+in the history is reported, so it can be swapped for the credits.
+
+## Repeated elective codes
+
+The history keeps one record per code, and the audit counts a repeated code
+once. Some real records repeat a code: IB Mathematics gives MA 1000 twice, and
+AP Biology plus the Heal the World GPS both give BB 1000. Only the first one
+counts for now, and the second shows up as skipped.
 
 ## Explicit planner connections
 

@@ -36,3 +36,20 @@ export function termsBetween(first: TermName, last: TermName, summer = false): T
   for (let term = first; termRank(term) <= termRank(last); term = nextTerm(term, summer)) list.push(term);
   return list;
 }
+
+export const sameTerm = (a: TermName | null, b: TermName | null) => !!a && !!b && a.letter === b.letter && a.year === b.year;
+
+export function termAt(date: Date): TermName {
+  const year = date.getFullYear();
+  const day = (date.getMonth() + 1) * 100 + date.getDate();
+  if (day <= 307) return { letter: "C", year };
+  if (day <= 507) return { letter: "D", year };
+  if (day <= 814) return { letter: "E", year };
+  if (day <= 1017) return { letter: "A", year };
+  if (day <= 1212) return { letter: "B", year };
+  return { letter: "C", year: year + 1 };
+}
+
+export const graduationMonth = ({ letter, year }: TermName) => `${letter === "C" || letter === "D" ? "May" : "December"} ${year}`;
+
+export const graduationSemester = ({ letter, year }: TermName) => year * 2 + (letter === "C" || letter === "D" ? 0 : 1);

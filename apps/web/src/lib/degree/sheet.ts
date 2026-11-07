@@ -1,5 +1,5 @@
 import type { AuditCheck, AuditLine, AuditSuccess } from "@/lib/engine/types";
-import type { DegreeHistory, HistoryCourse } from "./history";
+import type { CreditSource, DegreeHistory, HistoryCourse } from "./history";
 import { coursesInDoubt, lineState, manualItemForLine } from "./progress";
 import { loadedRequirements, SECTIONS, SPORTS_ITEM } from "./requirements";
 import { crossListed, WPE_LINE } from "./rules";
@@ -54,7 +54,7 @@ export interface CheckPill {
   state: CheckPillState;
 }
 
-export type SheetFilter = "done" | "planned" | "toGo" | "toCheck";
+export type SheetFilter = "done" | "planned" | "toGo" | "toCheck" | "remaining";
 
 const SECTION_NAMES: Record<string, string> = {
   hua: "Humanities & arts",
@@ -94,6 +94,8 @@ export const sectionNameOfLine = (line: number) => {
 
 export const lineName = (line: number) => `${sectionNameOfLine(line)}, line ${line}`;
 
+const CREDIT_LABELS: Partial<Record<CreditSource, string>> = { transfer: "Transfer", ap: "AP", ib: "IB" };
+
 export function findHistoryCourse(history: DegreeHistory, code: string): HistoryCourse | undefined {
   const names = crossListed(code);
   return history.courses.find((course) => names.includes(course.code));
@@ -104,7 +106,8 @@ function courseDetail(course: HistoryCourse | undefined, openTerm: TermName | nu
   if (!course) return { detail: openTerm ? termLong(openTerm) : "Planned", term: open };
   const named = parseTerm(course.term);
   const term = named ? termShort(named) : null;
-  if (course.creditSource === "transfer") return { detail: "Transfer", term };
+  const source = course.creditSource && CREDIT_LABELS[course.creditSource];
+  if (source) return { detail: source, term };
   if (named) return { detail: termLong(named), term };
   return { detail: course.term === PRIOR_CREDIT ? "Prior" : null, term: null };
 }
@@ -269,6 +272,7 @@ export function checkPills(result: AuditSuccess, history: DegreeHistory): CheckP
 }
 
 export function tileMatchesFilter(tile: SheetTile, filter: SheetFilter): boolean {
+  if (filter === "remaining") return tile.kind === "planned" || tile.kind === "empty" || (tile.kind === "tick" && !tile.checked);
   if (filter === "planned") return tile.kind === "planned";
   if (filter === "toCheck") return tile.kind === "check";
   const filled = tile.kind === "done" || tile.kind === "check" || (tile.kind === "tick" && tile.checked);
@@ -276,6 +280,7 @@ export function tileMatchesFilter(tile: SheetTile, filter: SheetFilter): boolean
 }
 
 export const FILTER_WORDS: Record<SheetFilter, { chip: string; sentence: string }> = {
+  remaining: { chip: "What’s left", sentence: "Unfilled and planned lines, grouped by requirement." },
   done: { chip: "Done", sentence: "Showing only completed coursework" },
   planned: { chip: "Planned", sentence: "Showing only planned coursework" },
   toGo: { chip: "To go", sentence: "Showing only open lines" },

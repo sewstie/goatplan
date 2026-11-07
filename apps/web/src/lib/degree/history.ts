@@ -1,4 +1,5 @@
 import { normalizeCourseCode } from "@/components/courses/courseCode";
+import { huaPathId, parseHuaPath } from "./humanities";
 import type { Course } from "@/lib/data/types";
 import { ENGINE_API_VERSION, type AuditCourse, type AuditRequest } from "@/lib/engine/types";
 import { parseTerm } from "./terms";
@@ -27,7 +28,7 @@ export interface HistoryCourse {
   creditSource?: CreditSource;
 }
 
-export const CREDIT_SOURCES = ["wpi", "transfer", "other"] as const;
+export const CREDIT_SOURCES = ["wpi", "transfer", "ap", "ib", "other"] as const;
 export type CreditSource = (typeof CREDIT_SOURCES)[number];
 
 export interface LinePin {
@@ -44,6 +45,7 @@ export interface DegreeHistory extends SheetHistory {
   courses: HistoryCourse[];
   sheetId?: string;
   sheets?: Record<string, SheetHistory>;
+  huaPath?: string;
 }
 
 export function keepSheetState(history: DegreeHistory): DegreeHistory {
@@ -89,7 +91,7 @@ const isObject = (value: unknown): value is Record<string, unknown> =>
 
 export function validHistoryTerm(text: string): boolean {
   const term = parseTerm(text);
-  return !!term && term.letter !== "E" && term.year >= 2026 && term.year <= 2030;
+  return !!term && term.year >= 2026 && term.year <= 2030;
 }
 
 export function parseCourse(value: unknown): HistoryCourse | null {
@@ -154,7 +156,8 @@ export function parseHistory(value: unknown): StoredHistory {
     const clean = parseSheetState(state);
     return isSheetId(id) && clean ? [[id, clean]] : [];
   })) : undefined;
-  return { history: { courses: [...courses.values()], manual, ...(pins.length > 0 ? { pins } : {}), ...(isSheetId(value.sheetId) ? { sheetId: value.sheetId } : {}), ...(sheets ? { sheets } : {}) }, damaged: damaged || !validSheetFields(value) };
+  const huaPath = parseHuaPath(value.huaPath);
+  return { history: { courses: [...courses.values()], manual, ...(pins.length > 0 ? { pins } : {}), ...(isSheetId(value.sheetId) ? { sheetId: value.sheetId } : {}), ...(sheets ? { sheets } : {}), ...(huaPath ? { huaPath: huaPathId(huaPath) } : {}) }, damaged: damaged || !validSheetFields(value) };
 }
 
 export function serializeHistory(history: DegreeHistory): string {
