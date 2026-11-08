@@ -140,9 +140,14 @@ in the history is reported, so it can be swapped for the credits.
 ## Repeated elective codes
 
 The history keeps one record per code, and the audit counts a repeated code
-once. Some real records repeat a code: IB Mathematics gives MA 1000 twice, and
-AP Biology plus the Heal the World GPS both give BB 1000. Only the first one
-counts for now, and the second shows up as skipped.
+once. When one exam gives the same code twice, like MA 1000 from IB
+Mathematics, the record keeps both: `copies: 2` and the credits of both
+(6). The audit request splits the credits per copy, and each copy fills its
+own line. Pinning moves one copy and leaves the other where it was.
+
+Two different sources that give the same code still count once: AP Biology
+plus the Heal the World GPS both give BB 1000, and the second shows up as
+skipped.
 
 ## Explicit planner connections
 

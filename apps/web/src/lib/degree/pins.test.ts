@@ -77,6 +77,15 @@ describe("applyPins", () => {
     expect(result.freeElectives.courses).toEqual([]);
   });
 
+  it("moves only one copy of a code that counts twice", () => {
+    const twice: PinCourses = new Map([["MA 1000", { credits: 6, taken: true }]]);
+    const start = audit([], [line(34, "MA 1000"), line(35, "MA 1000"), line(36)]);
+    const moved = applyPins(start, [{ code: "MA 1000", line: 36 }], twice).result;
+    expect([34, 35, 36].map((id) => lineOf(moved, id).course)).toEqual([null, "MA 1000", "MA 1000"]);
+    const stays = applyPins(start, [{ code: "MA 1000", line: 35 }], twice).result;
+    expect([34, 35, 36].map((id) => lineOf(stays, id).course)).toEqual(["MA 1000", "MA 1000", null]);
+  });
+
   it("rejects a pin the course isn't allowed on", () => {
     const start = audit([line(18, "CS 2119")], [line(38)]);
     const applied = applyPins(start, [{ code: "CS 2119", line: 18 }, { code: "CS 2119", line: 40 }], taken("CS 2119"));

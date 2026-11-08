@@ -10,6 +10,7 @@ export const HISTORY_KEY = "goatplan:history:v1";
 const HISTORY_VERSION = 2;
 export const DEFAULT_CREDITS = 3;
 const MAX_CREDITS = 30;
+const MAX_COPIES = 9;
 const MAX_TITLE_LENGTH = 300;
 export const MAX_TERM_LENGTH = 40;
 const MAX_MANUAL_ITEM_LENGTH = 64;
@@ -26,6 +27,7 @@ export interface HistoryCourse {
   apIb: boolean;
   source: "found" | "typed";
   creditSource?: CreditSource;
+  copies?: number;
 }
 
 export const CREDIT_SOURCES = ["wpi", "transfer", "ap", "ib", "other"] as const;
@@ -114,6 +116,7 @@ export function parseCourse(value: unknown): HistoryCourse | null {
     apIb: value.apIb === true,
     source: value.source === "found" ? "found" : "typed",
     ...(CREDIT_SOURCES.includes(value.creditSource as CreditSource) ? { creditSource: value.creditSource as CreditSource } : {}),
+    ...(Number.isInteger(value.copies) && (value.copies as number) > 1 && (value.copies as number) <= MAX_COPIES ? { copies: value.copies as number } : {}),
   };
 }
 
@@ -254,8 +257,12 @@ export function writeHistory(storage: HistoryStorage | null, history: DegreeHist
   }
 }
 
-const auditCourse = ({ code, credits, apIb }: HistoryCourse): AuditCourse =>
-  apIb ? { code, credits, apIb } : { code, credits };
+const auditCourse = ({ code, credits, apIb, copies = 1 }: HistoryCourse): AuditCourse => ({
+  code,
+  credits: credits / copies,
+  ...(apIb ? { apIb } : {}),
+  ...(copies > 1 ? { copies } : {}),
+});
 
 export function buildAuditRequest({ courses, manual }: DegreeHistory, sheet: TrackingSheet = getRequirements()): AuditRequest {
   return {

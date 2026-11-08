@@ -71,7 +71,14 @@ export function applyPins(result: AuditSuccess, pins: readonly LinePin[], course
   const size = (code: string) => courses.get(code)?.credits ?? 0;
   const stateOf = (code: string): AuditLine["state"] => (courses.get(code)?.taken ? "done" : "planned");
 
-  function removeEverywhere(code: string): boolean {
+  function removeEverywhere(code: string, target: AuditLine): boolean {
+    const holding = [...lines.values()].filter((line) => sameCourse(line.course, code));
+    if (holding.length > 1) {
+      if (holding.includes(target)) return true;
+      holding[0].course = null;
+      holding[0].state = "empty";
+      return true;
+    }
     let found = false;
     for (const line of lines.values()) {
       if (sameCourse(line.course, code)) {
@@ -133,13 +140,13 @@ export function applyPins(result: AuditSuccess, pins: readonly LinePin[], course
       rejected.push(pin);
       continue;
     }
-    const inAudit = removeEverywhere(pin.code);
+    const inAudit = removeEverywhere(pin.code, target);
     if (!inAudit) {
       rejected.push(pin);
       continue;
     }
     const holder = target.course;
-    if (holder) homeless.push(holder);
+    if (holder && !sameCourse(holder, pin.code)) homeless.push(holder);
     put(pin.code, pin.line);
     pinned.set(pin.line, pin.code);
   }

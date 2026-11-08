@@ -292,6 +292,19 @@ describe("buildAuditRequest", () => {
     });
   });
 
+  it("sends a code that counts more than once with its credits split per copy", () => {
+    const { history } = parseHistory({ version: 2, courses: [course("MA 1000", { apIb: true, credits: 6, copies: 2 })], manual: [] });
+    expect(history.courses[0].copies).toBe(2);
+    expect(buildAuditRequest(history).taken).toEqual([{ code: "MA 1000", credits: 3, apIb: true, copies: 2 }]);
+  });
+
+  it("drops a copies count it can't use", () => {
+    for (const copies of [1, 0, 1.5, 10, "2"]) {
+      const { history } = parseHistory({ version: 2, courses: [course("MA 1000", { copies: copies as number })], manual: [] });
+      expect(history.courses[0]).not.toHaveProperty("copies");
+    }
+  });
+
   it("works from the stored copy alone, for a course no term file lists", () => {
     const { history } = parseHistory({ version: 1, courses: [course("CS 1005", { title: "Retired course" })], manual: [] });
     expect(buildAuditRequest(history).taken).toEqual([{ code: "CS 1005", credits: 3 }]);

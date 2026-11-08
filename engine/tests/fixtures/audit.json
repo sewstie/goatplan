@@ -1164,6 +1164,25 @@
     "extra": ["CS 2223", "CS 2223"]
   },
   {
+    "name": "copies of one code each count as their own course",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        { "code": "MA 1000", "credits": 3, "apIb": true, "copies": 2 }
+      ]
+    },
+    "sections": {
+      "Mathematics": { "done": 2, "planned": 0, "total": 7 }
+    },
+    "lines": [
+      { "id": 34, "state": "done", "course": "MA 1000" },
+      { "id": 35, "state": "done", "course": "MA 1000" }
+    ],
+    "freeElectives": { "creditsDone": 0, "creditsPlanned": 0, "creditsTotal": 9, "courses": [] },
+    "extra": []
+  },
+  {
     "name": "WPE classes fill WPE slots",
     "request": {
       "version": 1,
@@ -2013,6 +2032,24 @@
     "error": {
       "code": "badRequest",
       "detail": "taken[0].credits"
+    }
+  },
+  {
+    "name": "invalid copies",
+    "request": {
+      "version": 1,
+      "requirements": "cs-2030",
+      "taken": [
+        {
+          "code": "MA 1000",
+          "credits": 3,
+          "copies": 0
+        }
+      ]
+    },
+    "error": {
+      "code": "badRequest",
+      "detail": "taken[0].copies"
     }
   },
   {

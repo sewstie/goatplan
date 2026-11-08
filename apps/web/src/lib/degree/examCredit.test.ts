@@ -43,6 +43,13 @@ describe("exam credit", () => {
     ]);
   });
 
+  it("keeps a code an exam gives twice as one record that counts twice", () => {
+    const { add, skipped } = planExamCredit({ courses: [] }, [{ examId: "ib-mathematics", score: 6 }]);
+    expect(add).toEqual([{ code: "MA 1000", title: "IB Mathematics HL", credits: 6, copies: 2, status: "taken", apIb: true, source: "found", creditSource: "ib" }]);
+    expect(skipped).toEqual([]);
+    expect(parseCourse(add[0])).toEqual(add[0]);
+  });
+
   it("never adds a course twice and says which ones were already counted", () => {
     const history = { courses: [typedCourse("MA 1021")] };
     const plan = planExamCredit(history, [{ examId: "ap-calculus-bc", score: 5 }, { examId: "ib-mathematics-analysis-and-approaches", score: 7 }, { examId: "ib-mathematics", score: 7 }]);
@@ -51,7 +58,6 @@ describe("exam credit", () => {
       { code: "MA 1021", exam: "AP Calculus BC" },
       { code: "MA 1021", exam: "IB Mathematics: Analysis and Approaches HL" },
       { code: "MA 1022", exam: "IB Mathematics: Analysis and Approaches HL" },
-      { code: "MA 1000", exam: "IB Mathematics HL" },
     ]);
   });
 

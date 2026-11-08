@@ -31,7 +31,7 @@ export function ExamCreditFields({ program, exams, pick, plan, onPick, onTypeIns
                 {plan.add.map((course) => (
                   <li key={course.code} className="flex items-center gap-8 border-b border-line py-7 last:border-b-0">
                     <Check aria-hidden weight="bold" className="size-12 shrink-0 text-success-ink" />
-                    <span className="text-9 leading-15 font-650">{course.code}</span>
+                    <span className="text-9 leading-15 font-650">{course.code}{course.copies ? ` ×${course.copies}` : ""}</span>
                     <span className="min-w-0 flex-1 truncate text-8 leading-12 text-ink-muted">{course.title}</span>
                     <span className="text-8 leading-12 text-ink-muted">{unitLabel(course.credits)}</span>
                   </li>

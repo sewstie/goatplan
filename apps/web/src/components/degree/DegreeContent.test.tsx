@@ -413,6 +413,22 @@ describe("course history", () => {
     ]);
   });
 
+  it("adds both MA 1000 credits from IB Mathematics", async () => {
+    const { user } = await setup();
+    await user.click(screen.getByRole("button", { name: "Course history" }));
+    await user.click(screen.getByRole("button", { name: "Manual credit" }));
+    const panel = within(screen.getByRole("region", { name: "Add manual credit" }));
+    await user.click(panel.getByRole("radio", { name: "IB" }));
+    await user.click(panel.getByRole("combobox", { name: "IB exam" }));
+    await user.click(screen.getByRole("option", { name: "Mathematics" }));
+    await user.click(panel.getByRole("radio", { name: "6" }));
+    const earns = within(panel.getByRole("region", { name: "What this exam earns" }));
+    expect(earns.getByText("MA 1000 ×2")).toBeVisible();
+    expect(earns.queryByText(/already in your history/)).toBeNull();
+    await user.click(panel.getByRole("button", { name: "Add 2 courses" }));
+    expect(stored().courses).toEqual([expect.objectContaining({ code: "MA 1000", credits: 6, copies: 2, apIb: true, creditSource: "ib" })]);
+  });
+
   it("refuses text that isn't shaped like a course code", async () => {
     const { user } = await setup();
     await user.click(screen.getByRole("button", { name: "Find your courses" }));

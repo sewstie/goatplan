@@ -373,6 +373,7 @@ Each course object has:
 | `code`    | string  | required | The course code, e.g. `"CS 2102"`. |
 | `credits` | number  | required | Credit value of the course. |
 | `apIb`    | boolean | `false`  | Whether the course was earned through AP or IB. |
+| `copies`  | integer | `1`      | How many times this code counts, from 1 to 9. `credits` is for one copy. |
 
 Codes use uppercase subjects of two to four letters, one space, and a
 three- or four-digit number with an optional uppercase suffix. Credits must
@@ -380,7 +381,8 @@ be finite and nonnegative. Invalid fields return `badRequest` with their
 field path. Optional lists may be omitted or `null` to use their defaults.
 
 A repeated code counts once; later copies are ignored and show as "Extra" in
-the response. Cross-listed courses (e.g. CS 2022 and MA 2201) are one course
+the response. The exception is `copies`: IB Mathematics gives MA 1000 twice,
+so it's sent once with `"copies": 2`, and each copy fills its own line. Cross-listed courses (e.g. CS 2022 and MA 2201) are one course
 with several codes; listing both codes counts once, and the unused code shows
 as "Extra". The order of the lists doesn't change the response.
 
@@ -517,7 +519,7 @@ The matcher assigns courses to lines to fill the most lines possible.
 - The `wpe-sports` manual item fills the WPE slots that taken classes leave
   open, and any class left over goes to the pool. Other manual items fill their
   own lines.
-- A repeated code counts once; later copies show as "Extra".
+- A repeated code counts once; later copies show as "Extra". A course sent with `copies` counts that many times.
 - An `apIbLimit` check caps how many AP/IB courses can fill lines in its
   section. Courses are counted in seating order, and the ones past the cap
   never connect to that section's lines.
