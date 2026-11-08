@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { CalendarBlank, Flag } from "@phosphor-icons/react/ssr";
+import { Flag } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
-import { ListboxField } from "@/components/ui/ListboxField";
 import { SegmentedSwitch } from "@/components/ui/SegmentedSwitch";
 import { getDegreeSource, parseTerm, termLong, unitLabel, type DegreeSnapshot, type TermName } from "@/lib/degree";
 import { coursePlanState, coursesInTerm, moveCourseTerm, planYears } from "@/lib/degree/planGrid";
-import { savePlanStart, usePlanStart } from "./usePlanStart";
+import { usePlanStart } from "./usePlanStart";
 import { NextTermsSuggestions } from "./NextTermsSuggestions";
 import { TermPicker } from "./TermPicker";
 import { CreditsCard } from "./CreditsCard";
@@ -23,7 +22,6 @@ import { keepClickFocus } from "./keepClickFocus";
 
 const COLUMNS = ["A Term", "B Term", "C Term", "D Term", "E Term · Summer"];
 const ROW = "grid grid-cols-[5.5rem_repeat(5,minmax(0,1fr))] gap-6 wide:grid-cols-[6.5rem_repeat(5,minmax(0,1fr))] wide:gap-8";
-const START_CHOICES = [2026, 2027].map((year) => ({ value: String(year), label: `A Term ${year}` }));
 const PROJECTS: { value: "IQP" | "MQP"; label: string; icon: null }[] = [{ value: "IQP", label: "IQP", icon: null }, { value: "MQP", label: "MQP", icon: null }];
 const LEGEND = [
   { word: "Taken", look: TILE_LOOK.done },
@@ -36,7 +34,6 @@ export function PlanAhead({ degree, view }: { degree: DegreeSnapshot; view: Degr
   const set = useDegreeUi((state) => state.set);
   const current = useCurrentTerm();
   const start = usePlanStart();
-  const [startOpen, setStartOpen] = useState(false);
   const [projectOpen, setProjectOpen] = useState(false);
   const [project, setProject] = useState<"IQP" | "MQP">("IQP");
   const [projectTerm, setProjectTerm] = useState("B Term 2028");
@@ -87,7 +84,6 @@ export function PlanAhead({ degree, view }: { degree: DegreeSnapshot; view: Degr
         </div>
         <div className="flex flex-wrap gap-8">
           <NextTermsSuggestions degree={degree} startYear={start} blocks={blocks} />
-          <Button variant="secondary" size="sm" icon={<CalendarBlank aria-hidden />} onClick={() => setStartOpen(true)}>Start: A {start}</Button>
           <Button variant="secondary" size="sm" icon={<Flag aria-hidden />} onClick={() => setProjectOpen(true)}>Add project block</Button>
         </div>
       </header>
@@ -138,11 +134,6 @@ export function PlanAhead({ degree, view }: { degree: DegreeSnapshot; view: Degr
       <p className="pt-10 text-8 leading-16 text-ink-muted">Project blocks reserve a term. They add no credit until confirmed.</p>
     </section>
     {view && <div className="degree-plan-insights"><CreditsCard view={view} degree={degree} /><PaceCard view={view} /></div>}
-    <Dialog open={startOpen} onClose={() => setStartOpen(false)} title="When did you start?" description="Your plan grid and term choices start here." footer={<Button onClick={() => setStartOpen(false)}>Done</Button>}>
-      <div className="pt-8">
-        <ListboxField label="First term" value={String(start)} options={START_CHOICES} onChange={(value) => { if (!savePlanStart(Number(value))) set({ toast: { message: "Start year changed for this visit. Browser storage is unavailable." } }); }} />
-      </div>
-    </Dialog>
     <Dialog
       open={projectOpen}
       onClose={() => setProjectOpen(false)}

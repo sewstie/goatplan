@@ -10,7 +10,7 @@ import { MajorPickerFields } from "./MajorPickerFields";
 export function MajorPicker({ selected }: { selected: string | null }) {
   const phone = usePhoneViewport();
   const [open, setOpen] = useState(false);
-  const title = "Set up My degree";
+  const title = "Choose your major";
   const form = <MajorPickerFields selected={selected} onDone={() => setOpen(false)} />;
 
   if (!selected && !phone) {

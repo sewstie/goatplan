@@ -35,11 +35,10 @@ for (const width of [1440, 834]) {
     await page.setViewportSize({ width, height: 1000 });
     await openDegree(page, { courses: [savedCourse({ code: "ME 2300", credits: 3 })] });
     await page.getByRole("button", { name: "Change major" }).click();
-    await page.getByRole("combobox", { name: "Major", exact: true }).click();
-    await page.getByRole("option", { name: "Mechanical Engineering", exact: true }).click();
-    await page.getByRole("button", { name: "Continue", exact: true }).click();
+    await page.getByRole("radio", { name: "Mechanical Engineering", exact: true }).check();
+    await page.getByRole("button", { name: "Open my sheet", exact: true }).click();
     await auditReady(page);
-    await expect(page.getByText("Mechanical Engineering · Class of 2030 · Beta", { exact: true })).toBeVisible();
+    await expect(page.locator(".degree-major").getByText("Mechanical Engineering", { exact: true })).toBeVisible();
     await expect(page.getByRole("link", { name: /^ME 2030 tracking sheet/ })).toBeVisible();
     await openAllSections(page);
     await expect(page.getByRole("button", { name: /^ME 2300, line 42,/ })).toBeVisible();
