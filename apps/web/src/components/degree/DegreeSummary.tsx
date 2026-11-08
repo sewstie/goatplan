@@ -17,13 +17,13 @@ function Stat({ icon, value, label, tone, filter }: { icon: ReactNode; value: nu
       aria-pressed={active}
       aria-label={`${value} ${label}. Show only these lines on the sheet`}
       onClick={() => set({ filter: active ? null : filter, selectedTerm: null })}
-      className={cx("flex min-w-0 cursor-pointer flex-col items-start rounded-card border px-2 py-2 tablet:items-center tablet:px-2 tablet:py-4", active ? "border-choice-line bg-accent-soft" : "border-transparent hover:bg-surface-selected")}
+      className={cx("flex min-w-0 cursor-pointer flex-col items-center rounded-card border px-2 py-4", active ? "border-choice-line bg-accent-soft" : "border-transparent hover:bg-surface-selected")}
     >
       <span className="flex items-center gap-7 text-17 leading-22 font-650">
         <span aria-hidden className="flex text-ink [&_svg]:size-14">{icon}</span>
         <span className={tone}>{value}</span>
       </span>
-      <span className="pl-19 text-8 leading-14-4 whitespace-nowrap text-ink-muted tablet:pl-0">{label}</span>
+      <span className="text-8 leading-14-4 whitespace-nowrap text-ink-muted">{label}</span>
     </button>
   );
 }
