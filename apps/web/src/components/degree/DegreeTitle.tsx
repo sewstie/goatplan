@@ -18,7 +18,6 @@ export function DegreeTitle({ selectedSheetId, showSheetControls = true }: { has
           <p className="text-12 leading-17 text-ink"><strong className="font-650">{sheet?.major ?? "Saved major unavailable"}</strong> <span className="ml-8 text-9 text-ink-soft">Class of {sheet?.classYear ?? 2030}</span></p>
           <MajorPicker selected={selectedSheetId} />
         </div>
-        <p className="pt-4 text-tile leading-16 text-ink-muted">Unofficial · Check with your advisor and Workday’s Academic Progress.</p>
       </div>
       {showSheetControls && <div className="flex items-center justify-between gap-10 tablet:justify-end">
         <Button variant="secondary" icon={<ClockCounterClockwise aria-hidden />} onClick={() => open({ kind: "history", tab: "history" })}>Course history</Button>
