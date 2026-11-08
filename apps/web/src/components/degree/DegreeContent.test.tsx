@@ -286,6 +286,30 @@ describe("moving a course", () => {
     expect(stored().pins).toBeUndefined();
   });
 
+  it("lists only approved social-area courses across terms and adds a non-CS choice without a CS pin", async () => {
+    const { user } = await setup();
+    catalog.courses = ["CS 2102", "CS 3043", "GOV 2314", "IMGD 2000"].map((code) => ({ ...course(code, code), termLetters: ["A", "C"] }));
+    act(() => useDegreeUi.getState().open({ kind: "fill", line: 25 }));
+    const panel = within(screen.getByRole("region", { name: "Courses that fit line 25" }));
+    const add = await panel.findByRole("button", { name: /^Add GOV 2314 for / });
+    expect(panel.getByRole("button", { name: /^Add IMGD 2000 for / })).toBeVisible();
+    expect(panel.queryByRole("button", { name: /^Add CS 2102 for / })).not.toBeInTheDocument();
+    expect(panel.getAllByText("Usually A, C")).toHaveLength(3);
+    await user.click(add);
+    expect(stored().courses).toEqual([expect.objectContaining({ code: "GOV 2314", status: "planned" })]);
+    expect(stored().pins).toBeUndefined();
+    expect(useDegreeUi.getState().toast?.message).toContain("Counts toward Social Implications");
+  });
+
+  it("pins a CS area choice to the selected area line", async () => {
+    const { user } = await setup();
+    catalog.courses = [course("CS 3043", "Social Implications")];
+    act(() => useDegreeUi.getState().open({ kind: "fill", line: 25 }));
+    const panel = within(screen.getByRole("region", { name: "Courses that fit line 25" }));
+    await user.click(await panel.findByRole("button", { name: /^Add CS 3043 for / }));
+    expect(stored().pins).toEqual([{ code: "CS 3043", line: 25 }]);
+  });
+
   it("offers courses from the history for an empty line", async () => {
     const { user } = await setup([saved("CS 2022")], { pins: [{ code: "CS 2022", line: 38 }] });
     await user.click(tile(/^CS 2000\+, 5 lines left, lines 17 to 21/));

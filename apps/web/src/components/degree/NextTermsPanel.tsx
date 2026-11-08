@@ -3,10 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Sparkle } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
-import { Disclosure } from "@/components/ui/Disclosure";
 import { DrawerFrame } from "@/components/ui/Drawer";
 import { Notice } from "@/components/ui/Notice";
-import { loadTerm } from "@/lib/data/load";
+import { loadRecommendationTerm } from "@/lib/degree/recommendations/loadTerm";
 import { EngineClient, getEngineClient } from "@/lib/engine";
 import { compareTerms, getDegreeSource, nextTerm, parseTerm, termLong, type DegreeSnapshot, type HistoryCourse } from "@/lib/degree";
 import { createRecommendationAudit } from "@/lib/degree/recommendations/audit";
@@ -22,7 +21,6 @@ import { termChoices } from "./termChoices";
 import { reservationSnapshot, useRecommendationReservations } from "./useRecommendationReservations";
 import { OpenInPlanner } from "./OpenInPlanner";
 import { COURSE_CREDITS, NextTermsSettings } from "./NextTermsSettings";
-import { HowSuggestionsWork } from "./HowSuggestionsWork";
 import { SuggestionChoices } from "./SuggestionChoices";
 import { SuggestedTermCard } from "./SuggestedTermCard";
 
@@ -78,7 +76,7 @@ export function NextTermsPanel({ degree, startYear, blocks, onClose }: { degree:
       await Promise.all(terms.map(async (term) => {
         const id = termId(term);
         if (!published.terms.some((item) => item.id === id)) { offerings[id] = { status: "unpublished" }; return; }
-        try { offerings[id] = { status: "published", file: await loadTerm(id) }; }
+        try { offerings[id] = { status: "published", file: await loadRecommendationTerm(id) }; }
         catch { offerings[id] = { status: "failed" }; }
       }));
       const cancelled = () => reservationSnapshot() !== reservations.revision || asked !== sequence.current || askedKey !== latestKey.current || getDegreeSource().getSnapshot().history !== degree.history;
@@ -161,12 +159,6 @@ export function NextTermsPanel({ degree, startYear, blocks, onClose }: { degree:
           <SuggestedTermCard key={termId(row.term)} row={row} cap={cap} selected={preview.selected} keptCodes={kept.map((course) => course.code)} select={select} keep={keep} exclude={exclude} confirmations={confirmations} onConfirm={confirm}
             planner={preview.published.includes(termId(row.term)) && !stale ? <OpenInPlanner termId={termId(row.term)} /> : undefined} />
         ))}
-        {preview && preview.result.issues.length > 0 && (
-          <Disclosure summary={`Still open on your sheet · ${preview.result.issues.length}`}>
-            <ul className="flex list-disc flex-col gap-4 pl-16 text-8-5 leading-15 text-ink-muted">{preview.result.issues.map((issue, index) => <li key={index}>{issue}</li>)}</ul>
-          </Disclosure>
-        )}
-        <HowSuggestionsWork />
       </div>
     </DrawerFrame>
   );

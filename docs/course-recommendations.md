@@ -43,25 +43,29 @@ requires explicit review before keeping a course. Most non-CS catalog courses ha
 no curated background here; they remain useful degree alternatives for review.
 
 Published presence requires actual sections in a successfully loaded term file.
+Both suggestion panels refresh live seats before checking availability and use the
+daily file when live seats are unavailable.
 Published absence, request failure, historical observation, and unknown offerings
 remain distinct. Failed requests can be retried by regenerating. Historical letters
 are estimates, never annual-frequency claims. Seat information does not establish
 registration eligibility.
 
 Only offered courses are suggested, as additions or as alternatives: in a published
-term the course needs sections in that term's file, and in a later term it needs to
+term the course needs a complete registration option with open seats, and in a later term it needs to
 have been seen in that term letter before. A course you kept or already planned still
 shows, with a note when it isn't offered.
 
-In a published term, every course the planner adds must leave at least one weekly
-schedule for that term's courses. `lib/degree/recommendations/schedules.ts` asks the
-engine with the course codes only and no preferences, so it doesn't check your
-blocked times or full sections. It runs on its own engine worker, which is closed
-after each generation, so the schedule planner's loaded term never changes. Each
-selection step checks at most 12 candidates. A course that clashes is left out with
-a note, and an alternative that clashes says so. When the engine can't answer, the
-course isn't left out and the term says its class times weren't checked. Unpublished
-terms have no sections, so they aren't checked.
+In a published term, every automatic addition and alternative must leave at least
+one weekly schedule with open seats for all courses in the term. A required full
+lab or discussion makes that option unavailable even when its lecture has seats.
+`lib/degree/recommendations/schedules.ts` asks the engine with `onlyOpen` enabled.
+It loads the same term file used to check offerings and runs on its own worker,
+which is closed after generation. The schedule planner's loaded term stays intact.
+Each selection step checks at most 12 candidates. Clashing or unchecked courses
+are left out. If existing choices already clash, they remain visible and no new
+courses are suggested for that term. Unpublished terms use historical offerings
+because their sections and seats are not available yet. Individual-course
+suggestions also check published courses against dated plans in that term.
 
 When the planner looks for courses that lead to useful ones, it skips any "or"
 choice the student already covers. Having CS 1101 means CS 1004 and CS 1005 never
@@ -93,8 +97,21 @@ courses first and show five before "Show more"; Keep lives there and makes the l
 out of date until you suggest again. Courses without tracked WPI background (most
 courses outside CS) and special topics are never picked automatically, and lower
 course numbers rank higher. After courses are added the list clears. Kept courses, skipped courses and confirmed experience show as
-removable chips. The fine print lives in "How this works". The footer always shows
+removable chips. The footer always shows
 how many courses are ticked and the button that adds them.
 
 The original design references under `docs/design/` are absent in this checkout.
 Browser tests capture desktop, tablet, and phone in both themes.
+
+## Tracking-sheet fields
+
+Opening a field lists courses across all terms. CS area fields use their approved
+area lists, including the listed non-CS options for Social Implications. General
+credit fields keep their normal subject and level rules. The term picker sets when
+a course is added; it does not filter the list. Each row shows observed catalog
+term letters as “Usually A, C” or says “Terms unknown.” These are historical
+offerings, not a promise of future availability.
+
+A CS area course is pinned to the selected area line when needed. A non-CS social
+course is added without a CS pin: it satisfies the social check and can count
+toward another eligible field, while CS credit remains separate.

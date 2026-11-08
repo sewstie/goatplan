@@ -4,6 +4,8 @@ import { ArrowsLeftRight } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
 import { DrawerFrame } from "@/components/ui/Drawer";
 import { historyForLine, lineLabel, sectionNameOfLine, type DegreeHistory } from "@/lib/degree";
+import { matchesLineRequirement } from "@/lib/degree/lineCourses";
+import { getRequirements } from "@/lib/degree/requirements";
 import { requestMove } from "./degreeActions";
 import { SUGGESTIONS_ON } from "./degreeFeatures";
 import { useDegreeUi } from "./degreeUi";
@@ -15,7 +17,10 @@ export function FillLinePanel({ line, view, history }: { line: number; view: Deg
   const close = useDegreeUi((state) => state.close);
   const open = useDegreeUi((state) => state.open);
 
-  const fromHistory = historyForLine(line, history, view.sheet.sections, view.result.freeElectives.courses);
+  const fromHistory = historyForLine(line, history, view.sheet.sections, view.result.freeElectives.courses).filter((fit) => {
+    const course = history.courses.find((item) => item.code === fit.code);
+    return course && matchesLineRequirement(course.code, course.credits, line, getRequirements());
+  });
   return (
     <DrawerFrame title={`Courses that fit line ${line}`} onClose={close}>
       <SummaryCard eyebrow={sectionNameOfLine(line)} title={`Line ${line} · ${lineLabel(line)}`} />

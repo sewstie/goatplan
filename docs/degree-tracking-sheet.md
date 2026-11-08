@@ -151,7 +151,7 @@ skipped.
 
 ## Explicit planner connections
 
-The planner’s ⋯ menu offers “Add these courses to My degree as planned.” It
+The planner’s ⋯ menu offers “Add to My degree,” which adds the plan’s courses as planned. It
 copies the displayed plan’s courses with its term and preserves existing history
 records. Later planner changes do not change these copies. A planned history
 record whose term has published data offers “Open in planner.”
