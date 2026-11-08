@@ -6,10 +6,13 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { showsInstructor, uniqueInstructors } from "@/lib/data";
 import type { Course } from "@/lib/data/types";
 import { usePlanner } from "@/lib/store";
+import { CourseDescription } from "./CourseDescription";
+import { CourseDescriptionButton } from "./CourseDescriptionButton";
 import { ProfessorPicker } from "./ProfessorPicker";
 import { RemoveCourseButton } from "./RemoveCourseButton";
 import { SectionsInSchedule } from "./SectionsInSchedule";
 import { hasSetTime, sectionsById } from "./sectionDetails";
+import { useDescriptionPage } from "./useDescriptionPage";
 import { useSectionSteps } from "./useSectionSteps";
 import { useShownSections } from "./useShownSections";
 
@@ -30,6 +33,12 @@ export function CourseDetails({ course }: { course: Course }) {
   const waitlist = sections.some((section) => section.status === "waitlist");
   // With no course left nothing re-renders the panel's focus target, so focus goes to search.
   const lastCourse = usePlanner((state) => state.courses.length === 1);
+  const description = useDescriptionPage(selectedSection);
+
+  if (description.reading) {
+    const inSchedule = sections.filter((section) => chosen.includes(section.id));
+    return <CourseDescription code={code} title={course.title} description={course.description} sections={inSchedule} onBack={description.back} />;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -41,6 +50,7 @@ export function CourseDetails({ course }: { course: Course }) {
         {code}
       </h2>
       <p className="text-11 leading-17-6 font-510 text-ink">{course.title}</p>
+      <CourseDescriptionButton buttonRef={description.button} onClick={description.open} />
 
       {!waitlist && <ProfessorPicker course={course} />}
       {!hasLectures && (
