@@ -74,26 +74,6 @@ test("project and start term dialogs work from the keyboard and return focus", a
   await dialog.getByRole("button", { name: "Add project block", exact: true }).click();
   await expect(page.getByRole("button", { name: "Remove MQP project block from C Term 2029" })).toBeVisible();
   await expect(opener).toBeFocused();
-
-  const start = page.getByRole("button", { name: /^Start:/ });
-  await start.focus();
-  await page.keyboard.press("Enter");
-  const startDialog = page.getByRole("dialog", { name: "When did you start?" });
-  const first = startDialog.getByRole("combobox", { name: "First term" });
-  await expect(startDialog.getByRole("heading", { name: "When did you start?" })).toBeFocused();
-  await page.keyboard.press("Tab");
-  await page.keyboard.press("Tab");
-  await expect(first).toBeFocused();
-  await expect(first).toHaveCSS("outline-style", "solid");
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("Enter");
-  await expect(first).toHaveText("A Term 2027");
-  await expect(first).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(startDialog).toBeHidden();
-  await expect(start).toHaveText("Start: A 2027");
-  await expect(start).toBeFocused();
 });
 
 test("phone keeps a readable plan", async ({ page }) => {

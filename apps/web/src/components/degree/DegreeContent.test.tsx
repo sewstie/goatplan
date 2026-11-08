@@ -92,9 +92,9 @@ beforeEach(() => {
 afterEach(() => vi.restoreAllMocks());
 
 describe("the first visit", () => {
-  it("says it's unofficial, Beta and based on the Class of 2030 sheet", async () => {
+  it("says it's unofficial and based on the Class of 2030 sheet, without a Beta label", async () => {
     await setup();
-    expect(screen.getByText("Beta")).toBeVisible();
+    expect(screen.queryByText("Beta")).not.toBeInTheDocument();
     expect(screen.getByText("Unofficial · Check with your advisor and Workday’s Academic Progress.")).toBeVisible();
     expect(screen.getByText("Class of 2030")).toBeVisible();
   });
