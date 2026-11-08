@@ -18,7 +18,7 @@ export function DegreePanels({ degree, view }: { degree: DegreeSnapshot; view: D
   const panel = useDegreeUi((state) => state.panel);
   const close = useDegreeUi((state) => state.close);
   return (
-    <Drawer open={panel !== null} onClose={close} centered={panel !== null && ["details"].includes(panel.kind)}>
+    <Drawer open={panel !== null} onClose={close}>
       {panel?.kind === "suggest" && <SuggestCoursesPanel history={degree.history} line={panel.line} />}
       {panel?.kind === "checks" && view && <ChecksPanel view={view} history={degree.history} />}
       {panel?.kind === "options" && view && <CourseOptionsPanel code={panel.code} view={view} />}

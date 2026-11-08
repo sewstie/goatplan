@@ -6,6 +6,7 @@ import type { FlowLayout } from "@/lib/courseMap/routing";
 import { cx } from "@/components/ui/cx";
 import { FlowCard, type CourseState } from "./FlowCard";
 import { FlowLines } from "./FlowLines";
+import { keepClickFocus } from "@/components/degree/keepClickFocus";
 
 type FlowchartMapProps = {
   flow: Flowchart;
@@ -49,7 +50,7 @@ export function FlowchartMap({ flow, layout, zoom, scroller, setZoom, resetZoom,
   }, [selected]);
 
   return (
-    <div ref={scroller} role="region" aria-label="Course map diagram" tabIndex={0} className="flow-scroller" onKeyDown={keys} onPointerDown={grab} onPointerMove={move} onPointerUp={drop} onPointerCancel={drop}>
+    <div ref={scroller} role="region" aria-label="Course map diagram" tabIndex={0} className="flow-scroller" onKeyDown={keys} onMouseDown={keepClickFocus} onPointerDown={grab} onPointerMove={move} onPointerUp={drop} onPointerCancel={drop}>
       <div style={{ width: layout.width * zoom, height: layout.height * zoom }}>
         <div ref={canvas} className="flow-canvas" style={{ width: layout.width, height: layout.height, transform: `scale(${zoom})` }} onMouseLeave={() => preview(null)}>
           {layout.bands.map((band) => (

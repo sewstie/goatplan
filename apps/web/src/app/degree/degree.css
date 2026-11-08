@@ -59,9 +59,9 @@
 .degree-plan-insights article { padding: 18px; }
 @media(max-width: 767px) { .degree-plan-insights { grid-template-columns: 1fr; } }
 .degree-page dialog[data-degree-dialog="centered"] { padding: 26px 16px; overflow-y: auto; }
-.degree-page dialog[data-degree-dialog="centered"] > div { min-height: 100%; display: block; }
-.degree-page dialog[data-degree-dialog="centered"] > div > div:first-child { position: fixed; inset: 0; z-index: -1; }
-.degree-page dialog[data-degree-dialog="centered"] > div > div:last-child { width: min(550px,100%); max-height: calc(100dvh - 110px); margin: 0 auto; border-radius: 11px; border: 1px solid var(--color-card-line); }
+.degree-page dialog[data-degree-dialog="centered"] > div:not([role]) { min-height: 100%; display: block; }
+.degree-page dialog[data-degree-dialog="centered"] > div:not([role]) > div:first-child { position: fixed; inset: 0; z-index: -1; }
+.degree-page dialog[data-degree-dialog="centered"] > div:not([role]) > div:last-child { width: min(550px,100%); max-height: calc(100dvh - 110px); margin: 0 auto; border-radius: 11px; border: 1px solid var(--color-card-line); }
 .degree-page dialog[data-degree-dialog="centered"]:has(section[aria-label="Your sheet"]) > div > div:last-child { width: min(670px,100%); }
 .degree-page dialog section[aria-labelledby="drawer-title"] > div:first-child { padding: 20px; }
 .degree-page dialog #drawer-title { font-size: 20px; line-height: 26px; }
