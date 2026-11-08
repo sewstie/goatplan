@@ -9,6 +9,7 @@ import type { TermFile } from "@/lib/data/types";
 import { getEngineClient } from "@/lib/engine";
 import { createGapSource } from "@/lib/degree/courseGaps";
 import { foundCourse, getDegreeSource, parseTerm, seminarTooEarly, suggestions, type DegreeHistory } from "@/lib/degree";
+import { isOffered, offering as offeringIn, type OfferingInput } from "@/lib/degree/recommendations/offerings";
 import { useCourseCatalog } from "./useCourseCatalog";
 import { usePublishedTerms } from "./usePublishedTerms";
 import { useDegreeUi } from "./degreeUi";
@@ -50,9 +51,15 @@ export function SuggestCoursesPanel({ history, line, inline = false }: { history
   }, [published, termId, offeringAttempt]);
 
   const known = new Set(history.courses.map((course) => course.code));
-  const details = gaps.details ? new Map([...gaps.details].filter(([code, fit]) => !known.has(code) && !seminarTooEarly(code, history.courses, named) && (line === undefined || fit.lines.includes(line)))) : null;
-  const list = suggestions(details, limit);
   const offered = file?.term.id === termId ? file : null;
+  const catalogByCode = useMemo(() => new Map(catalog.courses.map((course) => [course.code, course])), [catalog.courses]);
+  const termOffering: OfferingInput | null = publishedTerms.status !== "ready" ? null : !published ? { status: "unpublished" } : offered ? { status: "published", file: offered } : null;
+  const offeredThen = (code: string) => {
+    const course = catalogByCode.get(code);
+    return !termOffering || !course || isOffered(offeringIn(course, named, termOffering));
+  };
+  const details = gaps.details ? new Map([...gaps.details].filter(([code, fit]) => !known.has(code) && !seminarTooEarly(code, history.courses, named) && (line === undefined || fit.lines.includes(line)) && offeredThen(code))) : null;
+  const list = suggestions(details, limit);
 
   return (
     <SuggestFrame inline={inline} close={close}>

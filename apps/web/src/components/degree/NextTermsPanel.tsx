@@ -7,13 +7,14 @@ import { Disclosure } from "@/components/ui/Disclosure";
 import { DrawerFrame } from "@/components/ui/Drawer";
 import { Notice } from "@/components/ui/Notice";
 import { loadTerm } from "@/lib/data/load";
-import { getEngineClient } from "@/lib/engine";
+import { EngineClient, getEngineClient } from "@/lib/engine";
 import { compareTerms, getDegreeSource, nextTerm, parseTerm, termLong, type DegreeSnapshot, type HistoryCourse } from "@/lib/degree";
 import { createRecommendationAudit } from "@/lib/degree/recommendations/audit";
 import { applyRecommendation } from "@/lib/degree/recommendations/apply";
 import { recommend, type Recommendation } from "@/lib/degree/recommendations/planner";
 import { defaultRecommendationTerm, recommendationTerms } from "@/lib/degree/recommendations/terms";
 import { termId, type OfferingInput } from "@/lib/degree/recommendations/offerings";
+import { createScheduleCheck } from "@/lib/degree/recommendations/schedules";
 import { useCourseCatalog } from "./useCourseCatalog";
 import { useCurrentTerm } from "./useCurrentTerm";
 import { usePublishedTerms } from "./usePublishedTerms";
@@ -66,6 +67,7 @@ export function NextTermsPanel({ degree, startYear, blocks, onClose }: { degree:
     const askedShape = shapeKey;
     setBusy(true);
     setNotice("Checking your sheet, background and offerings…");
+    let timetables: EngineClient | null = null;
     try {
       if (published.status !== "ready" || !catalog.ready || !degree.sheet || degree.selectedSheetId !== "cs-2030") throw new Error("Wait for the CS sheet, catalog and terms to load, then try again.");
       const named = parseTerm(start);
@@ -81,13 +83,15 @@ export function NextTermsPanel({ degree, startYear, blocks, onClose }: { degree:
       }));
       const cancelled = () => reservationSnapshot() !== reservations.revision || asked !== sequence.current || askedKey !== latestKey.current || getDegreeSource().getSnapshot().history !== degree.history;
       if (cancelled()) return;
-      const result = await recommend({ history: degree.history, sheet: degree.sheet, catalog: catalog.courses, terms, cap, offerings, kept, excluded, confirmations, reserved: reservations.blocks, cancelled }, createRecommendationAudit(getEngineClient(), degree.sheet));
+      // Its own engine, so loading terms here never swaps the schedule planner’s term.
+      timetables = new EngineClient();
+      const result = await recommend({ history: degree.history, sheet: degree.sheet, catalog: catalog.courses, terms, cap, offerings, kept, excluded, confirmations, reserved: reservations.blocks, cancelled }, createRecommendationAudit(getEngineClient(), degree.sheet), createScheduleCheck(timetables));
       if (cancelled()) return;
       if (terms.length < Number(count)) result.issues.unshift("The plan grid ends here, so there are fewer terms than you asked for.");
       setPreview({ result, key: askedKey, shape: askedShape, history: degree.history, selected: result.terms.flatMap((term) => term.additions.map((choice) => choice.course.code)), published: Object.entries(offerings).filter(([, value]) => value.status === "published").map(([id]) => id) });
       setNotice(Object.values(offerings).some((value) => value.status === "failed") ? "Some terms couldn’t be loaded. Suggest again to retry." : "Suggestions ready. Nothing is saved until you add them.");
     } catch (error) { if (asked === sequence.current && askedKey === latestKey.current) setNotice(error instanceof Error ? error.message : "Suggestions couldn’t be made. Try again."); }
-    finally { if (asked === sequence.current) { setBusy(false); if (askedKey !== latestKey.current) setNotice("Your plan or settings changed. Suggest again to update."); } }
+    finally { timetables?.dispose(); if (asked === sequence.current) { setBusy(false); if (askedKey !== latestKey.current) setNotice("Your plan or settings changed. Suggest again to update."); } }
   }
 
   const choiceFor = (code: string) => preview?.result.terms.flatMap((row) => [...row.additions, ...row.alternatives]).find((choice) => choice.course.code === code);

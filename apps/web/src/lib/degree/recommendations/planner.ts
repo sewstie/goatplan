@@ -6,8 +6,9 @@ import { crossListed } from "../rules";
 import type { TrackingSheet } from "../sheets";
 import { compareTerms, nextTerm, parseTerm, sameTerm, termLong, type TermName } from "../terms";
 import { backgroundCourses, preparation, ready, recordFor, type Preparation } from "./background";
-import { offering, termId, type Offering, type OfferingInput } from "./offerings";
+import { isOffered, offering, termId, type Offering, type OfferingInput } from "./offerings";
 import type { Progress, RecommendationAudit } from "./audit";
+import type { ScheduleCheck } from "./schedules";
 
 export interface Choice { course: HistoryCourse; reason: string; background: Preparation; offering: Offering; kept: boolean }
 export type TermState = "open" | "reserved" | "failed" | "over";
@@ -40,7 +41,7 @@ export function conflicts(code: string, courses: readonly HistoryCourse[], sheet
   return courses.some((course) => names.includes(course.code) || sheet.onlyOneSets.some((set) => set.courses.some((item) => names.includes(item)) && set.courses.some((item) => equivalents(course.code, sheet).includes(item))));
 }
 
-export async function recommend(input: RecommendationInput, audit: RecommendationAudit): Promise<Recommendation> {
+export async function recommend(input: RecommendationInput, audit: RecommendationAudit, schedules?: ScheduleCheck): Promise<Recommendation> {
   if (input.sheet.id !== "cs-2030") throw new Error("Next-term suggestions are available for CS 2030 only.");
   if (!Number.isFinite(input.cap) || input.cap <= 0 || input.cap > 30 || round(input.cap) !== input.cap) throw new Error("Enter a credit cap above 0 and at most 30, with up to two decimal places.");
   if (!input.terms.length || input.terms.length > 4 || input.terms.some((term, index) => term.letter === "E" || term.year < 2026 || term.year > 2030 || (index > 0 && !sameTerm(nextTerm(input.terms[index - 1]), term)))) throw new Error("Choose one to four supported regular terms in order.");
@@ -64,7 +65,7 @@ export async function recommend(input: RecommendationInput, audit: Recommendatio
   const undated = input.history.courses.filter((course) => course.status === "planned" && !parseTerm(course.term));
   if (undated.length) result.issues.push(`Plans without a term: ${undated.map((course) => course.code).join(", ")}. Give them a term in course history so later courses can build on them.`);
   for (const course of input.history.courses) if (conflicts(course.code, input.history.courses.filter((item) => item !== course), input.sheet)) result.issues.push(`${course.code} overlaps with another course in your history. Both are kept; check which one counts.`);
-  const allowed = (course: CatalogCourse, term: TermName) => !equivalents(course.code, input.sheet).some((code) => input.excluded.includes(code)) && !conflicts(course.code, projected.courses, input.sheet) && !huaProblem(course.code, projected.courses, input.sheet) && !seminarTooEarly(course.code, projected.courses, term);
+  const allowed = (course: CatalogCourse, term: TermName) => isOffered(offering(course, term, input.offerings[termId(term)])) && !equivalents(course.code, input.sheet).some((code) => input.excluded.includes(code)) && !conflicts(course.code, projected.courses, input.sheet) && !huaProblem(course.code, projected.courses, input.sheet) && !seminarTooEarly(course.code, projected.courses, term);
   const checkCancelled = () => { if (input.cancelled?.()) throw new Error("Your plan or settings changed. Suggest again."); };
   const makeChoice = (course: HistoryCourse, term: TermName, reason: string, isKept = false): Choice => {
     const catalogCourse = catalog.find((item) => item.code === course.code);
@@ -85,6 +86,18 @@ export async function recommend(input: RecommendationInput, audit: Recommendatio
     }
     const blocked = input.offerings[termId(term)]?.status === "failed" || !input.offerings[termId(term)];
     if (blocked) { row.state = "failed"; row.issues.push("This term’s classes couldn’t be loaded. Suggest again to retry."); }
+    const offeredHere = input.offerings[termId(term)];
+    let file = schedules && offeredHere?.status === "published" ? offeredHere.file : null;
+    const termCodes = () => projected.courses.filter((course) => sameTerm(parseTerm(course.term), term)).map((course) => course.code);
+    const clashing: string[] = [];
+    let unchecked = false;
+    if (file && termCodes().length > 0) {
+      const fit = await schedules!.fit(file, termCodes());
+      checkCancelled();
+      if (fit === "clashes") row.issues.push("Your courses in this term can’t all fit in one weekly schedule. Check their class times in the planner.");
+      if (fit === "clashes") file = null;
+      if (fit === "unknown") unchecked = true;
+    }
     let slots = 0;
     while (!reserved && !blocked && row.credits < input.cap && slots++ < 6 && evaluations < 180) {
       checkCancelled();
@@ -110,7 +123,18 @@ export async function recommend(input: RecommendationInput, audit: Recommendatio
       candidates.sort((a, b) => b.score - a.score || a.course.code.localeCompare(b.course.code));
       const eligible = candidates.filter((item) => !/special topics/i.test(item.course.title) && ready(item.background) && ["confirmed", "estimated"].includes(item.value.state) && item.course.credits !== null && item.course.credits > 0 && round(row.credits + item.course.credits) <= input.cap);
       let selected: { choice: Choice; next: DegreeHistory; score: number } | null = null;
-      for (const candidate of eligible.slice(0, 6)) {
+      let tried = 0;
+      let timeChecks = 0;
+      for (const candidate of eligible) {
+        if (tried >= 6) break;
+        if (file) {
+          if (timeChecks++ >= 12) break;
+          const fit = await schedules!.fit(file, [...termCodes(), candidate.course.code]);
+          checkCancelled();
+          if (fit === "clashes") { if (!clashing.includes(candidate.course.code)) clashing.push(candidate.course.code); continue; }
+          if (fit === "unknown") unchecked = true;
+        }
+        tried += 1;
         if (++evaluations > 180) break;
         const course = { ...foundCourse(candidate.course), status: "planned" as const, term: termLong(term) };
         const next = { ...projected, courses: [...projected.courses, course] };
@@ -145,8 +169,12 @@ export async function recommend(input: RecommendationInput, audit: Recommendatio
       if (choice.offering.credits === null) choice.reason += " Credits unknown; enter them before keeping it.";
       else choice.course.credits = choice.offering.credits;
       if (round(row.credits + choice.course.credits) > input.cap) choice.reason += " Doesn’t fit your limit.";
+      if (clashing.includes(course.code)) choice.reason += " Its class times clash with your other courses this term.";
       return choice;
     });
+    const leftOut = clashing.filter((code) => !row.additions.some((choice) => choice.course.code === code));
+    if (leftOut.length) row.issues.push(`Left out ${leftOut.length > 3 ? `${leftOut.slice(0, 3).join(", ")} and ${leftOut.length - 3} more` : leftOut.join(", ")}: their class times clash with your other courses this term.`);
+    if (unchecked) row.issues.push("Couldn’t check class times for this term, so these courses might clash.");
     row.unused = round(Math.max(0, input.cap - row.credits));
     if (slots > 6 || evaluations >= 180) { result.limited = true; row.issues.push("Stopped early to stay fast. Try fewer terms for a fuller plan."); }
     result.terms.push(row);

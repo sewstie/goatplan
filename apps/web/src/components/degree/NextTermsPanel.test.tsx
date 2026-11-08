@@ -10,7 +10,7 @@ vi.mock("./useCourseCatalog", () => ({ useCourseCatalog: () => ({ ready: true, f
 vi.mock("./usePublishedTerms", () => ({ usePublishedTerms: () => mocks.published }));
 vi.mock("@/lib/degree/recommendations/planner", () => ({ recommend: mocks.generate }));
 vi.mock("@/lib/degree/recommendations/audit", () => ({ createRecommendationAudit: () => ({}) }));
-vi.mock("@/lib/engine", () => ({ getEngineClient: () => ({}) }));
+vi.mock("@/lib/engine", () => ({ getEngineClient: () => ({}), EngineClient: class { dispose() {} } }));
 vi.mock("@/lib/degree/degreeSource", () => ({ getDegreeSource: () => ({ getSnapshot: mocks.snapshot }) }));
 vi.mock("./OpenInPlanner", () => ({ OpenInPlanner: () => <button>Open in planner</button> }));
 const degree = { selectedSheetId: "cs-2030", history: { courses: [], manual: [] }, sheet: { id: "cs-2030" }, audit: { status: "ready" } } as unknown as DegreeSnapshot;
@@ -107,13 +107,13 @@ it("invalidates a preview when project reservations change in another tab", asyn
   expect(screen.getByRole("alert")).toHaveTextContent("out of date");
   expect(addButton()).toBeDisabled();
   fireEvent.click(screen.getByRole("button", { name: "Suggest again" }));
-  await waitFor(() => expect(mocks.generate).toHaveBeenLastCalledWith(expect.objectContaining({ reserved: { "A Term 2027": "IQP" } }), expect.anything()));
+  await waitFor(() => expect(mocks.generate).toHaveBeenLastCalledWith(expect.objectContaining({ reserved: { "A Term 2027": "IQP" } }), expect.anything(), expect.objectContaining({ fit: expect.any(Function) })));
 });
 it("turns courses per term into a credit limit", async () => {
   mount();
   fireEvent.click(within(screen.getByRole("group", { name: "Courses per term" })).getByRole("button", { name: "4" }));
   await generate();
-  expect(mocks.generate).toHaveBeenLastCalledWith(expect.objectContaining({ cap: 12 }), expect.anything());
+  expect(mocks.generate).toHaveBeenLastCalledWith(expect.objectContaining({ cap: 12 }), expect.anything(), expect.objectContaining({ fit: expect.any(Function) }));
 });
 it("ignores a late generation response after settings change", async () => {
   let resolve!: (result: Recommendation) => void;
