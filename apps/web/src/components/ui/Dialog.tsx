@@ -22,6 +22,7 @@ export function Dialog({ open, onClose, title, description, children, footer }: 
   return (
     <dialog
       ref={ref}
+      data-message-dialog
       aria-labelledby={titleId}
       aria-describedby={description ? descriptionId : undefined}
       onClose={handleClose}

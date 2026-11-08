@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
+#include <cstdint>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -21,6 +22,7 @@ using json = nlohmann::ordered_json;
 
 constexpr double kMinimumCredits = 0.75;
 constexpr double kLineCredits = 3;
+constexpr int kMaxCopies = 9;
 constexpr double kCreditTolerance = 1e-9;
 constexpr int kNone = -1;
 constexpr int kFirstTier = 0;
@@ -316,6 +318,7 @@ struct Course {
     double credits;
     bool taken;
     bool apIb;
+    bool copy = false;
 
     const std::string& code() const { return facts->code; }
 };
@@ -337,12 +340,25 @@ Course parseCourse(const json& value, const std::string& field, bool taken, Code
     return {facts, amount, taken, apIb && apIb->get<bool>()};
 }
 
+int copiesOf(const json& value, const std::string& field) {
+    const auto* copies = find(value, "copies");
+    if (!copies) return 1;
+    const auto count = copies->is_number_integer() ? copies->get<std::int64_t>() : 0;
+    if (count < 1 || count > kMaxCopies) throw badRequest(field + ".copies", "must be a whole number from 1 to 9");
+    return static_cast<int>(count);
+}
+
 std::vector<Course> courses(const json& root, const char* key, bool taken, CodeBook& book) {
     std::vector<Course> result;
     if (const auto* list = find(root, key)) {
         if (!list->is_array()) throw badRequest(key, "must be a list");
         for (std::size_t i = 0; i < list->size(); ++i) {
-            result.push_back(parseCourse((*list)[i], std::string(key) + "[" + std::to_string(i) + "]", taken, book));
+            const auto field = std::string(key) + "[" + std::to_string(i) + "]";
+            auto course = parseCourse((*list)[i], field, taken, book);
+            const auto copies = copiesOf((*list)[i], field);
+            result.push_back(course);
+            course.copy = true;
+            for (int copy = 1; copy < copies; ++copy) result.push_back(course);
         }
     }
     return result;
@@ -441,6 +457,7 @@ std::vector<Listing> groupCopies(std::vector<Course> history, std::vector<std::s
     std::stable_sort(history.begin(), history.end(), [](const Course& a, const Course& b) {
         if (a.taken != b.taken) return a.taken;
         if (a.code() != b.code()) return a.code() < b.code();
+        if (a.copy != b.copy) return b.copy;
         if (a.credits != b.credits) return a.credits > b.credits;
         return a.apIb && !b.apIb;
     });
@@ -451,6 +468,10 @@ std::vector<Listing> groupCopies(std::vector<Course> history, std::vector<std::s
             continue;
         }
         const auto* crossList = course.facts->crossList;
+        if (course.copy) {
+            listings.push_back({{course}, course.credits, crossList, nullptr});
+            continue;
+        }
         const void* identity = crossList ? static_cast<const void*>(crossList) : static_cast<const void*>(course.facts);
         const auto it = std::find_if(listings.begin(), listings.end(), [&](const Listing& listing) { return listing.identity == identity; });
         if (it == listings.end()) {

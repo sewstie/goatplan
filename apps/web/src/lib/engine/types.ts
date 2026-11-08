@@ -175,6 +175,7 @@ export interface AuditCourse {
   code: string;
   credits: number;
   apIb?: boolean | null;
+  copies?: number | null;
 }
 
 export interface AuditRequest {

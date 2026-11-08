@@ -26,7 +26,7 @@ function Grid({ section, view, history, current }: RowProps) {
     return (
       <div className="grid grid-cols-2 gap-6">
         {courseTiles.map((tile) => <SheetTile key={tile.key} tile={tile} view={view} history={history} current={current} />)}
-        <div className="col-span-full grid grid-cols-3 gap-6">
+        <div className="col-span-full grid grid-cols-2 gap-6">
           <p className="col-span-full pt-4 text-8 leading-16 text-ink-muted"><b className="pr-8 font-650 text-ink">MQP</b>Included in the 18 CS lines</p>
           {projectTiles.map((tile) => <SheetTile key={tile.key} tile={tile} view={view} history={history} current={current} />)}
         </div>

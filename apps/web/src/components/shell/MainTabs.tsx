@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cx } from "@/components/ui/cx";
 
-export function MainTabs({ phone = false }: { phone?: boolean }) {
+export function MainTabs() {
   const pathname = usePathname();
   const onDegree = pathname === "/degree" || pathname.startsWith("/degree/");
   const tabs = [
@@ -13,7 +13,7 @@ export function MainTabs({ phone = false }: { phone?: boolean }) {
   ];
 
   return (
-    <nav aria-label="Main" className={cx("flex gap-5", phone && "w-full gap-8")}>
+    <nav aria-label="Main" className="flex gap-5">
       {tabs.map((tab) => (
         <Link
           key={tab.href}
@@ -21,7 +21,6 @@ export function MainTabs({ phone = false }: { phone?: boolean }) {
           aria-current={tab.active ? "page" : undefined}
           className={cx(
             "flex min-h-34 items-center justify-center rounded-row px-8 text-9 leading-13 whitespace-nowrap wide:px-12 transition-colors",
-            phone && "min-h-44 flex-1",
             tab.active ? "bg-accent-soft font-600 text-accent" : "font-510 text-ink-muted hover:bg-surface-selected hover:text-ink",
           )}
         >

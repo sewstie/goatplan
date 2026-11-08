@@ -53,7 +53,7 @@ export function RequirementsList({ view, history }: { view: DegreeView; history:
   const sections = filter ? all.filter((section) => section.tiles.some((tile) => tileMatchesFilter(tile, filter))) : all;
   return (
     <section aria-label="Your requirements" className="rounded-panel border border-card-line bg-surface px-16 pt-18 pb-14 tablet:px-20">
-      <div className="flex flex-wrap items-center justify-between gap-12 pb-12">
+      <div className="degree-sheet-heading flex flex-wrap items-center justify-between gap-12 pb-12">
         <h2 className="text-12 leading-19-2 font-650">Your sheet</h2>
         <SheetControls view={view} />
       </div>

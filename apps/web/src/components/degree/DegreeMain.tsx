@@ -1,6 +1,5 @@
 "use client";
 
-import { ShieldCheck } from "@phosphor-icons/react/ssr";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { Button } from "@/components/ui/Button";
 import { getDegreeSource, type DegreeSnapshot } from "@/lib/degree";
@@ -8,7 +7,6 @@ import { DegreeSkeleton } from "./DegreeSkeleton";
 import { DegreeSummary } from "./DegreeSummary";
 import { FilterBar } from "./FilterBar";
 import { FirstVisitPanel } from "./FirstVisitPanel";
-import { InsightsSection } from "./InsightsSection";
 import { PlanningFirstCard } from "./PlanningFirstCard";
 import { RequirementsList } from "./RequirementsList";
 import { SheetPanel } from "./SheetPanel";
@@ -41,12 +39,6 @@ export function DegreeMain({ degree, view }: DegreeMainProps) {
       {empty && <FirstVisitPanel />}
       <FilterBar view={view} />
       {layout === "sheet" ? <SheetPanel view={view} history={degree.history} /> : <RequirementsList view={view} history={degree.history} />}
-      {empty && (
-        <p className="flex items-center justify-center gap-10 py-8 text-center text-8-5 leading-16 text-ink-muted">
-          <ShieldCheck aria-hidden className="size-16 shrink-0 text-ink" />
-          Course history stays in this browser. You can import a history file from another device.
-        </p>
-      )}
     </>
   );
   const damaged = degree.damaged && <p role="alert" className="rounded-card bg-notice-warning px-15 py-10 text-8-5 leading-16 text-notice-warning-ink">Some of your saved courses couldn’t be read, so they aren’t listed.</p>;
@@ -58,7 +50,7 @@ export function DegreeMain({ degree, view }: DegreeMainProps) {
         {damaged}
         <DegreeSummary view={view} />
         {sheet}
-        {!empty && !filter && <InsightsSection view={view} degree={degree} />}
+        {!empty && !filter && <PlanningFirstCard view={view} />}
       </div>
     );
   }

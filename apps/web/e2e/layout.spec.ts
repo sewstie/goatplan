@@ -638,26 +638,38 @@ test.describe("the phone", () => {
     await guide.getByRole("button", { name: "Next" }).click({ timeout: 30_000 });
     await expect(guide.getByRole("heading", { name: "Add your courses" })).toBeVisible();
     await expect(guide.getByRole("button", { name: "Skip" })).toBeVisible();
-    expect(await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).scrollPaddingBottom))).toBeGreaterThan(50);
   });
 
-  test("has a bottom tab bar and no sideways scroll, on both pages", async ({ page }) => {
+  test("both pages share the top bar links and the footer, with no sideways scroll", async ({ page }) => {
     await openPlanner(page, { degree: true });
-    const tabs = page.getByRole("navigation", { name: "Main" });
-    const box = (await tabs.boundingBox())!;
-    expect(box.y + box.height).toBeGreaterThan(812 - 60);
-    expect(await sidewaysScroll(page)).toBe(false);
-    await tabs.getByRole("link", { name: "My degree" }).click();
-    await expect(page).toHaveURL(/\/degree/);
-    await expect(page.getByRole("button", { name: "Choose your major" })).toBeVisible();
-    expect(await sidewaysScroll(page)).toBe(false);
+    for (const where of ["planner", "degree"]) {
+      const bar = page.locator("[data-phone-topbar]");
+      const tabs = bar.getByRole("navigation", { name: "Main" });
+      await expect(tabs.getByRole("link", { name: where === "planner" ? "Planner" : "My degree" })).toHaveAttribute("aria-current", "page");
+      await expect(bar.getByRole("link", { name: "GoatPlan" })).toBeVisible();
+      const footer = page.locator("footer");
+      await expect(footer.getByRole("link", { name: /Data source/ })).toBeVisible();
+      await expect(footer.getByRole("button", { name: "How to use GoatPlan" })).toBeVisible();
+      await expect(footer.getByRole("link", { name: /Send feedback/ })).toBeVisible();
+      await expect(page.locator("[data-phone-tabs]")).toHaveCount(0);
+      expect(await sidewaysScroll(page)).toBe(false);
+      if (where === "planner") {
+        await tabs.getByRole("link", { name: "My degree" }).click();
+        await expect(page).toHaveURL(/\/degree/);
+        await expect(page.getByRole("heading", { name: "Choose your major" })).toBeVisible();
+      }
+    }
   });
 
-  test("the top bar keeps the logo and the term picker only", async ({ page }) => {
+  test("the planner top bar fits the goat, both page links and the term picker", async ({ page }) => {
     await openPlanner(page, { degree: true });
-    const main = page.getByRole("navigation", { name: "Main" });
-    expect((await main.boundingBox())!.y).toBeGreaterThan(200);
-    await expect(page.getByRole("link", { name: "GoatPlan" })).toBeVisible();
+    const bar = (await page.locator("[data-phone-topbar]").boundingBox())!;
+    for (const item of [page.getByRole("link", { name: "GoatPlan" }), page.getByRole("navigation", { name: "Main" }), page.locator("#tutorial-term")]) {
+      const box = (await item.boundingBox())!;
+      expect(box.y).toBeGreaterThanOrEqual(bar.y);
+      expect(box.y + box.height).toBeLessThanOrEqual(bar.y + bar.height);
+      expect(box.x + box.width).toBeLessThanOrEqual(375);
+    }
   });
 
   test("the calendar starts within 420 px, with Save beside the switcher and Share and Export in the menu", async ({ page }) => {

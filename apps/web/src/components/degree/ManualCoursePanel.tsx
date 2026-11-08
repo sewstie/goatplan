@@ -46,7 +46,7 @@ export function ManualCoursePanel({ history, initialCode = "" }: { history: Degr
   const program = PROGRAMS[source];
   const byExam = program !== undefined && !typing;
   const examPlan = byExam && exam.examId && exam.score !== null ? planExamCredit(history, [{ examId: exam.examId, score: exam.score }]) : null;
-  const examCount = examPlan?.add.length ?? 0;
+  const examCount = examPlan?.add.reduce((sum, course) => sum + (course.copies ?? 1), 0) ?? 0;
   const where = target.term || "your history";
   const stateWord = PLAN_STATES[target.state].label.toLowerCase();
 

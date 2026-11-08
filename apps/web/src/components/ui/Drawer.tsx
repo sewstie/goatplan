@@ -13,7 +13,7 @@ type DrawerProps = {
   centered?: boolean;
 };
 
-/** A panel from the right, or from the bottom on a phone. The top bar stays in view above it. */
+/** A panel from the right, or a whole page on a phone. The top bar stays in view above it. */
 export function Drawer({ open, onClose, children, centered = false }: DrawerProps) {
   const { ref, handleClose, close } = useModalDialog(open, onClose);
   return (
@@ -25,8 +25,8 @@ export function Drawer({ open, onClose, children, centered = false }: DrawerProp
       className="fixed inset-x-0 top-(--size-topbar) bottom-0 m-0 h-auto max-h-none w-full max-w-none overflow-hidden bg-transparent p-0 text-ink backdrop:bg-transparent open:flex open:flex-col"
     >
       <div className="flex min-h-0 flex-1 flex-col tablet:flex-row">
-        <div aria-hidden onClick={close} className="h-28 shrink-0 bg-scrim-flat tablet:h-auto tablet:flex-1" />
-        <div className="-mt-1 flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-t-panel bg-surface shadow-popover tablet:mt-0 tablet:w-(--size-drawer) tablet:flex-none tablet:rounded-none">
+        <div aria-hidden onClick={close} className="hidden bg-scrim-flat tablet:block tablet:flex-1" />
+        <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden bg-surface tablet:w-(--size-drawer) tablet:flex-none tablet:shadow-popover">
           {children}
         </div>
       </div>
@@ -52,7 +52,7 @@ export function DrawerFrame({ title, onClose, tabs, children, footer }: DrawerFr
 
   return (
     <section aria-labelledby={DRAWER_TITLE_ID} className="flex min-h-0 flex-1 flex-col">
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-20 pt-30 tablet:px-25">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-20 pt-24 tablet:px-25 tablet:pt-30">
         <div className="flex items-start justify-between gap-12">
           <div className="min-w-0">
             <p className="text-micro leading-13 font-570 tracking-[0.06em] text-ink-muted uppercase">My degree</p>

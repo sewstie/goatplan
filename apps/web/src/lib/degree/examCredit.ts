@@ -63,13 +63,20 @@ export function planExamCredit(history: Pick<DegreeHistory, "courses">, picks: r
   for (const pick of picks) {
     const exam = findExam(pick.examId);
     if (!exam) continue;
+    const added = new Map<string, HistoryCourse>();
     for (const course of examAward(exam, pick.score)) {
+      const again = added.get(course.code);
+      if (again) {
+        again.credits += course.credits;
+        again.copies = (again.copies ?? 1) + 1;
+        continue;
+      }
       if (taken.has(course.code)) {
-        plan.skipped.push({ code: course.code, exam: examLabel(exam) });
+        if (!plan.skipped.some((item) => item.code === course.code && item.exam === examLabel(exam))) plan.skipped.push({ code: course.code, exam: examLabel(exam) });
         continue;
       }
       taken.add(course.code);
-      plan.add.push({
+      const record: HistoryCourse = {
         code: course.code,
         title: course.title ?? titleOf(course.code) ?? examLabel(exam),
         credits: course.credits,
@@ -77,7 +84,9 @@ export function planExamCredit(history: Pick<DegreeHistory, "courses">, picks: r
         apIb: true,
         source: "found",
         creditSource: exam.program === "AP" ? "ap" : "ib",
-      });
+      };
+      added.set(course.code, record);
+      plan.add.push(record);
     }
   }
   return plan;

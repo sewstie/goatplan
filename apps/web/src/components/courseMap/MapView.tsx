@@ -12,7 +12,7 @@ export function MapView(props: MapViewProps) {
     <div className="relative min-w-0">
       <FlowchartMap {...props} zoom={zoom} scroller={scroller} setZoom={setZoom} resetZoom={reset} />
       <div className="flow-zoom">
-        {fitted ? <span>Ctrl + scroll to zoom</span> : <><span>{Math.round(zoom * 100)}%</span><button type="button" onClick={reset}>Fit</button></>}
+        {fitted ? <><span className="flow-zoom-mouse">Ctrl + scroll to zoom</span><span className="flow-zoom-touch">Scroll to explore</span></> : <><span>{Math.round(zoom * 100)}%</span><button type="button" onClick={reset}>Fit</button></>}
       </div>
     </div>
   );

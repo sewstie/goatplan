@@ -107,7 +107,7 @@ describe("the first visit", () => {
     expect(screen.getByRole("button", { name: "Add AP or IB credit" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Add courses" })).toBeVisible();
     expect(screen.queryByRole("heading", { name: "Insights" })).not.toBeInTheDocument();
-    expect(screen.getByText(/Course history stays in this browser/)).toBeVisible();
+    expect(screen.queryByText(/Course history stays in this browser/)).not.toBeInTheDocument();
     expect(tile(/^Introductory CS, line 16, empty/)).toBeVisible();
   });
 
@@ -411,6 +411,22 @@ describe("course history", () => {
       expect.objectContaining({ code: "MA 1022", apIb: true, creditSource: "ap", status: "taken" }),
       expect.objectContaining({ code: "MA 1023", apIb: true, creditSource: "ap", status: "taken" }),
     ]);
+  });
+
+  it("adds both MA 1000 credits from IB Mathematics", async () => {
+    const { user } = await setup();
+    await user.click(screen.getByRole("button", { name: "Course history" }));
+    await user.click(screen.getByRole("button", { name: "Manual credit" }));
+    const panel = within(screen.getByRole("region", { name: "Add manual credit" }));
+    await user.click(panel.getByRole("radio", { name: "IB" }));
+    await user.click(panel.getByRole("combobox", { name: "IB exam" }));
+    await user.click(screen.getByRole("option", { name: "Mathematics" }));
+    await user.click(panel.getByRole("radio", { name: "6" }));
+    const earns = within(panel.getByRole("region", { name: "What this exam earns" }));
+    expect(earns.getByText("MA 1000 ×2")).toBeVisible();
+    expect(earns.queryByText(/already in your history/)).toBeNull();
+    await user.click(panel.getByRole("button", { name: "Add 2 courses" }));
+    expect(stored().courses).toEqual([expect.objectContaining({ code: "MA 1000", credits: 6, copies: 2, apIb: true, creditSource: "ib" })]);
   });
 
   it("refuses text that isn't shaped like a course code", async () => {

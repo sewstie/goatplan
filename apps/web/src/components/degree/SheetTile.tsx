@@ -39,9 +39,9 @@ export function SheetTile({ tile, view, history, current }: SheetTileProps) {
   if (tile.kind === "tick") {
     const manualId = tile.manualId;
     return (
-      <label className={cx(TILE_BOX, "pr-26", box, manualId ? "cursor-pointer hover:border-line-strong" : "cursor-default")}>
+      <label className={cx(TILE_BOX, "pr-10", box, manualId ? "cursor-pointer hover:border-line-strong" : "cursor-default")}>
         <Corner number={tile.number} />
-        <span className="flex min-w-0 items-center gap-7">
+        <span className="flex min-w-0 items-center gap-7 pr-16">
           <CheckBox
             small
             aria-label={`${tile.label}${tile.number ? `, line ${tile.line}` : ""}`}
@@ -51,7 +51,7 @@ export function SheetTile({ tile, view, history, current }: SheetTileProps) {
           />
           <span className={cx("truncate text-9 leading-14-4 font-600", tile.checked ? ink : "text-ink")}>{tile.label}</span>
         </span>
-        <span className="truncate pl-20 text-8 leading-16 text-ink-muted">{tile.detail ?? (tile.checked ? "Done" : "Tick when done")}</span>
+        <span className="pl-20 text-8 leading-16 text-ink-muted">{tile.detail ?? (tile.checked ? "Done" : "Tick when done")}</span>
       </label>
     );
   }

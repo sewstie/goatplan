@@ -196,7 +196,18 @@ TEST(Audit, SharedContractCasesWithoutLoadedTerm) {
         }
         ASSERT_EQ(response.at("ok"), true) << text;
         EXPECT_EQ(response.at("sections").size(), 8u);
-        std::set<std::string> assigned;
+        std::map<std::string, int> allowed;
+        for (const char* key : {"taken", "planned"}) {
+            for (const auto& course : item.at("request").value(key, json::array())) {
+                auto& most = allowed[course.at("code").get<std::string>()];
+                most = std::max(most, course.value("copies", 1));
+            }
+        }
+        std::map<std::string, int> assigned;
+        const auto assign = [&](const json& course) {
+            const auto code = course.get<std::string>();
+            return ++assigned[code] <= std::max(allowed[code], 1);
+        };
         std::size_t lineCount = 0;
         for (const auto& section : response.at("sections")) {
             lineCount += section.at("lines").size();
@@ -208,7 +219,7 @@ TEST(Audit, SharedContractCasesWithoutLoadedTerm) {
                         if (slot.at("state") == "done") ++done;
                         if (slot.at("state") == "planned") ++planned;
                         if (!slot.at("course").is_null()) {
-                            EXPECT_TRUE(assigned.insert(slot.at("course").get<std::string>()).second);
+                            EXPECT_TRUE(assign(slot.at("course")));
                         }
                     }
                 } else {
@@ -218,7 +229,7 @@ TEST(Audit, SharedContractCasesWithoutLoadedTerm) {
                 if (!line.at("course").is_null()) {
                     EXPECT_NE(line.at("state"), "empty");
                     if (section.at("name") != "Free Electives") {
-                        EXPECT_TRUE(assigned.insert(line.at("course").get<std::string>()).second);
+                        EXPECT_TRUE(assign(line.at("course")));
                     }
                 }
                 for (const auto& expected : item.value("lines", json::array())) {
@@ -247,7 +258,7 @@ TEST(Audit, SharedContractCasesWithoutLoadedTerm) {
         EXPECT_LE(pool.at("creditsDone").get<double>() + pool.at("creditsPlanned").get<double>(),
                   pool.at("creditsTotal").get<double>());
         for (const auto& course : pool.at("courses")) {
-            EXPECT_EQ(assigned.count(course.get<std::string>()), 0u) << course;
+            EXPECT_TRUE(assign(course)) << course;
         }
         EXPECT_TRUE(response.at("candidateResults").is_array());
         if (item.contains("candidateResults")) EXPECT_EQ(response.at("candidateResults"), item.at("candidateResults"));

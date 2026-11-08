@@ -7,6 +7,7 @@ import { EngineClient, type EngineWorker } from "./EngineClient";
 import { createEngineHost, type GoatplanModule } from "./engineHost";
 import type { AuditRequest, AuditSuccess } from "./types";
 import type { TermFile, TermIndex } from "@/lib/data/types";
+import { planExamCredit } from "@/lib/degree/examCredit";
 import { buildAuditRequest, type HistoryCourse } from "@/lib/degree/history";
 import { loadSheet } from "@/lib/degree/sheets";
 
@@ -224,8 +225,10 @@ describe("audit through WebAssembly and EngineClient", () => {
           .flatMap((section) => section.lines)
           .flatMap((line) => line.subSlots ? line.subSlots.map((slot) => slot.course) : [line.course])
           .flatMap((course) => course ? [course] : []);
-        expect(new Set(assigned).size, item.name).toBe(assigned.length);
-        expect(assigned.filter((code) => response.freeElectives.courses.includes(code)), item.name).toEqual([]);
+        const copies = new Map<string, number>();
+        for (const course of [...(item.request.taken ?? []), ...(item.request.planned ?? [])]) copies.set(course.code, Math.max(copies.get(course.code) ?? 1, course.copies ?? 1));
+        for (const code of new Set(assigned)) expect(assigned.filter((other) => other === code).length, item.name).toBeLessThanOrEqual(copies.get(code) ?? 1);
+        expect(assigned.filter((code) => (copies.get(code) ?? 1) === 1 && response.freeElectives.courses.includes(code)), item.name).toEqual([]);
       }
       expect(fetchTermText).not.toHaveBeenCalled();
     } finally {
@@ -417,6 +420,14 @@ describe("the degree module's requests through WebAssembly", () => {
   it("counts a taken course without leaving extra planned credit", async () => {
     const response = await ask({ courses: [saved("CS 2102")] });
     expect(lineOf(response, 17)).toMatchObject({ state: "done", course: "CS 2102" });
+    expect(response.extra).toEqual([]);
+  });
+
+  it("fills two math lines from IB Mathematics, which gives MA 1000 twice", async () => {
+    const { add } = planExamCredit({ courses: [] }, [{ examId: "ib-mathematics", score: 7 }]);
+    const response = await ask({ courses: add });
+    expect(response.sections.find((section) => section.name === "Mathematics")).toMatchObject({ done: 2 });
+    expect([lineOf(response, 34), lineOf(response, 35)]).toMatchObject([{ state: "done", course: "MA 1000" }, { state: "done", course: "MA 1000" }]);
     expect(response.extra).toEqual([]);
   });
 
