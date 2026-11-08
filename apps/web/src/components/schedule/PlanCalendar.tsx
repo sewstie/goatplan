@@ -22,6 +22,7 @@ import { useDiagnosticPreview } from "./useDiagnosticPreview";
 import { useHeldRange } from "./useHeldRange";
 import { useSectionPreviewItems } from "./useSectionPreviewItems";
 import { usePhoneScreen } from "@/components/phone/phoneScreen";
+import { focusDetails } from "@/components/shell/detailsFocus";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
 import { WeekCalendar } from "./WeekCalendar";
 
@@ -115,7 +116,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             drawing={drawingHere}
             style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN, CLASS_END_GAP)}
             selected={selected}
-            onSelect={(clicked) => {
+            onSelect={(clicked, fromKeyboard) => {
               // On a phone a tap opens the course screen with that section picked.
               if (phone && !clicked.preview) {
                 selectCourse(clicked.courseCode, clicked.sectionId);
@@ -123,6 +124,7 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
                 return;
               }
               selectCourse(clicked.courseCode, selected ? null : clicked.sectionId);
+              if (fromKeyboard) focusDetails();
             }}
           />
         );
@@ -147,8 +149,8 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
       busy={!saved && pending}
       days={days}
       range={range}
-      caption={hasTimes ? `${saved ? "Saved plan" : diagnostic.hasDiagnosis ? "Preview" : "Auto-fit"} · ${formatTimeRange(range.start, range.end)}` : diagnostic.hasDiagnosis && !saved ? "No schedule fits" : "No timed courses yet"}
-      note={saved ? "Saved plan" : diagnostic.hasDiagnosis ? "Preview" : "Auto-fit to your schedule"}
+      caption={hasTimes ? `${saved ? (shared ? "Shared plan" : "Saved plan") : diagnostic.hasDiagnosis ? "Preview" : "Auto-fit"} · ${formatTimeRange(range.start, range.end)}` : diagnostic.hasDiagnosis && !saved ? "No schedule fits" : "No timed courses yet"}
+      note={saved ? (shared ? "Shared plan" : "Saved plan") : diagnostic.hasDiagnosis ? "Preview" : "Auto-fit to your schedule"}
       renderDay={renderDay}
       background={hasTimes && <EarlyBand range={range} startsAfter={preferences.startsAfter} />}
       footer={<NoTimeStrip items={saved || untimed.length > 0 ? untimed : diagnostic.untimed} />}

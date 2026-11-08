@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, type RefObject } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { focusDetails } from "@/components/shell/detailsFocus";
 import { COURSE_COLORS, courseSlot } from "@/components/ui/courseColors";
 import type { Course } from "@/lib/data/types";
 import { selectChosenSections, usePlanner } from "@/lib/store";
@@ -83,7 +84,10 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
               swatch={COURSE_COLORS[courseSlot(codes, course.code)].swatch}
               locked={(locks[course.code]?.length ?? 0) > 0}
               selected={course.code === selected}
-              onSelect={() => selectCourse(course.code)}
+              onSelect={(fromKeyboard) => {
+                selectCourse(course.code);
+                if (fromKeyboard) focusDetails();
+              }}
               onRemove={() => remove(course.code)}
             />
           ))}

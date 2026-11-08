@@ -24,7 +24,7 @@ export function AddToCalendarButton() {
         aria-controls={panelId}
         onClick={() => setOpen(!open)}
       >
-        Export
+        <span className="tablet:max-wide:sr-only">Export</span>
       </Button>
       {open && <ExportPanel id={panelId} anchor={button} onClose={() => setOpen(false)} />}
     </>

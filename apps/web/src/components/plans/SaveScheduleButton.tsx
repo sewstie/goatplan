@@ -30,15 +30,15 @@ export function SaveScheduleButton({ saved, disabled, onSave }: SaveScheduleButt
 
   if (saved) {
     return (
-      <Button variant="soft" aria-label="Schedule saved" aria-disabled="true" icon={<Check aria-hidden />} className="min-w-84" aria-live="polite">
-        Saved
+      <Button variant="soft" aria-label="Schedule saved" aria-disabled="true" icon={<Check aria-hidden />} className="tablet:max-wide:min-w-0 min-w-84" aria-live="polite">
+        <span className="tablet:max-wide:sr-only">Saved</span>
       </Button>
     );
   }
 
   return (
-    <Button aria-label="Save schedule" icon={<BookmarkSimple aria-hidden />} disabled={disabled} onClick={onSave} className="min-w-84" aria-live="polite">
-      Save
+    <Button aria-label="Save schedule" icon={<BookmarkSimple aria-hidden />} disabled={disabled} onClick={onSave} className="tablet:max-wide:min-w-0 min-w-84" aria-live="polite">
+      <span className="tablet:max-wide:sr-only">Save</span>
     </Button>
   );
 }
