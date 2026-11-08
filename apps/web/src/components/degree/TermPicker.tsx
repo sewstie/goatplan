@@ -7,6 +7,7 @@ import { cx } from "@/components/ui/cx";
 import { floatingPosition } from "@/components/ui/floatingPosition";
 import { parseTerm, sameTerm, termLong, type TermName } from "@/lib/degree";
 import { planYears } from "@/lib/degree/planGrid";
+import { termIdOf, type TermOffers } from "@/lib/degree/termOfferings";
 import { termTag } from "./termTag";
 
 type TermPickerProps = {
@@ -18,6 +19,7 @@ type TermPickerProps = {
   allowNone?: boolean;
   summer?: boolean;
   hint?: ReactNode;
+  offers?: TermOffers;
   className?: string;
 };
 
@@ -52,7 +54,9 @@ function step(cells: (TermName | null)[][], from: { row: number; column: number 
   }
 }
 
-export function TermPicker({ label, value, onChange, startYear, current, allowNone = false, summer = true, hint, className }: TermPickerProps) {
+const OFFER_WORDS = { offered: "offered", "not-offered": "not offered" } as const;
+
+export function TermPicker({ label, value, onChange, startYear, current, allowNone = false, summer = true, hint, offers, className }: TermPickerProps) {
   const id = useId();
   const trigger = useRef<HTMLButtonElement>(null);
   const popup = useRef<HTMLDivElement>(null);
@@ -186,22 +190,26 @@ export function TermPicker({ label, value, onChange, startYear, current, allowNo
                     const selected = sameTerm(term, chosen);
                     const now = sameTerm(term, current);
                     const tagText = termTag(term, current);
+                    const offer = offers?.get(termIdOf(term));
+                    const words = [tagText && (tagText === "Now" ? "current term" : tagText.toLowerCase()), offer && OFFER_WORDS[offer]].filter(Boolean);
                     return (
                       <span key={name} role="gridcell">
                         <button
                           type="button"
                           tabIndex={isActive ? 0 : -1}
                           data-active={isActive || undefined}
-                          aria-label={tagText ? `${name}, ${tagText === "Now" ? "current term" : tagText.toLowerCase()}` : name}
+                          aria-label={[name, ...words].join(", ")}
                           aria-pressed={selected}
                           onClick={() => choose(name)}
                           onMouseEnter={() => setActive({ row, column })}
                           className={cx(
                             "relative flex h-34 w-full cursor-pointer flex-col items-center justify-center rounded-row text-9 leading-12 font-570 transition-colors motion-reduce:transition-none",
                             selected ? "bg-accent text-on-accent" : now ? "bg-accent-soft text-accent hover:bg-surface-selected" : term.letter === "E" ? "bg-canvas text-ink-soft hover:bg-surface-selected" : "bg-surface-subtle text-ink hover:bg-surface-selected",
+                            offer === "offered" && !selected && "ring-1 ring-success ring-inset",
                           )}
                         >
-                          {term.letter} {String(term.year).slice(-2)}
+                          {offer === "offered" && <span aria-hidden className={cx("absolute top-4 right-4 size-5 rounded-full", selected ? "bg-on-accent" : "bg-success")} />}
+                          <span className={cx(offer === "not-offered" && "line-through", offer === "not-offered" && !selected && "text-ink-faint")}>{term.letter} {String(term.year).slice(-2)}</span>
                           {now && <span aria-hidden className={cx("text-micro font-650", selected ? "text-on-accent" : "text-accent")}>Now</span>}
                         </button>
                       </span>
@@ -211,6 +219,13 @@ export function TermPicker({ label, value, onChange, startYear, current, allowNo
               );
             })}
           </div>
+          {offers && offers.size > 0 && (
+            <p className="flex flex-wrap items-center gap-x-10 gap-y-2 pt-8 text-8 leading-12 text-ink-muted">
+              <span className="flex items-center gap-4"><span aria-hidden className="size-5 rounded-full bg-success" />Offered</span>
+              <span><span aria-hidden className="line-through">Term</span> Not offered</span>
+              <span>Terms without a schedule yet have no mark.</span>
+            </p>
+          )}
           {allowNone && (
             <button
               type="button"

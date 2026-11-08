@@ -20,6 +20,8 @@ import { UnitsField } from "./UnitsField";
 import { useCurrentTerm } from "./useCurrentTerm";
 import { usePlanStart } from "./usePlanStart";
 import { UNKNOWN_COURSE_NOTE } from "./unknownCourseNote";
+import { offerHintNode } from "./offerHint";
+import { useTermOffers } from "./useTermOfferings";
 import type { DegreeView } from "./useDegreeView";
 
 const BAD_UNITS = "Enter WPI units, like 1/3 or 1/6.";
@@ -36,6 +38,7 @@ export function CourseDetailsPanel({ code, history, view }: { code: string; hist
   const [units, setUnits] = useState(course ? unitsText(course.credits) : "");
   const [when, setWhen] = useState<TermAndState>(() => ({ term: course?.term ?? "", state: course ? coursePlanState(course, current) : "taken" }));
   const [problem, setProblem] = useState<string | null>(null);
+  const offers = useTermOffers(course?.code ?? null);
   if (!course) return <DrawerFrame title="Edit course" onClose={close}><p className="text-8-5 leading-16 text-ink-muted">This course is only in your plan. Change it in the planner.</p></DrawerFrame>;
 
   const tile = view?.sheet.sections.flatMap((section) => section.tiles).find((item) => item.course !== null && names.includes(item.course));
@@ -75,7 +78,7 @@ export function CourseDetailsPanel({ code, history, view }: { code: string; hist
         <p className="pt-2 text-8 leading-12 text-ink-muted">{[creditLabel(course), course.title].filter(Boolean).join(" · ") || "No title"}</p>
       </div>
       <div className="pt-16">
-        <TermStatusFields term={when.term} state={when.state} onChange={setWhen} startYear={startYear} current={current} termLabel="Term (optional)" />
+        <TermStatusFields term={when.term} state={when.state} onChange={setWhen} startYear={startYear} current={current} termLabel="Term (optional)" offers={offers} hint={when.state === "taken" ? undefined : offerHintNode(course.code, when.term, offers)} />
       </div>
       <div className="pt-16 pb-18">
         <UnitsField value={units} problem={problem === BAD_UNITS ? problem : null} onChange={(next) => { setUnits(next); setProblem(null); }} />

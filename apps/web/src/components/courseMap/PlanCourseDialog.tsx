@@ -11,13 +11,17 @@ import { TermPicker } from "@/components/degree/TermPicker";
 import { useCurrentTerm } from "@/components/degree/useCurrentTerm";
 import { usePlanStart } from "@/components/degree/usePlanStart";
 import { usePublishedTerms } from "@/components/degree/usePublishedTerms";
+import { offerHintNode } from "@/components/degree/offerHint";
+import { useTermOffers } from "@/components/degree/useTermOfferings";
+import { firstOffered } from "@/lib/degree/termOfferings";
 
 export function PlanCourseDialog({ node, open, close }: { node: MapNode | null; open: boolean; close(): void }) {
   const current = useCurrentTerm();
   const startYear = usePlanStart();
   const [chosen, setTerm] = useState<string | null>(null);
-  const term = chosen ?? termLong(nextTerm(current));
   const published = usePublishedTerms();
+  const offers = useTermOffers(node?.code ?? null);
+  const term = chosen ?? termLong(firstOffered(nextTerm(current), offers));
   const set = useDegreeUi((state) => state.set);
   const named = parseTerm(term)!;
   const termId = `${named.year}-${named.letter}`;
@@ -40,7 +44,7 @@ export function PlanCourseDialog({ node, open, close }: { node: MapNode | null; 
       </>}
     >
       <div className="pt-8">
-        <TermPicker label="Term" value={term} onChange={setTerm} startYear={startYear} current={current} />
+        <TermPicker label="Term" value={term} onChange={setTerm} startYear={startYear} current={current} offers={offers} hint={offerHintNode(node?.code, term, offers)} />
       </div>
     </Dialog>
   );

@@ -30,7 +30,7 @@ test("plan course edits persist in the existing history", async ({ page }) => {
   await page.getByRole("navigation", { name: "Degree views" }).getByRole("button", { name: "Plan ahead" }).click();
   await page.getByRole("button", { name: /^Edit CS 1102,/ }).click();
   await page.getByRole("button", { name: /^Term \(optional\)/ }).click();
-  await page.getByRole("button", { name: "D Term 2027", exact: true }).click();
+  await page.getByRole("grid", { name: "Terms by school year" }).getByRole("button", { name: /^D Term 2027(,|$)/ }).click();
   await page.getByRole("button", { name: "Save changes" }).click();
   expect((await stored(page)).courses.find((course: { code: string }) => course.code === "CS 1102").term).toBe("D Term 2027");
   await expect(page.getByRole("region", { name: "D Term 2027", exact: true }).getByRole("button", { name: /^Edit CS 1102,/ })).toBeVisible();

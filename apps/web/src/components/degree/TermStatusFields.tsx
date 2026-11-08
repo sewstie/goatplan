@@ -1,8 +1,10 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { SegmentedSwitch } from "@/components/ui/SegmentedSwitch";
 import { compareTerms, nextTerm, parseTerm, termLong, type TermName } from "@/lib/degree";
 import { stateForTerm, type PlanState } from "@/lib/degree/planGrid";
+import type { TermOffers } from "@/lib/degree/termOfferings";
 import { PLAN_STATES } from "./planStateLook";
 import { TermPicker } from "./TermPicker";
 
@@ -14,6 +16,8 @@ type TermStatusFieldsProps = TermAndState & {
   current: TermName;
   termLabel?: string;
   allowNone?: boolean;
+  offers?: TermOffers;
+  hint?: ReactNode;
 };
 
 const ORDER: PlanState[] = ["taken", "progress", "planned"];
@@ -25,7 +29,7 @@ export function termForState(state: PlanState, term: string, current: TermName):
   return term;
 }
 
-export function TermStatusFields({ term, state, onChange, startYear, current, termLabel = "Term", allowNone = true }: TermStatusFieldsProps) {
+export function TermStatusFields({ term, state, onChange, startYear, current, termLabel = "Term", allowNone = true, offers, hint }: TermStatusFieldsProps) {
   return (
     <div className="flex flex-col gap-14">
       <TermPicker
@@ -34,6 +38,8 @@ export function TermStatusFields({ term, state, onChange, startYear, current, te
         startYear={startYear}
         current={current}
         allowNone={allowNone}
+        offers={offers}
+        hint={hint}
         onChange={(next) => onChange({ term: next, state: stateForTerm(parseTerm(next), current) })}
       />
       <div className="flex flex-col items-start">
