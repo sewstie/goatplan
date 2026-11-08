@@ -5,7 +5,7 @@ export { getGapSource, type CourseGaps } from "./courseGaps";
 export { useCourseGaps } from "./useCourseGaps";
 export { findCourse, loadCatalog, offeringNote, type Catalog } from "./catalog";
 export { GPS_COURSES, GPS_SECTIONS, gpsCountsForHumanities, isGpsCourse, planGpsCredit, type GpsCreditPlan, type GpsPick, type GpsSection } from "./gps";
-export { applyHuaPath, detectHuaPath, HUA_GROUPINGS, HUA_SUBJECTS, humanitiesCourses, huaPathId, huaProblem, LANGUAGE_PATH_SUBJECTS, parseHuaPath, SEMINAR_CODES, seminarTooEarly, type HuaPath, type HuaPathGuess } from "./humanities";
+export { applyHuaPath, detectHuaPath, groupingName, HUA_GROUPINGS, HUA_SUBJECTS, humanitiesCourses, huaPathId, huaPathNote, huaProblem, LANGUAGE_NAMES, LANGUAGE_PATH_SUBJECTS, lastLanguageLevel, parseHuaPath, SEMINAR_CODES, seminarTooEarly, type HuaPath, type HuaPathGuess } from "./humanities";
 export { EXAM_PROGRAMS, EXAMS, examAward, examLabel, examScores, findExam, planExamCredit, type Exam, type ExamCourse, type ExamCreditPlan, type ExamPick, type ExamProgram } from "./examCredit";
 export {
   cleanCourseCode,

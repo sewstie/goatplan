@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applyHuaPath, detectHuaPath, HUA_GROUPINGS, HUA_SUBJECTS, humanitiesCourses, huaPathId, huaProblem, parseHuaPath, seminarTooEarly, type HuaPath } from "./humanities";
+import { applyHuaPath, detectHuaPath, HUA_GROUPINGS, HUA_SUBJECTS, humanitiesCourses, huaPathId, huaPathNote, huaProblem, parseHuaPath, seminarTooEarly, type HuaPath } from "./humanities";
 import { typedCourse, type HistoryCourse } from "./history";
 import { loadSheet, SHEETS } from "./sheets";
 
@@ -15,12 +15,12 @@ describe("humanities path", () => {
   });
 
   it("puts a student on the language path when their first humanities course is a language", () => {
-    expect(detectHuaPath([course("SP 1521", "A Term 2026"), course("CS 1101", "A Term 2026")])).toEqual({ path: language("SP"), chosen: false, first: "SP 1521", alsoPossible: null });
+    expect(detectHuaPath([course("SP 1521", "A Term 2026"), course("CS 1101", "A Term 2026")])).toEqual({ path: language("SP"), chosen: false, first: "SP 1521" });
     expect(detectHuaPath([course("GN 1511", "A Term 2026"), course("GN 1512", "B Term 2026")]).path).toEqual(language("GN"));
   });
 
   it("uses depth and breadth when the first course isn't a language", () => {
-    expect(detectHuaPath([course("HI 1310", "A Term 2026")])).toEqual({ path: DEPTH_BREADTH, chosen: false, first: "HI 1310", alsoPossible: null });
+    expect(detectHuaPath([course("HI 1310", "A Term 2026")])).toEqual({ path: DEPTH_BREADTH, chosen: false, first: "HI 1310" });
   });
 
   it("switches to depth and breadth once a course breaks the language path", () => {
@@ -29,17 +29,27 @@ describe("humanities path", () => {
     expect(detectHuaPath([course("SP 1521", "A Term 2026"), course("HU 3900", "B Term 2027", "planned")]).path).toEqual(DEPTH_BREADTH);
   });
 
-  it("keeps ISE open, since it can be its own path or part of depth and breadth", () => {
-    expect(detectHuaPath([course("ISE 1800", "A Term 2026")])).toEqual({ path: DEPTH_BREADTH, chosen: false, first: "ISE 1800", alsoPossible: language("ISE") });
+  it("starts the ISE path on its own, and leaves it once a course in another subject comes", () => {
+    expect(detectHuaPath([course("ISE 1800", "A Term 2026")])).toEqual({ path: language("ISE"), chosen: false, first: "ISE 1800" });
+    expect(detectHuaPath([course("ISE 1800", "A Term 2026"), course("HI 1310", "B Term 2026")]).path).toEqual(DEPTH_BREADTH);
   });
 
-  it("uses depth and breadth for Arabic, which has no advanced course to finish a language path", () => {
-    expect(detectHuaPath([course("AB 1531", "A Term 2026")]).path).toEqual(DEPTH_BREADTH);
+  it("starts the Arabic path, which ends at the intermediate level", async () => {
+    expect(detectHuaPath([course("AB 1531", "A Term 2026")]).path).toEqual(language("AB"));
+    const changed = applyHuaPath(await loadSheet("cs-2030"), language("AB"));
+    expect(changed.lines.filter((line) => line.section === "hua" && line.filter.type === "subjectMinLevel").map((line) => [line.filter.subject, line.filter.minLevel])).toEqual([["AB", 2000]]);
+  });
+
+  it("explains the path the student is on", () => {
+    expect(huaPathNote(DEPTH_BREADTH)).toBeNull();
+    expect(huaPathNote(language("SP"))).toBe("Language path: all 6 humanities courses in Spanish. The last is SP 3000+ in place of the seminar, so no breadth course is needed. With WPI credit for 3 years of high school Spanish, 5 intermediate or higher courses at WPI are enough.");
+    expect(huaPathNote(language("AB"))).toBe("Language path: all 6 humanities courses in Arabic. The last is AB 2000+ in place of the seminar, so no breadth course is needed.");
+    expect(huaPathNote(language("ISE"))).not.toContain("high school");
   });
 
   it("starts on depth and breadth with no humanities courses, and the student's own choice always wins", () => {
-    expect(detectHuaPath([])).toEqual({ path: DEPTH_BREADTH, chosen: false, first: null, alsoPossible: null });
-    expect(detectHuaPath([course("SP 1521", "A Term 2026")], DEPTH_BREADTH)).toEqual({ path: DEPTH_BREADTH, chosen: true, first: "SP 1521", alsoPossible: null });
+    expect(detectHuaPath([])).toEqual({ path: DEPTH_BREADTH, chosen: false, first: null });
+    expect(detectHuaPath([course("SP 1521", "A Term 2026")], DEPTH_BREADTH)).toEqual({ path: DEPTH_BREADTH, chosen: true, first: "SP 1521" });
     expect(detectHuaPath([course("ISE 1800", "A Term 2026")], language("ISE")).path).toEqual(language("ISE"));
   });
 
@@ -47,7 +57,7 @@ describe("humanities path", () => {
     expect(huaPathId(language("SP"))).toBe("language:SP");
     expect(parseHuaPath("language:SP")).toEqual(language("SP"));
     expect(parseHuaPath("depth-breadth")).toEqual(DEPTH_BREADTH);
-    for (const bad of ["language:AB", "language:XX", "language", "", 3, null]) expect(parseHuaPath(bad)).toBeNull();
+    for (const bad of ["language:EN", "language:XX", "language", "", 3, null]) expect(parseHuaPath(bad)).toBeNull();
   });
 
   it("leaves the sheet alone on depth and breadth", async () => {

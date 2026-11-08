@@ -1,5 +1,6 @@
 import type { AuditCheck, AuditLine, AuditSuccess } from "@/lib/engine/types";
 import type { CreditSource, DegreeHistory, HistoryCourse } from "./history";
+import { detectHuaPath, huaPathNote, parseHuaPath } from "./humanities";
 import { coursesInDoubt, lineState, manualItemForLine } from "./progress";
 import { loadedRequirements, SECTIONS, SPORTS_ITEM } from "./requirements";
 import { crossListed, WPE_LINE } from "./rules";
@@ -135,7 +136,7 @@ export function buildSheet(
       id: definition.id,
       name: definition.displayName ?? SECTION_NAMES[definition.id] ?? definition.name,
       lineRange: first === last ? `Line ${lineNumber(first)}` : `Lines ${lineNumber(first)}–${lineNumber(last)}`,
-      note: definition.note ?? SECTION_NOTES[definition.id] ?? null,
+      note: (definition.id === "hua" && huaPathNote(detectHuaPath(history.courses, parseHuaPath(history.huaPath)).path)) || (definition.note ?? SECTION_NOTES[definition.id] ?? null),
     };
     if (definition.id === "wpe") return { ...base, ...wpeSection(lines[0], history) };
     const tiles = lines.map((line) => tileFor(line, history, doubted, pinned, openTerm));

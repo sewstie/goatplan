@@ -183,10 +183,10 @@ test.describe("the real audit", () => {
     await openDegree(page, { courses: ["EN 1001", "EN 1002", "EN 2201"].map((code) => savedCourse({ code, credits: 3 })) });
     await page.getByRole("button", { name: /^HUA theme: Review/ }).click();
     const checks = panel(page, "Requirement checks");
-    await expect(checks.getByText("Confirm the relationship between the humanities courses with your advisor.")).toBeVisible();
+    await expect(checks.getByText("EN 1001, EN 1002 and EN 2201 are all in literature and writing. Ask your advisor if they share one theme, then tick the box.")).toBeVisible();
     await checks.getByRole("checkbox", { name: "My humanities depth courses are thematically related" }).click();
     await auditReady(page);
-    await expect(checks.getByText("You confirmed these courses are related.")).toBeVisible();
+    await expect(checks.getByText("You confirmed that EN 1001, EN 1002 and EN 2201 share one theme.")).toBeVisible();
   });
 
 });

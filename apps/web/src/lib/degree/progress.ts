@@ -25,7 +25,7 @@ const CHECKS_ABOUT_A_LINE = new Set(["hua-depth", "hua-breadth", "hua-ap-ib-limi
 const HELP: Record<string, string> = {
   social: "A course outside CS meets this, but it doesn't count toward your CS units.",
   "hua-depth": "You need 3 related courses in one grouping. Yours are in different groupings so far.",
-  "hua-breadth": "You need a course outside your depth grouping. Ask your advisor if all your courses are in languages.",
+  "hua-breadth": "Breadth is 1 course outside your depth grouping. You can skip it only when all 6 courses are in one language.",
   "hua-ap-ib-limit": "Only 1 AP/IB course can count toward humanities.",
   residency: "You need 8 units at WPI. A course code can't show where you took it.",
   "grad-equivalence": "Each graduate course counts here as one 4000+ course. The sheet's 2-for-3 rule may give you more.",

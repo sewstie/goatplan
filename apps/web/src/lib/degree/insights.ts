@@ -3,6 +3,8 @@ import { hasRegistrationCode, isPriorCredit, type DegreeHistory, type HistoryCou
 import { lineNumber, lineName, sectionNameOfLine, type Sheet, type SheetSection } from "./sheet";
 import { areaCourses, crossListed, fitsLine, onlyOneRivals } from "./rules";
 import { unitLabel } from "./units";
+import { groupingName, humanitiesCourses } from "./humanities";
+import { canConfirmDepth } from "./progress";
 import { loadedRequirements } from "./requirements";
 import { compareTerms, nextTerm, parseTerm, termLong, termShort, termsBetween, type TermName } from "./terms";
 
@@ -261,6 +263,28 @@ function joined(codes: readonly string[]): string {
   return codes.length < 2 ? (codes[0] ?? "") : `${codes.slice(0, -1).join(", ")} and ${codes.at(-1)}`;
 }
 
+function depthText(check: AuditCheck | undefined): string {
+  const courses = check?.courses ?? [];
+  if (!check || check.state === "not-met") return "Take 3 related courses in one grouping, like 3 history courses. Or take all 6 humanities courses in one language.";
+  if (check.state !== "check") return courses.length > 0 ? `You confirmed that ${joined(courses)} share one theme.` : "You confirmed your related courses.";
+  if (courses.length === 0) return "Take 3 related courses in one grouping.";
+  const area = groupingName(courses[0]);
+  if (canConfirmDepth(check)) return `${joined(courses)} are all in ${area}. Ask your advisor if they share one theme, then tick the box.`;
+  return `${joined(courses)} are in different groupings. You need 3 related courses in one grouping.`;
+}
+
+function breadthText(check: AuditCheck | undefined, depth: AuditCheck | undefined, history: DegreeHistory): string {
+  const settled = depth && depth.courses.length > 0 && (depth.state === "met" || depth.state === "planned" || canConfirmDepth(depth));
+  const area = settled ? groupingName(depth.courses[0]) : null;
+  const outside = area ? `1 course outside ${area}` : "1 course outside your depth grouping";
+  if (check?.state === "met" || check?.state === "planned") return `${check.courses.length > 0 ? joined(check.courses) : "A course outside your depth grouping"} gives you breadth.`;
+  if (check?.state !== "check") return `Take ${outside}.`;
+  const allLanguages = humanitiesCourses(history.courses).every((course) => groupingName(course.code) === "languages");
+  return allLanguages
+    ? "All your humanities courses are languages. You skip breadth only if all 6 are in one language. Otherwise take 1 course from another grouping."
+    : `Take 3 related courses in one grouping first. Then take ${outside}.`;
+}
+
 export function checkRows(checks: readonly AuditCheck[], history: DegreeHistory): CheckRowText[] {
   const find = (id: string) => checks.find((check) => check.id === id);
   const statusOf = (id: string): CheckStatus => STATUS[find(id)?.state ?? "not-met"];
@@ -289,13 +313,13 @@ export function checkRows(checks: readonly AuditCheck[], history: DegreeHistory)
       id: "hua-depth",
       name: "HUA theme",
       status: statusOf("hua-depth"),
-      text: find("hua-depth")?.state === "not-met" ? "You need 3 related courses in one grouping." : find("hua-depth")?.state === "check" ? "Confirm the relationship between the humanities courses with your advisor." : "You confirmed these courses are related.",
+      text: depthText(find("hua-depth")),
     },
     {
       id: "hua-breadth",
       name: "HUA breadth",
       status: statusOf("hua-breadth"),
-      text: find("hua-breadth")?.state === "check" ? "You need a course outside your depth grouping. Ask your advisor if all your courses are in languages." : find("hua-breadth")?.state === "not-met" ? "You need a course outside your depth grouping." : "A course outside your depth grouping is counted.",
+      text: breadthText(find("hua-breadth"), find("hua-depth"), history),
     },
     {
       id: "transfer",

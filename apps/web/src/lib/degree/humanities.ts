@@ -12,9 +12,11 @@ export const HUA_GROUPINGS = {
 
 export const HUA_SUBJECTS: readonly string[] = Object.values(HUA_GROUPINGS).flat();
 export const SEMINAR_CODES: readonly string[] = ["HU 3900", "HU 3910"];
-export const LANGUAGE_PATH_SUBJECTS: readonly string[] = ["CN", "GN", "SP", "ISE"];
-const EITHER_PATH_SUBJECTS = new Set(["ISE"]);
+export const LANGUAGE_PATH_SUBJECTS: readonly string[] = ["AB", "CN", "GN", "SP", "ISE"];
+export const LANGUAGE_NAMES: Record<string, string> = { AB: "Arabic", CN: "Chinese", GN: "German", SP: "Spanish", ISE: "English for non-native speakers (ISE)" };
+const LAST_COURSE_LEVEL: Record<string, number> = { AB: 2000 };
 const ADVANCED_LEVEL = 3000;
+export const lastLanguageLevel = (subject: string) => LAST_COURSE_LEVEL[subject] ?? ADVANCED_LEVEL;
 
 export type HuaPath = { kind: "depth-breadth" } | { kind: "language"; subject: string };
 
@@ -22,7 +24,6 @@ export interface HuaPathGuess {
   path: HuaPath;
   chosen: boolean;
   first: string | null;
-  alsoPossible: HuaPath | null;
 }
 
 const DEPTH_BREADTH: HuaPath = { kind: "depth-breadth" };
@@ -51,14 +52,12 @@ export function humanitiesCourses(courses: readonly HistoryCourse[]): HistoryCou
 export function detectHuaPath(courses: readonly HistoryCourse[], chosen?: HuaPath | null): HuaPathGuess {
   const list = humanitiesCourses(courses);
   const first = list[0]?.code ?? null;
-  if (chosen) return { path: chosen, chosen: true, first, alsoPossible: null };
+  if (chosen) return { path: chosen, chosen: true, first };
   const subjects = new Set(list.map((course) => subjectOf(course.code)));
   const language = subjects.size === 1 ? [...subjects][0] : null;
   const seminar = courses.some((course) => SEMINAR_CODES.includes(course.code));
-  if (!language || seminar || !LANGUAGE_PATH_SUBJECTS.includes(language)) return { path: DEPTH_BREADTH, chosen: false, first, alsoPossible: null };
-  const path: HuaPath = { kind: "language", subject: language };
-  if (EITHER_PATH_SUBJECTS.has(language)) return { path: DEPTH_BREADTH, chosen: false, first, alsoPossible: path };
-  return { path, chosen: false, first, alsoPossible: null };
+  if (!language || seminar || !LANGUAGE_PATH_SUBJECTS.includes(language)) return { path: DEPTH_BREADTH, chosen: false, first };
+  return { path: { kind: "language", subject: language }, chosen: false, first };
 }
 
 export function applyHuaPath(sheet: TrackingSheet, path: HuaPath): TrackingSheet {
@@ -74,7 +73,7 @@ export function applyHuaPath(sheet: TrackingSheet, path: HuaPath): TrackingSheet
       if (line.section !== section) return line;
       const seminar = line.filter.courses?.some((code) => SEMINAR_CODES.includes(code)) ?? false;
       return seminar
-        ? { ...line, name: "Advanced language course", displayName: `${subject} ${ADVANCED_LEVEL}+`, filter: { type: "subjectMinLevel", subject, minLevel: ADVANCED_LEVEL } }
+        ? { ...line, name: "Advanced language course", displayName: `${subject} ${lastLanguageLevel(subject)}+`, filter: { type: "subjectMinLevel", subject, minLevel: lastLanguageLevel(subject) } }
         : { ...line, name: "Language course", displayName: `${subject} course`, filter: { type: "subjects", subjects: [subject] } };
     }),
     checks: sheet.checks.filter((check) => !removed.has(check.id)),
@@ -90,6 +89,11 @@ const AREA_NAMES: Record<string, string> = {
   "philosophy-religion": "philosophy and religion",
 };
 const SEMINAR_AFTER = 5;
+
+export function groupingName(code: string): string | null {
+  const area = Object.entries(HUA_GROUPINGS).find(([, subjects]) => (subjects as readonly string[]).includes(subjectOf(code)))?.[0];
+  return area ? AREA_NAMES[area] : null;
+}
 
 function areaWords(names: readonly string[]): string {
   const words = names.map((name) => AREA_NAMES[name] ?? name);
@@ -130,4 +134,12 @@ export function seminarTooEarly(code: string, courses: readonly HistoryCourse[],
     return when ? termRank(when) < termRank(term) : course.status === "taken";
   });
   return before.length < SEMINAR_AFTER;
+}
+
+export function huaPathNote(path: HuaPath): string | null {
+  if (path.kind === "depth-breadth") return null;
+  const { subject } = path;
+  const name = subject === "ISE" ? "ISE" : (LANGUAGE_NAMES[subject] ?? subject);
+  const main = `Language path: all 6 humanities courses in ${name}. The last is ${subject} ${lastLanguageLevel(subject)}+ in place of the seminar, so no breadth course is needed.`;
+  return subject === "ISE" || subject === "AB" ? main : `${main} With WPI credit for 3 years of high school ${name}, 5 intermediate or higher courses at WPI are enough.`;
 }

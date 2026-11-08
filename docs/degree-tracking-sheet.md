@@ -84,17 +84,29 @@ There are two paths:
 - **Depth and breadth:** 3 related courses in one grouping, one of them at the
   2000 level or above, then HU 3900 or HU 3910. Add a course from another
   grouping and one humanities elective.
-- **Language:** all six courses in one language. The last one is an advanced
-  course (3000 or above) that takes the place of the seminar, and no breadth
-  course is needed. Chinese, German, Spanish and ISE have advanced courses.
-  Arabic doesn’t, so Arabic is only part of depth and breadth.
+- **Language:** all six courses in one language. The last one takes the place
+  of the seminar, and no breadth course is needed. WPI teaches Arabic (AB),
+  Chinese (CN), German (GN), Spanish (SP) and English for non-native speakers
+  (ISE), see [language programs](https://www.wpi.edu/academics/departments/humanities-arts/language-programs).
+  The last course is 3000 or above, except in Arabic: WPI’s Arabic path is
+  three elementary and three intermediate courses, so it ends at 2000 or above.
+
+Students with three years of a language in high school (B or better, no AP
+exam) can ask WPI for 1/3 unit of credit in it. It counts as one of the six, so
+five intermediate or higher courses at WPI finish the language path
+([request form](https://www.wpi.edu/sites/default/files/2023-02/LanguageStudyHighSchoolRequstforCredit.pdf)).
+It is entered like AP credit, so the one-AP limit applies.
+
+On the language path, the humanities section note on the sheet explains it
+(`huaPathNote`). On depth and breadth the sheet’s usual note stays.
 
 The first humanities course picks the path. A Spanish course starts the Spanish
 path, and a history course starts depth and breadth. Courses are ordered by
 term. Taken courses with no term (like AP credit) come first, and planned ones
 with no term come last. A later course outside that language, or an HU 3900 or
-HU 3910, moves the student to depth and breadth. ISE could go either way, so it
-stays on depth and breadth and offers the ISE path as an option. A path the
+HU 3910, moves the student to depth and breadth. ISE works the same way: all
+ISE courses start the ISE path, and a course in another subject moves the
+student to depth and breadth. A path the
 student picks always wins. It is saved as `huaPath` (`"depth-breadth"` or
 `"language:SP"`) at the top of the history, so it stays the same across majors.
 
