@@ -2,6 +2,8 @@ import { createStore, type StoreApi } from "zustand/vanilla";
 import { isTermId } from "@/lib/data/load";
 import { openTerms, pickDefaultTerm } from "@/lib/data/terms";
 import type { TermFile, TermIndex } from "@/lib/data/types";
+import { seatMergeBytes, withLiveSeats } from "@/lib/data/seatMerge";
+import type { SeatSnapshot } from "@/lib/data/seatParser";
 import { EngineSupersededError, type EngineClient } from "@/lib/engine/EngineClient";
 import type { Fix, SolveRequest, SolveResponse } from "@/lib/engine/types";
 import { lectureInstructors, lecturesByProfessor } from "@/lib/data/instructors";
@@ -26,6 +28,7 @@ export interface PlannerDeps {
   engine: Pick<EngineClient, "loadTerm" | "solve">;
   loadTermIndex(): Promise<TermIndex>;
   loadTerm(termId: string): Promise<TermFile>;
+  loadSeats?(termId: string): Promise<SeatSnapshot | null>;
   takeTermBuffer(termId: string): ArrayBuffer | null;
   storage: DraftStorage | null;
   solveDelayMs?: number;
@@ -41,6 +44,8 @@ const initialState: PlannerState = {
   terms: [],
   termId: null,
   term: null,
+  seatsUpdatedAt: null,
+  seatRefresh: "idle",
   termStatus: "idle",
   termError: null,
   response: null,
@@ -94,6 +99,12 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
   let termToken = 0;
   let solveToken = 0;
   let initialized: Promise<void> | null = null;
+  // The term as its daily file has it, before any live seats.
+  let dailyTerm: TermFile | null = null;
+  // The live seats asked for with the term, until refreshSeats takes them.
+  let pendingSeats: Promise<SeatSnapshot | null> | null = null;
+  let seatRefresh: Promise<void> | null = null;
+  let seatsReloading = false;
   // Sections (course code → ids) the next answer should show when it has a schedule with them.
   let showNext: Readonly<Record<string, readonly string[]>> | null = null;
 
@@ -106,8 +117,9 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
     async function askEngine(request: SolveRequest, termId: string): Promise<SolveResponse> {
       const response = await deps.engine.solve(request);
       if (response.ok || response.error.code !== "noTerm") return response;
-      // A restarted worker lost the term: load it again (the worker fetches it) and retry once.
-      await deps.engine.loadTerm(termId);
+      // A restarted worker lost the term: load it again and retry once. Without live seats the worker fetches the file itself.
+      const term = get().term;
+      await deps.engine.loadTerm(termId, term && term !== dailyTerm ? seatMergeBytes(term) : null);
       return deps.engine.solve(request);
     }
 
@@ -116,7 +128,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       const state = get();
       const request = buildRequest(state);
       const termId = state.termId;
-      if (!request || !termId || !state.term || state.termStatus !== "ready") return false;
+      if (!request || !termId || !state.term || state.termStatus !== "ready" || seatsReloading) return false;
 
       const token = ++solveToken;
       set({ solveStatus: "solving", solveError: null });
@@ -227,6 +239,10 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
     /** Starts loading a term with the draft it should open with. Resolves to true once it's ready. */
     async function switchTerm(termId: string, draftFor: () => Draft): Promise<boolean> {
       const token = ++termToken;
+      dailyTerm = null;
+      seatRefresh = null;
+      seatsReloading = false;
+      pendingSeats = deps.loadSeats?.(termId).catch(() => null) ?? null;
       clearSolveTimer();
       solveToken += 1;
       showNext = null;
@@ -237,6 +253,8 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         savedSelectedSection: null,
         termId,
         term: null,
+        seatsUpdatedAt: null,
+        seatRefresh: "idle",
         termStatus: "loading",
         removedCourse: null,
         blockedChange: null,
@@ -256,13 +274,15 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         writeLastTerm(deps.storage, termId);
         const term = await deps.loadTerm(termId);
         if (token !== termToken) return false;
-        // The term file's bytes move to the worker, so the file is downloaded only once.
-        const loaded = await deps.engine.loadTerm(termId, deps.takeTermBuffer(termId));
+        // The term file's bytes move to the worker, so the file is downloaded only once. Coming back to a
+        // term sends them again, since the worker may still have that term with live seats.
+        const loaded = await deps.engine.loadTerm(termId, deps.takeTermBuffer(termId) ?? seatMergeBytes(term));
         if (token !== termToken) return false;
         if (!loaded.ok) throw new Error(loaded.error.message);
 
+        dailyTerm = term;
         const draft = sanitizeDraft(draftFor(), term);
-        set({ ...draft, term, termStatus: "ready", selectedCourse: draft.courses[0] ?? null });
+        set({ ...draft, term, seatsUpdatedAt: term.generatedAt, termStatus: "ready", selectedCourse: draft.courses[0] ?? null });
         return true;
       } catch (error) {
         if (token !== termToken) return false;
@@ -335,7 +355,50 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       },
 
       async setTerm(termId) {
-        if (await switchTerm(termId, () => readDraft(deps.storage, termId) ?? emptyDraft())) void runSolve();
+        if (await switchTerm(termId, () => readDraft(deps.storage, termId) ?? emptyDraft())) {
+          void runSolve();
+          void get().refreshSeats();
+        }
+      },
+
+      refreshSeats() {
+        if (seatRefresh) return seatRefresh;
+        const { termId, termStatus } = get();
+        const daily = dailyTerm;
+        if (!deps.loadSeats || !termId || !daily || termStatus !== "ready") return Promise.resolve();
+        const load = pendingSeats ?? deps.loadSeats(termId).catch(() => null);
+        pendingSeats = null;
+        const token = termToken;
+        const refresh = (async () => {
+          set({ seatRefresh: "refreshing" });
+          const snapshot = await load;
+          if (token !== termToken) return;
+          const current = get().term!;
+          const previousUpdatedAt = get().seatsUpdatedAt;
+          const { term: merged, seatsUpdatedAt } = withLiveSeats(current, daily, snapshot);
+          set({ seatRefresh: snapshot ? "idle" : "failed", seatsUpdatedAt });
+          if (merged === current) return;
+          clearSolveTimer();
+          solveToken += 1;
+          seatsReloading = true;
+          set({ term: merged, response: null, scheduleIndex: 0, solveStatus: buildRequest(get()) ? "waiting" : "idle", solveError: null });
+          try {
+            const result = await deps.engine.loadTerm(termId, seatMergeBytes(merged));
+            if (token !== termToken) return;
+            if (!result.ok) throw new Error(result.error.message);
+            seatsReloading = false;
+            await runSolve();
+          } catch (error) {
+            if (token !== termToken) return;
+            seatsReloading = false;
+            set({ term: current, seatsUpdatedAt: previousUpdatedAt, solveStatus: "error", solveError: describe(error) });
+          }
+        })();
+        seatRefresh = refresh;
+        void refresh.finally(() => {
+          if (seatRefresh === refresh) seatRefresh = null;
+        });
+        return refresh;
       },
 
       async openPlan(termId, plan, chosen = {}) {
@@ -369,9 +432,14 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
           return false;
         }
         writeDraft(deps.storage, termId, draftOf(get()));
-        if (!buildRequest(get())) return true;
+        if (!buildRequest(get())) {
+          void get().refreshSeats();
+          return true;
+        }
         showNext = chosen;
-        return runSolve();
+        const result = await runSolve();
+        void get().refreshSeats();
+        return result;
       },
 
       addCourse(code) {

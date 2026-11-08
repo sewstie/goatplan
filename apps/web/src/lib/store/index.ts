@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useStore } from "zustand";
 import type { StoreApi } from "zustand/vanilla";
 import { loadTerm, loadTermIndex, takeTermBuffer } from "@/lib/data/load";
+import { loadSeats } from "@/lib/data/loadSeats";
 import { getEngineClient } from "@/lib/engine";
 import { createPlannerStore } from "./createPlannerStore";
 import { browserStorage, readDraft } from "./draft";
@@ -25,6 +26,7 @@ export function getPlannerStore(): StoreApi<PlannerStore> {
     engine: getEngineClient(),
     loadTermIndex,
     loadTerm,
+    loadSeats,
     takeTermBuffer,
     storage: browserStorage(),
   });

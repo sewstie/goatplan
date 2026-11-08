@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { loadTerm, type TermFile } from "@/lib/data";
+import { usePlanner } from "@/lib/store";
 
 export type TermFileState =
   | { status: "loading"; term: null }
@@ -10,12 +11,13 @@ export type TermFileState =
 
 const LOADING: TermFileState = { status: "loading", term: null };
 
-/** The latest data for a term (downloaded once and shared with the planner), to check saved plans against. */
+/** The latest data for a term, with the planner's live seats when it has that term open, to check saved plans against. */
 export function useTermFile(termId: string | null): TermFileState {
   const [result, setResult] = useState<{ termId: string; state: TermFileState } | null>(null);
+  const plannerTerm = usePlanner((state) => (state.term?.term.id === termId && state.termStatus === "ready" ? state.term : null));
 
   useEffect(() => {
-    if (!termId) return;
+    if (!termId || plannerTerm) return;
     let active = true;
     loadTerm(termId).then(
       (term) => active && setResult({ termId, state: { status: "ready", term } }),
@@ -24,7 +26,8 @@ export function useTermFile(termId: string | null): TermFileState {
     return () => {
       active = false;
     };
-  }, [termId]);
+  }, [termId, plannerTerm]);
 
+  if (plannerTerm) return { status: "ready", term: plannerTerm };
   return result && result.termId === termId ? result.state : LOADING;
 }

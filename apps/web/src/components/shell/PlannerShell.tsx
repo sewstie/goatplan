@@ -6,6 +6,7 @@ import { PhonePlanner } from "@/components/phone/PhonePlanner";
 import { CourseDetailsPanel } from "@/components/sections/CourseDetailsPanel";
 import { AppShell } from "@/components/shell/AppShell";
 import { PlannerToast } from "@/components/shell/PlannerToast";
+import { SeatStatus } from "@/components/shell/SeatStatus";
 import { Sidebar } from "@/components/shell/Sidebar";
 import { TermPicker } from "@/components/courses/TermPicker";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
@@ -37,7 +38,7 @@ export function PlannerShell({ header, barCenter, barActions, barNavigation, bar
       ) : (
         <AppShell
           sidebar={
-            <Sidebar>
+            <Sidebar footer={<SeatStatus className="pb-6" />}>
               <TermPicker />
               <CourseSearchPanel />
             </Sidebar>

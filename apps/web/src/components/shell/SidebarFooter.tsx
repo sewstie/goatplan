@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
 import { ReplayGuideButton } from "@/components/tutorial/ReplayGuideButton";
 import { FeedbackLink } from "./FeedbackLink";
@@ -7,13 +8,14 @@ import { usePlanner } from "@/lib/store";
 
 const dataTime = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 
-export function SidebarFooter({ termId }: { termId?: string }) {
+export function SidebarFooter({ termId, extra }: { termId?: string; extra?: ReactNode }) {
   const generatedAt = usePlanner((state) => state.terms.find((term) => term.id === (termId ?? state.termId))?.generatedAt);
   const date = generatedAt ? new Date(generatedAt) : null;
   const dated = date && !Number.isNaN(date.getTime());
 
   return (
     <footer className="flex shrink-0 flex-col border-t border-line pt-8 text-8 leading-12 text-ink-muted print:hidden">
+      {extra}
       {dated && (
         <p className="flex min-h-20 items-center whitespace-nowrap">
           Data <time dateTime={generatedAt} className="ml-4">{dataTime.format(date)}</time>

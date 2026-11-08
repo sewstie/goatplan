@@ -175,7 +175,7 @@ describe("solving", () => {
     });
     state().addCourse("AE 2320");
     await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
-    expect(engine.loadTerm).toHaveBeenLastCalledWith("2027-C");
+    expect(engine.loadTerm).toHaveBeenLastCalledWith("2027-C", null);
     expect(engine.solve).toHaveBeenCalledTimes(2);
     expect(state()).toMatchObject({ solveStatus: "done" });
   });

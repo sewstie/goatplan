@@ -76,6 +76,10 @@ export interface PlannerState extends Draft {
   terms: TermSummary[];
   termId: string | null;
   term: TermFile | null;
+  /** When the seat counts in `term` are from: the live snapshot's time, or the daily file's. */
+  seatsUpdatedAt: string | null;
+  /** How the latest try at live seat counts went. */
+  seatRefresh: "idle" | "refreshing" | "failed";
   termStatus: TermStatus;
   termError: string | null;
   response: SolveResponse | null;
@@ -108,6 +112,8 @@ export interface PlannerActions {
   previousSavedPlan(): void;
   init(): Promise<void>;
   setTerm(termId: string): Promise<void>;
+  /** Asks for live seat counts and merges them into the term. On failure the daily file's counts stay. */
+  refreshSeats(): Promise<void>;
   /**
    * Switches to the term, replaces the draft with the plan and solves once. Then shows the schedule
    * with the `chosen` sections (course code → section ids) when the answer has one. Resolves to false
