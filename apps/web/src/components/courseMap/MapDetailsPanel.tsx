@@ -6,8 +6,10 @@ import { AREA_NAMES } from "@/lib/courseMap/csLayout";
 import { Button } from "@/components/ui/Button";
 import { CourseChips } from "./CourseChips";
 import type { CourseState } from "./FlowCard";
+import { BackgroundExpression } from "./BackgroundExpression";
 
 type MapDetailsPanelProps = {
+  summarized?: boolean;
   node: MapNode | null;
   flow: Flowchart;
   chain: Chain | null;
@@ -22,7 +24,7 @@ function countCourses(flow: Flowchart, codes: Set<string> | undefined) {
   return flow.courses.filter((item) => codes.has(item.code)).length - doubled;
 }
 
-export function MapDetailsPanel({ node, flow, chain, state, select, plan }: MapDetailsPanelProps) {
+export function MapDetailsPanel({ summarized = false, node, flow, chain, state, select, plan }: MapDetailsPanelProps) {
   const heading = useRef<HTMLHeadingElement>(null);
   const followed = useRef(false);
   const code = node?.code;
@@ -65,16 +67,16 @@ export function MapDetailsPanel({ node, flow, chain, state, select, plan }: MapD
       <div className="flex min-w-0 flex-col gap-12 overflow-y-auto">
         <section aria-label="Before this course" className="flex flex-col gap-6">
           <h4 className="text-10 font-650">Before this</h4>
-          {before.length ? <CourseChips codes={before} pick={follow} /> : <p className="text-10 text-ink-muted">No CS course is listed.</p>}
-          {course && course.extras.length > 0 && <p className="text-caption text-ink-muted">Outside CS: {extraText(course.extras)}</p>}
+          {before.length ? <CourseChips codes={before} pick={follow} /> : <p className="text-10 text-ink-muted">{node.background ? <BackgroundExpression value={node.background} /> : "No recommended background is listed."}</p>}
+          {before.length > 0 && course && course.extras.length > 0 && <p className="text-caption text-ink-muted">Other background: {extraText(course.extras)}</p>}
         </section>
         <section aria-label="What it leads to" className="flex flex-col gap-6">
           <h4 className="text-10 font-650">What it leads to</h4>
-          {after.length ? <CourseChips codes={after} pick={follow} /> : <p className="text-10 text-ink-muted">No later CS course lists it.</p>}
+          {after.length ? <CourseChips codes={after} pick={follow} /> : <p className="text-10 text-ink-muted">No later course on this map lists it.</p>}
         </section>
       </div>
       <section aria-label="Catalog wording" className="flow-details-wording">
-        <h4 className="text-10 font-650">WPI catalog says</h4>
+        <h4 className="text-10 font-650">{summarized ? "Catalog background summary" : "WPI catalog says"}</h4>
         <p className="mt-6 whitespace-pre-line border-l-2 border-accent pl-10 text-10 leading-16 text-ink-muted">{node.wording}</p>
         <a className="mt-6 inline-flex items-center gap-4 text-caption text-accent underline" target="_blank" rel="noreferrer" href={node.source}>Open in WPI catalog<ArrowSquareOut aria-hidden /></a>
         {node.offering?.description && (

@@ -76,6 +76,23 @@
 .flow-legend ul { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
 .flow-legend li { display: inline-flex; align-items: center; gap: 5px; }
 .flow-swatch { width: 15px; height: 11px; border-radius: 3px; border: 1px solid var(--color-line-strong); background: var(--area-soft); box-shadow: inset 4px 0 0 var(--area); }
+.flow-area-mechanics { --area: var(--color-area-systems); --area-soft: var(--color-area-systems-soft); }
+.flow-area-thermal { --area: var(--color-area-theory); --area-soft: var(--color-area-theory-soft); }
+.flow-area-materials { --area: var(--color-area-cyber); --area-soft: var(--color-area-cyber-soft); }
+.flow-area-experiments { --area: var(--color-area-social); --area-soft: var(--color-area-social-soft); }
+.flow-area-circuits { --area: var(--color-area-systems); --area-soft: var(--color-area-systems-soft); }
+.flow-area-signals { --area: var(--color-area-theory); --area-soft: var(--color-area-theory-soft); }
+.flow-area-power { --area: var(--color-area-design); --area-soft: var(--color-area-design-soft); }
+.flow-area-computing { --area: var(--color-area-systems); --area-soft: var(--color-area-systems-soft); }
+.flow-area-statistics { --area: var(--color-area-theory); --area-soft: var(--color-area-theory-soft); }
+.flow-area-data { --area: var(--color-area-cyber); --area-soft: var(--color-area-cyber-soft); }
+.flow-area-learning { --area: var(--color-area-design); --area-soft: var(--color-area-design-soft); }
+.flow-area-visualization { --area: var(--color-area-social); --area-soft: var(--color-area-social-soft); }
+.flow-area-robotics { --area: var(--color-area-systems); --area-soft: var(--color-area-systems-soft); }
+.flow-area-embedded { --area: var(--color-area-cyber); --area-soft: var(--color-area-cyber-soft); }
+.flow-area-manipulation { --area: var(--color-area-design); --area-soft: var(--color-area-design-soft); }
+.flow-area-perception { --area: var(--color-area-theory); --area-soft: var(--color-area-theory-soft); }
+.flow-area-interaction { --area: var(--color-area-social); --area-soft: var(--color-area-social-soft); }
 .flow-area-systems { --area: var(--color-area-systems); --area-soft: var(--color-area-systems-soft); }
 .flow-area-theory { --area: var(--color-area-theory); --area-soft: var(--color-area-theory-soft); }
 .flow-area-design { --area: var(--color-area-design); --area-soft: var(--color-area-design-soft); }

@@ -3,11 +3,11 @@ import { AREA_NAMES, type AreaId } from "@/lib/courseMap/csLayout";
 
 const AREAS: AreaId[] = ["systems", "theory", "design", "social", "cyber"];
 
-export function MapLegend() {
+export function MapLegend({ areas = AREAS }: { areas?: AreaId[] }) {
   return (
     <div aria-label="Map key" role="group" className="flow-legend">
       <ul aria-label="Areas">
-        {AREAS.map((area) => <li key={area}><span className={`flow-swatch flow-area-${area}`} aria-hidden />{AREA_NAMES[area]}</li>)}
+        {areas.map((area) => <li key={area}><span className={`flow-swatch flow-area-${area}`} aria-hidden />{AREA_NAMES[area]}</li>)}
       </ul>
       <ul aria-label="Your record">
         <li><CheckCircle size={13} weight="fill" aria-hidden className="text-success" />Taken</li>

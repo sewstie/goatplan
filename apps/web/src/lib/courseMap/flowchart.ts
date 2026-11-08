@@ -52,7 +52,6 @@ export function extraText(extras: string[]) {
 export const edgeKey = (edge: { from: string; to: string }) => `${edge.from} → ${edge.to}`;
 
 const bandOf = (code: string) => Math.floor(Number(code.split(" ")[1]) / 1000) * 1000;
-const outside = (code: string) => !code.startsWith("CS ");
 const unique = <T,>(items: T[]) => [...new Set(items)];
 
 function alternatives(value: Background): Background[] {
@@ -70,10 +69,11 @@ function shorten(codes: string[]) {
   return parts.join(" or ");
 }
 
-function extrasOf(value: Background | null): string[] {
+function extrasOf(value: Background | null, shown: Set<string>): string[] {
+  const outside = (code: string) => !shown.has(code);
   if (!value || "note" in value) return [];
   if ("course" in value) return outside(value.course) ? [value.course] : [];
-  if ("all" in value) return value.all.flatMap(extrasOf);
+  if ("all" in value) return value.all.flatMap((part) => extrasOf(part, shown));
   const codes = unique(alternatives(value).flatMap(courseCodes));
   const extra = codes.filter(outside);
   if (extra.length === 0) return [];
@@ -145,7 +145,7 @@ export function buildFlowchart(records: readonly MapSource[] = sources, layout: 
       ...spot,
       band: bandOf(code),
       area: layout.areas[code] ?? null,
-      extras: extrasOf(record.background),
+      extras: extrasOf(record.background, shown),
       pair: pairs.find((pair) => pair.codes.includes(code))?.id ?? null,
     };
   });

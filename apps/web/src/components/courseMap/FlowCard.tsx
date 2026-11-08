@@ -21,7 +21,7 @@ export function FlowCard({ course, box, state, selected, dimmed, select, preview
     course.code,
     course.aliases.length ? `also ${course.aliases.join(" and ")}` : null,
     course.title,
-    course.extras.length ? `outside CS ${extraText(course.extras)}` : null,
+    course.extras.length ? `other background ${extraText(course.extras)}` : null,
     course.area && AREA_NAMES[course.area],
     state,
   ].filter(Boolean).join(", ");
