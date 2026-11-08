@@ -107,7 +107,7 @@ describe("the first visit", () => {
     expect(screen.getByRole("button", { name: "Add AP or IB credit" })).toBeVisible();
     expect(screen.getByRole("button", { name: "Add courses" })).toBeVisible();
     expect(screen.queryByRole("heading", { name: "Insights" })).not.toBeInTheDocument();
-    expect(screen.getByText(/Course history stays in this browser/)).toBeVisible();
+    expect(screen.queryByText(/Course history stays in this browser/)).not.toBeInTheDocument();
     expect(tile(/^Introductory CS, line 16, empty/)).toBeVisible();
   });
 

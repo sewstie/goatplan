@@ -21,7 +21,7 @@ import type { DegreeView } from "./useDegreeView";
 import { keepClickFocus } from "./keepClickFocus";
 
 const COLUMNS = ["A Term", "B Term", "C Term", "D Term", "E Term · Summer"];
-const ROW = "grid grid-cols-[5.5rem_repeat(5,minmax(0,1fr))] gap-6 wide:grid-cols-[6.5rem_repeat(5,minmax(0,1fr))] wide:gap-8";
+const ROW = "degree-plan-row grid grid-cols-[5.5rem_repeat(5,minmax(0,1fr))] gap-6 wide:grid-cols-[6.5rem_repeat(5,minmax(0,1fr))] wide:gap-8";
 const PROJECTS: { value: "IQP" | "MQP"; label: string; icon: null }[] = [{ value: "IQP", label: "IQP", icon: null }, { value: "MQP", label: "MQP", icon: null }];
 const LEGEND = [
   { word: "Taken", look: TILE_LOOK.done },

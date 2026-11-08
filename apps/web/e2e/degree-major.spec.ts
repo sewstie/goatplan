@@ -9,7 +9,6 @@ for (const width of [1440, 834, 375]) {
       localStorage.setItem("goatplan:term:v1", "2027-C");
     });
     await page.goto("/degree");
-    if (width === 375) await page.getByRole("button", { name: "Choose your major" }).click();
     await expect(page.getByRole("heading", { name: "Choose your major" })).toBeVisible();
     await expect(page.getByText("For the Class of 2030, starting A Term 2026.")).toBeVisible();
     await expect(page.getByText("Other class years, minors and double majors aren’t supported yet.")).toBeVisible();
@@ -24,7 +23,7 @@ for (const width of [1440, 834, 375]) {
     await auditReady(page);
     await expect(page.getByRole("heading", { name: "Choose your major" })).toHaveCount(0);
     await page.getByRole("button", { name: "Change major" }).click();
-    const change = width === 375 ? page.getByRole("dialog") : page.getByRole("dialog", { name: "Choose your major" });
+    const change = page.getByRole("dialog", { name: "Choose your major" });
     await expect(change).toBeVisible();
     await change.getByRole("button", { name: "My major isn’t listed" }).click();
     await expect(change.getByRole("button", { name: "Request this major" })).toBeVisible();
