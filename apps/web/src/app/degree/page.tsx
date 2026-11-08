@@ -3,7 +3,6 @@ import { DegreeContent } from "@/components/degree/DegreeContent";
 import { DegreeLayout } from "@/components/degree/DegreeLayout";
 import { DegreeOpenedEvent } from "@/components/degree/DegreeOpenedEvent";
 import { PhoneTopBar } from "@/components/phone/PhoneTopBar";
-import { DegreeGate } from "@/components/shell/DegreeGate";
 import { DegreeFooter } from "@/components/degree/DegreeFooter";
 import "./degree.css";
 import { SkipToMain } from "@/components/shell/SkipToMain";
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function DegreePage() {
   return (
-    <DegreeGate>
+    <>
       <DegreeOpenedEvent />
       <div className="degree-page flex min-h-dvh flex-col bg-canvas">
         <SkipToMain />
@@ -34,6 +33,6 @@ export default function DegreePage() {
         </main>
         <DegreeFooter />
       </div>
-    </DegreeGate>
+    </>
   );
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import { TesterLink } from "@/components/shell/TesterLink";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -21,7 +20,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: `try{document.documentElement.dataset.theme=localStorage.getItem("goatplan:theme:v1")==="dark"?"dark":"light"}catch{document.documentElement.dataset.theme="light"}` }} />
       </head>
-      <body><TesterLink />{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
