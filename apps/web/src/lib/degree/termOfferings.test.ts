@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import type { TermFile } from "@/lib/data/types";
-import { firstOffered, offeredCodes, offerHint, termOffers } from "./termOfferings";
+import type { Course, TermFile } from "@/lib/data/types";
+import { buildSearchIndex, searchCourses } from "@/components/courses/searchCourses";
+import { firstOffered, offeredCodes, offerHint, termOffers, withTermSections } from "./termOfferings";
 
 const file = (id: string, courses: Record<string, number>): TermFile => ({
   term: { id, name: "", season: "", year: Number(id.slice(0, 4)), start: "", end: "" },
@@ -36,5 +37,27 @@ describe("term offerings", () => {
     expect(firstOffered(next, termOffers("MA 2071", offered))).toEqual(next);
     expect(firstOffered(next, termOffers("PH 1110", offered))).toEqual(next);
     expect(firstOffered(next, undefined)).toEqual(next);
+  });
+});
+
+describe("withTermSections", () => {
+  const lecture = (id: string, name: string) => ({ id, code: id.split("-")[1], type: "lecture", instructors: [name], meetings: [] });
+  const files = [
+    { courses: [{ code: "CS 2102", sections: [lecture("CS 2102-BL01", "Kathi Fisler")] }] },
+    { courses: [{ code: "CS 2102", sections: [lecture("CS 2102-DL01", "Jane Doe")] }] },
+  ] as unknown as TermFile[];
+  const catalog = [{ code: "CS 2102", subject: "CS", title: "Object-Oriented Design Concepts", sections: [] }, { code: "MA 1021", subject: "MA", title: "Calculus I", sections: [] }] as unknown as Course[];
+
+  it("gives catalog courses the sections of every published term", () => {
+    const [cs, ma] = withTermSections(catalog, files);
+    expect(cs.sections.map((section) => section.id)).toEqual(["CS 2102-BL01", "CS 2102-DL01"]);
+    expect(ma).toBe(catalog[1]);
+  });
+
+  it("lets the degree search find a course by a professor who teaches it this year", () => {
+    const index = buildSearchIndex(withTermSections(catalog, files));
+    expect(searchCourses(index, "fisler").map((result) => result.course.code)).toEqual(["CS 2102"]);
+    expect(searchCourses(index, "jane doe").map((result) => result.course.code)).toEqual(["CS 2102"]);
+    expect(searchCourses(buildSearchIndex(catalog), "fisler")).toEqual([]);
   });
 });

@@ -1,4 +1,4 @@
-import type { TermFile } from "@/lib/data/types";
+import type { Course, Section, TermFile } from "@/lib/data/types";
 import { crossListed } from "./rules";
 import { compareTerms, parseTerm, termLong, type TermName } from "./terms";
 
@@ -10,6 +10,12 @@ export const termIdOf = ({ year, letter }: TermName) => `${year}-${letter}`;
 
 export function offeredCodes(files: readonly TermFile[]): Map<string, Set<string>> {
   return new Map(files.map((file) => [file.term.id, new Set(file.courses.filter((course) => course.sections.length > 0).map((course) => course.code))]));
+}
+
+export function withTermSections<T extends Course>(courses: readonly T[], files: readonly TermFile[]): T[] {
+  const sections = new Map<string, Section[]>();
+  for (const file of files) for (const course of file.courses) sections.set(course.code, [...(sections.get(course.code) ?? []), ...course.sections]);
+  return courses.map((course) => (sections.has(course.code) ? { ...course, sections: sections.get(course.code)! } : course));
 }
 
 export function termOffers(code: string, offered: OfferedCodes): Map<string, TermOffer> {

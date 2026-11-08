@@ -13,14 +13,14 @@ import type { Course } from "@/lib/data/types";
 import { cleanCourseCode, foundCourse, getDegreeSource, huaProblem, offeringNote, unitLabel, type DegreeHistory } from "@/lib/degree";
 import { hasRegistrationCode } from "@/lib/degree/history";
 import { statusOfState } from "@/lib/degree/planGrid";
-import { offerHint, termOffers } from "@/lib/degree/termOfferings";
+import { offerHint, termOffers, withTermSections } from "@/lib/degree/termOfferings";
 import { AddedStatus, type Added } from "./AddedStatus";
 import { AddTargetCard } from "./AddTargetCard";
 import { useDegreeUi } from "./degreeUi";
 import { PLAN_STATES } from "./planStateLook";
 import { useAddTarget } from "./useAddTarget";
 import { useCourseCatalog } from "./useCourseCatalog";
-import { useOfferedCodes } from "./useTermOfferings";
+import { useOfferedCodes, useTermFiles } from "./useTermOfferings";
 
 const MAX_RESULTS = 8;
 
@@ -42,9 +42,10 @@ export function SearchTab({ history }: { history: DegreeHistory }) {
   }, [load]);
 
   const courses = catalog.courses;
-  const index = useMemo(() => buildSearchIndex(courses ?? []), [courses]);
-  const matches = useMemo(() => (search ? searchCourses(index, search).slice(0, MAX_RESULTS).map((match) => match.course) : []), [index, search]);
+  const termFiles = useTermFiles().files;
+  const index = useMemo(() => buildSearchIndex(withTermSections(courses, termFiles)), [courses, termFiles]);
   const catalogCourses = useMemo(() => new Map(courses.map((course) => [course.code, course])), [courses]);
+  const matches = useMemo(() => (search ? searchCourses(index, search).slice(0, MAX_RESULTS).map((match) => catalogCourses.get(match.course.code)!) : []), [index, search, catalogCourses]);
   const inHistory = new Set(history.courses.map((course) => course.code));
   const highlighted = Math.min(active, Math.max(0, matches.length - 1));
   const typedCode = search && matches.length === 0 ? cleanCourseCode(search) : null;
