@@ -35,3 +35,12 @@ it("falls back to the screen's heading when the opener is gone too", () => {
   rerender(<><h1 data-screen-heading tabIndex={-1}>Title</h1></>);
   expect(screen.getByRole("heading", { name: "Title" })).toHaveFocus();
 });
+
+it("starts on the part marked to take focus, instead of the first button", () => {
+  function Form() {
+    const { ref, handleClose } = useModalDialog(true, () => {});
+    return <dialog ref={ref} onClose={handleClose} aria-label="Form"><button type="button">Close</button><div data-autofocus><button type="button">Field</button></div></dialog>;
+  }
+  render(<Form />);
+  expect(screen.getByRole("button", { name: "Field" })).toHaveFocus();
+});

@@ -9,7 +9,7 @@ const fixtures = path.join(__dirname, "../../../../data/fixtures");
 
 export type FixtureCourse = { code: string; credits: number; term?: string; apIb?: boolean };
 
-export const savedCourse = (course: FixtureCourse, inProgress = false) => ({ title: "", apIb: false, source: "found", ...course, inProgress });
+export const savedCourse = (course: FixtureCourse, planned = false) => ({ title: "", apIb: false, source: "found", ...course, status: planned ? "planned" : "taken" });
 
 export function readFixture(name: string) {
   return JSON.parse(readFileSync(path.join(fixtures, name), "utf8")) as {
@@ -62,7 +62,6 @@ export async function openAllSections(page: Page) {
 export const panel = (page: Page, name: string) => page.getByRole("region", { name, exact: true });
 
 export async function openHistory(page: Page) {
-  await page.getByRole("button", { name: "Sheet options" }).click();
-  await page.getByRole("button", { name: "Course history" }).click();
+  await page.getByRole("button", { name: "Course history", exact: true }).first().click();
   return panel(page, "Course history");
 }

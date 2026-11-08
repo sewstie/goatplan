@@ -1,7 +1,7 @@
 "use client";
 
 import { cx } from "@/components/ui/cx";
-import { selectCurrentSchedule, selectSavedPlan, usePlanner } from "@/lib/store";
+import { selectCurrentSchedule, selectReadOnlyPlan, usePlanner } from "@/lib/store";
 import { count, scheduleBadgeDetails, summaryText } from "./scheduleCopy";
 import { ScoreChips } from "./ScoreChips";
 import { useScheduleItems } from "./useScheduleItems";
@@ -15,7 +15,7 @@ import { useHeldHeight } from "./useHeldHeight";
  * and one row of badges, so it's the same height whether schedules fit or not.
  */
 export function ScheduleSummary({ steady = false, aside = null }: { steady?: boolean; aside?: string | null } = {}) {
-  const saved = usePlanner(selectSavedPlan);
+  const saved = usePlanner(selectReadOnlyPlan);
   const termStatus = usePlanner((state) => state.termStatus);
   const termName = usePlanner((state) => state.terms.find((term) => term.id === state.termId)?.name ?? null);
   const courseCount = usePlanner((state) => state.courses.length);
@@ -34,7 +34,7 @@ export function ScheduleSummary({ steady = false, aside = null }: { steady?: boo
   const timed = new Set(classes.map((item) => item.courseCode));
   const untimedCourses = new Set(untimed.map((item) => item.courseCode).filter((code) => !timed.has(code))).size;
 
-  if (saved) return <span>{count("course", saved.courses.length)} · Saved plan</span>;
+  if (saved) return <span>{count("course", saved.courses.length)} · {saved.id === "__temporary__" ? "Shared plan" : "Saved plan"}</span>;
 
   const issue = diagnosis?.issues[0];
   const text = issue ? (issue.kind === "pair" ? `${count("course", courseCount)} · ${issue.summary}` : issue.summary) : summaryText({

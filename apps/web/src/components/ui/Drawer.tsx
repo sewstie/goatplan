@@ -10,14 +10,16 @@ type DrawerProps = {
   open: boolean;
   onClose: () => void;
   children?: ReactNode;
+  centered?: boolean;
 };
 
 /** A panel from the right, or from the bottom on a phone. The top bar stays in view above it. */
-export function Drawer({ open, onClose, children }: DrawerProps) {
+export function Drawer({ open, onClose, children, centered = false }: DrawerProps) {
   const { ref, handleClose, close } = useModalDialog(open, onClose);
   return (
     <dialog
       ref={ref}
+      data-degree-dialog={centered ? "centered" : undefined}
       aria-labelledby={DRAWER_TITLE_ID}
       onClose={handleClose}
       className="fixed inset-x-0 top-(--size-topbar) bottom-0 m-0 h-auto max-h-none w-full max-w-none overflow-hidden bg-transparent p-0 text-ink backdrop:bg-transparent open:flex open:flex-col"

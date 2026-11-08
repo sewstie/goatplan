@@ -6,6 +6,11 @@ import { DrawingBar } from "@/components/schedule/DrawingBar";
 import { AddBlockedTimeButton } from "./AddBlockedTimeButton";
 import { BlockTimeButton } from "./BlockTimeButton";
 
+async function choose(scope: HTMLElement, field: string, option: string) {
+  await userEvent.click(within(scope).getByRole("combobox", { name: field }));
+  await userEvent.click(screen.getByRole("option", { name: option }));
+}
+
 // Ticket 11, requirement 2: on a phone the "Block a time" form is a bottom Sheet; on a tablet and
 // wider it is the centered Dialog. The Sheet and Dialog both render a <dialog> with the accessible
 // name "Block a time", so the tests tell them apart by the bottom-sheet classes the phone sheet
@@ -95,8 +100,8 @@ describe("The Preferences screen's Add on a phone", () => {
     await userEvent.click(screen.getByRole("button", { name: "Add a blocked time" }));
     const sheet = screen.getByRole("dialog", { name: "Block a time" });
     await userEvent.click(within(sheet).getByRole("checkbox", { name: "Monday" }));
-    await userEvent.selectOptions(within(sheet).getByRole("combobox", { name: "From" }), "10:00 AM");
-    await userEvent.selectOptions(within(sheet).getByRole("combobox", { name: "To" }), "11:30 AM");
+    await choose(sheet, "From", "10:00 AM");
+    await choose(sheet, "To", "11:30 AM");
     await userEvent.click(within(sheet).getByRole("button", { name: "Block time" }));
 
     expect(store.getState().preferences.blocked).toEqual([{ day: "Mon", start: 600, end: 690 }]);

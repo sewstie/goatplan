@@ -1,0 +1,36 @@
+import { expect, openMoreActions, test } from "./fixtures/test";
+import { seedThemePlan } from "./fixtures/theme";
+
+test("saved plans and registration keep the phone theme switch available", async ({ page }) => {
+  await seedThemePlan(page);
+  await page.goto("/plans");
+  await expect(page.getByRole("heading", { name: "Your saved plans" })).toBeAttached();
+  await expect(page.getByRole("button", { name: "More actions" })).toBeVisible();
+  await openMoreActions(page);
+  const theme = page.getByRole("switch", { name: "Dark theme" });
+  await theme.focus();
+  await page.keyboard.press("Space");
+  await expect(theme).toBeChecked();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "More actions" })).toBeFocused();
+  await page.getByRole("link", { name: "Sections to register Plan 1", exact: true }).tap();
+  await expect(page).toHaveURL(/\/plans\?plan=plan-1$/);
+  await expect(page.getByRole("button", { name: "More actions" })).toBeVisible();
+  await openMoreActions(page);
+  await expect(theme).toBeChecked();
+  await theme.tap();
+  await expect(theme).not.toBeChecked();
+  await page.keyboard.press("Escape");
+  await page.getByRole("link", { name: "All saved plans", exact: true }).tap();
+  await expect(page).toHaveURL(/\/plans$/);
+  await page.getByRole("link", { name: "Back to planner", exact: true }).tap();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done");
+  await expect(page.getByRole("button", { name: "More actions" })).toBeVisible();
+  await openMoreActions(page);
+  await expect(theme).not.toBeChecked();
+  await page.reload();
+  await expect(page.getByRole("button", { name: "More actions" })).toBeVisible();
+  await openMoreActions(page);
+  await expect(theme).not.toBeChecked();
+});

@@ -1,5 +1,7 @@
 "use client";
 
+import { AddPlanToDegree } from "@/components/degree/AddPlanToDegree";
+import { BarMoreMenu } from "./BarMoreMenu";
 import { PlanActions } from "@/components/plans/PlanActions";
 
 export function PlannerBarActions() {
@@ -12,6 +14,7 @@ export function PlannerBarActions() {
             {share}
             {exportButton}
             {saveButton}
+            <BarMoreMenu><AddPlanToDegree /></BarMoreMenu>
           </>
         )}
       />

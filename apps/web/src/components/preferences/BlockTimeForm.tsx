@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent, type Ref } from "react";
-import { Select } from "@/components/ui/Select";
+import { ListboxField } from "@/components/ui/ListboxField";
 import { TextInput } from "@/components/ui/TextInput";
 import { WEEK } from "@/lib/data";
 import type { Day } from "@/lib/data/types";
@@ -70,28 +70,17 @@ export function BlockTimeForm({ id, onSubmit, onError, errorId, nameRef, initial
         </div>
       </fieldset>
       <div className="grid grid-cols-2 gap-10">
-        <Select
-          variant="box"
+        <ListboxField
           label="From"
-          hideLabel={false}
-          className="min-h-38"
           options={START_OPTIONS}
           value={String(start)}
-          onChange={(event) => {
-            const next = Number(event.target.value);
+          onChange={(value) => {
+            const next = Number(value);
             setStart(next);
             setEnd((current) => endAfter(next, current));
           }}
         />
-        <Select
-          variant="box"
-          label="To"
-          hideLabel={false}
-          className="min-h-38"
-          options={blockEndOptions(start)}
-          value={String(end)}
-          onChange={(event) => setEnd(Number(event.target.value))}
-        />
+        <ListboxField label="To" options={blockEndOptions(start)} value={String(end)} onChange={(value) => setEnd(Number(value))} />
       </div>
     </form>
   );

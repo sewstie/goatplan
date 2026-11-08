@@ -1,0 +1,588 @@
+[
+  {
+    "code": "ECE 4011",
+    "title": "Biomedical Signal Analysis",
+    "aliases": [
+      "BME 4011"
+    ],
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering-electrical-and-computer-engineering/bme-4011ece-4011",
+    "wording": "Recommended background: (ECE 2311; ECE 2312).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2311"
+        },
+        {
+          "course": "ECE 2312"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 4023",
+    "title": "Biomedical Instrumentation Design",
+    "aliases": [
+      "BME 4023"
+    ],
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering-electrical-and-computer-engineering/bme-4023ece-4023",
+    "wording": "Recommended background: (BME 3012; BME 3013; (ECE 2010 or ECE 2019)).",
+    "background": {
+      "all": [
+        {
+          "course": "BME 3012"
+        },
+        {
+          "course": "BME 3013"
+        },
+        {
+          "any": [
+            {
+              "course": "ECE 2010"
+            },
+            {
+              "course": "ECE 2019"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 4802",
+    "title": "Introduction to Cryptography and Communication Security",
+    "aliases": [
+      "CS 4801"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-electrical-and-computer-engineering/cs-4801ece-4802",
+    "wording": "Recommended background: (ECE 2049 or CS 2301).",
+    "background": {
+      "any": [
+        {
+          "course": "ECE 2049"
+        },
+        {
+          "course": "CS 2301"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 1799",
+    "title": "Frontiers and Current Issues of Electrical and Computer Engineering",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-1799",
+    "wording": "No recommended background is listed.",
+    "background": null
+  },
+  {
+    "code": "ECE 2010",
+    "title": "Introduction to Electrical and Computer Engineering",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2010",
+    "wording": "Recommended background: (High school physics; MA 1022 may be taken concurrently).",
+    "background": {
+      "all": [
+        {
+          "note": "High school physics"
+        },
+        {
+          "note": "MA 1022 may be taken concurrently"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 2019",
+    "title": "Sensors, Circuits, and Systems",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2019",
+    "wording": "Recommended background: (ECE 2010; MA 1024; (PH 1120 or PH 1121); MA 2051 may be taken concurrently).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2010"
+        },
+        {
+          "course": "MA 1024"
+        },
+        {
+          "any": [
+            {
+              "course": "PH 1120"
+            },
+            {
+              "course": "PH 1121"
+            }
+          ]
+        },
+        {
+          "note": "MA 2051 may be taken concurrently"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 2029",
+    "title": "Introduction to Digital Circuit Design",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2029",
+    "wording": "Recommended background: ((ECE 2010 or RBE 1001); MA 1022).",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "ECE 2010"
+            },
+            {
+              "course": "RBE 1001"
+            }
+          ]
+        },
+        {
+          "course": "MA 1022"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 2039",
+    "title": "Computational Engineering",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2039",
+    "wording": "Recommended background: (CS 1004 or CS 1101 or CS 1102 or BME 1004).",
+    "background": {
+      "any": [
+        {
+          "course": "CS 1004"
+        },
+        {
+          "course": "CS 1101"
+        },
+        {
+          "course": "CS 1102"
+        },
+        {
+          "course": "BME 1004"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 2049",
+    "title": "Embedded Computing in Engineering Design",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2049",
+    "wording": "Recommended background: ((ECE 2039 or CS 2301 or CS 2303); ECE 2010).",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "ECE 2039"
+            },
+            {
+              "course": "CS 2301"
+            },
+            {
+              "course": "CS 2303"
+            }
+          ]
+        },
+        {
+          "course": "ECE 2010"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 2112",
+    "title": "Electromagnetic Fields",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2112",
+    "wording": "Recommended background: ECE 2019.",
+    "background": {
+      "course": "ECE 2019"
+    }
+  },
+  {
+    "code": "ECE 2201",
+    "title": "Microelectronic Circuits I",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2201",
+    "wording": "Recommended background: ECE 2019.",
+    "background": {
+      "course": "ECE 2019"
+    }
+  },
+  {
+    "code": "ECE 2305",
+    "title": "Introduction to Communications and Networks",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2305",
+    "wording": "Recommended background: ECE 2010.",
+    "background": {
+      "course": "ECE 2010"
+    }
+  },
+  {
+    "code": "ECE 2311",
+    "title": "Continuous-Time Signal and System Analysis",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2311",
+    "wording": "Recommended background: ((ECE 2039 or CS 2301 or CS 2303 or CS 1004 or CS 1101 or CS 1102); MA 2051; ECE 2010).",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "ECE 2039"
+            },
+            {
+              "course": "CS 2301"
+            },
+            {
+              "course": "CS 2303"
+            },
+            {
+              "course": "CS 1004"
+            },
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            }
+          ]
+        },
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "ECE 2010"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 2312",
+    "title": "Discrete-Time Signal and System Analysis",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2312",
+    "wording": "Recommended background: ((ECE 2039 or CS 2301 or CS 2303 or CS 1004 or CS 1101 or CS 1102); MA 2051; ECE 2311).",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "ECE 2039"
+            },
+            {
+              "course": "CS 2301"
+            },
+            {
+              "course": "CS 2303"
+            },
+            {
+              "course": "CS 1004"
+            },
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            }
+          ]
+        },
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "ECE 2311"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 2799",
+    "title": "Electrical and Computer Engineering Design",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-2799",
+    "wording": "Recommended background: At least three of ECE 2019, ECE 2029, ECE 2049 and ECE 2311.",
+    "background": {
+      "note": "At least three of ECE 2019, ECE 2029, ECE 2049 and ECE 2311"
+    }
+  },
+  {
+    "code": "ECE 3012",
+    "title": "Introduction to Control Systems Engineering",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-3012",
+    "wording": "Recommended background: (MA 2051; ECE 2019; ECE 2311).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "ECE 2019"
+        },
+        {
+          "course": "ECE 2311"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 3113",
+    "title": "Introduction to RF Circuit Design",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-3113",
+    "wording": "Recommended background: (ECE 2019; ECE 3204).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2019"
+        },
+        {
+          "course": "ECE 3204"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 3204",
+    "title": "Microelectronic Circuits II",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-3204",
+    "wording": "Recommended background: (ECE 2201; ECE 2311).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2201"
+        },
+        {
+          "course": "ECE 2311"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 3308",
+    "title": "Introduction to Wireless Networks",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-3308",
+    "wording": "Recommended background: (MA 1022; PH 1120).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 1022"
+        },
+        {
+          "course": "PH 1120"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 3311",
+    "title": "Principles of Communication Systems",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-3311",
+    "wording": "Recommended background: (MA 1024; ECE 2312).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 1024"
+        },
+        {
+          "course": "ECE 2312"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 3405",
+    "title": "Foundations and Trends in Machine Learning for Engineering",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-3405",
+    "wording": "Recommended background: (ECE 2312; ECE 2039).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2312"
+        },
+        {
+          "course": "ECE 2039"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 3500",
+    "title": "Electric Power and Renewable Energy Systems",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-3500",
+    "wording": "Recommended background: ECE 2010.",
+    "background": {
+      "course": "ECE 2010"
+    }
+  },
+  {
+    "code": "ECE 3501",
+    "title": "Electromechanical Energy Systems",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-3501",
+    "wording": "Recommended background: ECE 3500.",
+    "background": {
+      "course": "ECE 3500"
+    }
+  },
+  {
+    "code": "ECE 3829",
+    "title": "Advanced Digital System Design with FPGAs",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-3829",
+    "wording": "Recommended background: (ECE 2029; ECE 2049).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2029"
+        },
+        {
+          "course": "ECE 2049"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 3849",
+    "title": "Real-Time Embedded Systems",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-3849",
+    "wording": "Recommended background: (ECE 2029; ECE 2049).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2029"
+        },
+        {
+          "course": "ECE 2049"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 4305",
+    "title": "Software-Defined Radio Systems and Analysis",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-4305",
+    "wording": "Recommended background: (ECE 3311; MA 2621; Familiarity with Simulink and programming).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 3311"
+        },
+        {
+          "course": "MA 2621"
+        },
+        {
+          "note": "Familiarity with Simulink and programming"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 4503",
+    "title": "Power Electronics And Power Management",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-4503",
+    "wording": "Recommended background: (ECE 3204; ECE 3501).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 3204"
+        },
+        {
+          "course": "ECE 3501"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 4576",
+    "title": "Introduction to Hardware Security",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-4576",
+    "wording": "Recommended background: ((ECE 2039 or CS 2301 or CS 2303); ECE 2049; ECE 2029).",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "ECE 2039"
+            },
+            {
+              "course": "CS 2301"
+            },
+            {
+              "course": "CS 2303"
+            }
+          ]
+        },
+        {
+          "course": "ECE 2049"
+        },
+        {
+          "course": "ECE 2029"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 4703",
+    "title": "Real-Time Digital Signal Processing",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-4703",
+    "wording": "Recommended background: (ECE 2049; ECE 2312; C programming experience).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2049"
+        },
+        {
+          "course": "ECE 2312"
+        },
+        {
+          "note": "C programming experience"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 4801",
+    "title": "Computer Organization and Design",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-4801",
+    "wording": "Recommended background: ECE 3849.",
+    "background": {
+      "course": "ECE 3849"
+    }
+  },
+  {
+    "code": "ECE 4803",
+    "title": "Machine Learning in Cybersecurity",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-4803",
+    "wording": "Recommended background: Familiarity with regression, support vector machines, clustering and neural networks.",
+    "background": {
+      "note": "Familiarity with regression, support vector machines, clustering and neural networks"
+    }
+  },
+  {
+    "code": "ECE 4901",
+    "title": "CMOS Fundamentals",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-4901",
+    "wording": "Recommended background: (ECE 2029; ECE 2201).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2029"
+        },
+        {
+          "course": "ECE 2201"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ECE 4902",
+    "title": "Analog Integrated Circuit Design",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-4902",
+    "wording": "Recommended background: ECE 3204.",
+    "background": {
+      "course": "ECE 3204"
+    }
+  },
+  {
+    "code": "ECE 4904",
+    "title": "Semiconductor Devices",
+    "source": "https://wpi.cleancatalog.net/electrical-and-computer-engineering/ece-4904",
+    "wording": "Recommended background: ECE 2201.",
+    "background": {
+      "course": "ECE 2201"
+    }
+  }
+]

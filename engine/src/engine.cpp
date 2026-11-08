@@ -14,6 +14,7 @@
 
 #include <nlohmann/json.hpp>
 
+#include "goatplan/audit.hpp"
 #include "day_names.hpp"
 #include "goatplan/diagnose.hpp"
 #include "goatplan/filters.hpp"
@@ -437,6 +438,10 @@ namespace goatplan {
     std::string Engine::handle(std::string_view requestJson) const {
         try {
             try {
+                const auto peek = json::parse(requestJson, nullptr, false);
+                if (peek.is_object() && peek.contains("requirements")) {
+                    return audit_.handle(requestJson);
+                }
                 if (!term_) {
                     throw RequestError{"noTerm", "No term is loaded yet", nullptr};
                 }

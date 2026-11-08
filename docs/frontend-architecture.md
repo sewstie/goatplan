@@ -266,6 +266,75 @@ still shows that plan's courses, preferences and summary.
   don't call it: the store owns the engine and puts its answers in `response`.
   The types follow `engine-api.md`.
 
+## Degree and theme integration
+
+`TopBar` accepts `navigation` and `appearance` alongside its existing center
+and action slots. `AppShell` and `PlannerShell` forward these as
+`barNavigation` and `barAppearance`. Appearance controls sit outside the
+planner action wrapper, which applies compact button styles.
+
+`PhoneTopBar` accepts `navigation`. `PlannerShell.phoneNavigation` forwards
+to it through `PhonePlanner`. Omit navigation slots to use `MainTabs` and
+`PhoneTabBar`, which always show Planner and My degree.
+
+`PlannerShell.phoneMenuActions` forwards to `PhonePlanner.menuActions` and
+`PhoneScheduleScreen.menuActions`. These actions use the existing More actions
+menu. They also keep that menu available in a shared preview without exposing
+draft actions. A degree page can reuse `BarMoreMenu` for its phone controls.
+
+These slots are optional and render no controls on their own. Theme work owns
+the appearance buttons and state. Keep theme values in `app/globals.css`:
+its `@theme static` block already includes surface, text, course, status,
+degree-tile, chart and focus tokens. Add dark overrides there, keep light values
+as defaults and use light tokens for print. No token consolidation is needed
+before degree restoration or theme work starts.
+
+The planner fills the appearance slots with `ThemeButton` and `ThemeSwitch`.
+`lib/theme` reads the document theme and keeps mounted controls in sync.
+The root layout applies `goatplan:theme:v1` before paint. Light is the default;
+only a saved `dark` value enables Dark. Storage failures allow changes for the
+current page. Dark tokens only apply to screen media, so print uses Light.
+
+Saved plans and registration fill the same appearance slots. The phone
+registration header uses `BarMoreMenu` with `ThemeSwitch`.
+
+Ticket 10 covers the planner palette and controls. Ticket 11 verifies the
+remaining current surfaces and theme-independent print, sharing and exports.
+My degree uses `ThemeButton` in its desktop top bar and `ThemeSwitch` in the
+phone's `BarMoreMenu`. It shares the global preference. Degree tiles, charts
+and progress states use screen-only dark tokens. `chart-done` keeps completed
+progress distinct from planned progress without changing Light. See
+[dark theme release checks](dark-theme-release.md) and
+[degree theme checks](degree-dark-theme.md) for validation evidence.
+
+## My degree
+
+`/degree` is open to everyone, with all five Class of 2030 majors (CS, RBE, ME,
+ECE and DS). There is no tester flag or page gate. Each sheet's `status` and
+`verification` in `lib/degree/sheets` only record whether a student has checked
+it against Workday.
+
+`lib/degree` owns history and audit state separately from the planner store.
+History stays under `goatplan:history:v1`. Version 2 records have an explicit
+`taken` or `planned` status and an optional A/B/C/D term from 2026–2030. Version 1
+imports migrate in-progress records to planned and all others to taken.
+
+`DegreeSource` sends only degree history through `EngineClient.audit`. It does
+not read planner drafts or subscribe to planner changes. My degree has no global
+Term picker. Search reads the persistent `/data/catalog.json` catalog.
+
+`CourseGaps` supplies search badges and the Suggest courses panel through
+candidate audits. The panel has its own term choice. Published offerings support
+explicit schedule additions; unpublished terms use observed term letters.
+Planner courses reach degree history only through the planner’s ⋯ action.
+See [the tracking sheet spec](degree-tracking-sheet.md) for migration, catalog
+updates, paste review and the explicit planner connections.
+
+The sheet retains the latest pre-deletion tiles, stacked empty lines, pins,
+checks and confirmation panels. Wide screens show insights beside it; tablets
+can scroll through the insight cards; phones use folded sections and drawers.
+The List view provides the same requirements without the tile layout.
+
 ## Phone layout
 
 Phone is in scope at 375 px. The breakpoint is `--breakpoint-tablet: 40rem`

@@ -13,6 +13,7 @@ type SheetProps = {
   open: boolean;
   onClose: () => void;
   title: ReactNode;
+  focusKey?: string;
   children?: ReactNode;
   /** Along the right edge (the default), or across the bottom of the screen, as on a phone. */
   side?: SheetSide;
@@ -59,7 +60,7 @@ function keepFocusInside(event: KeyboardEvent<HTMLDialogElement>) {
   }
 }
 
-export function Sheet({ open, onClose, title, children, side = "right", lightScrim = false }: SheetProps) {
+export function Sheet({ open, onClose, title, focusKey, children, side = "right", lightScrim = false }: SheetProps) {
   const titleId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
   const { ref, handleClose, handlePointerDown, handleBackdropClick, close } = useModalDialog(open, onClose);
@@ -70,7 +71,7 @@ export function Sheet({ open, onClose, title, children, side = "right", lightScr
   // reads the title first. This runs after useModalDialog has opened the sheet.
   useEffect(() => {
     if (open) heading.current?.focus();
-  }, [open]);
+  }, [open, focusKey]);
 
   return (
     <dialog

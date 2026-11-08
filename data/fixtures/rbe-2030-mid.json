@@ -1,0 +1,255 @@
+{
+  "sheetId": "rbe-2030",
+  "description": "Hand-worked mid history from the numbered official RBE 2030 sheet. Equivalent slots assert completion without requiring a particular course order; interpretation checks remain unresolved.",
+  "takenCourses": [
+    {
+      "code": "EN 1001",
+      "credits": 3
+    },
+    {
+      "code": "EN 1002",
+      "credits": 3
+    },
+    {
+      "code": "EN 2201",
+      "credits": 3
+    },
+    {
+      "code": "ECON 1110",
+      "credits": 3
+    },
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "MA 1022",
+      "credits": 3
+    },
+    {
+      "code": "MA 1023",
+      "credits": 3
+    },
+    {
+      "code": "MA 1024",
+      "credits": 3
+    },
+    {
+      "code": "PH 1110",
+      "credits": 3
+    },
+    {
+      "code": "PH 1120",
+      "credits": 3
+    },
+    {
+      "code": "ETR 1100",
+      "credits": 3
+    },
+    {
+      "code": "RBE 1001",
+      "credits": 3
+    },
+    {
+      "code": "RBE 2001",
+      "credits": 3
+    },
+    {
+      "code": "CS 1005",
+      "credits": 3
+    },
+    {
+      "code": "CS 2102",
+      "credits": 3
+    },
+    {
+      "code": "ECE 2010",
+      "credits": 3
+    },
+    {
+      "code": "ES 2501",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "RBE 2002",
+      "credits": 3
+    },
+    {
+      "code": "RBE 2020",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedLines": {
+    "1": {
+      "state": "done",
+      "course": "EN 1001"
+    },
+    "2": {
+      "state": "done",
+      "course": "EN 1002"
+    },
+    "3": {
+      "state": "done",
+      "course": "EN 2201"
+    },
+    "8": {
+      "state": "done",
+      "course": "ECON 1110"
+    },
+    "16": {
+      "state": "done",
+      "course": "MA 1021"
+    },
+    "17": {
+      "state": "done",
+      "course": "MA 1022"
+    },
+    "18": {
+      "state": "done",
+      "course": "MA 1023"
+    },
+    "19": {
+      "state": "done",
+      "course": "MA 1024"
+    },
+    "23": {
+      "state": "done",
+      "course": "PH 1110"
+    },
+    "24": {
+      "state": "done",
+      "course": "PH 1120"
+    },
+    "27": {
+      "state": "done",
+      "course": "ETR 1100"
+    },
+    "28": {
+      "state": "done",
+      "course": "RBE 1001"
+    },
+    "29": {
+      "state": "done",
+      "course": "RBE 2001"
+    },
+    "33": {
+      "state": "done",
+      "course": "CS 1005"
+    },
+    "34": {
+      "state": "done",
+      "course": "CS 2102"
+    },
+    "36": {
+      "state": "done",
+      "course": "ECE 2010"
+    },
+    "38": {
+      "state": "done",
+      "course": "ES 2501"
+    },
+    "30": {
+      "state": "planned",
+      "course": "RBE 2002"
+    },
+    "37": {
+      "state": "planned",
+      "course": "RBE 2020"
+    }
+  },
+  "expectedSections": {
+    "Humanities and Arts": {
+      "done": 3,
+      "planned": 0,
+      "total": 6
+    },
+    "Wellness and Physical Education": {
+      "done": 0,
+      "planned": 0,
+      "total": 4
+    },
+    "Social Science": {
+      "done": 1,
+      "planned": 0,
+      "total": 2
+    },
+    "Interactive Qualifying Project": {
+      "done": 0,
+      "planned": 0,
+      "total": 3
+    },
+    "Free Electives": {
+      "done": 0,
+      "planned": 0,
+      "total": 3
+    },
+    "Mathematics": {
+      "done": 4,
+      "planned": 0,
+      "total": 7
+    },
+    "Basic Science": {
+      "done": 2,
+      "planned": 0,
+      "total": 4
+    },
+    "Entrepreneurship": {
+      "done": 1,
+      "planned": 0,
+      "total": 1
+    },
+    "Robotics Engineering": {
+      "done": 2,
+      "planned": 1,
+      "total": 5
+    },
+    "Computer Science": {
+      "done": 2,
+      "planned": 0,
+      "total": 3
+    },
+    "Electrical and Computer Engineering": {
+      "done": 1,
+      "planned": 1,
+      "total": 2
+    },
+    "Engineering Science": {
+      "done": 1,
+      "planned": 0,
+      "total": 2
+    },
+    "Engineering Science and Design Electives": {
+      "done": 0,
+      "planned": 0,
+      "total": 3
+    },
+    "Social Implications": {
+      "done": 0,
+      "planned": 0,
+      "total": 1
+    },
+    "Major Qualifying Project": {
+      "done": 0,
+      "planned": 0,
+      "total": 3
+    }
+  },
+  "expectedChecks": {
+    "hua-depth": "check",
+    "hua-breadth": "not-met",
+    "hua-ap-ib-limit": "met",
+    "residency": "check",
+    "math-equivalents": "check",
+    "robotics-equivalents": "check",
+    "programming-equivalents": "check",
+    "classical-controls": "check",
+    "design-distribution": "check",
+    "social-overlap": "check",
+    "entrepreneurship-equivalents": "check",
+    "hua-sequence": "check",
+    "capstone-design": "check"
+  }
+}

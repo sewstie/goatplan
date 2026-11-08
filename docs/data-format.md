@@ -404,3 +404,10 @@ A change is logged at the check that noticed it, so its time is only accurate
 to about 30 minutes. GitHub also delays or skips scheduled runs when it's
 busy, so expect some gaps of an hour or more. Delete the workflow once the
 week is over.
+
+## Degree course catalog
+
+`data/catalog.json` is the persistent catalog served at `/data/catalog.json`.
+It keeps codes, titles, credits, level, `lastOffered` and `termLetters`.
+The daily job merges published terms without deleting earlier courses. See
+[My degree tracking sheet](degree-tracking-sheet.md) for the source and rules.

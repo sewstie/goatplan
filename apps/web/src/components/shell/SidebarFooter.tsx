@@ -2,6 +2,7 @@
 
 import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
 import { ReplayGuideButton } from "@/components/tutorial/ReplayGuideButton";
+import { FeedbackLink } from "./FeedbackLink";
 import { usePlanner } from "@/lib/store";
 
 const dataTime = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
@@ -25,6 +26,8 @@ export function SidebarFooter({ termId }: { termId?: string }) {
         </a>
         <span aria-hidden>·</span>
         <ReplayGuideButton label="Guide" className="cursor-pointer rounded-badge whitespace-nowrap underline hover:text-ink" />
+        <span aria-hidden>·</span>
+        <FeedbackLink topic="Planner feedback" className="rounded-badge whitespace-nowrap underline hover:text-ink" />
       </nav>
     </footer>
   );

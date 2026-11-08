@@ -1,6 +1,6 @@
 import { isTermId } from "@/lib/data/load";
 import type { FailureReason, WorkerReply, WorkerRequest } from "./protocol";
-import type { LoadTermResponse, SolveResponse } from "./types";
+import type { EngineResponse, LoadTermResponse } from "./types";
 
 /** What goatplan.mjs gives back: both functions take and return JSON text and never throw. */
 export interface GoatplanModule {
@@ -62,7 +62,7 @@ export function createEngineHost(deps: EngineHostDeps) {
       const response =
         message.kind === "loadTerm"
           ? await loadTerm(message.termId, message.buffer)
-          : (JSON.parse((await getModule()).handle(JSON.stringify(message.request))) as SolveResponse);
+          : (JSON.parse((await getModule()).handle(JSON.stringify(message.request))) as EngineResponse);
       return { id: message.id, type: "result", response };
     } catch (error) {
       if (error instanceof HostFailure) {

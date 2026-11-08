@@ -1,11 +1,147 @@
 @import "tailwindcss";
 
+:root { color-scheme: light; }
+
+@media screen {
+  :root[data-theme="dark"] .brand-logo {
+    filter: brightness(0) invert(1);
+  }
+}
+
+@media screen {
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --opacity-course-drawing: 0.85;
+    --color-canvas: #0f1115;
+    --color-surface: #171a21;
+    --color-surface-overlay: rgb(23 26 33 / 0.98);
+    --color-surface-subtle: #1c2029;
+    --color-surface-selected: #252a36;
+    --color-surface-raised: #202530;
+    --color-surface-disabled: #1c2029;
+    --color-code-surface: #202530;
+    --color-card-field: #1c2029;
+    --color-card-line: #707c91;
+    --color-ink: #e7e9ee;
+    --color-ink-muted: #b1bacb;
+    --color-ink-soft: #bac3d3;
+    --color-ink-secondary: #b1bacb;
+    --color-ink-faint: #aab4c7;
+    --color-ink-hatch: #c5cddc;
+    --color-on-accent: #151727;
+    --color-line: #303745;
+    --color-line-soft: #303745;
+    --color-line-disabled: #707c91;
+    --color-line-control: #707c91;
+    --color-line-button: #707c91;
+    --color-line-popover: #707c91;
+    --color-line-strong: #8591a7;
+    --color-guide-line: #8987c9;
+    --color-guide-hint: #ddc691;
+    --color-listbox-line: #8987c9;
+    --color-accent: #aaa8ff;
+    --color-accent-soft: #2b2949;
+    --color-accent-line: #3c395b;
+    --color-info-ink: #c4bfff;
+    --color-preview-surface: #29263f;
+    --color-choice-surface: #211f32;
+    --color-choice-line: #a8a0eb;
+    --color-choice-preview: #29263f;
+    --color-focus: #c1bfff;
+    --color-scrim: rgb(0 0 0 / 0.6);
+    --color-button-disabled: #343b4c;
+    --color-button-disabled-ink: #a5b0c6;
+    --color-toggle-off: #8591a7;
+    --color-skeleton: #303745;
+    --color-skeleton-block: #343c4b;
+    --color-neutral-soft: #252a36;
+    --color-neutral-ink: #b1bacb;
+    --color-success: #99d8b5;
+    --color-success-soft: #20392e;
+    --color-success-surface: #20392e;
+    --color-success-ink: #a9e2c0;
+    --color-saved: #99d8b5;
+    --color-ready: #99d8b5;
+    --color-warning: #f1c187;
+    --color-warning-soft: #3b2d20;
+    --color-warning-line: #b48754;
+    --color-warning-surface: #3b2d20;
+    --color-warning-ink: #f1c187;
+    --color-alert: #f2b291;
+    --color-alert-soft: #3c2922;
+    --color-alert-line: #b98269;
+    --color-attention: #f1c187;
+    --color-issue-surface: #352b23;
+    --color-issue-line: #b48754;
+    --color-issue-ink: #e2c4a8;
+    --color-problem-surface: #30261f;
+    --color-problem-line: #b48754;
+    --color-unfit-surface: #3b2d20;
+    --color-unfit-line: #b48754;
+    --color-unfit-ink: #f1c187;
+    --color-clash-surface: #3c2922;
+    --color-clash-line: #b98269;
+    --color-clash-ink: #f2b291;
+    --color-tile-done: #29283f;
+    --color-tile-empty: #1c2029;
+    --color-tile-empty-line: #748198;
+    --color-tile-check: #382e20;
+    --color-tile-check-line: #b48754;
+    --color-tile-planned-line: #aaa8ff;
+    --color-tile-tick-line: #707c91;
+    --color-chart-done: #e7e9ee;
+    --color-chart-planned: #797393;
+    --color-chart-none: #8591a7;
+    --color-chart-grid: #66738a;
+    --color-track: #272b36;
+    --color-filter-surface: #25243a;
+    --color-notice-info: #29283f;
+    --color-notice-warning: #3b2d20;
+    --color-notice-warning-ink: #f1c187;
+    --color-notice-neutral: #252a36;
+    --color-hatch-a: #343c4b;
+    --color-hatch-b: #202530;
+    --color-course-1: #bac3d3;
+    --color-course-1-soft: #2c3340;
+    --color-course-1-hover-line: #e7e9ee;
+    --color-course-2: #48382f;
+    --color-course-2-soft: #2c231f;
+    --color-course-2-swatch: #bf967a;
+    --color-course-2-line: #bf967a;
+    --color-course-2-hover-line: #e3b697;
+    --color-course-3: #42412a;
+    --color-course-3-soft: #28281e;
+    --color-course-3-swatch: #b1ad6c;
+    --color-course-3-line: #b1ad6c;
+    --color-course-3-hover-line: #d7d08a;
+    --color-course-4: #39314f;
+    --color-course-4-soft: #272233;
+    --color-course-4-swatch: #a99bd7;
+    --color-course-4-line: #a99bd7;
+    --color-course-4-hover-line: #cbbcf4;
+    --color-area-systems: #d9bd5c;
+    --color-area-systems-soft: #332d1b;
+    --color-area-theory: #7fa9e3;
+    --color-area-theory-soft: #1d2a3d;
+    --color-area-design: #e3898c;
+    --color-area-design-soft: #3a2325;
+    --color-area-social: #c09ce3;
+    --color-area-social-soft: #2e2339;
+    --color-area-cyber: #7cc796;
+    --color-area-cyber-soft: #1c3326;
+    --shadow-block-hover: 0 2px 5px 0 rgb(0 0 0 / 0.25);
+    --shadow-popover: 0 4px 14px 0 rgb(0 0 0 / 0.3);
+    --shadow-guide: 0 8px 30px 0 rgb(0 0 0 / 0.35);
+  }
+}
+
 /*
   Design tokens. This is the only file with raw color values.
   Utilities read these variables, so a dark theme only has to redefine them, e.g.
   :root[data-theme="dark"] { --color-canvas: …; --color-ink: …; }
 */
 @theme static {
+  --opacity-course-drawing: 0.7;
   --color-*: initial;
 
   --color-canvas: #f7f8fb;
@@ -86,6 +222,7 @@
   --color-tile-check-line: #ecd5a8;
   --color-tile-planned-line: #8d88d6;
   --color-tile-tick-line: #e3e6ed;
+  --color-chart-done: #3432c7;
   --color-chart-planned: #8d88d6;
   --color-chart-none: #a1a8ba;
   --color-chart-grid: #e8eaf0;
@@ -108,18 +245,32 @@
   --color-course-1: #30333a;
   --color-course-1-soft: #eeefef;
   --color-course-1-hover-line: #697387;
+  --color-course-1-line: transparent;
   --color-course-2: #ffeadc;
   --color-course-2-soft: #fef6f1;
   --color-course-2-swatch: #f7c5a3;
   --color-course-2-hover-line: #bd8e6e;
+  --color-course-2-line: transparent;
   --color-course-3: #f4f2cc;
   --color-course-3-soft: #f9f9ec;
   --color-course-3-swatch: #dad57e;
   --color-course-3-hover-line: #a2a065;
+  --color-course-3-line: transparent;
   --color-course-4: #eeebff;
   --color-course-4-soft: #f6f4ff;
   --color-course-4-swatch: #b9b1e9;
   --color-course-4-hover-line: #8b86b0;
+  --color-course-4-line: transparent;
+  --color-area-systems: #b8941c;
+  --color-area-systems-soft: #fdf5d3;
+  --color-area-theory: #3f78c4;
+  --color-area-theory-soft: #e6effb;
+  --color-area-design: #c4555a;
+  --color-area-design-soft: #fce9e9;
+  --color-area-social: #8d5cc0;
+  --color-area-social-soft: #f3eafb;
+  --color-area-cyber: #2f8a52;
+  --color-area-cyber-soft: #e4f4e9;
 
   --text-*: initial;
   --text-25: 1.75rem;
@@ -267,6 +418,7 @@
   /* Below 360 px the phone top bar has room for the logo but not the wordmark. */
   --breakpoint-narrow: 22.5rem;
   --breakpoint-wide: 68.75rem;
+  --breakpoint-desk: 80rem;
 
   /*
     The room inside a calendar block for its code wrapped, a short code on one line, any code on one line, those
@@ -300,6 +452,7 @@
   --size-phone-axis: 2.125rem;
   --size-phone-day-header: 2.125rem;
   --size-phone-bar: 4rem;
+  --size-phone-tabs: 3.5625rem;
   --size-sidebar: 16.5rem;
   --size-details: 16.75rem;
   --size-header: 4.75rem;
@@ -344,6 +497,16 @@
   body {
     font-size: var(--text-10);
     line-height: var(--text-10--line-height);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [role="option"],
+  [role="tab"],
+  summary,
+  label:has(> input:is([type="checkbox"], [type="radio"]):not(:disabled)),
+  input:is([type="checkbox"], [type="radio"]):not(:disabled) {
+    cursor: pointer;
   }
 
   :where(:focus-visible) {
