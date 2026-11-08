@@ -57,9 +57,12 @@ test("the list shows the same background and planning a course marks it on the m
   await page.getByRole("button", { name: "Map", exact: true }).click();
   await card(page, "CS 4123").click();
   await details(page).getByRole("button", { name: "Plan this" }).click();
-  await page.getByRole("dialog", { name: "Plan CS 4123" }).getByRole("button", { name: "Plan for C Term 2027" }).click();
+  const dialog = page.getByRole("dialog", { name: "Plan CS 4123" });
+  await dialog.getByRole("button", { name: /^Term / }).click();
+  await page.getByRole("button", { name: /^D Term 2028/ }).click();
+  await dialog.getByRole("button", { name: "Plan for D Term 2028" }).click();
   await expect(card(page, "CS 4123")).toHaveClass(/flow-planned/);
-  expect((await stored(page)).courses).toContainEqual(expect.objectContaining({ code: "CS 4123", status: "planned", term: "C Term 2027" }));
+  expect((await stored(page)).courses).toContainEqual(expect.objectContaining({ code: "CS 4123", status: "planned", term: "D Term 2028" }));
 });
 
 for (const width of [1440, 834]) {

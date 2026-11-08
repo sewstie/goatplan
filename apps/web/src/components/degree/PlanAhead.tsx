@@ -16,6 +16,7 @@ import { useCurrentTerm } from "./useCurrentTerm";
 import { useDegreeUi } from "./degreeUi";
 import { TILE_LOOK } from "./tileState";
 import type { DegreeView } from "./useDegreeView";
+import { keepClickFocus } from "./keepClickFocus";
 
 const COLUMNS = ["A Term", "B Term", "C Term", "D Term", "E Term · Summer"];
 const ROW = "grid grid-cols-[5.5rem_repeat(5,minmax(0,1fr))] gap-6 wide:grid-cols-[6.5rem_repeat(5,minmax(0,1fr))] wide:gap-8";
@@ -86,7 +87,7 @@ export function PlanAhead({ degree, view }: { degree: DegreeSnapshot; view: Degr
         </ul>
         <p className="text-8 leading-16 text-ink-muted">{counts.taken} taken · {counts.progress} in progress · {counts.planned} planned</p>
       </div>
-      <div className="degree-plan-scroll -mx-4 overflow-x-auto px-4 pb-4" tabIndex={0} role="group" aria-label="Four-year plan terms">
+      <div className="degree-plan-scroll -mx-4 overflow-x-auto px-4 pb-4" tabIndex={0} role="group" aria-label="Four-year plan terms" onMouseDown={keepClickFocus}>
         <div className="flex min-w-[45rem] flex-col">
           <div aria-hidden className={`${ROW} border-t border-line pt-10 pb-6`}>
             <span />
