@@ -12,6 +12,7 @@ import { loadSheet, type TrackingSheet } from "../sheets";
 import { createRecommendationAudit } from "./audit";
 import { recommend, type RecommendationInput } from "./planner";
 import { termId } from "./offerings";
+import type { ScheduleCheck } from "./schedules";
 
 const webRoot = fileURLToPath(new URL("../../../../", import.meta.url));
 const host = createEngineHost({
@@ -89,7 +90,38 @@ describe("recommendations with the real CS audit", () => {
     expect(failed.terms[0].issues.join(" ")).toContain("couldn’t be loaded");
     const absent = await generate({ offerings: { "2027-A": { status: "published", file: { term: { id: "2027-A" }, courses: [], generatedAt: "" } as never } } });
     expect(codes(absent)).toEqual([]);
-    expect(absent.terms[0].alternatives[0].offering.state).toBe("absent");
+    expect(absent.terms[0].alternatives).toEqual([]);
+  });
+  it("only suggests courses offered in that term, as alternatives too", async () => {
+    const file = { term: { id: "2027-A" }, generatedAt: "", courses: [{ code: "MA 1021", credits: 3, sections: [{ status: "open", capacity: 30, enrolled: 10 }] }] } as never;
+    const published = await generate({ offerings: { "2027-A": { status: "published", file } } });
+    expect([...published.terms[0].additions, ...published.terms[0].alternatives].map((choice) => choice.course.code)).toEqual(["MA 1021"]);
+    const onlyInC = await generate({ catalog: [{ ...course("CS 1101"), termLetters: ["C"] }, course("MA 1021"), { ...course("PH 1110"), termLetters: [] }] });
+    expect([...onlyInC.terms[0].additions, ...onlyInC.terms[0].alternatives].map((choice) => choice.course.code)).toEqual(["MA 1021"]);
+  });
+  it("doesn't group courses whose class times clash", async () => {
+    const section = { status: "open", capacity: 30, enrolled: 0 };
+    const file = { term: { id: "2027-A" }, generatedAt: "", courses: introCatalog.map((item) => ({ code: item.code, credits: 3, sections: [section] })) } as never;
+    const asked: string[][] = [];
+    const clashOf = (codes: readonly string[]) => codes.includes("CS 1101") && codes.includes("CS 2022");
+    const schedules: ScheduleCheck = { fit: async (_, codes) => { asked.push([...codes]); return clashOf(codes) ? "clashes" : "fits"; } };
+    const value = input({ offerings: { "2027-A": { status: "published", file } } });
+    const free = await recommend(value, createRecommendationAudit(engine, sheet));
+    expect(codes(free)).toEqual(expect.arrayContaining(["CS 1101", "CS 2022"]));
+    const result = await recommend(value, createRecommendationAudit(engine, sheet), schedules);
+    expect(clashOf(codes(result))).toBe(false);
+    expect(asked.length).toBeGreaterThan(0);
+    expect(result.terms[0].issues.join(" ")).toMatch(/Left out (CS 1101|CS 2022): their class times clash/);
+    const unsure = await recommend(value, createRecommendationAudit(engine, sheet), { fit: async () => "unknown" });
+    expect(codes(unsure)).toEqual(codes(free));
+    expect(unsure.terms[0].issues.join(" ")).toContain("Couldn’t check class times");
+    const kept = ["CS 1101", "CS 2022"].map((code) => ({ ...typedCourse(code), status: "planned" as const, term: "A Term 2027" }));
+    const keptClash = await recommend({ ...value, kept }, createRecommendationAudit(engine, sheet), schedules);
+    expect(keptClash.terms[0].issues.join(" ")).toContain("can’t all fit in one weekly schedule");
+    expect(keptClash.terms[0].issues.join(" ")).not.toContain("Left out");
+    const keptFree = await recommend({ ...value, kept }, createRecommendationAudit(engine, sheet));
+    expect(keptClash.terms[0].additions.map((choice) => choice.course.code)).toEqual(keptFree.terms[0].additions.map((choice) => choice.course.code));
+    expect(keptClash.terms[0].alternatives.some((choice) => choice.reason.includes("clash"))).toBe(false);
   });
   it("does not select variable-credit courses automatically", async () => {
     const result = await generate({ catalog: [course("CS 1101", null)] });

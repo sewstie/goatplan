@@ -46,7 +46,22 @@ Published presence requires actual sections in a successfully loaded term file.
 Published absence, request failure, historical observation, and unknown offerings
 remain distinct. Failed requests can be retried by regenerating. Historical letters
 are estimates, never annual-frequency claims. Seat information does not establish
-registration eligibility or a conflict-free schedule.
+registration eligibility.
+
+Only offered courses are suggested, as additions or as alternatives: in a published
+term the course needs sections in that term's file, and in a later term it needs to
+have been seen in that term letter before. A course you kept or already planned still
+shows, with a note when it isn't offered.
+
+In a published term, every course the planner adds must leave at least one weekly
+schedule for that term's courses. `lib/degree/recommendations/schedules.ts` asks the
+engine with the course codes only and no preferences, so it doesn't check your
+blocked times or full sections. It runs on its own engine worker, which is closed
+after each generation, so the schedule planner's loaded term never changes. Each
+selection step checks at most 12 candidates. A course that clashes is left out with
+a note, and an alternative that clashes says so. When the engine can't answer, the
+course isn't left out and the term says its class times weren't checked. Unpublished
+terms have no sections, so they aren't checked.
 
 When the planner looks for courses that lead to useful ones, it skips any "or"
 choice the student already covers. Having CS 1101 means CS 1004 and CS 1005 never

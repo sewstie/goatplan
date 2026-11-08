@@ -15,3 +15,5 @@ export function offering(course: CatalogCourse, term: TermName, input: OfferingI
   }
   return { state: course.termLetters.includes(term.letter) ? "estimated" : "unknown", text: course.termLetters.includes(term.letter) ? `Usually offered in ${term.letter} term. Not confirmed yet.` : "Not sure when it’s offered.", credits: course.credits };
 }
+
+export const isOffered = (value: Offering) => value.state === "confirmed" || value.state === "estimated";
