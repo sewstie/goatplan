@@ -115,6 +115,18 @@ seminar line takes a 3000+ course in it, and the depth and breadth checks and
 the depth confirmation are left out. The engine audits that changed sheet as it
 is, so it needs no special rule for languages.
 
+## Filling an empty line
+
+Clicking an empty line on the sheet lists the regular courses that fit it
+(`coursesForLine` in `apps/web/src/lib/degree/lineCourses.ts`), with a term and
+status to add them for. When the term’s schedule is published, only courses
+offered that term are shown; otherwise every catalog course that fits. Courses
+already in the history, graduate courses and humanities courses that can’t
+count are left out, and a cross-listed course is shown once under the name that
+fits the line. If the course could also land on a different kind of empty line,
+it is pinned to the clicked one. AP, IB, transfer and retired courses are added
+through Add courses → manual credit instead.
+
 ## Great Problems Seminar
 
 A GPS (FY 1100 and FY 1101) is posted as two credits that depend on the section.
