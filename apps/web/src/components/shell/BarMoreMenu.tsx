@@ -38,6 +38,11 @@ export function BarMoreMenu({ children }: { children: ReactNode }) {
     const dialogClosed = () => setTimeout(() => {
       setOpen(false);
       trigger.current?.focus();
+      // The dialog may still hand focus back to its button inside the now hidden menu, so check once more.
+      requestAnimationFrame(() => {
+        const active = document.activeElement;
+        if (!active || active === document.body || element.contains(active) && active !== trigger.current) trigger.current?.focus();
+      });
     });
     element.addEventListener("close", dialogClosed, true);
     return () => element.removeEventListener("close", dialogClosed, true);
