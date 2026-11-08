@@ -10,7 +10,7 @@ jobs:
     name: C++ engine (build + tests)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Configure
         run: cmake -S engine -B engine/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-Werror"
       - name: Build
@@ -22,8 +22,8 @@ jobs:
     name: WebAssembly engine (build + smoke test)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - uses: mymindstorm/setup-emsdk@v16
@@ -43,8 +43,8 @@ jobs:
     name: Data scripts (tests)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - run: npm run data:test
@@ -53,8 +53,8 @@ jobs:
     name: Web app (lint + build)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -67,8 +67,8 @@ jobs:
     name: Web app (end-to-end tests)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -81,7 +81,7 @@ jobs:
       - name: Build and run the end-to-end tests
         working-directory: apps/web
         run: npm run test:e2e -- --ignore-snapshots
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-results
