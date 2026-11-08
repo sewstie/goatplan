@@ -499,6 +499,16 @@
     line-height: var(--text-10--line-height);
   }
 
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [role="option"],
+  [role="tab"],
+  summary,
+  label:has(> input:is([type="checkbox"], [type="radio"]):not(:disabled)),
+  input:is([type="checkbox"], [type="radio"]):not(:disabled) {
+    cursor: pointer;
+  }
+
   :where(:focus-visible) {
     outline: 2px solid var(--color-focus);
     outline-offset: 2px;
