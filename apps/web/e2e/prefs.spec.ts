@@ -1,5 +1,6 @@
 import { openCourseDetails, expect, test, pickStartsAfter, startsAfterText } from "./fixtures/test";
 import type { Page } from "@playwright/test";
+import { chooseOption } from "./fixtures/pickers";
 
 const screenshotDir = "e2e/screenshots";
 const DRAFT_KEY = "goatplan:draft:v1:2027-C";
@@ -90,8 +91,8 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   await dialog.getByRole("textbox", { name: "Name (optional)" }).fill("Lunch");
   await dialog.getByRole("checkbox", { name: "Monday" }).check();
   await dialog.getByRole("checkbox", { name: "Wednesday" }).check();
-  await dialog.getByRole("combobox", { name: "From" }).selectOption({ label: "12:00 PM" });
-  await dialog.getByRole("combobox", { name: "To" }).selectOption({ label: "1:00 PM" });
+  await chooseOption(dialog, "From", "12:00 PM");
+  await chooseOption(dialog, "To", "1:00 PM");
   await dialog.getByRole("button", { name: "Block time" }).click();
   await expect(dialog).toBeHidden();
   await row.getByRole("button", { name: "2 blocked times" }).click();

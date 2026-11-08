@@ -8,6 +8,12 @@ import { DrawingBar } from "@/components/schedule/DrawingBar";
 import { PreferencesBar } from "./PreferencesBar";
 import { SortSelect } from "./SortSelect";
 
+async function choose(scope: HTMLElement, field: string, option: string) {
+  await userEvent.click(within(scope).getByRole("combobox", { name: field }));
+  await userEvent.click(screen.getByRole("option", { name: option }));
+}
+
+
 vi.mock("@/lib/store", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/store")>()),
   usePlanner: (await import("@/components/sections/testing/plannerStore")).useTestPlanner,
@@ -90,8 +96,8 @@ describe("PreferencesBar", () => {
     const dialog = await openForm();
     await userEvent.click(within(dialog).getByRole("checkbox", { name: "Monday" }));
     await userEvent.click(within(dialog).getByRole("checkbox", { name: "Wednesday" }));
-    await userEvent.selectOptions(within(dialog).getByRole("combobox", { name: "From" }), "10:00 AM");
-    await userEvent.selectOptions(within(dialog).getByRole("combobox", { name: "To" }), "11:30 AM");
+    await choose(dialog, "From", "10:00 AM");
+    await choose(dialog, "To", "11:30 AM");
     await userEvent.click(within(dialog).getByRole("button", { name: "Block time" }));
 
     expect(store.getState().preferences.blocked).toEqual([
@@ -113,8 +119,8 @@ describe("PreferencesBar", () => {
     await userEvent.type(name, "Work");
     await userEvent.click(within(dialog).getByRole("checkbox", { name: "Tuesday" }));
     await userEvent.click(within(dialog).getByRole("checkbox", { name: "Friday" }));
-    await userEvent.selectOptions(within(dialog).getByRole("combobox", { name: "From" }), "2:00 PM");
-    await userEvent.selectOptions(within(dialog).getByRole("combobox", { name: "To" }), "4:00 PM");
+    await choose(dialog, "From", "2:00 PM");
+    await choose(dialog, "To", "4:00 PM");
     await userEvent.click(within(dialog).getByRole("button", { name: "Block time" }));
 
     expect(store.getState().preferences.blocked).toEqual([
@@ -151,11 +157,13 @@ describe("PreferencesBar", () => {
     renderWithBar();
 
     const dialog = await openForm();
-    await userEvent.selectOptions(within(dialog).getByRole("combobox", { name: "From" }), "3:00 PM");
+    await choose(dialog, "From", "3:00 PM");
 
     const to = within(dialog).getByRole("combobox", { name: "To" });
-    expect(to).toHaveDisplayValue("4:00 PM");
-    expect(within(to).queryByRole("option", { name: "3:00 PM" })).not.toBeInTheDocument();
+    expect(to).toHaveTextContent("4:00 PM");
+    await userEvent.click(to);
+    expect(screen.queryByRole("option", { name: "3:00 PM" })).not.toBeInTheDocument();
+    expect(screen.getByRole("option", { name: "4:00 PM" })).toBeInTheDocument();
   });
 
   it("turns drawing mode on and off with Block a time, which says when it's on", async () => {

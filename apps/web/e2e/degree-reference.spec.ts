@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { fixtureHistory, openDegree, stored } from "./fixtures/degree";
 import { COURSE_MAP_ON, SUGGESTIONS_ON } from "../src/components/degree/degreeFeatures";
+import { pickTerm } from "./fixtures/pickers";
 
 for (const width of [1440, 834]) {
   test(`degree reference layouts at ${width}px`, async ({ page }) => {
@@ -47,6 +48,52 @@ test("project blocks reserve a term without changing degree credit", async ({ pa
   await page.reload();
   await page.getByRole("navigation", { name: "Degree views" }).getByRole("button", { name: "Plan ahead" }).click();
   await expect(page.getByRole("button", { name: "Remove IQP project block from B Term 2028" })).toBeVisible();
+});
+
+test("project and start term dialogs work from the keyboard and return focus", async ({ page }) => {
+  await openDegree(page, fixtureHistory("degree-history-mid.json"));
+  await page.getByRole("navigation", { name: "Degree views" }).getByRole("button", { name: "Plan ahead" }).click();
+  const opener = page.getByRole("button", { name: "Add project block", exact: true });
+  await opener.focus();
+  await page.keyboard.press("Enter");
+  const dialog = page.getByRole("dialog", { name: "Add project block" });
+  await expect(dialog.getByRole("heading", { name: "Add project block" })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await expect(dialog.getByRole("button", { name: "IQP", exact: true })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Enter");
+  await expect(dialog.getByRole("button", { name: "MQP", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await pickTerm(dialog, "Term", "C Term 2029");
+  await expect(dialog.getByRole("button", { name: /^Term C Term 2029/ })).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(dialog.getByRole("grid")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(dialog.getByRole("grid")).toHaveCount(0);
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("button", { name: "Add project block", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Remove MQP project block from C Term 2029" })).toBeVisible();
+  await expect(opener).toBeFocused();
+
+  const start = page.getByRole("button", { name: /^Start:/ });
+  await start.focus();
+  await page.keyboard.press("Enter");
+  const startDialog = page.getByRole("dialog", { name: "When did you start?" });
+  const first = startDialog.getByRole("combobox", { name: "First term" });
+  await expect(startDialog.getByRole("heading", { name: "When did you start?" })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await expect(first).toBeFocused();
+  await expect(first).toHaveCSS("outline-style", "solid");
+  await page.keyboard.press("ArrowDown");
+  await page.keyboard.press("ArrowDown");
+  await page.keyboard.press("Enter");
+  await expect(first).toHaveText("A Term 2027");
+  await expect(first).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(startDialog).toBeHidden();
+  await expect(start).toHaveText("Start: A 2027");
+  await expect(start).toBeFocused();
 });
 
 test("phone keeps a readable plan", async ({ page }) => {

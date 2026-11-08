@@ -21,6 +21,16 @@ describe("the term picker", () => {
     expect(screen.getAllByRole("rowheader").map((cell) => cell.textContent)).toEqual(["Year 12026–27", "Year 22027–28", "Year 32028–29", "Year 42029–30"]);
   });
 
+  it("can leave out summer, for choices like project blocks", async () => {
+    const user = userEvent.setup();
+    render(<TermPicker label="Term" value="B Term 2028" onChange={() => {}} startYear={2026} current={{ letter: "B", year: 2026 }} summer={false} />);
+    await user.click(screen.getByRole("button", { name: /^Term B Term 2028/ }));
+    expect(screen.queryByRole("button", { name: /^E Term/ })).not.toBeInTheDocument();
+    expect(screen.getAllByRole("gridcell", { name: "Not available in summer" })).toHaveLength(3);
+    await user.keyboard("{ArrowRight}{ArrowRight}{ArrowRight}");
+    expect(screen.getByRole("button", { name: /^D Term 2029/ })).toHaveFocus();
+  });
+
   it("moves across terms and years with the arrow keys", async () => {
     const user = userEvent.setup();
     render(<Picker />);

@@ -4,11 +4,13 @@ import { useState } from "react";
 import { CalendarBlank, Flag } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
-import { Select } from "@/components/ui/Select";
+import { ListboxField } from "@/components/ui/ListboxField";
+import { SegmentedSwitch } from "@/components/ui/SegmentedSwitch";
 import { getDegreeSource, parseTerm, termLong, unitLabel, type DegreeSnapshot, type TermName } from "@/lib/degree";
 import { coursePlanState, coursesInTerm, moveCourseTerm, planYears } from "@/lib/degree/planGrid";
 import { savePlanStart, usePlanStart } from "./usePlanStart";
 import { NextTermsSuggestions } from "./NextTermsSuggestions";
+import { TermPicker } from "./TermPicker";
 import { CreditsCard } from "./CreditsCard";
 import { PaceCard } from "./PaceCard";
 import { PlanTermCard } from "./PlanTermCard";
@@ -21,6 +23,8 @@ import { keepClickFocus } from "./keepClickFocus";
 
 const COLUMNS = ["A Term", "B Term", "C Term", "D Term", "E Term · Summer"];
 const ROW = "grid grid-cols-[5.5rem_repeat(5,minmax(0,1fr))] gap-6 wide:grid-cols-[6.5rem_repeat(5,minmax(0,1fr))] wide:gap-8";
+const START_CHOICES = [2026, 2027].map((year) => ({ value: String(year), label: `A Term ${year}` }));
+const PROJECTS: { value: "IQP" | "MQP"; label: string; icon: null }[] = [{ value: "IQP", label: "IQP", icon: null }, { value: "MQP", label: "MQP", icon: null }];
 const LEGEND = [
   { word: "Taken", look: TILE_LOOK.done },
   { word: "In progress", look: TILE_LOOK.progress },
@@ -34,13 +38,12 @@ export function PlanAhead({ degree, view }: { degree: DegreeSnapshot; view: Degr
   const start = usePlanStart();
   const [startOpen, setStartOpen] = useState(false);
   const [projectOpen, setProjectOpen] = useState(false);
-  const [project, setProject] = useState("IQP");
+  const [project, setProject] = useState<"IQP" | "MQP">("IQP");
   const [projectTerm, setProjectTerm] = useState("B Term 2028");
   const [blocks, setBlocks] = useState<Record<string, string>>(() => {
     try { const saved: unknown = JSON.parse(localStorage.getItem("goatplan:degree:projects") ?? "{}"); return saved && typeof saved === "object" && !Array.isArray(saved) ? Object.fromEntries(Object.entries(saved).filter(([term, name]) => parseTerm(term) && (name === "IQP" || name === "MQP"))) : {}; } catch { return {}; }
   });
   const years = planYears(start);
-  const options = years.flatMap(({ terms }) => terms.filter((term) => term.letter !== "E").map((term) => ({ value: termLong(term), label: termLong(term) })));
   const { courses } = degree.history;
   const undated = courses.filter((course) => !parseTerm(course.term));
   const counts = { taken: 0, progress: 0, planned: 0 };
@@ -61,6 +64,12 @@ export function PlanAhead({ degree, view }: { degree: DegreeSnapshot; view: Degr
   function addTo(name: string) {
     set({ addingTerm: name, lastAddTerm: name });
     open({ kind: "history", tab: "search" });
+  }
+
+  function addProject() {
+    saveBlocks({ ...blocks, [projectTerm]: project });
+    setProjectOpen(false);
+    set({ toast: { message: `${project} reserves ${projectTerm}.` } });
   }
 
   function removeBlock(name: string) {
@@ -129,14 +138,25 @@ export function PlanAhead({ degree, view }: { degree: DegreeSnapshot; view: Degr
       <p className="pt-10 text-8 leading-16 text-ink-muted">Project blocks reserve a term. They add no credit until confirmed.</p>
     </section>
     {view && <div className="degree-plan-insights"><CreditsCard view={view} degree={degree} /><PaceCard view={view} /></div>}
-    <Dialog open={startOpen} onClose={() => setStartOpen(false)} title="When did you start?" description="Your plan grid and term choices start here.">
-      <Select label="Start year" hideLabel={false} value={String(start)} options={[2026, 2027].map((year) => ({ value: String(year), label: `A Term ${year}` }))} onChange={(event) => { const year = Number(event.target.value); if (!savePlanStart(year)) set({ toast: { message: "Start year changed for this visit. Browser storage is unavailable." } }); }} />
-      <Button onClick={() => setStartOpen(false)}>Done</Button>
+    <Dialog open={startOpen} onClose={() => setStartOpen(false)} title="When did you start?" description="Your plan grid and term choices start here." footer={<Button onClick={() => setStartOpen(false)}>Done</Button>}>
+      <div className="pt-8">
+        <ListboxField label="First term" value={String(start)} options={START_CHOICES} onChange={(value) => { if (!savePlanStart(Number(value))) set({ toast: { message: "Start year changed for this visit. Browser storage is unavailable." } }); }} />
+      </div>
     </Dialog>
-    <Dialog open={projectOpen} onClose={() => setProjectOpen(false)} title="Add project block" description="Reserve a term for IQP or MQP. This adds no credit.">
-      <Select label="Project" hideLabel={false} value={project} options={[{ value: "IQP", label: "IQP" }, { value: "MQP", label: "MQP" }]} onChange={(event) => setProject(event.target.value)} />
-      <Select label="Term" hideLabel={false} value={projectTerm} options={options} onChange={(event) => setProjectTerm(event.target.value)} />
-      <Button onClick={() => { saveBlocks({ ...blocks, [projectTerm]: project }); setProjectOpen(false); }}>Add project block</Button>
+    <Dialog
+      open={projectOpen}
+      onClose={() => setProjectOpen(false)}
+      title="Add project block"
+      description="Reserve a term for IQP or MQP. This adds no credit."
+      footer={<><Button variant="secondary" onClick={() => setProjectOpen(false)}>Cancel</Button><Button onClick={addProject}>Add project block</Button></>}
+    >
+      <div className="flex flex-col gap-14 pt-8">
+        <div className="flex flex-col items-start">
+          <span aria-hidden className="pb-5 text-10 leading-14-5 font-650 text-ink">Project</span>
+          <SegmentedSwitch<"IQP" | "MQP"> label="Project" value={project} options={PROJECTS} onChange={setProject} />
+        </div>
+        <TermPicker label="Term" value={projectTerm} onChange={setProjectTerm} startYear={start} current={current} summer={false} />
+      </div>
     </Dialog>
   </div>;
 }

@@ -16,6 +16,7 @@ type TermPickerProps = {
   startYear: number;
   current: TermName;
   allowNone?: boolean;
+  summer?: boolean;
   hint?: ReactNode;
   className?: string;
 };
@@ -24,8 +25,8 @@ type Spot = { row: number; column: number } | "none";
 
 const HEADINGS = ["A", "B", "C", "D", "E"];
 
-function grid(startYear: number): (TermName | null)[][] {
-  return planYears(startYear).map(({ terms }, index) => terms.map((term) => (index === 3 && term.letter === "E" ? null : term)));
+function grid(startYear: number, summer: boolean): (TermName | null)[][] {
+  return planYears(startYear).map(({ terms }, index) => terms.map((term) => (term.letter === "E" && (index === 3 || !summer) ? null : term)));
 }
 
 function spotOf(cells: (TermName | null)[][], term: TermName | null): Spot | null {
@@ -51,14 +52,14 @@ function step(cells: (TermName | null)[][], from: { row: number; column: number 
   }
 }
 
-export function TermPicker({ label, value, onChange, startYear, current, allowNone = false, hint, className }: TermPickerProps) {
+export function TermPicker({ label, value, onChange, startYear, current, allowNone = false, summer = true, hint, className }: TermPickerProps) {
   const id = useId();
   const trigger = useRef<HTMLButtonElement>(null);
   const popup = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<Spot>("none");
   const [portal, setPortal] = useState<HTMLElement | null>(null);
-  const cells = grid(startYear);
+  const cells = grid(startYear, summer);
   const chosen = parseTerm(value);
   const tag = termTag(chosen, current);
 
@@ -147,7 +148,7 @@ export function TermPicker({ label, value, onChange, startYear, current, allowNo
             show();
           }
         }}
-        className="flex min-h-38 w-full cursor-pointer items-center gap-8 rounded-control border border-line bg-surface px-10 text-left text-10 leading-14-5 text-ink hover:border-line-strong"
+        className="flex min-h-38 w-full cursor-pointer items-center gap-8 rounded-control border border-line bg-surface px-10 aria-expanded:outline-2 aria-expanded:outline-offset-2 aria-expanded:outline-focus text-left text-10 leading-14-5 text-ink hover:border-line-strong"
       >
         <CalendarBlank aria-hidden className="size-14 shrink-0 text-ink-muted" />
         <span id={`${id}-value`} className="flex-1 truncate">{chosen ? termLong(chosen) : "No term"}</span>
@@ -179,7 +180,7 @@ export function TermPicker({ label, value, onChange, startYear, current, allowNo
                 <div key={year} role="row" className="contents">
                   <span role="rowheader" className="flex flex-col justify-center text-8 leading-11-2 text-ink-muted"><span className="font-650 text-ink">Year {row + 1}</span>{year}–{String(year + 1).slice(-2)}</span>
                   {terms.map((term, column) => {
-                    if (!term) return <span key={column} role="gridcell" aria-label="After this plan" className="rounded-row border border-dashed border-line" />;
+                    if (!term) return <span key={column} role="gridcell" aria-label={row === 3 || summer ? "After this plan" : "Not available in summer"} className="rounded-row border border-dashed border-line" />;
                     const name = termLong(term);
                     const isActive = active !== "none" && active.row === row && active.column === column;
                     const selected = sameTerm(term, chosen);
@@ -197,7 +198,7 @@ export function TermPicker({ label, value, onChange, startYear, current, allowNo
                           onMouseEnter={() => setActive({ row, column })}
                           className={cx(
                             "relative flex h-34 w-full cursor-pointer flex-col items-center justify-center rounded-row text-9 leading-12 font-570 transition-colors motion-reduce:transition-none",
-                            selected ? "bg-accent text-on-accent" : now ? "bg-accent-soft text-accent ring-1 ring-accent ring-inset" : term.letter === "E" ? "bg-canvas text-ink-soft hover:bg-surface-selected" : "bg-surface-subtle text-ink hover:bg-surface-selected",
+                            selected ? "bg-accent text-on-accent" : now ? "bg-accent-soft text-accent hover:bg-surface-selected" : term.letter === "E" ? "bg-canvas text-ink-soft hover:bg-surface-selected" : "bg-surface-subtle text-ink hover:bg-surface-selected",
                           )}
                         >
                           {term.letter} {String(term.year).slice(-2)}

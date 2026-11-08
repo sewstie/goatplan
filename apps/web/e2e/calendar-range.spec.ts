@@ -1,6 +1,7 @@
 import { expect, frozenTerm, test } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
+import { chooseTime } from "./fixtures/pickers";
 
 const source: TermFile = frozenTerm("2027-C");
 const calendar = (page: Page) => page.getByRole("region", { name: "Weekly schedule" });
@@ -100,8 +101,8 @@ test("range changes animate briefly and respect reduced motion", async ({ page }
   await page.getByRole("button", { name: "Type a time instead" }).click();
   const dialog = page.getByRole("dialog");
   await dialog.getByLabel("Sunday", { exact: true }).check();
-  await dialog.getByLabel("From", { exact: true }).selectOption("1080");
-  await dialog.getByLabel("To", { exact: true }).selectOption("1200");
+  await chooseTime(dialog, "From", 1080);
+  await chooseTime(dialog, "To", 1200);
   await dialog.getByRole("button", { name: "Block time", exact: true }).click();
   await expect(calendar(page).getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeVisible();
   await page.emulateMedia({ reducedMotion: "reduce" });

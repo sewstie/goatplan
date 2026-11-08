@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
+import { Button, type ButtonSize } from "@/components/ui/Button";
 import { usePlannerStore } from "@/lib/store";
 
-export function OpenInPlanner({ termId, code }: { termId: string; code?: string }) {
+export function OpenInPlanner({ termId, code, size = "sm" }: { termId: string; code?: string; size?: ButtonSize }) {
   const store = usePlannerStore();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
@@ -27,5 +27,5 @@ export function OpenInPlanner({ termId, code }: { termId: string; code?: string 
     router.push("/");
   }
 
-  return <div><Button variant="secondary" size="sm" disabled={busy} onClick={() => void open()}>{code ? "Add to schedule" : "Open in planner"}</Button>{error && <p role="alert" className="pt-6 text-8 text-warning-ink">{error}</p>}</div>;
+  return <div><Button variant="secondary" size={size} disabled={busy} onClick={() => void open()}>{code ? "Add to schedule" : "Open in planner"}</Button>{error && <p role="alert" className="pt-6 text-8 text-warning-ink">{error}</p>}</div>;
 }

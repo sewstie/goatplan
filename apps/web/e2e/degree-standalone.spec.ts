@@ -1,6 +1,7 @@
 import { expect, test } from "./fixtures/test";
 import { auditReady, fixtureHistory, openDegree, openHistory, panel, savedCourse, stored } from "./fixtures/degree";
 import { SUGGESTIONS_ON } from "../src/components/degree/degreeFeatures";
+import { pickTerm } from "./fixtures/pickers";
 
 for (const width of [1440, 834, 375]) {
   test(`standalone degree sheet and suggestions at ${width}px`, async ({ page }) => {
@@ -16,7 +17,7 @@ for (const width of [1440, 834, 375]) {
     await page.getByRole("dialog").getByRole("button", { name: "Suggest courses", exact: true }).focus();
     await page.keyboard.press("Enter");
     const suggestions = panel(page, "Suggest courses");
-    await suggestions.getByRole("combobox", { name: "Term to plan for" }).selectOption("C Term 2027");
+    await pickTerm(suggestions, "Term to plan for", "C Term 2027");
     await expect(suggestions.getByRole("button", { name: /^Plan .* for C Term 2027$/ }).first()).toBeVisible({ timeout: 30_000 });
     await expect(suggestions.getByText(/^Offered · \d+ sections$/).first()).toBeVisible();
     await page.screenshot({ path: `e2e/screenshots/degree-suggestions-${width}.png`, animations: "disabled" });
@@ -72,7 +73,7 @@ test("future suggestions use only observed term letters and leave the planner al
   await page.getByRole("button", { name: "Sheet options" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Suggest courses", exact: true }).click();
   const suggestions = panel(page, "Suggest courses");
-  await suggestions.getByRole("combobox", { name: "Term to plan for" }).selectOption("C Term 2030");
+  await pickTerm(suggestions, "Term to plan for", "C Term 2030");
   await expect(suggestions.getByText("Usually offered in C").first()).toBeVisible();
   await expect(suggestions.getByText("Offering not known yet").first()).toBeVisible();
   await expect(suggestions.getByRole("button", { name: "Add to schedule", exact: true })).toHaveCount(0);
@@ -87,7 +88,7 @@ test("Add to schedule opens the selected published term without adding degree hi
   await page.getByRole("button", { name: "Sheet options" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Suggest courses", exact: true }).click();
   const suggestions = panel(page, "Suggest courses");
-  await suggestions.getByRole("combobox", { name: "Term to plan for" }).selectOption("C Term 2027");
+  await pickTerm(suggestions, "Term to plan for", "C Term 2027");
   const row = suggestions.getByRole("listitem").filter({ has: page.getByRole("heading", { name: /^CS 3043 ·/ }) });
   await row.getByRole("button", { name: "Add to schedule", exact: true }).click();
   await expect(page).toHaveURL(/\/$/);

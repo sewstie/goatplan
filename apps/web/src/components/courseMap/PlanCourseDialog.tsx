@@ -30,13 +30,17 @@ export function PlanCourseDialog({ node, open, close }: { node: MapNode | null; 
     close();
   };
   return (
-    <Dialog open={open} onClose={close} title={`Plan ${node?.code ?? "course"}`}>
-      <div className="flex flex-col gap-14">
+    <Dialog
+      open={open}
+      onClose={close}
+      title={`Plan ${node?.code ?? "course"}`}
+      footer={<>
+        {node && published.terms.some((item) => item.id === termId) && <OpenInPlanner termId={termId} code={node.code} size="lg" />}
+        <Button onClick={add}>Plan for {term}</Button>
+      </>}
+    >
+      <div className="pt-8">
         <TermPicker label="Term" value={term} onChange={setTerm} startYear={startYear} current={current} />
-        <div className="flex flex-wrap gap-8">
-          <Button onClick={add}>Plan for {term}</Button>
-          {node && published.terms.some((item) => item.id === termId) && <OpenInPlanner termId={termId} code={node.code} />}
-        </div>
       </div>
     </Dialog>
   );
