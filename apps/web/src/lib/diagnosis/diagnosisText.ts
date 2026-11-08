@@ -1,8 +1,8 @@
 import { formatDays, formatTime, formatTimeRange } from "@/lib/data";
 import { lectureInstructors, lecturesByProfessor } from "@/lib/data/instructors";
 import type { Day, Section, TermFile } from "@/lib/data/types";
-import type { Diagnosis, EmptyCourse, Fix } from "@/lib/engine/types";
-import type { PlanPreferences } from "@/lib/store/types";
+import type { Diagnosis, EmptyCourse } from "@/lib/engine/types";
+import type { PlanFix, PlanPreferences, ProfessorFix } from "@/lib/store/types";
 import { availableOptions, commonSections, lockedOptions, optionSections } from "./sectionOptions";
 
 export interface DiagnosisContext {
@@ -10,6 +10,7 @@ export interface DiagnosisContext {
   preferences: PlanPreferences;
   locks: Readonly<Record<string, readonly string[]>>;
   professorByCourse?: Readonly<Record<string, string | null>>;
+  professorFixes?: readonly ProfessorFix[];
 }
 
 export interface DiagnosisIssue {
@@ -26,7 +27,7 @@ export interface DiagnosisIssue {
 }
 
 export interface DiagnosisFix {
-  fix: Fix;
+  fix: PlanFix;
   label: string;
   count: string;
 }
@@ -202,7 +203,7 @@ function pairIssue(pair: [string, string], context: DiagnosisContext): Diagnosis
   };
 }
 
-export function fixText(fix: Fix, context: DiagnosisContext): DiagnosisFix {
+export function fixText(fix: PlanFix, context: DiagnosisContext): DiagnosisFix {
   let label: string;
   switch (fix.kind) {
     case "relaxStartsAfter": label = fix.startsAfter === 0 ? "Clear start restriction" : `Change to ${formatTime(fix.startsAfter)}`; break;
@@ -216,6 +217,7 @@ export function fixText(fix: Fix, context: DiagnosisContext): DiagnosisFix {
       break;
     }
     case "dropCourse": label = `Remove ${fix.course}`; break;
+    case "switchProfessor": label = `Switch ${fix.course} to ${fix.professor}`; break;
     case "unlock": {
       const course = context.term?.courses.find((item) => item.code === fix.course);
       const ids = context.locks[fix.course] ?? [];
@@ -255,5 +257,8 @@ export function diagnosisText(diagnosis: Diagnosis, context: DiagnosisContext) {
     }
     return [text];
   });
+  const switches = (context.professorFixes ?? []).map((fix) => fixText(fix, context));
+  const firstDrop = fixes.findIndex(({ fix }) => fix.kind === "dropCourse");
+  fixes.splice(firstDrop < 0 ? fixes.length : firstDrop, 0, ...switches);
   return { issues, fixes };
 }
