@@ -617,7 +617,8 @@ describe("professor preferences", () => {
     await flush();
     expect(state()).toMatchObject({ ...draft, solveStatus: "done" });
     expect(selectChosenSections(state())).toEqual({});
-    expect(engine.solve.mock.calls.at(-1)![0].preferences).toMatchObject({
+    // Later calls only try other professors, one schedule each.
+    expect(engine.solve.mock.calls.filter(([request]) => request.limits?.maxSchedules !== 1).at(-1)![0].preferences).toMatchObject({
       locked: draft.locks, anyOf: { "AE 2320": ["AE 2320-CL01", "AE 2320-CL02", "AE 2320-CL05", "AE 2320-CL06"] },
       startsAfter: 540, onlyOpen: false, blocked: [{ day: "Fri", start: 840, end: 960 }],
     });
@@ -677,8 +678,8 @@ describe("professor preferences", () => {
     expect(state()).toMatchObject({ ...draft, solveStatus: "done", solveError: null });
     expect(state().response).toMatchObject({ ok: true, total: 0, schedules: [], diagnosis: { unsure: false } });
     expect(selectChosenSections(state())).toEqual({});
-    // Only the extra solve that counts "Allow any professor" reaches the engine, without the professor rule.
-    expect(engine.solve).toHaveBeenCalledOnce();
+    // First the extra solve that counts "Allow any professor", without the professor rule, then one try per other professor.
+    expect(engine.solve.mock.calls.slice(1).every(([request]) => request.limits?.maxSchedules === 1 && request.preferences?.anyOf?.["AE 2320"]?.length)).toBe(true);
     expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({});
     const response = state().response;
     const fix = response?.ok ? response.diagnosis?.fixes[0] : undefined;
@@ -1314,16 +1315,28 @@ describe("professor fixes", () => {
     const { state, engine } = await unavailable({ "AE 2320": "Former Professor" });
     await state().init();
     await flush();
-    expect(engine.solve).toHaveBeenCalledOnce();
     expect(engine.solve.mock.calls[0][0]).toMatchObject({ courses: ["AE 2320", "AE 2410"], preferences: { anyOf: {} } });
     expect(state()).toMatchObject({ solveStatus: "done", scheduleIndex: 0, response: { ok: true, total: 0, patterns: 0, schedules: [] } });
     expect(fixesOf(state().response)).toEqual([{ kind: "clearAnyOf", course: "AE 2320", schedules: 2, capped: false }]);
     expect(diagnosisText((state().response as Extract<SolveResponse, { ok: true }>).diagnosis!, state()).fixes.map((fix) => [fix.label, fix.count]))
-      .toEqual([["Allow any professor for AE 2320", "2 schedules fit"]]);
+      .toEqual([["Allow any professor for AE 2320", "2 schedules fit"], ["Switch AE 2320 to Ye Lu", "2 schedules fit"]]);
+    expect(state()).toMatchObject({ checkingProfessors: false, professorFixes: [{ kind: "switchProfessor", course: "AE 2320", professor: "Ye Lu", schedules: 2, capped: false }] });
 
     state().applyFix(fixesOf(state().response)![0]);
     await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
     expect(state()).toMatchObject({ professorByCourse: { "AE 2320": null }, response: { ok: true, total: 2 } });
+  });
+
+  it("switches to another professor through a professor fix", async () => {
+    const { state } = await unavailable({ "AE 2320": "Former Professor" });
+    await state().init();
+    await flush();
+    const [fix] = state().professorFixes;
+    expect(fix).toMatchObject({ kind: "switchProfessor", course: "AE 2320", professor: "Ye Lu" });
+    state().applyFix(fix);
+    expect(state()).toMatchObject({ professorByCourse: { "AE 2320": "Ye Lu" }, professorFixes: [], checkingProfessors: false });
+    await vi.advanceTimersByTimeAsync(SOLVE_DELAY_MS);
+    expect(state().response).toMatchObject({ ok: true, total: 2 });
   });
 
   it("keeps other professor rules in the extra solve and gives each unavailable course a fix, in course order", async () => {
@@ -1334,7 +1347,6 @@ describe("professor fixes", () => {
     engine.solve.mockImplementation(async (request) => ({ ...solved(request), total: 7, capped: true }));
     await state().init();
     await flush();
-    expect(engine.solve).toHaveBeenCalledOnce();
     expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01"] });
     expect(fixesOf(state().response)).toEqual([
       { kind: "clearAnyOf", course: "AE 2410", schedules: 7, capped: true },

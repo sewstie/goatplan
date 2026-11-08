@@ -5,10 +5,11 @@ import type { TermFile, TermIndex } from "@/lib/data/types";
 import { seatMergeBytes, withLiveSeats } from "@/lib/data/seatMerge";
 import type { SeatSnapshot } from "@/lib/data/seatParser";
 import { EngineSupersededError, type EngineClient } from "@/lib/engine/EngineClient";
-import type { Fix, SolveRequest, SolveResponse } from "@/lib/engine/types";
+import type { SolveRequest, SolveResponse } from "@/lib/engine/types";
 import { lectureInstructors, lecturesByProfessor } from "@/lib/data/instructors";
 import { buildRequest } from "./buildRequest";
 import { unavailableProfessorResponse } from "./unavailableProfessorResponse";
+import { findProfessorFixes } from "./professorFixes";
 import {
   emptyDraft,
   readDraft,
@@ -19,7 +20,7 @@ import {
   type DraftStorage,
 } from "./draft";
 import { findSchedule, scheduleKey, selectChosenSections, selectCurrentSchedule, selectSchedules } from "./selectors";
-import type { AlternativeChoices, Draft, PlannerState, PlannerStore, RemovedCourse, TemporaryPlan } from "./types";
+import type { AlternativeChoices, Draft, PlanFix, PlannerState, PlannerStore, RemovedCourse, TemporaryPlan } from "./types";
 
 /** How long the store waits after the last change before it asks the engine. */
 export const SOLVE_DELAY_MS = 200;
@@ -59,6 +60,8 @@ const initialState: PlannerState = {
   blockedChange: null,
   drawing: false,
   temporaryPlan: null,
+  professorFixes: [],
+  checkingProfessors: false,
 };
 
 export const TEMPORARY_PLAN_ID = "__temporary__";
@@ -123,6 +126,21 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       return deps.engine.solve(request);
     }
 
+    /** After an answer with no schedules, tries other professors for courses that have one chosen. */
+    async function checkProfessors(token: number, request: SolveRequest, response: SolveResponse, termId: string) {
+      const state = get();
+      const needed = response.ok && response.total === 0 && response.diagnosis && !response.diagnosis.unsure
+        && request.courses.some((code) => state.professorByCourse[code]);
+      if (!needed || !state.term) return;
+      set({ checkingProfessors: true });
+      try {
+        const professorFixes = await findProfessorFixes(request, state.term, state.professorByCourse, (probe) => askEngine(probe, termId), () => token === solveToken);
+        if (token === solveToken) set({ professorFixes, checkingProfessors: false });
+      } catch {
+        if (token === solveToken) set({ checkingProfessors: false });
+      }
+    }
+
     /** Asks the engine now. Resolves to false when a newer change or term made the answer moot. */
     async function runSolve(): Promise<boolean> {
       const state = get();
@@ -131,7 +149,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
       if (!request || !termId || !state.term || state.termStatus !== "ready" || seatsReloading) return false;
 
       const token = ++solveToken;
-      set({ solveStatus: "solving", solveError: null });
+      set({ solveStatus: "solving", solveError: null, professorFixes: [], checkingProfessors: false });
       try {
         // A chosen professor with no lectures this term: the answer is made here, and the engine only
         // counts the "Allow any professor" fix.
@@ -141,6 +159,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
           if (token !== solveToken) return false;
           showNext = null;
           set({ response, scheduleIndex: 0, solveStatus: "done" });
+          void checkProfessors(token, request, response, termId);
           return true;
         }
         const response = await askEngine(request, termId);
@@ -151,6 +170,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         const found = wanted ? findSchedule(schedules, wanted) : null;
         if (!found) {
           set({ response, scheduleIndex: 0, solveStatus: "done" });
+          void checkProfessors(token, request, response, termId);
           return true;
         }
         const alternatives = withChoices(get().alternatives, scheduleKey(schedules[found.index]), found.choices);
@@ -172,7 +192,7 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         set({ response: null, scheduleIndex: 0, solveStatus: "idle", solveError: null, lastChosenSections: {} });
         return;
       }
-      set({ response: null, scheduleIndex: 0, solveStatus: "waiting", solveError: null });
+      set({ response: null, scheduleIndex: 0, solveStatus: "waiting", solveError: null, professorFixes: [], checkingProfessors: false });
       solveTimer = setTimeout(() => {
         solveTimer = null;
         void runSolve();
@@ -642,8 +662,11 @@ export function createPlannerStore(deps: PlannerDeps): StoreApi<PlannerStore> {
         await runSolve();
       },
 
-      applyFix(fix: Fix) {
+      applyFix(fix: PlanFix) {
         switch (fix.kind) {
+          case "switchProfessor":
+            get().setProfessor(fix.course, fix.professor);
+            break;
           case "relaxStartsAfter":
             get().setPreferences({ startsAfter: fix.startsAfter });
             break;

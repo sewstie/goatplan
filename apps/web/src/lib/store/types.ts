@@ -66,6 +66,18 @@ export interface BlockedChange {
   count?: number;
 }
 
+/** Another lecture professor for a course, tried by the planner after an answer with no schedules. */
+export interface ProfessorFix {
+  kind: "switchProfessor";
+  course: string;
+  professor: string;
+  schedules: number;
+  capped: boolean;
+}
+
+/** A fix the engine suggested, or a professor switch the planner found. */
+export type PlanFix = Fix | ProfessorFix;
+
 export type TemporaryPlan = OpenedPlan & { view?: SavedPlan; warnings?: string[]; missing?: MissingItem[] };
 
 export interface PlannerState extends Draft {
@@ -101,6 +113,10 @@ export interface PlannerState extends Draft {
   /** Drawing mode: a drag on the calendar blocks or unblocks time. Not saved with the draft or with plans. */
   drawing: boolean;
   temporaryPlan: TemporaryPlan | null;
+  /** Other professors that give schedules when the answer has none. Not saved. */
+  professorFixes: ProfessorFix[];
+  /** True while the planner is still trying other professors. */
+  checkingProfessors: boolean;
 }
 
 export interface PlannerActions {
@@ -149,7 +165,7 @@ export interface PlannerActions {
   setScheduleIndex(index: number): void;
   nextSchedule(): void;
   previousSchedule(): void;
-  applyFix(fix: Fix): void;
+  applyFix(fix: PlanFix): void;
   retrySolve(): Promise<void>;
 }
 

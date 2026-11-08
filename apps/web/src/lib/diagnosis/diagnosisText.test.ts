@@ -31,6 +31,24 @@ describe("diagnosisText", () => {
     expect(result.fixes[0].fix).toBe(fix);
   });
 
+  it("puts professor switches after preference fixes and before removing a course", () => {
+    const result = diagnosisText(diagnosis({
+      clashingPairs: [["AE 2320", "AE 2410"]],
+      fixes: [
+        { kind: "clearAnyOf", course: "AE 2320", schedules: 2, capped: false },
+        { kind: "dropCourse", course: "AE 2410", schedules: 4, capped: false },
+      ],
+    }), context({
+      professorByCourse: { "AE 2320": "Ye Lu" },
+      professorFixes: [{ kind: "switchProfessor", course: "AE 2320", professor: "Mark Richman", schedules: 1, capped: true }],
+    }));
+    expect(result.fixes.map(({ label, count }) => [label, count])).toEqual([
+      ["Allow any professor for AE 2320", "2 schedules fit"],
+      ["Switch AE 2320 to Mark Richman", "At least 1 schedule fits"],
+      ["Remove AE 2410", "4 schedules fit"],
+    ]);
+  });
+
   it("uses state 35 wording when the start time excludes the only lecture", () => {
     const result = diagnosisText(diagnosis({ emptyCourses: [empty()] }), context());
     expect(result.issues[0]).toMatchObject({

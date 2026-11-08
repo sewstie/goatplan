@@ -28,23 +28,30 @@ export function DiagnosisPanel({ course: selected, diagnosis, locks }: {
   const waitlist = sections.some((section) => section.status === "waitlist") || primary?.kind === "full";
   return (
     <div id="tutorial-diagnosis" tabIndex={-1} className="flex flex-col gap-4 rounded-control">
-      <p className="text-9 leading-13 font-650 text-attention">Needs attention</p>
-      <h2 tabIndex={-1} className="mt-4 text-21 leading-25-2 font-700 tracking-heading text-ink">{course?.code ?? "No schedule fits"}</h2>
+      <p className="inline-flex w-fit items-center gap-6 rounded-badge bg-warning-soft px-7 py-3 text-8-5 leading-11-9 font-650 text-attention">
+        <span aria-hidden className="size-6 rounded-full bg-attention" />
+        Needs attention
+      </p>
+      <h2 tabIndex={-1} className="mt-8 text-21 leading-25-2 font-700 tracking-heading text-ink">{course?.code ?? "No schedule fits"}</h2>
       {course && <p className="text-11 leading-17-6 font-510 text-ink">{course.title}</p>}
       <div className="mt-12 flex flex-col gap-8">
         {ordered.map((issue) => <DiagnosisIssueCard key={issue.key} issue={issue} />)}
       </div>
-      {course && sections.map((section) => (
-        <SectionChoiceCard
-          key={section.id}
-          course={course}
-          section={section}
-          locked={locks[course.code]?.includes(section.id) ?? false}
-          problem={primary?.problemSectionIds.includes(section.id) ?? false}
-          readOnly={!locks[course.code]?.includes(section.id)}
-          onUnlocked={() => document.getElementById("main")?.focus()}
-        />
-      ))}
+      {course && sections.length > 0 && (
+        <div className="mt-8 flex flex-col gap-8">
+          {sections.map((section) => (
+            <SectionChoiceCard
+              key={section.id}
+              course={course}
+              section={section}
+              locked={locks[course.code]?.includes(section.id) ?? false}
+              problem={primary?.problemSectionIds.includes(section.id) ?? false}
+              readOnly={!locks[course.code]?.includes(section.id)}
+              onUnlocked={() => document.getElementById("main")?.focus()}
+            />
+          ))}
+        </div>
+      )}
       <DiagnosisFixes fixes={diagnosis.fixes} />
       {course && primary && (primary.kind === "pair" || primary.kind === "missing") && <CheckAnotherTermButton code={course.code} />}
       {waitlist && (
@@ -52,7 +59,11 @@ export function DiagnosisPanel({ course: selected, diagnosis, locks }: {
           Join waitlist in Workday
         </ButtonLink>
       )}
-      {course && <ProfessorPicker course={course} />}
+      {course && (
+        <div className="mt-16 border-t border-line-soft pt-9 empty:hidden">
+          <ProfessorPicker course={course} />
+        </div>
+      )}
     </div>
   );
 }
