@@ -1,6 +1,7 @@
 import { expect, test, pickStartsAfter, startsAfterText } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 import type { Section, TermFile } from "../src/lib/data/types";
+import { chooseTime } from "./fixtures/pickers";
 
 const code = "AE 2410";
 const data: TermFile = {
@@ -70,8 +71,8 @@ async function blockTime(page: Page, day: string, from: string, to: string) {
   await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Block a time" });
   await dialog.getByRole("checkbox", { name: day, exact: true }).check();
-  await dialog.getByRole("combobox", { name: "From", exact: true }).selectOption(from);
-  await dialog.getByRole("combobox", { name: "To", exact: true }).selectOption(to);
+  await chooseTime(dialog, "From", Number(from));
+  await chooseTime(dialog, "To", Number(to));
   await dialog.getByRole("button", { name: "Block time", exact: true }).click();
   await settled(page);
 }

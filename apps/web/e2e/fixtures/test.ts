@@ -14,7 +14,8 @@ export function frozenTerm(id: string): TermFile {
 export const test = base.extend<{ frozenData: void }>({
   frozenData: [async ({ context }, use) => {
     await context.route(/\/data\/[^/?]+\.json(\?.*)?$/, (route) => {
-      const file = path.join(dataDir, path.basename(new URL(route.request().url()).pathname));
+      const name = path.basename(new URL(route.request().url()).pathname);
+      const file = name === "catalog.json" ? path.join(__dirname, "../../../../data/catalog.json") : path.join(dataDir, name);
       return existsSync(file) ? route.fulfill({ path: file }) : route.fulfill({ status: 404 });
     });
     await use();

@@ -16,8 +16,8 @@ export interface CourseColors {
 }
 
 export const COURSE_COLORS: Readonly<Record<CourseSlot, CourseColors>> = {
-  1: { block: "bg-course-1 text-on-accent hover:border-course-1-hover-line", swatch: "bg-course-1", soft: "bg-course-1-soft" },
-  2: { block: "bg-course-2 text-ink hover:border-course-2-hover-line", swatch: "bg-course-2-swatch", soft: "bg-course-2-soft" },
-  3: { block: "bg-course-3 text-ink hover:border-course-3-hover-line", swatch: "bg-course-3-swatch", soft: "bg-course-3-soft" },
-  4: { block: "bg-course-4 text-ink hover:border-course-4-hover-line", swatch: "bg-course-4-swatch", soft: "bg-course-4-soft" },
+  1: { block: "border-course-1-line bg-course-1 text-on-accent hover:border-course-1-hover-line", swatch: "bg-course-1", soft: "bg-course-1-soft" },
+  2: { block: "border-course-2-line bg-course-2 text-ink hover:border-course-2-hover-line", swatch: "bg-course-2-swatch", soft: "bg-course-2-soft" },
+  3: { block: "border-course-3-line bg-course-3 text-ink hover:border-course-3-hover-line", swatch: "bg-course-3-swatch", soft: "bg-course-3-soft" },
+  4: { block: "border-course-4-line bg-course-4 text-ink hover:border-course-4-hover-line", swatch: "bg-course-4-swatch", soft: "bg-course-4-soft" },
 };

@@ -37,6 +37,9 @@ jobs:
             echo "normalize.mjs not written yet, skipping"
           fi
 
+      - name: Update degree catalog
+        run: npm run data:catalog
+
       - name: Stop if a term lost too many sections
         if: ${{ !inputs.allow_drop }}
         run: node scripts/check-section-drop.mjs
@@ -45,7 +48,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/web/public/data
+          git add apps/web/public/data data/catalog.json
           if git diff --cached --quiet; then
             echo "No changes in course data."
           else

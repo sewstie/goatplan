@@ -14,6 +14,10 @@ type PlannerShellProps = {
   header: ReactNode;
   barCenter?: ReactNode;
   barActions?: ReactNode;
+  barNavigation?: ReactNode;
+  barAppearance?: ReactNode;
+  phoneNavigation?: ReactNode;
+  phoneMenuActions?: ReactNode;
   toolbar?: ReactNode;
   banner: ReactNode;
   schedule: ReactNode;
@@ -24,13 +28,13 @@ type PlannerShellProps = {
  * from the tablet breakpoint up, or the phone planner's one-screen-at-a-time layout below it. Only
  * one of the two is mounted, so the tutorial target IDs never appear twice in the DOM.
  */
-export function PlannerShell({ header, barCenter, barActions, toolbar, banner, schedule }: PlannerShellProps) {
+export function PlannerShell({ header, barCenter, barActions, barNavigation, barAppearance, phoneNavigation, phoneMenuActions, toolbar, banner, schedule }: PlannerShellProps) {
   const phone = usePhoneViewport();
 
   return (
     <>
       {phone ? (
-        <PhonePlanner banner={banner} />
+        <PhonePlanner banner={banner} navigation={phoneNavigation} menuActions={phoneMenuActions} />
       ) : (
         <AppShell
           sidebar={
@@ -42,6 +46,8 @@ export function PlannerShell({ header, barCenter, barActions, toolbar, banner, s
           header={header}
           barCenter={barCenter}
           barActions={barActions}
+          barNavigation={barNavigation}
+          barAppearance={barAppearance}
           toolbar={toolbar}
           banner={banner}
           schedule={schedule}

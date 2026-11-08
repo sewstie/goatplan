@@ -1,0 +1,308 @@
+[
+  {
+    "code": "RBE 1001",
+    "title": "Introduction to Robotics",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-1001",
+    "wording": "Python programming experience or CS 1004, plus PH 1120 or PH 1121.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 1004"
+            },
+            {
+              "note": "Significant Python programming experience"
+            }
+          ]
+        },
+        {
+          "any": [
+            {
+              "course": "PH 1120"
+            },
+            {
+              "course": "PH 1121"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "RBE 2001",
+    "title": "Unified Robotics I: Mechanical Applications in Robotics",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-2001",
+    "wording": "Embedded systems (ECE 2049), statics (ES 2501), and CAD (ES 1310).",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2049"
+        },
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 1310"
+        }
+      ]
+    }
+  },
+  {
+    "code": "RBE 2002",
+    "title": "Unified Robotics II: Sensing and Perception in Robotics",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-2002",
+    "wording": "Embedded systems knowledge, as covered in ECE 2049.",
+    "background": {
+      "course": "ECE 2049"
+    }
+  },
+  {
+    "code": "RBE 2020",
+    "title": "Embedded Systems for Robotics",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-2020",
+    "wording": "RBE 1001, electronics (ECE 2010), and programming (CS 2119, CS 2102/2103, CS 2301/2303, or ECE 2039).",
+    "background": {
+      "all": [
+        {
+          "course": "RBE 1001"
+        },
+        {
+          "course": "ECE 2010"
+        },
+        {
+          "any": [
+            {
+              "course": "CS 2119"
+            },
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            },
+            {
+              "course": "CS 2301"
+            },
+            {
+              "course": "CS 2303"
+            },
+            {
+              "course": "ECE 2039"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "RBE 3001",
+    "title": "Unified Robotics III: Manipulation",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-3001",
+    "wording": "The catalog prints \u201cBE 2002\u201d (shown here as RBE 2002), ECE 2049, CS 2102, MA 2051, MA 2071, and programming experience.",
+    "background": {
+      "all": [
+        {
+          "course": "RBE 2002"
+        },
+        {
+          "course": "ECE 2049"
+        },
+        {
+          "course": "CS 2102"
+        },
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "MA 2071"
+        },
+        {
+          "note": "Experience implementing algorithms in a programming or scripting language"
+        }
+      ]
+    }
+  },
+  {
+    "code": "RBE 3002",
+    "title": "Unified Robotics IV: Navigation",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-3002",
+    "wording": "RBE 3001, ES 3011, and probability (MA 2621 or MA 2631).",
+    "background": {
+      "all": [
+        {
+          "course": "RBE 3001"
+        },
+        {
+          "course": "ES 3011"
+        },
+        {
+          "any": [
+            {
+              "course": "MA 2621"
+            },
+            {
+              "course": "MA 2631"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "RBE 3100",
+    "title": "Social Implications of Robotics",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-3100",
+    "wording": "General familiarity with robots and robotic systems.",
+    "background": {
+      "note": "General familiarity with robots and robotic systems"
+    }
+  },
+  {
+    "code": "RBE 4322",
+    "title": "Modeling and Analysis of Mechatronic Systems",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering-mechanical-and-materials-engineering/rbe-4322me-4322-0",
+    "wording": "Math (MA 2051, MA 2071), fluids (ES 3004), thermodynamics (ES 3001), and mechanics (ES 2501, ES 2503).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "MA 2071"
+        },
+        {
+          "course": "ES 3004"
+        },
+        {
+          "course": "ES 3001"
+        },
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2503"
+        }
+      ]
+    },
+    "aliases": [
+      "ME 4322"
+    ]
+  },
+  {
+    "code": "RBE 4540",
+    "title": "Vision-based Robotic Manipulation",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-4540",
+    "wording": "Robot kinematics and transformations (RBE 3001), plus robotic simulation (RBE 3002).",
+    "background": {
+      "all": [
+        {
+          "course": "RBE 3001"
+        },
+        {
+          "course": "RBE 3002"
+        }
+      ]
+    }
+  },
+  {
+    "code": "RBE 4601",
+    "title": "Human Factors and Human-Robot Interface",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-4601",
+    "wording": "RBE 1001 and RBE 3100.",
+    "background": {
+      "all": [
+        {
+          "course": "RBE 1001"
+        },
+        {
+          "course": "RBE 3100"
+        }
+      ]
+    }
+  },
+  {
+    "code": "RBE 4701",
+    "title": "Artificial Intelligence for Robotics",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-4701",
+    "wording": "Linear algebra (MA 2071), differential equations (MA 2051), probability (MA 2621 or MA 2631), and algorithms (CS 2223).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2071"
+        },
+        {
+          "course": "MA 2051"
+        },
+        {
+          "any": [
+            {
+              "course": "MA 2621"
+            },
+            {
+              "course": "MA 2631"
+            }
+          ]
+        },
+        {
+          "course": "CS 2223"
+        }
+      ]
+    }
+  },
+  {
+    "code": "RBE 4744",
+    "title": "Deep Learning for Perception",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-4744",
+    "wording": "Programming, preferably Python; multivariate calculus (MA 1024), linear algebra (MA 2071, MA 2072), and probability (MA 2621, MA 2631).",
+    "background": {
+      "all": [
+        {
+          "note": "Programming proficiency, preferably Python"
+        },
+        {
+          "course": "MA 1024"
+        },
+        {
+          "any": [
+            {
+              "course": "MA 2071"
+            },
+            {
+              "course": "MA 2072"
+            }
+          ]
+        },
+        {
+          "any": [
+            {
+              "course": "MA 2621"
+            },
+            {
+              "course": "MA 2631"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "RBE 4815",
+    "title": "Industrial Robotics",
+    "source": "https://wpi.cleancatalog.net/robotics-engineering/rbe-4815",
+    "wording": "RBE 3001, ES 3011, and programming experience.",
+    "background": {
+      "all": [
+        {
+          "course": "RBE 3001"
+        },
+        {
+          "course": "ES 3011"
+        },
+        {
+          "note": "Computer programming experience"
+        }
+      ]
+    }
+  }
+]

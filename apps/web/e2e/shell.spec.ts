@@ -15,10 +15,11 @@ test("shell regions line up at 1680 × 800", async ({ page }) => {
   const details = (await page.getByRole("complementary", { name: "Course details" }).boundingBox())!;
   const topBar = (await page.getByRole("banner").first().boundingBox())!;
   expect(topBar).toMatchObject({ x: 0, y: 0, width: 1680 });
-  expect(sidebar.x).toBe(12);
+  const gutter = 0.75 * root;
+  expect(Math.abs(sidebar.x - gutter)).toBeLessThanOrEqual(1);
   expect(Math.abs(sidebar.width - 16.5 * root)).toBeLessThanOrEqual(1.5);
   expect(Math.abs(details.width - 16.75 * root)).toBeLessThanOrEqual(1.5);
-  expect(details.x + details.width).toBe(1680);
+  expect(Math.abs(details.x + details.width - (1680 - gutter))).toBeLessThanOrEqual(1);
   expect(schedule.x).toBeGreaterThan(sidebar.x + sidebar.width);
   expect(schedule.x + schedule.width).toBeLessThan(details.x);
   expect(sidebar.y).toBeGreaterThanOrEqual(topBar.height);
@@ -31,7 +32,7 @@ test("shell at 1440 keeps the details beside the calendar, with no page scroll",
   const schedule = await page.getByRole("region", { name: "Weekly schedule" }).boundingBox();
   const details = await page.getByRole("complementary", { name: "Course details" }).boundingBox();
   expect(schedule!.x + schedule!.width).toBeLessThan(details!.x);
-  expect(details!.x + details!.width).toBe(1440);
+  expect(details!.x + details!.width).toBe(1428);
   expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(900);
   await page.screenshot({ path: `${screenshotDir}/shell-1440.png` });
 });

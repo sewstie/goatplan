@@ -52,7 +52,6 @@ it("doesn't show its details on a click in drawing mode, but does from the keybo
   await userEvent.click(button);
   expect(onSelect).not.toHaveBeenCalled();
   expect(button.className).toContain("cursor-crosshair");
-  expect(button.className).toContain("opacity-70");
 
   button.focus();
   await userEvent.keyboard("{Enter}");

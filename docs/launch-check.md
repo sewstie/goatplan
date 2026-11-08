@@ -39,9 +39,7 @@ goatplan.wasm  434b2d9902caac5af711045a472db7994b6df83746d407882d88dbf439a6b7a1
 
 ## Screens and UI review
 
-Screens were captured at 1440, 834 and 375 px. Screenshots are not kept in git:
-fresh captures go to `apps/web/e2e/screenshots/`, and launch journeys attach their
-images to Playwright results.
+Screens were captured at 1440, 834 and 375 px.
 
 The reviewer checked My degree's empty/history/progress/expanded-line/check
 states, course editing, paste and review, import confirmation and errors, shared

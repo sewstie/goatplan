@@ -4,7 +4,7 @@ import { Listbox, type ListboxOption } from "@/components/ui/Listbox";
 import { usePlanner } from "@/lib/store";
 
 /** The term field and the line under it, with the same list as the Sort and professor menus. */
-export function TermPicker() {
+export function TermPicker({ inline = false }: { inline?: boolean }) {
   const terms = usePlanner((state) => state.terms);
   const termId = usePlanner((state) => state.termId);
   const termStatus = usePlanner((state) => state.termStatus);
@@ -21,6 +21,10 @@ export function TermPicker() {
           description: `${term.season} ${term.year} · ${term.courses.toLocaleString("en-US")} courses`,
         }))
       : [{ value: "", label: noTerms ? "No terms available" : "Loading terms…" }];
+
+  if (inline) {
+    return <Listbox label="Term" variant="menu" menuLabel="Term" options={options} value={current?.id ?? ""} disabled={terms.length === 0} onChange={(value) => void setTerm(value)} />;
+  }
 
   // The wrapper is the guide's outline target for the term step.
   return (

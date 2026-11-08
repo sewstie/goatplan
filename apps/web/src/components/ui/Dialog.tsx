@@ -31,7 +31,7 @@ export function Dialog({ open, onClose, title, description, children, footer }: 
     >
       <div className="flex flex-col gap-6 px-20 pt-24 pb-20">
         <div className="flex items-start justify-between gap-12">
-          <h2 id={titleId} className="text-17 leading-23-8 font-700 tracking-message">
+          <h2 id={titleId} tabIndex={-1} data-autofocus className="text-17 leading-23-8 font-700 tracking-message outline-none">
             {title}
           </h2>
           <IconButton

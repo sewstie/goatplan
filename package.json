@@ -19,8 +19,9 @@
     "engine:test": "npm run engine:build && ctest --test-dir engine/build --output-on-failure",
     "engine:wasm": "emcmake cmake -S engine -B engine/build-wasm -DCMAKE_BUILD_TYPE=Release && emmake cmake --build engine/build-wasm -j",
     "engine:wasm:test": "node scripts/wasm-smoke.mjs",
+    "data:catalog": "node scripts/update-catalog.mjs",
     "data:normalize": "node scripts/normalize.mjs",
-    "data:update": "npm run data:fetch && npm run data:normalize",
+    "data:update": "npm run data:fetch && npm run data:normalize && npm run data:catalog",
     "data:test": "node --test scripts/tests/*.test.mjs"
   },
   "allowScripts": {

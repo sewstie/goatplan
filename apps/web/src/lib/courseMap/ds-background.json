@@ -1,0 +1,535 @@
+[
+  {
+    "code": "DS 4343",
+    "title": "Deep Learning",
+    "aliases": [
+      "CS 4343"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4343ds-4343",
+    "wording": "(CS 4342; MA 2071; CS 2223)",
+    "background": {
+      "all": [
+        {
+          "course": "CS 4342"
+        },
+        {
+          "course": "MA 2071"
+        },
+        {
+          "course": "CS 2223"
+        }
+      ]
+    }
+  },
+  {
+    "code": "DS 4344",
+    "title": "Natural Language Processing: From Foundations to Large Language Models",
+    "aliases": [
+      "CS 4344"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4344ds-4344",
+    "wording": "((CS 1004 or CS 1101 or CS 1102); (CS 2102 or CS 2103 or CS 2119); (DS 3010 or CS 4445 or CS 4342))",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 1004"
+            },
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            }
+          ]
+        },
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            },
+            {
+              "course": "CS 2119"
+            }
+          ]
+        },
+        {
+          "any": [
+            {
+              "course": "DS 3010"
+            },
+            {
+              "course": "CS 4445"
+            },
+            {
+              "course": "CS 4342"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "DS 4345",
+    "title": "Multi-Agent Systems",
+    "aliases": [
+      "CS 4345"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4345ds-4345",
+    "wording": "(Linear algebra, probability and Python knowledge; (DS 3010 or CS 4445 or CS 4342); Deep learning background such as CS/DS 4343 is encouraged)",
+    "background": {
+      "all": [
+        {
+          "note": "Linear algebra, probability and Python knowledge"
+        },
+        {
+          "any": [
+            {
+              "course": "DS 3010"
+            },
+            {
+              "course": "CS 4445"
+            },
+            {
+              "course": "CS 4342"
+            }
+          ]
+        },
+        {
+          "note": "Deep learning background such as CS/DS 4343 is encouraged"
+        }
+      ]
+    }
+  },
+  {
+    "code": "DS 4433",
+    "title": "Big Data Management and Analytics",
+    "aliases": [
+      "CS 4433"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4433ds-4433",
+    "wording": "(CS 4432; Programming experience)",
+    "background": {
+      "all": [
+        {
+          "course": "CS 4432"
+        },
+        {
+          "note": "Programming experience"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4804",
+    "title": "Data Visualization",
+    "source": "https://wpi.cleancatalog.net/data-science-computer-science/cs-4804",
+    "wording": "((CS 2102 or CS 2103); CS 2223)",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            }
+          ]
+        },
+        {
+          "course": "CS 2223"
+        }
+      ]
+    }
+  },
+  {
+    "code": "DS 1010",
+    "title": "Data Science I: Introduction to Data Science and Artificial Intelligence",
+    "source": "https://wpi.cleancatalog.net/data-science/ds-1010",
+    "wording": "No recommended background is listed.",
+    "background": null
+  },
+  {
+    "code": "DS 2010",
+    "title": "Data Science II: Statistical Modeling and Analysis",
+    "source": "https://wpi.cleancatalog.net/data-science/ds-2010",
+    "wording": "(DS 1010; MA 2611; MA 2612; Programming experience from a 1000- or 2000-level CS course)",
+    "background": {
+      "all": [
+        {
+          "course": "DS 1010"
+        },
+        {
+          "course": "MA 2611"
+        },
+        {
+          "course": "MA 2612"
+        },
+        {
+          "note": "Programming experience from a 1000- or 2000-level CS course"
+        }
+      ]
+    }
+  },
+  {
+    "code": "DS 3010",
+    "title": "Data Science III: Computational Methods",
+    "source": "https://wpi.cleancatalog.net/data-science/ds-3010",
+    "wording": "(DS 1010; DS 2010; MA 2611; MA 2612; (CS 1004 or CS 1101 or CS 1102); (CS 2102 or CS 2103 or CS 2119); (CS 3431 or MIS 3720))",
+    "background": {
+      "all": [
+        {
+          "course": "DS 1010"
+        },
+        {
+          "course": "DS 2010"
+        },
+        {
+          "course": "MA 2611"
+        },
+        {
+          "course": "MA 2612"
+        },
+        {
+          "any": [
+            {
+              "course": "CS 1004"
+            },
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            }
+          ]
+        },
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            },
+            {
+              "course": "CS 2119"
+            }
+          ]
+        },
+        {
+          "any": [
+            {
+              "course": "CS 3431"
+            },
+            {
+              "course": "MIS 3720"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "DS 4099",
+    "title": "Special Topics in Data Science",
+    "source": "https://wpi.cleancatalog.net/data-science/ds-4099",
+    "wording": "Background varies with the topic; consult the course announcement",
+    "background": {
+      "note": "Background varies with the topic; consult the course announcement"
+    }
+  },
+  {
+    "code": "DS 4635",
+    "title": "Data Analytics and Statistical Learning",
+    "aliases": [
+      "MA 4635"
+    ],
+    "source": "https://wpi.cleancatalog.net/data-science-mathematical-sciences/ds-4635ma-4635",
+    "wording": "(MA 2071; MA 2612; MA 2631; Ability to program in a scientific language)",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2071"
+        },
+        {
+          "course": "MA 2612"
+        },
+        {
+          "course": "MA 2631"
+        },
+        {
+          "note": "Ability to program in a scientific language"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 1004",
+    "title": "Introduction to Programming for Non-Majors",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-1004",
+    "wording": "None. All Computer Science students and other students wishing to prepare for 3000-level courses in Computer Science should take CS 1101/CS 1102 instead of CS 1004. This course provides sufficient background for CS 2301 Systems Programming for Non-Majors.",
+    "background": null
+  },
+  {
+    "code": "CS 1101",
+    "title": "Introduction to Program Design",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-1101",
+    "wording": "None. Either CS 1101 or CS 1102 provides sufficient background for further courses in the CS department. Undergraduate credit may not be earned for both this course and CS 1102.",
+    "background": null
+  },
+  {
+    "code": "CS 1102",
+    "title": "Accelerated Introduction to Program Design",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-1102",
+    "wording": "Substantial prior programming experience (including functions, recursion, and lists, as would be covered in high-school Advanced Placement Computer Science A courses, but not necessarily AP CS Principles courses). Either CS 1101 or CS 1102 provides sufficient background for further courses in the CS department. Undergraduate credit may not be earned for both this course and CS 1101.",
+    "background": {
+      "note": "Substantial prior programming experience"
+    }
+  },
+  {
+    "code": "CS 2102",
+    "title": "Object-Oriented Design Concepts",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2102",
+    "wording": "CS 1101 or CS 1102.",
+    "background": {
+      "any": [
+        {
+          "course": "CS 1101"
+        },
+        {
+          "course": "CS 1102"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 2103",
+    "title": "Accelerated Object-Oriented Design Concepts",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2103",
+    "wording": "CS 1101 or CS 1102 and significant prior experience writing object-oriented programs from scratch.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            }
+          ]
+        },
+        {
+          "note": "significant prior experience writing object-oriented programs from scratch"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 2119",
+    "title": "Application Building with Object-Oriented Concepts",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2119",
+    "wording": "Programming experience such as found in CS 1101, CS 1102, CS 1004, or CS 1005.",
+    "background": {
+      "any": [
+        {
+          "course": "CS 1101"
+        },
+        {
+          "course": "CS 1102"
+        },
+        {
+          "course": "CS 1004"
+        },
+        {
+          "course": "CS 1005"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 2022",
+    "title": "Discrete Mathematics",
+    "aliases": [
+      "MA 2201"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-mathematical-sciences/cs-2022ma-2201",
+    "wording": "None.",
+    "background": null
+  },
+  {
+    "code": "CS 2223",
+    "title": "Algorithms",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2223",
+    "wording": "CS 2102 or CS 2103, and CS 2022.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            }
+          ]
+        },
+        {
+          "course": "CS 2022"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 3431",
+    "title": "Database Systems I",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-3431",
+    "wording": "CS 2022 and either CS 2102, CS 2103, or CS 2119.",
+    "background": {
+      "all": [
+        {
+          "course": "CS 2022"
+        },
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            },
+            {
+              "course": "CS 2119"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4432",
+    "title": "Database Systems II",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4432",
+    "wording": "CS 3431 and CS 3733.",
+    "background": {
+      "all": [
+        {
+          "course": "CS 3431"
+        },
+        {
+          "course": "CS 3733"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4342",
+    "title": "Machine Learning",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4342",
+    "wording": "Multivariate Calculus (MA 1024 or MA 1034), Linear Algebra (such as MA 2071), Probability (MA 2621 or MA 2631), and Algorithms (CS 2223). Students may not earn credit for both CS 453X and CS 4342. Undergraduate credit may not be earned both for this course and for CS 539.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "MA 1024"
+            },
+            {
+              "course": "MA 1034"
+            }
+          ]
+        },
+        {
+          "course": "MA 2071"
+        },
+        {
+          "any": [
+            {
+              "course": "MA 2621"
+            },
+            {
+              "course": "MA 2631"
+            }
+          ]
+        },
+        {
+          "course": "CS 2223"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4445",
+    "title": "Data Mining and Knowledge Discovery in Databases",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4445",
+    "wording": "MA 2611, CS 2223, and CS 3431 or CS 3733.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2611"
+        },
+        {
+          "course": "CS 2223"
+        },
+        {
+          "any": [
+            {
+              "course": "CS 3431"
+            },
+            {
+              "course": "CS 3733"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "MA 2071",
+    "title": "Matrices and Linear Algebra I",
+    "source": "https://wpi.cleancatalog.net/mathematical-sciences/ma-2071",
+    "wording": "No recommended background is listed.",
+    "background": null
+  },
+  {
+    "code": "MA 2611",
+    "title": "Applied Statistics I",
+    "source": "https://wpi.cleancatalog.net/mathematical-sciences/ma-2611",
+    "wording": "MA 1022",
+    "background": {
+      "course": "MA 1022"
+    }
+  },
+  {
+    "code": "MA 2612",
+    "title": "Applied Statistics II",
+    "source": "https://wpi.cleancatalog.net/mathematical-sciences/ma-2612",
+    "wording": "MA 2611",
+    "background": {
+      "course": "MA 2611"
+    }
+  },
+  {
+    "code": "MA 2621",
+    "title": "Probability for Applications",
+    "source": "https://wpi.cleancatalog.net/mathematical-sciences/ma-2621",
+    "wording": "MA 1024",
+    "background": {
+      "course": "MA 1024"
+    }
+  },
+  {
+    "code": "MA 2631",
+    "title": "Probability Theory",
+    "source": "https://wpi.cleancatalog.net/mathematical-sciences/ma-2631",
+    "wording": "MA 1024",
+    "background": {
+      "course": "MA 1024"
+    }
+  }
+]

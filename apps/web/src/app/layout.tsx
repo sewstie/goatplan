@@ -9,13 +9,17 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: "GoatPlan",
+  icons: { icon: "/brand/favicon.ico" },
   description:
     "Course planner for WPI students: pick courses, compare sections and professors, build a conflict-free term schedule.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${dmSans.variable} antialiased`}>
+    <html lang="en" className={`${dmSans.variable} antialiased`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `try{document.documentElement.dataset.theme=localStorage.getItem("goatplan:theme:v1")==="dark"?"dark":"light"}catch{document.documentElement.dataset.theme="light"}` }} />
+      </head>
       <body>{children}</body>
     </html>
   );

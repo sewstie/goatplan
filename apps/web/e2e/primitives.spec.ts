@@ -42,7 +42,7 @@ test("dialog keeps focus off the page behind, closes with Escape and returns foc
   await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Example dialog" });
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole("button", { name: "Close" })).toBeFocused();
+  await expect(dialog.getByRole("heading", { name: "Example dialog" })).toBeFocused();
   await page.screenshot({ path: `${screenshotDir}/dev-ui-dialog.png` });
 
   // A native modal dialog lets Tab leave to the browser UI (body), but never to the inert page.

@@ -1,0 +1,1094 @@
+[
+  {
+    "code": "CS 1004",
+    "title": "Introduction to Programming for Non-Majors",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-1004",
+    "wording": "None. All Computer Science students and other students wishing to prepare for 3000-level courses in Computer Science should take CS 1101/CS 1102 instead of CS 1004. This course provides sufficient background for CS 2301 Systems Programming for Non-Majors.",
+    "background": null
+  },
+  {
+    "code": "CS 1005",
+    "title": "Programming for Engineers",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-1005",
+    "wording": "None. Computer Science majors and other students wishing to prepare for 3000-level courses in Computer Science should take CS 1101/CS 1102 instead of CS 1005. This course provides sufficient background for CS 2301 Systems Programming for Non-Majors. Undergraduate credit may not be earned for both this course and CS 1004. Undergraduate credit may not be earned for both this course and RBE 100X.",
+    "background": null
+  },
+  {
+    "code": "CS 1101",
+    "title": "Introduction to Program Design",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-1101",
+    "wording": "None. Either CS 1101 or CS 1102 provides sufficient background for further courses in the CS department. Undergraduate credit may not be earned for both this course and CS 1102.",
+    "background": null
+  },
+  {
+    "code": "CS 1102",
+    "title": "Accelerated Introduction to Program Design",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-1102",
+    "wording": "Substantial prior programming experience (including functions, recursion, and lists, as would be covered in high-school Advanced Placement Computer Science A courses, but not necessarily AP CS Principles courses). Either CS 1101 or CS 1102 provides sufficient background for further courses in the CS department. Undergraduate credit may not be earned for both this course and CS 1101.",
+    "background": {
+      "note": "Substantial prior programming experience"
+    }
+  },
+  {
+    "code": "CS 2011",
+    "title": "Introduction to Machine Organization and Assembly Language",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2011",
+    "wording": "CS 2301 or CS 2303, or a significant knowledge of C/C++.",
+    "background": {
+      "any": [
+        {
+          "course": "CS 2301"
+        },
+        {
+          "course": "CS 2303"
+        },
+        {
+          "note": "a significant knowledge of C/C++"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 2022",
+    "title": "Discrete Mathematics",
+    "aliases": [
+      "MA 2201"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-mathematical-sciences/cs-2022ma-2201",
+    "wording": "None.",
+    "background": null
+  },
+  {
+    "code": "CS 2102",
+    "title": "Object-Oriented Design Concepts",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2102",
+    "wording": "CS 1101 or CS 1102.",
+    "background": {
+      "any": [
+        {
+          "course": "CS 1101"
+        },
+        {
+          "course": "CS 1102"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 2103",
+    "title": "Accelerated Object-Oriented Design Concepts",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2103",
+    "wording": "CS 1101 or CS 1102 and significant prior experience writing object-oriented programs from scratch.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            }
+          ]
+        },
+        {
+          "note": "significant prior experience writing object-oriented programs from scratch"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 2119",
+    "title": "Application Building with Object-Oriented Concepts",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2119",
+    "wording": "Programming experience such as found in CS 1101, CS 1102, CS 1004, or CS 1005.",
+    "background": {
+      "any": [
+        {
+          "course": "CS 1101"
+        },
+        {
+          "course": "CS 1102"
+        },
+        {
+          "course": "CS 1004"
+        },
+        {
+          "course": "CS 1005"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 2223",
+    "title": "Algorithms",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2223",
+    "wording": "CS 2102 or CS 2103, and CS 2022.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            }
+          ]
+        },
+        {
+          "course": "CS 2022"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 2301",
+    "title": "Systems Programming for Non-Majors",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2301",
+    "wording": "Programming experience such as found in CS 1101, CS 1102, CS 1004, or CS 1005.",
+    "background": {
+      "any": [
+        {
+          "course": "CS 1101"
+        },
+        {
+          "course": "CS 1102"
+        },
+        {
+          "course": "CS 1004"
+        },
+        {
+          "course": "CS 1005"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 2303",
+    "title": "Systems Programming Concepts",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-2303",
+    "wording": "CS 2102, CS 2103, or CS 2119 and/or substantial object-oriented programming experience.",
+    "background": {
+      "any": [
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            },
+            {
+              "course": "CS 2119"
+            }
+          ]
+        },
+        {
+          "note": "substantial object-oriented programming experience; the source allows and/or"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 3013",
+    "title": "Operating Systems",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-3013",
+    "wording": "CS 2303 or CS 2301, and CS 2011.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2303"
+            },
+            {
+              "course": "CS 2301"
+            }
+          ]
+        },
+        {
+          "course": "CS 2011"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 3041",
+    "title": "Human-Computer Interaction",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-3041",
+    "wording": "CS 2102, CS 2103, or CS 2119.",
+    "background": {
+      "any": [
+        {
+          "course": "CS 2102"
+        },
+        {
+          "course": "CS 2103"
+        },
+        {
+          "course": "CS 2119"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 3043",
+    "title": "Social Implications of Information Processing",
+    "aliases": [
+      "SS 3043"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-social-science-policy-studies/cs-3043ss-3043",
+    "wording": "A general knowledge of computers and computer systems.",
+    "background": {
+      "note": "A general knowledge of computers and computer systems."
+    }
+  },
+  {
+    "code": "CS 3133",
+    "title": "Foundations of Computer Science",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-3133",
+    "wording": "Discrete Mathematics (CS 2022 or equivalent), and Algorithms (CS 2223 or equivalent).",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2022"
+            },
+            {
+              "note": "equivalent discrete mathematics"
+            }
+          ]
+        },
+        {
+          "any": [
+            {
+              "course": "CS 2223"
+            },
+            {
+              "note": "equivalent algorithms"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 3404",
+    "title": "Introduction to Security",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-3404",
+    "wording": "This course assumes a basic understanding of program design (CS 1101 or CS 1102) and systems programming concepts (CS 2303).",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            }
+          ]
+        },
+        {
+          "course": "CS 2303"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 3431",
+    "title": "Database Systems I",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-3431",
+    "wording": "CS 2022 and either CS 2102, CS 2103, or CS 2119.",
+    "background": {
+      "all": [
+        {
+          "course": "CS 2022"
+        },
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            },
+            {
+              "course": "CS 2119"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 3516",
+    "title": "Computer Networks",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-3516",
+    "wording": "CS 2301 or CS 2303, or a significant knowledge of C/C++.",
+    "background": {
+      "any": [
+        {
+          "course": "CS 2301"
+        },
+        {
+          "course": "CS 2303"
+        },
+        {
+          "note": "a significant knowledge of C/C++"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 3733",
+    "title": "Software Engineering",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-3733",
+    "wording": "CS 2102, CS 2103, or CS 2119.",
+    "background": {
+      "any": [
+        {
+          "course": "CS 2102"
+        },
+        {
+          "course": "CS 2103"
+        },
+        {
+          "course": "CS 2119"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4032",
+    "title": "Numerical Methods for Linear and Nonlinear Systems",
+    "aliases": [
+      "MA 3257"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-mathematical-sciences/cs-4032ma-3257",
+    "wording": "MA 2071. An ability to write computer programs in a scientific language is assumed.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2071"
+        },
+        {
+          "note": "An ability to write computer programs in a scientific language"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4033",
+    "title": "Numerical Methods for Calculus and Differential Equations",
+    "aliases": [
+      "MA 3457"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-mathematical-sciences/cs-4033ma-3457",
+    "wording": "MA 2051. An ability to write computer programs in a scientific language is assumed. Undergraduate credit may not be earned for both this course and for MA 3255/CS 4031.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "note": "An ability to write computer programs in a scientific language"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4099",
+    "title": "Special Topics in Computer Science",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4099",
+    "wording": "No background statement is listed in this catalog entry. Check the specific topic with the department.",
+    "background": null
+  },
+  {
+    "code": "CS 4120",
+    "title": "Analysis of Algorithms",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4120",
+    "wording": "Algorithms (CS 2223 or equivalent), and some knowledge of probability.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2223"
+            },
+            {
+              "note": "equivalent algorithms"
+            }
+          ]
+        },
+        {
+          "note": "some knowledge of probability"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4123",
+    "title": "Theory of Computation",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4123",
+    "wording": "CS 3133.",
+    "background": {
+      "course": "CS 3133"
+    }
+  },
+  {
+    "code": "CS 4233",
+    "title": "Object-Oriented Analysis and Design",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4233",
+    "wording": "CS 2303 and CS 3733.",
+    "background": {
+      "all": [
+        {
+          "course": "CS 2303"
+        },
+        {
+          "course": "CS 3733"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4241",
+    "title": "Webware: Computational Technology for Network Information Systems",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4241",
+    "wording": "CS 2102, CS 2103, or CS 2119; and CS 3013.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            },
+            {
+              "course": "CS 2119"
+            }
+          ]
+        },
+        {
+          "course": "CS 3013"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4300",
+    "title": "Graphics, Simulation, and Aesthetics",
+    "aliases": [
+      "IMGD 4300"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-interactive-media-and-game-development/cs-4300imgd-4300",
+    "wording": "Students should have experience with graphics, web, or game engine programming and multimedia development. One of CS 4731 (Computer Graphics), CS 4241 (Webware), or IMGD 4000 (Technical Game Development II) should provide sufficient background for this course.",
+    "background": {
+      "any": [
+        {
+          "note": "experience with graphics, web, or game engine programming and multimedia development"
+        },
+        {
+          "course": "CS 4731"
+        },
+        {
+          "course": "CS 4241"
+        },
+        {
+          "course": "IMGD 4000"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4341",
+    "title": "Introduction to Artificial Intelligence",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4341",
+    "wording": "CS 2102 or CS 2103; CS 2223; and CS 3133.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            }
+          ]
+        },
+        {
+          "course": "CS 2223"
+        },
+        {
+          "course": "CS 3133"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4342",
+    "title": "Machine Learning",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4342",
+    "wording": "Multivariate Calculus (MA 1024 or MA 1034), Linear Algebra (such as MA 2071), Probability (MA 2621 or MA 2631), and Algorithms (CS 2223). Students may not earn credit for both CS 453X and CS 4342. Undergraduate credit may not be earned both for this course and for CS 539.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "MA 1024"
+            },
+            {
+              "course": "MA 1034"
+            }
+          ]
+        },
+        {
+          "course": "MA 2071"
+        },
+        {
+          "any": [
+            {
+              "course": "MA 2621"
+            },
+            {
+              "course": "MA 2631"
+            }
+          ]
+        },
+        {
+          "course": "CS 2223"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4343",
+    "title": "Deep Learning",
+    "aliases": [
+      "DS 4343"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4343ds-4343",
+    "wording": "Machine Learning (CS 4342), and knowledge of Linear Algebra (such as MA 2071) and Algorithms (such as CS 2223)",
+    "background": {
+      "all": [
+        {
+          "course": "CS 4342"
+        },
+        {
+          "course": "MA 2071"
+        },
+        {
+          "course": "CS 2223"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4344",
+    "title": "Natural Language Processing: From Foundations to Large Language Models",
+    "aliases": [
+      "DS 4344"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4344ds-4344",
+    "wording": "Programming skills equivalent to (CS 1004 or CS 1101 or CS 1102) and (CS 2102 or CS 2103 or CS 2119); and machine learning equivalent to (DS 3010, CS 4445, or CS 4342).",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 1004"
+            },
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            }
+          ]
+        },
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            },
+            {
+              "course": "CS 2119"
+            }
+          ]
+        },
+        {
+          "any": [
+            {
+              "course": "DS 3010"
+            },
+            {
+              "course": "CS 4445"
+            },
+            {
+              "course": "CS 4342"
+            },
+            {
+              "note": "equivalent machine learning"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4345",
+    "title": "Multi-Agent Systems",
+    "aliases": [
+      "DS 4345"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4345ds-4345",
+    "wording": "Basic knowledge of linear algebra, probability theory, and Python programming. Familiarity with machine learning and deep learning equivalent to (DS 3010, CS 4445, CS 4342). Familiarity with deep learning equivalent to CS/DS 4343 encouraged.",
+    "background": {
+      "all": [
+        {
+          "note": "Basic knowledge of linear algebra, probability theory, and Python programming"
+        },
+        {
+          "any": [
+            {
+              "course": "DS 3010"
+            },
+            {
+              "course": "CS 4445"
+            },
+            {
+              "course": "CS 4342"
+            },
+            {
+              "note": "equivalent machine learning and deep learning"
+            }
+          ]
+        },
+        {
+          "note": "Familiarity equivalent to CS/DS 4343 is encouraged"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4401",
+    "title": "Software Security",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4401",
+    "wording": "This course assumes a substantive understanding of machine organization and assembly language (CS 2011), systems programming concepts (CS 2303), and operating systems (CS 3013).",
+    "background": {
+      "all": [
+        {
+          "course": "CS 2011"
+        },
+        {
+          "course": "CS 2303"
+        },
+        {
+          "course": "CS 3013"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4402",
+    "title": "Reverse Engineering",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4402",
+    "wording": "This course assumes a substantive understanding of machine organization and assembly language (CS 2011), systems programming concepts (CS 2303), and operating systems (CS 3013).",
+    "background": {
+      "all": [
+        {
+          "course": "CS 2011"
+        },
+        {
+          "course": "CS 2303"
+        },
+        {
+          "course": "CS 3013"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4403",
+    "title": "Web Application Security",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4403",
+    "wording": "This course assumes a basic understanding of program design (CS 1101 or CS 1102), systems programming concepts (CS 2303), and web technologies (CS 4241)",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            }
+          ]
+        },
+        {
+          "course": "CS 2303"
+        },
+        {
+          "course": "CS 4241"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4404",
+    "title": "Network Security",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4404",
+    "wording": "Knowledge of operating systems (CS 3013 or equivalent) and computer networks (CS 3516 or equivalent). Familiarity with Linux or Unix (e.g., from practical exercises in CS 3013) is essential. The course requires enough programming and systems background to understand attacks and use systems tools.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 3013"
+            },
+            {
+              "note": "equivalent operating systems"
+            }
+          ]
+        },
+        {
+          "any": [
+            {
+              "course": "CS 3516"
+            },
+            {
+              "note": "equivalent computer networks"
+            }
+          ]
+        },
+        {
+          "note": "Familiarity with Linux or Unix; enough programming and systems background to understand attacks and use systems tools"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4405",
+    "title": "Digital Forensics",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4405",
+    "wording": "This course assumes a basic understanding of operating systems (CS 3013).",
+    "background": {
+      "course": "CS 3013"
+    }
+  },
+  {
+    "code": "CS 4432",
+    "title": "Database Systems II",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4432",
+    "wording": "CS 3431 and CS 3733.",
+    "background": {
+      "all": [
+        {
+          "course": "CS 3431"
+        },
+        {
+          "course": "CS 3733"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4433",
+    "title": "Big Data Management and Analytics",
+    "aliases": [
+      "DS 4433"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4433ds-4433",
+    "wording": "Knowledge in database systems at the level of CS 4432, and programming experience are assumed.",
+    "background": {
+      "all": [
+        {
+          "course": "CS 4432"
+        },
+        {
+          "note": "programming experience"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4445",
+    "title": "Data Mining and Knowledge Discovery in Databases",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4445",
+    "wording": "MA 2611, CS 2223, and CS 3431 or CS 3733.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2611"
+        },
+        {
+          "course": "CS 2223"
+        },
+        {
+          "any": [
+            {
+              "course": "CS 3431"
+            },
+            {
+              "course": "CS 3733"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4513",
+    "title": "Distributed Computing Systems",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4513",
+    "wording": "CS 3013, CS 3516, and system programming experience.",
+    "background": {
+      "all": [
+        {
+          "course": "CS 3013"
+        },
+        {
+          "course": "CS 3516"
+        },
+        {
+          "note": "system programming experience"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4515",
+    "title": "Computer Architecture",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4515",
+    "wording": "CS 2011 or ECE 2049, and CS 3013.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2011"
+            },
+            {
+              "course": "ECE 2049"
+            }
+          ]
+        },
+        {
+          "course": "CS 3013"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4516",
+    "title": "Advanced Computer Networks",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4516",
+    "wording": "CS 3013, CS 3516, and knowledge of probability. The course assumes a familiarity with operating systems including Unix or Linux and significant experience with C/C++.",
+    "background": {
+      "all": [
+        {
+          "course": "CS 3013"
+        },
+        {
+          "course": "CS 3516"
+        },
+        {
+          "note": "knowledge of probability, familiarity with Unix or Linux, and significant experience with C/C++"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4518",
+    "title": "Mobile and Ubiquitous Computing",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4518",
+    "wording": "Proficiency in programming in Java, including classes, inheritance, exceptions, interfaces, and polymorphism (CS 2102 or equivalent).",
+    "background": {
+      "any": [
+        {
+          "course": "CS 2102"
+        },
+        {
+          "note": "equivalent proficiency in Java, including classes, inheritance, exceptions, interfaces, and polymorphism"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4533",
+    "title": "Techniques of Programming Language Translation",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4533",
+    "wording": "CS 2102 or CS 2103, and CS 3133.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            }
+          ]
+        },
+        {
+          "course": "CS 3133"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4536",
+    "title": "Programming Languages",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4536",
+    "wording": "CS 2303, CS 3133, and experience programming in a functional language (as provided by CS 1101 or CS 1102).",
+    "background": {
+      "all": [
+        {
+          "course": "CS 2303"
+        },
+        {
+          "course": "CS 3133"
+        },
+        {
+          "any": [
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            },
+            {
+              "note": "experience programming in a functional language"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4731",
+    "title": "Computer Graphics",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4731",
+    "wording": "CS 2223, CS 2303, and MA 2071.",
+    "background": {
+      "all": [
+        {
+          "course": "CS 2223"
+        },
+        {
+          "course": "CS 2303"
+        },
+        {
+          "course": "MA 2071"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4732",
+    "title": "Computer Animation",
+    "source": "https://wpi.cleancatalog.net/computer-science/cs-4732",
+    "wording": "CS 4731.",
+    "background": {
+      "course": "CS 4731"
+    }
+  },
+  {
+    "code": "CS 4801",
+    "title": "Introduction to Cryptography and Communication Security",
+    "aliases": [
+      "ECE 4802"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-electrical-and-computer-engineering/cs-4801ece-4802",
+    "wording": "Experience in expressing algorithms in a modern programming language (e.g., ECE 2049 or CS 2301). ECE 2049 (Embedded Computing in Engineering Design) or CS 2301 (Systems Programming for Non-Majors) or equivalent.\n\nSuggested Background\nDiscrete mathematics (CS 2022/MA 2201 or equivalent)",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "ECE 2049"
+            },
+            {
+              "course": "CS 2301"
+            },
+            {
+              "note": "equivalent experience expressing algorithms in a modern programming language"
+            }
+          ]
+        },
+        {
+          "note": "Discrete mathematics (CS 2022/MA 2201 or equivalent) is suggested"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4804",
+    "title": "Data Visualization",
+    "source": "https://wpi.cleancatalog.net/data-science-computer-science/cs-4804",
+    "wording": "CS 2102 or CS 2103, and CS 2223.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            }
+          ]
+        },
+        {
+          "course": "CS 2223"
+        }
+      ]
+    }
+  },
+  {
+    "code": "CS 4100",
+    "title": "Artificial Intelligence for Interactive Media and Games",
+    "aliases": [
+      "IMGD 4100"
+    ],
+    "source": "https://wpi.cleancatalog.net/computer-science-interactive-media-and-game-development/imgd-4100cs-4100",
+    "wording": "Object-oriented design concepts (CS 2102 or CS 2103), algorithms (CS 2223), and knowledge of technical game development (IMGD 3000 or IMGD 4000).",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "CS 2102"
+            },
+            {
+              "course": "CS 2103"
+            }
+          ]
+        },
+        {
+          "course": "CS 2223"
+        },
+        {
+          "any": [
+            {
+              "course": "IMGD 3000"
+            },
+            {
+              "course": "IMGD 4000"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

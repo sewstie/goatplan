@@ -2,6 +2,7 @@
 
 import { useDeferredValue, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { useCourseGaps } from "@/lib/degree";
 import { selectChosenSections, usePlanner } from "@/lib/store";
 import { normalizeCourseCode } from "./courseCode";
 import { courseFit } from "./courseFit";
@@ -45,6 +46,8 @@ export function CourseSearchPanel() {
   const ready = termStatus === "ready" && term !== null;
   const index = useMemo(() => (term ? buildSearchIndex(term.courses) : []), [term]);
   const matches = useMemo(() => (ready && search ? searchCourses(index, search) : []), [ready, index, search]);
+  const gaps = useCourseGaps(ready ? term.courses : null, planned);
+  const closes = gaps?.closes ?? null;
 
   const shown = useMemo(() => {
     if (!term) return [];
@@ -52,9 +55,9 @@ export function CourseSearchPanel() {
     const plan = { courses, chosen, locks, preferences };
     return matches.slice(0, MAX_RESULTS).map(({ course }) => {
       const isAdded = planned.includes(course.code);
-      return { course, added: isAdded, fit: isAdded ? null : courseFit(course, plan) };
+      return { course, added: isAdded, fit: isAdded ? null : courseFit(course, plan), countsToward: closes?.get(course.code) };
     });
-  }, [term, planned, chosen, locks, preferences, matches]);
+  }, [term, planned, chosen, locks, preferences, matches, closes]);
 
   const code = normalizeCourseCode(search);
   const missingCode = ready && matches.length === 0 && code !== null ? code : null;

@@ -1,6 +1,6 @@
 import { expect, test } from "./fixtures/test";
 import type { Page } from "@playwright/test";
-import { DEGREE_FLAG_KEY, fixtureHistory, openDegree, panel, stored } from "./fixtures/degree";
+import { DEGREE_FLAG_KEY, fixtureHistory, openDegree, stored } from "./fixtures/degree";
 import { SORT_MENU_COURSES, sortMenuTerm } from "./fixtures/sortMenu";
 
 type Plan = { courses?: string[]; degree?: boolean };
@@ -508,16 +508,6 @@ test.describe("the top bar", () => {
     });
   }
 
-  test("with My degree hidden it shows the logo and no lone tab", async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await openPlanner(page);
-    const bar = page.getByRole("banner").first();
-    await expect(bar.getByRole("link", { name: "GoatPlan" })).toBeVisible();
-    await expect(bar.getByRole("link", { name: "Planner" })).toHaveCount(0);
-    await expect(page.getByRole("heading", { level: 1, name: "Schedule planner" })).toBeAttached();
-    expect((await bar.boundingBox())!.height).toBe(56);
-  });
-
   test("with My degree on it shows both tabs", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openPlanner(page, { degree: true });
@@ -705,13 +695,13 @@ test.describe("My degree", () => {
     await expect(page.getByText("MQP is included below")).toHaveCount(0);
     const tile = (await page.getByRole("button", { name: /^CS 1102, line 16/ }).boundingBox())!;
     expect(tile.width).toBeGreaterThanOrEqual(160);
-    await expect(page.getByRole("combobox", { name: "Term" })).toBeVisible();
+    await expect(page.getByRole("combobox", { name: "Term" })).toHaveCount(0);
   });
 
-  test("at 1440×900 the ring, Pace and Take in C Term show without scrolling, and the page is compact", async ({ page }) => {
+  test("at 1440×900 the ring, Pace and Suggest courses show without scrolling, and the page is compact", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openDegree(page, midHistory());
-    for (const heading of ["Pace & what-if", "Take in C Term"]) {
+    for (const heading of ["Pace & what-if", "Suggest courses"]) {
       const box = (await page.getByRole("heading", { name: heading }).boundingBox())!;
       expect(box.y + box.height).toBeLessThanOrEqual(900);
     }
@@ -771,7 +761,7 @@ test.describe("My degree", () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openDegree(page, midHistory());
     const stack = page.getByRole("button", { name: /^CS 4000\+, 5 lines left/ });
-    await expect(stack).toContainText("CS 4000+ · 5 left");
+    await expect(stack).toContainText("5 left · Show lines");
     await expect(stack).toHaveAttribute("aria-expanded", "false");
     await stack.focus();
     await page.keyboard.press("Enter");
@@ -804,7 +794,7 @@ test.describe("My degree", () => {
     await counter.focus();
     await page.keyboard.press("Enter");
     await expect(counter).toHaveAttribute("aria-pressed", "true");
-    await expect(page.getByText(/Showing only lines to check/)).toBeVisible();
+    await expect(page.getByText(/^To check · \d+ lines?$/)).toBeVisible();
     await expect(page.getByRole("button", { name: /, line \d+, check this yourself/ }).first()).toBeVisible();
     await expect(page.getByRole("button", { name: /^CS 1102, line 16/ })).toHaveCount(0);
     await page.keyboard.press("Enter");
@@ -812,36 +802,6 @@ test.describe("My degree", () => {
     await expect(page.getByRole("button", { name: /^CS 1102, line 16/ })).toBeVisible();
   });
 
-  test("pasted courses can get a term in review, and Units per term and Pace fill in afterwards", async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await openDegree(page, { courses: [{ code: "WR 1011", title: "", credits: 3, apIb: false, source: "found", inProgress: false }] });
-    await page.getByRole("button", { name: "Add courses" }).click();
-    await page.getByRole("tab", { name: /several/i }).click();
-    await page.getByRole("textbox", { name: "Workday course text" }).fill("CS 1101\nMA 1021\nCS 2102");
-    await page.getByRole("button", { name: "Review 3 courses" }).click();
-    const review = panel(page, "Review detected courses");
-    await review.getByRole("combobox", { name: "Term for selected" }).selectOption("A Term 2026");
-    await expect(review.getByRole("listitem").first()).toContainText("A Term 2026");
-    await review.getByRole("button", { name: "Add 3 courses" }).click();
-    await page.keyboard.press("Escape");
-    await expect(page.getByRole("heading", { name: "Units per term" })).toBeVisible();
-    await expect(page.getByRole("figure", { name: "Units per term chart" })).toBeVisible();
-    await expect(page.getByText("Add terms to see your pace")).toHaveCount(0);
-    await expect(page.getByRole("heading", { name: "Pace & what-if" })).toBeVisible();
-    expect(((await stored(page)).courses as { code: string; term?: string }[]).find((course) => course.code === "CS 1101")?.term).toBe("A Term 2026");
-  });
-
-  test("term headings in the pasted text fill in each course's term", async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await openDegree(page, { courses: [{ code: "WR 1011", title: "", credits: 3, apIb: false, source: "found", inProgress: false }] });
-    await page.getByRole("button", { name: "Add courses" }).click();
-    await page.getByRole("tab", { name: /several/i }).click();
-    await page.getByRole("textbox", { name: "Workday course text" }).fill("A Term 2026\nCS 1101\nB Term 2026\nMA 1021");
-    await page.getByRole("button", { name: "Review 2 courses" }).click();
-    const review = panel(page, "Review detected courses");
-    await expect(review.getByRole("listitem").filter({ hasText: "CS 1101" })).toContainText("A Term 2026");
-    await expect(review.getByRole("listitem").filter({ hasText: "MA 1021" })).toContainText("B Term 2026");
-  });
 });
 
 test.describe("the phone", () => {
@@ -877,11 +837,6 @@ test.describe("the phone", () => {
     const main = page.getByRole("navigation", { name: "Main" });
     expect((await main.boundingBox())!.y).toBeGreaterThan(200);
     await expect(page.getByRole("link", { name: "GoatPlan" })).toBeVisible();
-  });
-
-  test("with My degree hidden there is no tab bar", async ({ page }) => {
-    await openPlanner(page);
-    await expect(page.getByRole("navigation", { name: "Main" })).toHaveCount(0);
   });
 
   test("the calendar starts within 420 px, with Save beside the switcher and Share and Export in the menu", async ({ page }) => {

@@ -20,16 +20,27 @@ type ListboxProps = Omit<ComponentProps<"button">, "onChange" | "children" | "on
 };
 
 const triggerBase =
-  "cursor-pointer rounded-row border border-line bg-surface px-9 text-left text-10 leading-14-5 text-ink disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint";
+  "cursor-pointer border aria-expanded:border-focus aria-expanded:hover:border-focus aria-expanded:outline-none border-line bg-surface px-9 text-left text-10 leading-14-5 text-ink disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-ink-faint";
 
 // The menu is the field look, sized to sit in the Preferences row. The link is plain muted text,
 // like the phone calendar's "Fewest early classes ⌄". The pill is the phone top bar's term picker.
 const triggerClasses: Record<ListboxVariant, string> = {
-  field: cx(triggerBase, "flex min-h-36.5 w-full items-center justify-between gap-6 py-9"),
-  menu: cx(triggerBase, "relative inline-flex min-h-32 min-w-146 items-center gap-6 py-7"),
+  field: cx(triggerBase, "flex min-h-38 w-full items-center justify-between gap-6 rounded-control py-9 hover:border-line-strong"),
+  menu: cx(triggerBase, "relative inline-flex rounded-row min-h-32 min-w-146 items-center gap-6 py-7"),
   pill: "flex min-h-40 w-full cursor-pointer items-center justify-end gap-8 rounded-row px-4 text-right text-8 font-510 text-ink-soft disabled:cursor-not-allowed disabled:text-ink-faint",
   link: "relative inline-flex min-w-0 cursor-pointer items-center gap-3 rounded-badge text-9 leading-13 text-ink-muted hover:text-ink",
 };
+
+type Side = "below" | "above";
+
+const JOINED = new Set<ListboxVariant>(["field", "menu"]);
+
+function popupJoin(variant: ListboxVariant, side: Side): string {
+  const radius = variant === "field" ? "rounded-control" : "rounded-row";
+  // The field's list is exactly as wide as the trigger; the menu's may be wider and lines up on the right.
+  const square = side === "below" ? (variant === "field" ? "rounded-t-none" : "rounded-tr-none") : variant === "field" ? "rounded-b-none" : "rounded-br-none";
+  return cx("border-focus", radius, square);
+}
 
 export function Listbox({ label, menuLabel, options, value, onChange, variant = "field", className, ...props }: ListboxProps) {
   const id = useId();
@@ -39,6 +50,9 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
   const search = useRef({ text: "", time: 0 });
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
+  const [portal, setPortal] = useState<HTMLElement | null>(null);
+  const [side, setSide] = useState<Side>("below");
+  const joined = JOINED.has(variant);
   const selected = Math.max(0, options.findIndex((option) => option.value === value));
 
   useEffect(() => {
@@ -55,15 +69,17 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
     const anchor = button.current.getBoundingClientRect();
     // List is at least as wide as the trigger, and wide enough for content
     popup.current.style.minWidth = `${anchor.width}px`;
-    popup.current.style.width = "max-content";
+    popup.current.style.width = variant === "field" ? `${anchor.width}px` : "max-content";
     const size = popup.current.getBoundingClientRect();
     // The menu sits at the end of a row, so its list lines up with the trigger's right edge.
     const offsetX = variant === "field" ? 0 : anchor.width - size.width;
-    const position = floatingPosition(anchor, size, { width: window.innerWidth, height: window.innerHeight }, { gap: variant === "field" ? 4 : 0, offsetX });
+    // A joined list overlaps the trigger's border by 1px, so the two read as one box.
+    const position = floatingPosition(anchor, size, { width: window.innerWidth, height: window.innerHeight }, { gap: joined ? -1 : 0, offsetX });
     popup.current.style.left = `${position.left}px`;
     popup.current.style.top = `${position.top}px`;
     popup.current.style.visibility = "visible";
-  }, [open, variant]);
+    setSide(position.top >= anchor.bottom - 1 ? "below" : "above");
+  }, [open, variant, joined]);
 
   useLayoutEffect(() => {
     if (open) popup.current?.children.item(active)?.scrollIntoView?.({ block: "nearest" });
@@ -81,10 +97,11 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
         aria-expanded={open}
         aria-controls={popupId}
         aria-activedescendant={open ? `${id}-option-${active}` : undefined}
-        className={cx(triggerClasses[variant], className)}
-        onClick={() => { setActive(selected); setOpen(!open); }}
+        className={cx(triggerClasses[variant], open && joined && (side === "below" ? "rounded-b-none" : "rounded-t-none"), className)}
+        onClick={(event) => { setPortal(event.currentTarget.closest("dialog")); setActive(selected); setOpen(!open); }}
         onBlur={() => setOpen(false)}
         onKeyDown={(event) => {
+          setPortal(event.currentTarget.closest("dialog"));
           if (!open || event.key.length !== 1) search.current.text = "";
           if (event.key === "Escape" && open) {
             event.preventDefault();
@@ -135,7 +152,7 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
         )}
       </button>
       {open && createPortal(
-        <div ref={popup} id={popupId} role="listbox" aria-label={label} className="invisible fixed z-40 max-h-[min(25rem,calc(100vh-16px))] overflow-y-auto rounded-listbox border border-listbox-line bg-surface p-5 shadow-listbox">
+        <div ref={popup} id={popupId} role="listbox" aria-label={label} className={cx("invisible fixed z-40 max-h-[min(25rem,calc(100vh-16px))] overflow-y-auto border bg-surface p-5 shadow-listbox", joined ? popupJoin(variant, side) : "rounded-listbox border-listbox-line")}>
           {options.map((option, index) => {
             const chosen = option.value === value;
             // A one-line list (professor names) stays short and light, marking the choice with text color and a check.
@@ -155,7 +172,7 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
               </div>
             );
           })}
-        </div>, document.body,
+        </div>, portal ?? document.body,
       )}
     </>
   );

@@ -60,6 +60,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - run: npm run test:degree-sheets -w web
       - run: npm run build
 
   e2e:

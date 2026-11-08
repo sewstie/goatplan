@@ -1,0 +1,827 @@
+[
+  {
+    "code": "ES 1310",
+    "title": "Introduction to Computer Aided Design",
+    "source": "https://wpi.cleancatalog.net/engineering-science-interdisciplinary/es-1310",
+    "wording": "No earlier engineering graphics or software experience is assumed.",
+    "background": null
+  },
+  {
+    "code": "ME 1520",
+    "title": "The Technology of Alpine Skiing",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-1520",
+    "wording": "No recommended background is listed.",
+    "background": null
+  },
+  {
+    "code": "ME 1800",
+    "title": "Manufacturing Science, Prototyping, and Computer-Controlled Machining",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-1800",
+    "wording": "No recommended background is listed.",
+    "background": null
+  },
+  {
+    "code": "ES 2001",
+    "title": "Introduction to Materials Science",
+    "source": "https://wpi.cleancatalog.net/engineering-science-interdisciplinary-mechanical-and-materials-engineering/es-2001",
+    "wording": "Recommended background: College chemistry knowledge.",
+    "background": {
+      "note": "College chemistry knowledge"
+    }
+  },
+  {
+    "code": "ME 2300",
+    "title": "Introduction to Engineering Design",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-2300",
+    "wording": "Recommended background: (ES 1310; ES 2501; ES 2502; ME 1800).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 1310"
+        },
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ME 1800"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 2312",
+    "title": "Introduction to Computational Solutions for Engineering Problems",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-2312",
+    "wording": "Recommended background: (ES 2501; ES 2502; PH 1110; MA 1021; MA 1022).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "PH 1110"
+        },
+        {
+          "course": "MA 1021"
+        },
+        {
+          "course": "MA 1022"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ES 2501",
+    "title": "Introduction to Static Systems",
+    "source": "https://wpi.cleancatalog.net/engineering-science-interdisciplinary-mechanical-and-materials-engineering/es-2501",
+    "wording": "Recommended background: (MA 1021; MA 1022; MA 1023; MA 1024).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 1021"
+        },
+        {
+          "course": "MA 1022"
+        },
+        {
+          "course": "MA 1023"
+        },
+        {
+          "course": "MA 1024"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ES 2502",
+    "title": "Stress Analysis",
+    "source": "https://wpi.cleancatalog.net/engineering-science-interdisciplinary-mechanical-and-materials-engineering/es-2502",
+    "wording": "Recommended background: (ES 2501; MA 1021; MA 1022; MA 1023; MA 1024).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "MA 1021"
+        },
+        {
+          "course": "MA 1022"
+        },
+        {
+          "course": "MA 1023"
+        },
+        {
+          "course": "MA 1024"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ES 2503",
+    "title": "Introduction to Dynamic Systems",
+    "source": "https://wpi.cleancatalog.net/engineering-science-interdisciplinary-mechanical-and-materials-engineering/es-2503",
+    "wording": "Recommended background: (ES 2501 or CE 2000).",
+    "background": {
+      "any": [
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "CE 2000"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 2820",
+    "title": "Materials Processing",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-2820",
+    "wording": "Recommended background: (ME 1800; ES 2001).",
+    "background": {
+      "all": [
+        {
+          "course": "ME 1800"
+        },
+        {
+          "course": "ES 2001"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ES 3001",
+    "title": "Introduction to Thermodynamics",
+    "source": "https://wpi.cleancatalog.net/engineering-science-interdisciplinary-mechanical-and-materials-engineering/es-3001",
+    "wording": "Recommended background: ((PH 1110 or PH 1111); MA 1021; MA 1022).",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "PH 1110"
+            },
+            {
+              "course": "PH 1111"
+            }
+          ]
+        },
+        {
+          "course": "MA 1021"
+        },
+        {
+          "course": "MA 1022"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ES 3003",
+    "title": "Heat Transfer",
+    "source": "https://wpi.cleancatalog.net/engineering-science-interdisciplinary-mechanical-and-materials-engineering/es-3003",
+    "wording": "Recommended background: (ES 3001; ES 3004; MA 2051).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 3001"
+        },
+        {
+          "course": "ES 3004"
+        },
+        {
+          "course": "MA 2051"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ES 3004",
+    "title": "Fluid Mechanics",
+    "source": "https://wpi.cleancatalog.net/engineering-science-interdisciplinary-mechanical-and-materials-engineering/es-3004",
+    "wording": "Recommended background: Basic physics, differential equations and vectors.",
+    "background": {
+      "note": "Basic physics, differential equations and vectors"
+    }
+  },
+  {
+    "code": "ME 3310",
+    "title": "Kinematics of Mechanisms",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-3310",
+    "wording": "Recommended background: (MA 2051; ES 2501; ES 2503).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2503"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 3311",
+    "title": "Dynamics of Mechanisms and Machines",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-3311",
+    "wording": "Recommended background: (MA 2051; ES 2501; ES 2503; ME 3310; Linear algebra knowledge).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2503"
+        },
+        {
+          "course": "ME 3310"
+        },
+        {
+          "note": "Linear algebra knowledge"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 3320",
+    "title": "Design of Machine Elements",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-3320",
+    "wording": "Recommended background: (ES 2501; ES 2502; ES 2503; ME 1800; ME 2820; (CS 1101 or CS 1102)).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2503"
+        },
+        {
+          "course": "ME 1800"
+        },
+        {
+          "course": "ME 2820"
+        },
+        {
+          "any": [
+            {
+              "course": "CS 1101"
+            },
+            {
+              "course": "CS 1102"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 3411",
+    "title": "Intermediate Fluid Mechanics",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-3411",
+    "wording": "Recommended background: ES 3004.",
+    "background": {
+      "course": "ES 3004"
+    }
+  },
+  {
+    "code": "ME 3501",
+    "title": "Elementary Continuum Mechanics",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-3501",
+    "wording": "Recommended background: (MA 2051; ES 2501; ES 2503).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2503"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 3506",
+    "title": "Rehabilitation Engineering",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-3506",
+    "wording": "Recommended background: (ES 2501; ES 2502; ES 2503; ME 2300; ME 1800; ECE 2010).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2503"
+        },
+        {
+          "course": "ME 2300"
+        },
+        {
+          "course": "ME 1800"
+        },
+        {
+          "course": "ECE 2010"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 3820",
+    "title": "Computer-Aided Manufacturing",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-3820",
+    "wording": "Recommended background: (ME 1800; ME 2820; Basic programming of computers or logic devices).",
+    "background": {
+      "all": [
+        {
+          "course": "ME 1800"
+        },
+        {
+          "course": "ME 2820"
+        },
+        {
+          "note": "Basic programming of computers or logic devices"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 3901",
+    "title": "Engineering Experimentation",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-3901",
+    "wording": "Recommended background: (MA 2051; ES 3001; ES 3003; ES 3004; ES 2501; ES 2502; ES 2503; ES 2001).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "ES 3001"
+        },
+        {
+          "course": "ES 3003"
+        },
+        {
+          "course": "ES 3004"
+        },
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2503"
+        },
+        {
+          "course": "ES 2001"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 3902",
+    "title": "Project-Based Engineering Experimentation",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-3902",
+    "wording": "Recommended background: (ES 3003; ES 2502; ES 2503; ECE 2010; ES 2001).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 3003"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2503"
+        },
+        {
+          "course": "ECE 2010"
+        },
+        {
+          "course": "ES 2001"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4320",
+    "title": "Advanced Engineering Design",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4320",
+    "wording": "Recommended background: (ME 3310; ME 3311; ES 2502; ME 3320; ES 3001; ES 3003; ES 3004; ES 2001; ME 1800).",
+    "background": {
+      "all": [
+        {
+          "course": "ME 3310"
+        },
+        {
+          "course": "ME 3311"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ME 3320"
+        },
+        {
+          "course": "ES 3001"
+        },
+        {
+          "course": "ES 3003"
+        },
+        {
+          "course": "ES 3004"
+        },
+        {
+          "course": "ES 2001"
+        },
+        {
+          "course": "ME 1800"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4322",
+    "title": "Modeling and Analysis of Mechatronic Systems",
+    "aliases": [
+      "RBE 4322"
+    ],
+    "source": "https://wpi.cleancatalog.net/robotics-engineering-mechanical-and-materials-engineering/rbe-4322me-4322-0",
+    "wording": "Recommended background: (MA 2051; MA 2071; ES 3004; ES 3001; ES 2501; ES 2503).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "MA 2071"
+        },
+        {
+          "course": "ES 3004"
+        },
+        {
+          "course": "ES 3001"
+        },
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2503"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4323",
+    "title": "Fundamentals of Drivetrain Systems",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4323",
+    "wording": "Recommended background: (ES 2001; ES 2502; ES 2503).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2001"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2503"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4324",
+    "title": "Integrated Design of Mechanical Systems",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4324",
+    "wording": "Recommended background: (ES 2001; ES 1310; ES 2501; ES 2502; ES 2503).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2001"
+        },
+        {
+          "course": "ES 1310"
+        },
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2503"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4422",
+    "title": "Design and Optimization of Thermal Systems",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4422",
+    "wording": "Recommended background: (ES 3001; ES 3004; ES 3003; ME 2300).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 3001"
+        },
+        {
+          "course": "ES 3004"
+        },
+        {
+          "course": "ES 3003"
+        },
+        {
+          "course": "ME 2300"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4429",
+    "title": "Thermofluid Application and Design",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4429",
+    "wording": "Recommended background: (ES 3001; ES 3004; ES 3003; ME 2300).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 3001"
+        },
+        {
+          "course": "ES 3004"
+        },
+        {
+          "course": "ES 3003"
+        },
+        {
+          "course": "ME 2300"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4430",
+    "title": "Integrated Thermomechanical Design and Analysis",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4430",
+    "wording": "Recommended background: (MA 2051; ES 2001; ES 2502; ES 3003; ME 3901; Introductory design knowledge).",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "ES 2001"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 3003"
+        },
+        {
+          "course": "ME 3901"
+        },
+        {
+          "note": "Introductory design knowledge"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4503",
+    "title": "Computational Biomechanics",
+    "aliases": [
+      "BME 4503"
+    ],
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering-mechanical-and-materials-engineering/bme-4503me-4503",
+    "wording": "Recommended background: (ES 2501; ES 2502; ES 2503; ME 3501; MA 2051; BME 2211).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2503"
+        },
+        {
+          "course": "ME 3501"
+        },
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "BME 2211"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4504",
+    "title": "Biomechanics",
+    "aliases": [
+      "BME 4504"
+    ],
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering-mechanical-and-materials-engineering/bme-4504me-4504",
+    "wording": "Recommended background: (ES 2501; ES 2502; ES 2503; ME 3501; MA 2051).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2503"
+        },
+        {
+          "course": "ME 3501"
+        },
+        {
+          "course": "MA 2051"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4506",
+    "title": "Mechanical Vibrations",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4506",
+    "wording": "Recommended background: (MA 2501; ES 2501; ES 2503). The catalog prints MA 2501 for differential equations; this map preserves that code.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2501"
+        },
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2503"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4512",
+    "title": "Introduction to the Finite Element Method",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4512",
+    "wording": "MA 2051 and MA 2071, plus mechanics from both ES 2501 and ES 2502 or both CE 2000 and CE 2001. Equivalent background also works.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "MA 2071"
+        },
+        {
+          "note": "Mechanics background: both ES 2501 and ES 2502, or both CE 2000 and CE 2001"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4606",
+    "title": "Biofluids",
+    "aliases": [
+      "BME 4606"
+    ],
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering-mechanical-and-materials-engineering/bme-4606me-4606",
+    "wording": "Recommended background: (ME 3501; ES 3004).",
+    "background": {
+      "all": [
+        {
+          "course": "ME 3501"
+        },
+        {
+          "course": "ES 3004"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4813",
+    "title": "Ceramics and Glasses for Engineering Applications",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4813",
+    "wording": "Recommended background: ES 2001.",
+    "background": {
+      "course": "ES 2001"
+    }
+  },
+  {
+    "code": "ME 4814",
+    "title": "Biomaterials",
+    "aliases": [
+      "BME 4814"
+    ],
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering-biomedical-engineering/bme-4814me-4814",
+    "wording": "Recommended background: (BB 3101; CH 1010; ES 2001; Differential and integral calculus knowledge).",
+    "background": {
+      "all": [
+        {
+          "course": "BB 3101"
+        },
+        {
+          "course": "CH 1010"
+        },
+        {
+          "course": "ES 2001"
+        },
+        {
+          "note": "Differential and integral calculus knowledge"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4821",
+    "title": "Plastics",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4821",
+    "wording": "Recommended background: ES 2001.",
+    "background": {
+      "course": "ES 2001"
+    }
+  },
+  {
+    "code": "ME 4829",
+    "title": "Sustainable Recycling and Production of Metals",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4829",
+    "wording": "Recommended background: (CH 1010; ES 2001; ES 3001; PH 1121).",
+    "background": {
+      "all": [
+        {
+          "course": "CH 1010"
+        },
+        {
+          "course": "ES 2001"
+        },
+        {
+          "course": "ES 3001"
+        },
+        {
+          "course": "PH 1121"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4832",
+    "title": "Corrosion and Corrosion Control",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4832",
+    "wording": "Recommended background: ES 2001.",
+    "background": {
+      "course": "ES 2001"
+    }
+  },
+  {
+    "code": "ME 4840",
+    "title": "Physical Metallurgy",
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4840",
+    "wording": "Recommended background: (ES 2001; ME 2820).",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2001"
+        },
+        {
+          "course": "ME 2820"
+        }
+      ]
+    }
+  },
+  {
+    "code": "ME 4875",
+    "title": "Introduction to Nanomaterials and Nanotechnology",
+    "aliases": [
+      "MTE 575"
+    ],
+    "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4875mte-575",
+    "wording": "Recommended background: ES 2001.",
+    "background": {
+      "course": "ES 2001"
+    }
+  }
+]

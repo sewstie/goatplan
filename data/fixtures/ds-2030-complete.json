@@ -1,0 +1,386 @@
+{
+  "sheetId": "ds-2030",
+  "description": "Independently worked complete numbered sheet: 38 academic courses plus IQP, MQP and explicit sports confirmation. Four advanced electives: CS 4445, MIS 4084, MA 4635 and CS 4433. CS 3431 supplies data management, CS 4445 supplies mining, MIS 4084 supplies business modeling. All three foundation areas have distinct courses. Interpretation checks and residency remain unresolved; this is not Workday verification.",
+  "takenCourses": [
+    {
+      "code": "EN 1001",
+      "credits": 3
+    },
+    {
+      "code": "EN 1002",
+      "credits": 3
+    },
+    {
+      "code": "EN 2201",
+      "credits": 3
+    },
+    {
+      "code": "HU 3900",
+      "credits": 3
+    },
+    {
+      "code": "HI 1311",
+      "credits": 3
+    },
+    {
+      "code": "PY 1731",
+      "credits": 3
+    },
+    {
+      "code": "ECON 1110",
+      "credits": 3
+    },
+    {
+      "code": "PSY 1400",
+      "credits": 3
+    },
+    {
+      "code": "DS 1010",
+      "credits": 3
+    },
+    {
+      "code": "DS 2010",
+      "credits": 3
+    },
+    {
+      "code": "DS 3010",
+      "credits": 3
+    },
+    {
+      "code": "CS 1101",
+      "credits": 3
+    },
+    {
+      "code": "CS 2102",
+      "credits": 3
+    },
+    {
+      "code": "CS 2223",
+      "credits": 3
+    },
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "MA 1022",
+      "credits": 3
+    },
+    {
+      "code": "MA 2611",
+      "credits": 3
+    },
+    {
+      "code": "MA 2612",
+      "credits": 3
+    },
+    {
+      "code": "MA 2071",
+      "credits": 3
+    },
+    {
+      "code": "BUS 2080",
+      "credits": 3
+    },
+    {
+      "code": "ETR 1100",
+      "credits": 3
+    },
+    {
+      "code": "CS 3431",
+      "credits": 3
+    },
+    {
+      "code": "CS 4445",
+      "credits": 3
+    },
+    {
+      "code": "MIS 4084",
+      "credits": 3
+    },
+    {
+      "code": "MA 4635",
+      "credits": 3
+    },
+    {
+      "code": "CS 4433",
+      "credits": 3
+    },
+    {
+      "code": "MA 1023",
+      "credits": 3
+    },
+    {
+      "code": "MA 1024",
+      "credits": 3
+    },
+    {
+      "code": "MA 2051",
+      "credits": 3
+    },
+    {
+      "code": "MA 2073",
+      "credits": 3
+    },
+    {
+      "code": "MIS 3720",
+      "credits": 3
+    },
+    {
+      "code": "MKT 3650",
+      "credits": 3
+    },
+    {
+      "code": "GOV 2315",
+      "credits": 3
+    },
+    {
+      "code": "PH 1110",
+      "credits": 3
+    },
+    {
+      "code": "CH 1010",
+      "credits": 3
+    },
+    {
+      "code": "BB 1001",
+      "credits": 3
+    },
+    {
+      "code": "BB 1002",
+      "credits": 3
+    },
+    {
+      "code": "BB 1035",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [],
+  "confirmedManualItems": [
+    "iqp-1",
+    "iqp-2",
+    "iqp-3",
+    "mqp-1",
+    "mqp-2",
+    "mqp-3",
+    "wpe-sports"
+  ],
+  "expectedLines": {
+    "1": {
+      "state": "done"
+    },
+    "2": {
+      "state": "done"
+    },
+    "3": {
+      "state": "done"
+    },
+    "4": {
+      "state": "done"
+    },
+    "5": {
+      "state": "done"
+    },
+    "6": {
+      "state": "done"
+    },
+    "7": {
+      "state": "done"
+    },
+    "8": {
+      "state": "done"
+    },
+    "9": {
+      "state": "done"
+    },
+    "10": {
+      "state": "done"
+    },
+    "11": {
+      "state": "done"
+    },
+    "12": {
+      "state": "done"
+    },
+    "13": {
+      "state": "done"
+    },
+    "14": {
+      "state": "done"
+    },
+    "15": {
+      "state": "done"
+    },
+    "16": {
+      "state": "done"
+    },
+    "17": {
+      "state": "done"
+    },
+    "18": {
+      "state": "done"
+    },
+    "19": {
+      "state": "done"
+    },
+    "20": {
+      "state": "done"
+    },
+    "21": {
+      "state": "done"
+    },
+    "22": {
+      "state": "done"
+    },
+    "23": {
+      "state": "done"
+    },
+    "24": {
+      "state": "done"
+    },
+    "25": {
+      "state": "done"
+    },
+    "26": {
+      "state": "done"
+    },
+    "27": {
+      "state": "done"
+    },
+    "28": {
+      "state": "done"
+    },
+    "29": {
+      "state": "done"
+    },
+    "30": {
+      "state": "done"
+    },
+    "31": {
+      "state": "done"
+    },
+    "32": {
+      "state": "done"
+    },
+    "33": {
+      "state": "done"
+    },
+    "34": {
+      "state": "done"
+    },
+    "35": {
+      "state": "done"
+    },
+    "36": {
+      "state": "done"
+    },
+    "37": {
+      "state": "done"
+    },
+    "38": {
+      "state": "done"
+    },
+    "39": {
+      "state": "done"
+    },
+    "40": {
+      "state": "done"
+    },
+    "41": {
+      "state": "done"
+    },
+    "42": {
+      "state": "done"
+    },
+    "43": {
+      "state": "done"
+    },
+    "44": {
+      "state": "done"
+    },
+    "45": {
+      "state": "done"
+    }
+  },
+  "expectedSections": {
+    "Humanities and Arts": {
+      "done": 6,
+      "planned": 0,
+      "total": 6
+    },
+    "Wellness and Physical Education": {
+      "done": 4,
+      "planned": 0,
+      "total": 4
+    },
+    "Social Science": {
+      "done": 2,
+      "planned": 0,
+      "total": 2
+    },
+    "Interactive Qualifying Project": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    },
+    "Free Electives": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    },
+    "Data Science Core": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    },
+    "Computer Science Foundation": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    },
+    "Mathematical Sciences Foundation": {
+      "done": 5,
+      "planned": 0,
+      "total": 5
+    },
+    "Business Foundation": {
+      "done": 2,
+      "planned": 0,
+      "total": 2
+    },
+    "Disciplinary Electives": {
+      "done": 11,
+      "planned": 0,
+      "total": 11
+    },
+    "Data Privacy and Ethics": {
+      "done": 1,
+      "planned": 0,
+      "total": 1
+    },
+    "Natural or Engineering Sciences": {
+      "done": 2,
+      "planned": 0,
+      "total": 2
+    },
+    "Major Qualifying Project": {
+      "done": 3,
+      "planned": 0,
+      "total": 3
+    }
+  },
+  "expectedChecks": {
+    "ds-source-review": "check",
+    "ds-credit-review": "check",
+    "ds-mqp-advisor": "check",
+    "ds-foundation-review": "check",
+    "hua-sequence": "check",
+    "hua-depth": "check",
+    "hua-breadth": "met",
+    "hua-ap-ib-limit": "met",
+    "residency": "check",
+    "data-management": "met",
+    "data-mining": "met",
+    "business-modeling": "met"
+  }
+}
