@@ -20,11 +20,10 @@ import { usePhoneScreen } from "./phoneScreen";
 type PhonePlannerProps = {
   banner: ReactNode;
   notices?: ReactNode;
-  navigation?: ReactNode;
   menuActions?: ReactNode;
 };
 
-export function PhonePlanner({ banner, notices, navigation, menuActions }: PhonePlannerProps) {
+export function PhonePlanner({ banner, notices, menuActions }: PhonePlannerProps) {
   const screen = usePhoneScreen((state) => state.screen);
   const main = useRef<HTMLElement>(null);
   const first = useRef(true);
@@ -68,7 +67,7 @@ export function PhonePlanner({ banner, notices, navigation, menuActions }: Phone
       >
         Skip to main content
       </a>
-      <PhoneTopBar navigation={navigation}>
+      <PhoneTopBar>
         <PhoneTermSelect />
       </PhoneTopBar>
       <main

@@ -30,7 +30,7 @@ export function Toast({ message, actions, onDismiss, dark = false }: ToastProps)
       role="status"
       aria-live="polite"
       aria-atomic="true"
-      className="pointer-events-none fixed inset-x-16 bottom-[calc(1rem+var(--phone-tabs-space,0px))] z-10 flex justify-center"
+      className="pointer-events-none fixed inset-x-16 bottom-[1rem] z-10 flex justify-center"
     >
       {/* A new message is a new box, so its timer starts over. */}
       {message !== null && <ToastMessage key={message} message={message} actions={actions} onDismiss={onDismiss} dark={dark} />}

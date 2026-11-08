@@ -452,7 +452,6 @@
   --size-phone-axis: 2.125rem;
   --size-phone-day-header: 2.125rem;
   --size-phone-bar: 4rem;
-  --size-phone-tabs: 3.5625rem;
   --size-sidebar: 16.5rem;
   --size-details: 16.75rem;
   --size-header: 4.75rem;
@@ -516,19 +515,6 @@
 
   html:has(dialog[open]:modal) {
     overflow: hidden;
-  }
-
-  /* The page keeps clear of the phone's bottom tab bar, which only shows while there are tabs to show. */
-  :root:has([data-phone-tabs]) {
-    --phone-tabs-space: calc(var(--size-phone-tabs) + env(safe-area-inset-bottom));
-  }
-
-  body {
-    padding-bottom: var(--phone-tabs-space, 0px);
-  }
-
-  html {
-    scroll-padding-bottom: var(--phone-tabs-space, 0px);
   }
 }
 
