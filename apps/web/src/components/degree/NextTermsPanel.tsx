@@ -57,6 +57,7 @@ export function NextTermsPanel({ degree, startYear, blocks, onClose }: { degree:
   useEffect(() => () => { sequence.current++; }, []);
   const stale = preview !== null && (preview.shape !== shapeKey || preview.history !== degree.history);
   const canGenerate = catalog.ready && published.status === "ready" && degree.audit.status === "ready";
+  const checking = catalog.ready && published.status === "ready" && degree.audit.status === "waiting";
 
   async function generate() {
     if (busy) return;
@@ -140,7 +141,8 @@ export function NextTermsPanel({ degree, startYear, blocks, onClose }: { degree:
           restore={(code) => refocus(() => setExcluded((values) => values.filter((item) => item !== code)))}
           unconfirm={(note) => refocus(() => confirm(note, false))}
           clear={() => refocus(() => { setKept([]); setExcluded([]); setConfirmations([]); })} />
-        <Button ref={suggestButton} icon={<Sparkle aria-hidden />} fullWidth disabled={!canGenerate} aria-disabled={busy || undefined} onClick={() => void generate()}>{busy ? "Finding courses…" : preview ? "Suggest again" : "Suggest courses"}</Button>
+        {/* While the degree check reruns, the button stays focusable, so focus put here after adding isn't lost. */}
+        <Button ref={suggestButton} icon={<Sparkle aria-hidden />} fullWidth disabled={!canGenerate && !checking} aria-disabled={busy || checking || undefined} onClick={() => { if (canGenerate && !busy) void generate(); }}>{busy ? "Finding courses…" : preview ? "Suggest again" : "Suggest courses"}</Button>
         {(catalog.failed || published.status === "failed") && (
           <div className="flex flex-wrap gap-8">
             {catalog.failed && <Button size="sm" variant="secondary" onClick={() => void catalog.load()}>Retry catalog</Button>}
