@@ -95,7 +95,7 @@ describe("the history", () => {
     const seminar = () => sheets.at(-1)!.lines.find((line) => line.line === 6)!.filter;
     source.addCourse({ ...foundCourse({ code: "SP 1521", title: "Elementary Spanish I", credits: 3 }), term: "A Term 2026" });
     await pause();
-    expect(source.getSnapshot().hua).toEqual({ path: { kind: "language", subject: "SP" }, chosen: false, first: "SP 1521", alsoPossible: null });
+    expect(source.getSnapshot().hua).toEqual({ path: { kind: "language", subject: "SP" }, chosen: false, first: "SP 1521" });
     expect(seminar()).toEqual({ type: "subjectMinLevel", subject: "SP", minLevel: 3000 });
     expect(source.setHuaPath({ kind: "depth-breadth" })).toBe(true);
     await pause();
@@ -117,7 +117,7 @@ describe("the history", () => {
     expect(source.getSnapshot().history.huaPath).toBe("language:GN");
     expect(JSON.parse(source.exportHistory()).huaPath).toBe("language:GN");
     expect(parseHistoryFile(source.exportHistory())).toMatchObject({ ok: true, history: { huaPath: "language:GN" } });
-    expect(parseHistoryFile(JSON.stringify({ version: 1, courses: [], manual: [], huaPath: "language:AB" }))).toEqual({ ok: true, history: { courses: [], manual: [] } });
+    expect(parseHistoryFile(JSON.stringify({ version: 1, courses: [], manual: [], huaPath: "language:EN" }))).toEqual({ ok: true, history: { courses: [], manual: [] } });
   });
 
   it("stores an added course and lists it", () => {
