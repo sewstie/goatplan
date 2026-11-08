@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { MapNode } from "@/lib/courseMap/courseMap";
-import { foundCourse, getDegreeSource, nextTerm, parseTerm, termLong, typedCourse } from "@/lib/degree";
+import { getDegreeSource, nextTerm, parseTerm, termLong } from "@/lib/degree";
 import { Button } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
 import { useDegreeUi } from "@/components/degree/degreeUi";
@@ -14,6 +14,7 @@ import { usePublishedTerms } from "@/components/degree/usePublishedTerms";
 import { offerHintNode } from "@/components/degree/offerHint";
 import { useTermOffers } from "@/components/degree/useTermOfferings";
 import { firstOffered } from "@/lib/degree/termOfferings";
+import { planMapCourse } from "./planMapCourse";
 
 export function PlanCourseDialog({ node, open, close }: { node: MapNode | null; open: boolean; close(): void }) {
   const current = useCurrentTerm();
@@ -28,8 +29,7 @@ export function PlanCourseDialog({ node, open, close }: { node: MapNode | null; 
   const add = () => {
     if (!node) return;
     const source = getDegreeSource();
-    const added = source.addCourse({ ...(node.offering ? foundCourse(node.offering) : { ...typedCourse(node.code), title: node.title }), status: "planned", term });
-    const result = added === "duplicate" ? source.editCourse(node.code, { term }) : added;
+    const result = planMapCourse(source, node, term);
     set({ toast: { message: result === "invalid" ? "This course couldn’t be planned." : result === "unsaved" ? `${node.code} planned for this visit. Browser storage is unavailable.` : `${node.code} planned for ${term}.` } });
     close();
   };

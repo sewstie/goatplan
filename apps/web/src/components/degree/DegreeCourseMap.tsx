@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Graph, Info, ListDashes } from "@phosphor-icons/react/ssr";
+import { getCourseMap } from "@/lib/courseMap/maps";
 import { buildCourseMap } from "@/lib/courseMap/courseMap";
 import { buildFlowchart, chainOf } from "@/lib/courseMap/flowchart";
 import { routeFlowchart } from "@/lib/courseMap/routing";
@@ -16,11 +17,12 @@ import { MapDetailsPanel } from "@/components/courseMap/MapDetailsPanel";
 import { PlanCourseDialog } from "@/components/courseMap/PlanCourseDialog";
 import type { CourseState } from "@/components/courseMap/FlowCard";
 
-const flow = buildFlowchart();
-const layout = routeFlowchart(flow);
 const VIEWS = [{ value: "map", label: "Map", icon: <Graph aria-hidden /> }, { value: "list", label: "List", icon: <ListDashes aria-hidden /> }] as const;
 
 export function DegreeCourseMap({ history }: { history: DegreeHistory }) {
+  const definition = getCourseMap(history.sheetId ?? "cs-2030")!;
+  const flow = useMemo(() => buildFlowchart(definition.records, definition.layout), [definition]);
+  const layout = useMemo(() => routeFlowchart(flow), [flow]);
   const [mode, setMode] = useState<"map" | "list">("map");
   const [selected, setSelected] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
@@ -28,10 +30,10 @@ export function DegreeCourseMap({ history }: { history: DegreeHistory }) {
   const [planning, setPlanning] = useState(false);
   const { courses, load } = useMapOfferings();
   useEffect(() => { void load(); }, [load]);
-  const map = useMemo(() => buildCourseMap(courses), [courses]);
+  const map = useMemo(() => buildCourseMap(courses, definition.records), [courses, definition]);
   const focus = hovered ?? selected;
-  const chain = useMemo(() => (focus ? chainOf(flow, focus) : null), [focus]);
-  const selectedChain = useMemo(() => (selected ? chainOf(flow, selected) : null), [selected]);
+  const chain = useMemo(() => (focus ? chainOf(flow, focus) : null), [flow, focus]);
+  const selectedChain = useMemo(() => (selected ? chainOf(flow, selected) : null), [flow, selected]);
   const node = map.nodes.find((item) => item.code === selected) ?? null;
   const stateOf = (code: string): CourseState => {
     const names = [code, ...(flow.courses.find((course) => course.code === code)?.aliases ?? [])];
@@ -54,16 +56,16 @@ export function DegreeCourseMap({ history }: { history: DegreeHistory }) {
       </header>
       <div className="flex flex-wrap items-center justify-between gap-12">
         <SegmentedSwitch<"map" | "list"> label="Course map view" value={mode} options={VIEWS} onChange={setMode} />
-        <MapLegend />
+        <MapLegend areas={[...new Set(Object.values(definition.layout.areas))]} />
       </div>
       <p className="sr-only" aria-live="polite">{node ? `${node.code} selected` : ""}</p>
-      <MapDetailsPanel node={node} flow={flow} chain={selectedChain} state={selected ? stateOf(selected) : null} select={show} plan={() => setPlanning(true)} />
+      <MapDetailsPanel summarized={definition.summarized} node={node} flow={flow} chain={selectedChain} state={selected ? stateOf(selected) : null} select={show} plan={() => setPlanning(true)} />
       <div className="flow-surface">
         {mode === "map"
           ? <MapView flow={flow} layout={layout} stateOf={stateOf} selected={selected} chain={chain} select={select} preview={setHovered} clear={() => setSelected(null)} />
           : <MapList flow={flow} map={map} selected={selected} stateOf={stateOf} select={show} />}
         <p className="pt-10 text-micro text-ink-muted">
-          Source: <a className="underline" target="_blank" rel="noreferrer" href="https://wpi.cleancatalog.net/computer-science">WPI catalog 2026–27</a>. Recommended, not required. Not shown: {flow.hidden.join(", ")} (don’t count toward the major).
+          Source: <a className="underline" target="_blank" rel="noreferrer" href={definition.source}>WPI catalog 2026–27</a>. Recommended, not required.{flow.hidden.length > 0 && <> Not shown: {flow.hidden.join(", ")} (don’t count toward the major).</>}
         </p>
       </div>
       <PlanCourseDialog node={node} open={planning} close={() => setPlanning(false)} />
@@ -72,7 +74,8 @@ export function DegreeCourseMap({ history }: { history: DegreeHistory }) {
           <p>1000 level is at the top, 4000 at the bottom. Levels are course numbers, not years.</p>
           <p>Arrows point to the courses that build on a course. Dashed means any one of them is enough. “or” means either course works.</p>
           <p>If a longer chain already links two courses, the direct arrow is left out. Click a course to see the full list.</p>
-          <p>Colors are the four areas the major needs one course from, plus Cybersecurity.</p>
+          <p>{definition.areaHelp}</p>
+          <p>Grouped recommendations, such as “at least three of,” appear in the course details instead of arrows.</p>
           <p>Ctrl + scroll or pinch to zoom. Drag to move around.</p>
           <p>These are WPI’s recommendations, not enforced prerequisites.</p>
         </div>

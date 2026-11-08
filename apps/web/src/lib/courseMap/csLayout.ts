@@ -1,12 +1,30 @@
-export type AreaId = "systems" | "theory" | "design" | "social" | "cyber";
+export type AreaId = "systems" | "theory" | "design" | "social" | "cyber" | "robotics" | "embedded" | "manipulation" | "perception" | "interaction" | "mechanics" | "thermal" | "materials" | "experiments" | "circuits" | "signals" | "power" | "computing" | "statistics" | "data" | "learning" | "visualization";
 
 export interface MapLayout {
+  subject?: string;
   rows: string[][];
   pairs: [string, string][];
   areas: Record<string, AreaId>;
 }
 
 export const AREA_NAMES: Record<AreaId, string> = {
+  mechanics: "Mechanics",
+  thermal: "Thermal & fluids",
+  materials: "Materials & manufacturing",
+  experiments: "Computation & experiments",
+  circuits: "Circuits & electronics",
+  signals: "Signals & communication",
+  power: "Power & energy",
+  computing: "Computing foundations",
+  statistics: "Math & statistics",
+  data: "Data management",
+  learning: "Machine learning & AI",
+  visualization: "Visualization",
+  robotics: "Robotics",
+  embedded: "Embedded systems",
+  manipulation: "Manipulation & control",
+  perception: "Perception & AI",
+  interaction: "Human–robot interaction",
   systems: "Systems",
   theory: "Theory & languages",
   design: "Design",

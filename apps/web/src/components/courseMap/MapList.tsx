@@ -25,7 +25,7 @@ export function MapList({ flow, map, selected, stateOf, select }: MapListProps) 
                   </button>
                   {(course.area || state) && <p className="text-caption text-ink-muted">{[course.area && AREA_NAMES[course.area], state === "taken" ? "Taken" : state === "planned" ? "Planned" : null].filter(Boolean).join(" · ")}</p>}
                   <p className="text-10 text-ink-muted">Before this: {node?.background ? <BackgroundExpression value={node.background} /> : "Nothing listed"}</p>
-                  <p className="text-10 text-ink-muted">Leads to: {leads.join(", ") || "No later CS course lists it"}</p>
+                  <p className="text-10 text-ink-muted">Leads to: {leads.join(", ") || "No later course on this map lists it"}</p>
                 </li>
               );
             })}

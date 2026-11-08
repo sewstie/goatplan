@@ -53,7 +53,7 @@ test("the list shows the same background and planning a course marks it on the m
   await openMap(page);
   await page.getByRole("button", { name: "List", exact: true }).click();
   await page.getByRole("button", { name: "CS 4342 Machine Learning", exact: true }).click();
-  await expect(details(page).getByText("Outside CS: + MA 1024/1034, MA 2071, MA 2621/2631")).toBeVisible();
+  await expect(details(page).getByText("Other background: + MA 1024/1034, MA 2071, MA 2621/2631")).toBeVisible();
   await page.getByRole("button", { name: "Map", exact: true }).click();
   await card(page, "CS 4123").click();
   await details(page).getByRole("button", { name: "Plan this" }).click();

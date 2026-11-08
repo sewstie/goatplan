@@ -1,0 +1,151 @@
+import type { MapLayout } from "./csLayout";
+
+export const ME_LAYOUT: MapLayout = {
+  "subject": "ME",
+  "rows": [
+    [
+      "ES 1310",
+      "ME 1800",
+      "",
+      "ME 1520",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "ES 2501",
+      "",
+      "",
+      "",
+      "ES 2001",
+      ""
+    ],
+    [
+      "",
+      "",
+      "ES 2502",
+      "ES 2503",
+      "",
+      "",
+      "ME 2820",
+      ""
+    ],
+    [
+      "ME 2300",
+      "ME 2312",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "ME 3320",
+      "ME 3506",
+      "ME 3310",
+      "ME 3501",
+      "ES 3001",
+      "ES 3004",
+      "ME 3820",
+      ""
+    ],
+    [
+      "",
+      "",
+      "ME 3311",
+      "",
+      "ES 3003",
+      "ME 3411",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "ME 3901",
+      "ME 3902"
+    ],
+    [
+      "ME 4320",
+      "ME 4324",
+      "ME 4323",
+      "ME 4322",
+      "ME 4422",
+      "ME 4429",
+      "ME 4813",
+      "ME 4821"
+    ],
+    [
+      "ME 4503",
+      "ME 4504",
+      "ME 4506",
+      "ME 4512",
+      "ME 4606",
+      "ME 4814",
+      "ME 4829",
+      "ME 4832"
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      "ME 4430",
+      "",
+      "ME 4840",
+      "ME 4875"
+    ]
+  ],
+  "pairs": [],
+  "areas": {
+    "ES 1310": "design",
+    "ME 1800": "materials",
+    "ME 1520": "mechanics",
+    "ES 2501": "mechanics",
+    "ES 2001": "materials",
+    "ES 2502": "mechanics",
+    "ES 2503": "mechanics",
+    "ME 2820": "materials",
+    "ME 2300": "design",
+    "ME 2312": "experiments",
+    "ME 3320": "mechanics",
+    "ME 3506": "mechanics",
+    "ME 3310": "mechanics",
+    "ME 3501": "mechanics",
+    "ES 3001": "thermal",
+    "ES 3004": "thermal",
+    "ME 3820": "materials",
+    "ME 3311": "mechanics",
+    "ES 3003": "thermal",
+    "ME 3411": "thermal",
+    "ME 3901": "experiments",
+    "ME 3902": "experiments",
+    "ME 4320": "design",
+    "ME 4324": "design",
+    "ME 4323": "mechanics",
+    "ME 4322": "mechanics",
+    "ME 4422": "thermal",
+    "ME 4429": "thermal",
+    "ME 4813": "materials",
+    "ME 4821": "materials",
+    "ME 4503": "mechanics",
+    "ME 4504": "mechanics",
+    "ME 4506": "mechanics",
+    "ME 4512": "mechanics",
+    "ME 4606": "thermal",
+    "ME 4814": "materials",
+    "ME 4829": "materials",
+    "ME 4832": "materials",
+    "ME 4430": "thermal",
+    "ME 4840": "materials",
+    "ME 4875": "materials"
+  }
+};
