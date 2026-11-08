@@ -38,9 +38,10 @@ test("state 25 opens the professor list over the course panel at 1440", async ({
   ]);
   const box = (await popup.boundingBox())!;
   const field = (await picker(page).boundingBox())!;
-  expect(box.width).toBeGreaterThan(236);
+  // The list joins its field: as wide, and its top border on the field's bottom border.
+  expect(box.width).toBeCloseTo(field.width, 0);
   expect(box.height).toBeGreaterThanOrEqual(140);
-  expect(box.y).toBe(field.y + field.height + 4);
+  expect(Math.abs(box.y - (field.y + field.height))).toBeLessThanOrEqual(1);
   await page.evaluate(() => document.fonts.ready);
   await expect(page).toHaveScreenshot("professor-listbox-state-25-1440.png", { animations: "disabled" });
 });

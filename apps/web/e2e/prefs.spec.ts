@@ -79,7 +79,7 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   await openPlanner(page, regular);
   const row = preferencesRow(page);
 
-  await expect(row.getByRole("button", { name: "1 blocked time" })).toBeVisible();
+  await expect(row.getByRole("button", { name: /^Remove blocked time / })).toHaveCount(1);
   await expect(page.getByRole("combobox", { name: "Sort" })).toHaveText("SortFewest early classes");
 
   await pickStartsAfter(row, 600);
@@ -95,10 +95,9 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   await chooseOption(dialog, "To", "1:00 PM");
   await dialog.getByRole("button", { name: "Block time" }).click();
   await expect(dialog).toBeHidden();
-  await row.getByRole("button", { name: "2 blocked times" }).click();
-  await expect(row.getByText("Mon, Wed 12 PM–1 PM")).toContainText("Lunch");
+  await expect(row.getByRole("button", { name: /^Remove blocked time Lunch, Mon, Wed 12/ })).toBeVisible();
 
-  await row.getByRole("button", { name: "Remove blocked time Tue, Fri 2 PM–4 PM" }).click();
+  await row.getByRole("button", { name: /^Remove blocked time Tue, Fri 2/ }).click();
   await row.getByRole("switch", { name: "Only open sections" }).click();
   await waitForSchedules(page);
 
@@ -114,7 +113,6 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   await page.reload();
   await waitForSchedules(page);
   await expect(row.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(600));
-  await row.getByRole("button", { name: "1 blocked time" }).click();
   await expect(row.getByText("Lunch")).toBeVisible();
   await expect(row.getByRole("switch", { name: "Only open sections" })).toHaveAttribute("aria-checked", "false");
 });

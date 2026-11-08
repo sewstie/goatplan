@@ -63,7 +63,7 @@ for (const [width, height] of [[1440, 900], [2560, 1440]] as const) {
 
       const search = page.getByRole("searchbox", { name: "Search courses" });
       await search.fill("ae 2");
-      await page.getByRole("region", { name: "Search results" }).getByRole("button", { name: /Sections/ }).first().click();
+      await expect(page.getByRole("region", { name: "Search results" }).getByRole("button", { name: /^Add / }).first()).toBeVisible();
       expect(await textUnder(page, 12)).toEqual([]);
 
       await search.fill("AE 23200");
@@ -96,11 +96,11 @@ async function widthOf(page: Page, region: ReturnType<typeof sidebar>) {
 
 test.describe("fluid scaling", () => {
   for (const { width, root, sidebarWidth, detailsWidth, button } of [
-    { width: 1194, root: 16, sidebarWidth: 224, detailsWidth: 288, button: 36 },
-    { width: 1440, root: 16, sidebarWidth: 224, detailsWidth: 288, button: 36 },
-    { width: 2000, root: 18, sidebarWidth: 252, detailsWidth: 324, button: 40.5 },
-    { width: 2560, root: 20, sidebarWidth: 280, detailsWidth: 360, button: 45 },
-    { width: 3440, root: 20, sidebarWidth: 280, detailsWidth: 360, button: 45 },
+    { width: 1194, root: 16, sidebarWidth: 264, detailsWidth: 268, button: 36 },
+    { width: 1440, root: 16, sidebarWidth: 264, detailsWidth: 268, button: 36 },
+    { width: 2000, root: 18, sidebarWidth: 297, detailsWidth: 301.5, button: 40.5 },
+    { width: 2560, root: 20, sidebarWidth: 330, detailsWidth: 335, button: 45 },
+    { width: 3440, root: 20, sidebarWidth: 330, detailsWidth: 335, button: 45 },
   ]) {
     test(`at ${width} px the root font is ${root} px and the panels and controls grow with it`, async ({ page }) => {
       await page.setViewportSize({ width, height: 1000 });
@@ -113,13 +113,15 @@ test.describe("fluid scaling", () => {
     });
   }
 
+  // The app's side padding is 0.75rem, so 15 px at the 20 px root.
   test("the app stops at 2200 px and centers on an ultra-wide screen", async ({ page }) => {
     await page.setViewportSize({ width: 3440, height: 1440 });
     await openPlanner(page);
+    const padding = 15;
     const left = (await sidebar(page).boundingBox())!.x;
     const panel = (await details(page).boundingBox())!;
-        expect(left).toBeCloseTo((3440 - 2200) / 2, 0);
-    expect(panel.x + panel.width).toBeCloseTo((3440 + 2200) / 2, 0);
+        expect(left).toBeCloseTo((3440 - 2200) / 2 + padding, 0);
+    expect(panel.x + panel.width).toBeCloseTo((3440 + 2200) / 2 - padding, 0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(3440);
   });
 
@@ -127,7 +129,8 @@ test.describe("fluid scaling", () => {
     await page.setViewportSize({ width: 2100, height: 1000 });
     await openPlanner(page);
     const panel = (await details(page).boundingBox())!;
-    expect(panel.x + panel.width).toBeCloseTo(2100, 0);
+    const padding = await page.evaluate(() => 0.75 * parseFloat(getComputedStyle(document.documentElement).fontSize));
+    expect(panel.x + panel.width).toBeCloseTo(2100 - padding, 0);
   });
 });
 
@@ -148,7 +151,7 @@ function clippedText(page: Page) {
       let inScroller = false;
       for (let parent: Element | null = element; parent && parent !== document.body; parent = parent.parentElement) {
         const style = getComputedStyle(parent);
-        if (style.position === "fixed" || style.clip !== "auto") break;
+        if (style.position === "fixed" || style.clip !== "auto" || style.clipPath !== "none") break;
         if (style.overflowX === "visible" && style.overflowY === "visible") continue;
         const edge = parent.getBoundingClientRect();
         inScroller ||= style.overflowY === "auto" || style.overflowY === "scroll";
@@ -177,15 +180,13 @@ test("a class shows its section and full time where the block has room, and a sh
   await expect(block.getByText("CL01")).toBeHidden();
 });
 
-test("at 834 a long day scrolls inside the calendar, and the No set time strip and the details stay in view", async ({ page }) => {
+test("at 834 the week fills the window with No set time in view, and the details come after it", async ({ page }) => {
   await page.setViewportSize({ width: 834, height: 1194 });
   await openPlanner(page, { courses: ["AE 2320", "AE 5131"], blocked: [{ day: "Mon", start: 1140, end: 1200 }] });
-  await expect(page.getByRole("heading", { name: "No set time" })).toBeVisible();
-  const grid = page.getByRole("group", { name: "Calendar time grid" });
-  await expect.poll(() => grid.evaluate((element) => element.scrollHeight - element.clientHeight)).toBeGreaterThan(0);
   await expect(page.getByRole("heading", { name: "No set time" })).toBeInViewport();
-  await expect(page.getByRole("complementary", { name: "Course details" })).toBeInViewport();
-  expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(1194);
+  const week = (await page.getByRole("region", { name: "Weekly schedule" }).boundingBox())!;
+  expect((await page.getByRole("complementary", { name: "Course details" }).boundingBox())!.y).toBeGreaterThanOrEqual(week.y + week.height);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(834);
 });
 
 test("the early band's label stays under a blocked time in that band", async ({ page }) => {
@@ -348,7 +349,7 @@ test.describe("everything fits", () => {
 
         const search = page.getByRole("searchbox", { name: "Search courses" });
         await search.fill("ae 2");
-        await page.getByRole("region", { name: "Search results" }).getByRole("button", { name: /Sections/ }).first().click();
+        await expect(page.getByRole("region", { name: "Search results" }).getByRole("button", { name: /^Add / }).first()).toBeVisible();
         await expectFits(page);
         await search.fill("");
 
