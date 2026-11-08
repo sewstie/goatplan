@@ -27,10 +27,9 @@ beforeEach(() => {
 afterEach(() => vi.useRealTimers());
 
 describe("SeatStatus", () => {
-  it("says how old the seats are and to confirm in Workday", () => {
+  it("says how old the seats are", () => {
     setup({ seatsUpdatedAt: "2026-11-12T11:55:00Z" });
     expect(screen.getByRole("status", { name: "Seat freshness" })).toHaveTextContent("Seats updated 5 min ago");
-    expect(screen.getByText("Confirm in Workday before you register.")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Retry/ })).not.toBeInTheDocument();
   });
 

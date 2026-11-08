@@ -14,6 +14,7 @@ const BACKGROUND: Record<BackgroundState, [string, TagTone]> = {
 const OFFERING: Record<Offering["state"], [string, TagTone]> = {
   confirmed: ["Offered", "good"],
   estimated: ["Usually offered", "plain"],
+  full: ["Full", "warn"],
   absent: ["Not offered", "warn"],
   unknown: ["Offering unknown", "plain"],
   failed: ["Couldn’t check offering", "warn"],

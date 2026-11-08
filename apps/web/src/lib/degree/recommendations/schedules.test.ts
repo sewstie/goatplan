@@ -18,7 +18,8 @@ const course = (code: string, start: number) => ({
 const term = {
   term: { id: "2027-C", name: "C Term", season: "Spring", year: 2027, start: "2027-01-13", end: "2027-03-05" },
   generatedAt: "2026-11-01T00:00:00Z",
-  courses: [course("CS 2102", 540), course("MA 1021", 540), course("PH 1110", 600), { ...course("CS 9999", 0), sections: [], options: [] }],
+  courses: [course("CS 2102", 540), course("MA 1021", 540), course("PH 1110", 600),
+    { ...course("MA 1022", 540), sections: [lecture("MA 1022", 540), { ...lecture("MA 1022", 660), id: "MA 1022-CL02", capacity: 30, enrolled: 30 }], options: [["MA 1022-CL01"], ["MA 1022-CL02"]] }, { ...course("CS 9999", 0), sections: [], options: [] }],
 } as unknown as TermFile;
 
 const webRoot = fileURLToPath(new URL("../../../../", import.meta.url));
@@ -45,8 +46,14 @@ describe("schedule check", () => {
     expect(await check.fit(term, ["CS 2102", "MA 1021"])).toBe("clashes");
     expect(await check.fit(term, ["CS 2102", "MA 1021", "EN 1251"])).toBe("clashes");
     expect(await check.fit(term, ["EN 1251"])).toBe("fits");
-    expect(loads).toBe(1);
+    expect(loads).toBe(0);
   }, 30_000);
+
+  it("rejects a course when only its full section avoids the chosen courses", async () => {
+    const check = createScheduleCheck(engine);
+    expect(await check.fit(term, ["MA 1022"])).toBe("fits");
+    expect(await check.fit(term, ["CS 2102", "MA 1022"])).toBe("clashes");
+  });
 
   it("can't tell when the engine fails", async () => {
     const broken = createScheduleCheck({ loadTerm: async () => { throw new Error("worker crashed"); }, solve: async () => { throw new Error("unused"); } });

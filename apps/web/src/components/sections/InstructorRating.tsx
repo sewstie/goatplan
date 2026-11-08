@@ -17,13 +17,13 @@ export function InstructorRating({ name, dense = false, showLink = true, phone =
         {name}
       </span>
       {showLink && (
-        <div className={cx("flex flex-wrap", phone ? "gap-8" : "gap-5")}>
-          <a href={OSCAR_URL} target="_blank" rel="noreferrer" aria-label={`View ${name} in OSCAR (opens in a new tab)`} className={linkClass}>
-            View in OSCAR
-            {icon}
-          </a>
+        <div className={cx("flex flex-col items-start", phone ? "gap-8" : "gap-5")}>
           <a href={rateMyProfessorsUrl(name)} target="_blank" rel="noreferrer" aria-label={`View ${name} on Rate My Professors (opens in a new tab)`} className={linkClass}>
             Rate My Professors
+            {icon}
+          </a>
+          <a href={OSCAR_URL} target="_blank" rel="noreferrer" aria-label={`View ${name} in OSCAR (opens in a new tab)`} className={linkClass}>
+            Check OSCAR
             {icon}
           </a>
         </div>

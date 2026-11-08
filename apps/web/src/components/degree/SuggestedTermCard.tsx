@@ -23,7 +23,7 @@ type SuggestedTermCardProps = RowProps & {
 };
 
 const FIRST_OPTIONS = 5;
-const OFFERED_FIRST: Record<Choice["offering"]["state"], number> = { confirmed: 0, estimated: 1, unknown: 2, absent: 3, failed: 4 };
+const OFFERED_FIRST: Record<Choice["offering"]["state"], number> = { confirmed: 0, estimated: 1, unknown: 2, full: 3, absent: 4, failed: 5 };
 
 export function SuggestedTermCard({ row, cap, selected, keptCodes, select, keep, exclude, planner, confirmations, onConfirm }: SuggestedTermCardProps) {
   const [showAll, setShowAll] = useState(false);

@@ -7,10 +7,6 @@ import { selectReadOnlyPlan, usePlanner, usePlannerStore } from "@/lib/store";
 import { seatAge, seatDate } from "./seatAge";
 import { useCurrentMinute } from "./useCurrentMinute";
 
-/**
- * How fresh the planner's seat counts are, and a reminder to check Workday. When live seats couldn't be
- * had it shows the daily file's date with Retry. A saved or shared plan keeps its own seats, so it says nothing there.
- */
 export function SeatStatus({ className }: { className?: string }) {
   const store = usePlannerStore();
   const now = useCurrentMinute();
@@ -58,7 +54,6 @@ export function SeatStatus({ className }: { className?: string }) {
           Seats updated <time dateTime={updatedAt} className="ml-4">{now === null ? "" : seatAge(updatedAt, now)}</time>
         </p>
       )}
-      <p>Confirm in Workday before you register.</p>
     </div>
   );
 }

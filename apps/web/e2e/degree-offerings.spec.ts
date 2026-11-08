@@ -41,7 +41,7 @@ test("the humanities note explains the language path", async ({ page }) => {
 });
 
 for (const width of [1440, 834]) {
-  test(`an empty line lists the regular courses that fit it, limited to the term's schedule when it's out, at ${width}px`, async ({ page }) => {
+  test(`an empty line lists matching courses across all terms, at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await openDegree(page);
     await openAllSections(page);
@@ -49,13 +49,15 @@ for (const width of [1440, 834]) {
     const fill = panel(page, "Courses that fit line 38");
     await expect(fill.getByLabel("AP, transfer or retired course")).toHaveCount(0);
     await pickTerm(fill, "Term", "C Term 2027");
-    await expect(fill.getByText(/^Courses offered in C Term 2027 that fit this line\./)).toBeVisible();
+    await expect(fill.getByText(/^Courses that fit this field, across all terms\./)).toBeVisible();
     await expect(fill.getByRole("button", { name: "Add MA 2071 for C Term 2027" })).toBeVisible();
-    await expect(fill.getByRole("button", { name: /^Add MA 2631 / })).toHaveCount(0);
+    await fill.getByRole("textbox", { name: "Filter courses" }).fill("2631");
+    await expect(fill.getByRole("button", { name: /^Add MA 2631 / })).toBeVisible();
+    await fill.getByRole("textbox", { name: "Filter courses" }).fill("");
     await expect(fill.getByRole("button", { name: /^Add (MA 1021|CS 2102) / })).toHaveCount(0);
     await page.screenshot({ path: `e2e/screenshots/degree-line-courses-${width}.png`, animations: "disabled" });
     await pickTerm(fill, "Term", "A Term 2027");
-    await expect(fill.getByText(/^The A Term 2027 schedule isn’t out yet, so every course that fits is shown\./)).toBeVisible();
+    await expect(fill.getByText(/^Courses that fit this field, across all terms\./)).toBeVisible();
     await fill.getByRole("textbox", { name: "Filter courses" }).fill("2631");
     await expect(fill.getByRole("button", { name: "Add MA 2631 for A Term 2027" })).toBeVisible();
     await pickTerm(fill, "Term", "C Term 2027");

@@ -1,4 +1,5 @@
 import type { TermFile } from "@/lib/data/types";
+import { seatMergeBytes } from "@/lib/data/seatMerge";
 import type { EngineClient } from "@/lib/engine";
 
 export type ScheduleFit = "fits" | "clashes" | "unknown";
@@ -15,15 +16,20 @@ export function createScheduleCheck(engine: Pick<EngineClient, "loadTerm" | "sol
   const unloadable = new Set<string>();
   let queue: Promise<unknown> = Promise.resolve();
 
-  async function ask(termId: string, courses: string[]): Promise<ScheduleFit> {
+  async function ask(file: TermFile, courses: string[]): Promise<ScheduleFit> {
+    const termId = file.term.id;
     try {
       if (unloadable.has(termId)) return "unknown";
       if (loaded !== termId) {
-        const response = await engine.loadTerm(termId);
+        const available = { ...file, courses: file.courses.map((course) => ({
+          ...course,
+          sections: course.sections.map((section) => section.status === "open" && section.enrolled >= section.capacity ? { ...section, status: "closed" as const } : section),
+        })) };
+        const response = await engine.loadTerm(termId, seatMergeBytes(available));
         if (!response.ok) { unloadable.add(termId); return "unknown"; }
         loaded = termId;
       }
-      const response = await engine.solve({ version: 1, courses, limits: { maxSchedules: 1, stepBudget: 2_000_000 } });
+      const response = await engine.solve({ version: 1, courses, preferences: { onlyOpen: true }, limits: { maxSchedules: 1, stepBudget: 2_000_000 } });
       if (!response.ok) return "unknown";
       return response.total > 0 ? "fits" : response.capped ? "unknown" : "clashes";
     } catch {
@@ -39,7 +45,7 @@ export function createScheduleCheck(engine: Pick<EngineClient, "loadTerm" | "sol
       const key = `${file.term.id}|${courses.join("|")}`;
       let answer = answers.get(key);
       if (!answer) {
-        answer = queue.then(() => ask(file.term.id, courses));
+        answer = queue.then(() => ask(file, courses));
         queue = answer;
         answers.set(key, answer);
       }

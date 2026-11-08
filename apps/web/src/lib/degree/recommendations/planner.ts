@@ -87,19 +87,20 @@ export async function recommend(input: RecommendationInput, audit: Recommendatio
     const blocked = input.offerings[termId(term)]?.status === "failed" || !input.offerings[termId(term)];
     if (blocked) { row.state = "failed"; row.issues.push("This term’s classes couldn’t be loaded. Suggest again to retry."); }
     const offeredHere = input.offerings[termId(term)];
-    let file = schedules && offeredHere?.status === "published" ? offeredHere.file : null;
+    const file = schedules && offeredHere?.status === "published" ? offeredHere.file : null;
     const termCodes = () => projected.courses.filter((course) => sameTerm(parseTerm(course.term), term)).map((course) => course.code);
     const clashing: string[] = [];
     let unchecked = false;
+    let unavailable = false;
     if (file && termCodes().length > 0) {
       const fit = await schedules!.fit(file, termCodes());
       checkCancelled();
       if (fit === "clashes") row.issues.push("Your courses in this term can’t all fit in one weekly schedule. Check their class times in the planner.");
-      if (fit === "clashes") file = null;
+      if (fit !== "fits") unavailable = true;
       if (fit === "unknown") unchecked = true;
     }
     let slots = 0;
-    while (!reserved && !blocked && row.credits < input.cap && slots++ < 6 && evaluations < 180) {
+    while (!reserved && !blocked && !unavailable && row.credits < input.cap && slots++ < 6 && evaluations < 180) {
       checkCancelled();
       const available = catalog.filter((course) => allowed(course, term));
       const termCandidates = available.map((course) => ({ ...course, credits: offering(course, term, input.offerings[termId(term)]).credits }));
@@ -132,7 +133,7 @@ export async function recommend(input: RecommendationInput, audit: Recommendatio
           const fit = await schedules!.fit(file, [...termCodes(), candidate.course.code]);
           checkCancelled();
           if (fit === "clashes") { if (!clashing.includes(candidate.course.code)) clashing.push(candidate.course.code); continue; }
-          if (fit === "unknown") unchecked = true;
+          if (fit === "unknown") { unchecked = true; continue; }
         }
         tried += 1;
         if (++evaluations > 180) break;
@@ -163,18 +164,28 @@ export async function recommend(input: RecommendationInput, audit: Recommendatio
     const subjects = new Map<string, number>();
     const diverse = alternatives.filter((course) => { const count = subjects.get(course.subject) ?? 0; subjects.set(course.subject, count + 1); return count < 2; });
     const alternativesByCode = new Map([...diverse, ...alternatives, ...row.alternatives.map((choice) => catalog.find((course) => course.code === choice.course.code)!)].filter(Boolean).map((course) => [course.code, course]));
-    row.alternatives = [...alternativesByCode.values()].slice(0, 30).map((course) => {
+    const checkedAlternatives: CatalogCourse[] = [];
+    if (!unavailable) for (const course of alternativesByCode.values()) {
+      if (checkedAlternatives.length >= 30) break;
+      if (file) {
+        const fit = await schedules!.fit(file, [...termCodes(), course.code]);
+        checkCancelled();
+        if (fit === "unknown") unchecked = true;
+        if (fit !== "fits") continue;
+      }
+      checkedAlternatives.push(course);
+    }
+    row.alternatives = checkedAlternatives.map((course) => {
       const names = remainingFits.get(course.code) ?? [];
       const choice = makeChoice({ ...foundCourse(course), status: "planned", term: termLong(term) }, term, names.length ? `Could fill ${names.join(" / ")}.` : "Might help as preparation or a free elective.");
       if (choice.offering.credits === null) choice.reason += " Credits unknown; enter them before keeping it.";
       else choice.course.credits = choice.offering.credits;
       if (round(row.credits + choice.course.credits) > input.cap) choice.reason += " Doesn’t fit your limit.";
-      if (clashing.includes(course.code)) choice.reason += " Its class times clash with your other courses this term.";
       return choice;
     });
     const leftOut = clashing.filter((code) => !row.additions.some((choice) => choice.course.code === code));
     if (leftOut.length) row.issues.push(`Left out ${leftOut.length > 3 ? `${leftOut.slice(0, 3).join(", ")} and ${leftOut.length - 3} more` : leftOut.join(", ")}: their class times clash with your other courses this term.`);
-    if (unchecked) row.issues.push("Couldn’t check class times for this term, so these courses might clash.");
+    if (unchecked) row.issues.push("Couldn’t check class times for this term. Unchecked suggestions were left out.");
     row.unused = round(Math.max(0, input.cap - row.credits));
     if (slots > 6 || evaluations >= 180) { result.limited = true; row.issues.push("Stopped early to stay fast. Try fewer terms for a fuller plan."); }
     result.terms.push(row);
