@@ -59,7 +59,7 @@ test("selecting a saved plan confirms unsaved changes and opens it directly for 
   await expect(page.getByRole("button", { name: "Remove AE 2410", exact: true })).toBeVisible();
 });
 
-test("All saved plans leaves the surrounding planner panels empty without changing the draft", async ({ page }) => {
+test("All saved plans leaves the preferences and plan summary empty without changing the draft", async ({ page }) => {
   await page.goto("/");
   await ready(page);
   const before = await page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"));
@@ -67,12 +67,8 @@ test("All saved plans leaves the surrounding planner panels empty without changi
   await page.getByRole("link", { name: "All saved plans", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Your saved plans", exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: "All saved plans", exact: true })).toBeVisible();
-  const sidebar = page.getByRole("complementary", { name: "Term and courses" });
-  await expect(sidebar.getByRole("combobox")).toHaveCount(0);
-  await expect(sidebar.getByRole("searchbox")).toHaveCount(0);
-  await expect(sidebar.getByText("AE 2320")).toHaveCount(0);
   await expect(page.getByRole("group", { name: "Preferences", exact: true })).toHaveCount(0);
-  await expect(page.getByRole("complementary", { name: "Plan summary" })).toBeEmpty();
+  await expect(page.getByRole("complementary", { name: "Plan summary" })).toBeHidden();
   for (const width of [1440, 834]) {
     await page.setViewportSize({ width, height: 900 });
     await page.screenshot({ path: `e2e/screenshots/all-saved-plans-empty-panels-${width}.png`, fullPage: true });

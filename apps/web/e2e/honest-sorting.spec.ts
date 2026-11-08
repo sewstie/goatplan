@@ -1,4 +1,5 @@
 import { expect, test } from "./fixtures/test";
+import { blockSections } from "./fixtures/shownSections";
 import type { Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft, SortPresetId } from "../src/lib/store/types";
@@ -70,7 +71,7 @@ type Shown = { sections: string; badges: string[]; days: number };
 
 /** The shown schedule as the student sees it: its sections, its badges, and its days on campus in the calendar. */
 async function shownSchedule(page: Page): Promise<Shown> {
-  const rows = await page.getByRole("region", { name: "Your courses" }).locator("[data-course-row]").allInnerTexts();
+  const rows = await blockSections(page);
   const badges = await page.getByRole("list", { name: "This schedule" }).getByRole("listitem").allInnerTexts();
   const days = await page.getByRole("group", { name: "Calendar time grid" }).evaluate((grid) =>
     [...grid.querySelectorAll('[role="group"]')].filter((day) => day.querySelector("[data-block]:not([data-preview])")).length,

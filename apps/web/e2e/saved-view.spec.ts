@@ -37,13 +37,13 @@ test("saved URLs survive reload and back without changing the working draft", as
   await ready(page);
   const before = await page.evaluate(() => localStorage.getItem("goatplan:draft:v1:2027-C"));
   const foundLabel = await page.getByRole("group", { name: "Schedules", exact: true }).innerText();
-  await page.locator("main header").screenshot({ path: "e2e/screenshots/found-header-1440.png" });
+  await page.getByRole("banner").first().screenshot({ path: "e2e/screenshots/found-header-1440.png" });
   await expect(page.getByRole("group", { name: "Schedule source" })).toHaveCount(0);
   await page.goto("/?share=reserved&view=saved&plan=plan-1");
   await ready(page);
   await expect(page).toHaveURL(/view=saved&plan=plan-1/);
   await expect(page.getByRole("button", { name: "Previous saved plan" })).toHaveAttribute("aria-disabled", "true");
-  await page.locator("main header").screenshot({ path: "e2e/screenshots/saved-header-1440.png" });
+  await page.getByRole("banner").first().screenshot({ path: "e2e/screenshots/saved-header-1440.png" });
   await page.getByRole("button", { name: "Next saved plan" }).click();
   await expect(page).toHaveURL(/plan=plan-2/);
   await expect(page.getByRole("button", { name: "Next saved plan" })).toHaveAttribute("aria-disabled", "true");
@@ -92,8 +92,9 @@ test("the saved-plans page offers Back to planner instead of save controls", asy
   await page.getByRole("button", { name: "Saved plans", exact: true }).click();
   await page.getByRole("link", { name: "All saved plans" }).click();
   await expect(page).toHaveURL("/plans");
-  await expect(page.locator("main header").getByRole("button")).toHaveCount(0);
-  await page.locator("main header:visible").screenshot({ path: "e2e/screenshots/all-saved-header-1440.png" });
+  const bar = page.getByRole("banner").first();
+  for (const name of ["Save schedule", "Share", "Export"]) await expect(bar.getByRole("button", { name, exact: true })).toHaveCount(0);
+  await bar.screenshot({ path: "e2e/screenshots/all-saved-header-1440.png" });
   await page.getByRole("link", { name: "Back to planner" }).click();
   await expect(page).toHaveURL("/");
   await expect(page.getByRole("button", { name: "Remove AE 2320" })).toBeVisible();
@@ -103,7 +104,7 @@ test("the saved-plans page offers Back to planner instead of save controls", asy
 test("save states are shown by the button and the dropdown keeps only the requested actions", async ({ page }) => {
   await page.goto("/");
   await ready(page);
-  const header = page.locator("main header");
+  const header = page.getByRole("banner").first();
   await expect(header.getByText("Unsaved changes", { exact: true })).toHaveCount(0);
   for (const width of [1440, 834]) {
     await page.setViewportSize({ width, height: 900 });

@@ -114,8 +114,6 @@ for (const width of [1440, 834]) {
     await page.keyboard.press("Space");
     await expectSchedules(page, []);
     await expect(startsAfter(page)).toHaveText(startsAfterText(0));
-    await preferences(page).getByRole("button", { name: "2 blocked times" }).focus();
-    await page.keyboard.press("Enter");
     await expect(preferences(page).getByRole("button", { name: /Remove blocked time/ })).toHaveCount(2);
   });
 }
@@ -145,8 +143,7 @@ test("reload, saving, and saving a copy preserve configured preferences, profess
     await settled(page);
     await expect(startsAfter(page)).toHaveText(startsAfterText(540));
     await expect(onlyOpen(page)).not.toBeChecked();
-    await preferences(page).getByRole("button", { name: "1 blocked time" }).click();
-    await expect(preferences(page).getByRole("button", { name: "Remove blocked time Tue 12 PM–1 PM" })).toBeVisible();
+    await expect(preferences(page).getByRole("button", { name: /^Remove blocked time Tue 12/ })).toBeVisible();
     await expect(professor(page)).toHaveText("Ye Lu");
     await expect(details(page).getByRole("heading", { name: "Lecture C03", exact: true })).toBeVisible();
     await expect(details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true })).toBeVisible();
@@ -170,9 +167,7 @@ test("reload, saving, and saving a copy preserve configured preferences, profess
 
   for (const name of ["Mornings free", "Mornings copy"]) {
     await pickStartsAfter(preferences(page), 0);
-    const blockedPill = preferences(page).getByRole("button", { name: /^\d+ blocked time/ });
-    if ((await blockedPill.getAttribute("aria-expanded")) !== "true") await blockedPill.click();
-    await preferences(page).getByRole("button", { name: "Remove blocked time Tue 12 PM–1 PM" }).click();
+    await preferences(page).getByRole("button", { name: /^Remove blocked time Tue 12/ }).click();
     await details(page).getByRole("button", { name: "Unlock Lecture C03", exact: true }).click();
     await chooseProfessor(page, "Any professor");
     await onlyOpen(page).click();

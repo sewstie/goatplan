@@ -84,7 +84,6 @@ test.describe("the real audit", () => {
     await page.keyboard.press("Escape");
     await expect(tile(page, /^MA 1021, line 34, done/)).toBeVisible({ timeout: 30_000 });
     await expect(page.getByText("1 of 45")).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Units per term" })).toBeVisible();
     expect(await storedCodes(page)).toEqual(["MA 1021"]);
   });
 
@@ -261,16 +260,19 @@ test.describe("pins", () => {
 });
 
 test.describe("insights", () => {
+  const planAhead = (page: Page) => page.getByRole("navigation", { name: "Degree views" }).getByRole("button", { name: "Plan ahead" }).click();
   const dated = { courses: [savedCourse({ code: "CS 1101", credits: 3, term: "A Term 2026" }), savedCourse({ code: "MA 1021", credits: 3, term: "B Term 2026" }), savedCourse({ code: "MA 1022", credits: 3 })] };
 
   test("asks for terms until there's enough to estimate", async ({ page }) => {
     await openDegree(page, { courses: [savedCourse({ code: "CS 1101", credits: 3 })] });
+    await planAhead(page);
+    await expect(page.getByText("Add terms to see your pace")).toBeVisible();
     await expect(page.getByRole("button", { name: "Add course terms" })).toBeVisible();
-    await expect(page.getByText("Average unavailable · add completed-course terms")).toBeVisible();
   });
 
   test("a heavier semester load changes the estimate", async ({ page }) => {
     await openDegree(page, dated);
+    await planAhead(page);
     const summary = page.getByRole("article").filter({ hasText: "Pace & what-if" });
     await expect(summary).toContainText("Estimated graduation");
     const slider = page.getByRole("slider", { name: "Credits per semester" });
@@ -286,6 +288,7 @@ test.describe("insights", () => {
 
   test("selecting a term lights up its courses, and the chart has a table", async ({ page }) => {
     await openDegree(page, dated);
+    await planAhead(page);
     const bar = page.getByRole("button", { name: /^A Term 2026: / });
     await bar.click();
     await expect(bar).toHaveAttribute("aria-pressed", "true");

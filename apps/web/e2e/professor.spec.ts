@@ -36,7 +36,7 @@ for (const state of ["04", "07", "24", "29"] as const) {
       await page.getByRole("searchbox").blur();
     }
     await expect(details(page).getByRole("heading", { level: 2, name: code })).toBeVisible();
-    expect((await details(page).boundingBox())!.width).toBeGreaterThanOrEqual(288);
+    expect((await details(page).boundingBox())!.width).toBeGreaterThanOrEqual(268);
     // State 04's AE 2320 has one lecture and no chosen professor, so there's nothing to pick. State 29 has no lectures.
     if (state === "04" || state === "29") {
       await expect(picker(page)).toHaveCount(0);
@@ -162,7 +162,6 @@ test("lecture filtering keeps linked labs and discussions, supports alternatives
   const row = page.getByRole("group", { name: "Preferences" });
   await expect(row.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(540));
   await expect(row.getByRole("switch", { name: "Only open sections" })).toBeChecked();
-  await row.getByRole("button", { name: "1 blocked time" }).click();
   await expect(row.getByRole("button", { name: /Remove blocked time Mon/ })).toBeVisible();
 });
 

@@ -40,7 +40,9 @@ export function startsAfterLabel(minutes: number) {
 /** Picks a "Starts after" time from its list, like Sort. Phones use their own picker instead. */
 export async function pickStartsAfter(scope: Page | Locator, minutes: number) {
   const page = "page" in scope ? scope.page() : scope;
-  await scope.getByRole("combobox", { name: "Starts after" }).click();
+  // By keyboard, since an open guide can sit over the field.
+  await scope.getByRole("combobox", { name: "Starts after" }).focus();
+  await page.keyboard.press("Enter");
   await page.getByRole("listbox", { name: "Starts after" }).getByRole("option", { name: startsAfterLabel(minutes), exact: true }).click();
 }
 

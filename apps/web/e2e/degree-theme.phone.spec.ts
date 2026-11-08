@@ -1,22 +1,16 @@
-import { expect, openMoreActions, test } from "./fixtures/test";
+import { expect, test } from "./fixtures/test";
 import { auditReady, fixtureHistory, openDegree, openHistory, panel } from "./fixtures/degree";
 
-test("the degree phone menu changes the global theme with the keyboard", async ({ page }) => {
+test("the degree phone theme button changes the global theme with the keyboard", async ({ page }) => {
   await openDegree(page, fixtureHistory("degree-history-mid.json"));
-  await openMoreActions(page);
-  const theme = page.getByRole("switch", { name: "Dark theme" });
-  await expect(theme).toBeVisible();
-  await expect(theme).not.toBeChecked();
-  await theme.focus();
-  await page.keyboard.press("Space");
-  await expect(theme).toBeChecked();
+  const toDark = page.getByRole("button", { name: "Switch to dark theme" });
+  await toDark.focus();
+  await page.keyboard.press("Enter");
   await expect(page.locator("html")).toHaveCSS("color-scheme", "dark");
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("button", { name: "More actions" })).toBeFocused();
+  await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeFocused();
   await page.reload();
   await auditReady(page);
-  await openMoreActions(page);
-  await expect(theme).toBeChecked();
+  await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeVisible();
 });
 
 for (const theme of ["light", "dark"]) {
@@ -34,8 +28,6 @@ for (const theme of ["light", "dark"]) {
     await expect(panel(page, "Edit course")).toBeVisible();
     await capture("details");
     await page.keyboard.press("Escape");
-    await openMoreActions(page);
-    await expect(page.getByRole("switch", { name: "Dark theme" })).toHaveAttribute("aria-checked", String(theme === "dark"));
-    await page.keyboard.press("Escape");
+    await expect(page.getByRole("button", { name: theme === "dark" ? "Switch to light theme" : "Switch to dark theme" })).toBeVisible();
   });
 }
