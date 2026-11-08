@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/Button";
 import { DrawerFrame } from "@/components/ui/Drawer";
-import { Select } from "@/components/ui/Select";
 import { loadTerm } from "@/lib/data/load";
 import type { TermFile } from "@/lib/data/types";
 import { getEngineClient } from "@/lib/engine";
@@ -13,7 +12,9 @@ import { foundCourse, getDegreeSource, parseTerm, seminarTooEarly, suggestions, 
 import { useCourseCatalog } from "./useCourseCatalog";
 import { usePublishedTerms } from "./usePublishedTerms";
 import { useDegreeUi } from "./degreeUi";
-import { termChoices } from "./termChoices";
+import { TermPicker } from "./TermPicker";
+import { useCurrentTerm } from "./useCurrentTerm";
+import { usePlanStart } from "./usePlanStart";
 import { OpenInPlanner } from "./OpenInPlanner";
 
 function SuggestFrame({ inline, close, children }: { inline: boolean; close(): void; children: ReactNode }) {
@@ -25,6 +26,8 @@ export function SuggestCoursesPanel({ history, line, inline = false }: { history
   const catalog = useCourseCatalog();
   const { load } = catalog;
   const publishedTerms = usePublishedTerms();
+  const startYear = usePlanStart();
+  const current = useCurrentTerm();
   const [term, setTerm] = useState("A Term 2026");
   const [file, setFile] = useState<TermFile | null>(null);
   const [failed, setFailed] = useState(false);
@@ -54,7 +57,7 @@ export function SuggestCoursesPanel({ history, line, inline = false }: { history
   return (
     <SuggestFrame inline={inline} close={close}>
       <p className="pb-16 text-8-5 leading-17 text-ink-muted">Courses that fill an open line or check.</p>
-      <Select label={inline ? "Registration term" : "Term to plan for"} hideLabel={false} variant="box" options={termChoices().filter((option) => option.value)} value={term} onChange={(event) => { setTerm(event.target.value); setFailed(false); }} />
+      <TermPicker label={inline ? "Registration term" : "Term to plan for"} value={term} onChange={(value) => { setTerm(value); setFailed(false); }} startYear={startYear} current={current} />
       {catalog.failed && <div role="alert"><p className="py-8 text-8 text-ink-muted">The course catalog couldn’t be loaded.</p><Button variant="secondary" onClick={() => void load()}>Try again</Button></div>}
       {publishedTerms.status === "failed" && <div role="alert"><p className="py-8 text-8 text-ink-muted">Published terms couldn’t be loaded.</p><Button variant="secondary" onClick={publishedTerms.retry}>Try again</Button></div>}
       {failed && <Button variant="secondary" onClick={() => { setFailed(false); setOfferingAttempt((value) => value + 1); }}>Retry offerings</Button>}

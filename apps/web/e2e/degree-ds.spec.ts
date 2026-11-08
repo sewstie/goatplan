@@ -1,6 +1,7 @@
 import { expect, test } from "./fixtures/test";
 import { auditReady, openAllSections, openDegree, savedCourse } from "./fixtures/degree";
 import { SUGGESTIONS_ON } from "../src/components/degree/degreeFeatures";
+import { pickTerm } from "./fixtures/pickers";
 
 test("DS history drives search badges and explicit course suggestions", async ({ page }) => {
   test.skip(!SUGGESTIONS_ON, "Suggestions are paused");
@@ -9,7 +10,7 @@ test("DS history drives search badges and explicit course suggestions", async ({
   await page.getByRole("button", { name: "Sheet options" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Suggest courses", exact: true }).click();
   const suggestions = page.getByRole("region", { name: "Suggest courses", exact: true });
-  await suggestions.getByRole("combobox", { name: "Term to plan for" }).selectOption("C Term 2027");
+  await pickTerm(suggestions, "Term to plan for", "C Term 2027");
   const add = suggestions.getByRole("button", { name: /^Plan .* for C Term 2027$/ }).first();
   await expect(add).toBeVisible({ timeout: 60_000 });
   const code = (await add.getAttribute("aria-label"))!.replace(/^Plan /, "").replace(/ for C Term 2027$/, "");

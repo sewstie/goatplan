@@ -1,7 +1,7 @@
 "use client";
 
 import { Check } from "@phosphor-icons/react/ssr";
-import { Listbox } from "@/components/ui/Listbox";
+import { ListboxField } from "@/components/ui/ListboxField";
 import { examScores, unitLabel, type Exam, type ExamCreditPlan, type ExamProgram } from "@/lib/degree";
 import { ChoiceChips } from "./ChoiceChips";
 
@@ -20,10 +20,7 @@ export function ExamCreditFields({ program, exams, pick, plan, onPick, onTypeIns
   const scores = examScores(program).map((score) => ({ value: String(score), label: String(score) }));
   return (
     <div className="flex flex-col gap-16 pt-18">
-      <div className="flex flex-col">
-        <span className="pb-5 text-10 leading-14-5 font-650 text-ink">{program} exam</span>
-        <Listbox label={`${program} exam`} value={pick.examId} options={[{ value: "", label: "Choose your exam" }, ...exams.map((exam) => ({ value: exam.id, label: exam.name }))]} onChange={(examId) => onPick({ ...pick, examId })} />
-      </div>
+      <ListboxField label={`${program} exam`} value={pick.examId} options={[{ value: "", label: "Choose your exam" }, ...exams.map((exam) => ({ value: exam.id, label: exam.name }))]} onChange={(examId) => onPick({ ...pick, examId })} />
       <ChoiceChips label="Score" options={scores} value={pick.score === null ? "" : String(pick.score)} onChange={(score) => onPick({ ...pick, score: Number(score) })} />
       {plan && (
         <section aria-label="What this exam earns" className="rounded-card border border-card-line px-14 py-12">

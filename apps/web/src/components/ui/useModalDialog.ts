@@ -3,6 +3,7 @@
 import { useEffect, useRef, type MouseEvent, type PointerEvent } from "react";
 
 export const MODAL_OPEN = "dialog[open]";
+const FOCUSABLE = "button:not(:disabled):not([tabindex='-1']), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex='-1'])";
 
 /** Back to what opened the dialog, or to the screen's heading when that's gone. */
 function restoreFocus(target: HTMLElement | null) {
@@ -22,6 +23,8 @@ export function useModalDialog(open: boolean, onClose: () => void) {
     if (open && !dialog.open) {
       returnFocusTo.current = document.activeElement as HTMLElement | null;
       dialog.showModal();
+      const start = dialog.querySelector<HTMLElement>("[data-autofocus]");
+      (start?.matches(FOCUSABLE) || start?.hasAttribute("tabindex") ? start : start?.querySelector<HTMLElement>(FOCUSABLE))?.focus();
     } else if (!open && dialog.open) {
       closingFromState.current = true;
       dialog.close();

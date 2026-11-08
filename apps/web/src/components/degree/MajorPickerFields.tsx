@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { Select } from "@/components/ui/Select";
+import { ListboxField } from "@/components/ui/ListboxField";
 import { track } from "@/lib/analytics/track";
 import { getDegreeSource } from "@/lib/degree";
 import { SHEETS } from "@/lib/degree/sheets";
@@ -32,7 +32,7 @@ export function MajorPickerFields({ selected, onDone }: { selected: string | nul
           return <label key={major} className={value === id ? "degree-major-option degree-major-option-selected" : "degree-major-option"}><input type="radio" name="degree-major" value={id} checked={value === id} onChange={() => { setValue(id); setRequested(false); }} /><span><strong>{major}</strong><small>{option ? `${option.abbreviation} · Class of 2030` : "Coming soon"}</small></span></label>;
         })}
       </fieldset>
-      <Select label="When did you start?" hideLabel={false} value={start} options={[{ value: "2026", label: "A Term 2026" }, { value: "2027", label: "A Term 2027" }]} onChange={(event) => setStart(event.target.value)} />
+      <ListboxField label="When did you start?" value={start} options={[{ value: "2026", label: "A Term 2026" }, { value: "2027", label: "A Term 2027" }]} onChange={setStart} />
       <p className="text-caption text-ink-muted">Your plan grid and term choices start here.</p>
       <div className="rounded-card border border-card-line bg-canvas px-14 py-12 text-caption text-ink-muted"><strong>Other class years: coming soon</strong><p className="pt-6">Minors and double majors aren’t supported yet.</p></div>
       <button type="button" className="cursor-pointer text-left text-caption font-650 text-accent" onClick={() => { setValue("other"); setRequested(false); }}>Another major · Request this major</button>
