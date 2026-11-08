@@ -63,6 +63,7 @@ export function TermPicker({ label, value, onChange, startYear, current, allowNo
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<Spot>("none");
   const [portal, setPortal] = useState<HTMLElement | null>(null);
+  const [placement, setPlacement] = useState<{ side: "below" | "above"; wider: boolean }>({ side: "below", wider: false });
   const cells = grid(startYear, summer);
   const chosen = parseTerm(value);
   const tag = termTag(chosen, current);
@@ -88,10 +89,11 @@ export function TermPicker({ label, value, onChange, startYear, current, allowNo
     const anchor = trigger.current.getBoundingClientRect();
     popup.current.style.width = `${Math.max(anchor.width, 304)}px`;
     const size = popup.current.getBoundingClientRect();
-    const position = floatingPosition(anchor, size, { width: window.innerWidth, height: window.innerHeight }, { gap: 4 });
+    const position = floatingPosition(anchor, size, { width: window.innerWidth, height: window.innerHeight }, { gap: -1 });
     popup.current.style.left = `${position.left}px`;
     popup.current.style.top = `${position.top}px`;
     popup.current.style.visibility = "visible";
+    setPlacement({ side: position.top >= anchor.bottom - 1 ? "below" : "above", wider: size.width > anchor.width + 1 || position.left !== anchor.left });
   }, [open]);
 
   useEffect(() => {
@@ -152,7 +154,7 @@ export function TermPicker({ label, value, onChange, startYear, current, allowNo
             show();
           }
         }}
-        className="flex min-h-38 w-full cursor-pointer items-center gap-8 rounded-control border border-line bg-surface px-10 aria-expanded:outline-2 aria-expanded:outline-offset-2 aria-expanded:outline-focus text-left text-10 leading-14-5 text-ink hover:border-line-strong"
+        className={cx("flex min-h-38 w-full cursor-pointer items-center gap-8 rounded-control border border-line bg-surface px-10 aria-expanded:border-focus aria-expanded:hover:border-focus aria-expanded:outline-none text-left text-10 leading-14-5 text-ink hover:border-line-strong", open && (placement.side === "below" ? "rounded-b-none" : "rounded-t-none"))}
       >
         <CalendarBlank aria-hidden className="size-14 shrink-0 text-ink-muted" />
         <span id={`${id}-value`} className="flex-1 truncate">{chosen ? termLong(chosen) : "No term"}</span>
@@ -171,7 +173,7 @@ export function TermPicker({ label, value, onChange, startYear, current, allowNo
             if (next instanceof Node && (popup.current?.contains(next) || trigger.current?.contains(next))) return;
             if (next) setOpen(false);
           }}
-          className="term-picker invisible fixed z-40 rounded-listbox border border-listbox-line bg-surface p-10 text-ink shadow-listbox"
+          className={cx("term-picker invisible fixed z-40 rounded-control border border-focus bg-surface p-10 text-ink shadow-listbox", placement.side === "below" ? (placement.wider ? "rounded-tl-none" : "rounded-t-none") : placement.wider ? "rounded-bl-none" : "rounded-b-none")}
         >
           <div role="grid" aria-label="Terms by school year" className="grid grid-cols-[3.6rem_repeat(5,minmax(0,1fr))] gap-x-4 gap-y-5">
             <div role="row" className="contents">

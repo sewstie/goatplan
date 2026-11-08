@@ -235,7 +235,7 @@ describe("menu variant", () => {
       await user.click(screen.getByRole("combobox", { name: "Sort" }));
       const list = screen.getByRole("listbox", { name: "Sort" });
       expect(list.style.left).toBe(`${700 + 146 - listWidth}px`);
-      expect(list.style.top).toBe("128px");
+      expect(list.style.top).toBe("127px");
       expect(list.style.minWidth).toBe("146px");
     });
 
@@ -246,7 +246,7 @@ describe("menu variant", () => {
       await user.click(screen.getByRole("combobox", { name: "Sort" }));
       const list = screen.getByRole("listbox", { name: "Sort" });
       expect(list.style.left).toBe("8px");
-      expect(list.style.top).toBe(`${700 - 300}px`);
+      expect(list.style.top).toBe(`${700 + 1 - 300}px`);
     });
 
     it("keeps the field variant's list lined up with its left edge", async () => {
