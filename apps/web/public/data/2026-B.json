@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-07T15:35:21Z",
+  "generatedAt": "2026-11-08T15:53:22Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -3430,7 +3430,7 @@
       "level": "Graduate",
       "description": "ECE 574 ADVANCED DIGITAL SYSTEMS DESIGN (3 credits) This course introduces digital systems design using hardware description languages and their associated tooling to capture, integrate, verify, simulate, and synthesize digital hardware. The course will examine modern hardware design flows using high-level synthesis and register-transfer-level (RTL) synthesis. The course covers the role of hardware description languages in the verification, simulation, and integration process of hardware modules in large digital systems. The course projects offer an integrated experience in advanced digital systems design combining hardware description languages, hardware design methodologies, and hardware design practice on a programmable target such as a Field Programmable Gate Array, or on a chip-level target such as a standard-cell Application-Specific Integrated Circuit. (Prerequisites: Basic digital design, Experience with programming in a high-level language).",
       "sections": [
-        {"id":"ECE 574-F01","code":"F01","type":"lecture","status":"waitlist","enrolled":20,"capacity":20,"waitlist":{"taken":2,"capacity":10},"instructors":["Patrick Schaumont"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":1080,"end":1250,"location":"Atwater Kent 232"}]}
+        {"id":"ECE 574-F01","code":"F01","type":"lecture","status":"waitlist","enrolled":20,"capacity":20,"waitlist":{"taken":1,"capacity":10},"instructors":["Patrick Schaumont"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":1080,"end":1250,"location":"Atwater Kent 232"}]}
       ],
       "options": [
         ["ECE 574-F01"]

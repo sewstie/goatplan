@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-11-07T15:35:21Z",
+  "generatedAt": "2026-11-08T15:53:22Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -138,7 +138,7 @@
       "description": "This course presents applications of compressible fluid dynamics at an introductory graduate level. Topics are chosen from: conservation laws; propagation of disturbances; compressible flow with friction; method of characteristics, analysis and design of supersonic nozzles, diffusers, and inlets; transonic and supersonic thin-airfoil theory; three-dimensional compressible flows; compressible boundary layers; hypersonic flows; unsteady compressible flows. Students cannot receive credit for this course if they have taken AE 5093 ST: Applied Compressible Fluid Dynamics.",
       "sections": [
         {"id":"AE 5132-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":20,"capacity":20,"waitlist":{"taken":7,"capacity":30},"instructors":["David Olinger"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Kaven Hall 204"}]},
-        {"id":"AE 5132-D02","code":"D02","type":"lecture","status":"open","enrolled":6,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["David Olinger"],"delivery":"online-sync","meetings":[]}
+        {"id":"AE 5132-D02","code":"D02","type":"lecture","status":"open","enrolled":7,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["David Olinger"],"delivery":"online-sync","meetings":[]}
       ],
       "options": [
         ["AE 5132-D01"],
@@ -2316,7 +2316,7 @@
       "level": "Graduate",
       "description": "This course is an introduction to the design, analysis and proofs of correctness of algorithms. Examples are drawn from algorithms for many areas. Analysis techniques include asymptotic worst case and average case, as well as amortized analysis. Average case analysis includes the development of a probability model. Techniques for proving lower bounds on complexity are discussed, along with NP-completeness. Prerequisites: an undergraduate knowledge of discrete mathematics and data structures. Note: students with a strong background in design and analysis of computer systems, at the level equal to a BS in computer science, should not take CS 5084 and should consider taking CS 504 or CS 584.",
       "sections": [
-        {"id":"CS 5084-S01","code":"S01","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Joseph Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 5084-S01","code":"S01","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Joseph Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 5084-S01"]
@@ -2330,7 +2330,7 @@
       "level": "Graduate",
       "description": "This course introduces students to a methodology and specific design techniques for team-based development of a software system. Against the back-drop of the software engineering life-cycle, this course focuses on the object-oriented paradigm and its supporting processes and tools. Students will be exposed to industrial-accepted standards and tools, such as requirements elicitation, specification, modeling notations, design patterns, software architecture, integrated development environments and testing frameworks. Students will be expected to work together in teams in the complete specification, implementation and testing of a software application. Prerequisites: knowledge of a recursive high-level language and data structures. An undergraduate course in software engineering is desirable.",
       "sections": [
-        {"id":"CS 509-S01","code":"S01","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Larz White"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 509-S01","code":"S01","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Larz White"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 509-S01"]
@@ -3320,7 +3320,7 @@
       "level": "Graduate",
       "description": "This graduate level course introduces the student to the effects of electromagnetic transients in distribution systems. Topics include transient analysis, lightning and switching surges, mechanisms of transient generation, insulation coordination, grounding, surge protection devices, and shielding. Prerequisite: ECE 5500 Power System Analysis.",
       "sections": [
-        {"id":"ECE 5511-LS01","code":"LS01","type":"lecture","status":"open","enrolled":6,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Edvina Uzunovic"],"delivery":"online-async","dates":{"start":"2027-04-12","end":"2027-06-25"},"meetings":[]},
+        {"id":"ECE 5511-LS01","code":"LS01","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Edvina Uzunovic"],"delivery":"online-async","dates":{"start":"2027-04-12","end":"2027-06-25"},"meetings":[]},
         {"id":"ECE 5511-S01","code":"S01","type":"lecture","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":3,"capacity":20},"instructors":["Edvina Uzunovic"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
@@ -4604,8 +4604,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course explores different types of story within gaming and other interactivemedia. It delineates between linear, branching, and emergent storytelling,identifies hybrids, and finds new modes of making compelling narrative. Avariety of games are discussed, including early text-based adventures, role-playinggames, shooters, and strategy games. Students will construct characters situations, and narratives through game play and scripted cut scenes. Studentswill explore and use visual storytelling techniques.",
       "sections": [
-        {"id":"IMGD 1002-D01","code":"D01","type":"lecture","status":"open","enrolled":7,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["John Domenico Calvelli"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Olin Hall 218"}]},
-        {"id":"IMGD 1002-D02","code":"D02","type":"lecture","status":"open","enrolled":12,"capacity":24,"waitlist":{"taken":2,"capacity":10},"instructors":["Melissa Kagen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Olin Hall 223"}]},
+        {"id":"IMGD 1002-D01","code":"D01","type":"lecture","status":"open","enrolled":6,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["John Domenico Calvelli"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Olin Hall 218"}]},
+        {"id":"IMGD 1002-D02","code":"D02","type":"lecture","status":"open","enrolled":12,"capacity":24,"waitlist":{"taken":1,"capacity":10},"instructors":["Melissa Kagen"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Olin Hall 223"}]},
         {"id":"IMGD 1002-D03","code":"D03","type":"lecture","status":"open","enrolled":8,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Karen Stewart"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Stratton Hall 202"}]}
       ],
       "options": [
@@ -5260,11 +5260,11 @@
       "description": "Cat. I This course is designed to introduce the student to probability.Topics to be covered are: basic probability theory including Bayes theorem;discrete and continuous random variables; special distributions including theBernoulli, Binomial, Geometric, Poisson, Uniform, Normal, Exponential, Chisquare,Gamma, Weibull, and Beta distributions; multivariate distributions;conditional and marginal distributions; independence; expectation; transformationsof univariate random variables.Recommended background: MA 1024.",
       "sections": [
         {"id":"MA 2621-DD01","code":"DD01","type":"discussion","status":"open","enrolled":26,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":780,"end":830,"location":"Stratton Hall 205"}]},
-        {"id":"MA 2621-DD03","code":"DD03","type":"discussion","status":"open","enrolled":19,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":660,"end":710,"location":"Stratton Hall 205"}]},
-        {"id":"MA 2621-DD04","code":"DD04","type":"discussion","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Buddika Peiris"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Stratton Hall 301"}]},
+        {"id":"MA 2621-DD03","code":"DD03","type":"discussion","status":"open","enrolled":18,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":660,"end":710,"location":"Stratton Hall 205"}]},
+        {"id":"MA 2621-DD04","code":"DD04","type":"discussion","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Buddika Peiris"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Stratton Hall 301"}]},
         {"id":"MA 2621-DD05","code":"DD05","type":"discussion","status":"open","enrolled":4,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Buddika Peiris"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":590,"location":"Stratton Hall 301"}]},
-        {"id":"MA 2621-DL01","code":"DL01","type":"lecture","status":"open","enrolled":45,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
-        {"id":"MA 2621-DL02","code":"DL02","type":"lecture","status":"open","enrolled":38,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Buddika Peiris"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Kaven Hall 116"}]}
+        {"id":"MA 2621-DL01","code":"DL01","type":"lecture","status":"open","enrolled":44,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Sajal Chakroborty"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
+        {"id":"MA 2621-DL02","code":"DL02","type":"lecture","status":"open","enrolled":39,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Buddika Peiris"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Kaven Hall 116"}]}
       ],
       "options": [
         ["MA 2621-DD01","MA 2621-DL01"],
@@ -5396,7 +5396,7 @@
       "level": "Undergraduate",
       "description": "Cat. II The course gives an introduction to differential geometry with a focus onRiemannian geometry. Starting with the geometry of curves and surfaces in thethree-dimensional Euclidean space and Riemannian metrics in 2 and higherdimensions, the course introduces the first fundamental form, tangent bundles,vector fields, distance functions and geodesics, followed by covariant derivativesand second fundamental form. The proof of Gauss’s Theorema Egregium ishighlighted. Additional topics are by instructor’s discretion. Students may notreceive credit for both MA 489X and MA 4895.Recommended background: Advanced Linear Algebra and Real Analysis (e.g.,MA 2073 Theoretical Linear Algebra and MA 3831 Principles of Real Analysis,or equivalent)",
       "sections": [
-        {"id":"MA 4895-D01","code":"D01","type":"lecture","status":"open","enrolled":6,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Min Wu"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Stratton Hall 313"}]}
+        {"id":"MA 4895-D01","code":"D01","type":"lecture","status":"open","enrolled":7,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Min Wu"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Stratton Hall 313"}]}
       ],
       "options": [
         ["MA 4895-D01"]
@@ -5453,7 +5453,7 @@
       "description": "This course is an introduction to statistics forgraduate students in engineering and the sciences.Topics covered include basic data analysis, issues in the design of studies, an introduction to probability,point and interval estimation and hypothesistesting for means and proportions from oneand two samples, simple and multiple regression,analysis of one and two-way tables, one-way analysisof variance. As time permits, additional topics,such as distribution-free methods and the designand analysis of factorial studies will be considered.(Prerequisites: Integral and differential calculus.)",
       "sections": [
         {"id":"MA 511-S01","code":"S01","type":"lecture","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Carly Thorp"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Stratton Hall 202"}]},
-        {"id":"MA 511-S02","code":"S02","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Michael Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"MA 511-S02","code":"S02","type":"lecture","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Michael Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["MA 511-S01"],
@@ -6467,7 +6467,7 @@
       "description": "MU 1100 Foundations of Music Theory and Aural Skills (1/3 unit; Cat. I) This course introduces basic music theory concepts and helps students develop aural skills. Course topics include scales, intervals, chords, harmonic progressions, and rhythm. Activities include both written work in music notation and ear training exercises. Recommended Background: some basic knowledge of reading music",
       "sections": [
         {"id":"MU 1100-D01","code":"D01","type":"lecture","status":"open","enrolled":6,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Mitchell Lutch"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Alden Hall B06 Janet Earle Room"}]},
-        {"id":"MU 1100-D02","code":"D02","type":"lecture","status":"open","enrolled":5,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Monica Hatch Moysey"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Alden Hall B06 Janet Earle Room"}]},
+        {"id":"MU 1100-D02","code":"D02","type":"lecture","status":"open","enrolled":6,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Monica Hatch Moysey"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Alden Hall B06 Janet Earle Room"}]},
         {"id":"MU 1100-D03","code":"D03","type":"lecture","status":"open","enrolled":3,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Monica Hatch Moysey"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Alden Hall B06 Janet Earle Room"}]}
       ],
       "options": [
@@ -8133,7 +8133,7 @@
       "description": "Cat. I (1/12 unit) Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
         {"id":"WPE 1012-D01","code":"D01","type":"workshop","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":3,"capacity":15},"instructors":["John Salivonchik"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":890,"location":"Recreation Center Courts 1-2"}]},
-        {"id":"WPE 1012-D02","code":"D02","type":"workshop","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["Christopher Bartley"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Courts 1-2"}]}
+        {"id":"WPE 1012-D02","code":"D02","type":"workshop","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":15},"instructors":["Christopher Bartley"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
         ["WPE 1012-D01"],

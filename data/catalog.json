@@ -11809,6 +11809,16 @@
       ]
     },
     {
+      "code": "PH 101X",
+      "title": "Frontiers And Opportunities In Physics",
+      "credits": 3,
+      "level": "Undergraduate",
+      "lastOffered": "2027-C",
+      "termLetters": [
+        "C"
+      ]
+    },
+    {
       "code": "PH 1110",
       "title": "General Physics-Mechanics",
       "credits": 3,
@@ -12653,6 +12663,16 @@
         "B",
         "C",
         "D"
+      ]
+    },
+    {
+      "code": "RBE 101X",
+      "title": "Selected Topics in Robotics Engineering",
+      "credits": 3,
+      "level": "Undergraduate",
+      "lastOffered": "2027-C",
+      "termLetters": [
+        "C"
       ]
     },
     {

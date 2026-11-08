@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05"},
-  "generatedAt": "2026-11-07T15:35:21Z",
+  "generatedAt": "2026-11-08T15:53:22Z",
   "courses": [
     {
       "code": "AB 1533",
@@ -506,7 +506,7 @@
       "level": "Undergraduate",
       "description": "BB 1101: Foundations of Cellular and Molecular Biotechnology. In this foundational course, students will explore the cellular and molecular basis of life through lectures, discussion, and project work. Students will gain an understanding of how genetic information is stored and used, as well as how the structures of cells underlie their functions. There will be a focus on the application of these topics to genetic engineering and biotechnology. This course is designed for BBT majors and minors, as well as others who plan further study in topics such as cell biology, molecular biology, and genetics. Credit cannot be received for both BB 1101 and BB 1035. Units: 1/3 Category: Category I Recommended Background: a solid working knowledge of biological principles such as would be learned in a rigorous high school biology course.",
       "sections": [
-        {"id":"BB 1101-C01","code":"C01","type":"lecture","status":"open","enrolled":57,"capacity":72,"waitlist":{"taken":0,"capacity":20},"instructors":["Louis Roberts"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Unity Hall 420"}]}
+        {"id":"BB 1101-C01","code":"C01","type":"lecture","status":"open","enrolled":58,"capacity":72,"waitlist":{"taken":0,"capacity":20},"instructors":["Louis Roberts"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Unity Hall 420"}]}
       ],
       "options": [
         ["BB 1101-C01"]
@@ -2027,8 +2027,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides the student with an understanding of the basic components of a general-purpose operating system. Topics include processes, process management, synchronization, input/output devices and their programming, interrupts, memory management, resource allocation, and an introduction to file systems. Students will be expected to design and implement a large piece ofsystem software in the C programming language.Undergraduate credit may not be earned both for this course and for CS 502.Recommended background: CS 2303 or CS 2301, and CS 2011.",
       "sections": [
-        {"id":"CS 3013-C01","code":"C01","type":"lecture","status":"open","enrolled":66,"capacity":80,"waitlist":{"taken":0,"capacity":20},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Washburn 229"}]},
-        {"id":"CS 3013-C02","code":"C02","type":"lecture","status":"closed","enrolled":16,"capacity":5,"waitlist":{"taken":0,"capacity":0},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Washburn 229"}]}
+        {"id":"CS 3013-C01","code":"C01","type":"lecture","status":"open","enrolled":65,"capacity":80,"waitlist":{"taken":0,"capacity":20},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Washburn 229"}]},
+        {"id":"CS 3013-C02","code":"C02","type":"lecture","status":"closed","enrolled":15,"capacity":5,"waitlist":{"taken":0,"capacity":0},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Washburn 229"}]}
       ],
       "options": [
         ["CS 3013-C01"],
@@ -2205,7 +2205,7 @@
       "level": "Undergraduate",
       "description": "Cat.I In this course, students will explore both theoretical and practical aspects of machine learning, including algorithms for regression, classification, dimensionality reduction, clustering, and density estimation. Specific topics may include neural networks and deep learning, Bayesian networks and probabilistic graphical models, principal component analysis, k-means clustering, decision trees and random forests, support vector machines, and kernel methods. Recommended background: Multivariate Calculus (MA 1024 or MA 1034), Linear Algebra (such as MA 2071), Probability (MA 2621 or MA 2631), and Algorithms (CS 2223). Students may not earn credit for both CS 453X and CS 4342. Undergraduate credit may not be earned both for this course and for CS 539.",
       "sections": [
-        {"id":"CS 4342-C01","code":"C01","type":"lecture","status":"open","enrolled":34,"capacity":70,"waitlist":{"taken":0,"capacity":10},"instructors":["Walter Gerych"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Washburn 229"}]}
+        {"id":"CS 4342-C01","code":"C01","type":"lecture","status":"open","enrolled":35,"capacity":70,"waitlist":{"taken":0,"capacity":10},"instructors":["Walter Gerych"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Washburn 229"}]}
       ],
       "options": [
         ["CS 4342-C01"]
@@ -2359,7 +2359,7 @@
       "level": "Graduate",
       "description": "This course is an introduction to the design, analysis and proofs of correctness of algorithms. Examples are drawn from algorithms for many areas. Analysis techniques include asymptotic worst case and average case, as well as amortized analysis. Average case analysis includes the development of a probability model. Techniques for proving lower bounds on complexity are discussed, along with NP-completeness. Prerequisites: an undergraduate knowledge of discrete mathematics and data structures. Note: students with a strong background in design and analysis of computer systems, at the level equal to a BS in computer science, should not take CS 5084 and should consider taking CS 504 or CS 584.",
       "sections": [
-        {"id":"CS 5084-S01","code":"S01","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Joseph Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 5084-S01","code":"S01","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Joseph Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 5084-S01"]
@@ -2373,7 +2373,7 @@
       "level": "Graduate",
       "description": "This course introduces students to a methodology and specific design techniques for team-based development of a software system. Against the back-drop of the software engineering life-cycle, this course focuses on the object-oriented paradigm and its supporting processes and tools. Students will be exposed to industrial-accepted standards and tools, such as requirements elicitation, specification, modeling notations, design patterns, software architecture, integrated development environments and testing frameworks. Students will be expected to work together in teams in the complete specification, implementation and testing of a software application. Prerequisites: knowledge of a recursive high-level language and data structures. An undergraduate course in software engineering is desirable.",
       "sections": [
-        {"id":"CS 509-S01","code":"S01","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Larz White"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CS 509-S01","code":"S01","type":"lecture","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Larz White"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CS 509-S01"]
@@ -3123,10 +3123,10 @@
       "level": "Undergraduate",
       "description": "Cat. I This course covers the systematic design of advanced digital systems using FPGAs. The emphasis is on top-down design starting with high level models using a hardware description language (such as VHDL or Verilog) as a tool for the design, synthesis, modeling, test bench development, and testing and verification of complete digital systems. These types of systems include the use of embedded soft core processors as well as lower level modules created from custom logic or imported IP blocks. Interfaces will be developed to access devices external to the FPGA such as memory or peripheral communication devices. The integration of tools and design methodologies will be addressed through a discussion of system on a chip (SOC) integration, methodologies, design for performance, and design for test. Topics: Hardware description languages, system modeling, synthesis, simulation and testing of digital circuits; Design integration to achieve specific system design goals including architecture, planning and integration, and testing; Use of soft core and IP modules to meet specific architecture and design goals. Laboratory exercises: Students will design and implement a complete sophisticated embedded digital system on an FPGA. HDL design of digital systems including lower level components and integration of higher level IP cores, simulating the design with test benches, and synthesizing and implementing these designs with FPGA development boards including interfacing to external devices. Recommended background: ECE 2029 and ECE 2049 Students who have received credit for ECE 3810 may not receive credit for ECE 3829.",
       "sections": [
-        {"id":"ECE 3829-CL01","code":"CL01","type":"lecture","status":"open","enrolled":59,"capacity":84,"waitlist":{"taken":0,"capacity":20},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Atwater Kent 219"}]},
+        {"id":"ECE 3829-CL01","code":"CL01","type":"lecture","status":"open","enrolled":60,"capacity":84,"waitlist":{"taken":0,"capacity":20},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":660,"end":710,"location":"Atwater Kent 219"}]},
         {"id":"ECE 3829-CX01","code":"CX01","type":"lab","status":"open","enrolled":23,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":480,"end":650,"location":"Atwater Kent 317 ECE Lab"}]},
         {"id":"ECE 3829-CX02","code":"CX02","type":"lab","status":"open","enrolled":19,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]},
-        {"id":"ECE 3829-CX03","code":"CX03","type":"lab","status":"open","enrolled":17,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]}
+        {"id":"ECE 3829-CX03","code":"CX03","type":"lab","status":"open","enrolled":18,"capacity":28,"waitlist":{"taken":0,"capacity":0},"instructors":["Shahin Tajik"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":1010,"location":"Atwater Kent 317 ECE Lab"}]}
       ],
       "options": [
         ["ECE 3829-CL01","ECE 3829-CX01"],
@@ -5501,7 +5501,7 @@
       "description": "This course is an introduction to statistics forgraduate students in engineering and the sciences.Topics covered include basic data analysis, issues in the design of studies, an introduction to probability,point and interval estimation and hypothesistesting for means and proportions from oneand two samples, simple and multiple regression,analysis of one and two-way tables, one-way analysisof variance. As time permits, additional topics,such as distribution-free methods and the designand analysis of factorial studies will be considered.(Prerequisites: Integral and differential calculus.)",
       "sections": [
         {"id":"MA 511-S01","code":"S01","type":"lecture","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Carly Thorp"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Stratton Hall 202"}]},
-        {"id":"MA 511-S02","code":"S02","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Michael Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
+        {"id":"MA 511-S02","code":"S02","type":"lecture","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":5,"capacity":20},"instructors":["Michael Johnson"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-04-05"},"meetings":[]}
       ],
       "options": [
         ["MA 511-S01"],
@@ -8339,7 +8339,7 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/12 unit) Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
-        {"id":"WPE 1018-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":28,"capacity":28,"waitlist":{"taken":6,"capacity":10},"instructors":["Mickey Cahoon"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Recreation Center Courts 1-2"}]},
+        {"id":"WPE 1018-C01","code":"C01","type":"workshop","status":"waitlist","enrolled":28,"capacity":28,"waitlist":{"taken":7,"capacity":10},"instructors":["Mickey Cahoon"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":660,"end":710,"location":"Recreation Center Courts 1-2"}]},
         {"id":"WPE 1018-C02","code":"C02","type":"workshop","status":"waitlist","enrolled":28,"capacity":28,"waitlist":{"taken":6,"capacity":10},"instructors":["Cherise Galasso"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
