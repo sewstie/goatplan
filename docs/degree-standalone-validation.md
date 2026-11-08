@@ -21,15 +21,10 @@ The catalog contains 1,487 records. Of these, 340 have no observed offering in
 the published 2026–27 data. Three catalog identifiers lack numbered registration
 codes. They stay in history for review and cannot break the audit.
 
-## Screenshots and review
-
-Screenshots are in `apps/web/e2e/screenshots/`:
-
-- `degree-standalone-1440.png`, `degree-standalone-834.png`, `degree-standalone-375.png`
-- `degree-suggestions-1440.png`, `degree-suggestions-834.png`, `degree-suggestions-375.png`
+## Review
 
 The UI reviewer found no blocking issues in the main sheet or suggestion panel
-at these widths. The design PNG comparison could not run because
+at 1440, 834 and 375 px. The design PNG comparison could not run because
 `docs/design/frames.md` and `docs/design/screens/` are absent from this checkout.
 
 ## Full-suite limitation

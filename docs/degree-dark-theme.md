@@ -22,10 +22,9 @@ phone controls, then the light tile surfaces. UI review caught the adjacent
 planned and empty progress colors; a regression test covers that pair and
 the completed/planned pair.
 
-Production screenshots are in `apps/web/e2e/screenshots/degree-theme-*.png`.
-They cover sheet and list views, charts and tables, term pickers, history,
-details, checks and validation feedback in both themes at 1440 and 834 px.
-Phone captures cover the sheet, history, details and confirmations at 375 px.
+Production captures covered sheet and list views, charts and tables, term
+pickers, history, details, checks and validation feedback in both themes at
+1440 and 834 px, and the sheet, history, details and confirmations at 375 px.
 Chart captures show the card directly so the insights scroller cannot hide it.
 
 ## Validation

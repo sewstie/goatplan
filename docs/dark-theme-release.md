@@ -27,10 +27,6 @@ checkout. This evidence does not validate those unfinished changes.
 - Light planner captures at 1440 and 834 px differed only by one RGB level on
   61 and 19 pixels respectively, consistent with rasterization noise.
 
-Screenshots are in `apps/web/e2e/screenshots/theme-release-*.png`. They include
-both themes for all three widths. Ticket 10's `theme-*.png` captures also cover
-drawing mode, blocked-time hatching and keyboard focus.
-
 Five older browser failures reproduce before ticket 11: four checks still
 look for planner actions in the removed `main header`, and the long
 registration-list check expects no nested scrolling at tablet width. These
