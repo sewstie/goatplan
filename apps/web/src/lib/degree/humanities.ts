@@ -1,6 +1,6 @@
 import type { HistoryCourse } from "./history";
 import type { TrackingSheet } from "./sheets/types";
-import { parseTerm, termRank } from "./terms";
+import { parseTerm, termRank, type TermName } from "./terms";
 
 export const HUA_GROUPINGS = {
   "art-drama-music": ["AR", "TH", "MU"],
@@ -80,4 +80,54 @@ export function applyHuaPath(sheet: TrackingSheet, path: HuaPath): TrackingSheet
     checks: sheet.checks.filter((check) => !removed.has(check.id)),
     manualItems: sheet.manualItems.filter((item) => !confirmations.has(item.id)),
   };
+}
+
+const AREA_NAMES: Record<string, string> = {
+  "art-drama-music": "art, drama and music",
+  "modern-languages": "languages",
+  "literature-writing": "literature and writing",
+  "history-humanities": "history and humanities",
+  "philosophy-religion": "philosophy and religion",
+};
+const SEMINAR_AFTER = 5;
+
+function areaWords(names: readonly string[]): string {
+  const words = names.map((name) => AREA_NAMES[name] ?? name);
+  return words.length < 2 ? words.join("") : `${words.slice(0, -1).join(", ")} or ${words.at(-1)}`;
+}
+
+export function huaProblem(code: string, courses: readonly HistoryCourse[], sheet: TrackingSheet): string | null {
+  const depth = sheet.checks.find((check) => check.type === "groupDepth");
+  const breadth = sheet.checks.find((check) => check.type === "groupBreadth");
+  if (!depth || !breadth?.groupings || SEMINAR_CODES.includes(code)) return null;
+  const order = breadth.groupingOrder ?? Object.keys(breadth.groupings);
+  const areaOf = (name: string) => order.find((area) => breadth.groupings![area].includes(subjectOf(name))) ?? null;
+  const area = areaOf(code);
+  if (!area) return null;
+  const slots = depth.lines?.length ?? 0;
+  const needed = depth.minCourses ?? 0;
+  const before = humanitiesCourses(courses.filter((course) => course.code !== code)).map((course) => areaOf(course.code));
+  if (before.length >= slots) return null;
+  const fits = (list: readonly (string | null)[]) => {
+    const open = slots - list.length;
+    return order.filter((target) => {
+      const count = list.filter((item) => item === target).length;
+      const missing = Math.max(0, needed - count);
+      return missing <= open && (list.length - count + open - missing >= 1 || target === breadth.exceptionGrouping);
+    });
+  };
+  const possible = fits(before);
+  if (!possible.length || fits([...before, area]).length) return null;
+  const done = possible.find((target) => before.filter((item) => item === target).length >= needed);
+  if (done) return `${code} won’t count toward humanities. Your depth is in ${areaWords([done])}, so your last humanities course has to come from another area for breadth.`;
+  return `${code} won’t count toward humanities. To finish depth in the courses you have left, pick from ${areaWords(possible)}.`;
+}
+
+export function seminarTooEarly(code: string, courses: readonly HistoryCourse[], term: TermName): boolean {
+  if (!SEMINAR_CODES.includes(code)) return false;
+  const before = humanitiesCourses(courses).filter((course) => {
+    const when = parseTerm(course.term);
+    return when ? termRank(when) < termRank(term) : course.status === "taken";
+  });
+  return before.length < SEMINAR_AFTER;
 }

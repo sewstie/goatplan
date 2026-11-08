@@ -2,6 +2,7 @@ import type { Course } from "@/lib/data/types";
 import { getEngineClient, type AuditRequest, type AuditSuccess } from "@/lib/engine";
 import { AUDIT_DELAY_MS, getDegreeSource, type AuditEngine, type DegreeSource } from "./degreeSource";
 import { buildAuditRequest, foundCourse, hasRegistrationCode, type DegreeHistory } from "./history";
+import { huaProblem } from "./humanities";
 import { DEFAULT_SHEET_ID, loadSheet, type TrackingSheet } from "./sheets";
 
 export interface OpenTerm {
@@ -95,8 +96,12 @@ export function createGapSource({ degree, engine }: GapSourceDeps): GapSource {
       if (snapshot.selectedSheetId === null) return;
       const sheet = snapshot.sheet ?? await loadSheet(snapshot.history.sheetId ?? DEFAULT_SHEET_ID);
       if (asked !== latest) return;
-      const response = await engine.audit(buildGapRequest(degree.getSnapshot().history, term, sheet));
-      if (response.ok) next = { status: "ready", closes: readAnswers(response), details: readDetails(response) };
+      const history = degree.getSnapshot().history;
+      const response = await engine.audit(buildGapRequest(history, term, sheet));
+      if (response.ok) {
+        const counted = { ...response, candidateResults: response.candidateResults.filter((candidate) => !huaProblem(candidate.code, history.courses, sheet)) };
+        next = { status: "ready", closes: readAnswers(counted), details: readDetails(counted) };
+      }
     } catch {
       // Search carries on without badges.
     }

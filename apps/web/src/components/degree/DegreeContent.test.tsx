@@ -424,6 +424,31 @@ describe("course history", () => {
     expect(stored().courses).toEqual([]);
   });
 
+  it("won't plan a humanities course that can't count, but still records one already taken", async () => {
+    catalog.courses = [course("EN 2231", "Shakespeare"), course("HI 1310", "Introduction to American History")];
+    const { user } = await setup(["EN 1251", "EN 2211", "EN 2221", "WR 1011"].map((code) => saved(code, { term: "A Term 2026" })));
+    await auditReady();
+    await user.click(screen.getByRole("button", { name: "Add courses" }));
+    const panel = within(screen.getByRole("region", { name: "Add courses" }));
+    await user.click(panel.getByRole("button", { name: "Planned" }));
+    const box = panel.getByRole("combobox", { name: "Course code or title" });
+    await user.type(box, "EN 2231");
+    expect(await panel.findByText("Can’t count")).toBeVisible();
+    expect(panel.queryByRole("button", { name: "Add EN 2231" })).not.toBeInTheDocument();
+    await user.keyboard("{Enter}");
+    expect(stored().courses).toHaveLength(4);
+    expect(panel.getByRole("status")).toHaveTextContent("EN 2231 won’t count toward humanities. Your depth is in literature and writing");
+    await user.clear(box);
+    await user.type(box, "HI 1310");
+    expect(await panel.findByRole("button", { name: "Add HI 1310" })).toBeVisible();
+    await user.click(panel.getByRole("button", { name: "Taken" }));
+    await user.clear(box);
+    await user.type(box, "EN 2231");
+    await user.click(await panel.findByRole("button", { name: "Add EN 2231" }));
+    expect(stored().courses).toHaveLength(5);
+    expect(panel.getByRole("status")).toHaveTextContent(/added to .* as taken\. EN 2231 won’t count toward humanities/);
+  });
+
   it("says so when Enter picks a course that's already in history", async () => {
     const { user } = await setup([saved("CS 2102")]);
     await user.click(screen.getByRole("button", { name: "Add courses" }));
