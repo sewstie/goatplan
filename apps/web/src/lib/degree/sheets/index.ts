@@ -67,13 +67,6 @@ export const SHEETS: readonly SheetMetadata[] = [{
   officialLines: Array.from({ length: 45 }, (_, index) => index + 1),
 }];
 
-export function isDegreeReleased(): boolean {
-  return ["cs-2030", "rbe-2030", "me-2030", "ece-2030", "ds-2030"].every((id) => {
-    const sheet = SHEETS.find((item) => item.id === id);
-    return sheet?.status === "checked" && !!sheet.verification?.student.trim() && /^\d{4}-\d{2}-\d{2}$/.test(sheet.verification.date);
-  });
-}
-
 const loaders: Record<string, () => Promise<TrackingSheet>> = {
   "ds-2030": async () => (await import("./ds-2030.json")).default as TrackingSheet,
   "ece-2030": async () => (await import("./ece-2030.json")).default as TrackingSheet,

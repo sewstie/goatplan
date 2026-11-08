@@ -275,8 +275,7 @@ planner action wrapper, which applies compact button styles.
 
 `PhoneTopBar` accepts `navigation`. `PlannerShell.phoneNavigation` forwards
 to it through `PhonePlanner`. Omit navigation slots to use `MainTabs` and
-`PhoneTabBar`. The degree restoration owns those components and the tester
-flag. Keep unavailable routes hidden until their feature is restored.
+`PhoneTabBar`, which always show Planner and My degree.
 
 `PlannerShell.phoneMenuActions` forwards to `PhonePlanner.menuActions` and
 `PhoneScheduleScreen.menuActions`. These actions use the existing More actions
@@ -310,10 +309,10 @@ progress distinct from planned progress without changing Light. See
 
 ## My degree
 
-`/degree` is available to invited testers through `/#enable-degree`. The
-`goatplan:degree:v1` browser flag controls both navigation and the page gate.
-Without it, the page redirects to the planner and search shows no degree badges.
-Restoring this feature does not open the public major launch.
+`/degree` is open to everyone, with all five Class of 2030 majors (CS, RBE, ME,
+ECE and DS). There is no tester flag or page gate. Each sheet's `status` and
+`verification` in `lib/degree/sheets` only record whether a student has checked
+it against Workday.
 
 `lib/degree` owns history and audit state separately from the planner store.
 History stays under `goatplan:history:v1`. Version 2 records have an explicit

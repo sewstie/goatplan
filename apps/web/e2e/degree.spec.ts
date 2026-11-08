@@ -1,6 +1,6 @@
 import { expect, test } from "./fixtures/test";
 import type { Page } from "@playwright/test";
-import { auditReady, DEGREE_FLAG_KEY, fixtureHistory, HISTORY_KEY, openAllSections, openDegree, openHistory, panel, readFixture, savedCourse, stored, storedCodes } from "./fixtures/degree";
+import { auditReady, fixtureHistory, openAllSections, openDegree, openHistory, panel, readFixture, savedCourse, stored, storedCodes } from "./fixtures/degree";
 import { SUGGESTIONS_ON } from "../src/components/degree/degreeFeatures";
 import { pickTerm } from "./fixtures/pickers";
 
@@ -8,7 +8,6 @@ test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
 });
 
-const flagValue = (page: Page) => page.evaluate((key) => localStorage.getItem(key), DEGREE_FLAG_KEY);
 const tile = (page: Page, name: RegExp) => page.getByRole("button", { name });
 
 test.describe("who can reach it", () => {
@@ -19,33 +18,17 @@ test.describe("who can reach it", () => {
     });
   });
 
-  test("the My degree tab is hidden until the flag is on", async ({ page }) => {
+  test("everyone reaches My degree from the planner tabs", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("link", { name: "My degree" })).toHaveCount(0);
-    await expect(page.getByRole("link", { name: "Planner" })).toHaveCount(0);
-  });
-
-  test("/degree is not reachable without the flag and redirects to the planner", async ({ page }) => {
-    await page.goto("/degree");
-    await expect(page).toHaveURL("/");
-    await expect(page.getByRole("heading", { level: 1, name: "My degree" })).toHaveCount(0);
-  });
-
-  test("the tester link turns My degree on for this browser and opens the page", async ({ page }) => {
-    await page.goto("/#enable-degree");
-    await expect(page).toHaveURL("/degree");
-    await expect(page.getByRole("heading", { level: 1, name: "What's your major?" })).toBeVisible();
-    expect(await flagValue(page)).toBe("on");
     const nav = page.getByRole("navigation", { name: "Main" });
-    await expect(nav.getByRole("link", { name: "Planner" })).toBeVisible();
+    await nav.getByRole("link", { name: "My degree" }).click();
+    await expect(page).toHaveURL("/degree");
+    await expect(page.getByRole("heading", { level: 1, name: "Choose your major" })).toBeVisible();
     await expect(nav.getByRole("link", { name: "My degree" })).toHaveAttribute("aria-current", "page");
-    await page.reload();
-    await expect(page.getByRole("heading", { level: 1, name: "What's your major?" })).toBeVisible();
   });
 
   test("the tabs switch between the planner and the degree page by keyboard", async ({ page }) => {
-    await page.goto("/#enable-degree");
-    await expect(page).toHaveURL("/degree");
+    await page.goto("/degree");
     const nav = page.getByRole("navigation", { name: "Main" });
     await nav.getByRole("link", { name: "Planner" }).focus();
     await page.keyboard.press("Enter");
@@ -53,22 +36,12 @@ test.describe("who can reach it", () => {
     await expect(nav.getByRole("link", { name: "Planner" })).toHaveAttribute("aria-current", "page");
   });
 
-  test("a phone shows both tabs once the flag is on", async ({ page }) => {
+  test("a phone shows both tabs", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/");
-    await expect(page.getByRole("navigation", { name: "Main" })).toHaveCount(0);
-    await page.goto("/#enable-degree");
-    await expect(page).toHaveURL("/degree");
     const nav = page.getByRole("navigation", { name: "Main" });
     await expect(nav.getByRole("link", { name: "Planner" })).toBeVisible();
     await expect(nav.getByRole("link", { name: "My degree" })).toBeInViewport();
-  });
-
-  test("without the flag, the screen and its data stay out of reach", async ({ page }) => {
-    await page.addInitScript(([key, value]) => localStorage.setItem(key, value), [HISTORY_KEY, JSON.stringify({ version: 1, courses: [savedCourse({ code: "MA 1021", credits: 3 })], manual: [] })]);
-    await page.goto("/degree");
-    await expect(page).toHaveURL("/");
-    await expect(page.getByRole("heading", { name: "Your sheet" })).toHaveCount(0);
   });
 });
 

@@ -3,14 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cx } from "@/components/ui/cx";
-import { useDegreeEnabled } from "@/lib/flags";
 
-/** Planner and My degree. With My degree still hidden there's nothing to switch to, so no tabs show. */
 export function MainTabs({ phone = false }: { phone?: boolean }) {
-  const degreeEnabled = useDegreeEnabled();
   const pathname = usePathname();
-  if (!degreeEnabled) return null;
-
   const onDegree = pathname === "/degree" || pathname.startsWith("/degree/");
   const tabs = [
     { href: "/", label: "Planner", active: !onDegree },

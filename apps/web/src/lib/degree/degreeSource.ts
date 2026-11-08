@@ -1,5 +1,4 @@
 import { getEngineClient, type AuditSuccess, type EngineClient } from "@/lib/engine";
-import { isSheetAvailable } from "@/lib/flags";
 import {
   browserHistoryStorage,
   buildAuditRequest,
@@ -16,7 +15,7 @@ import {
   type StoredHistory,
 } from "./history";
 import { applyHuaPath, detectHuaPath, huaPathId, parseHuaPath, type HuaPath, type HuaPathGuess } from "./humanities";
-import { DEFAULT_SHEET_ID, loadSheet, type TrackingSheet } from "./sheets";
+import { DEFAULT_SHEET_ID, loadSheet, SHEETS, type TrackingSheet } from "./sheets";
 import { activateRequirements } from "./requirements";
 
 export const AUDIT_DELAY_MS = 200;
@@ -321,6 +320,6 @@ export function createDegreeSource({ getStorage, engine, sheetId = DEFAULT_SHEET
 let shared: DegreeSource | null = null;
 
 export function getDegreeSource(): DegreeSource {
-  shared ??= createDegreeSource({ getStorage: browserHistoryStorage, engine: getEngineClient(), requireSelection: true, canSelectSheet: isSheetAvailable });
+  shared ??= createDegreeSource({ getStorage: browserHistoryStorage, engine: getEngineClient(), requireSelection: true, canSelectSheet: (id) => SHEETS.some((sheet) => sheet.id === id) });
   return shared;
 }

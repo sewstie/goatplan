@@ -4,16 +4,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { foundCourse, getDegreeSource, loadCatalog, parseTerm, termLong } from "@/lib/degree";
 import { validHistoryTerm } from "@/lib/degree/history";
-import { useDegreeEnabled } from "@/lib/flags";
 import { selectSavedPlan, usePlanner } from "@/lib/store";
 
 export function AddPlanToDegree() {
-  const enabled = useDegreeEnabled();
   const courses = usePlanner((state) => state.courses);
   const file = usePlanner((state) => state.term);
   const saved = usePlanner(selectSavedPlan);
   const [notice, setNotice] = useState("");
-  if (!enabled) return null;
   const codes = saved ? saved.courses : courses;
   const term = parseTerm(saved?.termId ?? file?.term.id);
 

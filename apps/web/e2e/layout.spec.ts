@@ -508,16 +508,6 @@ test.describe("the top bar", () => {
     });
   }
 
-  test("with My degree hidden it shows the logo and no lone tab", async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await openPlanner(page);
-    const bar = page.getByRole("banner").first();
-    await expect(bar.getByRole("link", { name: "GoatPlan" })).toBeVisible();
-    await expect(bar.getByRole("link", { name: "Planner" })).toHaveCount(0);
-    await expect(page.getByRole("heading", { level: 1, name: "Schedule planner" })).toBeAttached();
-    expect((await bar.boundingBox())!.height).toBe(56);
-  });
-
   test("with My degree on it shows both tabs", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await openPlanner(page, { degree: true });
@@ -847,11 +837,6 @@ test.describe("the phone", () => {
     const main = page.getByRole("navigation", { name: "Main" });
     expect((await main.boundingBox())!.y).toBeGreaterThan(200);
     await expect(page.getByRole("link", { name: "GoatPlan" })).toBeVisible();
-  });
-
-  test("with My degree hidden there is no tab bar", async ({ page }) => {
-    await openPlanner(page);
-    await expect(page.getByRole("navigation", { name: "Main" })).toHaveCount(0);
   });
 
   test("the calendar starts within 420 px, with Save beside the switcher and Share and Export in the menu", async ({ page }) => {
