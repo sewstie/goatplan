@@ -12,7 +12,7 @@ test("planned status, units and term stick after a reload, and reach the real au
   const details = panel(page, "Edit course");
   await details.getByRole("radio", { name: "⅙" }).click();
   await details.getByRole("button", { name: /^Term \(optional\)/ }).click();
-  await page.getByRole("button", { name: "D Term 2027", exact: true }).click();
+  await page.getByRole("grid", { name: "Terms by school year" }).getByRole("button", { name: /^D Term 2027(,|$)/ }).click();
   await expect(details.getByRole("button", { name: "Planned", exact: true })).toHaveAttribute("aria-pressed", "true");
   await details.getByRole("button", { name: "Save changes" }).click();
   await auditReady(page);
