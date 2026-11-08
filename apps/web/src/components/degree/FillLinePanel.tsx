@@ -1,44 +1,21 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
 import { ArrowsLeftRight } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/Button";
 import { DrawerFrame } from "@/components/ui/Drawer";
-import { TextInput } from "@/components/ui/TextInput";
-import { cleanCourseCode, findCourse, foundCourse, getDegreeSource, historyForLine, lineLabel, loadCatalog, sectionNameOfLine, typedCourse, type DegreeHistory } from "@/lib/degree";
+import { historyForLine, lineLabel, sectionNameOfLine, type DegreeHistory } from "@/lib/degree";
 import { requestMove } from "./degreeActions";
 import { SUGGESTIONS_ON } from "./degreeFeatures";
 import { useDegreeUi } from "./degreeUi";
+import { LineCourseList } from "./LineCourseList";
 import { SummaryCard } from "./SummaryCard";
 import type { DegreeView } from "./useDegreeView";
-
-const BAD_CODE = "That doesn’t look like a course code. Try one like CS 2102.";
 
 export function FillLinePanel({ line, view, history }: { line: number; view: DegreeView; history: DegreeHistory }) {
   const close = useDegreeUi((state) => state.close);
   const open = useDegreeUi((state) => state.open);
-  const [typed, setTyped] = useState("");
-  const [problem, setProblem] = useState<string | null>(null);
 
   const fromHistory = historyForLine(line, history, view.sheet.sections, view.result.freeElectives.courses);
-  async function addTyped(event: FormEvent) {
-    event.preventDefault();
-    const code = cleanCourseCode(typed);
-    if (!code) {
-      setProblem(BAD_CODE);
-      return;
-    }
-    const { courses } = await loadCatalog();
-    const found = findCourse(courses, code);
-    const result = getDegreeSource().addCourse(found ? foundCourse(found) : typedCourse(code));
-    if (result === "duplicate") {
-      setProblem(`${code} is already in your history.`);
-      return;
-    }
-    setTyped("");
-    setProblem(null);
-  }
-
   return (
     <DrawerFrame title={`Courses that fit line ${line}`} onClose={close}>
       <SummaryCard eyebrow={sectionNameOfLine(line)} title={`Line ${line} · ${lineLabel(line)}`} />
@@ -61,24 +38,7 @@ export function FillLinePanel({ line, view, history }: { line: number; view: Deg
           <Button variant="secondary" onClick={() => open({ kind: "suggest", line })}>Suggest courses for this line</Button>
         </div>
       )}
-      <form onSubmit={(event) => void addTyped(event)} noValidate className="pt-18">
-        <h3 className="pb-14 text-8-5 leading-16 font-650">Type a code</h3>
-        <TextInput
-          label="AP, transfer or retired course"
-          hideLabel={false}
-          placeholder="Course code"
-          autoComplete="off"
-          spellCheck={false}
-          value={typed}
-          aria-invalid={problem ? true : undefined}
-          hint={problem && <span role="alert">{problem}</span>}
-          onChange={(event) => {
-            setTyped(event.target.value);
-            setProblem(null);
-          }}
-        />
-        <p className="pt-14 text-8-5 leading-17 text-ink-muted">Add the record to history, then review where it counts.</p>
-      </form>
+      <LineCourseList line={line} view={view} history={history} />
     </DrawerFrame>
   );
 }
