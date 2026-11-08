@@ -137,8 +137,6 @@
 .degree-major-setup { margin-top: 0; }
 @media(max-width:767px) { .degree-major-options { grid-template-columns: 1fr; } }
 .degree-page { --radius-panel: 10px; }
-.degree-page > header a[aria-label="GoatPlan"] > span { display: inline; }
-.degree-page > header a[aria-label="GoatPlan"] img { width: 30px; height: 30px; }
 .degree-page .degree-title > div:last-child { padding-bottom: 0; }
 .degree-page section[aria-label="Your sheet"] h2, .degree-page section[aria-label="Your requirements"] h2 { font-size: 17px; line-height: 24px; }
 .degree-page .degree-planning-first { grid-template-columns: repeat(4,minmax(0,1fr)); }
@@ -153,7 +151,6 @@
 .degree-plan-insights { grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); }
 .degree-plan-insights > article { min-width: 0; }
 @media(max-width:767px) { .degree-plan-insights { grid-template-columns: minmax(0,1fr); } }
-.degree-page > header a[aria-label="GoatPlan"] > span { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; }
 @keyframes term-picker-in { from { opacity: 0; transform: translateY(-4px); } }
 .term-picker { animation: term-picker-in 120ms ease-out; }
 @media (prefers-reduced-motion: reduce) { .term-picker { animation: none; } }
