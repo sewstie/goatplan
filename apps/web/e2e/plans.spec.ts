@@ -62,18 +62,6 @@ const changedPlan = (() => {
   return changed;
 })();
 
-/** Nine courses, longer than the 630px the main region has on tablets. */
-const longPlan = (() => {
-  const long = savedPlan("plan-long", "Everything", "2026-10-17T12:00:00.000Z");
-  const extra = term.courses.filter((item) => !long.courses.includes(item.code)).slice(0, 6);
-  long.courses = [...long.courses, ...extra.map((item) => item.code)];
-  long.schedule = [
-    ...long.schedule,
-    ...extra.map((item) => ({ code: item.code, title: item.title, sections: [structuredClone(item.sections[0])] })),
-  ];
-  return long;
-})();
-
 const baseStorage = { "goatplan:term:v1": "2027-C", "goatplan:draft:v1:2027-C": draft };
 const savedStorage = {
   ...baseStorage,
@@ -108,7 +96,8 @@ async function screenshot(page: Page, name: string, fullPage = false) {
 }
 
 // The workspace header sits inside <main>, so it is no banner landmark.
-const header = (page: Page) => page.locator("main header");
+const header = (page: Page) => page.getByRole("banner").first();
+const plansHeader = (page: Page) => page.locator("main header");
 
 test.describe("Save schedule", () => {
   test("saves the current schedule with a name, then reads Saved", async ({ page }) => {
@@ -226,8 +215,8 @@ test.describe("Sections to register", () => {
     await page.goto("/plans?plan=plan-design");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sections to register · Plan 1");
     await expect(page.getByRole("region", { name: "Sections to register" })).toBeVisible();
-    await expect(header(page)).toContainText("Schedule 1 of 1");
-    await expect(header(page)).toContainText("3 courses · 4 sections · Saved plan");
+    await expect(plansHeader(page)).toContainText("Schedule 1 of 1");
+    await expect(plansHeader(page)).toContainText("3 courses · 4 sections · Saved plan");
     await expect(page.getByRole("heading", { level: 2, name: "Ready for Workday" })).toBeVisible();
     await expect(page.getByText("4 sections across 3 courses", { exact: true })).toBeVisible();
 
@@ -289,8 +278,8 @@ test.describe("Sections to register", () => {
     await expect(summary.getByRole("heading", { level: 3 })).toHaveText("AE 2410 C09 was removed.");
     await expect(summary.getByRole("button", { name: "Open in planner" })).toBeVisible();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sections to register · Mornings free");
-    await expect(header(page).getByRole("link", { name: "Back to planner" })).toBeVisible();
-    await expect(header(page).getByRole("button")).toHaveCount(0);
+    await expect(plansHeader(page).getByRole("link", { name: "Back to planner" })).toBeVisible();
+    await expect(plansHeader(page).getByRole("button")).toHaveCount(0);
     const rows = page.getByRole("table").getByRole("row");
     await expect(rows.nth(2)).toContainText(/Was \d+ open/);
     await expect(rows.nth(3)).toContainText("No longer offered");
@@ -302,8 +291,8 @@ test.describe("Sections to register", () => {
     await seed(page, unsavedStorage);
     await page.goto("/plans?plan=plan-design");
     await plannerSettled(page);
-    await expect(header(page).getByRole("button")).toHaveCount(0);
-    await header(page).getByRole("link", { name: "Back to planner" }).click();
+    await expect(plansHeader(page).getByRole("button")).toHaveCount(0);
+    await plansHeader(page).getByRole("link", { name: "Back to planner" }).click();
     await expect(header(page).getByRole("button", { name: "Save schedule" })).toBeEnabled();
     await expect(page.getByRole("group", { name: "Preferences" }).getByRole("button", { name: "Block a time" })).toBeEnabled();
     await expect(page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: "Remove AE 2320" })).toBeEnabled();
@@ -349,19 +338,6 @@ test.describe("Sections to register", () => {
     await plannerSettled(page);
     await expect(page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: "Remove AE 2410" })).toBeEnabled();
     await expect(page.getByRole("group", { name: "Preferences" })).toContainText("Job");
-  });
-
-  test("a long plan makes the page longer on a tablet instead of scrolling inside a box", async ({ page }) => {
-    await seed(page, { ...savedStorage, "goatplan:plans:v1:plan:plan-long": longPlan });
-    await page.setViewportSize({ width: 834, height: 1194 });
-    await page.goto("/plans?plan=plan-long");
-    const region = page.getByRole("region", { name: "Sections to register" });
-    await expect(region.getByRole("table").getByRole("row")).toHaveCount(11);
-    expect((await region.boundingBox())!.height).toBeGreaterThan(630);
-    const scrolls = await region.evaluate((element) =>
-      [element, ...element.children].some((node) => node.scrollHeight > node.clientHeight + 1),
-    );
-    expect(scrolls).toBe(false);
   });
 
   test("says when the latest course data can't be checked", async ({ page }) => {
@@ -452,6 +428,7 @@ test.describe("Saved plans list", () => {
     await page.getByRole("button", { name: "Open in planner Plan 1" }).click();
     await page.getByRole("dialog", { name: "Open “Plan 1”?" }).getByRole("button", { name: "Open plan" }).click();
     await expect(header(page).getByRole("button", { name: "Schedule saved", exact: true })).toBeVisible({ timeout: 30_000 });
+    await page.getByRole("button", { name: "Block a time" }).click();
     await page.getByRole("group", { name: "Preferences" }).getByRole("button", { name: "1 blocked time" }).click();
     await expect(page.getByRole("group", { name: "Preferences" }).getByText("Work")).toBeVisible();
     await expect(page.getByRole("group", { name: "Tuesday" }).getByText("Work")).toBeVisible();

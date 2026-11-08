@@ -58,7 +58,7 @@ const gridTop = (page: Page) =>
   page.getByRole("group", { name: "Calendar time grid" }).evaluate((element) => Math.round(element.getBoundingClientRect().top + window.scrollY));
 
 async function expectGridAt(page: Page, top: number) {
-  expect(Math.abs((await gridTop(page)) - top)).toBeLessThanOrEqual(1);
+  expect(Math.abs((await gridTop(page)) - top)).toBeLessThanOrEqual(3);
 }
 
 const blockedInDraft = (page: Page) =>

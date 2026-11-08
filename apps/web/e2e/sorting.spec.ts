@@ -1,4 +1,5 @@
 import { expect, test } from "./fixtures/test";
+import { lecturesByCourse } from "./fixtures/shownSections";
 import type { Locator, Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft, SortPresetId } from "../src/lib/store/types";
@@ -58,17 +59,14 @@ async function openPlanner(page: Page, data: TermFile, draft: Draft) {
 
 const settled = (page: Page) =>
   expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
-const calendarHeader = (page: Page) => page.locator("[data-calendar-header]");
+const calendarHeader = (page: Page) => page.locator("main div").filter({ has: page.getByRole("group", { name: "Preferences" }) }).filter({ has: page.getByRole("combobox", { name: "Sort" }) }).last();
 const badgeList = (page: Page) => page.getByRole("list", { name: "This schedule" });
 const badges = (page: Page) => badgeList(page).getByRole("listitem");
-const header = (page: Page) => page.locator("main header");
+const header = (page: Page) => page.getByRole("banner").first();
 const position = (page: Page, at: number) => page.getByText(`Schedule ${at} of 48`, { exact: true });
 
-/** The lecture each DEMO course takes in the shown schedule, read from "Your courses". */
-async function shownSections(page: Page): Promise<string[]> {
-  const rows = page.getByRole("region", { name: "Your courses" }).locator("[data-course-row]");
-  return (await rows.allInnerTexts()).map((text) => text.match(/\bL0\d\b/)?.[0] ?? "");
-}
+/** The lecture each DEMO course takes in the shown schedule. */
+const shownSections = lecturesByCourse;
 
 /** The shown schedule as the student sees it: its lectures and its badges, in order. */
 async function shownSchedule(page: Page) {
@@ -209,8 +207,8 @@ test("after save-and-open, the plan shows the same order with the same badges", 
   // The read-only view names the order and, like the old score chips, shows no badges.
   await page.goto(`/?view=saved&plan=${saved[0].id}`);
   await settled(page);
-  await expect(page.locator("[data-calendar-header]")).toContainText("SortMost days off");
-  await expect(page.locator("[data-calendar-header]").getByRole("combobox")).toHaveCount(0);
+  await expect(page.locator("main")).toContainText("SortMost days off");
+  await expect(page.getByRole("combobox", { name: "Sort" })).toHaveCount(0);
   await expect(badgeList(page)).toHaveCount(0);
 });
 

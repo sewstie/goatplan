@@ -152,8 +152,9 @@ test("sections with no set time are listed under the grid", async ({ page }) => 
   await openPlan(page, { ...designPlan, courses: [...designPlan.courses, "AE 5131"] });
   await expect(page.getByText("4 courses · 1 schedule fits · 1 course has no set time")).toBeVisible();
   const strip = calendar(page).getByRole("region", { name: "No set time" });
-  await expect(strip.getByRole("listitem")).toContainText("AE 5131 C01 · Online, asynchronous");
-  await expect(strip.getByTitle("Incompressible Fluid Dynamics")).toBeVisible();
+  await expect(strip.getByRole("listitem")).toContainText("AE 5131 · C01");
+  await expect(strip.getByRole("listitem")).toContainText("Online, asynchronous");
+  await expect(strip.getByText("Incompressible Fluid Dynamics")).toBeVisible();
   await screenshotBoth(page, "no-set-time");
 });
 

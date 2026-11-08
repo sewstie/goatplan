@@ -69,11 +69,13 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
+const toastStatus = () => screen.getAllByRole("status").find((element) => element.getAttribute("aria-label") !== "Selected course")!;
+
 describe("PlannerShell toast wiring", () => {
   it("shows the toast with the removed course code when one is pending", () => {
     setPlanner({ courses: ["AE 2410"], removedCourse: removed });
     renderShell();
-    const status = screen.getByRole("status");
+    const status = toastStatus();
     expect(status).toHaveTextContent("Removed AE 2320");
     expect(screen.getByRole("button", { name: "Undo" })).toBeInTheDocument();
   });
@@ -81,7 +83,7 @@ describe("PlannerShell toast wiring", () => {
   it("shows no message when nothing has been removed", () => {
     setPlanner({ courses: ["AE 2320", "AE 2410"], removedCourse: null });
     renderShell();
-    expect(screen.getByRole("status")).toBeEmptyDOMElement();
+    expect(toastStatus()).toBeEmptyDOMElement();
     expect(screen.queryByRole("button", { name: "Undo" })).not.toBeInTheDocument();
   });
 
@@ -95,7 +97,7 @@ describe("PlannerShell toast wiring", () => {
     const state = getPlannerStore().getState();
     expect(state.courses).toContain("AE 2320");
     expect(state.removedCourse).toBeNull();
-    expect(screen.getByRole("status")).toBeEmptyDOMElement();
+    expect(toastStatus()).toBeEmptyDOMElement();
   });
 
   it("dismisses the removed course when the toast times out", () => {

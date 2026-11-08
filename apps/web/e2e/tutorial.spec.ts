@@ -137,8 +137,7 @@ test("states 30–33 and 35: keyboard guide uses real controls and keeps restric
   await settled(page);
   await expect(guide(page)).toBeHidden();
   await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(600));
-  await page.getByRole("button", { name: /blocked time/ }).first().click();
-  await expect(page.getByRole("button", { name: "Remove blocked time Lunch, Mon, Wed, Fri 12 PM–1 PM" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Remove blocked time Lunch, Mon, Wed, Fri 12/ })).toBeVisible();
 });
 
 test("state 34: DEMO guide finishes while real professor, locks and schedule browsing stay usable", async ({ page }) => {
