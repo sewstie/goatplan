@@ -2,8 +2,11 @@
 
 import { Fragment, useRef, useState } from "react";
 import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
+import { CourseDescription } from "@/components/sections/CourseDescription";
+import { CourseDescriptionButton } from "@/components/sections/CourseDescriptionButton";
 import { ProfessorPicker } from "@/components/sections/ProfessorPicker";
 import { hasSetTime, sectionsById, typeWord } from "@/components/sections/sectionDetails";
+import { useDescriptionPage } from "@/components/sections/useDescriptionPage";
 import { useSectionSteps } from "@/components/sections/useSectionSteps";
 import { useShownSections } from "@/components/sections/useShownSections";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -35,6 +38,12 @@ export function PhoneCourseDetails({ course }: { course: Course }) {
   const untimed = sections.some((section) => !hasSetTime(section));
   const hasLectures = course.sections.some((section) => section.type === "lecture");
   const waitlist = sections.some((section) => section.status === "waitlist");
+  const description = useDescriptionPage(usePlanner((state) => (state.selectedCourse === course.code ? state.selectedSection : null)));
+
+  if (description.reading) {
+    const inSchedule = sections.filter((section) => chosen.includes(section.id));
+    return <CourseDescription code={course.code} title={course.title} description={course.description} sections={inSchedule} phone onBack={description.back} />;
+  }
 
   const chooseLecture = (lecture: Section) => {
     course.sections.filter((item) => item.type === "lecture" && locked.includes(item.id)).forEach((item) => unlockSection(course.code, item.id));
@@ -75,6 +84,7 @@ export function PhoneCourseDetails({ course }: { course: Course }) {
         {course.code}
       </h2>
       <p className="mt-6 text-11 font-510 text-ink">{course.title}</p>
+      <CourseDescriptionButton buttonRef={description.button} onClick={description.open} />
 
       {!waitlist && <ProfessorPicker course={course} phone />}
       {!hasLectures && (

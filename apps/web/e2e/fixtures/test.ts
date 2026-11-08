@@ -10,6 +10,17 @@ export function frozenTerm(id: string): TermFile {
   return JSON.parse(readFileSync(path.join(dataDir, `${id}.json`), "utf8"));
 }
 
+/** What /api/seats answers for a term: its own seat counts, fetched just now. */
+export function liveSeats(term: TermFile) {
+  const sections = term.courses.flatMap((course) => course.sections.map(({ id, status, enrolled, capacity, waitlist }) => ({ id, status, enrolled, capacity, waitlist })));
+  return { termId: term.term.id, fetchedAt: new Date().toISOString(), sections };
+}
+
+/** For a spec that serves its own term file: live seats then match it instead of the frozen file. */
+export async function serveLiveSeats(page: Page, term: TermFile) {
+  await page.route(`**/api/seats?term=${term.term.id}`, (route) => route.fulfill({ json: liveSeats(term) }));
+}
+
 // A context route, so any page.route in a spec still wins over it.
 export const test = base.extend<{ frozenData: void }>({
   frozenData: [async ({ context }, use) => {
@@ -17,6 +28,13 @@ export const test = base.extend<{ frozenData: void }>({
       const name = path.basename(new URL(route.request().url()).pathname);
       const file = name === "catalog.json" ? path.join(__dirname, "../../../../data/catalog.json") : path.join(dataDir, name);
       return existsSync(file) ? route.fulfill({ path: file }) : route.fulfill({ status: 404 });
+    });
+    // Live seats are the frozen ones, fetched just now, so tests never reach WPI and seats read "just now".
+    await context.route(/\/api\/seats\?/, (route) => {
+      const termId = new URL(route.request().url()).searchParams.get("term") ?? "";
+      const file = path.join(dataDir, `${termId}.json`);
+      if (!existsSync(file)) return route.fulfill({ status: 503, json: { error: "Use the term file's seat counts." } });
+      return route.fulfill({ json: liveSeats(frozenTerm(termId)) });
     });
     await use();
   }, { auto: true }],

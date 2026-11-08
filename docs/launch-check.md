@@ -102,17 +102,13 @@ unknown-course tests cover the additional notices.
 | Academic Advising email | Ask whether non-CS Social Implications may also fill another line, how the graduate 2-for-3 rule applies, and how repeated courses count. Record the answers before changing interpretations. |
 | Posts | Write and send the Class of 2030 chat post on Nov 10. Prepare ISC and r/WPI posts before January add/drop. No messages were sent by this check. |
 | Screenshots and degree launch | Approve the screenshots at all three widths and record the Nov 9 My degree go/no-go decision. |
-| Watcher report | Read the report and record whether to retain live seat refresh or rely on daily updates, including the daily update timing if changed. |
 
 Owner tasks are follow-ups, not blockers to completing this ticket's engineering
 work. They still matter to the owner's launch decision.
 
 ## Watcher disposition
 
-No recorded owner report decision was found in the supplied spec or repository
-docs. `.github/workflows/watch-source.yml`, `scripts/watch-source.mjs`,
-`scripts/watch-report.mjs`, their helpers, tests and fixtures are retained.
-The seat route remains. No watcher or daily schedule changes were made.
+Live seats are kept. The watcher (`.github/workflows/watch-source.yml`, `scripts/watch-source.mjs`, `scripts/watch-report.mjs`, their helpers, tests and fixtures) has been deleted. `/api/seats` caches WPI's seats for 15 minutes; see [seats.md](seats.md).
 
 ## Reproduce
 

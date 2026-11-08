@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { SEAT_POLL_MS } from "@/lib/data/loadSeats";
 import { getPlannerStore, usePlanner } from "@/lib/store";
 
 /** Starts the planner store in the browser. The hidden element exposes its status to tests and devtools. */
@@ -11,6 +12,15 @@ export function PlannerBootstrap() {
 
   useEffect(() => {
     void getPlannerStore().getState().init();
+    const refresh = () => {
+      if (document.visibilityState === "visible") void getPlannerStore().getState().refreshSeats();
+    };
+    const timer = setInterval(refresh, SEAT_POLL_MS);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", refresh);
+    };
   }, []);
 
   return (

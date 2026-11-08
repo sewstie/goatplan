@@ -1,4 +1,4 @@
-import { expect, frozenTerm, test, startsAfterText } from "./fixtures/test";
+import { expect, frozenTerm, serveLiveSeats, test, startsAfterText } from "./fixtures/test";
 import type { Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft } from "../src/lib/store/types";
@@ -27,7 +27,10 @@ function data() {
 
 async function open(page: Page, plan: Draft = regular, term = data(), route = true, wait = true) {
   await page.setViewportSize({ width: 1440, height: 900 });
-  if (route) await page.route("**/data/2027-C.json", (request) => request.fulfill({ json: term }));
+  if (route) {
+    await page.route("**/data/2027-C.json", (request) => request.fulfill({ json: term }));
+    await serveLiveSeats(page, term);
+  }
   await page.addInitScript(({ key, plan }) => {
     localStorage.setItem("goatplan:term:v1", "2027-C");
     localStorage.setItem(key, JSON.stringify({ version: 1, ...plan }));

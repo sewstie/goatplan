@@ -87,7 +87,7 @@ describe("loading a term", () => {
     expect(handedOver.byteLength).toBe(0);
   });
 
-  it("lets the worker fetch a term itself only when switching back to it", async () => {
+  it("hands the worker the term again when switching back to it, without downloading it again", async () => {
     const { store } = setup();
     await store.getState().init();
     await store.getState().setTerm("2027-D");
@@ -95,6 +95,6 @@ describe("loading a term", () => {
 
     await store.getState().setTerm("2027-C");
     expect(store.getState().termStatus).toBe("ready");
-    expect(requestsFor("/data/2027-C.json")).toBe(2);
+    expect(requestsFor("/data/2027-C.json")).toBe(1);
   });
 });

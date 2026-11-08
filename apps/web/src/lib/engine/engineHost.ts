@@ -48,7 +48,7 @@ export function createEngineHost(deps: EngineHostDeps) {
 
   async function loadTerm(termId: string, buffer?: ArrayBuffer): Promise<LoadTermResponse> {
     if (!isTermId(termId)) throw new HostFailure("fetchFailed", `Not a term id: ${termId}`);
-    if (loaded?.termId === termId) return loaded.response;
+    if (loaded?.termId === termId && !buffer) return loaded.response;
     const engine = await getModule();
     const text = buffer ? new TextDecoder().decode(buffer) : await fetchTerm(termId);
     const response = JSON.parse(engine.loadTerm(text)) as LoadTermResponse;

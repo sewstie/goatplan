@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { cx } from "@/components/ui/cx";
 import { PhoneCourseScreen } from "./PhoneCourseScreen";
+import { SeatStatus } from "@/components/shell/SeatStatus";
 import { PhoneFooter } from "./PhoneFooter";
 import { PhonePreferencesScreen } from "./PhonePreferencesScreen";
 import { PhoneScheduleScreen } from "./PhoneScheduleScreen";
@@ -85,7 +86,7 @@ export function PhonePlanner({ banner, notices, menuActions }: PhonePlannerProps
         <div data-phone-screen hidden={screen !== "schedule"}>
           <PhoneScheduleScreen banner={banner} notices={notices} menuActions={menuActions} />
         </div>
-        <PhoneFooter />
+        <PhoneFooter extra={<SeatStatus className="items-center text-center" />} />
       </main>
     </div>
   );
