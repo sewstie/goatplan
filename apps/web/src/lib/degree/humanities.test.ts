@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applyHuaPath, detectHuaPath, HUA_GROUPINGS, HUA_SUBJECTS, humanitiesCourses, huaPathId, parseHuaPath, type HuaPath } from "./humanities";
+import { applyHuaPath, detectHuaPath, HUA_GROUPINGS, HUA_SUBJECTS, humanitiesCourses, huaPathId, huaProblem, parseHuaPath, seminarTooEarly, type HuaPath } from "./humanities";
 import { typedCourse, type HistoryCourse } from "./history";
 import { loadSheet, SHEETS } from "./sheets";
 
@@ -78,4 +78,44 @@ describe("humanities path", () => {
       expect(breadth.groupings).toEqual(HUA_GROUPINGS);
     });
   }
+});
+
+describe("humanities courses that can't count", () => {
+  const list = (...names: string[]) => names.map((name) => course(name, "A Term 2026"));
+
+  it("refuses a fifth course from the depth area when breadth is still open", async () => {
+    const sheet = await loadSheet("cs-2030");
+    const have = list("EN 1251", "EN 2211", "EN 2221", "WR 1011");
+    expect(huaProblem("EN 2231", have, sheet)).toMatch(/depth is in literature and writing.*another area for breadth/);
+    expect(huaProblem("HI 1310", have, sheet)).toBeNull();
+  });
+
+  it("refuses a course that leaves too few lines to finish depth", async () => {
+    const sheet = await loadSheet("cs-2030");
+    const have = list("EN 1251", "EN 2211", "HI 1310", "PY 1731");
+    expect(huaProblem("AR 1100", have, sheet)).toMatch(/pick from literature and writing/);
+    expect(huaProblem("WR 1011", have, sheet)).toBeNull();
+    expect(huaProblem("EN 2221", list("EN 1251", "HI 1310", "PY 1731"), sheet)).toBeNull();
+  });
+
+  it("lets language depth finish without breadth, and leaves full or broken sheets alone", async () => {
+    const sheet = await loadSheet("cs-2030");
+    expect(huaProblem("SP 2521", list("SP 1521", "SP 1522", "SP 2520", "SP 1523"), sheet)).toBeNull();
+    expect(huaProblem("EN 1251", list("HI 1310", "PY 1731", "AR 1100", "SP 1521"), sheet)).toBeNull();
+    expect(huaProblem("EN 1251", list("HI 1310", "HI 1320", "HI 1330", "PY 1731", "AR 1100"), sheet)).toBeNull();
+    expect(huaProblem("HU 3900", list("EN 1251"), sheet)).toBeNull();
+    expect(huaProblem("CS 1101", list("EN 1251", "EN 2211", "EN 2221", "WR 1011"), sheet)).toBeNull();
+  });
+
+  it("doesn't apply depth rules on the language path", async () => {
+    const sheet = applyHuaPath(await loadSheet("cs-2030"), language("SP"));
+    expect(huaProblem("SP 2521", list("SP 1521", "SP 1522", "SP 2520", "SP 1523"), sheet)).toBeNull();
+  });
+
+  it("holds the seminar until five humanities courses come before it", () => {
+    const five = ["EN 1251", "EN 2211", "EN 2221", "HI 1310"].map((name) => course(name, "A Term 2026")).concat(course("PY 1731", "C Term 2027", "planned"));
+    expect(seminarTooEarly("HU 3900", five, { letter: "C", year: 2027 })).toBe(true);
+    expect(seminarTooEarly("HU 3900", five, { letter: "D", year: 2027 })).toBe(false);
+    expect(seminarTooEarly("CS 3733", [], { letter: "D", year: 2027 })).toBe(false);
+  });
 });

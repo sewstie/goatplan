@@ -10,7 +10,7 @@ import { DrawerFrame } from "@/components/ui/Drawer";
 import { Notice } from "@/components/ui/Notice";
 import { TextInput } from "@/components/ui/TextInput";
 import type { Course } from "@/lib/data/types";
-import { cleanCourseCode, foundCourse, getDegreeSource, offeringNote, unitLabel, type DegreeHistory } from "@/lib/degree";
+import { cleanCourseCode, foundCourse, getDegreeSource, huaProblem, offeringNote, unitLabel, type DegreeHistory } from "@/lib/degree";
 import { hasRegistrationCode } from "@/lib/degree/history";
 import { statusOfState } from "@/lib/degree/planGrid";
 import { AddedStatus, type Added } from "./AddedStatus";
@@ -47,18 +47,26 @@ export function SearchTab({ history }: { history: DegreeHistory }) {
   const highlighted = Math.min(active, Math.max(0, matches.length - 1));
   const typedCode = search && matches.length === 0 ? cleanCourseCode(search) : null;
   const stateWord = PLAN_STATES[target.state].label.toLowerCase();
+  const status = statusOfState(target.state);
+  const sheet = getDegreeSource().getSnapshot().sheet;
+  const huaNote = (code: string) => (sheet ? huaProblem(code, history.courses, sheet) : null);
 
   function add(course: Course) {
     if (inHistory.has(course.code)) {
       setAdded({ codes: [course.code], text: `${course.code} is already in your history.`, undo: false });
       return;
     }
-    const result = getDegreeSource().addCourse({ ...foundCourse(course), status: statusOfState(target.state), ...(target.term ? { term: target.term } : {}) });
+    const hua = huaNote(course.code);
+    if (hua && status === "planned") {
+      setAdded({ codes: [course.code], text: hua, undo: false });
+      return;
+    }
+    const result = getDegreeSource().addCourse({ ...foundCourse(course), status, ...(target.term ? { term: target.term } : {}) });
     const where = target.term || "your history";
     if (result === "duplicate") setAdded({ codes: [course.code], text: `${course.code} is already in your history.`, undo: false });
     else if (result === "invalid") setAdded({ codes: [course.code], text: "That course couldn’t be added. Try manual credit.", undo: false });
     else {
-      setAdded({ codes: [course.code], text: `${course.code} added to ${where} as ${stateWord}.${result === "unsaved" ? " Browser storage is unavailable." : ""}`, undo: true });
+      setAdded({ codes: [course.code], text: `${course.code} added to ${where} as ${stateWord}.${result === "unsaved" ? " Browser storage is unavailable." : ""}${hua ? ` ${hua}` : ""}`, undo: true });
     }
   }
 
@@ -117,16 +125,20 @@ export function SearchTab({ history }: { history: DegreeHistory }) {
             const already = inHistory.has(course.code);
             const known = catalogCourses.get(course.code);
             const note = known && offeringNote(known);
+            const blocked = !already && status === "planned" ? huaNote(course.code) : null;
             return (
               <li key={course.code} id={`${listId}-${position}`} role="option" aria-selected={position === highlighted} onMouseEnter={() => setActive(position)} className={cx("flex items-center justify-between gap-12 rounded-row px-10 py-9", position === highlighted && !already && "bg-surface-selected")}>
                 <div className="min-w-0">
                   <p className="text-9 leading-15 font-650">{course.code}</p>
                   <p className="truncate pt-2 text-8 leading-12 text-ink-muted">{course.title}{course.credits !== null ? ` · ${unitLabel(course.credits)}` : ""}</p>
                   {!hasRegistrationCode(course.code) && <p className="pt-2 text-8 leading-12 text-ink-muted">Kept for review. It needs a numbered WPI course code to count.</p>}
+                  {blocked && <p className="pt-2 text-8 leading-12 text-warning-ink">{blocked}</p>}
                 </div>
                 <div className="flex shrink-0 items-center gap-8">
-                  {note && !already && <Badge tone="warning" size="sm">{note}</Badge>}
-                  {already ? (
+                  {note && !already && !blocked && <Badge tone="warning" size="sm">{note}</Badge>}
+                  {blocked ? (
+                    <Badge tone="warning" size="sm">Can’t count</Badge>
+                  ) : already ? (
                     <Badge tone="accent" size="sm" className="gap-4"><Check aria-hidden weight="bold" className="size-10" />In history</Badge>
                   ) : (
                     <Button size="sm" variant={position === highlighted ? "primary" : "secondary"} icon={<Plus aria-hidden />} aria-label={`Add ${course.code}`} onClick={() => add(course)}>Add</Button>

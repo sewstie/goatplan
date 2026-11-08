@@ -9,7 +9,7 @@ import { loadTerm } from "@/lib/data/load";
 import type { TermFile } from "@/lib/data/types";
 import { getEngineClient } from "@/lib/engine";
 import { createGapSource } from "@/lib/degree/courseGaps";
-import { foundCourse, getDegreeSource, parseTerm, suggestions, type DegreeHistory } from "@/lib/degree";
+import { foundCourse, getDegreeSource, parseTerm, seminarTooEarly, suggestions, type DegreeHistory } from "@/lib/degree";
 import { useCourseCatalog } from "./useCourseCatalog";
 import { usePublishedTerms } from "./usePublishedTerms";
 import { useDegreeUi } from "./degreeUi";
@@ -47,7 +47,7 @@ export function SuggestCoursesPanel({ history, line, inline = false }: { history
   }, [published, termId, offeringAttempt]);
 
   const known = new Set(history.courses.map((course) => course.code));
-  const details = gaps.details ? new Map([...gaps.details].filter(([code, fit]) => !known.has(code) && (line === undefined || fit.lines.includes(line)))) : null;
+  const details = gaps.details ? new Map([...gaps.details].filter(([code, fit]) => !known.has(code) && !seminarTooEarly(code, history.courses, named) && (line === undefined || fit.lines.includes(line)))) : null;
   const list = suggestions(details, limit);
   const offered = file?.term.id === termId ? file : null;
 

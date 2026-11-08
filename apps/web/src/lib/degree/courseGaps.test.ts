@@ -118,6 +118,19 @@ describe("the stored answers", () => {
     });
   });
 
+  it("leaves out a humanities course that would block breadth", async () => {
+    const { gaps, degree } = setup(async (request) => ({
+      ...answer(request),
+      sections: [{ name: "Humanities & arts", done: 4, planned: 0, total: 6, lines: [{ id: 5, label: "HUA elective", state: "empty", course: null }] }],
+      candidateResults: (request.candidates ?? []).map(({ code }) => ({ code, closesLines: [5], closesChecks: [] })),
+    }));
+    degree.addCourses(["EN 1251", "EN 2211", "EN 2221", "WR 1011"].map((code) => ({ ...typedCourse(code), status: "taken" as const, term: "A Term 2026" })));
+    gaps.subscribe(() => {});
+    gaps.setOpenTerm({ courses: [course("EN 2231"), course("HI 1310")], planned: [] });
+    await pause();
+    expect([...(gaps.getSnapshot().closes?.keys() ?? [])]).toEqual(["HI 1310"]);
+  });
+
   it("names a section once when a course closes several of its lines", async () => {
     const { gaps } = setup(async (request) => ({
       ...answer(request),
