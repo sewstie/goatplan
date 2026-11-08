@@ -25,7 +25,7 @@ export function ShareButton() {
         aria-controls={panelId}
         onClick={() => setOpen(!open)}
       >
-        Share
+        <span className="tablet:max-wide:sr-only">Share</span>
       </Button>
       {open && <SharePanel id={panelId} anchor={button} onClose={() => setOpen(false)} />}
     </>

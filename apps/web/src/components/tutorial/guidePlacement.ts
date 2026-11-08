@@ -18,7 +18,7 @@ function overlap(a: GuideRect, b: GuideRect): number {
 export function preferredPlaces(step: GuideStep, targetId: string, target: GuideRect, size: Size, { sidebar, calendar, details }: GuideLandmarks): Position[] {
   const beside = (sidebar ? sidebar.left + sidebar.width : target.left + target.width + 16) + GAP;
   // Only beside the calendar. On a tablet the details are under it, and this would land on the calendar.
-  const detailsRight = details && (!calendar || details.left >= calendar.left + calendar.width) ? details.left + details.width - size.width : undefined;
+  const detailsRight = details && (!calendar || details.left >= calendar.left + calendar.width) ? Math.max(details.left, details.left + details.width - size.width) : undefined;
   switch (step) {
     case "term": return [{ left: beside, top: 178 }];
     case "courses": return [{ left: beside, top: 178 }, ...(detailsRight === undefined ? [] : [{ left: detailsRight, top: 178 }])];

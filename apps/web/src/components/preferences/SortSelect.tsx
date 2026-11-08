@@ -18,8 +18,10 @@ export function SortSelect({ className = "ml-auto shrink-0", variant = "menu" }:
   const many = usePlanner((state) =>
     state.solveStatus === "waiting" || state.solveStatus === "solving" ? null : selectSchedules(state).length > 1,
   );
+  const drawing = usePlanner((state) => state.drawing);
   const [shown, setShown] = useState(many === true);
-  if (many !== null && many !== shown) setShown(many);
+  // Drawing keeps Sort where it was, so the row doesn't reflow and move the calendar between drags.
+  if (many !== null && many !== shown && !drawing) setShown(many);
 
   if (saved) return <Chip label="Sort" value={SORT_PRESETS[saved.sortPreset].label} className={className} />;
   if (!shown) return null;
