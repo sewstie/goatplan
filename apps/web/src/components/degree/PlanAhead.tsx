@@ -8,6 +8,7 @@ import { Select } from "@/components/ui/Select";
 import { getDegreeSource, parseTerm, termLong, unitLabel, type DegreeSnapshot, type TermName } from "@/lib/degree";
 import { coursePlanState, coursesInTerm, moveCourseTerm, planYears } from "@/lib/degree/planGrid";
 import { savePlanStart, usePlanStart } from "./usePlanStart";
+import { NextTermsSuggestions } from "./NextTermsSuggestions";
 import { CreditsCard } from "./CreditsCard";
 import { PaceCard } from "./PaceCard";
 import { PlanTermCard } from "./PlanTermCard";
@@ -76,6 +77,7 @@ export function PlanAhead({ degree, view }: { degree: DegreeSnapshot; view: Degr
           <p className="text-8-5 leading-16 text-ink-muted">Drag courses between terms, or pick a term to add one.</p>
         </div>
         <div className="flex flex-wrap gap-8">
+          <NextTermsSuggestions degree={degree} startYear={start} blocks={blocks} />
           <Button variant="secondary" size="sm" icon={<CalendarBlank aria-hidden />} onClick={() => setStartOpen(true)}>Start: A {start}</Button>
           <Button variant="secondary" size="sm" icon={<Flag aria-hidden />} onClick={() => setProjectOpen(true)}>Add project block</Button>
         </div>
