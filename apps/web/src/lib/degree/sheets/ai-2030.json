@@ -1,0 +1,1193 @@
+{
+  "id": "ai-2030",
+  "$schema": "./degree-rules.schema.json",
+  "major": "Artificial Intelligence",
+  "classYear": 2030,
+  "catalogYear": "2026-2027",
+  "effectiveDate": "AY 2026-2027",
+  "source": "https://www.wpi.edu/sites/default/files/2026-07/AI-2030_fillable_update.pdf",
+  "catalogSource": "https://www.wpi.edu/student-experience/resources/academic-advising/program-tracking-sheets",
+  "totalUnits": 15,
+  "residencyUnits": 8,
+  "crossLists": [
+    [
+      "CS 4433",
+      "DS 4433"
+    ],
+    [
+      "CS 4343",
+      "DS 4343"
+    ],
+    [
+      "CS 4344",
+      "DS 4344"
+    ],
+    [
+      "CS 4345",
+      "DS 4345"
+    ],
+    [
+      "MA 4635",
+      "DS 4635"
+    ],
+    [
+      "CS 4100",
+      "IMGD 4100"
+    ],
+    [
+      "CS 3043",
+      "SS 3043"
+    ],
+    [
+      "PY 2731",
+      "RE 2731"
+    ],
+    [
+      "SS 2413",
+      "PSY 2413"
+    ]
+  ],
+  "huaSubjects": [
+    "AR",
+    "TH",
+    "MU",
+    "AB",
+    "CN",
+    "ISE",
+    "GN",
+    "SP",
+    "EN",
+    "WR",
+    "HI",
+    "HU",
+    "INTL",
+    "PY",
+    "RE"
+  ],
+  "orderNote": "All 5 HUA courses must be completed before the Inquiry Seminar; shown as text, not enforced",
+  "exclusions": [],
+  "onlyOneSets": [],
+  "sections": [
+    {
+      "id": "hua",
+      "name": "Humanities and Arts",
+      "minUnits": 2,
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "note": "Finish five HUA courses before Inquiry. Check the theme and sequence with your advisor."
+    },
+    {
+      "id": "wpe",
+      "name": "Wellness and Physical Education",
+      "minUnits": 0.333333,
+      "lines": [
+        7
+      ]
+    },
+    {
+      "id": "social-science",
+      "name": "Social Science",
+      "minUnits": 0.666667,
+      "lines": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "iqp",
+      "name": "Interactive Qualifying Project",
+      "minUnits": 1,
+      "lines": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "id": "free-electives",
+      "name": "Free Electives",
+      "minUnits": 1,
+      "creditPool": true,
+      "poolCredits": 9,
+      "lines": [
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "id": "cs-foundation",
+      "name": "Computer Science Foundation",
+      "minUnits": 1.0,
+      "lines": [
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "id": "mathematics",
+      "name": "Mathematical Sciences",
+      "minUnits": 1.6666666666666665,
+      "lines": [
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "id": "foundations",
+      "name": "AI Foundations",
+      "minUnits": 1.0,
+      "lines": [
+        24,
+        25,
+        26
+      ]
+    },
+    {
+      "id": "ai-core",
+      "name": "AI Core",
+      "minUnits": 1.6666666666666665,
+      "lines": [
+        27,
+        28,
+        29,
+        30,
+        31
+      ]
+    },
+    {
+      "id": "ethics",
+      "name": "AI Ethics and Social Implications",
+      "minUnits": 0.3333333333333333,
+      "lines": [
+        32
+      ]
+    },
+    {
+      "id": "disciplinary",
+      "name": "Disciplinary Electives",
+      "minUnits": 0.6666666666666666,
+      "lines": [
+        33,
+        34
+      ]
+    },
+    {
+      "id": "concentration",
+      "name": "Concentration",
+      "minUnits": 1.9999999999999998,
+      "lines": [
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "note": "Choose six distinct courses in one concentration from page two of the PDF. Confirm its required courses, category counts and levels; do not mix concentrations."
+    },
+    {
+      "id": "natural-science",
+      "name": "Natural and Engineering Science",
+      "minUnits": 0.6666666666666666,
+      "lines": [
+        41,
+        42
+      ]
+    },
+    {
+      "id": "mqp",
+      "name": "Major Qualifying Project",
+      "minUnits": 1.0,
+      "lines": [
+        43,
+        44,
+        45
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "line": 1,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 2,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 3,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 4,
+      "section": "hua",
+      "name": "Inquiry Seminar or Practicum",
+      "units": 0.333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "HU 3900",
+          "HU 3910"
+        ]
+      },
+      "displayName": "Inquiry / Practicum"
+    },
+    {
+      "line": 5,
+      "section": "hua",
+      "name": "Humanities breadth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Humanities breadth"
+    },
+    {
+      "line": 6,
+      "section": "hua",
+      "name": "Humanities elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Humanities elective"
+    },
+    {
+      "line": 7,
+      "section": "wpe",
+      "name": "Wellness and Physical Education",
+      "units": 0.333333,
+      "subSlots": 4,
+      "subSlotUnits": 0.083333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "WPE"
+        ]
+      },
+      "displayName": "WPE"
+    },
+    {
+      "line": 8,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECON",
+          "ENV",
+          "GOV",
+          "PSY",
+          "SD",
+          "SOC",
+          "SS",
+          "STS",
+          "DEV"
+        ],
+        "additionalCourses": [
+          "ID 2050"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Social science"
+    },
+    {
+      "line": 9,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECON",
+          "ENV",
+          "GOV",
+          "PSY",
+          "SD",
+          "SOC",
+          "SS",
+          "STS",
+          "DEV"
+        ],
+        "additionalCourses": [
+          "ID 2050"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Social science"
+    },
+    {
+      "line": 10,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 11,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 12,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 13,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 14,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 15,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 16,
+      "section": "cs-foundation",
+      "name": "CS 1004 / CS 1005 / CS 1101 / CS 1102",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 1004",
+          "CS 1005",
+          "CS 1101",
+          "CS 1102"
+        ]
+      }
+    },
+    {
+      "line": 17,
+      "section": "cs-foundation",
+      "name": "CS 2102 / CS 2103 / CS 2119",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2102",
+          "CS 2103",
+          "CS 2119"
+        ]
+      }
+    },
+    {
+      "line": 18,
+      "section": "cs-foundation",
+      "name": "CS 2223",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 2223"
+        ]
+      }
+    },
+    {
+      "line": 19,
+      "section": "mathematics",
+      "name": "MA 1021 / MA 1020",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 1021",
+          "MA 1020"
+        ]
+      }
+    },
+    {
+      "line": 20,
+      "section": "mathematics",
+      "name": "MA 1022 / MA 1120",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 1022",
+          "MA 1120"
+        ]
+      }
+    },
+    {
+      "line": 21,
+      "section": "mathematics",
+      "name": "MA 2611",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 2611"
+        ]
+      }
+    },
+    {
+      "line": 22,
+      "section": "mathematics",
+      "name": "MA 2612",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 2612"
+        ]
+      }
+    },
+    {
+      "line": 23,
+      "section": "mathematics",
+      "name": "MA 2071 / MA 2072",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "MA 2071",
+          "MA 2072"
+        ]
+      }
+    },
+    {
+      "line": 24,
+      "section": "foundations",
+      "name": "DS 1010",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "DS 1010"
+        ]
+      }
+    },
+    {
+      "line": 25,
+      "section": "foundations",
+      "name": "DS 2010",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "DS 2010"
+        ]
+      }
+    },
+    {
+      "line": 26,
+      "section": "foundations",
+      "name": "DS 3010",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "DS 3010"
+        ]
+      }
+    },
+    {
+      "line": 27,
+      "section": "ai-core",
+      "name": "CS 4341 / RBE 4701",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 4341",
+          "RBE 4701"
+        ]
+      }
+    },
+    {
+      "line": 28,
+      "section": "ai-core",
+      "name": "CS 4445 / CS 4342 / DS 4635 / MA 4635 / ECE 3405 / CS 4433 / DS 4433 / RBE 4744 / CS 4343 / DS 4343",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 4445",
+          "CS 4342",
+          "DS 4635",
+          "MA 4635",
+          "ECE 3405",
+          "CS 4433",
+          "DS 4433",
+          "RBE 4744",
+          "CS 4343",
+          "DS 4343"
+        ]
+      }
+    },
+    {
+      "line": 29,
+      "section": "ai-core",
+      "name": "CS 3041 / RBE 4601 / IMGD 4100 / CS 4100 / CS 4344 / DS 4344 / CS 4345 / DS 4345",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 3041",
+          "RBE 4601",
+          "IMGD 4100",
+          "CS 4100",
+          "CS 4344",
+          "DS 4344",
+          "CS 4345",
+          "DS 4345"
+        ]
+      }
+    },
+    {
+      "line": 30,
+      "section": "ai-core",
+      "name": "CS 4341 / RBE 4701 / CS 4445 / CS 4342 / DS 4635 / MA 4635 / ECE 3405 / CS 4433 / DS 4433 / RBE 4744 / CS 4343 / DS 4343 / CS 3041 / RBE 4601 / IMGD 4100 / CS 4100 / CS 4344 / DS 4344 / CS 4345 / DS 4345",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 4341",
+          "RBE 4701",
+          "CS 4445",
+          "CS 4342",
+          "DS 4635",
+          "MA 4635",
+          "ECE 3405",
+          "CS 4433",
+          "DS 4433",
+          "RBE 4744",
+          "CS 4343",
+          "DS 4343",
+          "CS 3041",
+          "RBE 4601",
+          "IMGD 4100",
+          "CS 4100",
+          "CS 4344",
+          "DS 4344",
+          "CS 4345",
+          "DS 4345"
+        ]
+      }
+    },
+    {
+      "line": 31,
+      "section": "ai-core",
+      "name": "CS 4341 / RBE 4701 / CS 4445 / CS 4342 / DS 4635 / MA 4635 / ECE 3405 / CS 4433 / DS 4433 / RBE 4744 / CS 4343 / DS 4343 / CS 3041 / RBE 4601 / IMGD 4100 / CS 4100 / CS 4344 / DS 4344 / CS 4345 / DS 4345",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 4341",
+          "RBE 4701",
+          "CS 4445",
+          "CS 4342",
+          "DS 4635",
+          "MA 4635",
+          "ECE 3405",
+          "CS 4433",
+          "DS 4433",
+          "RBE 4744",
+          "CS 4343",
+          "DS 4343",
+          "CS 3041",
+          "RBE 4601",
+          "IMGD 4100",
+          "CS 4100",
+          "CS 4344",
+          "DS 4344",
+          "CS 4345",
+          "DS 4345"
+        ]
+      }
+    },
+    {
+      "line": 32,
+      "section": "ethics",
+      "name": "CS 3043 / SS 3043 / ENV 2720 / GOV 2302 / GOV 2313 / PY 2713 / PY 2731 / RE 2731 / RBE 3100 / SS 1700 / SS 2413 / PSY 2413 / IMGD 2000 / IMGD 2002",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 3043",
+          "SS 3043",
+          "ENV 2720",
+          "GOV 2302",
+          "GOV 2313",
+          "PY 2713",
+          "PY 2731",
+          "RE 2731",
+          "RBE 3100",
+          "SS 1700",
+          "SS 2413",
+          "PSY 2413",
+          "IMGD 2000",
+          "IMGD 2002"
+        ],
+        "priority": -2
+      }
+    },
+    {
+      "line": 33,
+      "section": "disciplinary",
+      "name": "Disciplinary Electives",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 34,
+      "section": "disciplinary",
+      "name": "Disciplinary Electives",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 35,
+      "section": "concentration",
+      "name": "Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 36,
+      "section": "concentration",
+      "name": "Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 37,
+      "section": "concentration",
+      "name": "Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 38,
+      "section": "concentration",
+      "name": "Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 39,
+      "section": "concentration",
+      "name": "Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 40,
+      "section": "concentration",
+      "name": "Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 41,
+      "section": "natural-science",
+      "name": "Natural and Engineering Science",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "AREN",
+          "BB",
+          "BCB",
+          "BME",
+          "CE",
+          "CH",
+          "CHE",
+          "ECE",
+          "ES",
+          "GE",
+          "ME",
+          "NEU",
+          "PH",
+          "RBE"
+        ]
+      }
+    },
+    {
+      "line": 42,
+      "section": "natural-science",
+      "name": "Natural and Engineering Science",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "AREN",
+          "BB",
+          "BCB",
+          "BME",
+          "CE",
+          "CH",
+          "CHE",
+          "ECE",
+          "ES",
+          "GE",
+          "ME",
+          "NEU",
+          "PH",
+          "RBE"
+        ]
+      }
+    },
+    {
+      "line": 43,
+      "section": "mqp",
+      "name": "Major Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 44,
+      "section": "mqp",
+      "name": "Major Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 45,
+      "section": "mqp",
+      "name": "Major Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "hua-depth",
+      "name": "Humanities depth",
+      "type": "groupDepth",
+      "minCourses": 3,
+      "requiresConfirmation": true,
+      "note": "At least three thematically-related courses in the same grouping",
+      "confirmation": "hua-depth-confirmation",
+      "section": "hua",
+      "lines": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "hua-breadth",
+      "name": "Humanities breadth",
+      "type": "groupBreadth",
+      "groupings": {
+        "art-drama-music": [
+          "AR",
+          "TH",
+          "MU"
+        ],
+        "modern-languages": [
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP"
+        ],
+        "literature-writing": [
+          "EN",
+          "WR"
+        ],
+        "history-humanities": [
+          "HI",
+          "HU",
+          "INTL"
+        ],
+        "philosophy-religion": [
+          "PY",
+          "RE"
+        ]
+      },
+      "allLanguageException": true,
+      "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",
+      "groupingOrder": [
+        "art-drama-music",
+        "modern-languages",
+        "literature-writing",
+        "history-humanities",
+        "philosophy-religion"
+      ],
+      "section": "hua",
+      "exceptionGrouping": "modern-languages",
+      "depthCheck": "hua-depth"
+    },
+    {
+      "id": "residency",
+      "name": "Residency",
+      "type": "residency",
+      "minUnits": 8,
+      "note": "Minimum of 8 units must be completed at WPI; shows check-yourself once typed courses are present"
+    },
+    {
+      "id": "hua-sequence",
+      "name": "Humanities level and sequence",
+      "type": "manual",
+      "confirmation": "hua-sequence-confirmation",
+      "note": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
+      "help": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "hua-ap-credit",
+      "name": "AP credit in Humanities",
+      "type": "manual",
+      "confirmation": "hua-ap-credit-confirmation",
+      "note": "Confirm no more than 1/3 unit of AP credit in Humanities. The PDF does not state an IB limit.",
+      "help": "Confirm no more than 1/3 unit of AP credit in Humanities. The PDF does not state an IB limit.",
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "concentration-approval",
+      "name": "AI concentration and electives",
+      "type": "manual",
+      "confirmation": "concentration-approval-confirmation",
+      "note": "Confirm six distinct courses from one of the eleven page-two concentrations, including every required course, category minimum and level restriction. The two disciplinary electives may come from any concentration or the AI core. Confirm any approved graduate options.",
+      "help": "Confirm six distinct courses from one of the eleven page-two concentrations, including every required course, category minimum and level restriction. The two disciplinary electives may come from any concentration or the AI core. Confirm any approved graduate options.",
+      "lines": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "advanced-level",
+      "name": "AI advanced courses and MQP",
+      "type": "manual",
+      "confirmation": "advanced-level-confirmation",
+      "note": "Confirm at least two 4000-level core courses and four 4000-level courses overall. MQP must apply AI within the chosen concentration and have advisor appointments in AI and that concentration.",
+      "help": "Confirm at least two 4000-level core courses and four 4000-level courses overall. MQP must apply AI within the chosen concentration and have advisor appointments in AI and that concentration."
+    }
+  ],
+  "manualItems": [
+    {
+      "id": "iqp-1",
+      "line": 10,
+      "name": "IQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-2",
+      "line": 11,
+      "name": "IQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-3",
+      "line": 12,
+      "name": "IQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "wpe-sports",
+      "line": 7,
+      "name": "Club or varsity sports in place of WPE",
+      "type": "checkbox"
+    },
+    {
+      "id": "hua-depth-confirmation",
+      "name": "Humanities depth confirmation",
+      "type": "checkbox",
+      "note": "Student confirms that their 3 depth courses are thematically related"
+    },
+    {
+      "id": "hua-sequence-confirmation",
+      "name": "Humanities level and sequence",
+      "type": "checkbox",
+      "note": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor."
+    },
+    {
+      "id": "hua-ap-credit-confirmation",
+      "name": "AP credit in Humanities",
+      "type": "checkbox",
+      "note": "Confirm no more than 1/3 unit of AP credit in Humanities. The PDF does not state an IB limit."
+    },
+    {
+      "id": "requirement-33",
+      "line": 33,
+      "name": "Approved AI elective, line 33",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-34",
+      "line": 34,
+      "name": "Approved AI elective, line 34",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-35",
+      "line": 35,
+      "name": "Approved AI elective, line 35",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-36",
+      "line": 36,
+      "name": "Approved AI elective, line 36",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-37",
+      "line": 37,
+      "name": "Approved AI elective, line 37",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-38",
+      "line": 38,
+      "name": "Approved AI elective, line 38",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-39",
+      "line": 39,
+      "name": "Approved AI elective, line 39",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-40",
+      "line": 40,
+      "name": "Approved AI elective, line 40",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "concentration-approval-confirmation",
+      "name": "AI concentration and electives",
+      "type": "checkbox",
+      "note": "Confirm six distinct courses from one of the eleven page-two concentrations, including every required course, category minimum and level restriction. The two disciplinary electives may come from any concentration or the AI core. Confirm any approved graduate options."
+    },
+    {
+      "id": "advanced-level-confirmation",
+      "name": "AI advanced courses and MQP",
+      "type": "checkbox",
+      "note": "Confirm at least two 4000-level core courses and four 4000-level courses overall. MQP must apply AI within the chosen concentration and have advisor appointments in AI and that concentration."
+    },
+    {
+      "id": "mqp-1",
+      "line": 43,
+      "name": "MQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-2",
+      "line": 44,
+      "name": "MQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-3",
+      "line": 45,
+      "name": "MQP (3 of 3)",
+      "type": "checkbox"
+    }
+  ]
+}

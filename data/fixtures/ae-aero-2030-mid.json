@@ -1,0 +1,51 @@
+{
+  "sheetId": "ae-aero-2030",
+  "description": "Hand-worked from the official PDF. Four completed courses and one planned course; WPE and projects remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "AE 2110",
+      "credits": 3
+    },
+    {
+      "code": "AE 3120",
+      "credits": 3
+    },
+    {
+      "code": "AE 4510",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "AE 4220",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Mathematics": {
+      "done": 1,
+      "planned": 0
+    },
+    "Core Aerospace Engineering": {
+      "done": 1,
+      "planned": 0
+    },
+    "Aeronautics Track": {
+      "done": 2,
+      "planned": 0
+    },
+    "Astronautics Elective": {
+      "done": 0,
+      "planned": 1
+    }
+  },
+  "expectedChecks": {},
+  "unfilledLines": [
+    7
+  ]
+}

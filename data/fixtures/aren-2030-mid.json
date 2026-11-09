@@ -1,0 +1,55 @@
+{
+  "sheetId": "aren-2030",
+  "description": "Hand-worked from the official PDF. Four completed courses and one planned course; WPE and projects remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "AREN 2023",
+      "credits": 3
+    },
+    {
+      "code": "AREN 3003",
+      "credits": 3
+    },
+    {
+      "code": "CE 2000",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "AREN 3002",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Mathematics": {
+      "done": 1,
+      "planned": 0
+    },
+    "Architectural Engineering Complements": {
+      "done": 1,
+      "planned": 0
+    },
+    "Building Mechanical Systems": {
+      "done": 1,
+      "planned": 0
+    },
+    "Building Structural Engineering": {
+      "done": 1,
+      "planned": 0
+    },
+    "General Architectural Design": {
+      "done": 0,
+      "planned": 1
+    }
+  },
+  "expectedChecks": {},
+  "unfilledLines": [
+    7
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "sheetId": "mac-2030",
+  "description": "Hand-worked from the official PDF. Transition alternatives cannot fill two transition rows; FIN 1250 cannot fill Business. Four terms of zero-credit seminar stay unconfirmed. MA 4216 must add no academic credit even if entered with three credits.",
+  "takenCourses": [
+    {
+      "code": "MA 1033",
+      "credits": 3
+    },
+    {
+      "code": "MA 1971",
+      "credits": 3
+    },
+    {
+      "code": "FIN 1250",
+      "credits": 3
+    },
+    {
+      "code": "MA 4216",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "MA 3832",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Transition Courses": {
+      "done": 1,
+      "planned": 0
+    },
+    "Core Mathematics": {
+      "done": 0,
+      "planned": 1
+    },
+    "Business": {
+      "done": 0,
+      "planned": 0
+    },
+    "Introductory and Other Mathematics": {
+      "done": 0,
+      "planned": 0
+    }
+  },
+  "expectedChecks": {
+    "actuarial-seminar": "check"
+  },
+  "unfilledLines": [
+    7
+  ],
+  "expectedFreeCreditsDone": 6
+}

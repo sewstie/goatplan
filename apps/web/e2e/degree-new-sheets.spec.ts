@@ -44,7 +44,7 @@ for (const width of [1440, 834]) {
     await auditReady(page);
     await expect(page.locator(".degree-major")).toContainText("Professional Writing");
     await page.getByRole("button", { name: "Change major" }).click();
-    await page.getByRole("radio", { name: "Biomedical Engineering Coming soon", exact: true }).check();
+    await page.getByRole("radio", { name: "Chemical Engineering Coming soon", exact: true }).check();
     await expect(page.getByRole("button", { name: "Request this major" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Open my sheet" })).toHaveCount(0);
     await page.keyboard.press("Escape");

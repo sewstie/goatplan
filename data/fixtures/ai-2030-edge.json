@@ -1,0 +1,41 @@
+{
+  "sheetId": "ai-2030",
+  "description": "Hand-worked from the official PDF. Cross-listed machine learning counts once. Concentration credit stays unconfirmed; courses cannot be shared with core requirements.",
+  "takenCourses": [
+    {
+      "code": "CS 4433",
+      "credits": 3
+    },
+    {
+      "code": "DS 4433",
+      "credits": 3
+    },
+    {
+      "code": "GOV 2313",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "CS 4344",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "AI Core": {
+      "done": 1,
+      "planned": 1
+    },
+    "AI Ethics and Social Implications": {
+      "done": 1,
+      "planned": 0
+    }
+  },
+  "expectedChecks": {
+    "concentration-approval": "check"
+  },
+  "unfilledLines": [
+    7
+  ]
+}

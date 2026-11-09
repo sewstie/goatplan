@@ -82,6 +82,7 @@ export interface TrackingSheet {
   catalogSource: string;
   totalUnits: number;
   residencyUnits?: number;
+  nonCreditCourses?: string[];
   sections: SheetSection[];
   lines: SheetLine[];
   exclusions: { course: string; reason: string }[];

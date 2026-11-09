@@ -1,0 +1,55 @@
+{
+  "sheetId": "mac-2030",
+  "description": "Hand-worked from the official PDF. Four completed courses and one planned course; WPE and projects remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "MA 1033",
+      "credits": 3
+    },
+    {
+      "code": "MA 3831",
+      "credits": 3
+    },
+    {
+      "code": "MA 3212",
+      "credits": 3
+    },
+    {
+      "code": "PH 1110",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "FIN 2070",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Transition Courses": {
+      "done": 1,
+      "planned": 0
+    },
+    "Core Mathematics": {
+      "done": 1,
+      "planned": 0
+    },
+    "Actuarial Mathematics": {
+      "done": 1,
+      "planned": 0
+    },
+    "Basic Science": {
+      "done": 1,
+      "planned": 0
+    },
+    "Business": {
+      "done": 0,
+      "planned": 1
+    }
+  },
+  "expectedChecks": {},
+  "unfilledLines": [
+    7
+  ]
+}

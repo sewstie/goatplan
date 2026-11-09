@@ -9,6 +9,12 @@ import eceBackground from "./ece-background.json";
 import { ECE_LAYOUT } from "./eceLayout";
 import dsBackground from "./ds-background.json";
 import { DS_LAYOUT } from "./dsLayout";
+import aeBackground from "./ae-background.json";
+import aeLayout from "./ae-layout.json";
+import arenBackground from "./aren-background.json";
+import arenLayout from "./aren-layout.json";
+import bmeBackground from "./bme-background.json";
+import bmeLayout from "./bme-layout.json";
 
 interface MapDefinition {
   records: readonly MapSource[];
@@ -19,6 +25,17 @@ interface MapDefinition {
 }
 
 const MAPS: Record<string, MapDefinition> = {
+  ...Object.fromEntries([
+    ["ae-aero-2030", aeBackground, aeLayout, "aerospace-engineering"],
+    ["ae-astro-2030", aeBackground, aeLayout, "aerospace-engineering"],
+    ["aren-2030", arenBackground, arenLayout, "architectural-engineering"],
+    ["bme-2030", bmeBackground, bmeLayout, "biomedical-engineering"],
+  ].map(([id, records, layout, department]) => [id, {
+    records: records as MapSource[], layout: layout as MapLayout,
+    source: `https://wpi.cleancatalog.net/${department}`,
+    areaHelp: "Arrows show recommended background from WPI course descriptions. Topic preparation and alternatives appear in course details.",
+    summarized: true,
+  }])),
   "cs-2030": {
     records: sources,
     layout: CS_LAYOUT,

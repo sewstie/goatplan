@@ -44,7 +44,7 @@ is enough. Concurrent background stays marked as concurrent.
 ME 4506 prints MA 2501 for differential equations. The map preserves that
 code and flags it in the summary.
 
-The map tests cover every registered major, course aliases, key chains,
+The map tests cover every major with a curated map, course aliases, key chains,
 numbered bands and arrows avoiding course cards. Browser tests cover
 major switching, planning, keyboard selection and light/dark screenshots
 at 1440 and 834 px.
@@ -60,3 +60,7 @@ changes. A source-review date records a past check, not continuous verification.
 Map planning changes degree history through explicit actions. It does not
 initialize or synchronize the schedule planner. Academic requirements continue
 to come from the selected effective tracking sheet.
+
+## Engineering additions
+
+Both Aerospace tracks share the AE department map. Architectural Engineering and Biomedical Engineering have their own maps. These maps use the official 2026–27 course descriptions, independently of tracking-sheet degree rules. Background alternatives remain alternatives; topic-only preparation remains a note. Actuarial Mathematics and Artificial Intelligence do not yet have curated maps.

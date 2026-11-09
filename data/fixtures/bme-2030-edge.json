@@ -1,0 +1,45 @@
+{
+  "sheetId": "bme-2030",
+  "description": "Hand-worked from the official PDF. Human physiology is excluded from engineering credit. A 4000-level lab cannot fill BME depth. Labs require completed focus-pair confirmation.",
+  "takenCourses": [
+    {
+      "code": "BME 3112",
+      "credits": 3
+    },
+    {
+      "code": "BME 1004",
+      "credits": 3
+    },
+    {
+      "code": "BME 4012",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "BME 3300",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "BME Laboratories": {
+      "done": 0,
+      "planned": 0
+    },
+    "BME Depth 4000+": {
+      "done": 0,
+      "planned": 0
+    },
+    "Engineering Design": {
+      "done": 0,
+      "planned": 1
+    }
+  },
+  "expectedChecks": {
+    "bme-distribution": "check"
+  },
+  "unfilledLines": [
+    7
+  ]
+}

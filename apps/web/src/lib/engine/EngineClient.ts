@@ -69,6 +69,11 @@ export class EngineClient {
   }
 
   audit(request: AuditRequest): Promise<AuditResponse> {
+    const excluded = new Set(request.sheet?.nonCreditCourses ?? []);
+    if (excluded.size) {
+      const normalize = (courses: AuditRequest["taken"]) => courses?.map((course) => excluded.has(course.code) ? { ...course, credits: 0 } : course);
+      request = { ...request, taken: normalize(request.taken), planned: normalize(request.planned), candidates: normalize(request.candidates) };
+    }
     return this.enqueue({ id: this.nextId++, kind: "audit", request }) as Promise<AuditResponse>;
   }
 

@@ -1,0 +1,51 @@
+{
+  "sheetId": "bme-2030",
+  "description": "Hand-worked from the official PDF. Four completed courses and one planned course; WPE and projects remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "CH 1010",
+      "credits": 3
+    },
+    {
+      "code": "PH 1110",
+      "credits": 3
+    },
+    {
+      "code": "BME 3300",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "MA 2611",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Mathematics": {
+      "done": 1,
+      "planned": 1
+    },
+    "Chemistry": {
+      "done": 1,
+      "planned": 0
+    },
+    "Physics": {
+      "done": 1,
+      "planned": 0
+    },
+    "Engineering Design": {
+      "done": 1,
+      "planned": 0
+    }
+  },
+  "expectedChecks": {},
+  "unfilledLines": [
+    7
+  ]
+}

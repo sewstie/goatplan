@@ -593,6 +593,14 @@
     "orderNote": {
       "type": "string",
       "minLength": 1
+    },
+    "nonCreditCourses": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2,4} [0-9]{3,4}[A-Z]?$"
+      },
+      "uniqueItems": true
     }
   },
   "required": [

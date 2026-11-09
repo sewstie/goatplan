@@ -9,9 +9,10 @@ import { loadSheet, SHEETS } from "./sheets";
 import { validateSheet } from "./sheets/validation";
 import { activateRequirements } from "./requirements";
 import { buildSheet } from "./sheet";
+import { creditsPerTerm } from "./insights";
 
 const webRoot = fileURLToPath(new URL("../../../", import.meta.url));
-const ids = ["bbt", "bc", "ch", "bcb", "eve", "baaai", "mkt", "pw"];
+const ids = ["bbt", "bc", "ch", "bcb", "eve", "baaai", "mkt", "pw", "mac", "ae-aero", "ae-astro", "aren", "ai", "bme"];
 
 interface WorkedHistory {
   sheetId: string;
@@ -21,6 +22,7 @@ interface WorkedHistory {
   expectedSections: Record<string, { done: number; planned: number }>;
   expectedChecks: Record<string, string>;
   unfilledLines: number[];
+  expectedFreeCreditsDone?: number;
 }
 
 function auditClient() {
@@ -62,7 +64,14 @@ describe("new Class of 2030 PDF sheets", () => {
             taken: fixture.takenCourses, planned: fixture.plannedCourses, manual: fixture.confirmedManualItems });
           expect(response.ok).toBe(true);
           if (!response.ok) return;
+          if (fixture.expectedFreeCreditsDone !== undefined) {
+            expect(response.freeElectives.creditsDone).toBe(fixture.expectedFreeCreditsDone);
+          }
           activateRequirements(sheet);
+          if (id === "mac") {
+            const credits = creditsPerTerm({ courses: [{ code: "MA 4216", credits: 3, title: "Seminar", status: "taken", source: "typed", apIb: false }], manual: [] }, null);
+            expect(credits.noTerm.done).toBe(0);
+          }
           const view = buildSheet(response, { courses: [], manual: [] }, new Map(), null);
           if (id === "pw") {
             expect(view.sections.find((section) => section.id === "wpe")?.tiles.map((tile) => tile.detail)).toEqual([
