@@ -1,0 +1,1176 @@
+{
+  "id": "bcb-2030",
+  "$schema": "./degree-rules.schema.json",
+  "major": "Bioinformatics and Computational Biology",
+  "classYear": 2030,
+  "catalogYear": "2026-2027",
+  "effectiveDate": "AY 2026-2027",
+  "source": "https://www.wpi.edu/sites/default/files/2026-04/BCB-2030.pdf",
+  "catalogSource": "https://www.wpi.edu/student-experience/resources/academic-advising/program-tracking-sheets",
+  "totalUnits": 15,
+  "residencyUnits": 8,
+  "crossLists": [
+    [
+      "PY 2731",
+      "RE 2731"
+    ]
+  ],
+  "huaSubjects": [
+    "AR",
+    "TH",
+    "MU",
+    "AB",
+    "CN",
+    "ISE",
+    "GN",
+    "SP",
+    "EN",
+    "WR",
+    "HI",
+    "HU",
+    "INTL",
+    "PY",
+    "RE"
+  ],
+  "orderNote": "All 5 HUA courses must be completed before the Inquiry Seminar; shown as text, not enforced",
+  "exclusions": [],
+  "onlyOneSets": [
+    {
+      "id": "bcb-4001-equivalence",
+      "courses": [
+        "BCB 4001",
+        "BCB 501"
+      ],
+      "reason": "The official PDF does not allow both courses to count."
+    },
+    {
+      "id": "bcb-4004-equivalence",
+      "courses": [
+        "BCB 4004",
+        "BCB 504"
+      ],
+      "reason": "The official PDF does not allow both courses to count."
+    }
+  ],
+  "sections": [
+    {
+      "id": "hua",
+      "name": "Humanities and Arts",
+      "minUnits": 2,
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "note": "Finish five HUA courses before Inquiry. Check the theme and sequence with your advisor."
+    },
+    {
+      "id": "wpe",
+      "name": "Wellness and Physical Education",
+      "minUnits": 0.333333,
+      "lines": [
+        7
+      ]
+    },
+    {
+      "id": "social-science",
+      "name": "Social Science",
+      "minUnits": 0.666667,
+      "lines": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "iqp",
+      "name": "Interactive Qualifying Project",
+      "minUnits": 1,
+      "lines": [
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "id": "free-electives",
+      "name": "Free Electives",
+      "minUnits": 1,
+      "creditPool": true,
+      "poolCredits": 9,
+      "lines": [
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "id": "math",
+      "name": "Mathematics Foundation",
+      "minUnits": 1.6666666666666665,
+      "lines": [
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "note": "Include differential and integral calculus, linear algebra and statistics. The fifth course is statistics, probability, calculus or differential equations."
+    },
+    {
+      "id": "cs-foundation",
+      "name": "Computer Science Foundation",
+      "minUnits": 1.3333333333333333,
+      "lines": [
+        21,
+        22,
+        23,
+        24
+      ]
+    },
+    {
+      "id": "biology",
+      "name": "Biology Foundation",
+      "minUnits": 1.6666666666666665,
+      "lines": [
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "note": "Line 29 includes optional half-lab continuation 29.5. Confirm one full lab or two half labs together."
+    },
+    {
+      "id": "chemistry",
+      "name": "Chemistry Foundation",
+      "minUnits": 1.3333333333333333,
+      "lines": [
+        30,
+        31,
+        32,
+        33
+      ]
+    },
+    {
+      "id": "bcb",
+      "name": "Bioinformatics and Computational Biology",
+      "minUnits": 0.6666666666666666,
+      "lines": [
+        34,
+        35
+      ]
+    },
+    {
+      "id": "social-implications",
+      "name": "Social Implications",
+      "minUnits": 0.3333333333333333,
+      "lines": [
+        36
+      ]
+    },
+    {
+      "id": "advanced",
+      "name": "Advanced Elective Courses",
+      "minUnits": 1.9999999999999998,
+      "lines": [
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ]
+    },
+    {
+      "id": "mqp",
+      "name": "Major Qualifying Project",
+      "minUnits": 1.0,
+      "lines": [
+        43,
+        44,
+        45
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "line": 1,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 2,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 3,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Humanities depth"
+    },
+    {
+      "line": 4,
+      "section": "hua",
+      "name": "Inquiry Seminar or Practicum",
+      "units": 0.333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "HU 3900",
+          "HU 3910"
+        ]
+      },
+      "displayName": "Inquiry / Practicum"
+    },
+    {
+      "line": 5,
+      "section": "hua",
+      "name": "Humanities breadth",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Humanities breadth"
+    },
+    {
+      "line": 6,
+      "section": "hua",
+      "name": "Humanities elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Humanities elective"
+    },
+    {
+      "line": 7,
+      "section": "wpe",
+      "name": "Wellness and Physical Education",
+      "units": 0.333333,
+      "subSlots": 4,
+      "subSlotUnits": 0.083333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "WPE"
+        ]
+      },
+      "displayName": "WPE"
+    },
+    {
+      "line": 8,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECON",
+          "ENV",
+          "GOV",
+          "PSY",
+          "SD",
+          "SOC",
+          "SS",
+          "STS",
+          "DEV"
+        ],
+        "additionalCourses": [
+          "ID 2050"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Social science"
+    },
+    {
+      "line": 9,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECON",
+          "ENV",
+          "GOV",
+          "PSY",
+          "SD",
+          "SOC",
+          "SS",
+          "STS",
+          "DEV"
+        ],
+        "additionalCourses": [
+          "ID 2050"
+        ],
+        "priority": 100000
+      },
+      "displayName": "Social science"
+    },
+    {
+      "line": 10,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 11,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 12,
+      "section": "iqp",
+      "name": "IQP",
+      "units": 0.333333,
+      "filter": {
+        "type": "manual"
+      },
+      "displayName": "IQP"
+    },
+    {
+      "line": 13,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 14,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 15,
+      "section": "free-electives",
+      "name": "Free Elective",
+      "units": 0.333333,
+      "filter": {
+        "type": "any"
+      },
+      "displayName": "Free elective"
+    },
+    {
+      "line": 16,
+      "section": "math",
+      "name": "Mathematics Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "MA"
+        ]
+      }
+    },
+    {
+      "line": 17,
+      "section": "math",
+      "name": "Mathematics Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "MA"
+        ]
+      }
+    },
+    {
+      "line": 18,
+      "section": "math",
+      "name": "Mathematics Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "MA"
+        ]
+      }
+    },
+    {
+      "line": 19,
+      "section": "math",
+      "name": "Mathematics Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "MA"
+        ]
+      }
+    },
+    {
+      "line": 20,
+      "section": "math",
+      "name": "Mathematics Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "MA"
+        ]
+      }
+    },
+    {
+      "line": 21,
+      "section": "cs-foundation",
+      "name": "Introductory programming 1000-level",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "coursePatterns": [
+          "CS 1[0-9]{3}"
+        ]
+      }
+    },
+    {
+      "line": 22,
+      "section": "cs-foundation",
+      "name": "Introductory programming 2000-level",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "coursePatterns": [
+          "CS 2[0-9]{3}"
+        ]
+      }
+    },
+    {
+      "line": 23,
+      "section": "cs-foundation",
+      "name": "Discrete mathematics",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 24,
+      "section": "cs-foundation",
+      "name": "Algorithms",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 25,
+      "section": "biology",
+      "name": "Foundational biology",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "BB 1101",
+          "BB 1102"
+        ]
+      }
+    },
+    {
+      "line": 26,
+      "section": "biology",
+      "name": "Biology foundation lecture",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 27,
+      "section": "biology",
+      "name": "Biology foundation lecture",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 28,
+      "section": "biology",
+      "name": "Biology foundation lecture",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 29,
+      "section": "biology",
+      "name": "Biology 2000-level laboratory credit",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 30,
+      "section": "chemistry",
+      "name": "Chemistry Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "CH"
+        ]
+      }
+    },
+    {
+      "line": 31,
+      "section": "chemistry",
+      "name": "Chemistry Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "CH"
+        ]
+      }
+    },
+    {
+      "line": 32,
+      "section": "chemistry",
+      "name": "Chemistry Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "CH"
+        ]
+      }
+    },
+    {
+      "line": 33,
+      "section": "chemistry",
+      "name": "Chemistry Foundation",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "CH"
+        ]
+      }
+    },
+    {
+      "line": 34,
+      "section": "bcb",
+      "name": "Bioinformatics and Computational Biology",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "BCB"
+        ]
+      }
+    },
+    {
+      "line": 35,
+      "section": "bcb",
+      "name": "Bioinformatics and Computational Biology",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "BCB"
+        ]
+      }
+    },
+    {
+      "line": 36,
+      "section": "social-implications",
+      "name": "Social Implications",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "CS 3043",
+          "GOV 2302",
+          "GOV 2311",
+          "GOV 2314",
+          "GOV 2315",
+          "PY 2713",
+          "PY 2731",
+          "RE 2731"
+        ],
+        "priority": -2
+      }
+    },
+    {
+      "line": 37,
+      "section": "advanced",
+      "name": "Advanced Elective Courses",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 38,
+      "section": "advanced",
+      "name": "Advanced Elective Courses",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 39,
+      "section": "advanced",
+      "name": "Advanced Elective Courses",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 40,
+      "section": "advanced",
+      "name": "Advanced Elective Courses",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 41,
+      "section": "advanced",
+      "name": "Advanced Elective Courses",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 42,
+      "section": "advanced",
+      "name": "Advanced Elective Courses",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 43,
+      "section": "mqp",
+      "name": "Major Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 44,
+      "section": "mqp",
+      "name": "Major Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 45,
+      "section": "mqp",
+      "name": "Major Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "hua-depth",
+      "name": "Humanities depth",
+      "type": "groupDepth",
+      "minCourses": 3,
+      "requiresConfirmation": true,
+      "note": "At least three thematically-related courses in the same grouping",
+      "confirmation": "hua-depth-confirmation",
+      "section": "hua",
+      "lines": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "hua-breadth",
+      "name": "Humanities breadth",
+      "type": "groupBreadth",
+      "groupings": {
+        "art-drama-music": [
+          "AR",
+          "TH",
+          "MU"
+        ],
+        "modern-languages": [
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP"
+        ],
+        "literature-writing": [
+          "EN",
+          "WR"
+        ],
+        "history-humanities": [
+          "HI",
+          "HU",
+          "INTL"
+        ],
+        "philosophy-religion": [
+          "PY",
+          "RE"
+        ]
+      },
+      "allLanguageException": true,
+      "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",
+      "groupingOrder": [
+        "art-drama-music",
+        "modern-languages",
+        "literature-writing",
+        "history-humanities",
+        "philosophy-religion"
+      ],
+      "section": "hua",
+      "exceptionGrouping": "modern-languages",
+      "depthCheck": "hua-depth"
+    },
+    {
+      "id": "residency",
+      "name": "Residency",
+      "type": "residency",
+      "minUnits": 8,
+      "note": "Minimum of 8 units must be completed at WPI; shows check-yourself once typed courses are present"
+    },
+    {
+      "id": "hua-sequence",
+      "name": "Humanities level and sequence",
+      "type": "manual",
+      "confirmation": "hua-sequence-confirmation",
+      "note": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
+      "help": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "math-distribution",
+      "name": "Mathematics topics",
+      "type": "manual",
+      "confirmation": "math-distribution-confirmation",
+      "note": "Confirm 2/3 unit differential and integral calculus, 1/3 unit linear algebra, 1/3 unit statistics, and one additional statistics, probability, calculus or differential equations course.",
+      "help": "Confirm 2/3 unit differential and integral calculus, 1/3 unit linear algebra, 1/3 unit statistics, and one additional statistics, probability, calculus or differential equations course.",
+      "lines": [
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "cs-foundation-review",
+      "name": "CS foundation approval",
+      "type": "manual",
+      "confirmation": "cs-foundation-review-confirmation",
+      "note": "Confirm one 1000-level and one 2000-level introductory programming course from the approved foundation list, plus discrete mathematics and algorithms. The PDF refers to an external list; that list is not inferred here.",
+      "help": "Confirm one 1000-level and one 2000-level introductory programming course from the approved foundation list, plus discrete mathematics and algorithms. The PDF refers to an external list; that list is not inferred here.",
+      "lines": [
+        21,
+        22,
+        23,
+        24
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "biology-foundation-review",
+      "name": "Biology foundation approval",
+      "type": "manual",
+      "confirmation": "biology-foundation-review-confirmation",
+      "note": "Confirm cell biology or genetics, two approved lecture courses, and 1/3 unit of 2000-level BB laboratories. The optional 29.5 row is the second half of line 29, not extra credit.",
+      "help": "Confirm cell biology or genetics, two approved lecture courses, and 1/3 unit of 2000-level BB laboratories. The optional 29.5 row is the second half of line 29, not extra credit.",
+      "lines": [
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "chemistry-foundation-review",
+      "name": "Chemistry foundation topics",
+      "type": "manual",
+      "confirmation": "chemistry-foundation-review-confirmation",
+      "note": "Confirm 2/3 unit general chemistry and 1/3 unit organic chemistry. The fourth course must be general chemistry, organic chemistry or biochemistry.",
+      "help": "Confirm 2/3 unit general chemistry and 1/3 unit organic chemistry. The fourth course must be general chemistry, organic chemistry or biochemistry.",
+      "lines": [
+        30,
+        31,
+        32,
+        33
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "advanced-approval",
+      "name": "Advanced elective approval",
+      "type": "manual",
+      "confirmation": "advanced-approval-confirmation",
+      "note": "Confirm six courses from the approved advanced electives list, including at least three in the most related to BCB category. The PDF refers to a list outside the PDF, so eligibility requires confirmation.",
+      "help": "Confirm six courses from the approved advanced electives list, including at least three in the most related to BCB category. The PDF refers to a list outside the PDF, so eligibility requires confirmation.",
+      "lines": [
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "major-level",
+      "name": "Advanced level and MQP advisor",
+      "type": "manual",
+      "confirmation": "major-level-confirmation",
+      "note": "Confirm four courses at 4000-level for the major overall and an MQP advisor with a formal collaborative BCB appointment. No course may fill two requirements.",
+      "help": "Confirm four courses at 4000-level for the major overall and an MQP advisor with a formal collaborative BCB appointment. No course may fill two requirements."
+    },
+    {
+      "id": "hua-ap-credit",
+      "name": "AP credit in Humanities",
+      "type": "manual",
+      "confirmation": "hua-ap-credit-confirmation",
+      "note": "Confirm that no more than 1/3 unit of AP credit counts toward Humanities and Arts. The PDF states an AP limit; it does not give an IB limit.",
+      "help": "Confirm that no more than 1/3 unit of AP credit counts toward Humanities and Arts. The PDF states an AP limit; it does not give an IB limit.",
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "affectsLines": true
+    }
+  ],
+  "manualItems": [
+    {
+      "id": "iqp-1",
+      "line": 10,
+      "name": "IQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-2",
+      "line": 11,
+      "name": "IQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-3",
+      "line": 12,
+      "name": "IQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "wpe-sports",
+      "line": 7,
+      "name": "Club or varsity sports in place of WPE",
+      "type": "checkbox"
+    },
+    {
+      "id": "hua-depth-confirmation",
+      "name": "Humanities depth confirmation",
+      "type": "checkbox",
+      "note": "Student confirms that their 3 depth courses are thematically related"
+    },
+    {
+      "id": "hua-sequence-confirmation",
+      "name": "Humanities level and sequence",
+      "type": "checkbox",
+      "note": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor."
+    },
+    {
+      "id": "math-distribution-confirmation",
+      "name": "Mathematics topics",
+      "type": "checkbox",
+      "note": "Confirm 2/3 unit differential and integral calculus, 1/3 unit linear algebra, 1/3 unit statistics, and one additional statistics, probability, calculus or differential equations course."
+    },
+    {
+      "id": "requirement-23",
+      "line": 23,
+      "name": "Discrete mathematics, line 23",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-24",
+      "line": 24,
+      "name": "Algorithms, line 24",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "cs-foundation-review-confirmation",
+      "name": "CS foundation approval",
+      "type": "checkbox",
+      "note": "Confirm one 1000-level and one 2000-level introductory programming course from the approved foundation list, plus discrete mathematics and algorithms. The PDF refers to an external list; that list is not inferred here."
+    },
+    {
+      "id": "requirement-26",
+      "line": 26,
+      "name": "Biology foundation, line 26",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-27",
+      "line": 27,
+      "name": "Biology foundation, line 27",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-28",
+      "line": 28,
+      "name": "Biology foundation, line 28",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-29",
+      "line": 29,
+      "name": "Biology foundation, line 29",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "biology-foundation-review-confirmation",
+      "name": "Biology foundation approval",
+      "type": "checkbox",
+      "note": "Confirm cell biology or genetics, two approved lecture courses, and 1/3 unit of 2000-level BB laboratories. The optional 29.5 row is the second half of line 29, not extra credit."
+    },
+    {
+      "id": "chemistry-foundation-review-confirmation",
+      "name": "Chemistry foundation topics",
+      "type": "checkbox",
+      "note": "Confirm 2/3 unit general chemistry and 1/3 unit organic chemistry. The fourth course must be general chemistry, organic chemistry or biochemistry."
+    },
+    {
+      "id": "requirement-37",
+      "line": 37,
+      "name": "Approved advanced elective, line 37",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-38",
+      "line": 38,
+      "name": "Approved advanced elective, line 38",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-39",
+      "line": 39,
+      "name": "Approved advanced elective, line 39",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-40",
+      "line": 40,
+      "name": "Approved advanced elective, line 40",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-41",
+      "line": 41,
+      "name": "Approved advanced elective, line 41",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-42",
+      "line": 42,
+      "name": "Approved advanced elective, line 42",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "advanced-approval-confirmation",
+      "name": "Advanced elective approval",
+      "type": "checkbox",
+      "note": "Confirm six courses from the approved advanced electives list, including at least three in the most related to BCB category. The PDF refers to a list outside the PDF, so eligibility requires confirmation."
+    },
+    {
+      "id": "major-level-confirmation",
+      "name": "Advanced level and MQP advisor",
+      "type": "checkbox",
+      "note": "Confirm four courses at 4000-level for the major overall and an MQP advisor with a formal collaborative BCB appointment. No course may fill two requirements."
+    },
+    {
+      "id": "mqp-1",
+      "line": 43,
+      "name": "MQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-2",
+      "line": 44,
+      "name": "MQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-3",
+      "line": 45,
+      "name": "MQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "hua-ap-credit-confirmation",
+      "name": "AP credit in Humanities",
+      "type": "checkbox",
+      "note": "Confirm that no more than 1/3 unit of AP credit counts toward Humanities and Arts. The PDF states an AP limit; it does not give an IB limit."
+    }
+  ]
+}

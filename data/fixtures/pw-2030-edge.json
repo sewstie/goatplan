@@ -1,0 +1,47 @@
+{
+  "sheetId": "pw-2030",
+  "description": "Hand-worked edge history. The research-methods alternatives cannot both fill the named core row. ID 2050 is social science, not a communication elective. Concentration, shared credit and interdisciplinary MQP credit require explicit review.",
+  "takenCourses": [
+    {
+      "code": "WR 2111",
+      "credits": 3
+    },
+    {
+      "code": "WR 4111",
+      "credits": 3
+    },
+    {
+      "code": "WR 3112",
+      "credits": 3
+    },
+    {
+      "code": "ID 2050",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "WR 4500",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {},
+  "unfilledLines": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21
+  ],
+  "expectedChecks": {
+    "overlap-approval": "check"
+  }
+}

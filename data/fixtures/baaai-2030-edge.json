@@ -1,0 +1,47 @@
+{
+  "sheetId": "baaai-2030",
+  "description": "Hand-worked edge history. Repeating the data-management course counts once. CS 3043 is excluded from computing electives and CS 2022 is below the elective CS level. Two applications electives do not complete six electives or their distribution.",
+  "takenCourses": [
+    {
+      "code": "CS 4433",
+      "credits": 3
+    },
+    {
+      "code": "CS 4433",
+      "credits": 3
+    },
+    {
+      "code": "CS 3043",
+      "credits": 3
+    },
+    {
+      "code": "CS 2022",
+      "credits": 3
+    },
+    {
+      "code": "MKT 2620",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "MKT 2630",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Technical and AI Foundation Courses": {
+      "done": 1,
+      "planned": 0
+    },
+    "Business Analytics and Applied AI Electives": {
+      "done": 1,
+      "planned": 1
+    }
+  },
+  "unfilledLines": [],
+  "expectedChecks": {
+    "elective-distribution": "check"
+  }
+}

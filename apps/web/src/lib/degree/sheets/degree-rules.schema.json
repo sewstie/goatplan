@@ -605,7 +605,6 @@
     "source",
     "catalogSource",
     "totalUnits",
-    "residencyUnits",
     "sections",
     "lines",
     "exclusions",
@@ -679,6 +678,15 @@
         },
         "advanced": {
           "type": "boolean"
+        },
+        "coursePatterns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z]{2,4} .+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
         }
       },
       "required": [
@@ -695,8 +703,17 @@
             }
           },
           "then": {
-            "required": [
-              "courses"
+            "anyOf": [
+              {
+                "required": [
+                  "courses"
+                ]
+              },
+              {
+                "required": [
+                  "coursePatterns"
+                ]
+              }
             ]
           }
         },

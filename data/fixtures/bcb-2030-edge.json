@@ -1,0 +1,47 @@
+{
+  "sheetId": "bcb-2030",
+  "description": "Hand-worked edge history. The two equivalence pairs cannot earn four BCB placements. The external elective list is not in the PDF, so advanced electives and lab allocations stay unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "BCB 4001",
+      "credits": 3
+    },
+    {
+      "code": "BCB 501",
+      "credits": 3
+    },
+    {
+      "code": "BCB 4004",
+      "credits": 3
+    },
+    {
+      "code": "BCB 504",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "BB 1102",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {},
+  "unfilledLines": [
+    23,
+    24,
+    26,
+    27,
+    28,
+    29,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42
+  ],
+  "expectedChecks": {
+    "advanced-approval": "check"
+  }
+}

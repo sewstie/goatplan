@@ -1,0 +1,56 @@
+{
+  "sheetId": "bbt-2030",
+  "description": "Hand-worked edge history. The four introductory/laboratory courses cannot fill biology lecture lines. Repeating BB 4900 does not earn a second lecture slot. Labs require explicit credit allocation.",
+  "takenCourses": [
+    {
+      "code": "BB 1001",
+      "credits": 3
+    },
+    {
+      "code": "BB 1002",
+      "credits": 3
+    },
+    {
+      "code": "BB 1004",
+      "credits": 3
+    },
+    {
+      "code": "BB 2801",
+      "credits": 3
+    },
+    {
+      "code": "BB 4900",
+      "credits": 3
+    },
+    {
+      "code": "BB 4900",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "CH 1010",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Biology and Biotechnology": {
+      "done": 1,
+      "planned": 0
+    },
+    "Laboratory Experience": {
+      "done": 0,
+      "planned": 0
+    }
+  },
+  "unfilledLines": [
+    36,
+    37,
+    38,
+    39
+  ],
+  "expectedChecks": {
+    "lab-credit": "check"
+  }
+}

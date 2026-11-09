@@ -1,0 +1,51 @@
+{
+  "sheetId": "bc-2030",
+  "description": "Hand-worked from the official PDF. 5 completed courses and 1 planned course. WPE, projects and manual reviews remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "PH 1110",
+      "credits": 3
+    },
+    {
+      "code": "CH 2310",
+      "credits": 3
+    },
+    {
+      "code": "CH 3510",
+      "credits": 3
+    },
+    {
+      "code": "CH 4110",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "BB 2001",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Mathematics and Physics": {
+      "done": 2,
+      "planned": 0
+    },
+    "Chemistry and Biochemistry": {
+      "done": 3,
+      "planned": 0
+    },
+    "Biology": {
+      "done": 0,
+      "planned": 1
+    }
+  },
+  "unfilledLines": [
+    7
+  ],
+  "expectedChecks": {}
+}

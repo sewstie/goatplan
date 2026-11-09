@@ -76,7 +76,7 @@ const SECTION_NOTES: Record<string, string> = {
   science: "Check the required science distribution as well as the credit total.",
 };
 
-const WPE_SLOT_DETAILS = ["7a", "7b", "7c", "7d"];
+const WPE_SLOT_DETAILS = ["a", "b", "c", "d"];
 export const WPE_SLOTS = WPE_SLOT_DETAILS.map((slot, index) => `wpe-${index + 1}`);
 
 export function lineLabel(line: number): string {
@@ -179,13 +179,13 @@ function wpeSection(line: AuditLine | undefined, history: DegreeHistory) {
     const { course = null, state = "empty" } = slots[index] ?? {};
     const ticked = sports || history.manual.includes(manualId) || state === "done";
     return {
-      key: `7-${slot}`,
+      key: `${WPE_LINE}-${WPE_LINE}${slot}`,
       line: WPE_LINE,
       number: "",
       label: course ?? `WPE ${index + 1}`,
       kind: "tick",
       course,
-      detail: `${slot} · 1/12 unit`,
+      detail: `${WPE_LINE}${slot} · 1/12 unit`,
       pinned: false,
       manualId: course ? null : manualId,
       checked: ticked || state === "planned",

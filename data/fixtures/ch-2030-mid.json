@@ -1,0 +1,51 @@
+{
+  "sheetId": "ch-2030",
+  "description": "Hand-worked from the official PDF. 5 completed courses and 1 planned course. WPE, projects and manual reviews remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "PH 1110",
+      "credits": 3
+    },
+    {
+      "code": "CH 3410",
+      "credits": 3
+    },
+    {
+      "code": "CH 3510",
+      "credits": 3
+    },
+    {
+      "code": "CH 3530",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "CH 3550",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Mathematics and Physics": {
+      "done": 2,
+      "planned": 0
+    },
+    "Inorganic Chemistry": {
+      "done": 1,
+      "planned": 0
+    },
+    "Physical Chemistry": {
+      "done": 2,
+      "planned": 1
+    }
+  },
+  "unfilledLines": [
+    7
+  ],
+  "expectedChecks": {}
+}

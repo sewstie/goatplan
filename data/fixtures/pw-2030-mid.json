@@ -1,0 +1,51 @@
+{
+  "sheetId": "pw-2030",
+  "description": "Hand-worked from the official PDF. 5 completed courses and 1 planned course. WPE, projects and manual reviews remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "WR 2111",
+      "credits": 3
+    },
+    {
+      "code": "WR 3112",
+      "credits": 3
+    },
+    {
+      "code": "WR 4500",
+      "credits": 3
+    },
+    {
+      "code": "ECON 1110",
+      "credits": 3
+    },
+    {
+      "code": "MA 1021",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "WR 2450",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Writing and Rhetoric Core": {
+      "done": 3,
+      "planned": 1
+    },
+    "Social Science": {
+      "done": 1,
+      "planned": 0
+    },
+    "Scientific/Technical Electives": {
+      "done": 1,
+      "planned": 0
+    }
+  },
+  "unfilledLines": [
+    42
+  ],
+  "expectedChecks": {}
+}
