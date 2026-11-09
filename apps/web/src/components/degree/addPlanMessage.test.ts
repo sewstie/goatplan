@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addPlanMessage } from "./addPlanResult";
+import { addPlanMessage } from "./addPlanMessage";
 
 describe("addPlanMessage", () => {
   it("counts the added courses and names the term", () => {
