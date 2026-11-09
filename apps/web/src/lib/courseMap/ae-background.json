@@ -1,0 +1,366 @@
+[
+  {
+    "code": "AE 2110",
+    "title": "Introduction to Incompressible Fluid Dynamics",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: MA 2051, AE 2330. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "AE 2330"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 2210",
+    "title": "Introduction to Thermal Engineering",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: PH 1110 / PH 1111, MA 1021, MA 1022, MA 2051, AE 2110. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "PH 1110"
+            },
+            {
+              "course": "PH 1111"
+            }
+          ]
+        },
+        {
+          "course": "MA 1021"
+        },
+        {
+          "course": "MA 1022"
+        },
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "AE 2110"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 2310",
+    "title": "Introduction to Aerospace Control Systems",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: MA 2051, AE 2330, MA 2071. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "AE 2330"
+        },
+        {
+          "course": "MA 2071"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 2320",
+    "title": "Introduction to Orbital Mechanics",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: MA 1024, MA 2051, AE 2330. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 1024"
+        },
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "AE 2330"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 2330",
+    "title": "Introduction to Dynamics for Aerospace Engineering",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "AE 2410",
+    "title": "Introduction to Aerospace Structures",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "AE 3010",
+    "title": "Experimentation and Data Science with Aerospace Engineering Applications",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: PH 1110, PH 1111, MA 1021, MA 1022, MA 2051, MA 2611, AE 2110, AE 2210, AE 2310, AE 2410. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "any": [
+            {
+              "course": "PH 1110"
+            },
+            {
+              "course": "PH 1111"
+            }
+          ]
+        },
+        {
+          "course": "MA 1021"
+        },
+        {
+          "course": "MA 1022"
+        },
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "MA 2611"
+        },
+        {
+          "course": "AE 2110"
+        },
+        {
+          "course": "AE 2210"
+        },
+        {
+          "course": "AE 2310"
+        },
+        {
+          "course": "AE 2410"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 3110",
+    "title": "Fundamentals of Compressible Fluid Dynamics",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: AE 2210, AE 2110. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AE 2210"
+        },
+        {
+          "course": "AE 2110"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 3120",
+    "title": "Fundamentals of Aerodynamics",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: AE 2110, AE 3110. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AE 2110"
+        },
+        {
+          "course": "AE 3110"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 3310",
+    "title": "Fundamentals of Navigation and Communication",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: MA 2071, AE 2330, AE 2310. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2071"
+        },
+        {
+          "course": "AE 2330"
+        },
+        {
+          "course": "AE 2310"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 3420",
+    "title": "Fundamentals of Aerospace Structures",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: MA 2051, AE 2410. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "AE 2410"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 3430",
+    "title": "Fundamentals of Composite Materials",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: ES 2001, AE 2410. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2001"
+        },
+        {
+          "course": "AE 2410"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 4210",
+    "title": "Fundamentals of Air-Breathing Propulsion",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: AE 2210, AE 3110. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AE 2210"
+        },
+        {
+          "course": "AE 3110"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 4220",
+    "title": "Fundamentals of Rocket Propulsion",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: AE 3110, AE 2210. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AE 3110"
+        },
+        {
+          "course": "AE 2210"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 4310",
+    "title": "Fundamentals of Aircraft Dynamics and Control",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: AE 2310, AE 2330. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AE 2310"
+        },
+        {
+          "course": "AE 2330"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 4320",
+    "title": "Fundamentals of Spacecraft Dynamics and Control",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: AE 2320, AE 2330, AE 2310. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AE 2320"
+        },
+        {
+          "course": "AE 2330"
+        },
+        {
+          "course": "AE 2310"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 4410",
+    "title": "Fundamentals of Structural Dynamics",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: AE 2330, AE 2310, AE 3420. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AE 2330"
+        },
+        {
+          "course": "AE 2310"
+        },
+        {
+          "course": "AE 3420"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 4510",
+    "title": "Aircraft Design",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: AE 3120, AE 3420, AE 4210, AE 4310. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AE 3120"
+        },
+        {
+          "course": "AE 3420"
+        },
+        {
+          "course": "AE 4210"
+        },
+        {
+          "course": "AE 4310"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AE 4520",
+    "title": "Spacecraft and Mission Design",
+    "source": "https://wpi.cleancatalog.net/aerospace-engineering",
+    "wording": "Recommended background: AE 2320, PH 2550, AE 4320, AE 3420, AE 4220. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AE 2320"
+        },
+        {
+          "course": "PH 2550"
+        },
+        {
+          "course": "AE 4320"
+        },
+        {
+          "course": "AE 3420"
+        },
+        {
+          "course": "AE 4220"
+        }
+      ]
+    }
+  }
+]

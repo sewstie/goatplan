@@ -1,0 +1,37 @@
+{
+  "sheetId": "ae-astro-2030",
+  "description": "Hand-worked from the official PDF. Aerodynamics belongs in the opposite-track elective. Aircraft design is not spacecraft design.",
+  "takenCourses": [
+    {
+      "code": "AE 3120",
+      "credits": 3
+    },
+    {
+      "code": "AE 4220",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "AE 4510",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Astronautics Track": {
+      "done": 1,
+      "planned": 0
+    },
+    "Aeronautics Elective": {
+      "done": 1,
+      "planned": 0
+    }
+  },
+  "expectedChecks": {
+    "hua-ap-credit": "check"
+  },
+  "unfilledLines": [
+    7
+  ]
+}

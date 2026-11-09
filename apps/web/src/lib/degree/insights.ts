@@ -49,6 +49,7 @@ export function creditsPerTerm(history: DegreeHistory, openTerm: TermName | null
   let datedDone = 0;
   let undated = 0;
   for (const course of courses) {
+    if (loadedRequirements()?.nonCreditCourses?.includes(course.code)) continue;
     const term = parseTerm(course.term);
     if (!term && isPriorCredit(course)) {
       prior[course.status === "planned" ? "planned" : "done"] += course.credits;

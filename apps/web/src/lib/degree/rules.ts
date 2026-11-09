@@ -30,6 +30,7 @@ function codeFits(code: string, filter: LineFilter): boolean {
 }
 
 export function fitsLine(code: string, credits: number, line: number, sheet: TrackingSheet = getRequirements()): boolean {
+  if (sheet.nonCreditCourses?.includes(code)) return false;
   const rule = sheet.lines.find((item) => item.line === line);
   if (!rule || rule.subSlots) return false;
   if (rule.filter.type !== "any" && credits < SMALLEST_FULL_COURSE_CREDITS) return false;

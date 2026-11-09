@@ -1,0 +1,521 @@
+[
+  {
+    "code": "BME 1001",
+    "title": "Introduction to Biomedical Engineering",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "No recommended course codes are listed.",
+    "background": null
+  },
+  {
+    "code": "BME 1004",
+    "title": "Introduction to Programming in Matlab",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Topic preparation is described in the source.",
+    "background": {
+      "note": "See the linked WPI description for topic preparation."
+    }
+  },
+  {
+    "code": "BME 2001",
+    "title": "Introduction to Biomaterials",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Topic preparation is described in the source.",
+    "background": {
+      "note": "See the linked WPI description for topic preparation."
+    }
+  },
+  {
+    "code": "BME 2210",
+    "title": "Biomedical Signals, Instruments and Measurements",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "BME 2211",
+    "title": "Biomedical Data Analysis",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: BME 2210, CS 1004. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "BME 2210"
+        },
+        {
+          "course": "CS 1004"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 2502",
+    "title": "Introduction to Biomechanics: Stress Analysis",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "BME 2610",
+    "title": "Introduction to Bioprocess Engineering",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: MA 1021, MA 1022, BB 1004, CH 1010, CH 1020. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "MA 1021"
+        },
+        {
+          "course": "MA 1022"
+        },
+        {
+          "course": "BB 1004"
+        },
+        {
+          "course": "CH 1010"
+        },
+        {
+          "course": "CH 1020"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 3012",
+    "title": "Biomedical Sensors Laboratory: Techniques",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended instrumentation preparation: BME 2210, ECE 2010 or ECE 2019, or equivalent.",
+    "background": {
+      "any": [
+        {
+          "course": "BME 2210"
+        },
+        {
+          "course": "ECE 2010"
+        },
+        {
+          "course": "ECE 2019"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 3013",
+    "title": "Biomedical Instrumentation Laboratory: Techniques",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended instrumentation preparation: BME 2210, ECE 2010 or ECE 2019, or equivalent.",
+    "background": {
+      "any": [
+        {
+          "course": "BME 2210"
+        },
+        {
+          "course": "ECE 2010"
+        },
+        {
+          "course": "ECE 2019"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 3014",
+    "title": "Physiological Signals Laboratory: Techniques",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation: a first MATLAB course, such as BME 2211 or BME 1004, or equivalent.",
+    "background": {
+      "any": [
+        {
+          "course": "BME 2211"
+        },
+        {
+          "course": "BME 1004"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 3112",
+    "title": "Human Physiology for Biomedical Engineers",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: BB 1004, BB 2550. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "BB 1004"
+        },
+        {
+          "course": "BB 2550"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 3113",
+    "title": "Medical Devices Laboratory: Techniques",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: BME 3112, BME 1004. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "BME 3112"
+        },
+        {
+          "course": "BME 1004"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 3300",
+    "title": "Biomedical Engineering Design",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "No recommended course codes are listed.",
+    "background": null
+  },
+  {
+    "code": "BME 3505",
+    "title": "Solid Biomechanics Laboratory: Techniques",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: ES 2502, ES 2001. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2001"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 3507",
+    "title": "Skeletal Biomechanics Laboratory: Techniques",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: ES 2501, ES 2503. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2503"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 3607",
+    "title": "Biotransport Lab: Techniques",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Topic preparation is described in the source.",
+    "background": {
+      "note": "See the linked WPI description for topic preparation."
+    }
+  },
+  {
+    "code": "BME 3610",
+    "title": "Transport Analysis in Bioengineering",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "BME 3811",
+    "title": "Biomaterials Laboratory: Techniques",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: CH 1010, CH 1020, ES 2001. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "CH 1010"
+        },
+        {
+          "course": "CH 1020"
+        },
+        {
+          "course": "ES 2001"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 3813",
+    "title": "Cellular Engineering Laboratory: Techniques",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: CH 1010, CH 1020, BB 2550. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "CH 1010"
+        },
+        {
+          "course": "CH 1020"
+        },
+        {
+          "course": "BB 2550"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 4011",
+    "title": "Biomedical Signal Analysis",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: ECE 2311, ECE 2312. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "ECE 2311"
+        },
+        {
+          "course": "ECE 2312"
+        }
+      ]
+    },
+    "aliases": [
+      "ECE 4011"
+    ]
+  },
+  {
+    "code": "BME 4012",
+    "title": "Biomedical Sensors and Instrumentation Laboratory: Applications",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: BME 3012, BME 3013. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "BME 3012"
+        },
+        {
+          "course": "BME 3013"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 4023",
+    "title": "Biomedical Instrumentation Design",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    },
+    "aliases": [
+      "ECE 4023"
+    ]
+  },
+  {
+    "code": "BME 4201",
+    "title": "Biomedical Imaging",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "No recommended course codes are listed.",
+    "background": null
+  },
+  {
+    "code": "BME 4300",
+    "title": "MQP Capstone Design",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "BME 4301",
+    "title": "Biomedical Capstone - Design from the Margins",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: BME 3300. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "BME 3300"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 4503",
+    "title": "Computational Biomechanics",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: ES 2501, ES 2502, ES 2503, ME 3501, MA 2051, BME 2211. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2503"
+        },
+        {
+          "course": "ME 3501"
+        },
+        {
+          "course": "MA 2051"
+        },
+        {
+          "course": "BME 2211"
+        }
+      ]
+    },
+    "aliases": [
+      "ME 4503"
+    ]
+  },
+  {
+    "code": "BME 4504",
+    "title": "Biomechanics",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: ES 2501, ES 2502, ES 2503, ME 3501, MA 2051. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "ES 2501"
+        },
+        {
+          "course": "ES 2502"
+        },
+        {
+          "course": "ES 2503"
+        },
+        {
+          "course": "ME 3501"
+        },
+        {
+          "course": "MA 2051"
+        }
+      ]
+    },
+    "aliases": [
+      "ME 4504"
+    ]
+  },
+  {
+    "code": "BME 4505",
+    "title": "Solid Biomechanics Laboratory: Applications",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: BME 3505. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "BME 3505"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 4507",
+    "title": "Skeletal Biomechanics Laboratory: Applications",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: BME 3507. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "BME 3507"
+        }
+      ]
+    }
+  },
+  {
+    "code": "BME 4606",
+    "title": "Biofluids",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: ME 3501, ES 3004. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "ME 3501"
+        },
+        {
+          "course": "ES 3004"
+        }
+      ]
+    },
+    "aliases": [
+      "ME 4606"
+    ]
+  },
+  {
+    "code": "BME 4607",
+    "title": "Biotransport Laboratory: Applications",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "BME 4701",
+    "title": "Cell and Molecular Bioengineering",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "BME 4811",
+    "title": "Biomaterials Laboratory: Applications",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "BME 4813",
+    "title": "Cellular Engineering Laboratory: Applications",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "No recommended course codes are listed.",
+    "background": null
+  },
+  {
+    "code": "BME 4814",
+    "title": "Biomaterials",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended background: BB 3101, CH 1010, ES 2001. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "BB 3101"
+        },
+        {
+          "course": "CH 1010"
+        },
+        {
+          "course": "ES 2001"
+        }
+      ]
+    },
+    "aliases": [
+      "ME 4814"
+    ]
+  },
+  {
+    "code": "BME 4828",
+    "title": "Biomaterials-Tissue Interactions",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "BME 4831",
+    "title": "Drug Delivery",
+    "source": "https://wpi.cleancatalog.net/biomedical-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  }
+]

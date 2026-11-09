@@ -1,0 +1,28 @@
+{
+  "sheetId": "aren-2030",
+  "description": "Hand-worked from the official PDF. Pool credit alone does not prove that both structural electives are approved design courses. A CS course does not establish structural design credit.",
+  "takenCourses": [
+    {
+      "code": "CS 1101",
+      "credits": 3
+    },
+    {
+      "code": "CE 3006",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "CE 3008",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {},
+  "expectedChecks": {
+    "structural-approval": "check"
+  },
+  "unfilledLines": [
+    7
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "sheetId": "ae-aero-2030",
+  "description": "Hand-worked from the official PDF. Rocket propulsion belongs in the opposite-track elective. Spacecraft design is not aircraft design.",
+  "takenCourses": [
+    {
+      "code": "AE 4220",
+      "credits": 3
+    },
+    {
+      "code": "AE 3120",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "AE 4520",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Aeronautics Track": {
+      "done": 1,
+      "planned": 0
+    },
+    "Astronautics Elective": {
+      "done": 1,
+      "planned": 0
+    }
+  },
+  "expectedChecks": {
+    "hua-ap-credit": "check"
+  },
+  "unfilledLines": [
+    7
+  ]
+}

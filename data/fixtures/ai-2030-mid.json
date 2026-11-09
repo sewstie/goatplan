@@ -1,0 +1,51 @@
+{
+  "sheetId": "ai-2030",
+  "description": "Hand-worked from the official PDF. Four completed courses and one planned course; WPE and projects remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "CS 1101",
+      "credits": 3
+    },
+    {
+      "code": "CS 2102",
+      "credits": 3
+    },
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "DS 1010",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "CS 4341",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Computer Science Foundation": {
+      "done": 2,
+      "planned": 0
+    },
+    "Mathematical Sciences": {
+      "done": 1,
+      "planned": 0
+    },
+    "AI Foundations": {
+      "done": 1,
+      "planned": 0
+    },
+    "AI Core": {
+      "done": 0,
+      "planned": 1
+    }
+  },
+  "expectedChecks": {},
+  "unfilledLines": [
+    7
+  ]
+}

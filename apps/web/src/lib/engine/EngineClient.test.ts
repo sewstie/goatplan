@@ -239,3 +239,21 @@ describe("EngineClient", () => {
     expect(worker().terminated).toBe(true);
   });
 });
+
+it("normalizes non-credit courses in histories and candidates without changing saved values", async () => {
+  const { loadSheet } = await import("@/lib/degree/sheets");
+  const sheet = await loadSheet("mac-2030");
+  const worker = new FakeWorker();
+  const client = new EngineClient(() => worker);
+  const course = { code: "MA 4216", credits: 3 };
+  const promise = client.audit({ version: 1, requirements: sheet.id, sheet, taken: [course], planned: [course], candidates: [course] });
+  const sent = worker.posted[0];
+  expect(sent.kind).toBe("audit");
+  if (sent.kind === "audit") {
+    for (const field of ["taken", "planned", "candidates"] as const) expect(sent.request[field]).toEqual([{ code: "MA 4216", credits: 0 }]);
+  }
+  expect(course.credits).toBe(3);
+  const stopped = expect(promise).rejects.toBeInstanceOf(EngineFailureError);
+  client.dispose();
+  await stopped;
+});

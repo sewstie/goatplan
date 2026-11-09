@@ -1,0 +1,178 @@
+[
+  {
+    "code": "AREN 2002",
+    "title": "Architectural Design I",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "No recommended course codes are listed.",
+    "background": null
+  },
+  {
+    "code": "AREN 2004",
+    "title": "Architectural Design II - Light and Lighting Systems",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "Recommended background: AREN 2002. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AREN 2002"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AREN 2023",
+    "title": "Introduction to Architectural Engineering Systems",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "No recommended course codes are listed.",
+    "background": null
+  },
+  {
+    "code": "AREN 2025",
+    "title": "Building Electrical Systems",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "Recommended preparation includes alternatives; see the source for the full conditions.",
+    "background": {
+      "note": "Alternative or topic-based preparation. See the linked WPI description."
+    }
+  },
+  {
+    "code": "AREN 3002",
+    "title": "Architectural Design III",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "Recommended background: AREN 2002, AREN 2004. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AREN 2002"
+        },
+        {
+          "course": "AREN 2004"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AREN 3003",
+    "title": "Principles of HVAC Design for Buildings",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "Topic preparation is described in the source.",
+    "background": {
+      "note": "See the linked WPI description for topic preparation."
+    }
+  },
+  {
+    "code": "AREN 3005",
+    "title": "Lighting Systems",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "Recommended background: AREN 2025. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AREN 2025"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AREN 3006",
+    "title": "Advanced HVAC System Design",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "Recommended background: AREN 3003, ES 3004. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AREN 3003"
+        },
+        {
+          "course": "ES 3004"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AREN 3020",
+    "title": "Architectural Design IV - Building Energy Simulation",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "Recommended background: AREN 3024, AREN 3003, AREN 2002, AREN 2004, AREN 3002. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AREN 3024"
+        },
+        {
+          "course": "AREN 3003"
+        },
+        {
+          "course": "AREN 2002"
+        },
+        {
+          "course": "AREN 2004"
+        },
+        {
+          "course": "AREN 3002"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AREN 3022",
+    "title": "Architectural Design V - Building Envelope Design",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "Recommended background: AREN 3024, AREN 3003, AREN 2002, AREN 2004, AREN 3002. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AREN 3024"
+        },
+        {
+          "course": "AREN 3003"
+        },
+        {
+          "course": "AREN 2002"
+        },
+        {
+          "course": "AREN 2004"
+        },
+        {
+          "course": "AREN 3002"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AREN 3024",
+    "title": "Building Physics",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "Recommended background: ES 3001, ES 3003. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "ES 3001"
+        },
+        {
+          "course": "ES 3003"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AREN 3025",
+    "title": "Building Energy Simulation",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "Recommended background: AREN 3024. Topic preparation and equivalents are described in the source.",
+    "background": {
+      "all": [
+        {
+          "course": "AREN 3024"
+        }
+      ]
+    }
+  },
+  {
+    "code": "AREN 4010",
+    "title": "Professional Engagement",
+    "source": "https://wpi.cleancatalog.net/architectural-engineering",
+    "wording": "No recommended course codes are listed.",
+    "background": null
+  }
+]

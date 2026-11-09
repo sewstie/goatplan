@@ -11,7 +11,7 @@ function crosses([a, b]: [Point, Point], box: Box) {
     && Math.min(a[1], b[1]) < box.y + box.h - 1 && Math.max(a[1], b[1]) > box.y + 1;
 }
 
-const mappedIds = ["cs-2030", "rbe-2030", "me-2030", "ece-2030", "ds-2030"];
+const mappedIds = ["cs-2030", "rbe-2030", "me-2030", "ece-2030", "ds-2030", "ae-aero-2030", "ae-astro-2030", "aren-2030", "bme-2030"];
 
 describe("majors with catalog course maps", () => {
   for (const sheet of SHEETS.filter((sheet) => mappedIds.includes(sheet.id))) {
@@ -22,7 +22,7 @@ describe("majors with catalog course maps", () => {
       const layout = routeFlowchart(flow);
       expect(new Set(definition.records.map((record) => record.code)).size).toBe(definition.records.length);
       expect(new Set(flow.courses.map((course) => course.code)).size).toBe(flow.courses.length);
-      expect(layout.bands.map((band) => band.band)).toEqual([1000, 2000, 3000, 4000]);
+      expect(layout.bands.map((band) => band.band)).toEqual([...new Set(flow.courses.map((course) => course.band))].sort());
       for (const record of definition.records) {
         expect(record.source).toMatch(/^https:\/\/wpi\.cleancatalog\.net\//);
         expect(record.title.length).toBeGreaterThan(0);

@@ -20,7 +20,7 @@ and [the engine API](engine-api.md).
 | `/dev/ui`, `/dev/engine` | Development-only UI and engine pages |
 
 My degree is linked in the main navigation without a browser invitation or
-release flag. All thirteen registered Class of 2030 sheets are selectable. Their
+release flag. All nineteen registered Class of 2030 sheets are selectable. Their
 registry status remains beta and their student verification metadata is null.
 The individual Suggestions tab is disabled by `SUGGESTIONS_ON = false`.
 Course maps are enabled, and CS's Suggest next terms action remains available
@@ -180,7 +180,7 @@ confirmations are stored per sheet. Humanities path is shared across majors.
 The Sheet view has tiles and a List alternative. Plan ahead places history in a
 four-year grid, supports moving courses and project reservations, and exposes CS
 next-term recommendations. Course map uses curated background expressions for
-all thirteen registered majors. New visitors choose a major before entering history.
+all nineteen registered majors. New visitors choose a major before entering history.
 
 Opening an empty field lists only courses that meet its requirement, across all
 terms. Named CS areas use approved area lists, including listed non-CS social

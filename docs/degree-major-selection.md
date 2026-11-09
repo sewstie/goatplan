@@ -25,7 +25,14 @@ A Term 2026; other class years, minors and double majors are not supported.
 | `mkt-2030` | Marketing Analytics | 45 | beta |
 | `pw-2030` | Professional Writing | 45 | beta |
 
-All thirteen sheets are selectable. Each has `verification: null`; beta metadata
+| `mac-2030` | Actuarial Mathematics | 45 | beta |
+| `ae-aero-2030` | Aerospace Engineering, Aeronautical | 45 | beta |
+| `ae-astro-2030` | Aerospace Engineering, Astronautical | 45 | beta |
+| `aren-2030` | Architectural Engineering | 45 | beta |
+| `ai-2030` | Artificial Intelligence | 45 | beta |
+| `bme-2030` | Biomedical Engineering | 47 internal rows | beta |
+
+All nineteen sheets are selectable. Each has `verification: null`; beta metadata
 currently does not hide a sheet from the picker. A checked sheet must have a
 student name and dated Workday verification in registry metadata. Source and
 fixture checks do not supply that verification.
@@ -100,3 +107,5 @@ reload, backups, pin validation, request events and lazy downloads against the
 real app and audit. Fixture sheets never enter the production registry.
 Normal browser specs capture desktop, tablet and phone. The original design
 reference PNGs are absent; review current captures against the implemented UI.
+
+The six later additions are MAC, both AE tracks, AREN, AI and BME. Engineering course maps use official course descriptions separately from PDF-only degree rules. BME uses 47 internal rows because its PDF is unnumbered. AREN structural-design credit remains provisional until approved.
