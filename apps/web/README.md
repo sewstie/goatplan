@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GoatPlan web app
 
-## Getting Started
+The frontend uses Next.js App Router, strict TypeScript, React, Tailwind CSS,
+Zustand and DM Sans. It belongs to the root npm workspace; install dependencies
+with `npm ci` at the repository root.
 
-First, run the development server:
+## Local commands
+
+From the repository root:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run lint
+npm run test
+npm run build
+npm run test:e2e
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+From this directory, the same script names work. Install the browser once with
+`npx playwright install chromium`. Playwright starts a fresh production build
+on `PORT + 1000` and starts or reuses the dev server on `PORT` (default 3000).
+Only one dev server should use a worktree's `.next` output.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Routes and data
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Route | Purpose |
+| --- | --- |
+| `/` | Schedule planner, including shared-link and saved-plan views |
+| `/plans` | Saved plans and their registration sheets |
+| `/degree` | Major selection, tracking sheet, four-year plan and course maps |
+| `/data/catalog.json` | Persistent catalog served from the root `data/` directory |
+| `/api/seats?term=2027-C` | Cached live seat snapshot for a published term |
+| `/dev/ui`, `/dev/engine` | Development pages; return 404 in production |
 
-## Learn More
+The UI reads normalized term JSON and uses `lib/engine/EngineClient` for schedule
+searches and audits. The scheduler runs in a worker. Search, section presentation,
+saved plans, sharing and registration sheets stay in TypeScript.
 
-To learn more about Next.js, take a look at the following resources:
+Working drafts, saved plans, degree history and theme choice use separate browser
+storage keys. There is no account or server-side plan database. `/api/seats` is
+the runtime server boundary for refreshing WPI seat counts. Feedback opens GitHub
+Issues. Optional analytics sends named events only when configured and loaded.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## More documentation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Architecture](../../docs/frontend-architecture.md)
+- [Development and CI](../../docs/development.md)
+- [Degree tracking](../../docs/degree-tracking-sheet.md)
+- [Documentation index](../../docs/README.md)

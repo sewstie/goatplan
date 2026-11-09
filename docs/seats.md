@@ -1,13 +1,57 @@
 # Live seats
 
-`GET /api/seats?term=2027-C` takes a published term id. On the server it fetches WPI's `prod-data.json` and answers with only the seat fields of that term's sections (id, status, enrolled, capacity, waitlist), plus the term id and when it was fetched.
+`GET /api/seats?term=2027-C` accepts a published term ID from the generated term
+index. Invalid or unpublished IDs return 400. The server reads WPI's
+`prod-data.json` and returns only section IDs, status, enrollment, capacity and
+waitlist counts, plus `termId` and `fetchedAt`.
 
-The reduced listing for all published terms is kept in Next.js's data cache with `unstable_cache` and `revalidate: 900`, so WPI is asked at most once every 15 minutes. The big upstream file itself uses `no-store`. A good answer has `Cache-Control: public, max-age=0, s-maxage=900, stale-while-revalidate=900`.
+## Server cache
 
-Only one WPI request runs at a time on each server: requests that arrive while it runs, for any term, wait for the same answer. A failed WPI request is cached as a failure too, so an outage doesn't become one WPI request per visitor. Visitors then get an uncached 503.
+`lib/data/seatSource.ts` keeps the reduced listing for all published terms in
+Next.js's data cache through `unstable_cache`, with a 900-second revalidation
+interval. The large upstream response uses `no-store` and a 15-second timeout.
+Concurrent requests in one server process share a single in-flight WPI request.
 
-When the planner loads a term, it asks for live seats at the same time. Once both are in, it merges the seats into the term (`withLiveSeats` in `lib/data/seatMerge.ts`), gives the engine the merged term and solves again, but only if a count actually changed. It asks again every minute while the tab is visible and when the tab comes back. Seats that fail to load, are malformed, belong to another term or are older than the daily file are dropped, and the daily file's counts stay.
+Failed upstream results are cached too, preventing one WPI request per visitor
+during an outage. A missing usable snapshot returns an uncached 503. Successful
+responses use `Cache-Control: public, max-age=0, s-maxage=900,
+stale-while-revalidate=900`. Browser polling does not mean WPI is polled every
+minute; the server cache determines freshness.
 
-The sidebar footer (and, on phones, the line above the preferences) says "Seats updated 5 min ago" and "Confirm in Workday before you register." When live seats couldn't be had it shows "Seats from Nov 8 · Retry" instead. Saved and shared plans keep the seats they were saved with, so the line is hidden there.
+## Planner refresh
 
-The browser tests never reach WPI: `e2e/fixtures/test.ts` answers `/api/seats` with the frozen term's seats, fetched "just now".
+The planner asks for live seats alongside the daily term file. `withLiveSeats`
+accepts only a snapshot for that term, with a valid timestamp at least as recent
+as the daily file and at least one recognized section. It merges recognized
+seat fields without replacing meetings, descriptions, instructors or options.
+
+Changed counts are serialized into the engine's loaded term and trigger another
+solve. Unchanged counts need no extra solve. The planner refreshes every minute
+while visible and when the tab becomes visible again. Failed, malformed,
+other-term or older snapshots fall back to the daily file's counts.
+
+Saved and shared views preserve the section snapshots they were saved with.
+Refreshing the draft's live seats does not rewrite those views.
+
+## Display
+
+`SeatStatus` appears in the desktop/tablet sidebar footer and the phone footer.
+A successful refresh shows “Seats updated just now” or its age. Failure shows
+“Seats from Nov 8” and Retry. The daily file's timestamp supplies that date.
+The Workday reminder was removed intentionally and is not displayed in either
+state. The status is hidden before usable data loads and in saved/shared views.
+
+Retry replaces the failure state when it succeeds. If Retry had focus, focus
+moves to the updated freshness status when the button disappears.
+
+## Recommendations and tests
+
+Published-term recommendations refresh live seats before checking availability,
+using daily counts when the live request fails. They need an entire registration
+option with available seats, including labs/discussions. Their schedule checker
+marks numerically full sections closed in its own engine input even when the
+source status still says open. The schedule checker runs on a separate worker.
+
+Browser fixtures intercept `/api/seats` with frozen counts and a fresh timestamp.
+`e2e/seats.spec.ts` checks freshness, daily fallback, Retry and merged counts at
+1440, 834 and 375 px. These tests do not contact WPI.

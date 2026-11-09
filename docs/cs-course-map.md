@@ -4,7 +4,8 @@ The Course map tab on My degree shows how CS courses build on each other, from C
 
 ## Where the data comes from
 
-- `apps/web/src/lib/courseMap/cs-background.json` holds the "Recommended background" text from each course page of the [2026–27 CS catalog](https://wpi.cleancatalog.net/computer-science), with a structured version of it. It was checked against the live catalog on 2026-11-07, and nothing had changed.
+- `apps/web/src/lib/courseMap/cs-background.json` holds the "Recommended background" text from each course page of the [2026–27 CS catalog](https://wpi.cleancatalog.net/computer-science), with a structured version of it. The recorded source review was on 2026-11-07. That date does not imply a later
+  live-catalog check; review the curated records when source courses change.
 - `apps/web/src/lib/courseMap/csLayout.ts` places each course in a grid cell, lists the interchangeable pairs (1101/1102, 2102/2103, 2303/2301) and tags the four required areas and the Cybersecurity concentration. The area lists come from the catalog's CS major and Cybersecurity concentration pages.
 - CS 1004, CS 1005 and CS 2119 are not placed because they don't count toward the CS major. The page footer names them.
 
@@ -26,4 +27,7 @@ Selecting a course highlights every course before it and after it, and dims the 
 
 These are WPI's recommendations, not enforced prerequisites. The map doesn't decide readiness or change degree requirements.
 
-The tab is behind `COURSE_MAP_ON` in `apps/web/src/components/degree/degreeFeatures.ts`.
+The tab is enabled by `COURSE_MAP_ON = true` in
+`apps/web/src/components/degree/degreeFeatures.ts`. My degree is directly
+accessible without an invitation flag. The separate individual Suggestions tab
+is disabled and does not affect the map or its planning controls.

@@ -1,8 +1,9 @@
 # CS next-term recommendations
 
-The action in the four-year plan is available only for `cs-2030`. It leaves the
-individual-course suggestion flow intact. Previewing never initializes the
-schedule planner or writes degree history. Applying adds planned records through
+The action in Plan ahead is available only for `cs-2030`, independently of
+`SUGGESTIONS_ON`. The separate individual Suggestions tab is currently disabled.
+Field-specific course lists remain available for all registered majors.
+Previewing never initializes the schedule planner or writes degree history. Applying adds planned records through
 the degree source. Changes to inputs require regeneration. Storage failures keep
 additions for the visit and say that they have not been saved.
 
@@ -51,15 +52,17 @@ are estimates, never annual-frequency claims. Seat information does not establis
 registration eligibility.
 
 Only offered courses are suggested, as additions or as alternatives: in a published
-term the course needs a complete registration option with open seats, and in a later term it needs to
-have been seen in that term letter before. A course you kept or already planned still
+term the course needs a complete registration option with open seats, and in a
+later term it needs to have been seen in that term letter before. A course you kept or already planned still
 shows, with a note when it isn't offered.
 
 In a published term, every automatic addition and alternative must leave at least
 one weekly schedule with open seats for all courses in the term. A required full
 lab or discussion makes that option unavailable even when its lecture has seats.
 `lib/degree/recommendations/schedules.ts` asks the engine with `onlyOpen` enabled.
-It loads the same term file used to check offerings and runs on its own worker,
+It marks numerically full sections closed in its own input even if their source
+status is open, loads the same seat snapshot used to check offerings, and runs
+on its own worker,
 which is closed after generation. The schedule planner's loaded term stays intact.
 Each selection step checks at most 12 candidates. Clashing or unchecked courses
 are left out. If existing choices already clash, they remain visible and no new
@@ -97,8 +100,9 @@ courses first and show five before "Show more"; Keep lives there and makes the l
 out of date until you suggest again. Courses without tracked WPI background (most
 courses outside CS) and special topics are never picked automatically, and lower
 course numbers rank higher. After courses are added the list clears. Kept courses, skipped courses and confirmed experience show as
-removable chips. The footer always shows
-how many courses are ticked and the button that adds them.
+removable chips. The footer shows how many courses are ticked and the button
+that adds them. The “Still open on your sheet” and “How this works” disclosures
+have been removed. Per-term issues and stale-result warnings remain visible.
 
 The original design references under `docs/design/` are absent in this checkout.
 Browser tests capture desktop, tablet, and phone in both themes.
@@ -115,3 +119,9 @@ offerings, not a promise of future availability.
 A CS area course is pinned to the selected area line when needed. A non-CS social
 course is added without a CS pin: it satisfies the social check and can count
 toward another eligible field, while CS credit remains separate.
+
+General field browsing is separate from term recommendations. Field lists do not
+apply live-seat or schedule-clash filters, because they describe degree-eligible
+choices across all terms. Next-term recommendations verify availability for the
+specific published term. The usual-term letters in field rows come from the
+persistent catalog, including aliases, and are not a future-section guarantee.

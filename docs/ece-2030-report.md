@@ -1,7 +1,12 @@
 # ECE Class of 2030
 
-This sheet is beta and available only through tester access. Workday verification
-and the public release gate remain in ticket 09.
+This is a requirement-source and interpretation record. The current registry
+makes this sheet selectable at `/degree`, with beta status and no recorded
+student Workday verification. Validation counts and implementation sequences
+below describe the original feature snapshot, not the current test suite. See
+[major selection](degree-major-selection.md) and [current project checks](launch-check.md)
+for current access and verification behavior.
+
 
 ## Sources
 
@@ -101,9 +106,9 @@ The TDD cycles exposed missing registration, incorrect broad-elective
 allocation, missing source-review checks, missing cross-lists and inherited
 CS math guidance before the corresponding sheet data was added.
 
-Validation passed: lint, all 1,713 tests with native fixtures enabled, the
+Original implementation validation passed: lint, all 1,713 tests with native fixtures enabled, the
 production build, 163 native engine tests and seven production browser checks.
 The browser checks cover selection, audit, search badges, term actions,
-keyboard confirmation, persistence and tester access. The UI reviewer found
+keyboard confirmation, persistence and sheet availability. The UI reviewer found
 no blockers in the 1440px and 834px screenshots. `docs/design` and its reference
 PNGs are absent in this checkout; review used the established degree UI.

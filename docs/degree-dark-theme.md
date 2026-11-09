@@ -1,42 +1,42 @@
-# My degree theme checks
+# Theme behavior
 
-Ticket 12 applies the global theme to My degree. The desktop top bar uses the
-existing theme button. The phone's More actions menu uses the same Dark theme
-switch as the planner. Both controls remain available on the confirmations
-and allocation screens.
+Light and Dark apply to the planner, saved plans, shared views, registration and
+My degree. The default is Light. `app/layout.tsx` reads `goatplan:theme:v1` before
+paint and sets `data-theme` on the document. `lib/theme.ts` subscribes to that
+attribute, so mounted controls stay in sync. A storage failure does not prevent
+the theme changing for the visit.
 
-Dark tiles distinguish completed, planned, empty and review states. Pins and
-manual checkboxes retain their outlines. Completed, planned and empty chart
-segments have separate tokens. Planned segments contrast with empty tracks,
-and completed segments contrast with planned segments, by at least 3:1.
-The subtle empty track has explicit counts beside it in both sheet and list
-views. Text and tile labels meet 4.5:1 on their actual dark surfaces.
+## Controls and tokens
 
-Light token values stay unchanged. The new `chart-done` token has the same
-Light value as the accent it replaces. Dark overrides only apply to screen
-media, so printing uses the Light colors while retaining the browser choice.
+Desktop/tablet uses the top bar's ThemeButton. The phone planner uses Dark theme
+in More actions; My degree uses a ThemeButton directly in its phone top bar.
+Saved-plan controls reuse the same theme state. Theme controls do not depend on
+any historical degree invitation flag.
 
-The implementation followed red → green cycles at the approved browser and
-token-contrast boundaries. The tests first caught the missing desktop and
-phone controls, then the light tile surfaces. UI review caught the adjacent
-planned and empty progress colors; a regression test covers that pair and
-the completed/planned pair.
+`app/globals.css` defines Light defaults in `@theme static` and Dark overrides
+for screen media. Components use semantic tokens for surfaces, text, borders,
+course colors, checks and charts. DM Sans is the app font. Degree states remain
+distinct through labels/icons as well as color.
 
-Production captures covered sheet and list views, charts and tables, term
-pickers, history, details, checks and validation feedback in both themes at
-1440 and 834 px, and the sheet, history, details and confirmations at 375 px.
-Chart captures show the card directly so the insights scroller cannot hide it.
+Dark chart segments distinguish completed, planned and empty values. Counts
+remain available beside subtle tracks. `chart-done` has a Light value matching
+the original accent. Token contrast tests cover text and relevant adjacent chart
+states; a token test does not replace a full accessibility review.
 
-## Validation
+## Print and data
 
-The combined checkout includes tickets 03, 10, 11 and 12.
+Print uses Light colors without changing the saved screen preference. Theme
+does not change history, sheet selection, saved schedules, shared payloads or
+calendar downloads. Contrast and print rules belong in tokens/styles rather
+than route-specific data logic.
 
-- Lint and the production build passed.
-- All 1,660 Vitest tests passed.
-- All 73 selected production browser checks passed, including 11 degree
-  theme checks and the existing degree, history, badge and global theme tests.
-- The ui_reviewer found no remaining issues after reviewing the revised
-  progress colors and screenshots at 1440, 834 and 375 px.
+## Verification
 
-The existing tester flag still controls degree access. This ticket adds no
-major picker or public major release.
+Browser specs cover both themes, controls, persistence and Light print output.
+Degree coverage includes sheet/list views, charts, history, details, term
+pickers and confirmations at 1440, 834 and 375 px. Current test commands are in
+[development](development.md).
+
+[The original theme-release record](dark-theme-release.md) preserves historical
+implementation results. Its test counts and release-gate plans do not describe
+the current checkout.

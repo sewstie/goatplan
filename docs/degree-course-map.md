@@ -1,7 +1,8 @@
 # Course maps
 
 CS, RBE, ME, ECE and Data Science use the same map, list, course details
-and planning controls.
+and planning controls. The Course map tab is enabled for the registered sheets
+at `/degree`; the separate individual Suggestions feature flag does not control it.
 Changing majors clears the selected course. Taken and planned markers use
 saved history, including cross-listed codes. Changing a planned course’s
 term updates its saved code.
@@ -47,3 +48,15 @@ The map tests cover every registered major, course aliases, key chains,
 numbered bands and arrows avoiding course cards. Browser tests cover
 major switching, planning, keyboard selection and light/dark screenshots
 at 1440 and 834 px.
+
+## Maintenance
+
+`lib/courseMap/maps.ts` maps sheet IDs to curated records and layouts. Each
+major has a background JSON file and a layout module. Counts above describe
+those curated sets, not every course in the persistent catalog. Update the
+records, structured expressions and routing tests together when the catalog
+changes. A source-review date records a past check, not continuous verification.
+
+Map planning changes degree history through explicit actions. It does not
+initialize or synchronize the schedule planner. Academic requirements continue
+to come from the selected effective tracking sheet.

@@ -1,69 +1,88 @@
-# GoatPlan 🐐
+# GoatPlan
 
-A course planner for WPI students: pick your courses for a term, compare sections and professors, and build a conflict-free schedule.
+GoatPlan helps WPI students build a term schedule and plan their degree. It runs
+schedule searches and degree audits locally in the browser through a C++ engine
+compiled to WebAssembly. Plans and course history are saved in browser storage.
 
-> Not affiliated with or endorsed by Worcester Polytechnic Institute.
+GoatPlan is not affiliated with or endorsed by Worcester Polytechnic Institute.
 
-## Project structure
+## What it does
 
-```
-goatplan/
-├── apps/web/           Next.js app (TypeScript, Tailwind): the UI
-├── engine/             C++ scheduling engine, native and WebAssembly (see engine/README.md)
-│   ├── include/        public headers
-│   ├── src/            engine code + a small command-line tool
-│   └── tests/          GoogleTest unit tests
-├── scripts/            data scripts (plain JavaScript, no dependencies)
-├── data/
-│   ├── raw/            downloaded WPI data (git-ignored, re-fetchable)
-│   └── fixtures/       small real samples used for tests
-└── .github/workflows/  CI on every push (engine, WebAssembly, data scripts, web) and the daily data update
-```
+- Search published courses, compare sections and professors, lock sections, and
+  find schedules around start-time preferences and blocked times.
+- Explain clashes and offer tested changes, including other lecture professors.
+- Save plans, open a registration sheet, share a schedule by link, and download
+  a calendar file.
+- Track Class of 2030 requirements for CS, RBE, ME, ECE and Data Science, with
+  course history, AP/IB credit, manual confirmations, pins and a four-year plan.
+- Find courses for a specific requirement across all terms, and generate CS
+  next-term suggestions that check open seats and schedule fit for published terms.
+- Browse recommended-background maps for all five supported majors.
 
-## Requirements
+The app supports desktop, tablet and phone layouts, Light and Dark themes, and
+Light print output. My degree is available directly at `/degree`. All five
+sheets remain marked beta in the registry and have no recorded student Workday
+verification. Filling the sheet does not resolve its separate review checks.
 
-- **Node.js 20+** (22 recommended) and npm
-- **CMake 3.20+** and a **C++20 compiler** (GCC 11+, Clang 14+, or Xcode command line tools)
-- For the WebAssembly build: [Emscripten](https://emscripten.org/docs/getting_started/downloads.html) 6.0.12, the version CI uses (`brew install emscripten` on a Mac)
+## Run locally
 
-## First-time setup
+Use Node.js 22 and npm. The repository declares Node.js 20 or newer; CI uses 22.
+The committed term data and WebAssembly files are enough to run the frontend.
 
 ```bash
-# 1. Create the web app (only once)
-npx create-next-app@latest apps/web --typescript --tailwind --eslint --app \
-  --src-dir --import-alias "@/*" --use-npm --disable-git --skip-install --yes
-
-# 2. Install all JavaScript packages from the repo root (npm workspaces)
-npm install
-
-# 3. Build the engine and run its tests
-npm run engine:test
+npm ci
+npm run dev
 ```
 
-## Everyday commands
+Open [localhost:3000](http://localhost:3000). Do not run `create-next-app` inside
+this existing checkout. The app uses DM Sans through `next/font/google`; a fresh
+production build may need access to Google Fonts.
 
-| Command                    | What it does                                               |
-| -------------------------- | ---------------------------------------------------------- |
-| `npm run dev`              | Start the web app at http://localhost:3000                 |
-| `npm run build`            | Production build of the web app                            |
-| `npm run lint`             | Lint the web app                                           |
-| `npm run engine:build`     | Build the C++ engine and CLI                               |
-| `npm run engine:test`      | Build the engine and run the unit tests                    |
-| `npm run engine:wasm`      | Build the WebAssembly engine (needs Emscripten)            |
-| `npm run engine:wasm:test` | Check the WebAssembly engine answers like the CLI          |
-| `npm run data:fetch`       | Download the latest WPI section data into `data/raw/`      |
-| `npm run data:normalize`   | Turn that download into `apps/web/public/data/<term>.json` |
-| `npm run data:update`      | Fetch, then normalize                                      |
-| `npm run data:test`        | Run the unit tests of the data scripts                     |
+```bash
+npm run lint
+npm run test
+npm run build
+npm exec -w web -- playwright install chromium
+npm run test:e2e
+```
 
-Try the engine on its own: `./engine/build/goatplan_cli apps/web/public/data/2026-B.json engine/examples/basic.json --text`. Leave out `--text` to get the raw JSON response, or pass `-` instead of a file to read the request from stdin. The request and response format is in [docs/engine-api.md](docs/engine-api.md).
+Playwright builds production itself and starts production on port 4000 and dev
+pages on port 3000. Set `PORT` to change both; production uses `PORT + 1000`.
 
-## Data
+## Repository
 
-Course and section data comes from WPI's public course listings
-(`https://courselistings.wpi.edu/assets/prod-data.json`). Fetch it occasionally
-from the script, not from the browser on every page load. Professor ratings are
-not included in that data; the app links out to Rate My Professors.
+| Path | Purpose |
+| --- | --- |
+| `apps/web/` | Next.js App Router frontend, server routes and browser tests |
+| `engine/` | C++20 scheduler, generic degree audit, CLI and WebAssembly build |
+| `scripts/` | Course download, normalization, catalog update and data checks |
+| `data/catalog.json` | Persistent degree-search catalog |
+| `data/fixtures/` | Data samples and worked degree histories |
+| `apps/web/public/data/` | Generated term files and term index |
+| `apps/web/public/engine/` | Committed WebAssembly runtime |
+| `docs/` | Architecture, workflows, contracts and source interpretations |
+| `.github/workflows/` | CI and the daily course-data update |
 
-`scripts/normalize.mjs` turns the download into one clean JSON file per term.
-The format is described in [docs/data-format.md](docs/data-format.md).
+## Other commands
+
+| Command | Purpose |
+| --- | --- |
+| `npm run engine:test` | Configure, build and test the native engine |
+| `npm run engine:wasm` | Rebuild WebAssembly with Emscripten 6.0.12 |
+| `npm run engine:wasm:test` | Compare native and WebAssembly responses |
+| `npm run data:update` | Fetch WPI listings, normalize terms and update the catalog |
+| `npm run data:catalog` | Merge observed offerings into the persistent catalog |
+| `npm run data:test` | Run the data-script tests |
+
+Native builds need CMake 3.20+ and a C++20 compiler. Frontend-only work does not
+need them. Keep the Emscripten version aligned with CI when rebuilding generated
+assets. See [development](docs/development.md) for the macOS build notes.
+
+## Documentation
+
+Start with the [documentation index](docs/README.md). The main guides are
+[planner guide](docs/planner.md), [frontend architecture](docs/frontend-architecture.md),
+[My degree](docs/degree-tracking-sheet.md),
+[recommendations](docs/course-recommendations.md),
+[live seats](docs/seats.md), [data format](docs/data-format.md), and
+[the engine API](docs/engine-api.md).

@@ -1,125 +1,122 @@
-# v1 launch check
+# Current project checks
 
-Checked on November 1, 2026, on `ralph/main/19`, starting from `b2329fb`.
-This report covers the merged v1 implementation and ticket 19's review captures.
+This page describes the implemented project and the checks used before shipping.
+It replaces the November 1, 2026 launch snapshot. Results from older feature
+snapshots live in the source reports and historical validation records; they
+must not be treated as a current full-suite pass.
 
-The local engineering checks pass. Share links, calendar export and seat refresh
-are implemented. My degree remains hidden by default. Its public release needs
-the owner's Workday comparison and launch decision. No owner approval, real
-calendar import, production analytics delivery or friend test is implied by the
-automated results below.
+## Implemented scope
 
-## Checks
+| Area | Current behavior |
+| --- | --- |
+| Planner | Published-term search, six sort presets, professor choices, locks, blocked times and schedule browsing |
+| Diagnosis | Engine explanations and tested fixes, plus frontend searches for another lecture professor |
+| Live seats | Server cache, visible-tab refresh, daily fallback, freshness and Retry |
+| Plans | Browser-local saving, editable copies and registration snapshots |
+| Sharing | Schedule payload in the URL fragment; explicit save/edit actions |
+| Calendar | `.ics` downloads using term dates and calendar exceptions |
+| My degree | Direct navigation; five Class of 2030 sheets, history, pins, confirmations and Plan ahead |
+| Field choices | Requirement-specific catalog courses across terms, with usual offering letters |
+| Recommendations | CS next-term previews check published seats and timetable fit before applying |
+| Maps | Enabled for CS, RBE, ME, ECE and Data Science |
+| Theme | Light/Dark across routes, with Light print output |
 
-| Check | Result |
-|---|---|
-| `npm run lint` | Pass. |
-| `npm run test` | Pass: 163 files, 1,699 tests, including Wasm audit integration. |
-| `npm run build` | Pass: production build and TypeScript checks. |
-| `npm run engine:test` | Pass: 155 GoogleTest cases. |
-| `npm run data:test` | Pass: 131 tests. |
-| `PORT=3019 npm run test:e2e` | Pass: 394 tests, including six launch capture journeys. Screenshot comparisons are enabled. |
-| `npm run engine:wasm` | Pass with Emscripten 6.0.12. Rebuilt assets match the committed files byte for byte. |
-| `npm run engine:wasm:test` | Pass: all 18 native/Wasm answers match. |
-| `git diff --exit-code -- apps/web/public/engine` | Pass after rebuilding. No generated engine assets changed. |
-| `ui-reviewer` | No blocking issues. Reviewed fresh screenshots, component source, keyboard/focus behavior and ARIA tests. |
+Individual Suggestions remains disabled by `SUGGESTIONS_ON = false`. This does
+not disable field lists, candidate badges or CS next-term previews. The Workday
+seat reminder and the recommendation panel's Still open/How this works sections
+were intentionally removed.
 
-The sandbox initially denied an Emscripten cache lock and macOS file watching
-for the Playwright dev server. Both commands passed with approved permissions.
-The first launch capture run incorrectly expected textarea focus on phones;
-the test now checks the sheet heading, matching the intentional phone behavior.
-There are no unresolved check failures.
+## Verification commands
 
-The Wasm SHA-256 hashes are:
-
-```text
-goatplan.mjs   9129d9d166f6a34266a74208e08f831e81794d5acfe5bbd13a80342729e493f7
-goatplan.wasm  434b2d9902caac5af711045a472db7994b6df83746d407882d88dbf439a6b7a1
-```
-
-## Screens and UI review
-
-Screens were captured at 1440, 834 and 375 px.
-
-The reviewer checked My degree's empty/history/progress/expanded-line/check
-states, course editing, paste and review, import confirmation and errors, shared
-view/save/errors, calendar download guidance, search badges/filter, background
-hints and seat freshness. Existing tests cover keyboard interaction, focus
-return, labels, draft safety and default-hidden behavior. Review used the
-existing primitives, theme tokens and DM Sans; no missing design folder was
-required. Owner screenshot approval is still pending.
-
-One nonblocking improvement remains: My degree's Edit and Remove controls use
-compact `xs` buttons with a 21 px minimum height. Larger phone hit areas would
-make them easier to tap. The reviewer did not perform a full accessibility audit
-or duplicate the automated browser interactions.
-
-## My degree release gate
-
-| Gate | Status and evidence |
-|---|---|
-| Hidden by default | Pass. No global flag was enabled. A clean browser has no degree navigation; `/degree` redirects to `/`. `/#enable-degree` opts in only that browser. Unit and browser tests cover this. |
-| Owner history against Workday | Pending. No owner history or recorded comparison was supplied. Do not treat synthetic fixtures as a Workday match. |
-| Hand-written mid-degree history | Pass in native engine, Wasm/EngineClient and browser progress tests. `data/fixtures/degree-history-mid.json` supplies all 45 expected lines, section totals and checks for 22 taken and 2 planned courses. |
-| Hand-written complete-degree history | Pass through the same three layers. `data/fixtures/degree-history-complete.json` supplies all 45 expected lines, manual items, checks, free electives and Extra courses for 43 taken courses. |
-| Uncertain results stay explicit | Pass in contract, component and browser tests. The cases below retain warnings and manual confirmation. |
-| Public enable decision | Pending owner decision for the Nov 9 gate. Beta, Unofficial and Class of 2030 notices remain. |
-
-The hand-written histories validate our interpretation of the tracking sheet.
-They do not establish that every interpretation agrees with WPI or a real
-later-year student. See the [degree rules report](cs-2030-report.md).
-
-## Check this yourself cases
-
-| Case | Built behavior and remaining confirmation |
-|---|---|
-| Humanities depth without confirmation | Shows Check this yourself. A valid depth grouping offers Are these related? Only explicit confirmation resolves it. |
-| Humanities spread across groupings | Unclear depth or breadth keeps Check this yourself, including when there is no qualifying depth grouping yet. No thematic relationship is inferred. |
-| All-language humanities | Breadth remains Check this yourself under the language exception. Ask an advisor. |
-| More than one humanities AP/IB course | Shows Check this yourself and warns that only one can count. |
-| Non-CS Social Implications | GOV/ID 2314, GOV 2315, IMGD 2000 and RBE 3100 can satisfy the social check while filling another eligible line or free electives. The check remains Check this yourself. Advising must confirm this reading. |
-| Graduate equivalence | Each matched graduate course fills one advanced CS line. The 2-for-3 bonus is not applied and Check this yourself remains. The UI hides this check when no graduate courses are involved. Advising must confirm the rule. |
-| Residency | The engine conservatively asks Check this yourself once any taken or planned course is present. Course codes do not establish the required eight units at WPI. |
-| Courses from 0.75 to under 3 credits | Go to the free elective credit pool, with This may also count toward another requirement. Check with your advisor. WPE uses its separate slots. |
-| Typed or unknown courses | Default to 3 credits, count by normalized code and display the unknown-course notice. The student must confirm equivalence and credits. |
-| Inquiry Seminar ordering | Displays the rule to finish five HUA courses first; ordering is not enforced. |
-| IQP, MQP and sports | Require explicit manual confirmations. They are not inferred from history. |
-| Repeated or cross-listed courses | Count once, with surplus copies in Extra. The rules for repeated credit remain a question for Advising. |
-
-The shared audit contract cases in `engine/tests/fixtures/audit.json` cover the
-engine warning states. Degree progress/details tests verify the warning copy,
-manual controls and separate counts for uncertain lines. Small-credit and
-unknown-course tests cover the additional notices.
-
-## Open owner tasks
-
-| Task | What remains |
-|---|---|
-| Umami account and test event | Create/configure the account and production website ID. Confirm one real named event, URL hash exclusion, no course/history properties and retention for months. Local tests have no production credentials and cannot prove dashboard delivery. If custom events fail, use the specified Vercel page-view fallback and record that decision. |
-| Calendar imports | Import a generated C and D term file into Google Calendar and Apple Calendar. Check Jan 13's Monday schedule, Jan 18, Feb 12 and Feb 25 (Academic Advising Day, no classes) exclusions, Mar 29 exclusion, Mar 30's Monday schedule, section dates and times across daylight saving. |
-| Workday and paste box | Provide the owner's course history, compare every line/check with Workday Academic Progress, and try the paste box on the real Workday page. The synthetic paste journey passes but does not establish a real student can finish within three minutes. |
-| Testers | Recruit 5–10 friends, including at least two on phones. Record confusion, bugs and the real time to enter courses. |
-| Academic Advising email | Ask whether non-CS Social Implications may also fill another line, how the graduate 2-for-3 rule applies, and how repeated courses count. Record the answers before changing interpretations. |
-| Posts | Write and send the Class of 2030 chat post on Nov 10. Prepare ISC and r/WPI posts before January add/drop. No messages were sent by this check. |
-| Screenshots and degree launch | Approve the screenshots at all three widths and record the Nov 9 My degree go/no-go decision. |
-
-Owner tasks are follow-ups, not blockers to completing this ticket's engineering
-work. They still matter to the owner's launch decision.
-
-## Watcher disposition
-
-Live seats are kept. The watcher (`.github/workflows/watch-source.yml`, `scripts/watch-source.mjs`, `scripts/watch-report.mjs`, their helpers, tests and fixtures) has been deleted. `/api/seats` caches WPI's seats for 15 minutes; see [seats.md](seats.md).
-
-## Reproduce
-
-Run the commands in the checks table from the repository root. Pick an unused
-`PORT`; Playwright starts production at `PORT + 1000`. To regenerate only the
-additional launch screen captures, run:
+Run these for the checkout being shipped, after finishing code changes:
 
 ```bash
-PORT=3019 npm run test:e2e -- --project=production launch-review.spec.ts
+npm run lint
+npm run test
+npm run build
+npm run test:e2e
+npm run data:test
 ```
 
-The full suite also captures calendar, share, badge, hint and freshness screens.
-Review images before updating the committed copies. Do not use snapshot updates
-to conceal a failed comparison.
+For engine maintenance also run native tests, a matching-version WASM rebuild,
+the native/WASM smoke comparison and a generated-asset diff. The pinned toolchain
+and macOS notes are in [development](development.md).
+
+Review desktop, tablet and phone captures and keyboard focus. A subset of E2E,
+a source report, or fixture validation cannot substitute for a full E2E result.
+Port-binding, font-fetch and browser-launch restrictions are infrastructure
+failures; record them explicitly when they block verification.
+
+Seat tests cover both success and fallback without expecting the removed notice.
+Phone menu tests keep their focus assertion: closing or removing a dialog must
+close the menu and return focus to More actions. The direct return target and
+unit regressions are described in [architecture](frontend-architecture.md).
+
+## Academic verification
+
+All five registry entries are beta and have no recorded student verification.
+They are selectable in the app. Marking a sheet checked requires an actual
+student comparison with Workday and metadata passing schema validation.
+
+The worked histories establish the app's interpretation of source documents.
+They do not establish that WPI accepts a student's substitutions, thematic HUA
+choices, residency, project credit, engineering design distribution or total
+credit. Those checks remain visible for explicit review. A non-CS social course
+supports the CS social check without creating CS units or duplicating its credit.
+
+WPE requires recorded activity or explicit confirmation. A project block reserves
+a planning term but does not confirm the corresponding requirement. Graduate
+equivalence and approved substitutions remain separate from ordinary matching.
+
+## External checks
+
+Record real evidence before claiming any of the following:
+
+- Student-by-student Workday agreement, advisor-approved substitutions and sheet verification.
+- Successful Google Calendar and Apple Calendar imports, including date exceptions and daylight saving.
+- Production analytics delivery. The event helper requires configuration and a loaded Umami client; the root layout does not install it.
+- Usability feedback or owner screenshot approval. Automated fixtures are not a friend test.
+- A deployment or public release decision. Source changes and a Git push alone do not prove deployment.
+
+The removed source watcher is not part of current maintenance. Daily course-data
+updates and cached live seats remain. No personal outreach or external account
+setup is performed by the project checks.
+
+## Local integration check, November 8, 2026
+
+The documentation refresh checked the current working tree, including the
+planner-to-degree review controls, seat-test updates and phone dialog focus fix.
+Local Markdown file links, heading targets, code fences and the data-format JSON
+example were validated. No engine, script or generated asset files were changed.
+
+| Check | Result |
+| --- | --- |
+| `npm run lint` | Passed |
+| `npm run test -w web -- --maxWorkers=2` | 1,911 passed, 10 skipped |
+| `npx tsc --noEmit -p apps/web/tsconfig.json` | Passed |
+| `npm run build` | Passed |
+| `npm run data:test` | 119 passed |
+| `npm run test:e2e` | 539 passed, 9 skipped, 17 failed at screenshot comparisons |
+| `npm run test:e2e -w web -- --ignore-snapshots` | 556 passed, 9 skipped; matches CI configuration |
+
+The default-concurrency unit run initially hit six timeouts while other checks
+were running. The complete lower-concurrency rerun passed. The recorded E2E
+failures are in calendar selection, lab previews, professor controls, sorting,
+the guide and visit banners. Comparison images include an older planner header,
+sidebar and instructor-link layout. They have not been silently regenerated.
+The full local screenshot suite is therefore not green. CI explicitly skips
+these platform-specific comparisons; its behavior-only command is
+`npm run test:e2e -w web -- --ignore-snapshots`.
+
+A later stress run of the phone menu-close test (`--repeat-each=20 --workers=3`)
+still failed the More actions focus assertion in 3 runs, with 17 passing. The
+single successful full behavioral run does not resolve this intermittent failure.
+The direct dialog focus target and unmount regressions pass in Vitest, but the
+native browser timing issue needs further diagnosis. A follow-up instrumented
+browser attempt was blocked before tests by Turbopack's sandbox port-binding
+error. No debug instrumentation remains in source.
+
+Git integration was also blocked when the workspace denied creating
+`.git/index.lock`. The checked edits were not committed, merged or pushed by that
+attempt. Re-run verification and integration when Git writes and browser startup
+are available.

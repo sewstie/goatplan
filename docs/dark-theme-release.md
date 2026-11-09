@@ -1,4 +1,12 @@
-# Dark theme release checks
+# Historical dark-theme release checks
+
+This is historical evidence for the implementation snapshot identified below.
+Its test counts, known failures and release-gate plans are not current status.
+My degree is now directly accessible and all five Class of 2030 sheets are
+selectable, with beta registry metadata and no recorded student verification.
+Use [current project checks](launch-check.md), [theme behavior](degree-dark-theme.md)
+and [development](development.md) for the present code and verification commands.
+The remaining sections retain the original validation record.
 
 Ticket 11 adds the global theme control to saved plans and registration on
 desktop and phone. Sharing uses dark field and border tokens. Light token
@@ -27,7 +35,7 @@ checkout. This evidence does not validate those unfinished changes.
 - Light planner captures at 1440 and 834 px differed only by one RGB level on
   61 and 19 pixels respectively, consistent with rasterization noise.
 
-Five older browser failures reproduce before ticket 11: four checks still
+Five older browser failures reproduced before ticket 11: four checks still
 look for planner actions in the removed `main header`, and the long
 registration-list check expects no nested scrolling at tablet width. These
 are in `plans.spec.ts` and `saved-view.spec.ts`. They are not regressions
@@ -39,5 +47,6 @@ Ticket 12 completes the degree controls, tokens and UI review required to
 expose degree support and Dark together. The combined checkout passed lint,
 the production build, 1,660 Vitest tests and 73 degree, history, badge and
 global theme browser checks. See [degree theme checks](degree-dark-theme.md).
-My degree remains available to invited testers. Workday verification of the
-five-major launch is a separate release gate. No public deployment was made.
+At that snapshot, My degree was available to invited testers and Workday
+verification was a separate release task. No public deployment was made by that
+validation. Current direct access is described in [major selection](degree-major-selection.md).
