@@ -1,67 +1,83 @@
 # Choosing a degree sheet
 
-My degree asks new visitors to choose a major before adding course history.
-The picker supports Class of 2030. It uses the existing Listbox and opens in
-a bottom sheet on phones. The selected major appears beside Change.
+My degree is available at `/degree` without an invitation flag. New visitors
+choose a major before entering history. Changing the major later opens the same
+radio-list form in a dialog. The picker supports the Class of 2030, starting in
+A Term 2026; other class years, minors and double majors are not supported.
 
-The registry controls availability. Checked sheets can appear in the public
-picker when the degree release gate opens. Beta sheets require the existing
-tester invitation. CS, RBE, ME and ECE are registered beta sheets. The other launch
-majors remain Coming soon until their own tickets add them.
+## Current sheets
 
-The request action sends `degree_major_requested` with a `major` field.
-It sends no course history, pins or confirmations.
+`lib/degree/sheets/index.ts` is the registry and lazy-loader map.
 
-## Saved history
+| ID | Major | Numbered lines | Registry status |
+| --- | --- | --- | --- |
+| `cs-2030` | Computer Science | 45 | beta |
+| `rbe-2030` | Robotics Engineering | 46 | beta |
+| `me-2030` | Mechanical Engineering | 45 | beta |
+| `ece-2030` | Electrical and Computer Engineering | 45 | beta |
+| `ds-2030` | Data Science | 45 | beta |
 
-The storage key remains `goatplan:history:v1`. Courses are shared. `sheetId`
-records the selected sheet, and `sheets` stores manual confirmations and pins
-by sheet id. The top-level `manual` and `pins` fields reflect the selected
-sheet for the existing degree interface. Writes and exports update that
-sheet's entry in `sheets`.
+All five sheets are selectable. Each has `verification: null`; beta metadata
+currently does not hide a sheet from the picker. A checked sheet must have a
+student name and dated Workday verification in registry metadata. Source and
+fixture checks do not supply that verification.
 
-`huaPath` holds the humanities path the student picked. It isn't stored per
-sheet, because humanities are the same for every major. See
+My major isn't listed accepts a request. `degree_major_requested` sends the
+requested major through the optional analytics helper, without course history,
+pins or confirmations. The UI's thank-you message does not guarantee delivery
+when analytics is not configured or loaded.
+
+## Saved history and switching
+
+The storage key remains `goatplan:history:v1`, with version 2 exports. Courses
+are shared across majors. `sheetId` identifies the selection, and `sheets` keeps
+manual confirmations and pins per sheet. Top-level `manual` and `pins` reflect
+the selected sheet; writes and exports update its entry in `sheets`.
+
+`huaPath` records the student's humanities path once, across majors. See
 [Humanities path](degree-tracking-sheet.md#humanities-path).
 
-A history without `sheetId` opens CS without another picker prompt. Its
-existing confirmations and pins belong to CS. Switching or exporting records
-that association explicitly.
+An existing history without `sheetId` opens CS rather than asking for a major.
+Its confirmations and pins belong to CS. Switching or exporting makes that
+association explicit. A fresh history has no selected sheet until the student
+chooses one.
 
-Exports contain the selection, courses and every saved sheet's state. Imports
-validate course records, sheet ids, confirmations and pin structure before
-review. Pin eligibility uses the incoming selected sheet. Merging keeps
-existing course records, combines confirmations within each sheet, and keeps
-existing pins when a course or line conflicts. The imported selection opens
-after confirmation.
+Switching clears the previous audit and search badges immediately. Old responses
+are ignored. Only the requested sheet JSON is imported. The audit receives the
+selected effective sheet, including the humanities path, on each app request.
+The engine does not need a separate implementation for each major.
 
-Switching clears the previous audit and search badges immediately. Responses
-from older requests are ignored. Sheet labels come from sheet data; CS keeps
-its existing display names.
+## Backups and imports
 
-## Checks
+Exports include courses, the selected sheet and every saved sheet's state.
+Imports validate course records, known sheet IDs, manual confirmations and pin
+structure before review. Pin eligibility is checked against the incoming sheet.
+Merging keeps existing course records and conflicting pins, combines compatible
+confirmations, and applies the imported selection after confirmation.
 
-Run the source and browser suites from the repository root:
+## Validation
 
-```sh
+Run the normal checks from the repository root:
+
+```bash
 npm run lint
 npm run test
 npm run build
 npm run test:e2e -w web -- degree-major.spec.ts --project=production
 ```
 
-Run independent-sheet checks from `apps/web`:
+`npm run test:degree-sheets -w web` validates all registered documents against
+`degree-rules.schema.json` and checks references, line totals, cross-lists and
+verification metadata.
 
-```sh
-npx playwright test --config playwright.degree-major.config.ts --workers=2
+The independent fixture-sheet harness runs with:
+
+```bash
+npm exec -w web -- playwright test --config playwright.degree-major.config.ts --workers=2
 ```
 
-The latter builds an isolated copy under `.cache/degree-major` with a small,
-independent fixture sheet. It tests the production app and real audit with
-desktop keyboard and phone touch controls. Fixture sheets never enter the
-normal registry or production build. The checks cover switching, reload,
-all-sheet backups, cross-sheet pin validation, request events and lazy
-downloads. The normal picker suite captures 1440, 834 and 375 px screenshots.
-
-The design PNGs and `docs/design/frames.md` are absent in this checkout.
-Screenshots are reviewed against the existing degree UI and the ticket.
+It builds an isolated copy under `.cache/degree-major` and exercises switching,
+reload, backups, pin validation, request events and lazy downloads against the
+real app and audit. Fixture sheets never enter the production registry.
+Normal browser specs capture desktop, tablet and phone. The original design
+reference PNGs are absent; review current captures against the implemented UI.

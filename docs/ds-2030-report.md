@@ -1,7 +1,12 @@
 # DS Class of 2030
 
-This sheet is beta and available only through tester access. Workday verification
-and the public release gate remain in ticket 09.
+This is a requirement-source and interpretation record. The current registry
+makes this sheet selectable at `/degree`, with beta status and no recorded
+student Workday verification. Validation counts and implementation sequences
+below describe the original feature snapshot, not the current test suite. See
+[major selection](degree-major-selection.md) and [current project checks](launch-check.md)
+for current access and verification behavior.
+
 
 ## Sources
 
@@ -55,14 +60,15 @@ calculus alternatives and listed MA electives, including cross-lists.
 MA 1020/1021 and MA 1022/1120 are mutually exclusive for foundation placement.
 The shared engine can still place the redundant course into free electives.
 The credit-review check explicitly requires replacing it before confirming credit.
-This limitation remains visible to testers; a filled sheet is not verified credit.
+This limitation remains visible in the UI; a filled sheet is not verified credit.
 
 The catalog permits ethics to overlap social science with an extra free elective.
 This audit counts each course once and gives ethics priority over social science
 and humanities. The overlap route needs advisor review and is described in the
 ethics section and credit confirmation. It is not automatically marked complete.
 The total-credit check also requires confirmation of 135 academic credits and
-15 units. These interpretations must be checked against Workday in ticket 09.
+15 units. These interpretations require an actual Workday comparison before recording
+student verification.
 
 Humanities level and sequence, MQP advisor affiliation and residency cannot be
 established from course codes. They remain explicit checks. WPE never completes
@@ -96,11 +102,11 @@ PORT=3097 npm run test:e2e -w web -- degree-ds.spec.ts degree-major.spec.ts --pr
 ```
 
 Production browser checks cover selection, audit, search badges, term actions,
-keyboard confirmation, persistence and tester access at 1440px and 834px.
+keyboard confirmation, persistence and sheet availability at 1440px and 834px.
 Design PNGs are absent in this checkout, so visual review uses the established
 degree UI.
 
-Validation passed: lint, all 1,722 tests with native fixtures enabled, the
+Original implementation validation passed: lint, all 1,722 tests with native fixtures enabled, the
 production build, 163 native engine tests and seven production browser checks.
 The TDD cycles exposed missing registration, unrestricted foundation choices,
 missing cross-lists, absent elective category checks and missing worked histories

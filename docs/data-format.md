@@ -65,16 +65,16 @@ out as one course with four sections and three options.
         }
       ],
       "options": [
-        ["AE 2320-CL01", "AE 2320-CX01"],
-        ["AE 2320-CL01", "AE 2320-CX02"],
-        ["AE 2320-CL01", "AE 2320-CX03"]
+        ["AE 2320-CL01", "AE 2320-CX01"]
       ]
     }
   ]
 }
 ```
 
-(The example shows only two of the four sections.)
+(This shortened example includes one lecture/lab option. Real files include
+every section referenced by their options. Counts and dates above illustrate an
+earlier data snapshot.)
 
 ## Fields
 
@@ -117,8 +117,9 @@ not missing data. Co-teachers each have their own entry.
 
 An optional `ratingSource` string identifies the source beside the count.
 Test fixtures use `"Example data"` for synthetic ratings. Published data must
-name its actual source. The frontend displays this metadata without fetching
-ratings. The engine does not use it.
+name its actual source. The current frontend does not display numeric ratings. Instructor rows link to
+Rate My Professors, with Check OSCAR beneath it. These optional fields remain
+accepted metadata for compatibility and tests. The engine does not use them.
 
 ### Section
 
@@ -187,8 +188,8 @@ So the rules are:
 - If a course is only labs (BB 2815), each lab is an option by itself.
 - A semester-long section never pairs with a one-term one.
 
-A section can end up in no option. Right now that's IMGD 2030-CX02 and
-MA 2071-DD07: a lab and a discussion that WPI left out of their lecture's
+A section can end up in no option. Earlier snapshots included IMGD 2030-CX02
+and MA 2071-DD07: a lab and a discussion that WPI left out of their lecture's
 cluster. They stay in `sections` so the UI can show them, but they can't be
 scheduled. The script prints them on every run.
 
@@ -255,26 +256,27 @@ TODAY=2027-03-06 node scripts/normalize.mjs data/raw/courselistings.json /tmp/go
 These belong to the UI and the engine, but they depend on what's in the JSON,
 so they're written down here.
 
-**Seats.** Show seats as "X of Y open". X is capacity minus enrolled, never
+Show seats as "X of Y open". X is capacity minus enrolled, never
 below 0 for over-enrolled sections. For an option (lecture + discussion + lab),
 the open seats are the lowest among its sections. The lab is usually the
 bottleneck. `enrolled` and `capacity` stay in the JSON as they are; this math
 happens in the UI and the engine.
 
-**Dates.** The data can be up to a day old, so the term picker should also hide
+Daily term metadata can be up to a day old, so the term picker should also hide
 any term whose end date has passed. Same rules: New York time, end date
 inclusive.
 
-**Saved plans.** A saved plan for a term that has ended opens read-only with a
+A saved plan for a term that has ended opens read-only with a
 note that the term has ended, instead of failing. The term's file is gone by
 then, so the plan needs its own copy of the sections it shows.
 
-**Engine speed.** 363 options for one course is fine on its own, but it comes
-from labs pairing freely with every lecture. A future improvement is to treat
-"lecture + discussion" and "lab" as two separate choices in the engine instead
-of listing every combination. That cuts PH 1120 from 363 choices to 11 + 33.
-The current format works for now. Revisit this if the engine's timing test
-runs slow.
+The runtime seat API can overlay fresher enrollment, capacity, waitlist and status
+fields on the daily file. It never changes course options or meetings. Saved and
+shared plans preserve their own snapshots. See [live seats](seats.md).
+
+The engine's `onlyOpen` filter uses section status. Published-term recommendation
+checks also enforce positive remaining capacity and require a complete open
+option, including every required lab or discussion.
 
 ## Decisions built into this format
 
@@ -290,7 +292,7 @@ runs slow.
   option sits on its own line in the file. So each day's git commit shows only
   what actually changed, and a day with no changes makes no commit at all.
 
-A term file is about 900 KB, or 180 KB gzipped.
+Term-file sizes vary with the number of courses, meetings and section options.
 
 ## Edge cases from the real data
 

@@ -52,8 +52,12 @@ test("planner courses reach My degree only through the explicit menu action", as
   await openDegree(page, { courses: [savedCourse({ code: "MA 1021", credits: 3 })] });
   await expect(page.getByRole("button", { name: /^CS 2303, line/ })).toHaveCount(0);
   await page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Planner", exact: true }).click();
-  await page.getByRole("button", { name: "More actions", exact: true }).click();
-  await page.getByRole("button", { name: "Add to My degree", exact: true }).click();
+  await page.getByRole("button", { name: "Add to degree", exact: true }).click();
+  const panel = page.getByRole("dialog", { name: "Add to My degree" });
+  await expect(panel.getByRole("list", { name: "Courses to add" }).getByRole("listitem")).toHaveCount(2);
+  await panel.getByRole("button", { name: "Add 2 courses", exact: true }).click();
+  await expect(panel.getByRole("status")).toContainText("1 course added");
+  await page.keyboard.press("Escape");
   await expect.poll(async () => (await stored(page)).courses).toEqual([
     expect.objectContaining({ code: "MA 1021", status: "taken" }),
     expect.objectContaining({ code: "CS 2303", status: "planned", term: "C Term 2027" }),

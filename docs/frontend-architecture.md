@@ -1,558 +1,261 @@
 # Frontend architecture
 
-GoatPlan's web app is one planner page plus a "Sections to register" page, built
-with Next.js (App Router), TypeScript and Tailwind in `apps/web`. The lead owns
-the shared parts: layout, store, data, engine and UI primitives. Four feature
-agents build the features in their own folders, in parallel. This page says who
-owns what, what the shared store offers, and how to ask for a change to a
-shared file.
+GoatPlan uses Next.js App Router, strict TypeScript, React, Tailwind CSS and
+Zustand. The current dependency versions live in `apps/web/package.json`.
+The browser runs the C++ scheduler and generic audit through WebAssembly in a
+worker. Most product behavior is TypeScript.
 
-Read it together with [data-format.md](data-format.md) and
-[engine-api.md](engine-api.md).
+Read this with [development](development.md), [the data format](data-format.md)
+and [the engine API](engine-api.md).
 
-## Folder map
+## Routes
 
-All paths are under `apps/web/src/`.
+| Route | Responsibility |
+| --- | --- |
+| `/` | Editable term planner, saved snapshots and shared-link previews |
+| `/plans` | Saved plans and Sections to register |
+| `/degree` | Major selection, degree tracking, Plan ahead and Course map |
+| `/data/catalog.json` | Persistent degree catalog from `data/catalog.json` |
+| `/api/seats` | Server-side live seat proxy and cache |
+| `/dev/ui`, `/dev/engine` | Development-only UI and engine pages |
 
-```
-app/
-  layout.tsx            lead     root layout, DM Sans
-  page.tsx              lead     the planner page: places every feature component
-  globals.css           lead     design tokens (colors, type, spacing)
-  plans/                plans    /plans, "Sections to register"
-  dev/                  lead     /dev/ui and /dev/engine; 404 in production
-components/
-  tutorial/             lead     first-visit guide and its browser-local persistence
-  ui/                   lead     primitives: Button, ButtonLink, IconButton, Badge, Chip, Toggle,
-                                 Select, Listbox, TextInput, Card, Dialog, Sheet (right or bottom),
-                                 Toast, Tooltip; course colors
-  shell/                lead     AppShell, Sidebar, WorkspaceHeader, Placeholder, PlannerBootstrap
-  courses/              search   term picker, course search, "Your courses", breadcrumbs
-  schedule/             schedule calendar, schedule switcher, summary line, banner
-  preferences/          prefs    the Preferences row
-  sections/             prefs    details panel, lock controls, the "Choose a lab" sheet
-  plans/                plans    Save / Saved plans, registration sheet and summary
-lib/
-  data/                 lead     term files and formatting helpers
-  engine/               lead     EngineClient, the engine worker, engine types
-  store/                lead     the planner store (Zustand)
-  plans/                plans    saved plans and their own storage
-apps/web/e2e/           browser tests (Playwright); each agent adds its own spec file
-```
+My degree is linked in the main navigation without a browser invitation or
+release flag. All five registered Class of 2030 sheets are selectable. Their
+registry status remains beta and their student verification metadata is null.
+The individual Suggestions tab is disabled by `SUGGESTIONS_ON = false`.
+Course maps are enabled, and CS's Suggest next terms action remains available
+inside Plan ahead independently of that flag.
 
-## Who owns what
+## Modules
 
-Each feature already has placeholder components in the page, in the right
-place and holding the right space. A feature agent replaces the inside of its
-own components and adds new files in its own folders. **Never edit the page or
-the layout to place things**: if a component needs to be somewhere new, ask
-the lead (see [Asking for a shared-file change](#asking-for-a-shared-file-change)).
+Paths below are relative to `apps/web/src/`.
 
-| Agent | Owns | Components already in the page |
-|---|---|---|
-| **search** | `components/courses/` | `TermPicker` (sidebar, under the logo), `CourseSearchPanel` (sidebar: search box, results, "Your courses"), `TermBreadcrumbs` (above the title) |
-| **schedule** | `components/schedule/` | `ScheduleView` (calendar card), `ScheduleSwitcher` (next to the title), `ScheduleSummary` (line under the title), `ScheduleBanner` (full-width banner above the calendar) |
-| **prefs** | `components/preferences/`, `components/sections/` | `PreferencesBar` (the Preferences row), `CourseDetailsPanel` (details panel: section choices, Lock/Unlock, professor, "Needs attention" and fixes), `ChooseAlternativeSheet` |
-| **plans** | `app/plans/`, `components/plans/`, `lib/plans/` | `PlanActions` (header, right side), `RegistrationSheet` and `RegistrationSummary` (on `/plans`) |
+| Path | Responsibility |
+| --- | --- |
+| `app/` | Route composition, layout, DM Sans, tokens and server endpoints |
+| `components/ui/` | Buttons, fields, dialogs, sheets, drawers, popovers and focus utilities |
+| `components/shell/` | Responsive shell, top bar, theme, seat status and planner bootstrap |
+| `components/phone/` | Phone schedule, search, preferences and course screens |
+| `components/courses/` | Published-term search and chosen-course list |
+| `components/schedule/` | Calendar, schedule browsing, previews and blocked-time editing |
+| `components/sections/` | Section choices, professor controls, locks and diagnosis actions |
+| `components/preferences/` | Availability controls and sort presets |
+| `components/plans/` | Plan saving, opening, saved views and registration sheets |
+| `components/share/`, `components/calendar/` | Shared links and calendar export |
+| `components/degree/` | Degree UI, history entry, plan grid and planner transfer |
+| `components/courseMap/` | Background maps, course selection and map details |
+| `components/tutorial/` | First-plan guide and its persistence |
+| `lib/store/` | Working draft, solves, selection, live seats and planner view state |
+| `lib/engine/` | EngineClient, worker protocol, host and contract types |
+| `lib/data/` | Term loading, seat loading/merging, section rules and formatting |
+| `lib/degree/` | History, source state, sheet registry, matching and recommendations |
+| `lib/courseMap/` | Curated background expressions, map layouts and arrow routing |
+| `lib/plans/`, `lib/share/`, `lib/calendar/` | Plan persistence, share codec and ICS generation |
+| `lib/diagnosis/` | Diagnosis wording and calendar previews |
+| `lib/theme.ts`, `lib/analytics/` | Theme subscription and optional event reporting |
 
-- Keep the file names and exports of the placeholders; the page imports them.
-- Components that need state or events become client components (`"use client"`).
-- Saved plans have **their own storage** in `lib/plans/` (keys start with
-  `goatplan:plans:`), not the planner store. The store only keeps the working
-  draft.
-- `/plans` (`app/plans/page.tsx`) belongs to the plans agent and reuses the
-  shared shell and the other agents' sidebar components.
-- Sort options: the store keeps six sort presets (`SORT_PRESETS`), and the
-  prefs agent shows all six in the sort menu. Each preset is
-  `{ label, description, primary }`, where `primary` is the score field the
-  engine ranks by first (`null` for Best overall).
-- Tests: unit tests go next to the code, in your folders. Browser tests go in a
-  new `e2e/<agent>.spec.ts`; they run against the production build.
+## Boundaries and ownership
 
-## Shared files: only the lead edits them
+Search, section presentation, saved plans and Sections to register are
+TypeScript. Components use the engine only through `lib/engine/EngineClient`.
+The engine performs schedule searches and diagnoses, plus generic audits and
+candidate checks against caller-supplied tracking sheets. It does not contain
+major-specific rule files.
 
-- `app/layout.tsx` and `app/page.tsx`
-- `app/globals.css`
-- `lib/store/`, `lib/engine/`, `lib/data/`
-- `components/ui/`
-- Also lead-owned: `components/shell/`, `app/dev/`, the lead's specs in `e2e/`
-  (`shell`, `primitives`, `engine`), `playwright.config.ts`,
-  `vitest.config.mts`, `package.json` (so new dependencies too) and everything
-  in `docs/`.
+The lead owns app layout/page composition, `lib/store`, `lib/engine`, `lib/data`
+and `components/ui`. Feature agents request changes to those shared files.
+Keep components small and in separate files. Use theme tokens for colors and
+shared formatting helpers for section labels, times, seats and rooms.
 
-### Asking for a shared-file change
+Repository instructions prohibit edits to `engine/`, `scripts/`,
+`apps/web/public/data/` and `apps/web/public/engine/` during frontend work.
+Data and engine builds are separate maintenance workflows; this guide does not
+change those boundaries.
 
-Don't edit a shared file, even for a one-line fix. In your PR description, add
-a section called **"Needs from lead"** that lists each change:
+## Planner state and requests
 
-- the file,
-- exactly what to change (a new prop, a store action, a token, a dependency),
-- why your feature needs it.
+`getPlannerStore()` returns the shared Zustand store. `usePlanner(selector)`
+reads it, and `usePlannerStore()` exposes its API. Tests can inject a real store
+through `PlannerProvider`. Select stable values; object or array selectors need
+`useShallow` when they create a new value on every call.
 
-Until the lead adds it, build against what exists (or a local stand-in inside
-your folder) and say so in the PR. The lead makes the change in its own commit,
-so every agent gets it at the same time.
+`PlannerBootstrap` initializes the store on the planner route. Degree tracking
+does not initialize the planner. `lib/store/types.ts` is the complete state and
+action reference.
 
-## The planner store
+| State | Purpose |
+| --- | --- |
+| `termId`, `term`, `terms`, `termStatus`, `termError` | Published term and load state |
+| `courses`, `preferences`, `locks`, `professorByCourse`, `sortPreset`, `alternatives` | Working draft |
+| `response`, `scheduleIndex`, `solveStatus`, `solveError` | Latest accepted engine response and displayed schedule |
+| `selectedCourse`, `selectedSection`, `lastChosenSections` | Section details and selection continuity |
+| `savedPlans`, `savedPlanId`, saved selection fields | Saved snapshot view |
+| `temporaryPlan` | Shared preview or another temporary view |
+| `seatsUpdatedAt`, `seatRefresh` | Current draft's seat freshness |
+| `professorFixes`, `checkingProfessors` | Tested alternative-professor fixes |
+| `drawing`, `removedCourse`, `blockedChange` | Unsaved interaction and Undo state |
 
-`lib/store` is a Zustand store with everything the features share. Read it
-with `usePlanner(selector)` and call its actions the same way:
+New drafts start with no courses, Any time, no blocked times and only open
+sections. Restored drafts keep their saved settings. The main actions add/remove
+courses, select sections, change preferences/professors, lock/unlock sections,
+change sort, browse schedules, pick section options and apply tested fixes.
+`openPlan` replaces a draft explicitly; `refreshSeats` refreshes only seat data.
 
-```tsx
-const courses = usePlanner((state) => state.courses);
-const addCourse = usePlanner((state) => state.addCourse);
-```
+A draft change waits 200 ms before solving. `buildRequest` deduplicates courses,
+includes only relevant locks, removes blocked-time labels, translates selected
+lecture professors to `preferences.anyOf`, and applies a sort preset. All six
+presets share Best overall weights and vary the primary ranking measure.
+The app requests at most 200 returned schedules. The engine has its own caps.
 
-Select single values. A selector that builds a new object or array on every
-call (like `selectChosenSections`) needs `useShallow` from
-`zustand/react/shallow`, or it re-renders forever. `PlannerBootstrap` (in the
-page) starts the store in the browser by calling `init()`.
+An empty draft clears the answer without solving. Superseded answers are ignored.
+EngineClient queues worker operations and rejects requests replaced by newer
+loads or solves. Audits have their own request path.
 
-Component tests can pass a real `createPlannerStore` instance through
-`PlannerProvider`. `usePlanner` and `usePlannerStore` read that instance, so
-tests can supply data, engine, and storage boundaries without replacing store
-modules. Without a provider, both hooks use the app's shared store.
+## Data and seats
 
-### State
+`loadTermIndex` and `loadTerm` cache successful JSON requests. Failed requests can
+be retried. Raw term bytes can be transferred through `takeTermBuffer` to avoid
+a second fetch by the worker.
 
-| Field | What it is |
-|---|---|
-| `terms` | Published terms that haven't ended (New York time), for the term picker. |
-| `termId` | The chosen term's id, like `"2027-C"`. |
-| `term` | The chosen term's parsed file (courses and sections); `null` while it loads. |
-| `termStatus` | `idle`, `loading`, `ready` or `error`. Plan actions do nothing until `ready`. |
-| `termError` | Why the term couldn't load, in plain English. |
-| `courses` | The chosen course codes, in the order they were added. |
-| `preferences` | `{ startsAfter, blocked, onlyOpen }`. New drafts start at Any time (`startsAfter: 0`), with no blocked times and only open sections. Stored drafts and saved plans keep their settings, including a chosen 9:00 AM start. A blocked time can have a `label`, the name the student gave it ("Work"); it is saved with the draft but never sent to the engine. |
-| `locks` | Course code → the section ids locked for that course. |
-| `professorByCourse` | Course code → the selected lecture professor, or `null` for Any professor. All matching lectures remain eligible, including co-taught lectures. Labs and discussions can have other instructors. |
-| `sortPreset` | The Sort choice: `bestOverall`, `fewestEarly`, `latestStart`, `earliestFinish`, `fewestDays` or `fewestGaps` (labels, descriptions and primary measures in `SORT_PRESETS`). The menu shows all six sort orders. Every preset sends the Best overall weights, so `score.total` means the same in each, plus its `primary`; Best overall sends none. Stored IDs are kept as they are. |
-| `alternatives` | Per schedule (by `scheduleKey`) and per course, the same-time alternative the student picked. |
-| `response` | The engine's last answer, success or engine error; `null` when there are no courses. |
-| `scheduleIndex` | Which schedule in `response.schedules` is shown. |
-| `solveStatus` | `idle`, `waiting` (the 200 ms pause after a change), `solving`, `done` or `error`. |
-| `solveError` | Why the engine gave no answer at all (for example, the worker crashed). Engine errors are in `response`. |
-| `selectedCourse` | The course the details panel shows and "Your courses" marks. The first course once a term loads; not saved in the draft. |
-| `selectedSection` | The section whose calendar blocks are selected, after a click on a block; `null` otherwise. |
-| `removedCourse` | The last removed course, so it can be undone: `{ code, index, locks, professor, alternatives, wasSelected }` (its position, its locks or `undefined`, its professor entry, its picked alternatives per schedule key, and whether it was selected); `null` otherwise. A second remove replaces it. Any other draft change clears it (adding a course, preferences, sort, lock or unlock, professor, alternative, applying a fix, switching term, opening a plan); selecting a course or section and paging schedules don't. Not saved with the draft or with plans, so a reload loses it. |
-| `blockedChange` | The last blocked times added or removed by dragging on the calendar (or removed from its popover or selection): `{ previous, days, start, end, erased, count? }`, where `previous` is the blocked list from before and `count` is how many selected times one delete removed. Like `removedCourse`, any other draft change clears it, a removed course replaces it, and it isn't saved. |
-| `drawing` | Drawing mode: a drag on the calendar blocks or unblocks time. Off by default. Changing the term, opening a plan or switching between Found and Saved turns it off, and it stays off in a saved plan. Not saved with the draft or with plans. |
-| `savedPlans` | A read-only mirror of the plans source. Saved plans keep their own storage. |
-| `savedPlanId` | The saved plan being viewed, or `null` for Found. `PlannerViewSync` follows `/?view=saved&plan={id}` and browser history. Never persisted with the draft. |
-| `savedSelectedCourse`, `savedSelectedSection` | Selection within Saved. Found keeps its own selection. |
+The planner requests live seats alongside a term load and refreshes every minute
+while visible. `withLiveSeats` accepts only matching, sufficiently recent seat
+snapshots. Changed seats are loaded into the engine and solved again. Failed
+refreshes fall back to the daily file. Saved/shared snapshots keep their original
+section data. See [live seats](seats.md) for the server cache and status text.
 
-### Actions
+Degree search uses the persistent catalog, so courses can be recorded without
+published schedules. Individual course details and offering hints can load
+published term files independently of the planner.
 
-| Action | What it does |
-|---|---|
-| `init()` | Loads the term list and opens the term used last time, or else the first upcoming one. |
-| `setSavedPlans(plans)` | Refreshes the mirror from the plans source. Returns to Found if the viewed plan was removed. |
-| `showFound()` / `showSaved(id?)` | Changes the viewed source without changing the draft. Saved defaults to the first saved plan of this term. |
-| `nextSavedPlan()` / `previousSavedPlan()` | Pages through this term's saved plans, stopping at the ends. |
-| `setTerm(termId)` | Switches term: downloads the file once (page and engine), restores that term's draft and solves. |
-| `openPlan(termId, plan, chosen?)` | Opens a saved plan in one step: switches term if needed, replaces the draft (courses, preferences, locks, sort), solves once and shows the schedule with the `chosen` sections. Resolves to `false` if the term couldn't load. |
-| `addCourse(code)` | Adds a course from the current term (ignored if unknown or already added) and selects it. |
-| `removeCourse(code)` | Removes a course with its locks, professor and picked alternatives, keeping them in `removedCourse` first. If it was selected, the next course (or the one before) is selected. |
-| `undoRemoveCourse()` | Puts `removedCourse` back at its position (clamped to the list length) with its locks, professor and alternatives, reselects it if it was selected, clears `removedCourse` and solves once. Does nothing without one. |
-| `dismissRemovedCourse()` | Clears `removedCourse` without changing the plan. |
-| `changeBlocked(blocked, change)` | Replaces the blocked times after a calendar drag, keeps the old list in `blockedChange` and solves once. |
-| `undoBlockedChange()` | Puts `blockedChange.previous` back, clears `blockedChange` and solves once. Does nothing without one. |
-| `dismissBlockedChange()` | Clears `blockedChange` without changing the plan. |
-| `setDrawing(on)` | Turns drawing mode on or off. Does nothing in a saved plan or before the term is ready. |
-| `selectCourse(code, sectionId?)` | Selects a planned course, and optionally one of its sections; `null` clears the selection. |
-| `setPreferences(changes)` | Changes any of `startsAfter`, `blocked` and `onlyOpen`. |
-| `setProfessor(course, name)` | Selects a lecture professor, or `null` for Any professor, and regenerates schedules. |
-| `lockSection(course, sectionId)` | Keeps only schedules that use that section (the course must be in the plan). |
-| `unlockSection(course, sectionId)` | Removes that lock. |
-| `setSortPreset(preset)` | Changes the Sort order. |
-| `chooseAlternative(course, sectionIds)` | Picks a same-time alternative in the current schedule. It doesn't solve again. |
-| `pickOption(course, sectionIds)` | Takes another option of a course and keeps the rest of the shown schedule: shows a schedule from the answer that has both, or else locks the option's new sections (in place of locks it drops) and solves again. |
-| `setScheduleIndex(index)` | Shows the schedule at that position, kept within the answer. |
-| `nextSchedule()` / `previousSchedule()` | Pages through the schedules, stopping at the ends. |
-| `applyFix(fix)` | Applies a fix from `response.diagnosis.fixes`: start later, clear blocked times, allow full sections, unlock, allow any professor or drop a course. "Allow any professor" (`clearAnyOf`) clears the course's professor and, when the fix has `startsAfter`, sets the start time too, in one draft change and one solve. |
+## Professors and diagnosis
 
-Selectors and helpers that come with it: `selectSchedules`,
-`selectCurrentSchedule`, `selectChosenSections` (course → the section ids taken
-in the current schedule, with picked alternatives), `findSchedule` (the first
-schedule that can show given sections), `scheduleKey`, `storedDraft(termId)`
-(the draft this browser keeps for a term), `buildRequest`, `SORT_PRESETS`,
-`DEFAULT_PREFERENCES`, `MAX_SCHEDULES`.
+`lectureInstructors` and `lecturesByProfessor` use trimmed, case-insensitive full
+names. Selecting a professor restricts lectures, including co-taught lectures,
+while course options determine the required labs and discussions. Changing a
+professor preserves section locks. A restored professor with no matching lecture
+is handled explicitly; an empty `anyOf` list must not silently allow everyone.
 
-`selectViewedSchedule` supplies the calendar and saved course panel with the
-chosen section snapshots. Found applies the draft's alternatives; Saved uses
-the stored sections, even when current course data has changed. `selectSavedPlan`,
-`selectViewedCourse` and `selectViewedSection` supply the rest of the read-only
-view. Draft edits and Found paging do nothing in Saved. Leaving the planner
-clears Saved mode without changing the URL or draft. `share` is reserved and
-left untouched by view navigation.
+When no schedule fits, engine diagnosis explains empty courses, pair clashes or
+a larger clash. The frontend also tests up to six other lecture professors per
+selected course, keeping the rest of the request fixed. Successful choices show
+under Try another professor, followed by other tested fixes. These frontend
+`switchProfessor` fixes do not extend the engine's version 1 fix schema.
+Diagnosis and section hover previews are display state, not saved schedule edits.
 
-Choosing a saved plan from the menu opens it for editing. There is no separate
-Edit this plan button. Start a new plan in the same menu resets the current
-term's draft to empty courses and default preferences. It asks before replacing
-unsaved work and keeps every saved plan. Saving the fresh draft creates a
-separate plan.
+Instructor rows show Rate My Professors first and Check OSCAR beneath it. The
+app links to those services; it does not fetch or display numeric ratings.
 
-All saved plans leaves the course sidebar, preferences and summary panel empty.
-Viewing the list never changes the working draft. A selected registration sheet
-still shows that plan's courses, preferences and summary.
+## Plans, sharing and storage
 
-### How it behaves
+| Storage | Contents |
+| --- | --- |
+| `goatplan:term:v1` | Last planner term |
+| `goatplan:draft:v1:<termId>` | Per-term working draft |
+| `goatplan:plans:v1:plan:<id>` | Saved plan and section snapshots |
+| `goatplan:plans:v1:current:<termId>` | Plan associated with a term's draft |
+| `goatplan:history:v1` | Version 2 degree history and per-sheet state |
+| `goatplan:degree:projects` | Four-year-plan project reservations |
+| `goatplan:theme:v1` | Light or Dark preference |
+| `goatplan:tutorial:v1` | First-plan guide state |
 
-- The planner page mounts a five-step guide popover on the first visit. It
-  points to the real term, search, lecture professor, preferences and schedule
-  controls. The popover stays beside its target and leaves it usable. Next
-  waits for a loaded term on step 1 and a course on step 2. The remaining
-  steps are optional. The professor step selects the current lecture course,
-  or the first planned course with lectures, without changing its professor.
-  With no lectures, navigation skips that step. Progress totals change only
-  when navigating. The availability text reflects the current settings.
-  Finish is always available on the last step. Only a completed engine answer
-  with zero schedules shows the no-match text. Saved mode hides the guide.
-  Tutorial status uses `goatplan:tutorial:v1`, outside drafts and saved plans.
-  A restored plan with courses bypasses the guide. Skip, Close and Finish keep
-  every plan setting. Navigation checks whether guide progress can be stored.
-  The first failed write replaces the open step’s copy once. Later steps use
-  their usual copy. An info banner stays visible for the visit, including after
-  the guide closes. Restored drafts and saved snapshots show a success banner
-  listing the settings they kept. Loading placeholders and the empty-calendar
-  prompt stay hidden while the guide is open.
+Selecting Found shows generated schedules; Saved shows snapshots. Draft edits
+and Found paging do not alter a saved snapshot. Opening a saved plan for editing
+is explicit and can ask before replacing unsaved work. Starting a new plan keeps
+saved plans. Registration sheets remain usable for ended terms because saved
+plans contain section snapshots.
 
-- **Solving.** Every change to the plan waits 200 ms (`SOLVE_DELAY_MS`) for
-  more changes, then sends one request built by the pure `buildRequest(state)`.
-  Only the answer to the latest request is kept. An empty plan clears the answer
-  without asking the engine.
-- **Drafts.** The working plan (courses, preferences, locks, sort and picked
-  alternatives) is saved after every change, per term, in localStorage under
-  `goatplan:draft:v1:<termId>`; the last term is under `goatplan:term:v1`.
-  Switching terms keeps each term's own draft. Broken or old data is ignored,
-  and courses or sections a term no longer has are dropped on load.
-- **Loading a term** downloads its file once. The page parses it for the UI,
-  and the file's bytes are handed to the engine worker without a copy
-  (`takeTermBuffer` then `EngineClient.loadTerm(termId, buffer)`). The worker
-  only fetches the file itself when it has no bytes, which happens when you
-  switch back to a term you opened before.
-
-## Data and engine
-
-- `lib/data`: `loadTermIndex()` and `loadTerm(termId)` (cached), the types from
-  `data-format.md`, and formatting helpers for times, days, seats, section
-  labels, instructors and the Rate My Professors link. Use them instead of
-  formatting by hand. Search, section display and seat math are TypeScript.
-  - `lectureInstructors` supplies the professor picker and validates selections.
-    `lecturesByProfessor` uses trimmed, case-insensitive full names to keep
-    request generation, local choices, and diagnosis previews consistent.
-    Requests send matching lecture IDs in `preferences.anyOf`; published course
-    options still determine the linked labs and discussions.
-    Professor changes preserve all section locks. If a restored professor has no
-    matching lectures, the store reports no matches itself, because an empty
-    `anyOf` list would leave that course unrestricted. It runs one extra solve
-    without those courses' professor rules; when that gives schedules, the
-    0-result answer offers `clearAnyOf` ("Allow any professor") for each such
-    course, in course order, with that solve's count. The extra solve's
-    schedules are never shown.
-    The student can clear the professor in the picker, including when the course
-    no longer has lectures. Conflicting locks stay visible with Unlock controls.
-  - `formatDataDate(generatedAt)` writes a term's `generatedAt` as
-    "Oct 25, 2026" in the student's time zone, for "Course data updated", or
-    `null` when it can't be read.
-  - `roomName(location)` shortens a room to its building and number
-    ("Higgins Labs 230"). Show the full location as a `title` where it's cut.
-  - `meetingSpans`, `spansOverlap` and `meetsRules` check whether sections
-    overlap or pass the preferences, with the engine's 5-minute slots.
-- `components/ui/courseColors.ts`: `courseSlot(courses, code)` and
-  `COURSE_COLORS`, so the calendar blocks, the sidebar swatches and the "No set
-  time" items use the same color for a course.
-- `lib/engine`: the engine runs in a Web Worker behind `EngineClient`. Features
-  don't call it: the store owns the engine and puts its answers in `response`.
-  The types follow `engine-api.md`.
-
-## Degree and theme integration
-
-`TopBar` accepts `navigation` and `appearance` alongside its existing center
-and action slots. `AppShell` and `PlannerShell` forward these as
-`barNavigation` and `barAppearance`. Appearance controls sit outside the
-planner action wrapper, which applies compact button styles.
-
-`PhoneTopBar` accepts `navigation`. `PlannerShell.phoneNavigation` forwards
-to it through `PhonePlanner`. Omit navigation slots to use `MainTabs` and
-`PhoneTabBar`, which always show Planner and My degree.
-
-`PlannerShell.phoneMenuActions` forwards to `PhonePlanner.menuActions` and
-`PhoneScheduleScreen.menuActions`. These actions use the existing More actions
-menu. They also keep that menu available in a shared preview without exposing
-draft actions. A degree page can reuse `BarMoreMenu` for its phone controls.
-
-These slots are optional and render no controls on their own. Theme work owns
-the appearance buttons and state. Keep theme values in `app/globals.css`:
-its `@theme static` block already includes surface, text, course, status,
-degree-tile, chart and focus tokens. Add dark overrides there, keep light values
-as defaults and use light tokens for print. No token consolidation is needed
-before degree restoration or theme work starts.
-
-The planner fills the appearance slots with `ThemeButton` and `ThemeSwitch`.
-`lib/theme` reads the document theme and keeps mounted controls in sync.
-The root layout applies `goatplan:theme:v1` before paint. Light is the default;
-only a saved `dark` value enables Dark. Storage failures allow changes for the
-current page. Dark tokens only apply to screen media, so print uses Light.
-
-Saved plans and registration fill the same appearance slots. The phone
-registration header uses `BarMoreMenu` with `ThemeSwitch`.
-
-Ticket 10 covers the planner palette and controls. Ticket 11 verifies the
-remaining current surfaces and theme-independent print, sharing and exports.
-My degree uses `ThemeButton` in its desktop top bar and `ThemeSwitch` in the
-phone's `BarMoreMenu`. It shares the global preference. Degree tiles, charts
-and progress states use screen-only dark tokens. `chart-done` keeps completed
-progress distinct from planned progress without changing Light. See
-[dark theme release checks](dark-theme-release.md) and
-[degree theme checks](degree-dark-theme.md) for validation evidence.
+Shared links encode a schedule in the `p=` URL fragment. Loading a preview does
+not overwrite a draft. Saving or editing a shared copy requires an explicit
+action. Shared blocked times do not reveal private labels. Calendar export uses
+`lib/calendar` and term calendar data to build an `.ics` file. Downloads do not
+change the schedule or degree history.
 
 ## My degree
 
-`/degree` is open to everyone, with all five Class of 2030 majors (CS, RBE, ME,
-ECE and DS). There is no tester flag or page gate. Each sheet's `status` and
-`verification` in `lib/degree/sheets` only record whether a student has checked
-it against Workday.
+`DegreeSource` owns history, sheet selection and audits separately from the
+planner. `CourseGaps` runs candidate audits for search badges and the disabled
+individual-suggestions UI. History is shared across majors; pins and manual
+confirmations are stored per sheet. Humanities path is shared across majors.
 
-`lib/degree` owns history and audit state separately from the planner store.
-History stays under `goatplan:history:v1`. Version 2 records have an explicit
-`taken` or `planned` status and an optional A/B/C/D term from 2026–2030. Version 1
-imports migrate in-progress records to planned and all others to taken.
+The Sheet view has tiles and a List alternative. Plan ahead places history in a
+four-year grid, supports moving courses and project reservations, and exposes CS
+next-term recommendations. Course map uses curated background expressions for
+all five registered majors. New visitors choose a major before entering history.
 
-`DegreeSource` sends only degree history through `EngineClient.audit`. It does
-not read planner drafts or subscribe to planner changes. My degree has no global
-Term picker. Search reads the persistent `/data/catalog.json` catalog.
+Opening an empty field lists only courses that meet its requirement, across all
+terms. Named CS areas use approved area lists, including listed non-CS social
+courses. Rows show usual observed terms on the right. The chosen term controls
+when a course is added, not the candidate list. CS choices can be pinned to their
+area line; external social courses are not pinned to CS credit lines.
 
-`CourseGaps` supplies search badges and the Suggest courses panel through
-candidate audits. The panel has its own term choice. Published offerings support
-explicit schedule additions; unpublished terms use observed term letters.
-Planner courses reach degree history only through the planner’s ⋯ action.
-See [the tracking sheet spec](degree-tracking-sheet.md) for migration, catalog
-updates, paste review and the explicit planner connections.
+Planner courses reach history only through Add to degree. Tablet/desktop opens a
+review panel with the course list and an explicit Add button. The phone menu's
+Add to My degree row applies directly and displays the result in place. Both use
+`useAddPlanToDegree` and `addPlanMessage`, preserve existing entries, add planned
+records for the displayed plan's term, and report storage failures. They never
+keep the planner and history automatically synchronized. Add to degree is hidden
+in temporary/shared previews, where the background draft may be unrelated.
 
-The sheet retains the latest pre-deletion tiles, stacked empty lines, pins,
-checks and confirmation panels. Wide screens show insights beside it; tablets
-can scroll through the insight cards; phones use folded sections and drawers.
-The List view provides the same requirements without the tile layout.
+See [tracking](degree-tracking-sheet.md), [major selection](degree-major-selection.md)
+and [recommendations](course-recommendations.md) for the data and selection rules.
 
-## Phone layout
+## Responsive layout and focus
 
-Phone is in scope at 375 px. The breakpoint is `--breakpoint-tablet: 40rem`
-(640 px): below it the app renders the phone shell, above it the
-tablet/desktop layout. The JS hook `usePhoneViewport()`
-and the Tailwind `tablet:` prefix both read this boundary.
+The tablet breakpoint is 48rem (768 px). At that width and above, `PlannerShell`
+mounts `AppShell`, a sidebar and section details. Below it, `PhonePlanner` mounts
+schedule, search, preferences or course screens. The schedule screen stays
+mounted but hidden during a trip to another phone screen, retaining scroll and
+guide state. IDs for active tutorial controls are not duplicated.
 
-### Phone shell (`components/shell/`)
+`PhoneTopBar` has the goat mark, Planner/My degree navigation and the term picker.
+The phone schedule header has saved-plan controls and a More actions menu; Save
+sits beside the schedule browser. `PlanCalendar` uses `WeekCalendar` on both
+phone and desktop; it delegates to `SwipeWeekCalendar` on phone, with density
+and visible bounds adapted to the layout.
+The old one-day calendar/disclosure design is not the mounted phone planner.
 
-`PlannerShell` (`components/shell/PlannerShell.tsx`) is the client component
-that wires the responsive shell together. It uses `usePhoneViewport()` to
-choose which layout to mount:
+Native dialogs and sheets use `useModalDialog`. They focus a heading or marked
+control on open, trap focus where required, and restore focus on close or
+unmount. `AnchoredPanel` uses a popover on tablet/desktop and a bottom sheet on
+phone. `BarMoreMenu` supplies `ModalReturnFocusContext`, so its dialogs return
+directly to More actions. It observes dialog closing/removal to close the menu,
+avoiding delayed focus transfers to a hidden menu item.
 
-- **Phone (< 640 px):** single column, 16 px side gutter (`px-(--size-phone-gutter)`).
-  The sidebar and side details panel are not mounted. Instead:
-  - `YourCoursesDisclosure` replaces the sidebar. A collapsible button
-    "Your courses (N)" with the term picker, search and course list inside.
-    Open by default when empty, collapses once the first course lands.
-  - `PhoneCourseScreen` replaces the side details panel. A full screen,
-    opened only by a deliberate tap on a course chip or calendar block. It
-    renders `CourseDetailsPanel` with `PhoneCourseDetails` for the course:
-    a card per chosen section and "Change lecture" / "Change lab" lists.
-  - `DataUpdated` moves to `phoneFooter`, below the schedule.
-- **Tablet+ (≥ 640 px):** the `Sidebar` and side `DetailsPanel` mount as
-  usual, and phone-only slots are null.
+## Calendar editing
 
-Only one of the sidebar and the disclosure is mounted at a time, so
-tutorial-target IDs never duplicate in the DOM.
+Block a time toggles drawing mode. Dragging adds or erases half-hour ranges and
+solves once on release. The form remains available for keyboard users. Escape
+cancels a drag or leaves drawing mode. Saved plans are read-only.
 
-`AppShell` (`components/shell/AppShell.tsx`) is the presentational shell that
-accepts all the slots (`sidebar`, `phoneDisclosure`, `phoneSheet`,
-`phoneFooter`, etc.) and renders them in the right positions. The `main`
-element has `min-w-0 flex-1` and the schedule section has `overflow-hidden`,
-so nothing can force horizontal scroll.
+`dragBlock.ts` owns range math. `useBlockDrag` owns pointer handling, and
+`useHeldRange` holds the calendar range while drawing. Overlapping/touching times
+with the same name merge. Erasing can split a block. Undo restores the previous
+blocked list. A named time keeps its label in local storage, but labels are
+removed from engine requests and shared schedules.
 
-### Day view (`components/schedule/DayCalendar.tsx`)
+Outside drawing mode, blocked times open a popover with Rename and Remove.
+Ctrl/Command-click or the keyboard equivalent selects several blocks; Delete
+removes them together, and Escape clears the selection. Short blocks use compact
+text and full accessible labels. Class/course selection opens section details;
+keyboard selection can move focus into details and Escape returns it.
 
-On phone, `ScheduleView` renders `DayCalendar` instead of `PlanCalendar`
-(the 5-column week grid). The day calendar has:
+## Theme, feedback and analytics
 
-- **Day tabs:** `role="tablist"` with Mon–Fri (plus Sat/Sun when they have
-  classes). Arrow-key navigation (Left, Right, Home, End) with roving
-  tabindex. Selected tab is `bg-accent-soft text-accent`; a 4 px dot marks
-  days with classes.
-- **Day panel:** a vertical scrolling list of class blocks, sorted by start
-  time. Each block shows course code, section code (truncated), time range
-  and room (`break-words`). Tapping a block selects the course+section and
-  opens the phone details sheet.
-- **Free-time dividers:** between consecutive items when the gap is > 10 min,
-  showing "{N}h free" or "{N} min free".
-- **Empty day:** "No classes on {Day}" centered in muted text.
-- **No set time:** the `NoTimeStrip` lists online/unscheduled sections below
-  the day's classes.
+`app/globals.css` defines semantic tokens and Dark overrides. The root layout
+reads the saved theme before paint; `lib/theme.ts` subscribes to the document
+attribute. Light is the default. Printing uses Light without changing the saved
+screen theme. See [theme behavior](degree-dark-theme.md).
 
-The pure logic lives in `dayView.ts`: which days to show, the default-open
-day (today if it has classes, else the next day with classes, weekends wrap
-to Monday), and how to map classes and blocked times into day items. Covered
-by `DayCalendar.test.tsx` and `dayView.test.ts`.
+Feedback links open the repository's GitHub issue form. `lib/analytics/track`
+sends a small named event only in production, with
+`NEXT_PUBLIC_UMAMI_WEBSITE_ID` set and `window.umami` already available. The
+current root layout does not install an Umami script. The event helper does not
+prove production delivery or create analytics infrastructure.
 
-### Toast (`components/ui/Toast.tsx`)
+## Verification
 
-A fixed-position status region for short messages with one or more action
-buttons (`actions`):
-
-- Position: `fixed inset-x-16 bottom-16 z-10`, centered. Full width on phone
-  (`w-full`), content-width on tablet (`tablet:w-auto`).
-- `role="status" aria-live="polite" aria-atomic="true"`, so screen readers
-  announce changes without interrupting.
-- Auto-dismisses after 6 seconds (`DURATION = 6000`). The timer pauses on
-  hover or focus and resumes with the remaining time.
-- Each action button (e.g. "Undo") calls its handler; the handler clears the
-  message.
-- `PlannerToast` (`components/shell/`) renders the one Toast last in
-  `PlannerShell`, so it's the final Tab stop and sits above the shell at `z-10`.
-- It shows "Removed {code} · Undo", or after a calendar drag "Blocked Mon–Wed
-  12–1 PM · Name it · Undo" or "Unblocked Mon 12:30–1:30 PM · Undo". Name it
-  opens the Block a time form filled in with the drawn days and times. It only
-  shows when those times fit the form's 7 AM–10 PM choices. The message only
-  names days that really changed. After Undo or the Name it form, focus moves to
-  the Block a time button. Remove in a blocked time's popover shows the same
-  "Unblocked … · Undo".
-
-### Blocking time by dragging
-
-The "Block a time" pill (`BlockTimeButton`, "Block time" on a phone) is a
-toggle (`aria-pressed`) for drawing mode, kept in the store as `drawing`. While
-it's on, the pill says "Drawing busy times" and a slim bar above the calendar
-(`DrawingBar`) says "Drag on the calendar to block time, or start on a blocked
-time to erase it · Type a time instead · Done". "Type a time instead" opens the Block a time form; Done and Escape turn
-the mode off and put focus back on the pill. The mode also turns off when the
-planner page goes away, the phone shows another screen or any dialog opens. The
-phone Preferences screen's "+ Add" (`AddBlockedTimeButton`) still opens the
-form directly.
-
-Out of drawing mode a drag does nothing: clicks open class details and phone
-swipes scroll. In drawing mode, a drag anywhere in a day column blocks a time
-on one or more days. The time snaps to half hours, is at least 30 minutes long,
-and stays inside the visible range. A drag that starts on a blocked time
-removes that time instead, and splits a block when it only covers part of it.
-After adding, blocks on the same day with the same name that overlap or touch
-become one. The plan solves once, when the pointer is released.
-
-- A drag starts after the pointer moves 4 px, for a finger too. On the phone
-  the grid lets the page swipe sideways to other days (`touch-action: pan-x`),
-  so an up-and-down drag draws; the "Swipe for more days" button still works.
-  Escape cancels a drag first, and a second Escape leaves drawing mode.
-- Drawing starts from the same auto-fit range as outside drawing mode, on
-  desktop and phone. Times outside it are added with "Type a time instead".
-  Until Done the range can grow but not shrink (`useHeldRange`), so the hours
-  don't shift under the pointer between drags. With no courses yet, the "Add your first course" message gives way to a grid
-  to draw on. The grid stays on screen while the plan solves.
-- Nothing above the calendar moves between drags: the blocked times are one
-  fixed-width pill ("3 blocked times", `BlockedTimesMenu`) with a list to
-  remove each, the banner's space and the badge line are kept even when empty,
-  and `useHeldHeight` keeps the summary, the schedule browser, the banner and
-  the Preferences row from shrinking until drawing ends.
-- On a phone, when nothing fits, the week stays in view with the "Needs
-  attention" card under it, so the time that caused it can be erased.
-- Empty space has a crosshair pointer; blocked times have an eraser pointer
-  (`cursor-erase`, `public/cursors/erase.svg`). Class blocks don't open their
-  details while drawing.
-- The pure math is in `components/schedule/dragBlock.ts`, the pointer handling
-  in `useBlockDrag.ts`, and the rectangle in `DragSelectionBox.tsx`. Day columns
-  are marked with `data-drag-day`.
-- Keyboard and screen reader users can use "Type a time instead". The calendar
-  has a polite live region that says what changed on release ("Blocked Mon–Wed
-  12–1 PM"), and stays quiet when nothing did.
-- The saved plan view is read-only, so drawing mode is off there.
-
-### Short blocks and the blocked-time popover
-
-`blockLayout(heightPx)` in `components/schedule/blockLayout.ts` decides how
-much text a block shows: `full` from 48 px, `line` from 18 px, `none` below.
-The height comes from the block's minutes and the grid's pixels per hour
-(`WeekCalendar` and `SwipeWeekCalendar` measure the grid once and pass it to
-`renderDay`).
-
-- A blocked time with `line` shows one centered line ("Work · 12–12:30", or
-  "12–12:30 PM" without a name); `none` is only hatching. When its text is cut
-  down, a Tooltip shows the rest on hover and focus. Every blocked time has an
-  aria-label with everything: "Work, Monday 12:00 to 12:30 PM, blocked".
-- Class blocks under 40 minutes use the same rule: one line ("CS 1101 ·
-  9–9:30") or only the color. Their aria-label is unchanged.
-- Out of drawing mode a blocked time is a button. A click or Enter opens a small
-  popover (`BlockedTimePopover`, shown by `BlockedTimeMenu` next to the
-  calendar) with its name, day and time, "Rename" (the Block a time form filled
-  in) and "Remove" (with the Undo toast). Escape closes it and returns focus to
-  the block; after Rename or Remove, focus moves to the Block a time pill.
-- ⌘-click on a Mac, Ctrl-click elsewhere (or Ctrl/⌘+Enter on a focused block)
-  adds a blocked time to a selection or takes it out, in or out of drawing mode.
-  Selected blocks get an accent ring and ", selected" in their label. While
-  something is selected, `BlockedSelectionBar` floats over the bottom of the
-  calendar: "2 selected · Delete · Clear". Delete or Backspace removes them
-  too, as one change with "Removed 2 blocked times · Undo" (`blockedChange.count`);
-  Escape clears the selection before it leaves drawing mode. The selection
-  lives in `useBlockedTimeMenu` with the open popover, by `blockedKey`.
-
-### Bottom Sheet (`components/ui/Sheet.tsx`)
-
-`Sheet` is a native `<dialog>` modal with two sides:
-
-| Side | Use | Sizing |
-|---|---|---|
-| `right` | Desktop/tablet details, "Choose a lab" | `max-w-[calc(100vw-32px)]`, slide from right |
-| `bottom` | Phone details, phone "Block a time" | `w-full max-w-none`, `max-h-[85dvh]`, `rounded-t-panel`, slide up |
-
-Both sides share:
-- Focus trap (`keepFocusInside`): heading-first focus when opening.
-- Backdrop scrim overlay.
-- `motion-reduce:transition-none` for reduced-motion preference.
-- Close via Escape, Close button, or tap outside.
-
-The `bottom` variant adds safe-area padding for the iPhone home indicator:
-`pb-[max(20px,env(safe-area-inset-bottom))]`.
-
-The "Block a time" form (`BlockTimeDialog`) uses `Dialog` on tablet and
-`Sheet side="bottom"` on phone.
-
-## Checks before a PR
-
-From the repo root:
-
-```bash
-npm run lint
-npm run test        # Vitest
-npm run build
-npm run test:e2e    # Playwright; builds and starts the app itself
-```
-
-### Ports when agents run at the same time
-
-Every agent works in its own git worktree and uses its own port, set with the
-`PORT` environment variable (default 3000):
-
-| Agent | `PORT` | Dev server | Production build during `test:e2e` |
-|---|---|---|
-| search | 3001 | http://localhost:3001 | 4001 |
-| schedule | 3002 | http://localhost:3002 | 4002 |
-| prefs | 3003 | http://localhost:3003 | 4003 |
-| plans | 3004 | http://localhost:3004 | 4004 |
-
-```bash
-PORT=3002 npm run dev       # the dev server on 3002
-PORT=3002 npm run test:e2e  # tests: production build on 4002, dev pages on 3002
-```
-
-- `npm run dev` runs `next dev`, which reads `PORT` itself. Set it in the
-  shell, not in `.env`: Next reads the port before it loads `.env`.
-- `test:e2e` builds the app and serves it on `PORT + 1000` for the main
-  specs. It always starts that server fresh and fails clearly if the port is
-  taken.
-- The `/dev` page specs use the dev server on `PORT`. If your `npm run dev` is
-  already running there, the tests use it; otherwise they start one. Next
-  allows only one dev server per worktree, so don't start a second one on
-  another port.
-- Every worktree has its own `.next`, `e2e/results` and `e2e/screenshots`, so
-  parallel runs don't touch each other's files.
-
-Take screenshots of your screens at 1440, 834 and 375 px (save them in
-`apps/web/e2e/screenshots/`, which git ignores) and check each one before
-you open a pull request.
+Use the commands in [development](development.md). Logic tests sit beside source
+files. Browser tests use frozen data, including mocked live-seat responses, and
+capture 1440, 834 and 375 px views. Keep keyboard focus, labels and small-width
+behavior in scope. Do not replace a failing expectation with a new baseline
+without reviewing the behavior it protects.

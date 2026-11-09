@@ -17,7 +17,7 @@ for (const width of [1440, 834, 375]) {
     await openPlanner(page, width);
     const freshness = page.getByRole("status", { name: "Seat freshness" });
     await expect(freshness).toHaveText("Seats updated just now");
-    await expect(page.getByText("Confirm in Workday before you register.")).toBeVisible();
+    await expect(page.getByText("Confirm in Workday before you register.")).toHaveCount(0);
     const box = await freshness.boundingBox();
     expect(box!.x).toBeGreaterThanOrEqual(0);
     expect(box!.x + box!.width).toBeLessThanOrEqual(width);
@@ -30,7 +30,7 @@ for (const width of [1440, 834, 375]) {
     const freshness = page.getByRole("status", { name: "Seat freshness" });
     await expect(freshness.locator("time")).toHaveAttribute("datetime", frozenTerm("2027-C").generatedAt);
     await expect(freshness).toContainText(/^Seats from [A-Z][a-z]{2} \d+/);
-    await expect(page.getByText("Confirm in Workday before you register.")).toBeVisible();
+    await expect(page.getByText("Confirm in Workday before you register.")).toHaveCount(0);
 
     fail = false;
     const retry = page.getByRole("button", { name: "Retry getting the latest seats" });

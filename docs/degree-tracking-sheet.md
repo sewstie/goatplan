@@ -8,9 +8,10 @@ schedule planner.
 ## History
 
 Each course has a `status` of `taken` or `planned`. Only records explicitly added
-to My degree as planned count toward planned progress. A term is optional. The
-choices are A, B, C and D for each year from 2026 through 2030. A term does not
-need published course data. Undated planned records stay undated in charts and
+to My degree as planned count toward planned progress. A term is optional. Stored
+history accepts A, B, C, D and E terms from 2026 through 2030. The
+four-year picker starts in A Term 2026 and ends in D Term 2030, with summer
+choices for the first three years. A term does not need published course data. Undated planned records stay undated in charts and
 history groups.
 
 The storage key remains `goatplan:history:v1`. New exports use version 2. Version 1
@@ -81,10 +82,10 @@ a sheet’s copy drifts from them. The rules come from WPI’s
 and the [humanities guide](https://web.wpi.edu/Images/CMS/HUA/HumanitiesFAQ_FINAL.pdf).
 There are two paths:
 
-- **Depth and breadth:** 3 related courses in one grouping, one of them at the
+- Depth and breadth: 3 related courses in one grouping, one of them at the
   2000 level or above, then HU 3900 or HU 3910. Add a course from another
   grouping and one humanities elective.
-- **Language:** all six courses in one language. The last one takes the place
+- Language: all six courses in one language. The last one takes the place
   of the seminar, and no breadth course is needed. WPI teaches Arabic (AB),
   Chinese (CN), German (GN), Spanish (SP) and English for non-native speakers
   (ISE), see [language programs](https://www.wpi.edu/academics/departments/humanities-arts/language-programs).
@@ -115,17 +116,30 @@ seminar line takes a 3000+ course in it, and the depth and breadth checks and
 the depth confirmation are left out. The engine audits that changed sheet as it
 is, so it needs no special rule for languages.
 
-## Filling an empty line
+## Filling an empty field
 
-Clicking an empty line on the sheet lists the regular courses that fit it
-(`coursesForLine` in `apps/web/src/lib/degree/lineCourses.ts`), with a term and
-status to add them for. When the term’s schedule is published, only courses
-offered that term are shown; otherwise every catalog course that fits. Courses
-already in the history, graduate courses and humanities courses that can’t
-count are left out, and a cross-listed course is shown once under the name that
-fits the line. If the course could also land on a different kind of empty line,
-it is pinned to the clicked one. AP, IB, transfer and retired courses are added
-through Add courses → manual credit instead.
+Clicking an empty field opens courses that meet that requirement across all
+terms. General fields use the sheet's subject, level or exact-course filter.
+Named CS area fields use the approved area lists, so Social Implications shows
+CS 3043, GOV/ID 2314, GOV 2315, IMGD 2000 and RBE 3100 rather than arbitrary CS
+courses. IMGD 2002 is not in the Class of 2030 sheet's approved list.
+
+The term and status controls determine how a selected course is added. They do
+not restrict the list to that term's published schedule. The right side of each
+row shows observed catalog letters, such as “Usually A, C,” or “Terms unknown.”
+These are historical offerings, not confirmed future sections or seat counts.
+
+Courses already in history, graduate courses and humanities courses that cannot
+count are omitted. Cross-listed courses appear once under a qualifying code,
+with observed terms combined across aliases. Search can match any alias or title.
+The From your history section also respects the chosen CS area.
+
+A qualifying CS area choice can be pinned to the clicked area line. A non-CS
+Social Implications choice is added without a CS-line pin: it supports the
+social check while counting toward another eligible field or free electives.
+The panel repeats the sheet's warning that these courses do not count toward CS
+units. General fields pin a course when another kind of empty field could take
+it. AP, IB, transfer and retired courses remain available through Add courses.
 
 ## Great Problems Seminar
 
@@ -149,24 +163,47 @@ Two different sources that give the same code still count once: AP Biology
 plus the Heal the World GPS both give BB 1000, and the second shows up as
 skipped.
 
+## Plan ahead
+
+The four-year grid starts in A Term 2026. Moving a course changes its saved term;
+it does not modify a planner draft. Taken, In progress and Planned are display
+states derived from the record's stored status and the current term. Stored
+statuses remain `taken` or `planned`.
+
+IQP and MQP reservations are saved separately under `goatplan:degree:projects`.
+They reserve terms for recommendations but do not confirm project requirements.
+These reservations are separate from the exported history backup.
+Undated courses remain in the unplaced tray. CS alone exposes Suggest next terms
+for one to four future regular terms. See [recommendations](course-recommendations.md).
+
 ## Explicit planner connections
 
-The planner’s ⋯ menu offers “Add to My degree,” which adds the plan’s courses as planned. It
-copies the displayed plan’s courses with its term and preserves existing history
-records. Later planner changes do not change these copies. A planned history
-record whose term has published data offers “Open in planner.”
+Tablet and desktop show Add to degree beside the planner's other actions. Its
+panel lists the displayed plan's courses and asks for an explicit Add action.
+On a phone, Add to My degree is a row in More actions and adds directly. Both
+paths use `useAddPlanToDegree`, add planned records for the displayed plan's term,
+and preserve existing records. Empty or unsupported-term plans disable the
+action. It is hidden in shared/temporary previews. Results report newly added
+courses, duplicates, invalid input or
+visit-only storage; successful results link to My degree. Changing the plan later
+does not synchronize the copied records.
 
-“Suggest courses” opens a panel with its own term choice. Candidate audits use
-the selected major and degree history. Results close missing lines or checks;
-free-elective-only matches are excluded. The catalog supplies candidates even
-when a future term has no published file.
+A planned history record with published data can explicitly open its term in the
+planner. Catalog search, course history, and opening My degree never do this by
+themselves.
 
-Published offerings show “Offered · N sections.” “Plan for <term>” adds a planned
-history record. “Add to schedule” explicitly opens that planner term and adds the
-course to its draft. A course missing from that term can still be planned in My
-degree, but has no Add to schedule action.
+## Individual suggestions
 
-For unpublished terms, “Usually offered in <term letter>” appears only when the
-catalog has observed that course in the same letter before. Otherwise the panel
-shows “Offering not known yet.” These labels do not promise future availability.
-Catalog, term-index and offering failures provide retries.
+The separate Suggestions tab and Suggest courses for this line action are
+currently disabled by `SUGGESTIONS_ON = false` in `degreeFeatures.ts`. This does
+not disable field course lists, search badges, course maps or CS next-term
+recommendations.
+
+The retained `SuggestCoursesPanel` implementation has its own term choice and
+uses candidate audits against the selected sheet and history. When enabled, it
+excludes completed/planned duplicates and free-elective-only matches. Published
+term candidates need open registration options and a verified schedule with that
+term's dated plans. Unchecked or clashing candidates stay hidden and failed
+checks can be retried. It refreshes live seats with daily-data fallback.
+Unpublished terms use observed offering letters. Plan for a term adds history;
+Open in planner is a separate action for a published course.

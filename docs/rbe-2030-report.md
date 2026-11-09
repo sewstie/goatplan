@@ -1,8 +1,12 @@
 # RBE Class of 2030
 
-This sheet remains beta and requires the tester invitation. No student Workday
-verification has been recorded. Ticket 09 owns that verification and the public
-release gate.
+This is a requirement-source and interpretation record. The current registry
+makes this sheet selectable at `/degree`, with beta status and no recorded
+student Workday verification. Validation counts and implementation sequences
+below describe the original feature snapshot, not the current test suite. See
+[major selection](degree-major-selection.md) and [current project checks](launch-check.md)
+for current access and verification behavior.
+
 
 ## Sources
 
@@ -54,7 +58,7 @@ line 7.
 ## Interpretations and confirmation
 
 Every interpretation has a visible entry under Requirement checks. Matching
-courses cannot confirm these entries. A tester must explicitly confirm them;
+courses cannot confirm these entries. The student must explicitly confirm them;
 the choice is stored only for this sheet. Associated completed course tiles
 stay To check until confirmation.
 
@@ -128,7 +132,7 @@ npm run build
 PORT=3091 npm run test:e2e -w web -- degree-rbe.spec.ts degree-major.spec.ts degree-badges.spec.ts --project=production --workers=2
 ```
 
-Browser coverage exercises tester selection, beta feedback, saved
+Browser coverage exercises major selection and sheet feedback, saved
 confirmations, search badges, Take in C Term actions and planned courses.
 It captures the RBE sheet and checks panel at 1440px and 834px.
 All rules use existing generic filters, checks and manual items. A regression

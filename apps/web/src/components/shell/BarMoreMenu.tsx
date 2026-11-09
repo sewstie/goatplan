@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { DotsThree } from "@phosphor-icons/react/ssr";
 import { cx } from "@/components/ui/cx";
+import { ModalReturnFocusContext } from "@/components/ui/useModalDialog";
 
 const modalOpen = () => document.querySelector("dialog:modal") !== null;
 
@@ -31,21 +32,20 @@ export function BarMoreMenu({ children }: { children: ReactNode }) {
     };
   }, [open]);
 
-  // A dialog opened from the menu has to stay inside it, so the menu closes once the dialog does.
   useEffect(() => {
     const element = root.current;
     if (!element) return;
-    const dialogClosed = () => setTimeout(() => {
-      setOpen(false);
-      trigger.current?.focus();
-      // The dialog may still hand focus back to its button inside the now hidden menu, so check once more.
-      requestAnimationFrame(() => {
-        const active = document.activeElement;
-        if (!active || active === document.body || element.contains(active) && active !== trigger.current) trigger.current?.focus();
-      });
+    let hadDialog = false;
+    const observer = new MutationObserver(() => {
+      const hasDialog = element.querySelector("dialog[open]") !== null;
+      if (hadDialog && !hasDialog) {
+        setOpen(false);
+        if (!modalOpen()) trigger.current?.focus();
+      }
+      hadDialog = hasDialog;
     });
-    element.addEventListener("close", dialogClosed, true);
-    return () => element.removeEventListener("close", dialogClosed, true);
+    observer.observe(element, { childList: true, subtree: true, attributes: true, attributeFilter: ["open"] });
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -72,7 +72,7 @@ export function BarMoreMenu({ children }: { children: ReactNode }) {
           open ? "flex" : "hidden",
         )}
       >
-        {children}
+        <ModalReturnFocusContext value={trigger}>{children}</ModalReturnFocusContext>
       </div>
     </div>
   );

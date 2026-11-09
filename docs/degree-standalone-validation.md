@@ -1,4 +1,12 @@
-# Standalone degree validation
+# Historical standalone-degree validation
+
+This is historical evidence for the implementation snapshot identified below.
+Its test counts, known failures and release-gate plans are not current status.
+My degree is now directly accessible and all five Class of 2030 sheets are
+selectable, with beta registry metadata and no recorded student verification.
+Use [current project checks](launch-check.md), [theme behavior](degree-dark-theme.md)
+and [development](development.md) for the present code and verification commands.
+The remaining sections retain the original validation record.
 
 Checked on November 6, 2026. Existing local major-release edits were preserved.
 
@@ -32,7 +40,8 @@ at 1440, 834 and 375 px. The design PNG comparison could not run because
 The full repository run, `npm run test:e2e -w web -- --workers=4`, completed with
 363 passed, 183 failed and 5 skipped. Degree-specific failures from that run were
 corrected and the complete degree/course-map selection then passed as shown
-above. The full repository suite is still not green.
+above. The full repository suite was not green at that snapshot; this is not a claim
+about the current suite.
 
 Three representative planner failures were also reproduced in a temporary copy
 of unchanged `HEAD`: both calendar-selection screenshot tests and the 1440px

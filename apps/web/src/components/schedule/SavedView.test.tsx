@@ -7,6 +7,7 @@ import { plan as sharedPlan } from "@/lib/share/testing";
 import { getPlannerStore } from "@/lib/store";
 import { CourseSearchPanel } from "@/components/courses/CourseSearchPanel";
 import { PhonePreferenceChips } from "@/components/phone/PhonePreferenceChips";
+import { PlannerBarActions } from "@/components/shell/PlannerBarActions";
 import { PhoneScheduleScreen } from "@/components/phone/PhoneScheduleScreen";
 import { PreferencesBar } from "@/components/preferences/PreferencesBar";
 import { SortSelect } from "@/components/preferences/SortSelect";
@@ -32,6 +33,13 @@ it("keeps global phone menu actions keyboard accessible in a shared preview", as
   await user.keyboard("{Escape}");
   expect(trigger).toHaveFocus();
   expect(trigger).toHaveAttribute("aria-expanded", "false");
+});
+
+it("hides Add to degree in a shared preview when another draft is still loaded", () => {
+  setPlanner({ courses: ["AE 5131"], temporaryPlan: buildSharedPlan(sharedPlan, term), response: null, solveStatus: "idle" });
+  render(<PlannerBarActions />);
+  expect(screen.queryByRole("button", { name: "Add to degree" })).not.toBeInTheDocument();
+  expect(getPlannerStore().getState().courses).toEqual(["AE 5131"]);
 });
 
 it.each([{ courses: [] }, { courses: ["AE 5131"] }])("shows shared sections independently of the viewer's draft $courses", ({ courses }) => {

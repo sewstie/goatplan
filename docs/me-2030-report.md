@@ -1,7 +1,12 @@
 # ME Class of 2030
 
-This sheet remains beta behind tester access. Student Workday verification and
-public release belong to ticket 09.
+This is a requirement-source and interpretation record. The current registry
+makes this sheet selectable at `/degree`, with beta status and no recorded
+student Workday verification. Validation counts and implementation sequences
+below describe the original feature snapshot, not the current test suite. See
+[major selection](degree-major-selection.md) and [current project checks](launch-check.md)
+for current access and verification behavior.
+
 
 ## Sources
 
@@ -90,9 +95,9 @@ review behavior before the sheet data was updated. All implementation uses
 existing generic filters, manual items and checks. Engine source and committed
 WASM files were not changed.
 
-Validation passed: lint, production build and all 1,703 Vitest tests with native
+Original implementation validation passed: lint, production build and all 1,703 Vitest tests with native
 fixtures enabled. Seven production browser checks pass, including search
-badges, term actions, selection, tester access, keyboard confirmation and
+badges, term actions, selection, sheet availability, keyboard confirmation and
 persistence. The UI reviewer found no remaining blockers in refreshed 1440px
 and 834px screenshots. The review used the established degree UI because
 `docs/design` and its reference PNGs are absent in this checkout.

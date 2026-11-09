@@ -427,7 +427,7 @@ test.describe("the top bar", () => {
       await expect(bar.getByRole("combobox")).toHaveCount(0);
       await expect(bar.getByRole("group", { name: "Schedules" })).toBeVisible();
       const names = await bar.locator("a:visible, button:visible").evaluateAll((items) => items.map((item) => item.getAttribute("aria-label") ?? item.textContent?.trim()));
-      expect(names).toEqual(["GoatPlan", "Planner", "My degree", "Previous schedule", "Next schedule", "Saved plans", "Share", "Export", "Save schedule", "More actions", "Switch to dark theme"]);
+      expect(names).toEqual(["GoatPlan", "Planner", "My degree", "Previous schedule", "Next schedule", "Saved plans", "Share", "Export", "Add to degree", "Save schedule", "Switch to dark theme"]);
       expect(await sidewaysScroll(page)).toBe(false);
     });
   }
