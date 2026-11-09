@@ -175,8 +175,8 @@
 .degree-plan-insights article:has(.pace-slider) p.text-20 { font-size: 28px; line-height: 34px; color: var(--color-ink-soft); }
 @media(min-width:768px) and (max-width:1099px) { .degree-page .degree-title { align-items: center; } }
 @media(max-width:767px) { .degree-page .degree-title { padding-right: 0; } .degree-page .degree-title > div:last-child { position: static; } .degree-page .degree-planning-first { display: flex; } }
-.degree-page { --color-canvas: #f6f7fc; --color-card-line: #d9dff0; --color-line: #d9dff0; --color-ink: #1c2138; --color-ink-muted: #56617e; --color-success-soft: #e7f4ef; --color-success-ink: #1b6b55; }
-:root[data-theme="dark"] .degree-page { --color-canvas: #15182a; --color-surface: #1d2135; --color-card-line: #373e5a; --color-line: #373e5a; --color-ink: #eeedf7; --color-ink-muted: #bdc2d9; --color-success-soft: #203d39; --color-success-ink: #a5d9cc; --color-accent-soft: #302a56; }
+:root:not([data-theme="dark"]) .degree-page { --color-canvas: #f6f7fc; --color-card-line: #d9dff0; --color-line: #d9dff0; --color-ink: #1c2138; --color-ink-muted: #56617e; --color-success-soft: #e7f4ef; --color-success-ink: #1b6b55; }
+:root[data-theme="dark"] .degree-page { --color-card-line: var(--color-line); }
 .degree-page .degree-title { margin-bottom: 0; }
 .degree-page .degree-progress-total > span { width: 62px; height: 62px; }
 .degree-page .degree-progress-total > span > span { color: var(--color-ink); }
