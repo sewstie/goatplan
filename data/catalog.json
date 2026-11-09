@@ -7227,9 +7227,10 @@
       "title": "Introductory Topics in Historical Thinking",
       "credits": 3,
       "level": "Undergraduate",
-      "lastOffered": "2026-B",
+      "lastOffered": "2027-C",
       "termLetters": [
-        "B"
+        "B",
+        "C"
       ]
     },
     {
@@ -8479,11 +8480,13 @@
     },
     {
       "code": "INTL 1100",
-      "title": "Introduction to International and Global Studies",
+      "title": "Introduction To International And Global Studies",
       "credits": 3,
       "level": "Undergraduate",
-      "lastOffered": null,
-      "termLetters": []
+      "lastOffered": "2027-C",
+      "termLetters": [
+        "C"
+      ]
     },
     {
       "code": "INTL 2100",

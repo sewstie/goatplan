@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-08T15:53:22Z",
+  "generatedAt": "2026-11-09T19:41:37Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -440,8 +440,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/9 unit) Continuation of AS1001. Topics include Air Force core values, leadership principles, group leadership dynamics, and an introduction to communication skills. Leadership Laboratory is mandatory for AFROTC cadets and complements this course by providing cadets with followership experiences.",
       "sections": [
-        {"id":"AS 1002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["DeAndre Tipton"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Fuller Labs 320"}]},
-        {"id":"AS 1002-BX01","code":"BX01","type":"lab","status":"open","enrolled":21,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Jacob Fillinger","Justin Baker","DeAndre Tipton","Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"AS 1002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":22,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["DeAndre Tipton"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Fuller Labs 320"}]},
+        {"id":"AS 1002-BX01","code":"BX01","type":"lab","status":"open","enrolled":22,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Jacob Fillinger","Justin Baker","DeAndre Tipton","Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["AS 1002-BL01","AS 1002-BX01"]
@@ -3982,7 +3982,7 @@
       "level": "Graduate",
       "description": "This course develops expertise in financial decision-making by focusing on frequently used financial accounting information and the conceptual framework for managing financial problems. Students are introduced to the accounting and financial concepts, principles and methods for preparing, analyzing and evaluating financial information, for the purpose of managing financial resources of a business enterprise and investment decisions. The course adopts a decision-maker perspective by emphasizing the relations among financial data, their underlying economic events, and corporate finance issues. The course provides an overview of the financial reporting system, to enable data analysts in building queries for financial analyses and in forecasting possible future financial scenarios.",
       "sections": [
-        {"id":"FIN 500-F01","code":"F01","type":"lecture","status":"open","enrolled":39,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["David Dwumah"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[]}
+        {"id":"FIN 500-F01","code":"F01","type":"lecture","status":"open","enrolled":38,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["David Dwumah"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[]}
       ],
       "options": [
         ["FIN 500-F01"]
@@ -4203,7 +4203,7 @@
       "level": "Undergraduate",
       "description": "GN 3512: Advanced German II: National Identities and Stories (Cat. I) How are national identities communicated, contested, and settled? This course foregrounds the diversity of German culture as disseminated through various media. Students will interpret and present on longer texts (e.g. film, music, literature), and discuss these in the form of complex written and oral discourse. At the end of the course students will be able to communicate in German about topics and issues (e.g. history, citizenship, migration) central to cultural discourse in the German-speaking world. Special emphasis on the development of written communication. This course satisfies the Inquiry Practicum Requirement. Recommended background: GN 3511",
       "sections": [
-        {"id":"GN 3512-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":22,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Daniel DiMassa"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Atwater Kent 232"}]}
+        {"id":"GN 3512-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":23,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Daniel DiMassa"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Atwater Kent 232"}]}
       ],
       "options": [
         ["GN 3512-B01"]
