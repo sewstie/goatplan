@@ -16,11 +16,30 @@ A Term 2026; other class years, minors and double majors are not supported.
 | `me-2030` | Mechanical Engineering | 45 | beta |
 | `ece-2030` | Electrical and Computer Engineering | 45 | beta |
 | `ds-2030` | Data Science | 45 | beta |
+| `bbt-2030` | Biology and Biotechnology | 45 | beta |
+| `bc-2030` | Biochemistry | 45 | beta |
+| `ch-2030` | Chemistry | 45 | beta |
+| `bcb-2030` | Bioinformatics and Computational Biology | 45 | beta |
+| `eve-2030` | Environmental Engineering | 45 | beta |
+| `baaai-2030` | Business Analytics and Applied AI | 45 | beta |
+| `mkt-2030` | Marketing Analytics | 45 | beta |
+| `pw-2030` | Professional Writing | 45 | beta |
 
-All five sheets are selectable. Each has `verification: null`; beta metadata
+All thirteen sheets are selectable. Each has `verification: null`; beta metadata
 currently does not hide a sheet from the picker. A checked sheet must have a
 student name and dated Workday verification in registry metadata. Source and
 fixture checks do not supply that verification.
+
+The eight new sheets use only the PDFs linked from WPI's Program Tracking
+Sheets page. Their individual reports record the entering-year header and
+the limits of automatic matching. Course-number patterns expand into existing
+course filters when the selected sheet loads. Topics without course lists and
+fractional laboratory allocations require explicit confirmation. Professional
+Writing defaults to its single-major MQP; shared coursework and the optional
+interdisciplinary MQP require advisor review.
+
+Unimplemented majors from the WPI directory appear as Coming soon and can be
+requested. The list scrolls within the picker so its actions stay visible.
 
 My major isn't listed accepts a request. `degree_major_requested` sends the
 requested major through the optional analytics helper, without course history,

@@ -1,0 +1,59 @@
+{
+  "sheetId": "bcb-2030",
+  "description": "Hand-worked from the official PDF. 5 completed courses and 1 planned course. WPE, projects and manual reviews remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "MA 1022",
+      "credits": 3
+    },
+    {
+      "code": "CS 1101",
+      "credits": 3
+    },
+    {
+      "code": "BB 1101",
+      "credits": 3
+    },
+    {
+      "code": "CH 1010",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "GOV 2315",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Mathematics Foundation": {
+      "done": 2,
+      "planned": 0
+    },
+    "Computer Science Foundation": {
+      "done": 1,
+      "planned": 0
+    },
+    "Biology Foundation": {
+      "done": 1,
+      "planned": 0
+    },
+    "Chemistry Foundation": {
+      "done": 1,
+      "planned": 0
+    },
+    "Social Implications": {
+      "done": 0,
+      "planned": 1
+    }
+  },
+  "unfilledLines": [
+    7
+  ],
+  "expectedChecks": {}
+}

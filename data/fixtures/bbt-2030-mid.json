@@ -1,0 +1,51 @@
+{
+  "sheetId": "bbt-2030",
+  "description": "Hand-worked from the official PDF. 5 completed courses and 1 planned course. WPE, projects and manual reviews remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "CH 1010",
+      "credits": 3
+    },
+    {
+      "code": "CH 1020",
+      "credits": 3
+    },
+    {
+      "code": "CS 1101",
+      "credits": 3
+    },
+    {
+      "code": "PH 1110",
+      "credits": 3
+    },
+    {
+      "code": "BB 1101",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "BB 1102",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Chemistry": {
+      "done": 2,
+      "planned": 0
+    },
+    "Quantitative Reasoning": {
+      "done": 2,
+      "planned": 0
+    },
+    "Biology and Biotechnology": {
+      "done": 1,
+      "planned": 1
+    }
+  },
+  "unfilledLines": [
+    7
+  ],
+  "expectedChecks": {}
+}

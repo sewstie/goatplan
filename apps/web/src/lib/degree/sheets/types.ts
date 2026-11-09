@@ -3,6 +3,7 @@ export interface LineFilter {
   subject?: string;
   subjects?: string[];
   courses?: string[];
+  coursePatterns?: string[];
   minLevel?: number;
   additionalCourses?: string[];
   excludedCourses?: string[];
@@ -80,7 +81,7 @@ export interface TrackingSheet {
   source: string;
   catalogSource: string;
   totalUnits: number;
-  residencyUnits: number;
+  residencyUnits?: number;
   sections: SheetSection[];
   lines: SheetLine[];
   exclusions: { course: string; reason: string }[];

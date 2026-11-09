@@ -7,13 +7,22 @@ import { getDegreeSource } from "@/lib/degree";
 import { SHEETS } from "@/lib/degree/sheets";
 import { useDegreeUi } from "./degreeUi";
 
-const MAJORS = ["Computer Science", "Robotics Engineering", "Mechanical Engineering", "Electrical and Computer Engineering", "Data Science"];
+const COMING_SOON = [
+  "Actuarial Mathematics", "Aerospace Engineering, Aeronautical", "Aerospace Engineering, Astronautical",
+  "Architectural Engineering", "Artificial Intelligence", "Biomedical Engineering", "Business",
+  "Chemical Engineering", "Civil Engineering", "Cybersecurity", "Economic Science",
+  "Environmental and Sustainability Studies", "Financial Technology", "Humanities and Arts",
+  "Industrial Engineering", "Information Systems and Technology", "Interactive Media & Game Development—BS",
+  "Interactive Media & Game Development—BA", "International and Global Studies", "Management Engineering",
+  "Mathematical Sciences", "Physics", "Applied Physics", "Policy Studies", "Psychological Science",
+];
 
 export function MajorPickerFields({ selected, onDone }: { selected: string | null; onDone(): void }) {
   const [value, setValue] = useState(selected ?? "cs-2030");
   const [other, setOther] = useState("");
   const [requested, setRequested] = useState(false);
   const available = SHEETS.filter((sheet) => sheet.classYear === 2030);
+  const majors = [...available.map((sheet) => sheet.major), ...COMING_SOON.filter((major) => !available.some((sheet) => sheet.major === major))];
   const sheet = available.find((item) => item.id === value);
   const requestedMajor = value === "other" ? other.trim() : value;
 
@@ -21,7 +30,7 @@ export function MajorPickerFields({ selected, onDone }: { selected: string | nul
     <div className="flex flex-col gap-16">
       <p className="text-9 leading-17 text-ink-muted">For the Class of 2030, starting A Term 2026.</p>
       <fieldset className="degree-major-options"><legend className="sr-only">Major</legend>
-        {MAJORS.map((major) => {
+        {majors.map((major) => {
           const option = available.find((item) => item.major === major);
           const id = option?.id ?? major;
           return <label key={major} className={value === id ? "degree-major-option degree-major-option-selected" : "degree-major-option"}><input type="radio" name="degree-major" value={id} checked={value === id} onChange={() => { setValue(id); setRequested(false); }} /><span><strong>{major}</strong>{!option && <small>Coming soon</small>}</span></label>;

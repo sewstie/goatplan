@@ -1,0 +1,63 @@
+{
+  "sheetId": "eve-2030",
+  "description": "Hand-worked edge history. CE 2000 and ES 2501 are one solid-mechanics course. Both laboratory courses may count in separate lab slots. At most one of the three planning electives fills depth.",
+  "takenCourses": [
+    {
+      "code": "CE 2000",
+      "credits": 3
+    },
+    {
+      "code": "ES 2501",
+      "credits": 3
+    },
+    {
+      "code": "CE 3063",
+      "credits": 3
+    },
+    {
+      "code": "CE 4620",
+      "credits": 3
+    },
+    {
+      "code": "CE 3070",
+      "credits": 3
+    },
+    {
+      "code": "CE 3074",
+      "credits": 3
+    },
+    {
+      "code": "CE 4071",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "CE 3062",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Fundamental Engineering Science": {
+      "done": 1,
+      "planned": 0
+    },
+    "Laboratory Experimentation": {
+      "done": 2,
+      "planned": 0
+    },
+    "Environmental Engineering Breadth and Depth": {
+      "done": 1,
+      "planned": 0
+    },
+    "Environmental Engineering Core": {
+      "done": 0,
+      "planned": 1
+    }
+  },
+  "unfilledLines": [],
+  "expectedChecks": {
+    "capstone": "check"
+  }
+}

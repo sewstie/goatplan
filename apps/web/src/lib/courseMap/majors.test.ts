@@ -11,8 +11,10 @@ function crosses([a, b]: [Point, Point], box: Box) {
     && Math.min(a[1], b[1]) < box.y + box.h - 1 && Math.max(a[1], b[1]) > box.y + 1;
 }
 
-describe("maps for every registered major", () => {
-  for (const sheet of SHEETS) {
+const mappedIds = ["cs-2030", "rbe-2030", "me-2030", "ece-2030", "ds-2030"];
+
+describe("majors with catalog course maps", () => {
+  for (const sheet of SHEETS.filter((sheet) => mappedIds.includes(sheet.id))) {
     it(`${sheet.abbreviation} has unique courses, catalog sources and a routable map`, () => {
       const definition = getCourseMap(sheet.id)!;
       expect(definition).not.toBeNull();
@@ -37,6 +39,12 @@ describe("maps for every registered major", () => {
       }
     });
   }
+
+  it("keeps PDF-only sheets independent of catalog course maps", () => {
+    for (const sheet of SHEETS.filter((sheet) => !mappedIds.includes(sheet.id))) {
+      expect(getCourseMap(sheet.id)).toBeNull();
+    }
+  });
 
   it("includes engineering science in the ME chains without repeating it as outside background", () => {
     const definition = getCourseMap("me-2030")!;

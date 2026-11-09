@@ -1,0 +1,55 @@
+{
+  "sheetId": "eve-2030",
+  "description": "Hand-worked from the official PDF. 5 completed courses and 1 planned course. WPE, projects and manual reviews remain unconfirmed.",
+  "takenCourses": [
+    {
+      "code": "MA 1021",
+      "credits": 3
+    },
+    {
+      "code": "BB 1101",
+      "credits": 3
+    },
+    {
+      "code": "CH 1010",
+      "credits": 3
+    },
+    {
+      "code": "ES 3001",
+      "credits": 3
+    },
+    {
+      "code": "CE 3059",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "CE 3062",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Mathematics": {
+      "done": 1,
+      "planned": 0
+    },
+    "Basic Science": {
+      "done": 2,
+      "planned": 0
+    },
+    "Fundamental Engineering Science": {
+      "done": 1,
+      "planned": 0
+    },
+    "Environmental Engineering Core": {
+      "done": 1,
+      "planned": 1
+    }
+  },
+  "unfilledLines": [
+    7
+  ],
+  "expectedChecks": {}
+}

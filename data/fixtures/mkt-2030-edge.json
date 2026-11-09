@@ -1,0 +1,47 @@
+{
+  "sheetId": "mkt-2030",
+  "description": "Hand-worked edge history. Each cross-listed pair counts once. Three marketing electives, one planned, do not complete the six-course distribution.",
+  "takenCourses": [
+    {
+      "code": "CS 4433",
+      "credits": 3
+    },
+    {
+      "code": "DS 4433",
+      "credits": 3
+    },
+    {
+      "code": "PSY 4400",
+      "credits": 3
+    },
+    {
+      "code": "SS 4400",
+      "credits": 3
+    },
+    {
+      "code": "MKT 2620",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "MKT 2630",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {
+    "Technical and AI Foundation Courses": {
+      "done": 1,
+      "planned": 0
+    },
+    "Marketing Analytics Electives": {
+      "done": 2,
+      "planned": 1
+    }
+  },
+  "unfilledLines": [],
+  "expectedChecks": {
+    "elective-distribution": "check"
+  }
+}

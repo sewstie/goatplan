@@ -1,0 +1,1183 @@
+{
+  "id": "pw-2030",
+  "$schema": "./degree-rules.schema.json",
+  "major": "Professional Writing",
+  "classYear": 2030,
+  "catalogYear": "2026-2027",
+  "effectiveDate": "AY 2026-2027",
+  "source": "https://www.wpi.edu/sites/default/files/2026-04/PW-2030.pdf",
+  "catalogSource": "https://www.wpi.edu/student-experience/resources/academic-advising/program-tracking-sheets",
+  "totalUnits": 15,
+  "crossLists": [],
+  "huaSubjects": [
+    "AR",
+    "TH",
+    "MU",
+    "AB",
+    "CN",
+    "ISE",
+    "GN",
+    "SP",
+    "EN",
+    "WR",
+    "HI",
+    "HU",
+    "INTL",
+    "PY",
+    "RE"
+  ],
+  "orderNote": "All 5 HUA courses must be completed before the Inquiry Seminar; shown as text, not enforced",
+  "exclusions": [],
+  "onlyOneSets": [
+    {
+      "id": "research-alternatives",
+      "courses": [
+        "WR 2111",
+        "WR 4111"
+      ],
+      "reason": "The official PDF does not allow both courses to count."
+    }
+  ],
+  "sections": [
+    {
+      "id": "writing",
+      "name": "Writing and Rhetoric Core",
+      "minUnits": 2.333333333333333,
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "communication",
+      "name": "Communication Electives",
+      "minUnits": 0.6666666666666666,
+      "lines": [
+        8,
+        9
+      ]
+    },
+    {
+      "id": "concentration",
+      "name": "Subject-Matter Concentration",
+      "minUnits": 4.0,
+      "lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ]
+    },
+    {
+      "id": "technical",
+      "name": "Scientific/Technical Electives",
+      "minUnits": 1.9999999999999998,
+      "lines": [
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ]
+    },
+    {
+      "id": "hua",
+      "name": "Humanities and Arts",
+      "minUnits": 1.9999999999999998,
+      "lines": [
+        28,
+        29,
+        30,
+        31,
+        32,
+        33
+      ]
+    },
+    {
+      "id": "social-science",
+      "name": "Social Science",
+      "minUnits": 0.6666666666666666,
+      "lines": [
+        34,
+        35
+      ]
+    },
+    {
+      "id": "iqp",
+      "name": "Interactive Qualifying Project",
+      "minUnits": 1.0,
+      "lines": [
+        36,
+        37,
+        38
+      ]
+    },
+    {
+      "id": "free-electives",
+      "name": "Free Electives",
+      "minUnits": 1.0,
+      "lines": [
+        39,
+        40,
+        41
+      ],
+      "creditPool": true,
+      "poolCredits": 9
+    },
+    {
+      "id": "wpe",
+      "name": "Physical Education",
+      "minUnits": 0.3333333333333333,
+      "lines": [
+        42
+      ]
+    },
+    {
+      "id": "mqp",
+      "name": "Major Qualifying Project",
+      "minUnits": 1.0,
+      "lines": [
+        43,
+        44,
+        45
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "line": 1,
+      "section": "writing",
+      "name": "Designing Research Studies",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "WR 2111",
+          "WR 4111"
+        ]
+      }
+    },
+    {
+      "line": 2,
+      "section": "writing",
+      "name": "Rhetorical Theory",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "WR 3112"
+        ]
+      }
+    },
+    {
+      "line": 3,
+      "section": "writing",
+      "name": "Senior Seminar",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "WR 4500"
+        ]
+      }
+    },
+    {
+      "line": 4,
+      "section": "writing",
+      "name": "Writing and rhetoric",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjectMinLevel",
+        "subject": "WR",
+        "minLevel": 1000
+      }
+    },
+    {
+      "line": 5,
+      "section": "writing",
+      "name": "Writing and rhetoric",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjectMinLevel",
+        "subject": "WR",
+        "minLevel": 1000
+      }
+    },
+    {
+      "line": 6,
+      "section": "writing",
+      "name": "Writing and rhetoric",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjectMinLevel",
+        "subject": "WR",
+        "minLevel": 1000
+      }
+    },
+    {
+      "line": 7,
+      "section": "writing",
+      "name": "Writing and rhetoric",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjectMinLevel",
+        "subject": "WR",
+        "minLevel": 1000
+      }
+    },
+    {
+      "line": 8,
+      "section": "communication",
+      "name": "Communication Electives",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjectMinLevel",
+        "subject": "WR",
+        "minLevel": 1000
+      }
+    },
+    {
+      "line": 9,
+      "section": "communication",
+      "name": "Communication Electives",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjectMinLevel",
+        "subject": "WR",
+        "minLevel": 1000
+      }
+    },
+    {
+      "line": 10,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 11,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 12,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 13,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 14,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 15,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 16,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 17,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 18,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 19,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 20,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 21,
+      "section": "concentration",
+      "name": "Subject-Matter Concentration",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 22,
+      "section": "technical",
+      "name": "Scientific/Technical Electives",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "AREN",
+          "BB",
+          "BCB",
+          "BME",
+          "CE",
+          "CH",
+          "CHE",
+          "CS",
+          "DS",
+          "ECE",
+          "ES",
+          "GE",
+          "MA",
+          "ME",
+          "PH",
+          "RBE"
+        ]
+      }
+    },
+    {
+      "line": 23,
+      "section": "technical",
+      "name": "Scientific/Technical Electives",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "AREN",
+          "BB",
+          "BCB",
+          "BME",
+          "CE",
+          "CH",
+          "CHE",
+          "CS",
+          "DS",
+          "ECE",
+          "ES",
+          "GE",
+          "MA",
+          "ME",
+          "PH",
+          "RBE"
+        ]
+      }
+    },
+    {
+      "line": 24,
+      "section": "technical",
+      "name": "Scientific/Technical Electives",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "AREN",
+          "BB",
+          "BCB",
+          "BME",
+          "CE",
+          "CH",
+          "CHE",
+          "CS",
+          "DS",
+          "ECE",
+          "ES",
+          "GE",
+          "MA",
+          "ME",
+          "PH",
+          "RBE"
+        ]
+      }
+    },
+    {
+      "line": 25,
+      "section": "technical",
+      "name": "Scientific/Technical Electives",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "AREN",
+          "BB",
+          "BCB",
+          "BME",
+          "CE",
+          "CH",
+          "CHE",
+          "CS",
+          "DS",
+          "ECE",
+          "ES",
+          "GE",
+          "MA",
+          "ME",
+          "PH",
+          "RBE"
+        ]
+      }
+    },
+    {
+      "line": 26,
+      "section": "technical",
+      "name": "Scientific/Technical Electives",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "AREN",
+          "BB",
+          "BCB",
+          "BME",
+          "CE",
+          "CH",
+          "CHE",
+          "CS",
+          "DS",
+          "ECE",
+          "ES",
+          "GE",
+          "MA",
+          "ME",
+          "PH",
+          "RBE"
+        ]
+      }
+    },
+    {
+      "line": 27,
+      "section": "technical",
+      "name": "Scientific/Technical Electives",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AE",
+          "AREN",
+          "BB",
+          "BCB",
+          "BME",
+          "CE",
+          "CH",
+          "CHE",
+          "CS",
+          "DS",
+          "ECE",
+          "ES",
+          "GE",
+          "MA",
+          "ME",
+          "PH",
+          "RBE"
+        ]
+      }
+    },
+    {
+      "line": 28,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      }
+    },
+    {
+      "line": 29,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      }
+    },
+    {
+      "line": 30,
+      "section": "hua",
+      "name": "Humanities depth",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      }
+    },
+    {
+      "line": 31,
+      "section": "hua",
+      "name": "Humanities breadth",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      }
+    },
+    {
+      "line": 32,
+      "section": "hua",
+      "name": "Humanities breadth",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "AR",
+          "TH",
+          "MU",
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP",
+          "EN",
+          "WR",
+          "HI",
+          "HU",
+          "INTL",
+          "PY",
+          "RE"
+        ],
+        "priority": 100000
+      }
+    },
+    {
+      "line": 33,
+      "section": "hua",
+      "name": "Inquiry Seminar or Practicum",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "courses",
+        "courses": [
+          "HU 3900",
+          "HU 3910"
+        ]
+      }
+    },
+    {
+      "line": 34,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECON",
+          "ENV",
+          "GOV",
+          "PSY",
+          "SD",
+          "SOC",
+          "SS",
+          "STS",
+          "DEV"
+        ],
+        "additionalCourses": [
+          "ID 2050"
+        ],
+        "priority": 100000
+      }
+    },
+    {
+      "line": 35,
+      "section": "social-science",
+      "name": "Social Science",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "ECON",
+          "ENV",
+          "GOV",
+          "PSY",
+          "SD",
+          "SOC",
+          "SS",
+          "STS",
+          "DEV"
+        ],
+        "additionalCourses": [
+          "ID 2050"
+        ],
+        "priority": 100000
+      }
+    },
+    {
+      "line": 36,
+      "section": "iqp",
+      "name": "Interactive Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 37,
+      "section": "iqp",
+      "name": "Interactive Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 38,
+      "section": "iqp",
+      "name": "Interactive Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 39,
+      "section": "free-electives",
+      "name": "Free elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "any"
+      }
+    },
+    {
+      "line": 40,
+      "section": "free-electives",
+      "name": "Free elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "any"
+      }
+    },
+    {
+      "line": 41,
+      "section": "free-electives",
+      "name": "Free elective",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "any"
+      }
+    },
+    {
+      "line": 42,
+      "section": "wpe",
+      "name": "Wellness and Physical Education",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "subjects",
+        "subjects": [
+          "WPE"
+        ]
+      },
+      "subSlots": 4,
+      "subSlotUnits": 0.08333333333333333
+    },
+    {
+      "line": 43,
+      "section": "mqp",
+      "name": "Major Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 44,
+      "section": "mqp",
+      "name": "Major Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    },
+    {
+      "line": 45,
+      "section": "mqp",
+      "name": "Major Qualifying Project",
+      "units": 0.3333333333333333,
+      "filter": {
+        "type": "manual"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "writing-distribution",
+      "name": "Writing core distribution",
+      "type": "manual",
+      "confirmation": "writing-distribution-confirmation",
+      "note": "Confirm at most one 1000-level course and one of WR 2210, WR 2450, WR 3210, WR 3450 or WR 4210. A WR-focused HU 3900/3910 needs approval by Professional Writing faculty or the Program Review Committee.",
+      "help": "Confirm at most one 1000-level course and one of WR 2210, WR 2450, WR 3210, WR 3450 or WR 4210. A WR-focused HU 3900/3910 needs approval by Professional Writing faculty or the Program Review Committee.",
+      "lines": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "communication-approval",
+      "name": "Communication elective approval",
+      "type": "manual",
+      "confirmation": "communication-approval-confirmation",
+      "note": "Confirm both communication electives are approved. Other approved electives need manual review. ID 2050 and AP credit cannot count. These courses cannot overlap WPI free electives.",
+      "help": "Confirm both communication electives are approved. Other approved electives need manual review. ID 2050 and AP credit cannot count. These courses cannot overlap WPI free electives.",
+      "lines": [
+        8,
+        9
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "concentration-approval",
+      "name": "Subject-matter concentration",
+      "type": "manual",
+      "confirmation": "concentration-approval-confirmation",
+      "note": "Confirm four units in one discipline, or two units in each of two disciplines, unless shared with a second major.",
+      "help": "Confirm four units in one discipline, or two units in each of two disciplines, unless shared with a second major.",
+      "lines": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "technical-approval",
+      "name": "Scientific and technical electives",
+      "type": "manual",
+      "confirmation": "technical-approval-confirmation",
+      "note": "Confirm two units of approved scientific or technical electives.",
+      "help": "Confirm two units of approved scientific or technical electives.",
+      "lines": [
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "hua-depth",
+      "name": "Humanities depth",
+      "type": "groupDepth",
+      "minCourses": 3,
+      "requiresConfirmation": true,
+      "note": "At least three thematically-related courses in the same grouping",
+      "confirmation": "hua-depth-confirmation",
+      "section": "hua",
+      "lines": [
+        28,
+        29,
+        30,
+        31,
+        32
+      ]
+    },
+    {
+      "id": "hua-breadth",
+      "name": "Humanities breadth",
+      "type": "groupBreadth",
+      "groupings": {
+        "art-drama-music": [
+          "AR",
+          "TH",
+          "MU"
+        ],
+        "modern-languages": [
+          "AB",
+          "CN",
+          "ISE",
+          "GN",
+          "SP"
+        ],
+        "literature-writing": [
+          "EN",
+          "WR"
+        ],
+        "history-humanities": [
+          "HI",
+          "HU",
+          "INTL"
+        ],
+        "philosophy-religion": [
+          "PY",
+          "RE"
+        ]
+      },
+      "allLanguageException": true,
+      "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",
+      "groupingOrder": [
+        "art-drama-music",
+        "modern-languages",
+        "literature-writing",
+        "history-humanities",
+        "philosophy-religion"
+      ],
+      "section": "hua",
+      "exceptionGrouping": "modern-languages",
+      "depthCheck": "hua-depth"
+    },
+    {
+      "id": "overlap-approval",
+      "name": "Shared courses and MQP credit",
+      "type": "manual",
+      "confirmation": "overlap-approval-confirmation",
+      "note": "The PDF permits up to five writing-core courses shared with HUA, up to two communication electives shared elsewhere except free electives, and shared scientific/technical electives. This audit places each course once; confirm shared allocations and credit with your advisor. An interdisciplinary MQP needs 4/3 units, including optional line 46; the default sheet shows the single-major one-unit MQP.",
+      "help": "The PDF permits up to five writing-core courses shared with HUA, up to two communication electives shared elsewhere except free electives, and shared scientific/technical electives. This audit places each course once; confirm shared allocations and credit with your advisor. An interdisciplinary MQP needs 4/3 units, including optional line 46; the default sheet shows the single-major one-unit MQP."
+    },
+    {
+      "id": "hua-sequence",
+      "name": "Humanities level and sequence",
+      "type": "manual",
+      "confirmation": "hua-sequence-confirmation",
+      "note": "Confirm depth, breadth, the HUA elective, and completion of all five HUA courses before Inquiry. Review the modern-language exception.",
+      "help": "Confirm depth, breadth, the HUA elective, and completion of all five HUA courses before Inquiry. Review the modern-language exception.",
+      "lines": [
+        28,
+        29,
+        30,
+        31,
+        32,
+        33
+      ],
+      "affectsLines": true
+    },
+    {
+      "id": "hua-ap-credit",
+      "name": "AP credit in Humanities",
+      "type": "manual",
+      "confirmation": "hua-ap-credit-confirmation",
+      "note": "Confirm that no more than 1/3 unit of AP credit counts toward Humanities and Arts. The PDF states an AP limit; it does not give an IB limit.",
+      "help": "Confirm that no more than 1/3 unit of AP credit counts toward Humanities and Arts. The PDF states an AP limit; it does not give an IB limit.",
+      "lines": [
+        28,
+        29,
+        30,
+        31,
+        32,
+        33
+      ],
+      "affectsLines": true
+    }
+  ],
+  "manualItems": [
+    {
+      "id": "writing-distribution-confirmation",
+      "name": "Writing core distribution",
+      "type": "checkbox",
+      "note": "Confirm at most one 1000-level course and one of WR 2210, WR 2450, WR 3210, WR 3450 or WR 4210. A WR-focused HU 3900/3910 needs approval by Professional Writing faculty or the Program Review Committee."
+    },
+    {
+      "id": "communication-approval-confirmation",
+      "name": "Communication elective approval",
+      "type": "checkbox",
+      "note": "Confirm both communication electives are approved. Other approved electives need manual review. ID 2050 and AP credit cannot count. These courses cannot overlap WPI free electives."
+    },
+    {
+      "id": "requirement-10",
+      "line": 10,
+      "name": "Subject-matter concentration, line 10",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-11",
+      "line": 11,
+      "name": "Subject-matter concentration, line 11",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-12",
+      "line": 12,
+      "name": "Subject-matter concentration, line 12",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-13",
+      "line": 13,
+      "name": "Subject-matter concentration, line 13",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-14",
+      "line": 14,
+      "name": "Subject-matter concentration, line 14",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-15",
+      "line": 15,
+      "name": "Subject-matter concentration, line 15",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-16",
+      "line": 16,
+      "name": "Subject-matter concentration, line 16",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-17",
+      "line": 17,
+      "name": "Subject-matter concentration, line 17",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-18",
+      "line": 18,
+      "name": "Subject-matter concentration, line 18",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-19",
+      "line": 19,
+      "name": "Subject-matter concentration, line 19",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-20",
+      "line": 20,
+      "name": "Subject-matter concentration, line 20",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "requirement-21",
+      "line": 21,
+      "name": "Subject-matter concentration, line 21",
+      "type": "checkbox",
+      "note": "Confirm this requirement against your record and the official PDF."
+    },
+    {
+      "id": "concentration-approval-confirmation",
+      "name": "Subject-matter concentration",
+      "type": "checkbox",
+      "note": "Confirm four units in one discipline, or two units in each of two disciplines, unless shared with a second major."
+    },
+    {
+      "id": "technical-approval-confirmation",
+      "name": "Scientific and technical electives",
+      "type": "checkbox",
+      "note": "Confirm two units of approved scientific or technical electives."
+    },
+    {
+      "id": "hua-depth-confirmation",
+      "name": "Humanities depth confirmation",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-1",
+      "line": 36,
+      "name": "IQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-2",
+      "line": 37,
+      "name": "IQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "iqp-3",
+      "line": 38,
+      "name": "IQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "wpe-sports",
+      "line": 42,
+      "name": "Club or varsity sports in place of WPE",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-1",
+      "line": 43,
+      "name": "MQP (1 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-2",
+      "line": 44,
+      "name": "MQP (2 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "mqp-3",
+      "line": 45,
+      "name": "MQP (3 of 3)",
+      "type": "checkbox"
+    },
+    {
+      "id": "overlap-approval-confirmation",
+      "name": "Shared courses and MQP credit",
+      "type": "checkbox",
+      "note": "The PDF permits up to five writing-core courses shared with HUA, up to two communication electives shared elsewhere except free electives, and shared scientific/technical electives. This audit places each course once; confirm shared allocations and credit with your advisor. An interdisciplinary MQP needs 4/3 units, including optional line 46; the default sheet shows the single-major one-unit MQP."
+    },
+    {
+      "id": "hua-sequence-confirmation",
+      "name": "Humanities level and sequence",
+      "type": "checkbox",
+      "note": "Confirm depth, breadth, the HUA elective, and completion of all five HUA courses before Inquiry. Review the modern-language exception."
+    },
+    {
+      "id": "hua-ap-credit-confirmation",
+      "name": "AP credit in Humanities",
+      "type": "checkbox",
+      "note": "Confirm that no more than 1/3 unit of AP credit counts toward Humanities and Arts. The PDF states an AP limit; it does not give an IB limit."
+    }
+  ]
+}

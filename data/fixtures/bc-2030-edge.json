@@ -1,0 +1,29 @@
+{
+  "sheetId": "bc-2030",
+  "description": "Hand-worked edge history. CH 4170 can fill the named laboratory row, but the remaining lab credit cannot complete without confirmation. BB 3827 must not be confirmed alongside CH 4170. Inorganic chemistry is planned.",
+  "takenCourses": [
+    {
+      "code": "CH 4170",
+      "credits": 3
+    },
+    {
+      "code": "BB 3827",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "CH 3410",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {},
+  "unfilledLines": [
+    40,
+    41
+  ],
+  "expectedChecks": {
+    "laboratory-review": "check"
+  }
+}

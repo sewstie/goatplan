@@ -1,0 +1,36 @@
+{
+  "sheetId": "ch-2030",
+  "description": "Hand-worked edge history. General chemistry can fill additional science, but not the 2000-level chemistry requirements. Experimental rows and unspecified biochemistry rows require confirmation; CH 2630 and CH 2660 cannot both count.",
+  "takenCourses": [
+    {
+      "code": "CH 1010",
+      "credits": 3
+    },
+    {
+      "code": "CH 2630",
+      "credits": 3
+    },
+    {
+      "code": "CH 2660",
+      "credits": 3
+    }
+  ],
+  "plannedCourses": [
+    {
+      "code": "CH 4420",
+      "credits": 3
+    }
+  ],
+  "confirmedManualItems": [],
+  "expectedSections": {},
+  "unfilledLines": [
+    23,
+    24,
+    25,
+    33,
+    34
+  ],
+  "expectedChecks": {
+    "experimental-review": "check"
+  }
+}

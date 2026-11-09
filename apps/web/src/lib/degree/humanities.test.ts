@@ -75,7 +75,9 @@ describe("humanities path", () => {
       expect(lines.filter((line) => line.filter.type === "subjectMinLevel").map((line) => [line.filter.subject, line.filter.minLevel, line.name])).toEqual([["SP", 3000, "Advanced language course"]]);
       expect(changed.checks.map((check) => check.type)).not.toContain("groupDepth");
       expect(changed.checks.map((check) => check.type)).not.toContain("groupBreadth");
-      expect(changed.checks.map((check) => check.id)).toContain("hua-ap-ib-limit");
+      const creditLimit = sheet.checks.find((check) => check.id === "hua-ap-ib-limit" || check.id === "hua-ap-credit");
+      expect(creditLimit).toBeDefined();
+      expect(changed.checks).toContainEqual(creditLimit);
       expect(changed.manualItems.map((item) => item.id)).not.toContain("hua-depth-confirmation");
       expect(changed.lines.filter((line) => line.section !== "hua")).toEqual(sheet.lines.filter((line) => line.section !== "hua"));
       expect(sheet.lines.filter((line) => line.section === "hua").map((line) => line.filter.type)).not.toContain("subjectMinLevel");
