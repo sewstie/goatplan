@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-10T16:56:14Z",
+  "generatedAt": "2026-11-11T17:00:24Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -455,8 +455,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/9 unit) Continuation of AS2001. Topics include full-range leadership, problem solving, motivation, and continued development of communication skills.Leadership Laboratory is mandatory for AFROTC cadets and complements this course by providing cadets with followership experiences.",
       "sections": [
-        {"id":"AS 2002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":12,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Fuller Labs 320"}]},
-        {"id":"AS 2002-BX01","code":"BX01","type":"lab","status":"open","enrolled":12,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"AS 2002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":13,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Fuller Labs 320"}]},
+        {"id":"AS 2002-BX01","code":"BX01","type":"lab","status":"open","enrolled":13,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["AS 2002-BL01","AS 2002-BX01"]
@@ -1882,7 +1882,7 @@
       "description": "Cat. I Continuation of CN 2542. This course continues to build on students’ Chinese conversational skills with a focus on dialogue and mastery of grammatical constructions, as well as character recognition and reading ability. Conversational drills, audio recordings, video, and group interaction will enhance classroom learning. Recommended background: CN 2542 or the equivalent. This course is closed to native speakers of Chinese and heritage speakers except with written permission from the instructor.",
       "sections": [
         {"id":"CN 2543-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":20,"capacity":18,"waitlist":{"taken":3,"capacity":10},"instructors":["Wen-Hua Du"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Olin Hall 126"}]},
-        {"id":"CN 2543-B02","code":"B02","type":"lecture","status":"waitlist","enrolled":22,"capacity":18,"waitlist":{"taken":0,"capacity":10},"instructors":["Wen-Hua Du"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Olin Hall 126"}],"description":"Cat. I A continuation of Intermediate Chinese II. This course is designed to expand students' skills in listening comprehension, speaking, reading, and writing. The course continues to enhance students’ vocabulary and introduces more complex grammatical patterns, with more emphasis placed on improving communication skills both orally and in writing. Recommended background: CN 2542. This course satisfies the Inquiry Practicum requirement. This course is closed to native speakers of Chinese and heritage speakers, except with written permission from the coordinator of the Chinese track."}
+        {"id":"CN 2543-B02","code":"B02","type":"lecture","status":"waitlist","enrolled":21,"capacity":18,"waitlist":{"taken":0,"capacity":10},"instructors":["Wen-Hua Du"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Olin Hall 126"}],"description":"Cat. I A continuation of Intermediate Chinese II. This course is designed to expand students' skills in listening comprehension, speaking, reading, and writing. The course continues to enhance students’ vocabulary and introduces more complex grammatical patterns, with more emphasis placed on improving communication skills both orally and in writing. Recommended background: CN 2542. This course satisfies the Inquiry Practicum requirement. This course is closed to native speakers of Chinese and heritage speakers, except with written permission from the coordinator of the Chinese track."}
       ],
       "options": [
         ["CN 2543-B01"],
@@ -2075,7 +2075,7 @@
       "description": "Cat. I This course makes the student aware of the social, moral, ethical, and philosophical impact of computers and computer-based systems on society, both now and in the future. Topics include major computer-based applications and their impact, human machine relationships, and the major problems of controlling the use of computers. Students will be expected to contribute to classroom discussions and to complete a number of significant writing assignments. This course is recommended for juniors and seniors. The Social Science Requirement cannot be satisfied by this course. Undergraduate credit may not be earned both for this course and for CS 505. Recommended background: a general knowledge of computers and computer systems",
       "sections": [
         {"id":"CS 3043-B01","code":"B01","type":"lecture","status":"open","enrolled":23,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["EJ Néel"],"delivery":"hybrid","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Higgins Labs 114"}]},
-        {"id":"CS 3043-B02","code":"B02","type":"lecture","status":"open","enrolled":46,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Rosenberg"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 320"}]}
+        {"id":"CS 3043-B02","code":"B02","type":"lecture","status":"open","enrolled":45,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Rosenberg"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 320"}]}
       ],
       "options": [
         ["CS 3043-B01"],
@@ -2830,7 +2830,7 @@
       "level": "Graduate",
       "description": "Introduction to Data Science provides an overview of Data Science, covering a broad selection of key challenges in and methodologies for working with big data. Topics to be covered include data collection, integration, management, modeling, analysis, visualization, prediction and informed decision making, as well as data security and data privacy. This introductory course is integrative across the core disciplines of Data Science, including databases, data warehousing, statistics, data mining, data visualization, high performance computing, cloud computing, and business intelligence. Professional skills, such as communication, presentation, and storytelling with data, will be fostered. Students will acquire a working knowledge of data science through hands-on projects and case studies in a variety of business, engineering, social sciences, or life sciences domains. Issues of ethics, leadership, and teamwork are highlighted. Prerequisites: None beyond meeting the Data Science admission criteria.",
       "sections": [
-        {"id":"DS 501-F01","code":"F01","type":"lecture","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Narahara Chari Dingari"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[]},
+        {"id":"DS 501-F01","code":"F01","type":"lecture","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Narahara Chari Dingari"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[]},
         {"id":"DS 501-F02","code":"F02","type":"lecture","status":"open","enrolled":13,"capacity":50,"waitlist":{"taken":0,"capacity":0},"instructors":["Chun-Kit Ngan"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Thu"],"start":1080,"end":1250,"location":"Goddard Hall 227 Classroom"}]}
       ],
       "options": [
@@ -3416,7 +3416,7 @@
       "level": "Graduate",
       "description": "ECE 571: Machine Learning for Engineering Applications (Cat. I; 3 credits) This is an introductory course for engineering students to gain basic knowledge of machine learning and its applications. This course's objective is to learn machine learning theory and then apply it in engineering practice. A major emphasis of the course is to foster the capability of combining multiple machine learning techniques in complex problem solving, such as the detection of deepfake media. Topics include supervised learning, linear regression, kernel methods, support vector machine, neural networks, unsupervised learning, clustering, principal component analysis, deep learning with convolutional neural networks, and reinforcement learning. Students will develop software to implement machine learning and deep learning algorithms for practical engineering applications. Prerequisites: Basic knowledge of probability and computer programming.",
       "sections": [
-        {"id":"ECE 571-F01","code":"F01","type":"lecture","status":"open","enrolled":24,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Ziming Zhang"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[]}
+        {"id":"ECE 571-F01","code":"F01","type":"lecture","status":"open","enrolled":23,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Ziming Zhang"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[]}
       ],
       "options": [
         ["ECE 571-F01"]
@@ -3879,8 +3879,8 @@
       "level": "Undergraduate",
       "description": "Cat. I Characteristics of control systems. Mathematical representation of control components and systems. Laplace transforms, transfer functions, block and signal flow diagrams. Transient response analysis. Introduction to the root-locus method and stability analysis. Frequency response techniques including Bode, polar, and Nichols plots. This sequence of courses in the field of control engineering (ES 3011) is generally available to all juniors and seniors regardless of department. A good background in mathematics is required; familiarity with Laplace transforms, complex variables and matrices is desirable but not mandatory. All students taking Control Engineering I should have an understanding of ordinary differential equations (MA 2051 or equivalent) and basic physics through electricity and magnetism (PH 1120/1121). Control Engineering I may be considered a terminal course, or it may be the first course for those students wishing to do extensive work in this field. Students taking the sequence of two courses will be prepared for graduate work in the field. Recommended background: Ordinary Differential Equations (MA 2051) and Electricity and Magnestism (PH 1120, PH 1121). Students may not receive credit for both ES 3011 and ECE 3012",
       "sections": [
-        {"id":"ES 3011-BL01","code":"BL01","type":"lecture","status":"open","enrolled":57,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Cagdas Onal"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Goddard Hall 227 Classroom"}]},
-        {"id":"ES 3011-BX01","code":"BX01","type":"lab","status":"open","enrolled":28,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Cagdas Onal"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":890,"location":"Higgins Labs 031 ME Computer Lab"}]},
+        {"id":"ES 3011-BL01","code":"BL01","type":"lecture","status":"open","enrolled":56,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Cagdas Onal"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Goddard Hall 227 Classroom"}]},
+        {"id":"ES 3011-BX01","code":"BX01","type":"lab","status":"open","enrolled":27,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Cagdas Onal"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":890,"location":"Higgins Labs 031 ME Computer Lab"}]},
         {"id":"ES 3011-BX02","code":"BX02","type":"lab","status":"open","enrolled":29,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Cagdas Onal"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Higgins Labs 031 ME Computer Lab"}]}
       ],
       "options": [
@@ -6425,7 +6425,7 @@
       "level": "Graduate",
       "description": "Seminars on current issues related to various areas of mechanical engineering are presented by authorities in their fields. All full-time mechanical engineering students are required to register and attend.",
       "sections": [
-        {"id":"ME 591-B01","code":"B01","type":"seminar","status":"open","enrolled":114,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Mehdi Mortazavi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"ME 591-B01","code":"B01","type":"seminar","status":"open","enrolled":115,"capacity":120,"waitlist":{"taken":0,"capacity":20},"instructors":["Mehdi Mortazavi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["ME 591-B01"]
@@ -7935,10 +7935,10 @@
       "level": "Undergraduate",
       "description": "Cat. I An introduction to the pivotal ideas and developments of twentieth-century physics. Topics include: special relativity, photoelectric effect, X-rays, Compton scattering, blackbody radiation, DeBroglie waves, uncertainty principle, Bohr theory of the atom, atomic nuclei, radioactivity, and elementary particles. Recommended background: familiarity with material covered in PH 1110 and PH 1120 (or PH 1111 and PH 1121) and completion of MA 1021 and MA 1022.",
       "sections": [
-        {"id":"PH 1130-BD01","code":"BD01","type":"discussion","status":"open","enrolled":31,"capacity":64,"waitlist":{"taken":0,"capacity":0},"instructors":["Kun-Ta Wu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Unity Hall 400"}]},
-        {"id":"PH 1130-BL01","code":"BL01","type":"lecture","status":"open","enrolled":31,"capacity":64,"waitlist":{"taken":0,"capacity":20},"instructors":["Kun-Ta Wu"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 420"}]},
+        {"id":"PH 1130-BD01","code":"BD01","type":"discussion","status":"open","enrolled":30,"capacity":64,"waitlist":{"taken":0,"capacity":0},"instructors":["Kun-Ta Wu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Unity Hall 400"}]},
+        {"id":"PH 1130-BL01","code":"BL01","type":"lecture","status":"open","enrolled":30,"capacity":64,"waitlist":{"taken":0,"capacity":20},"instructors":["Kun-Ta Wu"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 420"}]},
         {"id":"PH 1130-BX01","code":"BX01","type":"lab","status":"open","enrolled":14,"capacity":16,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":600,"end":710,"location":"Olin Hall 117 Physics Lab"}]},
-        {"id":"PH 1130-BX02","code":"BX02","type":"lab","status":"open","enrolled":7,"capacity":16,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":720,"end":830,"location":"Olin Hall 117 Physics Lab"}]},
+        {"id":"PH 1130-BX02","code":"BX02","type":"lab","status":"open","enrolled":6,"capacity":16,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":720,"end":830,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1130-BX03","code":"BX03","type":"lab","status":"open","enrolled":0,"capacity":16,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":710,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1130-BX04","code":"BX04","type":"lab","status":"open","enrolled":10,"capacity":16,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":720,"end":830,"location":"Olin Hall 117 Physics Lab"}]}
       ],
@@ -8591,7 +8591,7 @@
       "description": "Cat. I This course makes the student aware of the social, moral, ethical, and philosophical impact of computers and computer-based systems on society, both now and in the future. Topics include major computer-based applications and their impact, human machine relationships, and the major problems of controlling the use of computers. Students will be expected to contribute to classroom discussions and to complete a number of significant writing assignments. This course is recommended for juniors and seniors. The Social Science Requirement cannot be satisfied by this course. Undergraduate credit may not be earned both for this course and for CS 505. Recommended background: a general knowledge of computers and computer systems",
       "sections": [
         {"id":"SS 3043-B01","code":"B01","type":"lecture","status":"open","enrolled":23,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["EJ Néel"],"delivery":"hybrid","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Higgins Labs 114"}]},
-        {"id":"SS 3043-B02","code":"B02","type":"lecture","status":"open","enrolled":46,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Rosenberg"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 320"}]}
+        {"id":"SS 3043-B02","code":"B02","type":"lecture","status":"open","enrolled":45,"capacity":60,"waitlist":{"taken":0,"capacity":10},"instructors":["Michelle Rosenberg"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 320"}]}
       ],
       "options": [
         ["SS 3043-B01"],
