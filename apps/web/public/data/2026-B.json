@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-11T17:00:24Z",
+  "generatedAt": "2026-11-12T17:29:38Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -268,7 +268,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course focuses on the methods, procedures and techniques of creating and manipulating images through electronic and digital means. Students will develop an understanding of image alteration. Topics may include color theory, displays, modeling, shading, and visual perception. Recommended background: AR 1100.",
       "sections": [
-        {"id":"AR 1101-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":26,"capacity":24,"waitlist":{"taken":8,"capacity":12},"instructors":["Matthew Steinke"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Salisbury Labs 123 Computer Lab"}]}
+        {"id":"AR 1101-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":26,"capacity":24,"waitlist":{"taken":7,"capacity":12},"instructors":["Matthew Steinke"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Salisbury Labs 123 Computer Lab"}]}
       ],
       "options": [
         ["AR 1101-B01"]
