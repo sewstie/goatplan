@@ -5763,8 +5763,10 @@
       "title": "Econometric Modeling",
       "credits": 3,
       "level": "Undergraduate",
-      "lastOffered": null,
-      "termLetters": []
+      "lastOffered": "2027-C",
+      "termLetters": [
+        "C"
+      ]
     },
     {
       "code": "ECON 2135",
@@ -11815,7 +11817,7 @@
     {
       "code": "PH 101X",
       "title": "Frontiers And Opportunities In Physics",
-      "credits": 3,
+      "credits": 0.75,
       "level": "Undergraduate",
       "lastOffered": "2027-C",
       "termLetters": [

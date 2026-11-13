@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-12T17:29:38Z",
+  "generatedAt": "2026-11-13T17:05:29Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -1541,7 +1541,7 @@
       "level": "Undergraduate",
       "description": "Cat. I A systematic survey of the major reaction types and functional groups in organic chemistry. The course will provide a representative collection of characteristic reactions and transformations of a variety of types of organic molecules. Most of the examples will be drawn from aliphatic chemistry. Some theoretical models will be introduced with a view toward establishing a general overview of the material. The course is intended for chemists, chemical engineers, pre-medical students and all those interested in the biosciences. A familiarity with the material presented in the general chemistry courses is assumed.",
       "sections": [
-        {"id":"CH 2310-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":107,"capacity":100,"waitlist":{"taken":0,"capacity":20},"instructors":["John MacDonald"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":720,"end":770,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
+        {"id":"CH 2310-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":106,"capacity":100,"waitlist":{"taken":0,"capacity":20},"instructors":["John MacDonald"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":720,"end":770,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
         {"id":"CH 2310-B02","code":"B02","type":"lecture","status":"open","enrolled":36,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Anita Mattson"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":540,"end":590,"location":"Unity Hall 420"}]}
       ],
       "options": [
@@ -1732,8 +1732,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course aims to build a strong foundation in analysis of chemical processes via a project-based approach. Topics covered include analysis and design of stagewise separation processes such as distillation, 1st and 2nd law (of thermodynamics) analysis of power and refrigeration cycles, and application of material and energy balances in industrial chemical processes, including those with recycle and non-ideal systems. Recommended background: Elementary college chemistry and calculus and some familiarity with the topics listed in CHE 2011. Students may not receive credit towards CHE distribution requirements for both CHE 2012 and ES 3000.",
       "sections": [
-        {"id":"CHE 2012-BD01","code":"BD01","type":"discussion","status":"open","enrolled":53,"capacity":100,"waitlist":{"taken":0,"capacity":0},"instructors":["N. Aaron Deskins"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":650,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
-        {"id":"CHE 2012-BL01","code":"BL01","type":"lecture","status":"open","enrolled":53,"capacity":100,"waitlist":{"taken":0,"capacity":20},"instructors":["N. Aaron Deskins"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Unity Hall 500"}]}
+        {"id":"CHE 2012-BD01","code":"BD01","type":"discussion","status":"open","enrolled":52,"capacity":100,"waitlist":{"taken":0,"capacity":0},"instructors":["N. Aaron Deskins"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":650,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
+        {"id":"CHE 2012-BL01","code":"BL01","type":"lecture","status":"open","enrolled":52,"capacity":100,"waitlist":{"taken":0,"capacity":20},"instructors":["N. Aaron Deskins"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Unity Hall 500"}]}
       ],
       "options": [
         ["CHE 2012-BD01","CHE 2012-BL01"]
@@ -1882,7 +1882,7 @@
       "description": "Cat. I Continuation of CN 2542. This course continues to build on students’ Chinese conversational skills with a focus on dialogue and mastery of grammatical constructions, as well as character recognition and reading ability. Conversational drills, audio recordings, video, and group interaction will enhance classroom learning. Recommended background: CN 2542 or the equivalent. This course is closed to native speakers of Chinese and heritage speakers except with written permission from the instructor.",
       "sections": [
         {"id":"CN 2543-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":20,"capacity":18,"waitlist":{"taken":3,"capacity":10},"instructors":["Wen-Hua Du"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Olin Hall 126"}]},
-        {"id":"CN 2543-B02","code":"B02","type":"lecture","status":"waitlist","enrolled":21,"capacity":18,"waitlist":{"taken":0,"capacity":10},"instructors":["Wen-Hua Du"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Olin Hall 126"}],"description":"Cat. I A continuation of Intermediate Chinese II. This course is designed to expand students' skills in listening comprehension, speaking, reading, and writing. The course continues to enhance students’ vocabulary and introduces more complex grammatical patterns, with more emphasis placed on improving communication skills both orally and in writing. Recommended background: CN 2542. This course satisfies the Inquiry Practicum requirement. This course is closed to native speakers of Chinese and heritage speakers, except with written permission from the coordinator of the Chinese track."}
+        {"id":"CN 2543-B02","code":"B02","type":"lecture","status":"waitlist","enrolled":20,"capacity":18,"waitlist":{"taken":0,"capacity":10},"instructors":["Wen-Hua Du"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Olin Hall 126"}],"description":"Cat. I A continuation of Intermediate Chinese II. This course is designed to expand students' skills in listening comprehension, speaking, reading, and writing. The course continues to enhance students’ vocabulary and introduces more complex grammatical patterns, with more emphasis placed on improving communication skills both orally and in writing. Recommended background: CN 2542. This course satisfies the Inquiry Practicum requirement. This course is closed to native speakers of Chinese and heritage speakers, except with written permission from the coordinator of the Chinese track."}
       ],
       "options": [
         ["CN 2543-B01"],
@@ -6871,7 +6871,7 @@
       "level": "Undergraduate",
       "description": "MU 1100 Foundations of Music Theory and Aural Skills (1/3 unit; Cat. I) This course introduces basic music theory concepts and helps students develop aural skills. Course topics include scales, intervals, chords, harmonic progressions, and rhythm. Activities include both written work in music notation and ear training exercises. Recommended Background: some basic knowledge of reading music",
       "sections": [
-        {"id":"MU 1100-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":26,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Mitchell Lutch"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Alden Hall B06 Janet Earle Room"}]},
+        {"id":"MU 1100-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Mitchell Lutch"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Alden Hall B06 Janet Earle Room"}]},
         {"id":"MU 1100-B02","code":"B02","type":"lecture","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Monica Hatch Moysey"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Alden Hall B06 Janet Earle Room"}]},
         {"id":"MU 1100-B03","code":"B03","type":"lecture","status":"open","enrolled":18,"capacity":25,"waitlist":{"taken":0,"capacity":5},"instructors":["Monica Hatch Moysey"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Alden Hall B06 Janet Earle Room"}]}
       ],
@@ -8799,7 +8799,7 @@
       "description": "Cat. I (1/12 unit) Introduction to basic rules and individual/team skill development with practical application through game competition.",
       "sections": [
         {"id":"WPE 1018-B01","code":"B01","type":"workshop","status":"waitlist","enrolled":28,"capacity":28,"waitlist":{"taken":0,"capacity":10},"instructors":["Mickey Cahoon"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":780,"end":830,"location":"Recreation Center Courts 1-2"}]},
-        {"id":"WPE 1018-B02","code":"B02","type":"workshop","status":"waitlist","enrolled":29,"capacity":28,"waitlist":{"taken":6,"capacity":10},"instructors":["Cherise Galasso"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":890,"location":"Recreation Center Courts 1-2"}]}
+        {"id":"WPE 1018-B02","code":"B02","type":"workshop","status":"waitlist","enrolled":29,"capacity":28,"waitlist":{"taken":5,"capacity":10},"instructors":["Cherise Galasso"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":890,"location":"Recreation Center Courts 1-2"}]}
       ],
       "options": [
         ["WPE 1018-B01"],
