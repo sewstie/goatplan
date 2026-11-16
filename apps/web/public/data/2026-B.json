@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-13T17:05:29Z",
+  "generatedAt": "2026-11-16T19:28:02Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -296,7 +296,7 @@
       "level": "Undergraduate",
       "description": "AR 1400 Digital Photography (1/3 units; Cat. II) This course teaches students the use of DSLR cameras to capture high quality images. Students will learn to produce images with correct exposure by using camera controls such as f/stops, shutter speeds, film speeds. The application of principles and elements of design in photography will be explored, and students will learn to create effective compositions by the use of depth of field, action motion, shadows and light, and camera angles. Projects may include still life, portraits, architectural and landscape, product and industrial photography as well as postproduction techniques. Recommended Background: None",
       "sections": [
-        {"id":"AR 1400-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":25,"capacity":24,"waitlist":{"taken":9,"capacity":12},"instructors":["Roshanak Bigonah"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Salisbury Labs 123 Computer Lab"}]}
+        {"id":"AR 1400-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":9,"capacity":12},"instructors":["Roshanak Bigonah"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Salisbury Labs 123 Computer Lab"}]}
       ],
       "options": [
         ["AR 1400-B01"]
@@ -973,9 +973,9 @@
       "level": "Undergraduate",
       "description": "Cat. I Students are guided through the open-ended, real-world, design process starting with the project definition, specification development, management, team interactions and communication, failure and safety criteria, progress reporting, marketing concepts, documentation and technical presentation of the final project outcome. The course will include a significant writing component, will make use of computers, and hands-on design explorations. Students who have previously received credit for BME 2300 may not receive credit for BME 3300.",
       "sections": [
-        {"id":"BME 3300-BL01","code":"BL01","type":"lecture","status":"open","enrolled":36,"capacity":54,"waitlist":{"taken":0,"capacity":20},"instructors":["Solomon Mensah"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Salisbury Labs 402"}]},
+        {"id":"BME 3300-BL01","code":"BL01","type":"lecture","status":"open","enrolled":35,"capacity":54,"waitlist":{"taken":0,"capacity":20},"instructors":["Solomon Mensah"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Salisbury Labs 402"}]},
         {"id":"BME 3300-BX01","code":"BX01","type":"lab","status":"open","enrolled":15,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Solomon Mensah"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":540,"end":650,"location":"Atwater Kent 014 BME Lab"}]},
-        {"id":"BME 3300-BX02","code":"BX02","type":"lab","status":"open","enrolled":14,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Solomon Mensah"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":770,"location":"Atwater Kent 014 BME Lab"}]},
+        {"id":"BME 3300-BX02","code":"BX02","type":"lab","status":"open","enrolled":13,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Solomon Mensah"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":770,"location":"Atwater Kent 014 BME Lab"}]},
         {"id":"BME 3300-BX03","code":"BX03","type":"lab","status":"open","enrolled":7,"capacity":18,"waitlist":{"taken":0,"capacity":0},"instructors":["Solomon Mensah"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":890,"location":"Atwater Kent 014 BME Lab"}]}
       ],
       "options": [
@@ -1480,12 +1480,12 @@
       "sections": [
         {"id":"CH 1020-BL01","code":"BL01","type":"lecture","status":"closed","enrolled":121,"capacity":120,"waitlist":{"taken":0,"capacity":0},"instructors":["Raul Orduna Picon"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":480,"end":530,"location":"Atwater Kent 116 Newell Hall"}]},
         {"id":"CH 1020-BL02","code":"BL02","type":"lecture","status":"open","enrolled":116,"capacity":120,"waitlist":{"taken":0,"capacity":0},"instructors":["Drew Brodeur"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":660,"end":710,"location":"Atwater Kent 116 Newell Hall"}]},
-        {"id":"CH 1020-BL03","code":"BL03","type":"lecture","status":"open","enrolled":78,"capacity":120,"waitlist":{"taken":0,"capacity":0},"instructors":["Bruce Bursten"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":900,"end":950,"location":"Atwater Kent 116 Newell Hall"}]},
+        {"id":"CH 1020-BL03","code":"BL03","type":"lecture","status":"open","enrolled":77,"capacity":120,"waitlist":{"taken":0,"capacity":0},"instructors":["Bruce Bursten"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":900,"end":950,"location":"Atwater Kent 116 Newell Hall"}]},
         {"id":"CH 1020-BX02","code":"BX02","type":"lab","status":"closed","enrolled":24,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Ivan Mardilovich"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Goddard Hall 109 Chem Lab"}]},
         {"id":"CH 1020-BX03","code":"BX03","type":"lab","status":"closed","enrolled":24,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Juwana de Silva"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Goddard Hall 109 Chem Lab"}]},
         {"id":"CH 1020-BX04","code":"BX04","type":"lab","status":"closed","enrolled":24,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Juwana de Silva"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Goddard Hall 109 Chem Lab"}]},
         {"id":"CH 1020-BX05","code":"BX05","type":"lab","status":"open","enrolled":22,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Ivan Mardilovich"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Goddard Hall 109 Chem Lab"}]},
-        {"id":"CH 1020-BX06","code":"BX06","type":"lab","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Ivan Mardilovich"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":480,"end":590,"location":"Goddard Hall 109 Chem Lab"}]},
+        {"id":"CH 1020-BX06","code":"BX06","type":"lab","status":"open","enrolled":22,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Ivan Mardilovich"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":480,"end":590,"location":"Goddard Hall 109 Chem Lab"}]},
         {"id":"CH 1020-BX07","code":"BX07","type":"lab","status":"open","enrolled":22,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Ivan Mardilovich"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Goddard Hall 109 Chem Lab"}]},
         {"id":"CH 1020-BX08","code":"BX08","type":"lab","status":"closed","enrolled":24,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Ivan Mardilovich"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Goddard Hall 109 Chem Lab"}]},
         {"id":"CH 1020-BX09","code":"BX09","type":"lab","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Ivan Mardilovich"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Goddard Hall 109 Chem Lab"}]},
@@ -1821,7 +1821,7 @@
       "level": "Graduate",
       "description": "This course includes a review of prototypical chemical reactors, including design of batch, stirred tank, and tubular reactors. Theories of reaction kinetics and catalysis for simple and complex reactions are addressed. Reactor design is discussed within the context of complex transport phenomena and reaction kinetics, including effects of bulk and pore diffusion and multiphase reactions/reactors. Techniques for experimentation, reaction data treatment, catalyst preparation and characterization, and computational tools are also included. Students cannot receive credit for this course and CHE 506 or CHE 507, which this class replaces.",
       "sections": [
-        {"id":"CHE 509-F01","code":"F01","type":"lecture","status":"open","enrolled":15,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Ravindra Datta"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Kaven Hall 203 CARS Computer Lab"}]}
+        {"id":"CHE 509-F01","code":"F01","type":"lecture","status":"open","enrolled":14,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Ravindra Datta"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Kaven Hall 203 CARS Computer Lab"}]}
       ],
       "options": [
         ["CHE 509-F01"]
@@ -1835,7 +1835,7 @@
       "level": "Graduate",
       "description": "Thermodynamics is at the heart of many systems of interest to chemical engineers, from the efficiency of simple mechanical processes to the equilibria of complex reactions. This course is a rigorous treatment of classicalthermodynamics, with reference to the field of statistical thermodynamics. Key modules include First and Second Law analysis; behavior and interrelationships of thermodynamic properties; and fluid phase and chemical equilibria. Exampletopics may include analysis of open and dynamic systems; fundamental relationships; Legendre transforms and generalized potentials; Maxwell relationships; stability theory; thermodynamics of mixtures; fugacity, activity, and chemical potential; phase equilibria of systems containing two or more components; and generalized treatment of chemical equilibria.",
       "sections": [
-        {"id":"CHE 561-F01","code":"F01","type":"lecture","status":"open","enrolled":22,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Michael Timko"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Mon","Wed","Thu"],"start":480,"end":590,"location":"Stratton Hall 207"}]}
+        {"id":"CHE 561-F01","code":"F01","type":"lecture","status":"open","enrolled":21,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Michael Timko"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Mon","Wed","Thu"],"start":480,"end":590,"location":"Stratton Hall 207"}]}
       ],
       "options": [
         ["CHE 561-F01"]
@@ -3556,7 +3556,7 @@
       "level": "Undergraduate",
       "description": "EDU 4100: Teaching Methods in Science, Technology, Engineering, and Mathematics (Cat. I, 1/3-unit) This course provides students with skills and instructional strategies necessary for success in teaching Science (biology, chemistry, physics), Technology (computer science), Engineering, and Mathematics in middle and high school classrooms. Students are introduced to the seven elements of the Candidate Assessment of Performance (CAP), which is the evaluative tool used to obtain teaching licensure within the Commonwealth of Massachusetts. Course topics include: a brief history of education; curriculum and course guidelines (Massachusetts Education Reform and regulations 603 CMR 7 .00, state curricular frameworks, national standards); legal issues; developing unit and lesson plans; and evidence-based teaching methods. Students learn about the elements of an engaging and inclusive lesson, create and design series of lessons to form a unit plan using backward design, how to manage a classroom, group work, and how to develop a classroom management plan, and how to assess student understanding using formative and summative techniques. A portion of the course requires students to complete field work in a local classroom to prepare for the student teaching practicum. Students who took ID 3100 for credit are not eligible to take EDU 4200 for credit. Recommended background: PSY 1401 or 2401 or 2410, EDU 2200, EDU 2300, EDU 3200",
       "sections": [
-        {"id":"EDU 4100-B01","code":"B01","type":"lecture","status":"open","enrolled":14,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":480,"end":590,"location":"Kaven Hall 204"}]}
+        {"id":"EDU 4100-B01","code":"B01","type":"lecture","status":"open","enrolled":14,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["TJ Noviello"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":480,"end":590,"location":"Kaven Hall 204"}]}
       ],
       "options": [
         ["EDU 4100-B01"]
@@ -4861,7 +4861,7 @@
       "level": "Undergraduate",
       "description": "Cat. II Latin America and the Caribbean are center stage in discussions about the inequalities and injustices of our current global ecological crisis. This course offers a two-fold approach. 1) It examines historical and contemporary processes producing—and contesting—environmental injustices in Latin America and the Caribbean Basin. 2) It analyzes the role of this region in the politics and policy of global environmental inequalities, including the region’s relationship with the United States, China, and other major international actors in issues such as climate change and sustainable development. This course is especially appropriate for students interested in environment and sustainability issues and international/global affairs, and for students who expect to complete their HUA, IQP, and/or MQP at WPI Project centers in Latin America or the Caribbean. Recommended background: None",
       "sections": [
-        {"id":"INTL 2320-B01","code":"B01","type":"lecture","status":"open","enrolled":17,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["William San Martín"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Stratton Hall 313"}]}
+        {"id":"INTL 2320-B01","code":"B01","type":"lecture","status":"open","enrolled":16,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["William San Martín"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Stratton Hall 313"}]}
       ],
       "options": [
         ["INTL 2320-B01"]
@@ -4942,10 +4942,10 @@
       "level": "Undergraduate",
       "description": "Cat. I, This course provides an introduction to differentiation and its applications. Topics covered include: functions and their graphs, limits, continuity, differentiation, linear approximation, chain rule, min/max problems, and applications of derivatives.Recommended background: Algebra, trigonometry and analytic geometry. Although the course will make use of computers, no programming experience is assumed.Students may not receive credit for both MA 1021 and MA 1020.",
       "sections": [
-        {"id":"MA 1021-BD01","code":"BD01","type":"discussion","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Marcel Blais"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":650,"location":"Stratton Hall 205"}]},
+        {"id":"MA 1021-BD01","code":"BD01","type":"discussion","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Marcel Blais"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":650,"location":"Stratton Hall 205"}]},
         {"id":"MA 1021-BD02","code":"BD02","type":"discussion","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Marcel Blais"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":660,"end":710,"location":"Stratton Hall 201"}]},
-        {"id":"MA 1021-BL01","code":"BL01","type":"lecture","status":"open","enrolled":33,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Marcel Blais"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Salisbury Labs 104"}]},
-        {"id":"MA 1021-BX01","code":"BX01","type":"lab","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":830,"location":"Stratton Hall 116 Computer Lab"}]},
+        {"id":"MA 1021-BL01","code":"BL01","type":"lecture","status":"open","enrolled":32,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Marcel Blais"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Salisbury Labs 104"}]},
+        {"id":"MA 1021-BX01","code":"BX01","type":"lab","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":830,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1021-BX02","code":"BX02","type":"lab","status":"open","enrolled":20,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":900,"end":950,"location":"Stratton Hall 116 Computer Lab"}]}
       ],
       "options": [
@@ -6801,7 +6801,7 @@
       "level": "Graduate",
       "description": "Reports on the state-of-the-art in various areas of research and development in materials science and engineering will be presented by the faculty and outside experts. Reports on graduate student research in progress will also be required.",
       "sections": [
-        {"id":"MTE 580-F01","code":"F01","type":"seminar","status":"open","enrolled":34,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Christiansen"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Washburn 229"}]}
+        {"id":"MTE 580-F01","code":"F01","type":"seminar","status":"open","enrolled":33,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Christiansen"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Washburn 229"}]}
       ],
       "options": [
         ["MTE 580-F01"]
@@ -7516,8 +7516,8 @@
         {"id":"PH 1120-BL10","code":"BL10","type":"lecture","status":"open","enrolled":135,"capacity":144,"waitlist":{"taken":0,"capacity":0},"instructors":["Snehalata Kadam"],"delivery":"in-person","meetings":[{"days":["Mon","Wed","Fri"],"start":780,"end":830,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
         {"id":"PH 1120-BS01","code":"BS01","type":"lecture","status":"open","enrolled":41,"capacity":110,"waitlist":{"taken":0,"capacity":0},"instructors":["Qi Wen"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Innovation Studio 203 Active Learning Classroom South / Innovation Studio 205 Active Learning Classroom North"}]},
         {"id":"PH 1120-BS01-Multipurpose","code":"BS01-Multipurpose","type":"discussion","status":"open","enrolled":41,"capacity":110,"waitlist":{"taken":0,"capacity":0},"instructors":["Qi Wen"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
-        {"id":"PH 1120-BS02","code":"BS02","type":"lecture","status":"open","enrolled":91,"capacity":110,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 203 Active Learning Classroom South / Innovation Studio 205 Active Learning Classroom North"}]},
-        {"id":"PH 1120-BS02-Multipurpose","code":"BS02-Multipurpose","type":"discussion","status":"open","enrolled":91,"capacity":110,"waitlist":{"taken":0,"capacity":0},"instructors":["Thomas Noviello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
+        {"id":"PH 1120-BS02","code":"BS02","type":"lecture","status":"open","enrolled":91,"capacity":110,"waitlist":{"taken":0,"capacity":0},"instructors":["TJ Noviello"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 203 Active Learning Classroom South / Innovation Studio 205 Active Learning Classroom North"}]},
+        {"id":"PH 1120-BS02-Multipurpose","code":"BS02-Multipurpose","type":"discussion","status":"open","enrolled":91,"capacity":110,"waitlist":{"taken":0,"capacity":0},"instructors":["TJ Noviello"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
         {"id":"PH 1120-BX01","code":"BX01","type":"lab","status":"open","enrolled":22,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":540,"end":650,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1120-BX02","code":"BX02","type":"lab","status":"open","enrolled":22,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":660,"end":770,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1120-BX03","code":"BX03","type":"lab","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":890,"location":"Olin Hall 117 Physics Lab"}]},
@@ -9363,7 +9363,7 @@
         {"id":"WPE 1601-F56","code":"F56","type":"workshop","title":"Insight Program - Pre-Health Professions","status":"open","enrolled":43,"capacity":54,"waitlist":{"taken":0,"capacity":0},"instructors":["Alyssa Holmes"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Salisbury Labs 105"}]},
         {"id":"WPE 1601-F57","code":"F57","type":"workshop","status":"open","enrolled":37,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Snehalata Kadam"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Fuller Labs 311"}]},
         {"id":"WPE 1601-F58","code":"F58","type":"workshop","title":"Insight Program - Interpersonal Meets Intercultural","status":"open","enrolled":32,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Adrienne Boertjens"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Salisbury Labs 407"}]},
-        {"id":"WPE 1601-F59","code":"F59","type":"workshop","title":"Insight Program - Transfer Students","status":"open","enrolled":25,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Lindsey Briggs"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":540,"end":590,"location":"Higgins Labs 202"}]},
+        {"id":"WPE 1601-F59","code":"F59","type":"workshop","title":"Insight Program - Transfer Students","status":"open","enrolled":24,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Lindsey Briggs"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":540,"end":590,"location":"Higgins Labs 202"}]},
         {"id":"WPE 1601-F60","code":"F60","type":"workshop","title":"Insight Program - Special Interest","status":"open","enrolled":27,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Gina Heinsohn"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-12-11"},"meetings":[{"days":["Wed"],"start":960,"end":1010,"location":"Atwater Kent 232"}]}
       ],
       "options": [
