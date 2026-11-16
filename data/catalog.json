@@ -513,9 +513,10 @@
       "title": "Modern Architecture In The American Era, 1750-2001 And Beyond",
       "credits": 3,
       "level": "Undergraduate",
-      "lastOffered": "2026-B",
+      "lastOffered": "2027-C",
       "termLetters": [
-        "B"
+        "B",
+        "C"
       ]
     },
     {
@@ -5762,8 +5763,10 @@
       "title": "Econometric Modeling",
       "credits": 3,
       "level": "Undergraduate",
-      "lastOffered": null,
-      "termLetters": []
+      "lastOffered": "2027-C",
+      "termLetters": [
+        "C"
+      ]
     },
     {
       "code": "ECON 2135",
@@ -7227,9 +7230,10 @@
       "title": "Introductory Topics in Historical Thinking",
       "credits": 3,
       "level": "Undergraduate",
-      "lastOffered": "2026-B",
+      "lastOffered": "2027-C",
       "termLetters": [
-        "B"
+        "B",
+        "C"
       ]
     },
     {
@@ -8479,11 +8483,13 @@
     },
     {
       "code": "INTL 1100",
-      "title": "Introduction to International and Global Studies",
+      "title": "Introduction To International And Global Studies",
       "credits": 3,
       "level": "Undergraduate",
-      "lastOffered": null,
-      "termLetters": []
+      "lastOffered": "2027-C",
+      "termLetters": [
+        "C"
+      ]
     },
     {
       "code": "INTL 2100",
@@ -11811,7 +11817,7 @@
     {
       "code": "PH 101X",
       "title": "Frontiers And Opportunities In Physics",
-      "credits": 3,
+      "credits": 0.75,
       "level": "Undergraduate",
       "lastOffered": "2027-C",
       "termLetters": [
