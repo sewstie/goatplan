@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-16T19:28:02Z",
+  "generatedAt": "2026-11-17T18:22:27Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -2118,7 +2118,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides a broad view of computer networks. The course exposes students to all seven layers of OSI Reference Model while providing an introduction into newer topics such as wireless networking and Internet traffic concerns. The objective is to focus on an understanding of fundamental concepts of modern computer network architecture from a design and performance perspective. Topics covered include physical layer considerations, network protocols, wide area networks, local area networks, wireless networks, switches and routing, congestion, Internet traffic, and network security. Students will be expected to do extensive systems/network programming and will be expected to make use of simulation and measurement tools to gain an appreciation of current network design and performance issues. This course is also highly recommended for RBE and IMGD majors. Recommended background: CS 2301 or CS 2303, or a significant knowledge of C/C++.",
       "sections": [
-        {"id":"CS 3516-B01","code":"B01","type":"lecture","status":"open","enrolled":45,"capacity":55,"waitlist":{"taken":0,"capacity":20},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 520"}]}
+        {"id":"CS 3516-B01","code":"B01","type":"lecture","status":"open","enrolled":44,"capacity":55,"waitlist":{"taken":0,"capacity":20},"instructors":["Shubbhi Taneja"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 520"}]}
       ],
       "options": [
         ["CS 3516-B01"]
@@ -2147,8 +2147,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides an introduction to modern computational methods for differential and integral calculus and differential equations. Topics covered include interpolation and polynomial approximation, approximation theory, numerical differentiation and integration, and numerical solutions of ordinary differential equations. Error analysis will be emphasized throughout. Recommended background: MA 2051. An ability to write computer programs in a scientific language is assumed. Undergraduate credit may not be earned for both this course and for MA 3255/CS 4031.",
       "sections": [
-        {"id":"CS 4033-BD01","code":"BD01","type":"discussion","status":"open","enrolled":27,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 201"}]},
-        {"id":"CS 4033-BL01","code":"BL01","type":"lecture","status":"open","enrolled":27,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Salisbury Labs 305"}]}
+        {"id":"CS 4033-BD01","code":"BD01","type":"discussion","status":"open","enrolled":26,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 201"}]},
+        {"id":"CS 4033-BL01","code":"BL01","type":"lecture","status":"open","enrolled":26,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Salisbury Labs 305"}]}
       ],
       "options": [
         ["CS 4033-BD01","CS 4033-BL01"]
@@ -5663,8 +5663,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course provides an introduction to modern computational methods for differential and integral calculus and differential equations. Topics covered include interpolation and polynomial approximation, approximation theory, numerical differentiation and integration, and numerical solutions of ordinary differential equations. Error analysis will be emphasized throughout. Recommended background: MA 2051. An ability to write computer programs in a scientific language is assumed. Undergraduate credit may not be earned for both this course and for MA 3255/CS 4031.",
       "sections": [
-        {"id":"MA 3457-BD01","code":"BD01","type":"discussion","status":"open","enrolled":27,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 201"}]},
-        {"id":"MA 3457-BL01","code":"BL01","type":"lecture","status":"open","enrolled":27,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Salisbury Labs 305"}]}
+        {"id":"MA 3457-BD01","code":"BD01","type":"discussion","status":"open","enrolled":26,"capacity":40,"waitlist":{"taken":0,"capacity":0},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 201"}]},
+        {"id":"MA 3457-BL01","code":"BL01","type":"lecture","status":"open","enrolled":26,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Andre Nachbin"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Salisbury Labs 305"}]}
       ],
       "options": [
         ["MA 3457-BD01","MA 3457-BL01"]
@@ -6369,7 +6369,7 @@
       "level": "Graduate",
       "description": "(2 Credits) Surface Metrology is about measuring, characterizing, and analyzing surface topographies or textures. This course covers conventional and developing measurement and characterization of roughness. It emphasizes research and covers a wide variety of applications, including, adhesion, friction, fatigue life, mass transfer, scattering, wear, manufacturing, food science, wetting, physical anthropology, and archeology. Surface metrology has applications in practically all engineering disciplines and sciences. Research principles are applied to critical evaluations of research methods. Students learn multiscale methods for discovering correlations between processing, textures, and behavior , and for discriminating surface textures supposed to be different because of their performance or manufacture. Results support product and process design, and quality assurance. Students create detailed project proposals on topics of their choosing, including literature reviews, preparation and testing of surfaces, measurements, characterizations, and analyses. Students cannot receive credit for this course if they have received credit for the Special Topics (ME 593/MTE 594/MFE 594) version of this course, or for ME 5370/MTE 5841/MFE 5841 Surface Metrology.",
       "sections": [
-        {"id":"ME 5371-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":15,"capacity":12,"waitlist":{"taken":3,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"ME 5371-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":15,"capacity":12,"waitlist":{"taken":2,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["ME 5371-B01"]
@@ -6481,7 +6481,7 @@
       "level": "Graduate",
       "description": "(2 Credits) Surface Metrology is about measuring, characterizing, and analyzing surface topographies or textures. This course covers conventional and developing measurement and characterization of roughness. It emphasizes research and covers a wide variety of applications, including, adhesion, friction, fatigue life, mass transfer, scattering, wear, manufacturing, food science, wetting, physical anthropology, and archeology. Surface metrology has applications in practically all engineering disciplines and sciences. Research principles are applied to critical evaluations of research methods. Students learn multiscale methods for discovering correlations between processing, textures, and behavior , and for discriminating surface textures supposed to be different because of their performance or manufacture. Results support product and process design, and quality assurance. Students create detailed project proposals on topics of their choosing, including literature reviews, preparation and testing of surfaces, measurements, characterizations, and analyses. Students cannot receive credit for this course if they have received credit for the Special Topics (ME 593/MTE 594/MFE 594) version of this course, or for ME 5370/MTE 5841/MFE 5841 Surface Metrology.",
       "sections": [
-        {"id":"MFE 5843-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":15,"capacity":12,"waitlist":{"taken":3,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"MFE 5843-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":15,"capacity":12,"waitlist":{"taken":2,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MFE 5843-B01"]
@@ -6815,7 +6815,7 @@
       "level": "Graduate",
       "description": "(2 Credits) Surface Metrology is about measuring, characterizing, and analyzing surface topographies or textures. This course covers conventional and developing measurement and characterization of roughness. It emphasizes research and covers a wide variety of applications, including, adhesion, friction, fatigue life, mass transfer, scattering, wear, manufacturing, food science, wetting, physical anthropology, and archeology. Surface metrology has applications in practically all engineering disciplines and sciences. Research principles are applied to critical evaluations of research methods. Students learn multiscale methods for discovering correlations between processing, textures, and behavior , and for discriminating surface textures supposed to be different because of their performance or manufacture. Results support product and process design, and quality assurance. Students create detailed project proposals on topics of their choosing, including literature reviews, preparation and testing of surfaces, measurements, characterizations, and analyses. Students cannot receive credit for this course if they have received credit for the Special Topics (ME 593/MTE 594/MFE 594) version of this course, or for ME 5370/MTE 5841/MFE 5841 Surface Metrology.",
       "sections": [
-        {"id":"MTE 5843-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":15,"capacity":12,"waitlist":{"taken":3,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
+        {"id":"MTE 5843-B01","code":"B01","type":"lecture","status":"waitlist","enrolled":15,"capacity":12,"waitlist":{"taken":2,"capacity":10},"instructors":["Christopher Brown"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
         ["MTE 5843-B01"]
@@ -7935,9 +7935,9 @@
       "level": "Undergraduate",
       "description": "Cat. I An introduction to the pivotal ideas and developments of twentieth-century physics. Topics include: special relativity, photoelectric effect, X-rays, Compton scattering, blackbody radiation, DeBroglie waves, uncertainty principle, Bohr theory of the atom, atomic nuclei, radioactivity, and elementary particles. Recommended background: familiarity with material covered in PH 1110 and PH 1120 (or PH 1111 and PH 1121) and completion of MA 1021 and MA 1022.",
       "sections": [
-        {"id":"PH 1130-BD01","code":"BD01","type":"discussion","status":"open","enrolled":30,"capacity":64,"waitlist":{"taken":0,"capacity":0},"instructors":["Kun-Ta Wu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Unity Hall 400"}]},
-        {"id":"PH 1130-BL01","code":"BL01","type":"lecture","status":"open","enrolled":30,"capacity":64,"waitlist":{"taken":0,"capacity":20},"instructors":["Kun-Ta Wu"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 420"}]},
-        {"id":"PH 1130-BX01","code":"BX01","type":"lab","status":"open","enrolled":14,"capacity":16,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":600,"end":710,"location":"Olin Hall 117 Physics Lab"}]},
+        {"id":"PH 1130-BD01","code":"BD01","type":"discussion","status":"open","enrolled":29,"capacity":64,"waitlist":{"taken":0,"capacity":0},"instructors":["Kun-Ta Wu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Unity Hall 400"}]},
+        {"id":"PH 1130-BL01","code":"BL01","type":"lecture","status":"open","enrolled":29,"capacity":64,"waitlist":{"taken":0,"capacity":20},"instructors":["Kun-Ta Wu"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Unity Hall 420"}]},
+        {"id":"PH 1130-BX01","code":"BX01","type":"lab","status":"open","enrolled":13,"capacity":16,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":600,"end":710,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1130-BX02","code":"BX02","type":"lab","status":"open","enrolled":6,"capacity":16,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":720,"end":830,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1130-BX03","code":"BX03","type":"lab","status":"open","enrolled":0,"capacity":16,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":710,"location":"Olin Hall 117 Physics Lab"}]},
         {"id":"PH 1130-BX04","code":"BX04","type":"lab","status":"open","enrolled":10,"capacity":16,"waitlist":{"taken":0,"capacity":0},"instructors":["Veneta Tountcheva"],"delivery":"in-person","meetings":[{"days":["Fri"],"start":720,"end":830,"location":"Olin Hall 117 Physics Lab"}]}

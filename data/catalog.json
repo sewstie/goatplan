@@ -3953,9 +3953,10 @@
       "title": "Deep Learning",
       "credits": 3,
       "level": "Undergraduate",
-      "lastOffered": "2026-B",
+      "lastOffered": "2027-C",
       "termLetters": [
-        "B"
+        "B",
+        "C"
       ]
     },
     {
@@ -4730,9 +4731,10 @@
       "title": "Deep Learning",
       "credits": 3,
       "level": "Undergraduate",
-      "lastOffered": "2026-B",
+      "lastOffered": "2027-C",
       "termLetters": [
-        "B"
+        "B",
+        "C"
       ]
     },
     {
@@ -13452,6 +13454,16 @@
       ]
     },
     {
+      "code": "SYS 503",
+      "title": "Systems Engineering Management and Leadership",
+      "credits": 3,
+      "level": "Graduate",
+      "lastOffered": "2027-D",
+      "termLetters": [
+        "D"
+      ]
+    },
+    {
       "code": "SYS 510",
       "title": "Systems Architecture And Design",
       "credits": 3,
@@ -13503,6 +13515,27 @@
       "lastOffered": "2027-D",
       "termLetters": [
         "C",
+        "D"
+      ]
+    },
+    {
+      "code": "SYS 544",
+      "title": "Technical Decision and Risk Analysis",
+      "credits": 3,
+      "level": "Graduate",
+      "lastOffered": "2027-D",
+      "termLetters": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "code": "SYS 552",
+      "title": "Engineering Dependable and Secure Systems",
+      "credits": 3,
+      "level": "Graduate",
+      "lastOffered": "2027-D",
+      "termLetters": [
         "D"
       ]
     },
