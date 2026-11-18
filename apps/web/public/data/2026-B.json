@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-17T18:22:27Z",
+  "generatedAt": "2026-11-18T17:56:04Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -455,8 +455,8 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/9 unit) Continuation of AS2001. Topics include full-range leadership, problem solving, motivation, and continued development of communication skills.Leadership Laboratory is mandatory for AFROTC cadets and complements this course by providing cadets with followership experiences.",
       "sections": [
-        {"id":"AS 2002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":13,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Fuller Labs 320"}]},
-        {"id":"AS 2002-BX01","code":"BX01","type":"lab","status":"open","enrolled":13,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
+        {"id":"AS 2002-BL01","code":"BL01","type":"lecture","status":"open","enrolled":14,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Fuller Labs 320"}]},
+        {"id":"AS 2002-BX01","code":"BX01","type":"lab","status":"open","enrolled":14,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Lee Fischer"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
         ["AS 2002-BL01","AS 2002-BX01"]
