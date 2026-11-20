@@ -66,7 +66,8 @@ export function ExportPanel({ id, anchor, onClose }: { id: string; anchor: RefOb
         <>
           <p role="status" className="pt-12 text-10 leading-16 font-650">Downloaded ✓ <span className="font-510 text-ink-muted">{fileName}</span></p>
           <ul className="list-disc pt-6 pl-16 text-8-5 leading-16 text-ink-muted">
-            <li>Apple Calendar or Outlook: open the file.</li>
+            <li>Open the file in Apple Calendar or Outlook.</li>
+            <li>If Outlook shows every class in one color, assign a color to each course code in Manage Categories.</li>
             <li>Google Calendar: Settings, then Import &amp; export.</li>
             <li>Export again if your sections change.</li>
           </ul>

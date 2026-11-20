@@ -96,8 +96,8 @@ it("downloads the chosen sections as a calendar file and records the event", asy
   expect(downloads[0].name).toBe("GoatPlan-C-Term-2027.ics");
   expect(downloads[0].blob.type).toBe("text/calendar;charset=utf-8");
   const text = await readBlob(downloads[0].blob);
-  expect(text).toContain("SUMMARY:AE 2320 Lecture CL01");
-  expect(text).toContain("SUMMARY:AE 2320 Lab CX01");
+  expect(text).toContain("Section: Lecture CL01");
+  expect(text).toContain("Section: Lab CX01");
   expect(text).not.toContain("CX02");
   expect(track).toHaveBeenCalledExactlyOnceWith("ics_exported");
   const dialog = screen.getByRole("dialog", { name: "Export to calendar" });

@@ -3,6 +3,40 @@ import type { DateRange } from "@/lib/data/types";
 import type { SavedCourse } from "@/lib/plans/types";
 import type { TermCalendar } from "./term-calendar";
 
+const CATEGORY_COLORS = ["Blue", "Green", "Purple", "Orange", "Red", "Yellow", "Teal", "Brown", "Olive", "Gray"];
+const BUILDING_CODES: Record<string, string> = {
+  "Alden Hall": "AH",
+  "Atwater Kent": "AK",
+  "Daniels Hall": "DH",
+  "Fuller Labs": "FL",
+  "Gateway Park 1 Room": "GP1",
+  "Gateway Park 2 Room": "GP2",
+  "Goddard Hall": "GH",
+  "Gordon Library": "GL",
+  "Harrington Auditorium": "HA",
+  "Higgins Labs": "HL",
+  "Innovation Studio": "IS",
+  "Kaven Hall": "KH",
+  "Olin Hall": "OH",
+  "Recreation Center": "RC",
+  "Salisbury Labs": "SL",
+  "Salisbury Laboratories": "SL",
+  "Stratton Hall": "SH",
+  "Unity Hall": "UH",
+  Washburn: "WB",
+  "Washburn Shops": "WB",
+};
+
+function calendarRoom(location: string): string {
+  return roomName(location).split(" / ").map((place) => {
+    if (place.startsWith("Fuller Labs PHL ")) return "FLPHLWR";
+    if (place.startsWith("Fuller Labs PHU ")) return "FLPHUPR";
+    const match = /^(.+) ([A-Z]?\d+[A-Z]?|GH)(?: .*)?$/.exec(place);
+    if (!match || !Object.hasOwn(BUILDING_CODES, match[1])) return place;
+    return BUILDING_CODES[match[1]] + match[2];
+  }).join(" / ");
+}
+
 const TIME_ZONE = "America/New_York";
 const DAY_MS = 86_400_000;
 const HOUR_MS = 3_600_000;
@@ -99,18 +133,18 @@ function eventTitle(courseCode: string, section: Pick<Section, "code" | "type">)
 
 function description(section: Section): string {
   const professors = showsInstructor(section) ? uniqueInstructors([section]) : [];
-  const lines = [`Section: ${section.code}`];
+  const lines = [`Section: ${sectionTypeName(section.type)} ${section.code}`];
   if (professors.length > 0) lines.unshift(`${professors.length === 1 ? "Professor" : "Professors"}: ${professors.join(", ")}`);
   return lines.join("\n");
 }
 
-function eventLines(uid: string, courseCode: string, section: Section, meeting: Meeting, day: number, stamp: string, repeats: string[]): string[] {
-  const location = roomName(meeting.location);
+function eventLines(uid: string, courseFields: string[], section: Section, meeting: Meeting, day: number, stamp: string, repeats: string[]): string[] {
+  const location = calendarRoom(meeting.location);
   return [
     "BEGIN:VEVENT",
     `UID:${uid}@goatplan`,
     `DTSTAMP:${stamp}`,
-    `SUMMARY:${escapeText(eventTitle(courseCode, section))}`,
+    ...courseFields,
     `DTSTART;TZID=${TIME_ZONE}:${localTime(day, meeting.start)}`,
     `DTEND;TZID=${TIME_ZONE}:${localTime(day, meeting.end)}`,
     ...repeats,
@@ -120,31 +154,34 @@ function eventLines(uid: string, courseCode: string, section: Section, meeting: 
   ];
 }
 
-function meetingEvents(courseCode: string, section: Section, meeting: Meeting, index: number, term: Pick<Term, "id" | "start" | "end">, calendar: TermCalendar | null, stamp: string): string[] {
+function meetingEvents(courseFields: string[], section: Section, meeting: Meeting, index: number, term: Pick<Term, "id" | "start" | "end">, calendar: TermCalendar | null, stamp: string): string[] {
   const dates = section.dates ?? term;
   const uid = `${term.id}-${encodeURIComponent(section.id)}-${index}`;
   const days = classDays(dates, meeting.days);
   const changed = new Set([...(calendar?.noClass ?? []), ...(calendar?.swaps ?? [])].map((entry) => utcDay(entry.date)));
   const removed = days.filter((day) => changed.has(day));
   const weekly = days.length > removed.length
-    ? eventLines(uid, courseCode, section, meeting, days[0], stamp, [
+    ? eventLines(uid, courseFields, section, meeting, days[0], stamp, [
         `RRULE:FREQ=WEEKLY;BYDAY=${meeting.days.map((day) => day.slice(0, 2).toUpperCase()).join(",")};UNTIL=${until(dates.end)}`,
         ...removed.map((day) => `EXDATE;TZID=${TIME_ZONE}:${localTime(day, meeting.start)}`),
       ])
     : [];
   const swapped = (calendar?.swaps ?? [])
     .filter((swap) => meeting.days.includes(swap.runs) && swap.date >= dates.start && swap.date <= dates.end)
-    .flatMap((swap) => eventLines(`${uid}-${swap.date.replaceAll("-", "")}`, courseCode, section, meeting, utcDay(swap.date), stamp, []));
+    .flatMap((swap) => eventLines(`${uid}-${swap.date.replaceAll("-", "")}`, courseFields, section, meeting, utcDay(swap.date), stamp, []));
   return [...weekly, ...swapped];
 }
 
 export function buildIcs(schedule: readonly SavedCourse[], term: Pick<Term, "id" | "start" | "end">, now: Date, calendar: TermCalendar | null = null): string {
   const stamp = utcStamp(now.getTime());
-  const events = schedule.flatMap((course) =>
-    course.sections.flatMap((section) =>
-      section.meetings.flatMap((meeting, index) => meetingEvents(course.code, section, meeting, index, term, calendar, stamp)),
-    ),
-  );
+  const events = schedule.flatMap((course, index) => {
+    const color = CATEGORY_COLORS[index % CATEGORY_COLORS.length];
+    const title = course.title && course.title !== course.code ? `${course.code} ${course.title}` : course.code;
+    const fields = [`SUMMARY:${escapeText(title)}`, `CATEGORIES:${color} Category,${escapeText(course.code)}`, `COLOR:${color}`];
+    return course.sections.flatMap((section) =>
+      section.meetings.flatMap((meeting, index) => meetingEvents(fields, section, meeting, index, term, calendar, stamp)),
+    );
+  });
   const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//GoatPlan//Calendar export//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", ...VTIMEZONE, ...events, "END:VCALENDAR"];
   return `${lines.map(fold).join("\r\n")}\r\n`;
 }

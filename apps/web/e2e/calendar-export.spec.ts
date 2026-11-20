@@ -39,7 +39,8 @@ for (const width of [1440, 834, 375]) {
     expect(text.startsWith("BEGIN:VCALENDAR\r\n")).toBe(true);
     expect(text.endsWith("END:VCALENDAR\r\n")).toBe(true);
     expect(text).toContain("TZID:America/New_York");
-    expect(text).toMatch(/SUMMARY:AE 2410 Lecture \w+\r\n/);
+    expect(text).toContain("SUMMARY:AE 2410 Introduction to Aerospace Structures\r\n");
+    expect(text).toContain("CATEGORIES:Blue Category,AE 2410\r\n");
     expect(text).toMatch(/DTSTART;TZID=America\/New_York:202701\d\dT\d{6}\r\n/);
     expect(text).toMatch(/RRULE:FREQ=WEEKLY;BYDAY=[A-Z,]+;UNTIL=20270306T045959Z\r\n/);
     expect(text).not.toContain("AE 5131");

@@ -47,6 +47,7 @@ export function exportLine(summary: ExportSummary): string {
 export function exportSummary(schedule: readonly SavedCourse[], term: DateRange, calendar: TermCalendar | null): ExportSummary {
   const sections: ExportSection[] = [];
   const untimed: string[] = [];
+  const ranges: DateRange[] = [];
   for (const course of schedule) {
     for (const section of course.sections) {
       const name = `${course.code} · ${sectionCode(course.code, section.id)}`;
@@ -54,13 +55,15 @@ export function exportSummary(schedule: readonly SavedCourse[], term: DateRange,
         untimed.push(name);
         continue;
       }
+      ranges.push(section.dates ?? term);
       const times = section.meetings.map((meeting) => `${formatDays(meeting.days)} · ${formatTimeRange(meeting.start, meeting.end)}`).join(", ");
       sections.push({ id: section.id, name, times, dates: span(section.dates ?? term) });
     }
   }
-  const noClass = calendar?.noClass.filter((day) => inRange(day.date, term)) ?? [];
-  const swaps = calendar?.swaps.filter((day) => inRange(day.date, term)) ?? [];
-  const notes = calendar?.notes.filter((note) => inRange(note.date, term)).map((note) => note.text) ?? [];
+  const included = ({ date }: { date: string }) => ranges.some((range) => inRange(date, range));
+  const noClass = calendar?.noClass.filter(included) ?? [];
+  const swaps = calendar?.swaps.filter(included) ?? [];
+  const notes = calendar?.notes.filter(included).map((note) => note.text) ?? [];
   return {
     termDates: `${span(term)}, ${term.end.slice(0, 4)}`,
     sections,

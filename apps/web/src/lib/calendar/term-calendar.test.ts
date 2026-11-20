@@ -10,7 +10,8 @@ function weekday(date: string) {
 }
 
 const entries = Object.values(file.terms);
-const dates = (key: keyof typeof file.terms) => file.terms[key].noClass.map((day) => day.date);
+const outsideTermBreak = (day: { name: string }) => day.name !== "Fall Break" && day.name !== "Spring Break";
+const dates = (key: keyof typeof file.terms) => file.terms[key].noClass.filter(outsideTermBreak).map((day) => day.date);
 
 function exported(sectionDates?: { start: string; end: string }, meetings = [{ days: ["Mon" as const], start: 540, end: 590, location: "Olin Hall 107" }]): SavedCourse[] {
   return [{ code: "A 1", title: "A", sections: [section("A 1", "C01", { dates: sectionDates, meetings })] }];
@@ -24,9 +25,9 @@ describe("term calendar file", () => {
 
   it("matches every no-class day on the WPI calendar that a published section can reach", () => {
     expect(dates("2026-A")).toEqual(["2026-09-07", "2026-09-25"]);
-    expect(dates("2026-B")).toEqual(["2026-11-03", "2026-11-25", "2026-11-26", "2026-11-27"]);
+    expect(dates("2026-B")).toEqual(["2026-11-03", "2026-11-25", "2026-11-26", "2026-11-27", "2026-12-07"]);
     expect(dates("2027-C")).toEqual(["2027-01-18", "2027-02-12", "2027-02-25"]);
-    expect(dates("2027-D")).toEqual(["2027-03-29", "2027-04-19"]);
+    expect(dates("2027-D")).toEqual(["2027-03-29", "2027-04-16", "2027-04-19"]);
     expect(dates("2027-E1")).toEqual(["2027-05-31", "2027-06-18"]);
   });
 
@@ -41,22 +42,20 @@ describe("term calendar file", () => {
   it("falls on the weekdays WPI's calendar shows", () => {
     const shown = {
       "2026-09-07": "Mon", "2026-09-10": "Thu", "2026-09-25": "Fri",
-      "2026-11-03": "Tue", "2026-11-25": "Wed", "2026-11-26": "Thu", "2026-11-27": "Fri",
+      "2026-11-03": "Tue", "2026-11-25": "Wed", "2026-11-26": "Thu", "2026-11-27": "Fri", "2026-12-07": "Mon",
       "2027-01-13": "Wed", "2027-01-18": "Mon", "2027-02-12": "Fri", "2027-02-25": "Thu",
-      "2027-03-29": "Mon", "2027-03-30": "Tue", "2027-04-19": "Mon", "2027-05-05": "Wed",
+      "2027-03-29": "Mon", "2027-03-30": "Tue", "2027-04-16": "Fri", "2027-04-19": "Mon", "2027-05-05": "Wed",
       "2027-05-31": "Mon", "2027-06-03": "Thu", "2027-06-18": "Fri",
     };
-    const listed = entries.flatMap((term) => [...term.noClass, ...term.swaps].map((entry) => entry.date));
+    const listed = entries.flatMap((term) => [...term.noClass.filter(outsideTermBreak), ...term.swaps].map((entry) => entry.date));
     expect([...listed].sort()).toEqual(Object.keys(shown).sort());
     for (const date of listed) expect(weekday(date)).toBe(shown[date as keyof typeof shown]);
   });
 
-  it("keeps the days WPI's PDF doesn't call days off on the calendar, each with a note", () => {
-    const listed = entries.flatMap((term) => term.noClass.map((day) => day.date));
-    const noted = entries.flatMap((term) => term.notes.map((note) => note.date));
-    for (const date of ["2026-12-07", "2027-04-16", "2026-10-12", "2027-03-08"]) {
-      expect(listed).not.toContain(date);
-      expect(noted).toContain(date);
+  it("covers both term breaks from the first weekend through the last", () => {
+    for (const [term, name, start] of [["2026-A", "Fall Break", "2026-10-10"], ["2027-C", "Spring Break", "2027-03-06"]] as const) {
+      const dates = file.terms[term].noClass.filter((day) => day.name === name).map((day) => day.date);
+      expect(dates).toEqual(Array.from({ length: 9 }, (_, index) => new Date(Date.parse(start) + index * 86400000).toISOString().slice(0, 10)));
     }
   });
 });
@@ -98,21 +97,12 @@ describe("exportNotes", () => {
   });
 
   it("leaves out a day the exported sections don't reach", () => {
-    expect(notes(exported()).join(" ")).not.toContain("Apr 16");
-    expect(notes(exported()).join(" ")).not.toContain("Mar 8");
+    expect(notes(exported()).join(" ")).not.toContain("Dec 7");
   });
 
-  it("mentions the C Term day and the break week for a semester class exported from D Term", () => {
-    const text = notes(exported({ start: "2027-01-13", end: "2027-05-05" }), "2027-D", { start: "2027-03-15", end: "2027-05-05" }).join(" ");
-    expect(text).toContain("Mar 8");
-    expect(text).toContain("Apr 16");
-  });
-
-  it("mentions Dec 7 in B Term and the break week only for a fall semester class", () => {
+  it("explains how to handle makeup classes on reading day", () => {
     const fall = { start: "2026-10-19", end: "2026-12-11" };
     expect(notes(exported(), "2026-B", fall).join(" ")).toContain("Dec 7");
-    expect(notes(exported(), "2026-B", fall).join(" ")).not.toContain("Oct 12");
-    expect(notes(exported({ start: "2026-08-20", end: "2026-12-11" }), "2026-B", fall).join(" ")).toContain("Oct 12");
   });
 
   it("ignores sections with no set time", () => {

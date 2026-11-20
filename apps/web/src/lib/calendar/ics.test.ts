@@ -43,16 +43,33 @@ function only(text: string): string[] {
 }
 
 describe("buildIcs", () => {
+  it("exports catalog titles, WPI room codes and a consistent color per course", () => {
+    const history = { ...course("HI 2320", section("HI 2320", "CL01", { meetings: lecture.sections[0].meetings })), title: "Modern European History" };
+    const calculus = { ...course("MA 1024", section("MA 1024", "CL01", {
+      meetings: [{ days: ["Mon"], start: 600, end: 650, location: "Salisbury Labs 115 Kinnicutt Hall" }],
+    })), title: "Calculus IV" };
+    const blocks = events(buildIcs([history, calculus], term, now, termCalendar(term.id)));
+    expect(blocks[0]).toContain("SUMMARY:HI 2320 Modern European History");
+    expect(blocks[2]).toContain("SUMMARY:MA 1024 Calculus IV");
+    expect(blocks[2]).toContain("LOCATION:SL115");
+    expect(blocks.map((block) => block.find((line) => line.startsWith("CATEGORIES:")))).toEqual([
+      "CATEGORIES:Blue Category,HI 2320", "CATEGORIES:Blue Category,HI 2320",
+      "CATEGORIES:Green Category,MA 1024", "CATEGORIES:Green Category,MA 1024",
+    ]);
+  });
+
   it("makes one repeating event per meeting with the class details", () => {
     expect(only(buildIcs([lecture], term, now))).toEqual([
       "UID:2027-C-PH%201110-CL01-0@goatplan",
       "DTSTAMP:20261031T163005Z",
-      "SUMMARY:PH 1110 Lecture CL01",
+      "SUMMARY:PH 1110",
+      "CATEGORIES:Blue Category,PH 1110",
+      "COLOR:Blue",
       "DTSTART;TZID=America/New_York:20270114T090000",
       "DTEND;TZID=America/New_York:20270114T095000",
       "RRULE:FREQ=WEEKLY;BYDAY=MO,TU,TH,FR;UNTIL=20270306T045959Z",
-      "LOCATION:Olin Hall 107",
-      "DESCRIPTION:Professor: Ada Lovelace\\nSection: CL01",
+      "LOCATION:OH107",
+      "DESCRIPTION:Professor: Ada Lovelace\\nSection: Lecture CL01",
     ]);
   });
 
@@ -118,10 +135,17 @@ describe("buildIcs", () => {
       "UID:2027-C-CS%201101-CL01-1@goatplan",
       "UID:2027-C-CS%201101-CD01-0@goatplan",
     ]);
-    expect(all[0]).toContain("LOCATION:Fuller Labs 320");
-    expect(all[1]).toContain("LOCATION:Kaven Hall 116");
+    expect(all[0]).toContain("LOCATION:FL320");
+    expect(all[1]).toContain("LOCATION:KH116");
     expect(all[1]).toContain("DTSTART;TZID=America/New_York:20270119T130000");
-    expect(all[2]).toContain("SUMMARY:CS 1101 Discussion CD01");
+    expect(all[2].join("\n")).toContain("Section: Discussion CD01");
+  });
+
+  it("keeps both locations for hybrid classes and recognizes named lecture halls", () => {
+    const hybrid = course("A 1", section("A 1", "C01", {
+      meetings: [{ days: ["Tue"], start: 600, end: 650, location: "Online-synchronous / Fuller Labs PHU Perreault Hall - Upper Section" }],
+    }));
+    expect(only(buildIcs([hybrid], term, now))).toContain("LOCATION:Online-synchronous / FLPHUPR");
   });
 
   it("gives the same IDs whatever the timestamp, so importing again updates events", () => {
@@ -136,9 +160,9 @@ describe("buildIcs", () => {
     }));
     const event = only(buildIcs([tricky], term, now));
     expect(event[0]).toBe("UID:2027-C-HU%203900-C%3B01-0@goatplan");
-    expect(event).toContain("SUMMARY:HU 3900 Lecture C\\;01");
+    expect(event).toContain("SUMMARY:HU 3900");
     expect(event).toContain("LOCATION:Little Theatre\\, Alden\\nHall");
-    expect(event).toContain("DESCRIPTION:Professors: Smith\\, Jr\\; Ann\\, Back\\\\slash\\nSection: C\\;01");
+    expect(event).toContain("DESCRIPTION:Professors: Smith\\, Jr\\; Ann\\, Back\\\\slash\\nSection: Lecture C\\;01");
   });
 
   it("leaves out an empty location and a missing or hidden professor", () => {
@@ -146,8 +170,8 @@ describe("buildIcs", () => {
     const lab = course("B 1", section("B 1", "X01", { type: "lab", instructors: ["Ada Lovelace"], meetings: [{ days: ["Mon"], start: 540, end: 590, location: "Atwater Kent 233" }] }));
     const event = only(buildIcs([noRoom], term, now));
     expect(event.some((line) => line.startsWith("LOCATION"))).toBe(false);
-    expect(event).toContain("DESCRIPTION:Section: C01");
-    expect(only(buildIcs([lab], term, now))).toContain("DESCRIPTION:Section: X01");
+    expect(event).toContain("DESCRIPTION:Section: Lecture C01");
+    expect(only(buildIcs([lab], term, now))).toContain("DESCRIPTION:Section: Lab X01");
   });
 
   it("skips a meeting whose days never fall inside the dates", () => {
@@ -204,18 +228,20 @@ describe("days off and swapped days", () => {
   it("removes Wednesday classes on Jan 13 and adds Monday classes as a one-off", () => {
     const [wednesday, monday, oneOff, ...rest] = build(meetsOn("A 1", ["Wed"]), meetsOn("B 1", ["Mon"]));
     expect(rest).toEqual([]);
-    expect(wednesday).toContain("SUMMARY:A 1 Lecture C01");
+    expect(wednesday).toContain("SUMMARY:A 1");
     expect(exdates(wednesday)).toContain("EXDATE;TZID=America/New_York:20270113T090000");
-    expect(monday).toContain("SUMMARY:B 1 Lecture C01");
+    expect(monday).toContain("SUMMARY:B 1");
     expect(exdates(monday)).not.toContain("EXDATE;TZID=America/New_York:20270113T090000");
     expect(oneOff).toEqual([
       "UID:2027-C-B%201-C01-0-20270113@goatplan",
       "DTSTAMP:20261031T163005Z",
-      "SUMMARY:B 1 Lecture C01",
+      "SUMMARY:B 1",
+      "CATEGORIES:Green Category,B 1",
+      "COLOR:Green",
       "DTSTART;TZID=America/New_York:20270113T090000",
       "DTEND;TZID=America/New_York:20270113T095000",
-      "LOCATION:Olin Hall 107",
-      "DESCRIPTION:Professor: Ye Lu\\nSection: C01",
+      "LOCATION:OH107",
+      "DESCRIPTION:Professor: Ye Lu\\nSection: Lecture C01",
     ]);
   });
 
@@ -225,9 +251,19 @@ describe("days off and swapped days", () => {
     const [wednesday, friday, oneOff, ...rest] = events(buildIcs([meetsOn("A 1", ["Wed"], dates), meetsOn("B 1", ["Fri"], dates)], term, now, spring));
     expect(rest).toEqual([]);
     expect(exdates(wednesday)).toContain("EXDATE;TZID=America/New_York:20270505T090000");
-    expect(friday).toContain("SUMMARY:B 1 Lecture C01");
+    expect(friday).toContain("SUMMARY:B 1");
     expect(oneOff).toContain("DTSTART;TZID=America/New_York:20270505T090000");
     expect(oneOff.some((line) => line.startsWith("RRULE"))).toBe(false);
+  });
+
+  it("excludes spring break and the project showcase from a semester-long Friday series", () => {
+    const semester = meetsOn("A 1", ["Fri"], { start: "2027-01-13", end: "2027-05-05" });
+    const [weekly] = events(buildIcs([semester], term, now, termCalendar(term.id)));
+    expect(exdates(weekly)).toEqual([
+      "EXDATE;TZID=America/New_York:20270212T090000",
+      "EXDATE;TZID=America/New_York:20270312T090000",
+      "EXDATE;TZID=America/New_York:20270416T090000",
+    ]);
   });
 
   it("never uses RDATE", () => {
