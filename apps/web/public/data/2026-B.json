@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-18T17:56:04Z",
+  "generatedAt": "2026-11-20T17:41:24Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -712,20 +712,6 @@
       ]
     },
     {
-      "code": "BB 504",
-      "subject": "BB",
-      "title": "Molecular Biology of the Cell",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "This course will facilitate a student’s functional knowledge of living cells from a biological, biochemical and technological perspective. Topics covered will include the structure, organization, growth, regulation, movements, and interaction of cells, as well as details of cellular metabolism and molecular biology. Emphasis will be placed on visualizing cellular architecture, describing the structure of DNA, describing the fate of various cellular RNAs, articulating information flow in cells, and describing protein outcomes. This course is intended to achieve a homogenous level of student understanding and can be used as a foundation course for the program. This course is designed to familiarize students with basic concepts of molecular biology including structure, organization, growth, regulation, movements, and interactions within a cell. Details of metabolism and molecular biology will be covered through projects and study of the primary literature to achieve a homogenous level of student understanding and rigor. Weekly online assessments are designed to ensure understanding. Note: Students may not receive credit for BB 504 and BB 570-196.",
-      "sections": [
-        {"id":"BB 504-F01","code":"F01","type":"lecture","status":"open","enrolled":28,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Monir Ejemel"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["BB 504-F01"]
-      ]
-    },
-    {
       "code": "BB 552",
       "subject": "BB",
       "title": "Scientific Writing And Proposal Development",
@@ -737,38 +723,6 @@
       ],
       "options": [
         ["BB 552-F01"]
-      ]
-    },
-    {
-      "code": "BB 560",
-      "subject": "BB",
-      "title": "Methods Of Protein Purification And Downstream Processing",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "(3 credits) This course provides a detailed hands-on survey of state-of-the-art methods employed by the biotechnology industry for the purification of products, proteins in particular, from fermentation processes. Focus is on methods that offer the best potential for scale-up. Included is the theory of the design, as well as the operation of these methods both at the laboratory scale and scaled up. It is intended for biology, biotechnology, chemical engineering and biochemistry students. (Prerequisite: knowledge of basic biochemistry is assumed.)",
-      "sections": [
-        {"id":"BB 560-FL01","code":"FL01","type":"lecture","status":"open","enrolled":25,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Jean-Francois Hamel"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]},
-        {"id":"BB 560-FX01","code":"FX01","type":"lab","status":"open","enrolled":25,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Jean-Francois Hamel"],"delivery":"in-person","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["BB 560-FL01","BB 560-FX01"]
-      ]
-    },
-    {
-      "code": "BB 570",
-      "subject": "BB",
-      "title": "Special Topics",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "Synchronous discussions, zoom and face-to face. Zoom will be held for one hour each week for 3 weeks. Face-to face meeting on campus for 2 hours. Five hours total synchronous time. Times and format to be discussed. The goals of Responsible Conduct of Research (RCR) education and training are to: Develop, foster, and maintain a culture of integrity in science; discourage and prevent unethical conduct; empower researchers to hold themselves and others accountable to high ethical standards; increase knowledge of, and sensitivity to, ethical issues surrounding the conduct of research by researchers with diverse backgrounds; improve the ability to make responsible choices when faced with ethical dilemmas involving research; provide an appreciation for the range of accepted scientific practices for conducting research; inform scientists and research trainees about the regulations, policies, statutes, and guidelines that govern the conduct of U.S. Public Health Service-funded research and promote compliance with the same; promote a career-long positive attitude toward research ethics and the responsible conduct of research.",
-      "sections": [
-        {"id":"BB 570-F01","code":"F01","type":"lecture","title":"ST: Biomanufacturing Process Control and Statistical Tools","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Floyd Brownewell"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[],"description":"The course provides instruction on statistical topics and tools focused on the manufacturing environment. This course is not intended to be an in depth or broadly general statistics course. The focus will be on process control within an industrial manufacturing environment. Discussions will include identifying data relevant to ensuring process control. Students will apply specific statistical tools to evaluate data generated from a typical manufacturing process. Students will design a qualification for a manufacturing system."},
-        {"id":"BB 570-FD02","code":"FD02","type":"discussion","title":"ST: Responsible Conduct of Research in Life Sciences","status":"open","enrolled":19,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Masha Fridkis-Hareli"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]},
-        {"id":"BB 570-FL02","code":"FL02","type":"lecture","title":"ST: Responsible Conduct of Research in Life Sciences","status":"open","enrolled":19,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Masha Fridkis-Hareli"],"delivery":"hybrid","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["BB 570-F01"],
-        ["BB 570-FD02","BB 570-FL02"]
       ]
     },
     {
@@ -1674,26 +1628,10 @@
       "level": "Graduate",
       "description": "This course is designed for students to attain a broad and in-depth acquaintance with the mechanism, platform and targets of various sensors, with a focus on biosensors and chemical sensors. Topical concepts covered include: sensor components and characteristics; synthetic, biological and biomimetic materials used in sensor development; miniaturization and nanotechnology involved in sensor fabrication; various sensing modalities, data analysis and device prototyping. Students will be required to partner with others and consult with academic and industrial scientists to design sensors of their own interests as a final project for assessment.",
       "sections": [
-        {"id":"CH 555-B01","code":"B01","type":"lecture","title":"AT: Introduction to Sensor Science and Technology","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Rong Wang"],"delivery":"online-async","meetings":[]},
-        {"id":"CH 555-F02","code":"F02","type":"lecture","title":"AT: Plant Medicinal Chemistry","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Ara Kirakosyan"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[],"description":"This course explores advanced concepts and state-of-the-art techniques in medicinal plant chemistry. Lectures provide an in-depth examination of bioactive compounds, their plant origins, secondary metabolite chemistry, the connections between primary and secondary metabolism, and the historical and cultural significance of medicinal plants. The goal is to develop a broad understanding and practical skills in medicinal plant chemistry and biology research. Students will gain evidence-based scientific knowledge and enhance their research and developmental skills. Learning Objectives: • Develop a strong sense of competence, confidence, and responsibility as a chemist. • Apply critical, creative, and practical thinking to problems related to medicinal plant chemistry. • Formulate and test hypotheses using the scientific method to explore medicinal plant chemistry. • Educate and inform others about the significance of medicinal plant chemistry in both personal and public contexts. • Appreciate the historical, current, and future potential of plant-derived medicines. • Identify and critically evaluate scientific literature and other key sources to support ongoing learning in the diverse and rapidly evolving field of medicinal plant chemistry. • Critically review and assess current evidence for the safety and efficacy of medicinal plants for specification, medicinal properties, and possible application(s)"}
+        {"id":"CH 555-B01","code":"B01","type":"lecture","title":"AT: Introduction to Sensor Science and Technology","status":"open","enrolled":11,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Rong Wang"],"delivery":"online-async","meetings":[]}
       ],
       "options": [
-        ["CH 555-B01"],
-        ["CH 555-F02"]
-      ]
-    },
-    {
-      "code": "CH 562",
-      "subject": "CH",
-      "title": "Drug Development Pathways for Therapeutics",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "How do Food and Drug Administration (FDA) regulations and guidelines drive the drugdevelopment pathway for small-molecule products? We will outline the guidelines and regulations for pharmaceutical products including requirements for non-Good Laboratory Practice (GLP) and GLP safety studies, Absorption, Distribution, Metabolism and Excretion (ADME), Pharmacokinetic-Pharmacodynamic (PK/PD), and other pharmacokinetic and toxicological studies to establish the safety and efficacy of drugs as dictated by FDA regulations. Students will learn how to utilize safety (NOEL/”No Observed Effect Level” and NOAEL/”No Observed Adverse Effect Level”), efficacy, and pharmacokinetic studies to determine first in human doses and a therapeutic index, and requirements for Good Manufacturing Practices (GMP). Students will also learn about small, niche FDA regulatory pathways to include the animal rule (in which humans cannot be included in efficacy studies for safety reasons)/animal model development through discussions of biological warfare and outbreak pathogen therapeutic development.",
-      "sections": [
-        {"id":"CH 562-F01","code":"F01","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Sallie Crenshaw"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["CH 562-F01"]
+        ["CH 555-B01"]
       ]
     },
     {
@@ -3353,62 +3291,6 @@
       ]
     },
     {
-      "code": "ECE 5500",
-      "subject": "ECE",
-      "title": "Power System Analysis",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "This graduate level course examines the principles of Power System Analysis. It will begin with a review of AC circuit analysis. The course will then cover the topics of transmission line parameter calculation, symmetrical component analysis, transformer and load modeling, symmetrical and unsymmetrical fault analysis, power flow, and power systems stability. Prerequisites: Knowledge of circuit analysis, basic calculus and differential equations, elementary matrix analysis and basic computer programming.",
-      "sections": [
-        {"id":"ECE 5500-F01","code":"F01","type":"lecture","status":"open","enrolled":29,"capacity":30,"waitlist":{"taken":6,"capacity":20},"instructors":["Mahmood Mirheydar"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["ECE 5500-F01"]
-      ]
-    },
-    {
-      "code": "ECE 5521",
-      "subject": "ECE",
-      "title": "Protective Relaying",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "This graduate level course is the first of a two course sequence that covers both the principles and practices of power system protective relaying. The course seeks to provide an understanding of how interconnected power systems and their components are protected from abnormal events such as faults (short circuits), over-voltages, off-nominal frequency and unbalanced phase conditions. This subject is presented from a theoretical viewpoint, however, many practical examples are included that emphasize the limitations of existing protective equipment. Course content is not specific to any particular manufacturer’s equipment. The course begins with a brief review of the nature of power system operation, power system faults and other abnormal conditions. The nature and objectives of protective relaying are covered next with emphasis on how the power system can be monitored to detect abnormal conditions. The computational tools needed to analyze system operation and apply protective relaying are covered next, including the per-unit system, phasors and symmetrical components. The modeling of current transformers under steady-state and transient conditions is presented with emphasis on the impact on protective devices. A unit on system grounding and its impact on protective device operation is included. Course emphasis then shifts to protective devices and their principles of operation. Both electromechanical and numeric relay designs are covered. Prerequisite: ECE 5500 Power System Analysis or equivalent background experience is suggested. Familiarity with phasors, derivatives, transfer functions, poles and zeros, block diagram and the notion of feedback with basic understanding power system analysis or similar background is recommended. Note: Credit cannot be awarded for this course if credit has already been received for ECE 5520 Power System Protection and Control.",
-      "sections": [
-        {"id":"ECE 5521-F01","code":"F01","type":"lecture","status":"open","enrolled":27,"capacity":30,"waitlist":{"taken":2,"capacity":20},"instructors":["Lalitha Devarakonda"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["ECE 5521-F01"]
-      ]
-    },
-    {
-      "code": "ECE 5523",
-      "subject": "ECE",
-      "title": "Power System Dynamics",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "This graduate level course is concerned with modeling, analyzing and mitigating power system stability and control problems. The course seeks to provide an understanding of the electromechanical dynamics of the interconnected electric power grid. This subject is presented from a theoretical viewpoint; however, many practical examples are included. The course begins with a description of the physics of the power system, frequency regulation during “steady-state” operation, dynamic characteristics of modern power systems, a review of feedback control systems, power system frequency regulation, and a review of protective relaying. This is followed by material on synchronous machine theory and modeling. Simulation of power system dynamic response, small signal stability, transient stability analysis using SIMULINK and effects of non-traditional power sources on systems dynamics will also be covered. Power system stabilizers, load modeling and under frequency load shedding are covered in the final lectures. Prerequisite: ECE 5500 Power System Analysis and ECE 5511 Transients in Power Systems or equivalent background experience is suggested. Familiarity with the basics of Laplace Transforms, derivatives, transfer functions, poles and zeros, block diagram and the notion of feedback with basic understanding power system analysis topics recommended.",
-      "sections": [
-        {"id":"ECE 5523-F01","code":"F01","type":"lecture","status":"open","enrolled":12,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Zeeshan Ahmed"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["ECE 5523-F01"]
-      ]
-    },
-    {
-      "code": "ECE 5532",
-      "subject": "ECE",
-      "title": "Distributed And Renewable Power Generation",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "This course introduces the characteristics and challenges of interconnecting increasing numbers of Distributed Energy Resources (DERs) to the Electric Power System (EPS). Topics include: challenges to distribution and transmission system protection; local voltage control; ride through; optimal interconnection transformer configurations; and practical engineering approaches to maintain system reliability and protection. The current and evolving interconnection standard (IEEE 1547) is included. Prerequisites: Since the course material builds on power system analysis capabilities, including system protection and controls, ECE 5500 Power System Analysis and either ECE 5520 Power System Protection & Control or ECE 5521 Protective Relaying are required. Also, it is recommended that students take this course after completing ECE 5530 Power Distribution.",
-      "sections": [
-        {"id":"ECE 5532-F01","code":"F01","type":"lecture","status":"open","enrolled":15,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Fei Ding"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["ECE 5532-F01"]
-      ]
-    },
-    {
       "code": "ECE 571",
       "subject": "ECE",
       "title": "Machine Learning for Engineering Applications",
@@ -4649,7 +4531,7 @@
       "level": "Undergraduate",
       "description": "IMGD/WR 2450: Narrative Design for Interactive Media and Games Course description: This course will introduce key narrative concepts and skills necessary to craft linear and branching experiences in games and interactive media. These lessons can be of fundamental value to all interactive media and any development role. Topics covered may include world-building, writing within intellectual property, lore creation, environmental storytelling, and quest design. Students will work in small groups throughout the course to provide feedback and practice reciprocal creative roles in narrative creation. Recommended background: design and development fundamentals. Students may not receive credit for both 2450 and IMGD/WR 3400.",
       "sections": [
-        {"id":"IMGD 2450-B01","code":"B01","type":"lecture","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Ben Schneider"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Higgins Labs 202"}]}
+        {"id":"IMGD 2450-B01","code":"B01","type":"lecture","status":"open","enrolled":22,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Ben Schneider"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Higgins Labs 202"}]}
       ],
       "options": [
         ["IMGD 2450-B01"]
@@ -4748,7 +4630,7 @@
       "description": "Cat. I This course focuses on the application of advanced Computer Science topics as they impact game development. Networking and distributed systems issues are addressed, including scalability and latency compensation techniques, for designing games for online multi-player environments. AI, graphics and physics techniques specific to game development are discussed. Students will implement games or parts of games that apply advanced Computer Science topics. Recommended background: IMGD 3000.",
       "sections": [
         {"id":"IMGD 4000-BL01","code":"BL01","type":"lecture","status":"waitlist","enrolled":27,"capacity":24,"waitlist":{"taken":7,"capacity":10},"instructors":["John Domenico Calvelli"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Fuller Labs 222 IMGD Computer Lab"}]},
-        {"id":"IMGD 4000-BX01","code":"BX01","type":"lab","status":"open","enrolled":40,"capacity":48,"waitlist":{"taken":0,"capacity":0},"instructors":["John Domenico Calvelli"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":950,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
+        {"id":"IMGD 4000-BX01","code":"BX01","type":"lab","status":"open","enrolled":39,"capacity":48,"waitlist":{"taken":0,"capacity":0},"instructors":["John Domenico Calvelli"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":950,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
         ["IMGD 4000-BL01","IMGD 4000-BX01"]
@@ -4776,8 +4658,8 @@
       "level": "Undergraduate",
       "description": "Cat. I This course focuses on the integration and organization of the various artistic elements used in game development. The course examines user interaction, interface design, and existing paradigms in current games. Students will combine elements of level design, animation, music, sound, and writing to create an aesthetically appealing game. Recommended background: IMGD 1002, IMGD 3500, MU 1611.",
       "sections": [
-        {"id":"IMGD 4500-BL01","code":"BL01","type":"lecture","status":"open","enrolled":13,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Ralph Sutter"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]},
-        {"id":"IMGD 4500-BX01","code":"BX01","type":"lab","status":"open","enrolled":40,"capacity":48,"waitlist":{"taken":0,"capacity":0},"instructors":["Ralph Sutter"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":950,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
+        {"id":"IMGD 4500-BL01","code":"BL01","type":"lecture","status":"open","enrolled":12,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Ralph Sutter"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]},
+        {"id":"IMGD 4500-BX01","code":"BX01","type":"lab","status":"open","enrolled":39,"capacity":48,"waitlist":{"taken":0,"capacity":0},"instructors":["Ralph Sutter"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":950,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
         ["IMGD 4500-BL01","IMGD 4500-BX01"]
@@ -8613,64 +8495,6 @@
       ]
     },
     {
-      "code": "SYS 501",
-      "subject": "SYS",
-      "title": "Concepts Of Systems Engineering",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "Systems Engineering is a multifaceted discipline, involving human, organizational, and various technical variables that work together to create complex systems. This course is an introduction and overview of the methods and disciplines that systems engineers use to define, develop, and deploy systems. It includes specific integrated examples, projects, and team building exercises to aid in understanding and appreciating fundamental principles. Topics covered include; Introduction to Systems Engineering; Requirements Development; Functional Analysis and Requirements Allocation; System Architecture and System Design; Integration, Verification and Validation; Trade Studies; Systems Analysis, Modeling and Simulation; Specialty Engineering; Risk Management; and Technical Planning and Management. (Prerequisite: an undergraduate degree in engineering or science, or permission of the instructor.)",
-      "sections": [
-        {"id":"SYS 501-F01","code":"F01","type":"lecture","status":"waitlist","enrolled":29,"capacity":27,"waitlist":{"taken":3,"capacity":20},"instructors":["David Wojcicki"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["SYS 501-F01"]
-      ]
-    },
-    {
-      "code": "SYS 502",
-      "subject": "SYS",
-      "title": "Business Practices",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "This course introduces students to the business aspects of Systems Engineering (SE) and is designed to help SE professionals integrate Systems Engineering concepts into a professional business practice environment and to improve systems engineers’ understanding fundamental business practices and their relationship to systems engineering.This course will cover how to prepare and evaluate professional quality business plans, project budgets, financial proposals, timelines and technical outlines. This course will also cover topics such as working with stakeholders; understanding competitive advantage and perceived value of systems engineering; various roles of systems engineers from a business practices perspective; contracting for systems engineering services, how systems engineers impact and are impacted by the various corporate operating divisions, and how to ensure quality control. The course will consist of lectures, case studies, class projects and student presentations.",
-      "sections": [
-        {"id":"SYS 502-F01","code":"F01","type":"lecture","status":"open","enrolled":24,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Jamie Monat"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["SYS 502-F01"]
-      ]
-    },
-    {
-      "code": "SYS 511",
-      "subject": "SYS",
-      "title": "Systems Integration, Verification & Validation",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "This course examines the use of Systems Engineering principles and best practices with respect to systems and systems-of-systems verification and validation (V&V). V&V processes, activities and methods as they apply across the product lifecycle will be examined. Case studies, papers and exercises will be used to examine the success and failure of verification, validation and test processes. Course topics include 1) How early systems engineering activities and solution sets affect integration, verification, validation and test; 2) V&V activities relative to product development phases; 3) Modeling quality, cost, time and risk; 4) Testing and non-testing methods; 5) V&V planning, execution and reporting; 6) Systems integration; and 7) V&V of critical and complex systems. (Prerequisite: SYS 501 Concepts of Systems Engineering)",
-      "sections": [
-        {"id":"SYS 511-F01","code":"F01","type":"lecture","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Robert Tranchina"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]}
-      ],
-      "options": [
-        ["SYS 511-F01"]
-      ]
-    },
-    {
-      "code": "SYS 579",
-      "subject": "SYS",
-      "title": "Special Topics",
-      "credits": 3,
-      "level": "Graduate",
-      "description": "This course will present reliability, maintainability, and related topics with the breadth of techniques and depth of detail that will benefit the systems engineer by allowing him/her to understand how they relate to the specification, development, testing, and fielding of reliable systems. The reliability of electronics, mechanical equipment, and software will be covered from the component level through their application at the system level. Other key topics will be: reliability prediction; failure modes, effects, and criticality analysis; stress testing; accelerated life testing; and reliability management. In addition, a series of relevant case studies will be studied and discussed.",
-      "sections": [
-        {"id":"SYS 579-F01","code":"F01","type":"lecture","title":"ST: Reliability Engineering","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Donald Gelosh"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[]},
-        {"id":"SYS 579-F02","code":"F02","type":"lecture","title":"ST: Technical Decision and Risk Analysis","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Jamie Monat"],"delivery":"online-async","dates":{"start":"2026-08-20","end":"2026-11-06"},"meetings":[],"description":"This course focuses on structured decision analysis for system design and formal risk and opportunity analysis to manage uncertainty throughout the system lifecycle. Students will learn techniques to conduct a trade study and analysis of alternatives using multiple objectives from varied stakeholder perspectives followed by sensitivity analysis. Students will learn how to identify, analyze, characterize, treat, and monitor risks and opportunities including risk mitigation plans and opportunity capture plans. These concepts will be applied to real-world problems. This course should be used as a substitution for OIE 542/Risk Management and Decision Making for Systems Engineering students."}
-      ],
-      "options": [
-        ["SYS 579-F01"],
-        ["SYS 579-F02"]
-      ]
-    },
-    {
       "code": "SYS 585",
       "subject": "SYS",
       "title": "Systems Engineering Capstone Experience",
@@ -9726,7 +9550,7 @@
       "level": "Undergraduate",
       "description": "IMGD/WR 2450: Narrative Design for Interactive Media and Games Course description: This course will introduce key narrative concepts and skills necessary to craft linear and branching experiences in games and interactive media. These lessons can be of fundamental value to all interactive media and any development role. Topics covered may include world-building, writing within intellectual property, lore creation, environmental storytelling, and quest design. Students will work in small groups throughout the course to provide feedback and practice reciprocal creative roles in narrative creation. Recommended background: design and development fundamentals. Students may not receive credit for both 2450 and IMGD/WR 3400.",
       "sections": [
-        {"id":"WR 2450-B01","code":"B01","type":"lecture","status":"open","enrolled":23,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Ben Schneider"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Higgins Labs 202"}]}
+        {"id":"WR 2450-B01","code":"B01","type":"lecture","status":"open","enrolled":22,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Ben Schneider"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Higgins Labs 202"}]}
       ],
       "options": [
         ["WR 2450-B01"]
