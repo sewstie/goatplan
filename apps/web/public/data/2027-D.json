@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-11-21T16:42:18Z",
+  "generatedAt": "2026-11-22T17:01:15Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -3756,7 +3756,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This introduction course in engineering graphical communications and design provides a solid background for all engineering disciplines. The ability to visualize, create and apply proper design intent and industry standards for simple parts, assemblies and drawings is a necessity for anyone in a technology environment. Computer Aided Design software is used as a tool to create 2D & 3D sketches, 3D parts, 3D assemblies and 2D drawings per an industry standard. Multiview and pictorial graphics techniques are integrated with ANSI standards for dimensioning and tolerances, sectioning, and generating detailed engineering drawings. Emphasis is placed on relating drawings to the required manufacturing processes. The design process and aids to creativity are combined with graphics procedures to incorporate functional design requirements in the geometric model. No prior engineering graphics or software knowledge is assumed.",
       "sections": [
-        {"id":"ES 1310-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":4,"capacity":15},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Kaven Hall 116"}]},
+        {"id":"ES 1310-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":5,"capacity":15},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Kaven Hall 116"}]},
         {"id":"ES 1310-DL02","code":"DL02","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":4,"capacity":15},"instructors":["Reza Ebadi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Atwater Kent 219"}]},
         {"id":"ES 1310-DX01","code":"DX01","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
         {"id":"ES 1310-DX02","code":"DX02","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
@@ -6233,7 +6233,7 @@
       "level": "Graduate",
       "description": "The conversion of technology into new products requires an understanding of how to develop a meaningful value proposition and integrate the development of a product with a marketing strategy that creates brand equity. This course will focus on the management of products, the implications of other marketing decisions on product and brand management, the management of product lines within the organization, including introduction, growth, and market exit. (Prerequisite: MKT 500 or equivalent content, or consent of instructor.)",
       "sections": [
-        {"id":"MKT 569-S01","code":"S01","type":"lecture","title":"Product And Brand Management","status":"open","enrolled":6,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Purvi Shah"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"MKT 569-S01","code":"S01","type":"lecture","title":"Product And Brand Management","status":"open","enrolled":7,"capacity":50,"waitlist":{"taken":0,"capacity":10},"instructors":["Purvi Shah"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["MKT 569-S01"]
@@ -6847,7 +6847,7 @@
       "level": "Undergraduate",
       "description": "Cat. I To aid all engineering students in understanding economics and business constraints on engineering decision making. Topics include evaluation of alternative; the six time-value-of-money factors; present worth, annual cash flow and rate-of-return analysis; incremental analysis; depreciation and income taxes; replacement analysis; inflation; handling probabilistic events; public economy; break-even and minimum cost points; and foreign exchange.",
       "sections": [
-        {"id":"OIE 2850-D01","code":"D01","type":"lecture","status":"open","enrolled":39,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Walter Towner"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 105 Active Learning Classroom"}]}
+        {"id":"OIE 2850-D01","code":"D01","type":"lecture","status":"open","enrolled":40,"capacity":45,"waitlist":{"taken":0,"capacity":10},"instructors":["Walter Towner"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 105 Active Learning Classroom"}]}
       ],
       "options": [
         ["OIE 2850-D01"]
@@ -7361,7 +7361,7 @@
       "level": "Graduate",
       "description": "This course will cover selected topics related to learning and creativity— including measurement, memory, semantic networks, sleep, analogies, problem-solving, divergent thinking, and insight moments. Students will critically review journal articles and other forms of media to gain a better understanding of the processes involved in learning and creative cognition. Students will also learn about prominent theories of learning and creativity and identify ways to utilize these frameworks to improve education and student experiences in the classroom.",
       "sections": [
-        {"id":"PSY 506-S01","code":"S01","type":"lecture","status":"open","enrolled":4,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Stacy Shaw"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":960,"end":1110,"location":"Olin Hall 218"}]}
+        {"id":"PSY 506-S01","code":"S01","type":"lecture","status":"open","enrolled":5,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Stacy Shaw"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue"],"start":960,"end":1110,"location":"Olin Hall 218"}]}
       ],
       "options": [
         ["PSY 506-S01"]
@@ -7498,7 +7498,7 @@
       "level": "Undergraduate",
       "description": "RBE 4815. Industrial Robotics Throughout this course, students will be introduced to industrial robots and their applications. The course covers both industrial serial arm robots, such as those equipped with spherical wrist, and industrial parallel manipulators, such as the Stewart-Gough platform and Delta manipulator. Topics include mechanisms’ degrees of freedom, inverse and forward kinematics (position and velocity), workspace, singularity, and manipulability analysis of industrial manipulators. Topics may extend to end effectors, motion accuracy, robot control and automation. This course is a combination of lecture, laboratory and project work. Students will engage in practical, hands-on learning experiences through the use of an industrial robot to apply theoretical knowledge to real-world scenarios, fostering comprehensive mastery of industrial robotics principles. Through the laboratory work, students will become familiar with industrial robotic programming while acquiring skills in working with industrial controllers such as Programmable Logic Controllers (PLC). Recommended background: RBE 3001, ES 3011, and computer programming",
       "sections": [
-        {"id":"RBE 4815-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":1,"capacity":10},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Salisbury Labs 407"}]},
+        {"id":"RBE 4815-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":2,"capacity":10},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Salisbury Labs 407"}]},
         {"id":"RBE 4815-DX01","code":"DX01","type":"lab","status":"closed","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"in-person","meetings":[]}
       ],
       "options": [
@@ -7541,7 +7541,7 @@
       "level": "Graduate",
       "description": "This course demonstrates the synergy between the control theory and robotics through applications and provides an in-depth coverage of control of manipulators and mobile robots. Topics include linearization, state space modeling and control of linear and nonlinear systems, feedback control, Lyapunov stability analysis of nonlinear control systems, set-point control, trajectory and motion control, compliance and force control, impedance control, adaptive robot control, robust control, and other advanced control topics. Course projects will emphasize simulation and practical implementation of control systems for robotic applications. (Prerequisites: RBE 500 or equivalent, Linear algebra; Differential equations; Linear systems and control theory as in ECE 504 or consent of the instructor)",
       "sections": [
-        {"id":"RBE 502-S01","code":"S01","type":"lecture","status":"open","enrolled":13,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Akin Tatoglu"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
+        {"id":"RBE 502-S01","code":"S01","type":"lecture","status":"open","enrolled":14,"capacity":30,"waitlist":{"taken":1,"capacity":20},"instructors":["Akin Tatoglu"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]},
         {"id":"RBE 502-S02","code":"S02","type":"lecture","status":"open","enrolled":23,"capacity":60,"waitlist":{"taken":0,"capacity":40},"instructors":["Giovanni Pittiglio"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Goddard Hall 227 Classroom"}]}
       ],
       "options": [
@@ -8207,7 +8207,7 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/12 unit) This course will teach basic strength training principles and techniques. Students will develop and implement an individualized conditioning program.",
       "sections": [
-        {"id":"WPE 1055-D01","code":"D01","type":"workshop","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":3,"capacity":15},"instructors":["Emily Dippel"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Fitness Area 4"}]}
+        {"id":"WPE 1055-D01","code":"D01","type":"workshop","status":"waitlist","enrolled":25,"capacity":25,"waitlist":{"taken":4,"capacity":15},"instructors":["Emily Dippel"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":780,"end":830,"location":"Recreation Center Fitness Area 4"}]}
       ],
       "options": [
         ["WPE 1055-D01"]
@@ -8532,7 +8532,7 @@
       "description": "WPE 1611 Introduction to Mindfulness (Cat. I, 1/12 unit) Introduction to Mindfulness is an evidence-based mindfulness curriculum designed for college aged adults by the Mindfulness Institute for Emerging Adults (MIEA). During this course, you will learn useful, practical tools to help manage your stress and increase self-compassion. Students will practice a variety of meditation skills, engage with the MIEA Mobile App, read the companion book, and participate in class discussion.",
       "sections": [
         {"id":"WPE 1611-D01","code":"D01","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Kristin Boudreau"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":840,"end":890,"location":"Daniels Hall 102E CWB Programming Room"}]},
-        {"id":"WPE 1611-D02","code":"D02","type":"workshop","status":"open","enrolled":14,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]},
+        {"id":"WPE 1611-D02","code":"D02","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":0,"capacity":10},"instructors":["Catherine Flayhan"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1611-D03","code":"D03","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":2,"capacity":10},"instructors":["Diana Fiorentino"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":780,"end":830,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1611-D04","code":"D04","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":3,"capacity":10},"instructors":["Robin Benoit"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":840,"end":890,"location":"Daniels Hall 102E CWB Programming Room"}]},
         {"id":"WPE 1611-D05","code":"D05","type":"workshop","status":"waitlist","enrolled":15,"capacity":15,"waitlist":{"taken":2,"capacity":5},"instructors":["Shavaun Cloran"],"delivery":"in-person","meetings":[{"days":["Tue"],"start":960,"end":1010,"location":"Daniels Hall 102E CWB Programming Room"}]}
@@ -8583,7 +8583,7 @@
       "level": "Undergraduate",
       "description": "WPE 1699 Special Topics in Holistic Well-Being, Cat. I (1/12 unit) This course provides an opportunity for students to learn about a special topic in holistic wellbeing. The topics are subject to change on a rotating basis to provide flexibility in the offerings based upon student interest and the latest practice and science of well-being.",
       "sections": [
-        {"id":"WPE 1699-D02","code":"D02","type":"workshop","title":"ST in Holistic Well-Being: Information Literacy for Well-Being","status":"open","enrolled":12,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Paige Wilkins"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":660,"end":710,"location":"Other"}]}
+        {"id":"WPE 1699-D02","code":"D02","type":"workshop","title":"ST in Holistic Well-Being: Information Literacy for Well-Being","status":"open","enrolled":13,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Paige Wilkins"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":660,"end":710,"location":"Other"}]}
       ],
       "options": [
         ["WPE 1699-D02"]
