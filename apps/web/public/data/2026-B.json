@@ -1,6 +1,6 @@
 {
   "term": {"id":"2026-B","name":"B Term","season":"Fall","year":2026,"start":"2026-10-19","end":"2026-12-11"},
-  "generatedAt": "2026-11-24T20:04:02Z",
+  "generatedAt": "2026-11-26T18:55:24Z",
   "courses": [
     {
       "code": "AB 1532",
@@ -647,11 +647,9 @@
       "level": "Undergraduate",
       "description": "BB 3813 Animal Cell Culture Techniques Laboratory (Cat. I; 1/6 unit) Basic laboratory skills in mammalian cell culture including cell counting, freezing and thawing cell lines, and culture of suspension and attached cells. Recommended background: knowledge of aseptic technique (BB 1801 or 2815 or equivalent) and cell biology (BB 2550 or equivalent). Students may not receive credit for this course and BB 3513.",
       "sections": [
-        {"id":"BB 3813-BX01","code":"BX01","type":"lab","status":"waitlist","enrolled":5,"capacity":5,"waitlist":{"taken":1,"capacity":2},"instructors":["Jill Rulfs"],"delivery":"in-person","dates":{"start":"2026-10-19","end":"2026-11-12"},"meetings":[{"days":["Tue","Fri"],"start":840,"end":1010,"location":"Goddard Hall 212 BB Lab"}]},
         {"id":"BB 3813-BX02","code":"BX02","type":"lab","status":"open","enrolled":4,"capacity":5,"waitlist":{"taken":0,"capacity":2},"instructors":["Jill Rulfs"],"delivery":"in-person","dates":{"start":"2026-11-16","end":"2026-12-11"},"meetings":[{"days":["Tue","Fri"],"start":840,"end":1010,"location":"Goddard Hall 212 BB Lab"}]}
       ],
       "options": [
-        ["BB 3813-BX01"],
         ["BB 3813-BX02"]
       ]
     },

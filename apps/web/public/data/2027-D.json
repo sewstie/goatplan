@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-11-25T19:05:19Z",
+  "generatedAt": "2026-11-26T18:55:24Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -245,7 +245,7 @@
       "level": "Undergraduate",
       "description": "This course will focus on making digital art functional in a video game environment. Students will learn the skills necessary to create and optimize their art assets through several creative and technical solutions that are all geared towards making high quality game art. This course will allow students to form a greater understanding of the bridge between pure art creation and interactive art implementation into a game engine. The course explores the many problems and technical restrictions one is faced with when trying to implement anything from animated characters to textures and focuses on how one can creatively apply technology to achieve high quality results. Topics covered include: creating complex character rigs, optimizing character meshes for rigging, shader creation, optimizing UV space and baking texture files and lighting. Recommended background: Basic knowledge of 3D modeling, texturing and animation (IMGD 2101 and IMGD 2201 or equivalent). Students may not receive credit for both IMGD 204X and AR/IMGD 2048.",
       "sections": [
-        {"id":"AR 2048-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":2,"capacity":10},"instructors":["Farley Chery"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
+        {"id":"AR 2048-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":3,"capacity":10},"instructors":["Farley Chery"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
         ["AR 2048-D01"]
@@ -1479,7 +1479,7 @@
       "level": "Graduate",
       "description": "This course introduces the concept of Building Information Modeling (BIM) which is a relatively new approach in planning, design, construction and operation of constructed facilities in a technologically enabled and collaborative fashion. The course reviews fundamental concepts for collaboration and integration; it also reviews technologies that support the BIM approach and provides discipline specific as well as global perspectives on BIM. The course format includes formal lectures, computer laboratory sessions, student presentations based on assigned readings and a project developed collaboratively by the students throughout the course. Guest speakers may be invited based on the topics covered and discussed in class. Prerequisites: Basic knowledge of computers. Exposure to professional practice in any area of the Architecture / Engineering / Construction / Facilities Management (A/E/C/FM) industry is desirable. Students are not permitted to receive credit for CE 587 if they have previously received credit for CE 585 or CE 590A-BIM.",
       "sections": [
-        {"id":"CE 587-S01","code":"S01","type":"lecture","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Michael Christiansen"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CE 587-S01","code":"S01","type":"lecture","status":"open","enrolled":17,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Michael Christiansen"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CE 587-S01"]
@@ -1615,7 +1615,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course presents a thorough analysis of the most relevant metabolic processes in cells. The catabolism of sugars and lipids will be presented in the context of energy generation and storage. Nucleotide and amino acid metabolism will discussed as building blocks for large biomolecules. Throughout the course the links between metabolism, hereditary pathologies, as well as risk of metabolic imbalances such as diabetes and obesity will be presented.Recommended background: Familiarity with organic chemistry topics including functional groups, nucleophilic addition and substitution reactions, stereochemistry, and carbonyl chemistry. General knowledge of cellular architecture is also recommended. See CH 2310, CH 2320, CH 2330, and BB2550 or equivalent.Specific concepts that we will discuss are: Glucose and glycogen metabolism; Gluconeogenesis; Citric Acid Cycle; Lipid, amino acid and nucleotide metabolisms; Mammalian Fuel Metabolism: Integration and Regulation.",
       "sections": [
-        {"id":"CH 4140-D01","code":"D01","type":"lecture","status":"open","enrolled":33,"capacity":48,"waitlist":{"taken":0,"capacity":15},"instructors":["Carissa Olsen"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 405"}]}
+        {"id":"CH 4140-D01","code":"D01","type":"lecture","status":"open","enrolled":34,"capacity":48,"waitlist":{"taken":0,"capacity":15},"instructors":["Carissa Olsen"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 405"}]}
       ],
       "options": [
         ["CH 4140-D01"]
@@ -3644,7 +3644,7 @@
       "level": "Undergraduate",
       "description": "EN2219 Creative Writing (Cat. I) This writing workshop aims to help students develop or improve the skills of written expression, emphasizing presentation and discussion of original work. Offerings may include themed courses covering multiple genres or specialized workshops in single genres of focus such as fiction, poetry, or creative nonfiction. This course may be repeated for different genres. Recommended Background: Introductory level creative writing (EN1219: Introduction to Creative Writing)",
       "sections": [
-        {"id":"EN 2219-D01","code":"D01","type":"lecture","title":"Creative Writing: Poetry","status":"waitlist","enrolled":20,"capacity":20,"waitlist":{"taken":5,"capacity":10},"instructors":["Jim Cocola"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Higgins Labs 114"}]}
+        {"id":"EN 2219-D01","code":"D01","type":"lecture","title":"Creative Writing: Poetry","status":"waitlist","enrolled":20,"capacity":20,"waitlist":{"taken":6,"capacity":10},"instructors":["Jim Cocola"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":720,"end":830,"location":"Higgins Labs 114"}]}
       ],
       "options": [
         ["EN 2219-D01"]
@@ -3818,7 +3818,7 @@
       "description": "Cat. I This is an introductory course that addresses the analysis of basic mechanical and structural elements. Topics include general concepts of stresses, strains, and material properties of common engineering materials. Also covered are two-dimensional stress transformations, principal stresses, Mohr’s circle and deformations due to mechanical and thermal effects. Applications are to uniaxially loaded bars, circular shafts under torsion, bending and shearing and deflection of beams, and buckling of columns. Both statically determinate and indeterminate problems are analyzed. Recommended background; mechanical systems (ES 2501 or equivalent), differential (MA 1021) and integral (MA 1022) calculus, vector algebra (MA 1023), and double and triple integration (MA 1024).",
       "sections": [
         {"id":"ES 2502-DD01","code":"DD01","type":"discussion","status":"open","enrolled":85,"capacity":86,"waitlist":{"taken":0,"capacity":0},"instructors":["Mehul Bhatia"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Atwater Kent 219"}]},
-        {"id":"ES 2502-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":86,"capacity":86,"waitlist":{"taken":2,"capacity":15},"instructors":["Mehul Bhatia"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 400"}]}
+        {"id":"ES 2502-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":86,"capacity":86,"waitlist":{"taken":1,"capacity":15},"instructors":["Mehul Bhatia"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 400"}]}
       ],
       "options": [
         ["ES 2502-DD01","ES 2502-DL01"]
@@ -3864,7 +3864,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course emphasizes system and control volume modeling using conservation of mass and the First and Second Laws of Thermodynamics. Topics include an introduction to heat, work, energy, and power, properties of simple substances, and cycle analysis for power production and refrigeration. Recommended background: basic physics, (PH 1110, PH 1111) elementary differential and integral calculus (MA 1021, MA 1022) or equivalents.",
       "sections": [
-        {"id":"ES 3001-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":66,"capacity":66,"waitlist":{"taken":18,"capacity":20},"instructors":["Aswin Gnanaskandan"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Atwater Kent 233"},{"days":["Wed"],"start":840,"end":890,"location":"Atwater Kent 233"}]}
+        {"id":"ES 3001-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":66,"capacity":66,"waitlist":{"taken":17,"capacity":20},"instructors":["Aswin Gnanaskandan"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Atwater Kent 233"},{"days":["Wed"],"start":840,"end":890,"location":"Atwater Kent 233"}]}
       ],
       "options": [
         ["ES 3001-D01"]
@@ -3908,7 +3908,7 @@
       "level": "Undergraduate",
       "description": "Cat. I A study of the fundamental laws of statics, kinematics, and dynamics applied to fluid mechanics. The course will include fluid properties, conservation of mass, momentum, and energy as applied to real and ideal fluids. Laminar and turbulent flows, fluid resistance, and basic boundary layer theory will also be considered. Recommended background: basic physics, basic differential equations, and vectors.",
       "sections": [
-        {"id":"ES 3004-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":7,"capacity":20},"instructors":["Fiona Zoutendyk"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":840,"end":890,"location":"Higgins Labs 116"}]},
+        {"id":"ES 3004-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":6,"capacity":20},"instructors":["Fiona Zoutendyk"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":840,"end":890,"location":"Higgins Labs 116"}]},
         {"id":"ES 3004-D02","code":"D02","type":"lecture","status":"open","enrolled":24,"capacity":70,"waitlist":{"taken":0,"capacity":15},"instructors":["Alireza Nejad"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":720,"end":770,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]}
       ],
       "options": [
@@ -4608,7 +4608,7 @@
       "level": "Undergraduate",
       "description": "This course will focus on making digital art functional in a video game environment. Students will learn the skills necessary to create and optimize their art assets through several creative and technical solutions that are all geared towards making high quality game art. This course will allow students to form a greater understanding of the bridge between pure art creation and interactive art implementation into a game engine. The course explores the many problems and technical restrictions one is faced with when trying to implement anything from animated characters to textures and focuses on how one can creatively apply technology to achieve high quality results. Topics covered include: creating complex character rigs, optimizing character meshes for rigging, shader creation, optimizing UV space and baking texture files and lighting. Recommended background: Basic knowledge of 3D modeling, texturing and animation (IMGD 2101 and IMGD 2201 or equivalent). Students may not receive credit for both IMGD 204X and AR/IMGD 2048.",
       "sections": [
-        {"id":"IMGD 2048-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":2,"capacity":10},"instructors":["Farley Chery"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
+        {"id":"IMGD 2048-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":3,"capacity":10},"instructors":["Farley Chery"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
         ["IMGD 2048-D01"]
@@ -7158,7 +7158,7 @@
       "level": "Undergraduate",
       "description": "Cat. I An introduction to the basic principles of thermodynamics and statistical physics. Topics covered include: basic ideas of probability theory, statistical description of systems of particles, thermodynamic laws, entropy, microcanonical and canonical ensembles, ideal and real gases, ensembles of weakly interacting spin 1/2 systems. Recommended background: knowledge of quantum mechanics and thermodynamics at the level of ES 3001.",
       "sections": [
-        {"id":"PH 3206-D01","code":"D01","type":"lecture","status":"open","enrolled":9,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Germano Iannacchione"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Washburn 323"}]}
+        {"id":"PH 3206-D01","code":"D01","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Germano Iannacchione"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Washburn 323"}]}
       ],
       "options": [
         ["PH 3206-D01"]
@@ -7702,7 +7702,7 @@
       "description": "Arranged by individual faculty with special expertise, these courses survey fundamentals in areas that are not covered by the regular Robotics Engineering course offerings. Exact course descriptions are disseminated by the Robotics Engineering Program well in advance of the offering. (Prerequisite: Consent of instructor.)",
       "sections": [
         {"id":"RBE 595-S01","code":"S01","type":"lecture","title":"ST: LLMs for Human-Robot Interaction","status":"open","enrolled":6,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Fiona Yuan"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Higgins Labs 154"}]},
-        {"id":"RBE 595-S03","code":"S03","type":"lecture","title":"ST: Advanced Robot Navigation","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["James Brodovsky"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[],"description":"In recent years, robots have become part of our everyday lives. Leaving the research labs to be part of the common tools of a household, tools such as robotic vacuum cleaners (iRobot, Roomba, Kalorik). pool cleaners (Polaris, Maytronics), lawn mowers (Landroid, LawnBott), and more abound. For navigating safely, these robots need the ability to localize themselves autonomously using their onboard sensors. Potential applications of such systems include the automatic 3D reconstruction, 3D reconstruction of buildings, inspection and simple maintenance tasks, metric exploitation, surveillance of public places as well as in search and rescue systems. In this course, we will dive deep into teh curent techniques for 3D localization, mapping and navigation that are suitable for robtoic applications. Required prerequisites: RBE 501, RBE 502"}
+        {"id":"RBE 595-S03","code":"S03","type":"lecture","title":"ST: Advanced Robot Navigation","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["James Brodovsky"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[],"description":"In recent years, robots have become part of our everyday lives. Leaving the research labs to be part of the common tools of a household, tools such as robotic vacuum cleaners (iRobot, Roomba, Kalorik). pool cleaners (Polaris, Maytronics), lawn mowers (Landroid, LawnBott), and more abound. For navigating safely, these robots need the ability to localize themselves autonomously using their onboard sensors. Potential applications of such systems include the automatic 3D reconstruction, 3D reconstruction of buildings, inspection and simple maintenance tasks, metric exploitation, surveillance of public places as well as in search and rescue systems. In this course, we will dive deep into teh curent techniques for 3D localization, mapping and navigation that are suitable for robtoic applications. Required prerequisites: RBE 501, RBE 502"}
       ],
       "options": [
         ["RBE 595-S01"],

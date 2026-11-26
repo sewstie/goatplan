@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-C","name":"C Term","season":"Spring","year":2027,"start":"2027-01-13","end":"2027-03-05"},
-  "generatedAt": "2026-11-25T19:05:19Z",
+  "generatedAt": "2026-11-26T18:55:24Z",
   "courses": [
     {
       "code": "AB 1533",
@@ -242,7 +242,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course focuses on the methods, procedures and techniques of creating andmanipulating images through electronic and digital means. Students will developan understanding of image alteration. Topics may include color theory, displays,modeling, shading, and visual perception.Recommended background: AR 1100.",
       "sections": [
-        {"id":"AR 1101-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":8,"capacity":10},"instructors":["Matthew Steinke"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
+        {"id":"AR 1101-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":9,"capacity":10},"instructors":["Matthew Steinke"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
         ["AR 1101-C01"]
@@ -256,7 +256,7 @@
       "level": "Undergraduate",
       "description": "Cat. I 3D modeling is concerned with how to render created forms in a virtual environment. This course covers 3D modeling applications in video game development, film production, product design and fine art. Topics may include creating and armature, modeling organic and hard surfaces and sculpting using traditional techniques applied to a 3D model. Students will create works suitable for presentation in professional quality portfolio. Recommended background: AR1100 and AR1101.",
       "sections": [
-        {"id":"AR 2101-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":5,"capacity":10},"instructors":["Paul Ruppar"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Fuller Labs 222 IMGD Computer Lab"}]},
+        {"id":"AR 2101-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":6,"capacity":10},"instructors":["Paul Ruppar"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Fuller Labs 222 IMGD Computer Lab"}]},
         {"id":"AR 2101-C02","code":"C02","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":6,"capacity":10},"instructors":["Paul Ruppar"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
@@ -330,7 +330,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course covers painting techniques as applied to texturing a 3D asset or illustration/conceptual art. Topics include are color theory, study of form, lighting, applying traditional painting ideas to the digital format, character design, generation of ideas and a history of digital painting. Each class features a demonstration on the topic followed by individual critique and study. Students work towards a final project that may be suitable for an Art portfolio. Recommended background: AR 1101, AR 2202",
       "sections": [
-        {"id":"AR 2700-C01","code":"C01","type":"lecture","status":"open","enrolled":18,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Edward Gutierrez"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
+        {"id":"AR 2700-C01","code":"C01","type":"lecture","status":"open","enrolled":19,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Edward Gutierrez"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
         ["AR 2700-C01"]
@@ -506,7 +506,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course is designed for students seeking a broad overview of ecological systems and the effect of humans on the ecosystems. It provides an introduction to natural ecosystems, population growth, and the interaction between human populations and our environment. It is conducted in an active style including the use of case studies, class discussion/participation, and classroom polling systems. The major goal of this course is to help students become more informed environmental citizens, skeptical when presented with data in the media, and knowledgeable enough to question and make informed decisions about the environment. It will primarily focus on current topics but areas of discussion likely to be covered include ecosystems, populations, biodiversity, pollution, environmental economics and climate change. This course is intended for non- life science majors. Recommended background: High School Biology",
       "sections": [
-        {"id":"BB 1002-C01","code":"C01","type":"lecture","status":"open","enrolled":117,"capacity":120,"waitlist":{"taken":10,"capacity":20},"instructors":["Michael Buckholt"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 500"}]}
+        {"id":"BB 1002-C01","code":"C01","type":"lecture","status":"open","enrolled":117,"capacity":120,"waitlist":{"taken":9,"capacity":20},"instructors":["Michael Buckholt"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Unity Hall 500"}]}
       ],
       "options": [
         ["BB 1002-C01"]
@@ -946,7 +946,7 @@
       "level": "Undergraduate",
       "description": "BME 3112 Human Physiology for Biomedical Engineers 1/3 unit (Cat. I) This course provides students with an understanding of the structure, function and pathologies of physiological systems such as the cardiovascular, respiratory, and the renal system. The course will teach the mechanisms of organ function from an engineering standpoint that help students understand the principles and techniques employed in designing devices used to treat or correct pathological conditions in these organ systems. Students will gain a better understanding of the interface between physiology and device design used in medical devices such as stents, catheters, pacemakers, ECG machines, and other devices as applicable. Special emphasis will be given to group discussions where students will discuss disease pathologies and review the devices used to treat those conditions. Students will be encouraged to review the device design and suggest improvements for better patient outcomes. Other topics covered in the course include regenerative medicine, biomedical ethics and the concept of “Bioinspired design”. This course will not count towards the “Biomedical Engineering and Engineering” course requirement for Biomedical Engineering majors. Students who have received credit for BME3111 cannot receive credit for BME3112. Recommended Background: A knowledge of Human biology (such as BB 1025 or equivalent) and Cell Biology (such as BB 2550 or equivalent).",
       "sections": [
-        {"id":"BME 3112-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":50,"capacity":50,"waitlist":{"taken":0,"capacity":20},"instructors":["Sakthikumar Ambady"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Goddard Hall 227 Classroom"}]}
+        {"id":"BME 3112-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":50,"capacity":50,"waitlist":{"taken":1,"capacity":20},"instructors":["Sakthikumar Ambady"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Goddard Hall 227 Classroom"}]}
       ],
       "options": [
         ["BME 3112-C01"]
@@ -1516,7 +1516,7 @@
       "level": "Graduate",
       "description": "This course introduces the concept of Building Information Modeling (BIM) which is a relatively new approach in planning, design, construction and operation of constructed facilities in a technologically enabled and collaborative fashion. The course reviews fundamental concepts for collaboration and integration; it also reviews technologies that support the BIM approach and provides discipline specific as well as global perspectives on BIM. The course format includes formal lectures, computer laboratory sessions, student presentations based on assigned readings and a project developed collaboratively by the students throughout the course. Guest speakers may be invited based on the topics covered and discussed in class. Prerequisites: Basic knowledge of computers. Exposure to professional practice in any area of the Architecture / Engineering / Construction / Facilities Management (A/E/C/FM) industry is desirable. Students are not permitted to receive credit for CE 587 if they have previously received credit for CE 585 or CE 590A-BIM.",
       "sections": [
-        {"id":"CE 587-S01","code":"S01","type":"lecture","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Michael Christiansen"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"CE 587-S01","code":"S01","type":"lecture","status":"open","enrolled":17,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["Michael Christiansen"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["CE 587-S01"]
@@ -1677,7 +1677,7 @@
       "level": "Undergraduate",
       "description": "Cat. I An introduction to quantum mechanics with applications to atomic and molecular species. The course will be developed systematically beginning with the postulates of quantum mechanics. The Schroedinger equation will be applied to systems such as the particle in a box, the rigid rotor, the harmonic oscillator and the hydrogen atom. Emphasis will be given to a quantum mechanical description of multielectron atoms, molecular bonding and spectroscopy. Recommended background: a solid foundation in elementary physics and calculus. This course is normally for students in their third year.",
       "sections": [
-        {"id":"CH 3530-C01","code":"C01","type":"lecture","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["George Kaminski"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":600,"end":650,"location":"Atwater Kent 232"}]}
+        {"id":"CH 3530-C01","code":"C01","type":"lecture","status":"open","enrolled":22,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["George Kaminski"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Wed","Thu","Fri"],"start":600,"end":650,"location":"Atwater Kent 232"}]}
       ],
       "options": [
         ["CH 3530-C01"]
@@ -2029,10 +2029,10 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to a model of programming where the programming language exposes details of how the hardware stores and executes software. Building from the design concepts covered in CS 2102, this course covers manual memory management, pointers, the machine stack, and input/output mechanisms. The course will involve large-scale programming exercises and will be designed to help students confront issues of safe programming with system-level constructs. The course will cover several tools that assist programmers in these tasks. Students will be expected to design, implement, and debug programs in C++ and C. The course presents the material from CS 2301 at a fast pace and also includes C++ and other advanced topics.Recommended background: CS 2102, CS 2103, or CS 2119 and/or substantial object-oriented programming experience.",
       "sections": [
-        {"id":"CS 2303-CL01","code":"CL01","type":"lecture","status":"open","enrolled":64,"capacity":100,"waitlist":{"taken":0,"capacity":0},"instructors":["Jennifer Mortensen"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
+        {"id":"CS 2303-CL01","code":"CL01","type":"lecture","status":"open","enrolled":63,"capacity":100,"waitlist":{"taken":0,"capacity":0},"instructors":["Jennifer Mortensen"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
         {"id":"CS 2303-CL02","code":"CL02","type":"lecture","status":"open","enrolled":65,"capacity":100,"waitlist":{"taken":0,"capacity":0},"instructors":["Yu-Shan Sun"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
         {"id":"CS 2303-CX01","code":"CX01","type":"lab","status":"closed","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Atwater Kent 013 Computer Lab"}]},
-        {"id":"CS 2303-CX02","code":"CX02","type":"lab","status":"closed","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Atwater Kent 013 Computer Lab"}]},
+        {"id":"CS 2303-CX02","code":"CX02","type":"lab","status":"open","enrolled":24,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Atwater Kent 013 Computer Lab"}]},
         {"id":"CS 2303-CX03","code":"CX03","type":"lab","status":"open","enrolled":11,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Atwater Kent 013 Computer Lab"}]},
         {"id":"CS 2303-CX04","code":"CX04","type":"lab","status":"open","enrolled":3,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":960,"end":1010,"location":"Atwater Kent 013 Computer Lab"}]},
         {"id":"CS 2303-CX13","code":"CX13","type":"lab","status":"closed","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Atwater Kent 013 Computer Lab"}]},
@@ -2179,7 +2179,7 @@
       "level": "Undergraduate",
       "description": "CS 4099: Special Topics in Computer Science. (Cat III, 1/3 unit) Instances of this course will explore advanced and emerging topics that are not covered by the current regular CS offerings. Content and format will vary to suit the interests and needs of the faculty and students. This course may be repeated for credit as topics change.",
       "sections": [
-        {"id":"CS 4099-C01","code":"C01","type":"lecture","title":"ST: Quantum Computing","status":"open","enrolled":18,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Hanmeng Zhan","Tian Guo"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Other"}]}
+        {"id":"CS 4099-C01","code":"C01","type":"lecture","title":"ST: Quantum Computing","status":"open","enrolled":19,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Hanmeng Zhan","Tian Guo"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Other"}]}
       ],
       "options": [
         ["CS 4099-C01"]
@@ -4290,7 +4290,7 @@
       "level": "Undergraduate",
       "description": "Cat I. A survey of the major developments in European history from the nineteenth century to the present. The course will focus upon those factors and events that led to the formation of modern European society: revolutions, nationalism, industrialization, world wars, the Cold War, the creation of the European Union. No prior knowledge of European history is required. Especially appropriate for students interested in WPI's global Project Centers in Europe. Students may not receive credit for HI 2320 and HI 2322.",
       "sections": [
-        {"id":"HI 2320-C01","code":"C01","type":"lecture","status":"open","enrolled":25,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Elise Franklin"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Salisbury Labs 105"}]}
+        {"id":"HI 2320-C01","code":"C01","type":"lecture","status":"open","enrolled":26,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Elise Franklin"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Salisbury Labs 105"}]}
       ],
       "options": [
         ["HI 2320-C01"]
@@ -4662,9 +4662,9 @@
       "level": "Undergraduate",
       "description": "This course serves as an introduction to game audio, where the basics of audio theory and production are discussed along with practical applications for use in game development. Topics may include music, sound effects, dialogue, soundscape design, digital signal processing, basic audio engine principles, and the aesthetic vs. technical considerations in game audio production. Lab exercises may include an introduction to audio editing and mixing, dynamics and effects processing, creating and timing sound effects to character animations, mixing for cinematics, and audio integration using a 3D engine. Recommended background: IMGD 1000 and IMGD 1001. This course assumes no prior knowledge of audio production.",
       "sections": [
-        {"id":"IMGD 2030-CL01","code":"CL01","type":"lecture","status":"open","enrolled":33,"capacity":50,"waitlist":{"taken":6,"capacity":10},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 205 Active Learning Classroom North"}]},
-        {"id":"IMGD 2030-CX01","code":"CX01","type":"lab","status":"open","enrolled":24,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Kaven Hall 202 Stats Computer Lab"}]},
-        {"id":"IMGD 2030-CX02","code":"CX02","type":"lab","status":"open","enrolled":9,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
+        {"id":"IMGD 2030-CL01","code":"CL01","type":"lecture","status":"open","enrolled":39,"capacity":50,"waitlist":{"taken":4,"capacity":10},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 205 Active Learning Classroom North"}]},
+        {"id":"IMGD 2030-CX01","code":"CX01","type":"lab","status":"closed","enrolled":25,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":710,"location":"Kaven Hall 202 Stats Computer Lab"}]},
+        {"id":"IMGD 2030-CX02","code":"CX02","type":"lab","status":"open","enrolled":10,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Rodney DuPlessis"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
         ["IMGD 2030-CL01","IMGD 2030-CX01"],
@@ -4679,7 +4679,7 @@
       "level": "Undergraduate",
       "description": "Cat. I 3D modeling is concerned with how to render created forms in a virtual environment. This course covers 3D modeling applications in video game development, film production, product design and fine art. Topics may include creating and armature, modeling organic and hard surfaces and sculpting using traditional techniques applied to a 3D model. Students will create works suitable for presentation in professional quality portfolio. Recommended background: AR1100 and AR1101.",
       "sections": [
-        {"id":"IMGD 2101-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":5,"capacity":10},"instructors":["Paul Ruppar"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Fuller Labs 222 IMGD Computer Lab"}]},
+        {"id":"IMGD 2101-C01","code":"C01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":6,"capacity":10},"instructors":["Paul Ruppar"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Fuller Labs 222 IMGD Computer Lab"}]},
         {"id":"IMGD 2101-C02","code":"C02","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":6,"capacity":10},"instructors":["Paul Ruppar"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
@@ -4737,7 +4737,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course covers painting techniques as applied to texturing a 3D asset or illustration/conceptual art. Topics include are color theory, study of form, lighting, applying traditional painting ideas to the digital format, character design, generation of ideas and a history of digital painting. Each class features a demonstration on the topic followed by individual critique and study. Students work towards a final project that may be suitable for an Art portfolio. Recommended background: AR 1101, AR 2202",
       "sections": [
-        {"id":"IMGD 2700-C01","code":"C01","type":"lecture","status":"open","enrolled":18,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Edward Gutierrez"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
+        {"id":"IMGD 2700-C01","code":"C01","type":"lecture","status":"open","enrolled":19,"capacity":24,"waitlist":{"taken":0,"capacity":10},"instructors":["Edward Gutierrez"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Fuller Labs 222 IMGD Computer Lab"}]}
       ],
       "options": [
         ["IMGD 2700-C01"]
@@ -4751,7 +4751,7 @@
       "level": "Undergraduate",
       "description": "This course provides students with the opportunity to examine and apply a variety of interactive media project design methods. Topics include audience-centered and iterative design strategies, playtesting best practices, critique and feedback analysis, professionalization, and the importance of play for both designers and audiences. Course activities range from small group design work to sophisticated analysis and discussion. Units: 1/3 Category: Category I Recommended Background: None",
       "sections": [
-        {"id":"IMGD 2901-C01","code":"C01","type":"lecture","status":"open","enrolled":19,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Karen Stewart"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Stratton Hall 207"}]}
+        {"id":"IMGD 2901-C01","code":"C01","type":"lecture","status":"open","enrolled":20,"capacity":40,"waitlist":{"taken":0,"capacity":15},"instructors":["Karen Stewart"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Stratton Hall 207"}]}
       ],
       "options": [
         ["IMGD 2901-C01"]
@@ -4962,7 +4962,7 @@
         {"id":"MA 1023-CD01","code":"CD01","type":"discussion","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Jeffrey Barden"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":960,"end":1010,"location":"Stratton Hall 201"}]},
         {"id":"MA 1023-CD05","code":"CD05","type":"discussion","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Stratton Hall 205"}]},
         {"id":"MA 1023-CD06","code":"CD06","type":"discussion","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 205"}]},
-        {"id":"MA 1023-CD07","code":"CD07","type":"discussion","status":"open","enrolled":29,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Stratton Hall 205"}]},
+        {"id":"MA 1023-CD07","code":"CD07","type":"discussion","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Stratton Hall 205"}]},
         {"id":"MA 1023-CD08","code":"CD08","type":"discussion","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":1020,"end":1070,"location":"Stratton Hall 205"}]},
         {"id":"MA 1023-CD10","code":"CD10","type":"discussion","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Olin Hall 109"}]},
         {"id":"MA 1023-CD12","code":"CD12","type":"discussion","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Olin Hall 109"}]},
@@ -4971,12 +4971,12 @@
         {"id":"MA 1023-CD15","code":"CD15","type":"discussion","status":"open","enrolled":31,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Arthur Heinricher"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":480,"end":530,"location":"Salisbury Labs 407"}]},
         {"id":"MA 1023-CD16","code":"CD16","type":"discussion","status":"open","enrolled":28,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Smith"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":840,"end":890,"location":"Stratton Hall 205"}]},
         {"id":"MA 1023-CL01","code":"CL01","type":"lecture","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Jeffrey Barden"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":1080,"end":1190,"location":"Stratton Hall 313"}]},
-        {"id":"MA 1023-CL03","code":"CL03","type":"lecture","status":"open","enrolled":59,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Salisbury Labs 104"}]},
+        {"id":"MA 1023-CL03","code":"CL03","type":"lecture","status":"closed","enrolled":60,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Salisbury Labs 104"}]},
         {"id":"MA 1023-CL04","code":"CL04","type":"lecture","status":"closed","enrolled":60,"capacity":60,"waitlist":{"taken":0,"capacity":0},"instructors":["Yuehui Xu"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Higgins Labs 116"}]},
         {"id":"MA 1023-CL05","code":"CL05","type":"lecture","status":"open","enrolled":69,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Olin Hall 107"}]},
         {"id":"MA 1023-CL06","code":"CL06","type":"lecture","status":"open","enrolled":62,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Smith"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":960,"end":1010,"location":"Fuller Labs PHU Perreault Hall - Upper Section"}]},
         {"id":"MA 1023-CL07","code":"CL07","type":"lecture","status":"open","enrolled":66,"capacity":70,"waitlist":{"taken":0,"capacity":0},"instructors":["Arthur Heinricher"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Fuller Labs PHL Perreault Hall - Lower Section"}]},
-        {"id":"MA 1023-CX02","code":"CX02","type":"lab","status":"open","enrolled":34,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":540,"end":590,"location":"Stratton Hall 116 Computer Lab"}]},
+        {"id":"MA 1023-CX02","code":"CX02","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":540,"end":590,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1023-CX03","code":"CX03","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":600,"end":650,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1023-CX04","code":"CX04","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":660,"end":710,"location":"Stratton Hall 116 Computer Lab"}]},
         {"id":"MA 1023-CX05","code":"CX05","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Tue"],"start":720,"end":770,"location":"Stratton Hall 116 Computer Lab"}]},
@@ -8042,7 +8042,7 @@
       "description": "Arranged by individual faculty with special expertise, these courses survey fundamentals in areas that are not covered by the regular Robotics Engineering course offerings. Exact course descriptions are disseminated by the Robotics Engineering Program well in advance of the offering. (Prerequisite: Consent of instructor.)",
       "sections": [
         {"id":"RBE 595-S01","code":"S01","type":"lecture","title":"ST: LLMs for Human-Robot Interaction","status":"open","enrolled":6,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Fiona Yuan"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Higgins Labs 154"}]},
-        {"id":"RBE 595-S03","code":"S03","type":"lecture","title":"ST: Advanced Robot Navigation","status":"open","enrolled":7,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["James Brodovsky"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[],"description":"In recent years, robots have become part of our everyday lives. Leaving the research labs to be part of the common tools of a household, tools such as robotic vacuum cleaners (iRobot, Roomba, Kalorik). pool cleaners (Polaris, Maytronics), lawn mowers (Landroid, LawnBott), and more abound. For navigating safely, these robots need the ability to localize themselves autonomously using their onboard sensors. Potential applications of such systems include the automatic 3D reconstruction, 3D reconstruction of buildings, inspection and simple maintenance tasks, metric exploitation, surveillance of public places as well as in search and rescue systems. In this course, we will dive deep into teh curent techniques for 3D localization, mapping and navigation that are suitable for robtoic applications. Required prerequisites: RBE 501, RBE 502"}
+        {"id":"RBE 595-S03","code":"S03","type":"lecture","title":"ST: Advanced Robot Navigation","status":"open","enrolled":8,"capacity":30,"waitlist":{"taken":0,"capacity":20},"instructors":["James Brodovsky"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[],"description":"In recent years, robots have become part of our everyday lives. Leaving the research labs to be part of the common tools of a household, tools such as robotic vacuum cleaners (iRobot, Roomba, Kalorik). pool cleaners (Polaris, Maytronics), lawn mowers (Landroid, LawnBott), and more abound. For navigating safely, these robots need the ability to localize themselves autonomously using their onboard sensors. Potential applications of such systems include the automatic 3D reconstruction, 3D reconstruction of buildings, inspection and simple maintenance tasks, metric exploitation, surveillance of public places as well as in search and rescue systems. In this course, we will dive deep into teh curent techniques for 3D localization, mapping and navigation that are suitable for robtoic applications. Required prerequisites: RBE 501, RBE 502"}
       ],
       "options": [
         ["RBE 595-S01"],
