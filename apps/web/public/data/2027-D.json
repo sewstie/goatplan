@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-11-26T18:55:24Z",
+  "generatedAt": "2026-11-27T18:48:15Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -66,7 +66,7 @@
       "level": "Undergraduate",
       "description": "Cat I This course introduces the ambient atmospheric and space environments encountered by aerospace vehicles. Topics include: the sun and solar activity; the solar wind; planetary magnetospheres; planetary atmospheres; radiation environments; galactic cosmic rays; meteoroids; and space debris. Recommended background: mechanics (PH1110 / 1111 or equivalent), electromagnetism (PH 1120 / 1121 or equivalent), and ordinary differential equations (MA 2051 or equivalent).",
       "sections": [
-        {"id":"AE 2550-D01","code":"D01","type":"lecture","status":"open","enrolled":153,"capacity":180,"waitlist":{"taken":0,"capacity":30},"instructors":["Hektor Kashuri"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Olin Hall 107"}]}
+        {"id":"AE 2550-D01","code":"D01","type":"lecture","status":"open","enrolled":154,"capacity":180,"waitlist":{"taken":0,"capacity":30},"instructors":["Hektor Kashuri"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Olin Hall 107"}]}
       ],
       "options": [
         ["AE 2550-D01"]
@@ -230,7 +230,7 @@
       "description": "Cat. I This course focuses on the methods, procedures and techniques of creating andmanipulating images through electronic and digital means. Students will developan understanding of image alteration. Topics may include color theory, displays,modeling, shading, and visual perception.Recommended background: AR 1100.",
       "sections": [
         {"id":"AR 1101-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":9,"capacity":10},"instructors":["Matthew Steinke"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Salisbury Labs 123 Computer Lab"}]},
-        {"id":"AR 1101-D02","code":"D02","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":8,"capacity":10},"instructors":["Roshanak Bigonah"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Salisbury Labs 123 Computer Lab"}]}
+        {"id":"AR 1101-D02","code":"D02","type":"lecture","status":"waitlist","enrolled":24,"capacity":24,"waitlist":{"taken":7,"capacity":10},"instructors":["Roshanak Bigonah"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Salisbury Labs 123 Computer Lab"}]}
       ],
       "options": [
         ["AR 1101-D01"],
@@ -680,7 +680,7 @@
       "level": "Undergraduate",
       "description": "BB 3825 Plant Physiology Laboratory (Cat. I; 1/6 unit) Basic studies in the biochemical and physical systems plants use to sustain life; includes an introduction to plant cell culture techniques. Some sections of this course may be offered as Writing Intensive (WI). Recommended background: BB 1102, BB 2803, or equivalent. Concurrent or prior registration in BB 3120 is recommended. Students may not receive credit for this course and BB 3525.",
       "sections": [
-        {"id":"BB 3825-D01","code":"D01","type":"lab","status":"waitlist","enrolled":16,"capacity":16,"waitlist":{"taken":1,"capacity":5},"instructors":["Chris Collins"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":950,"location":"Goddard Hall 205 BB Lab"}]}
+        {"id":"BB 3825-D01","code":"D01","type":"lab","status":"open","enrolled":15,"capacity":16,"waitlist":{"taken":0,"capacity":5},"instructors":["Chris Collins"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":950,"location":"Goddard Hall 205 BB Lab"}]}
       ],
       "options": [
         ["BB 3825-D01"]
@@ -1957,7 +1957,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course introduces students to the fundamental principles of programming in imperative and scripting languages. Topics include control structures, iterators, functional decomposition, basic data structures (such as records). Students will be expected to implement, test and debug programs. Through the use of compelling applications and lab exercises, students will learn how to interface with external data systems and control devices. Recommended background: none. All Computer Science students and other students wishing to prepare for 3000-level courses in Computer Science should take CS 1101/1102 instead of CS 1004. This course provides sufficient background for CS 2301 Systems Programming for Non-Majors. Undergraduate credit may not be earned both for this course and for CS 1005.",
       "sections": [
-        {"id":"CS 1004-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":85,"capacity":85,"waitlist":{"taken":15,"capacity":20},"instructors":["Gillian Smith"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Atwater Kent 219"}]},
+        {"id":"CS 1004-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":85,"capacity":85,"waitlist":{"taken":14,"capacity":20},"instructors":["Gillian Smith"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Atwater Kent 219"}]},
         {"id":"CS 1004-DX01","code":"DX01","type":"lab","status":"closed","enrolled":22,"capacity":22,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Thu"],"start":660,"end":710,"location":"Atwater Kent 013 Computer Lab"}]},
         {"id":"CS 1004-DX02","code":"DX02","type":"lab","status":"open","enrolled":20,"capacity":21,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Thu"],"start":540,"end":590,"location":"Atwater Kent 013 Computer Lab"}]},
         {"id":"CS 1004-DX03","code":"DX03","type":"lab","status":"closed","enrolled":21,"capacity":21,"waitlist":{"taken":0,"capacity":0},"instructors":[],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":650,"location":"Atwater Kent 013 Computer Lab"}]},
@@ -2086,7 +2086,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course makes the student aware of the social, moral, ethical, and philosophical impact of computers and computer-based systems on society, both now and in the future. Topics include major computer-based applications and their impact, human machine relationships, and the major problems of controlling the use of computers. Students will be expected to contribute to classroom discussions and to complete a number of significant writing assignments. This course is recommended for juniors and seniors. The Social Science Requirement cannot be satisfied by this course. Undergraduate credit may not be earned both for this course and for CS 505. Recommended background: a general knowledge of computers and computer systems",
       "sections": [
-        {"id":"CS 3043-D02","code":"D02","type":"lecture","status":"open","enrolled":31,"capacity":35,"waitlist":{"taken":5,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 405"}]},
+        {"id":"CS 3043-D02","code":"D02","type":"lecture","status":"open","enrolled":31,"capacity":35,"waitlist":{"taken":4,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 405"}]},
         {"id":"CS 3043-D03","code":"D03","type":"lecture","status":"open","enrolled":32,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["EJ Néel"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
@@ -2302,7 +2302,7 @@
       "level": "Graduate",
       "description": "This is the study of mathematical foundations of computing. Topics include finite automataand regular languages, pushdown automata and context-free languages, Turing machines and decidability, and an introduction to computational complexity. (Prerequisites: Knowledge of discretemathematics and algorithms at the undergraduate level, and some facility with reading and writingmathematical proofs.)",
       "sections": [
-        {"id":"CS 503-S01","code":"S01","type":"lecture","status":"open","enrolled":28,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Hanmeng Zhan"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Washburn 229"}]}
+        {"id":"CS 503-S01","code":"S01","type":"lecture","status":"open","enrolled":29,"capacity":40,"waitlist":{"taken":0,"capacity":10},"instructors":["Hanmeng Zhan"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":960,"end":1040,"location":"Washburn 229"}]}
       ],
       "options": [
         ["CS 503-S01"]
@@ -2420,7 +2420,7 @@
       "level": "Graduate",
       "description": "This course will offer a mathematical and practical perspective on artificial neural networks for machine learning. Students will learn about the most prominent network architectures including multilayer feedforward neural networks, convolutional neural networks (CNNs), auto-encoders, recurrent neural networks (RNNs), and generative-adversarial networks (GANs). This course will also teach students optimization and regularization techniques used to train them -- such as back-propagation, stochastic gradient descent, dropout, pooling, and batch normalization. Connections to related machine learning techniques and algorithms, such as probabilistic graphical models, will be explored. In addition to understanding the mathematics behind deep learning, students will also engage in hands-on course projects. Students will have the opportunity to train neural networks for a wide range of applications, such as object detection, facial expression recognition, handwriting analysis, and natural language processing. Prerequisite: Machine Learning (CS 539), and knowledge of Linear Algebra (such as MA 2071) and Algorithms (such as CS 2223).",
       "sections": [
-        {"id":"CS 541-S01","code":"S01","type":"lecture","status":"open","enrolled":36,"capacity":56,"waitlist":{"taken":2,"capacity":20},"instructors":["Jacob Whitehill"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
+        {"id":"CS 541-S01","code":"S01","type":"lecture","status":"open","enrolled":36,"capacity":56,"waitlist":{"taken":3,"capacity":20},"instructors":["Jacob Whitehill"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
         ["CS 541-S01"]
@@ -2506,7 +2506,7 @@
       "level": "Graduate",
       "description": "This course examines current issues in the computer implementation of visual perception. Topics include image formation, edge detection, segmentation, shape-from-shading, motion, stereo, texture analysis, pattern classification and object recognition. We will discuss various representations for visual information, including sketches and intrinsic images. (Prerequisites: CS 534, CS 543, CS 545, or the equivalent of one of these courses.)",
       "sections": [
-        {"id":"CS 549-S01","code":"S01","type":"lecture","status":"open","enrolled":26,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Nitin Sanket"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Salisbury Labs 402"}]},
+        {"id":"CS 549-S01","code":"S01","type":"lecture","status":"open","enrolled":27,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Nitin Sanket"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Salisbury Labs 402"}]},
         {"id":"CS 549-S02","code":"S02","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Alexandros Lioulemes"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
@@ -2888,7 +2888,7 @@
       "level": "Graduate",
       "description": "This course will offer a mathematical and practical perspective on artificial neural networks for machine learning. Students will learn about the most prominent network architectures including multilayer feedforward neural networks, convolutional neural networks (CNNs), auto-encoders, recurrent neural networks (RNNs), and generative-adversarial networks (GANs). This course will also teach students optimization and regularization techniques used to train them -- such as back-propagation, stochastic gradient descent, dropout, pooling, and batch normalization. Connections to related machine learning techniques and algorithms, such as probabilistic graphical models, will be explored. In addition to understanding the mathematics behind deep learning, students will also engage in hands-on course projects. Students will have the opportunity to train neural networks for a wide range of applications, such as object detection, facial expression recognition, handwriting analysis, and natural language processing. Prerequisite: Machine Learning (CS 539), and knowledge of Linear Algebra (such as MA 2071) and Algorithms (such as CS 2223).",
       "sections": [
-        {"id":"DS 541-S01","code":"S01","type":"lecture","status":"open","enrolled":36,"capacity":56,"waitlist":{"taken":2,"capacity":20},"instructors":["Jacob Whitehill"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
+        {"id":"DS 541-S01","code":"S01","type":"lecture","status":"open","enrolled":36,"capacity":56,"waitlist":{"taken":3,"capacity":20},"instructors":["Jacob Whitehill"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1040,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
         ["DS 541-S01"]
@@ -3004,7 +3004,7 @@
       "level": "Undergraduate",
       "description": "Cat. I The objective of this course is to introduce students to the broad field of electrical and computer engineering within the context of real world applications. This course is designed for first-year students who are considering ECE as a possible major or for non-ECE students fulfilling an out-of-major degree requirement. The course will introduce basic electrical circuit theory as well as analog and digital signal processing methods currently used to solve a variety of engineering design problems in areas such as entertainment and networking media, robotics, renewable energy and biomedical applications. Laboratory experiments based on these applications are used to reinforce basic concepts and develop laboratory skills, as well as to provide system-level understanding. Circuit and system simulation analysis tools are also introduced and emphasized. Topics: Basic concepts of AC/DC and Digital electrical circuits, power, linear circuit simulation and analysis, op-amp circuits, transducers, feedback, circuit equivalents and system models, first order transients, the description of sinusoidal signals and system response, analog/digital conversion, basic digital logic gates and combinatorial circuits. Recommended Background: high school physics, and MA 1022 (concurrent).",
       "sections": [
-        {"id":"ECE 2010-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":180,"capacity":180,"waitlist":{"taken":8,"capacity":20},"instructors":["Mostafa Asheghan"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Atwater Kent 116 Newell Hall"}]},
+        {"id":"ECE 2010-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":180,"capacity":180,"waitlist":{"taken":7,"capacity":20},"instructors":["Mostafa Asheghan"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":780,"end":830,"location":"Atwater Kent 116 Newell Hall"}]},
         {"id":"ECE 2010-DX01","code":"DX01","type":"lab","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Mostafa Asheghan"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":480,"end":650,"location":"Atwater Kent 113 ECE Lab"}]},
         {"id":"ECE 2010-DX02","code":"DX02","type":"lab","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Mostafa Asheghan"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":840,"end":1010,"location":"Atwater Kent 113 ECE Lab"}]},
         {"id":"ECE 2010-DX03","code":"DX03","type":"lab","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Mostafa Asheghan"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":840,"end":1010,"location":"Atwater Kent 113 ECE Lab"}]},
@@ -3757,7 +3757,7 @@
       "description": "Cat. I This introduction course in engineering graphical communications and design provides a solid background for all engineering disciplines. The ability to visualize, create and apply proper design intent and industry standards for simple parts, assemblies and drawings is a necessity for anyone in a technology environment. Computer Aided Design software is used as a tool to create 2D & 3D sketches, 3D parts, 3D assemblies and 2D drawings per an industry standard. Multiview and pictorial graphics techniques are integrated with ANSI standards for dimensioning and tolerances, sectioning, and generating detailed engineering drawings. Emphasis is placed on relating drawings to the required manufacturing processes. The design process and aids to creativity are combined with graphics procedures to incorporate functional design requirements in the geometric model. No prior engineering graphics or software knowledge is assumed.",
       "sections": [
         {"id":"ES 1310-DL01","code":"DL01","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":5,"capacity":15},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Kaven Hall 116"}]},
-        {"id":"ES 1310-DL02","code":"DL02","type":"lecture","status":"waitlist","enrolled":70,"capacity":70,"waitlist":{"taken":3,"capacity":15},"instructors":["Reza Ebadi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Atwater Kent 219"}]},
+        {"id":"ES 1310-DL02","code":"DL02","type":"lecture","status":"open","enrolled":69,"capacity":70,"waitlist":{"taken":1,"capacity":15},"instructors":["Reza Ebadi"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Atwater Kent 219"}]},
         {"id":"ES 1310-DX01","code":"DX01","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
         {"id":"ES 1310-DX02","code":"DX02","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Sarah Jane Wodin-Schwartz"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":950,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
         {"id":"ES 1310-DX03","code":"DX03","type":"lab","status":"closed","enrolled":35,"capacity":35,"waitlist":{"taken":0,"capacity":0},"instructors":["Reza Ebadi"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Higgins Labs 230 Geom Modeling Computer Lab"}]},
@@ -3832,9 +3832,9 @@
       "level": "Undergraduate",
       "description": "Cat. I Engineers should be able to formulate and solve problems that involve forces that act on bodies which are moving. This course deals with the kinematics and dynamics of particles and rigid bodies which move in a plane. Topics covered will include: kinematics of particles and rigid bodies, equations of motion, work-energy methods, and impulse and momentum. In this course a basic introduction to mechanical vibration is also discussed. Basic equations will be developed with respect to translating and rotating coordinate systems. Recommended background: Statics (ES 2501 or CE 2000).",
       "sections": [
-        {"id":"ES 2503-DD01","code":"DD01","type":"discussion","status":"open","enrolled":87,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Mustapha Fofana"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Washburn 229"}]},
+        {"id":"ES 2503-DD01","code":"DD01","type":"discussion","status":"open","enrolled":86,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Mustapha Fofana"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Washburn 229"}]},
         {"id":"ES 2503-DD02","code":"DD02","type":"discussion","status":"open","enrolled":80,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Alireza Nejad"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Higgins Labs 116"}]},
-        {"id":"ES 2503-DL01","code":"DL01","type":"lecture","status":"open","enrolled":87,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Mustapha Fofana"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Higgins Labs 116"}]},
+        {"id":"ES 2503-DL01","code":"DL01","type":"lecture","status":"open","enrolled":86,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Mustapha Fofana"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Higgins Labs 116"}]},
         {"id":"ES 2503-DL02","code":"DL02","type":"lecture","status":"open","enrolled":80,"capacity":90,"waitlist":{"taken":0,"capacity":20},"instructors":["Alireza Nejad"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Higgins Labs 116"}]}
       ],
       "options": [
@@ -4242,7 +4242,7 @@
       "level": "Undergraduate",
       "description": "Cat I.This course surveys the major political, social, and economic changes of American history from 1920 to the present. Emphasis will be placed on the Great Depression, the New Deal, suburbanization, McCarthyism, the persistence of poverty,the domestic effects of the Vietnam war, and recent demographic trends.",
       "sections": [
-        {"id":"HI 2315-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":35,"capacity":35,"waitlist":{"taken":9,"capacity":10},"instructors":["Whitney McIntosh"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Higgins Labs 154"}]},
+        {"id":"HI 2315-D01","code":"D01","type":"lecture","status":"waitlist","enrolled":35,"capacity":35,"waitlist":{"taken":7,"capacity":10},"instructors":["Whitney McIntosh"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":710,"location":"Higgins Labs 154"}]},
         {"id":"HI 2315-D02","code":"D02","type":"lecture","status":"waitlist","enrolled":35,"capacity":35,"waitlist":{"taken":8,"capacity":10},"instructors":["Joseph Cullon"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":540,"end":590,"location":"Stratton Hall 207"}]}
       ],
       "options": [
@@ -4562,7 +4562,7 @@
       "level": "Undergraduate",
       "description": "In Environmental Leadership Applications (IGS310X), students will apply the knowledge gained in the previous two courses (Environmental Leadership Foundations I and II, IGS210X and IGS220X). Students will choose how to apply their knowledge and leadership skills by completing a range of activities, including community projects, earning additional credentials (e.g., external badges and certifications), career exploration, networking, mentorship, and disseminating their work. Students will also choose how to disseminate their work, including delivering conference and poster presentations, developing professional publications, engaging in community organizing, and working on environmental justice initiatives. Classes will include guest speakers, discussions, action-oriented work, leadership training, and peer-to-peer mentoring. Assignments outside the classroom will include a mix of activities, such as attending regulatory hearings, attending town committee meetings (e.g., sustainability committee meetings), attending lectures and conference presentations, and organizing volunteer activities. During this course, students will have additional experiential, hands-on nature immersion opportunities. Required Background: Environmental Leadership Foundations I (IGS210X) and II (IGS220X). NOTE: This course is part of the Leaders in Environmental Action for the Future (LEAF) Initiative.",
       "sections": [
-        {"id":"IGS 310X-D01","code":"D01","type":"lecture","status":"open","enrolled":4,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Corey Dehner","Marja Bakermans"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":710,"location":"Washburn 323"}]}
+        {"id":"IGS 310X-D01","code":"D01","type":"lecture","status":"open","enrolled":3,"capacity":20,"waitlist":{"taken":0,"capacity":10},"instructors":["Corey Dehner","Marja Bakermans"],"delivery":"in-person","meetings":[{"days":["Thu"],"start":600,"end":710,"location":"Washburn 323"}]}
       ],
       "options": [
         ["IGS 310X-D01"]
@@ -4763,7 +4763,7 @@
       "level": "Undergraduate",
       "description": "Cat. II What is justice during an era of globalization? What are the rights and responsibilities of individuals, groups, nations, or supranational organizations in a world of profound inequalities of wealth or disparities of power? This course takes an interdisciplinary approach to historical, literary, religious, and ethical debates about global justice as well as the political and practical responses by various actors in the global South and North. Themes will vary each time the course is taught and may include globalization and distributive justice, climate justice, migration, citizenship, cosmopolitanism, human rights, ideology, reparations, racial or gender equity, nationalism and internationalism, and global democracy. No prior background required. Recommended background: None. This course will be offered in 2020-21, and in alternating years thereafter.",
       "sections": [
-        {"id":"INTL 2110-D01","code":"D01","type":"lecture","status":"open","enrolled":25,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Geoffrey Pfeifer"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Higgins Labs 114"}]}
+        {"id":"INTL 2110-D01","code":"D01","type":"lecture","status":"open","enrolled":26,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["Geoffrey Pfeifer"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":720,"end":830,"location":"Higgins Labs 114"}]}
       ],
       "options": [
         ["INTL 2110-D01"]
@@ -5077,7 +5077,7 @@
       "sections": [
         {"id":"MA 2071-DD02","code":"DD02","type":"discussion","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":660,"end":710,"location":"Stratton Hall 205"}]},
         {"id":"MA 2071-DD03","code":"DD03","type":"discussion","status":"open","enrolled":28,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":720,"end":770,"location":"Stratton Hall 205"}]},
-        {"id":"MA 2071-DD05","code":"DD05","type":"discussion","status":"open","enrolled":28,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":840,"end":890,"location":"Stratton Hall 205"}]},
+        {"id":"MA 2071-DD05","code":"DD05","type":"discussion","status":"open","enrolled":29,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Mon"],"start":840,"end":890,"location":"Stratton Hall 205"}]},
         {"id":"MA 2071-DD07","code":"DD07","type":"discussion","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Dina Rassias"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":780,"end":830,"location":"Stratton Hall 201"}]},
         {"id":"MA 2071-DD08","code":"DD08","type":"discussion","status":"open","enrolled":16,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Dina Rassias"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":960,"end":1010,"location":"Stratton Hall 205"}]},
         {"id":"MA 2071-DD09","code":"DD09","type":"discussion","status":"open","enrolled":24,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Dina Rassias"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":900,"end":950,"location":"Stratton Hall 205"}]},
@@ -5088,7 +5088,7 @@
         {"id":"MA 2071-DD14","code":"DD14","type":"discussion","status":"closed","enrolled":30,"capacity":30,"waitlist":{"taken":5,"capacity":5},"instructors":["Michael Smith"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":600,"end":650,"location":"Stratton Hall 201"}]},
         {"id":"MA 2071-DD15","code":"DD15","type":"discussion","status":"waitlist","enrolled":30,"capacity":30,"waitlist":{"taken":1,"capacity":5},"instructors":["Michael Smith"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":660,"end":710,"location":"Stratton Hall 201"}]},
         {"id":"MA 2071-DD16","code":"DD16","type":"discussion","status":"open","enrolled":14,"capacity":30,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Smith"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":720,"end":770,"location":"Stratton Hall 201"}]},
-        {"id":"MA 2071-DL01","code":"DL01","type":"lecture","status":"open","enrolled":86,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Olin Hall 107"}]},
+        {"id":"MA 2071-DL01","code":"DL01","type":"lecture","status":"open","enrolled":87,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Tatiana Doytchinova"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":480,"end":530,"location":"Olin Hall 107"}]},
         {"id":"MA 2071-DL02","code":"DL02","type":"lecture","status":"closed","enrolled":100,"capacity":100,"waitlist":{"taken":0,"capacity":0},"instructors":["Dina Rassias"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":840,"end":890,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
         {"id":"MA 2071-DL03","code":"DL03","type":"lecture","status":"closed","enrolled":90,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Samuel Tripp"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":900,"end":950,"location":"Salisbury Labs 115 Kinnicutt Hall"}]},
         {"id":"MA 2071-DL04","code":"DL04","type":"lecture","status":"open","enrolled":73,"capacity":90,"waitlist":{"taken":0,"capacity":0},"instructors":["Michael Smith"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":720,"end":770,"location":"Higgins Labs 218 Discovery Classroom"}]}
@@ -5300,8 +5300,8 @@
       "level": "Undergraduate",
       "description": "Cat. I MA 3832 is a continuation of MA 3831. For the contents of this course, see the description given for MA 3831.Recommended background: introductory knowledge in real analysis (e.g., MA 3831 Principles of Real Analysis I, or equivalent).",
       "sections": [
-        {"id":"MA 3832-DD01","code":"DD01","type":"discussion","status":"open","enrolled":20,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Darko Volkov"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Stratton Hall 311"}]},
-        {"id":"MA 3832-DL01","code":"DL01","type":"lecture","status":"open","enrolled":20,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Darko Volkov"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Stratton Hall 207"}]}
+        {"id":"MA 3832-DD01","code":"DD01","type":"discussion","status":"open","enrolled":19,"capacity":25,"waitlist":{"taken":0,"capacity":0},"instructors":["Darko Volkov"],"delivery":"in-person","meetings":[{"days":["Wed"],"start":840,"end":890,"location":"Stratton Hall 311"}]},
+        {"id":"MA 3832-DL01","code":"DL01","type":"lecture","status":"open","enrolled":19,"capacity":25,"waitlist":{"taken":0,"capacity":10},"instructors":["Darko Volkov"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Stratton Hall 207"}]}
       ],
       "options": [
         ["MA 3832-DD01","MA 3832-DL01"]
@@ -5820,7 +5820,7 @@
       "level": "Graduate",
       "description": "ME 527/RBE 500 Foundations of Robotics (3 Credits) Fundamentals of robotics engineering. Topics include forward and inverse kinematics, velocity kinematics, introduction to dynamics and control theory, sensors, actuators, basic probabilistic robotics concepts, fundamentals of computer vision, and robot ethics. In addition, modular robot programming will be covered, and the concepts learned will be applied using realistic simulators. Prerequisites: Differential Equations (MA 2051 or equivalent), Linear Algebra (MA 2071 or equivalent) and the ability to program in a high-level language",
       "sections": [
-        {"id":"ME 527-S03","code":"S03","type":"lecture","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":7,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"ME 527-S03","code":"S03","type":"lecture","status":"open","enrolled":17,"capacity":30,"waitlist":{"taken":7,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["ME 527-S03"]
@@ -6149,7 +6149,7 @@
       "level": "Graduate",
       "description": "This course provides students with the knowledge and skills to design, develop, and use business dashboards for monitoring organizational performance and making data-driven decisions. On the technical side, students will learn and apply business intelligence software to organize, represent, and analyze data about customers, products, sales, marketing, operations, and financials. They will learn to create strategic, operational, and analytical dashboards displaying key performance indicators (KPIs) for managerial decision-making. On the business side, students will learn the connections between business strategy and plans, the KPIs that measure performance compared to those plans, and how to use dashboards to manage organizational performance. Students will also learn the technical and managerial challenges of creating and deploying these business intelligence best practices so that organizations gain value from their data. The course includes business cases and hands-on analyses of business data. It is designed for any student interested in learning about data-driven business performance management, including students whose primary focus is Business Management, Data Science, IT, Marketing, or Operations.",
       "sections": [
-        {"id":"MIS 584-S02","code":"S02","type":"lecture","status":"open","enrolled":28,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Nima Kordzadeh"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"MIS 584-S02","code":"S02","type":"lecture","status":"open","enrolled":29,"capacity":50,"waitlist":{"taken":0,"capacity":15},"instructors":["Nima Kordzadeh"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["MIS 584-S02"]
@@ -7123,7 +7123,7 @@
       "level": "Undergraduate",
       "description": "Cat I This course introduces the ambient atmospheric and space environments encountered by aerospace vehicles. Topics include: the sun and solar activity; the solar wind; planetary magnetospheres; planetary atmospheres; radiation environments; galactic cosmic rays; meteoroids; and space debris. Recommended background: mechanics (PH1110 / 1111 or equivalent), electromagnetism (PH 1120 / 1121 or equivalent), and ordinary differential equations (MA 2051 or equivalent).",
       "sections": [
-        {"id":"PH 2550-D01","code":"D01","type":"lecture","status":"open","enrolled":153,"capacity":180,"waitlist":{"taken":0,"capacity":30},"instructors":["Hektor Kashuri"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Olin Hall 107"}]}
+        {"id":"PH 2550-D01","code":"D01","type":"lecture","status":"open","enrolled":154,"capacity":180,"waitlist":{"taken":0,"capacity":30},"instructors":["Hektor Kashuri"],"delivery":"in-person","meetings":[{"days":["Mon","Tue","Thu","Fri"],"start":600,"end":650,"location":"Olin Hall 107"}]}
       ],
       "options": [
         ["PH 2550-D01"]
@@ -7513,7 +7513,7 @@
       "level": "Graduate",
       "description": "ME 527/RBE 500 Foundations of Robotics (3 Credits) Fundamentals of robotics engineering. Topics include forward and inverse kinematics, velocity kinematics, introduction to dynamics and control theory, sensors, actuators, basic probabilistic robotics concepts, fundamentals of computer vision, and robot ethics. In addition, modular robot programming will be covered, and the concepts learned will be applied using realistic simulators. Prerequisites: Differential Equations (MA 2051 or equivalent), Linear Algebra (MA 2071 or equivalent) and the ability to program in a high-level language",
       "sections": [
-        {"id":"RBE 500-S03","code":"S03","type":"lecture","status":"open","enrolled":16,"capacity":30,"waitlist":{"taken":7,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
+        {"id":"RBE 500-S03","code":"S03","type":"lecture","status":"open","enrolled":17,"capacity":30,"waitlist":{"taken":7,"capacity":20},"instructors":["Mohammad Mahdi Agheli Hajiabadi"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
         ["RBE 500-S03"]
@@ -7627,7 +7627,7 @@
       "level": "Graduate",
       "description": "This course examines current issues in the computer implementation of visual perception. Topics include image formation, edge detection, segmentation, shape-from-shading, motion, stereo, texture analysis, pattern classification and object recognition. We will discuss various representations for visual information, including sketches and intrinsic images. (Prerequisites: CS 534, CS 543, CS 545, or the equivalent of one of these courses.)",
       "sections": [
-        {"id":"RBE 549-S01","code":"S01","type":"lecture","status":"open","enrolled":26,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Nitin Sanket"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Salisbury Labs 402"}]},
+        {"id":"RBE 549-S01","code":"S01","type":"lecture","status":"open","enrolled":27,"capacity":60,"waitlist":{"taken":0,"capacity":20},"instructors":["Nitin Sanket"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Mon","Thu"],"start":960,"end":1070,"location":"Salisbury Labs 402"}]},
         {"id":"RBE 549-S02","code":"S02","type":"lecture","status":"open","enrolled":10,"capacity":30,"waitlist":{"taken":4,"capacity":20},"instructors":["Alexandros Lioulemes"],"delivery":"online-async","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[]}
       ],
       "options": [
@@ -7643,7 +7643,7 @@
       "level": "Graduate",
       "description": "Motion planning is the study of algorithms that reason about the movement of physical or virtual entities. These algorithms can be used to generate sequences of motions for many kinds of robots, robot teams, animated characters, and even molecules. This course will cover the major topics of motion planning including (but not limited to) planning for manipulation with robot arms, mobile robot path planning with kinodynamic constraints, multi-robot path planning, highdimensional sampling-based planning, learning and planning, and task and motion planning. Students will implement motion planning algorithms in open-source frameworks such as OMPL and complete projects that draw on the course material. Recommended Background: Undergraduate Linear Algebra, knowledge of algorithmic principles, kinematics, and significant programming experience.",
       "sections": [
-        {"id":"RBE 550-S02","code":"S02","type":"lecture","status":"open","enrolled":22,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Constantinos Chamzas"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":720,"end":800,"location":"Unity Hall 420"}]}
+        {"id":"RBE 550-S02","code":"S02","type":"lecture","status":"open","enrolled":21,"capacity":30,"waitlist":{"taken":0,"capacity":10},"instructors":["Constantinos Chamzas"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Tue","Fri"],"start":720,"end":800,"location":"Unity Hall 420"}]}
       ],
       "options": [
         ["RBE 550-S02"]
@@ -7837,7 +7837,7 @@
       "level": "Undergraduate",
       "description": "Cat. I This course makes the student aware of the social, moral, ethical, and philosophical impact of computers and computer-based systems on society, both now and in the future. Topics include major computer-based applications and their impact, human machine relationships, and the major problems of controlling the use of computers. Students will be expected to contribute to classroom discussions and to complete a number of significant writing assignments. This course is recommended for juniors and seniors. The Social Science Requirement cannot be satisfied by this course. Undergraduate credit may not be earned both for this course and for CS 505. Recommended background: a general knowledge of computers and computer systems",
       "sections": [
-        {"id":"SS 3043-D02","code":"D02","type":"lecture","status":"open","enrolled":31,"capacity":35,"waitlist":{"taken":5,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 405"}]},
+        {"id":"SS 3043-D02","code":"D02","type":"lecture","status":"open","enrolled":31,"capacity":35,"waitlist":{"taken":4,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 405"}]},
         {"id":"SS 3043-D03","code":"D03","type":"lecture","status":"open","enrolled":32,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["EJ Néel"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
@@ -8189,7 +8189,7 @@
       "level": "Undergraduate",
       "description": "Cat. I (1/12 units) This course will teach the use of bodyweight to develop personal strength and conditioning.",
       "sections": [
-        {"id":"WPE 1054-D01","code":"D01","type":"workshop","status":"open","enrolled":15,"capacity":25,"waitlist":{"taken":0,"capacity":15},"instructors":["Brian Chabot"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Courts 3-4"}]},
+        {"id":"WPE 1054-D01","code":"D01","type":"workshop","status":"open","enrolled":16,"capacity":25,"waitlist":{"taken":0,"capacity":15},"instructors":["Brian Chabot"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":600,"end":650,"location":"Recreation Center Courts 3-4"}]},
         {"id":"WPE 1054-D02","code":"D02","type":"workshop","status":"open","enrolled":6,"capacity":25,"waitlist":{"taken":0,"capacity":15},"instructors":["Matt Oney"],"delivery":"in-person","meetings":[{"days":["Tue","Thu"],"start":540,"end":590,"location":"Recreation Center Courts 3-4"}]},
         {"id":"WPE 1054-D03","code":"D03","type":"workshop","status":"open","enrolled":23,"capacity":25,"waitlist":{"taken":0,"capacity":15},"instructors":["Philip Jackson"],"delivery":"in-person","meetings":[{"days":["Mon","Thu"],"start":840,"end":890,"location":"Recreation Center Courts 3-4"}]}
       ],
