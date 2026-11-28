@@ -8,7 +8,14 @@ afterEach(() => window.history.replaceState(null, "", "/"));
 it("keeps shared plan data when the keyboard skip link moves focus to the main content", async () => {
   const user = userEvent.setup();
   window.history.replaceState(null, "", "/?share=reserved#p=plan-data");
-  render(<><SkipToMain /><main id="main" tabIndex={-1}>Schedule</main></>);
+  render(
+    <>
+      <SkipToMain />
+      <main id="main" tabIndex={-1}>
+        Schedule
+      </main>
+    </>,
+  );
   await user.tab();
   await user.keyboard("{Enter}");
   expect(screen.getByRole("main")).toHaveFocus();

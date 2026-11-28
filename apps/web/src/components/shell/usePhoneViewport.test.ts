@@ -12,8 +12,10 @@ function mockMatchMedia(initialMatches: boolean) {
       return matches;
     },
     media: "",
-    addEventListener: (_: string, listener: Listener) => listeners.add(listener),
-    removeEventListener: (_: string, listener: Listener) => listeners.delete(listener),
+    addEventListener: (_: string, listener: Listener) =>
+      listeners.add(listener),
+    removeEventListener: (_: string, listener: Listener) =>
+      listeners.delete(listener),
   };
   vi.stubGlobal(
     "matchMedia",

@@ -5,5 +5,12 @@ import { useTheme } from "@/lib/theme";
 
 export function ThemeSwitch() {
   const { dark, toggle } = useTheme();
-  return <Toggle label="Dark theme" checked={dark} onCheckedChange={toggle} className="px-8" />;
+  return (
+    <Toggle
+      label="Dark theme"
+      checked={dark}
+      onCheckedChange={toggle}
+      className="px-8"
+    />
+  );
 }

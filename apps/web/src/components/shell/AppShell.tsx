@@ -44,7 +44,12 @@ export function AppShell({
       >
         Skip to main content
       </a>
-      <TopBar center={barCenter} actions={barActions} navigation={barNavigation} appearance={barAppearance} />
+      <TopBar
+        center={barCenter}
+        actions={barActions}
+        navigation={barNavigation}
+        appearance={barAppearance}
+      />
       {/* Phone: a single column with a 16px side gutter. Tablet and up: the sidebar plus the main region. */}
       <div className="mx-auto flex min-h-0 w-full max-w-(--size-app-max) flex-1 gap-(--size-gutter) px-(--size-phone-gutter) py-(--size-app-padding) tablet:px-12 tablet:py-12">
         <div className="contents">{sidebar}</div>
@@ -54,13 +59,19 @@ export function AppShell({
           className="flex min-w-0 flex-1 flex-col gap-(--size-gutter) outline-none tablet:min-h-0 tablet:overflow-y-auto wide:flex-row wide:overflow-visible"
         >
           <div className="flex min-w-0 flex-col gap-(--size-gutter) tablet:min-h-full tablet:flex-1 tablet:shrink-0 wide:min-h-0 wide:shrink">
-            <div className="order-2 tablet:order-none tablet:contents">{header}</div>
-            <div className="order-6 tablet:order-none tablet:contents">{toolbar}</div>
+            <div className="order-2 tablet:order-none tablet:contents">
+              {header}
+            </div>
+            <div className="order-6 tablet:order-none tablet:contents">
+              {toolbar}
+            </div>
             {/*
               Phone: the banner (e.g. the guide storage note) sits right under the header, above the
               schedule, instead of at the very bottom. Tablet and up keep the source order.
             */}
-            <div className="order-3 tablet:order-none tablet:contents">{banner}</div>
+            <div className="order-3 tablet:order-none tablet:contents">
+              {banner}
+            </div>
             <section
               aria-label={scheduleLabel}
               className="relative order-4 flex flex-col overflow-hidden rounded-panel bg-surface tablet:order-none tablet:min-h-400 tablet:flex-1 wide:min-h-0"
@@ -70,7 +81,10 @@ export function AppShell({
           </div>
           {/* The side details panel is hidden on a phone; the bottom sheet takes its place. */}
           {details && (
-            <DetailsPanel label={detailsLabel} hideOnTermError={hideDetailsOnTermError}>
+            <DetailsPanel
+              label={detailsLabel}
+              hideOnTermError={hideDetailsOnTermError}
+            >
               {details}
             </DetailsPanel>
           )}

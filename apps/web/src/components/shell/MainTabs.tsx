@@ -21,7 +21,9 @@ export function MainTabs() {
           aria-current={tab.active ? "page" : undefined}
           className={cx(
             "flex min-h-34 items-center justify-center rounded-row px-8 text-9 leading-13 whitespace-nowrap wide:px-12 transition-colors",
-            tab.active ? "bg-accent-soft font-600 text-accent" : "font-510 text-ink-muted hover:bg-surface-selected hover:text-ink",
+            tab.active
+              ? "bg-accent-soft font-600 text-accent"
+              : "font-510 text-ink-muted hover:bg-surface-selected hover:text-ink",
           )}
         >
           {tab.label}

@@ -17,7 +17,8 @@ export function SeatStatus({ className }: { className?: string }) {
   const [retrying, setRetrying] = useState(false);
   const status = useRef<HTMLParagraphElement>(null);
   const retryButton = useRef<HTMLButtonElement>(null);
-  if (!updatedAt || !Number.isFinite(Date.parse(updatedAt)) || planView) return null;
+  if (!updatedAt || !Number.isFinite(Date.parse(updatedAt)) || planView)
+    return null;
 
   async function retry() {
     if (retrying) return;
@@ -25,11 +26,17 @@ export function SeatStatus({ className }: { className?: string }) {
     await refreshSeats();
     const worked = store.getState().seatRefresh !== "failed";
     setRetrying(false);
-    if (worked && document.activeElement === retryButton.current) requestAnimationFrame(() => status.current?.focus());
+    if (worked && document.activeElement === retryButton.current)
+      requestAnimationFrame(() => status.current?.focus());
   }
 
   return (
-    <div className={cx("flex flex-col gap-y-2 text-8 leading-12 text-ink-muted", className)}>
+    <div
+      className={cx(
+        "flex flex-col gap-y-2 text-8 leading-12 text-ink-muted",
+        className,
+      )}
+    >
       {failed || retrying ? (
         <div className="flex min-h-20 items-center gap-4 self-start rounded-pill bg-notice-warning pr-4 pl-8 font-600 whitespace-nowrap text-notice-warning-ink">
           <Warning aria-hidden className="size-13 shrink-0" />
@@ -50,8 +57,18 @@ export function SeatStatus({ className }: { className?: string }) {
           </button>
         </div>
       ) : (
-        <p ref={status} tabIndex={-1} role="status" aria-label="Seat freshness" aria-atomic="true" className="flex min-h-20 items-center rounded-badge outline-none">
-          Seats updated <time dateTime={updatedAt} className="ml-4">{now === null ? "" : seatAge(updatedAt, now)}</time>
+        <p
+          ref={status}
+          tabIndex={-1}
+          role="status"
+          aria-label="Seat freshness"
+          aria-atomic="true"
+          className="flex min-h-20 items-center rounded-badge outline-none"
+        >
+          Seats updated{" "}
+          <time dateTime={updatedAt} className="ml-4">
+            {now === null ? "" : seatAge(updatedAt, now)}
+          </time>
         </p>
       )}
     </div>

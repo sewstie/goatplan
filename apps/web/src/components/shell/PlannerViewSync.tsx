@@ -37,7 +37,8 @@ export function PlannerViewSync() {
         url.searchParams.delete("view");
         url.searchParams.delete("plan");
       }
-      if (url.href !== window.location.href) window.history[replace ? "replaceState" : "pushState"](null, "", url);
+      if (url.href !== window.location.href)
+        window.history[replace ? "replaceState" : "pushState"](null, "", url);
     }
 
     function syncPlans() {
@@ -68,11 +69,18 @@ export function PlannerViewSync() {
       }
       setSharedError(false);
       setLoadingShare(false);
-      const plan = params.get("view") === "saved" ? source.getSnapshot().plans.find((plan) => plan.id === params.get("plan")) : null;
-      if (plan && store.getState().termId !== plan.termId) await store.getState().setTerm(plan.termId);
+      const plan =
+        params.get("view") === "saved"
+          ? source
+              .getSnapshot()
+              .plans.find((plan) => plan.id === params.get("plan"))
+          : null;
+      if (plan && store.getState().termId !== plan.termId)
+        await store.getState().setTerm(plan.termId);
       if (cancelled || token !== request) return;
       setMissingPlan(params.get("view") === "saved" && !plan);
-      if (plan && store.getState().termStatus === "ready") store.getState().showSaved(plan.id);
+      if (plan && store.getState().termStatus === "ready")
+        store.getState().showSaved(plan.id);
       else store.getState().showFound();
       reading = false;
       writeLocation(true);
@@ -84,18 +92,28 @@ export function PlannerViewSync() {
       if (reading) return;
       if (previous.temporaryPlan && !state.temporaryPlan) {
         request += 1;
-        window.history.replaceState(null, "", clearShareData(window.location.href));
+        window.history.replaceState(
+          null,
+          "",
+          clearShareData(window.location.href),
+        );
         setSharedError(false);
         setLoadingShare(false);
         focusDraft.current = true;
       }
-      if (state.courses !== previous.courses || state.termId !== previous.termId || state.savedPlanId !== previous.savedPlanId) {
+      if (
+        state.courses !== previous.courses ||
+        state.termId !== previous.termId ||
+        state.savedPlanId !== previous.savedPlanId
+      ) {
         setMissingPlan(false);
         setOpened(null);
       }
       if (state.savedPlanId !== previous.savedPlanId) writeLocation();
     });
-    const onPopState = () => { void readLocation(); };
+    const onPopState = () => {
+      void readLocation();
+    };
     window.addEventListener("popstate", onPopState);
     window.addEventListener("hashchange", onPopState);
     void readLocation();
@@ -124,29 +142,59 @@ export function PlannerViewSync() {
   if (loadingShare) {
     return (
       <div className="flex items-center gap-12">
-        <p role="status" className="text-9 leading-13 text-ink-muted">Opening shared plan…</p>
-        <button type="button" onClick={closeShare} className="cursor-pointer rounded-badge text-9 leading-13 font-600 text-accent hover:underline">Close preview</button>
+        <p role="status" className="text-9 leading-13 text-ink-muted">
+          Opening shared plan…
+        </p>
+        <button
+          type="button"
+          onClick={closeShare}
+          className="cursor-pointer rounded-badge text-9 leading-13 font-600 text-accent hover:underline"
+        >
+          Close preview
+        </button>
       </div>
     );
   }
   if (temporary) {
     const missing = temporary.missing ?? [];
     if (missing.length > 0 && !reviewing) {
-      return <SharedPlanFresh missing={missing} termName={temporary.view?.term.name ?? ""} onClose={closeShare} onReview={() => setReviewing(true)} />;
+      return (
+        <SharedPlanFresh
+          missing={missing}
+          termName={temporary.view?.term.name ?? ""}
+          onClose={closeShare}
+          onReview={() => setReviewing(true)}
+        />
+      );
     }
     return (
       <section aria-label="Shared plan" className="flex flex-col gap-8">
         <Notice className="py-8">
-          <p><b className="font-650">Viewing a shared plan.</b> Your own draft is safe. Changes require opening a separate copy.</p>
-          {temporary.warnings?.map((warning) => <p key={warning} className="pt-3 font-570">{warning}</p>)}
+          <p>
+            <b className="font-650">Viewing a shared plan.</b> Your own draft is
+            safe. Changes require opening a separate copy.
+          </p>
+          {temporary.warnings?.map((warning) => (
+            <p key={warning} className="pt-3 font-570">
+              {warning}
+            </p>
+          ))}
         </Notice>
       </section>
     );
   }
   return (
     <>
-      {opened && <span role="status" className="sr-only">Opened “{opened}” for editing.</span>}
-      {missingPlan && <div role="alert" className="rounded-panel bg-surface"><PlanNotFound /></div>}
+      {opened && (
+        <span role="status" className="sr-only">
+          Opened “{opened}” for editing.
+        </span>
+      )}
+      {missingPlan && (
+        <div role="alert" className="rounded-panel bg-surface">
+          <PlanNotFound />
+        </div>
+      )}
     </>
   );
 }

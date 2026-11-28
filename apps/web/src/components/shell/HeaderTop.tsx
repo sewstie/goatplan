@@ -9,7 +9,11 @@ export function HeaderTop({ children }: { children: ReactNode }) {
   const drawing = usePlanner((state) => state.drawing);
   const [ref, style] = useHeldHeight<HTMLDivElement>(drawing);
   return (
-    <div ref={ref} style={style} className="flex flex-wrap items-start justify-between gap-x-8 gap-y-8 wide:flex-nowrap">
+    <div
+      ref={ref}
+      style={style}
+      className="flex flex-wrap items-start justify-between gap-x-8 gap-y-8 wide:flex-nowrap"
+    >
       {children}
     </div>
   );

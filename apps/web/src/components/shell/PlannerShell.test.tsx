@@ -1,12 +1,18 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { resetPlanner, setPlanner } from "@/components/schedule/testing/plannerFixtures";
+import {
+  resetPlanner,
+  setPlanner,
+} from "@/components/schedule/testing/plannerFixtures";
 import { getPlannerStore } from "@/lib/store";
 
 // A phone flag we can flip per test without a real matchMedia.
 let phoneFlag = false;
-vi.mock("next/navigation", () => ({ usePathname: () => "/", useRouter: () => ({ push: vi.fn() }) }));
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+  useRouter: () => ({ push: vi.fn() }),
+}));
 vi.mock("@/components/shell/usePhoneViewport", () => ({
   usePhoneViewport: () => phoneFlag,
 }));
@@ -14,7 +20,9 @@ vi.mock("@/components/shell/usePhoneViewport", () => ({
 // The term picker and detail/search panels pull in the whole data + engine stack; the shell test only
 // cares about the Toast wiring, so stub them with light stand-ins. The sidebar/disclosure stubs expose
 // a course row so the focus-after-undo path has a real [data-course-row] target to land on.
-vi.mock("@/components/courses/TermPicker", () => ({ TermPicker: () => <div data-testid="term-picker" /> }));
+vi.mock("@/components/courses/TermPicker", () => ({
+  TermPicker: () => <div data-testid="term-picker" />,
+}));
 vi.mock("@/components/courses/CourseSearchPanel", () => ({
   CourseSearchPanel: () => (
     <ul>
@@ -26,7 +34,9 @@ vi.mock("@/components/courses/CourseSearchPanel", () => ({
     </ul>
   ),
 }));
-vi.mock("@/components/sections/CourseDetailsPanel", () => ({ CourseDetailsPanel: () => <div data-testid="details" /> }));
+vi.mock("@/components/sections/CourseDetailsPanel", () => ({
+  CourseDetailsPanel: () => <div data-testid="details" />,
+}));
 vi.mock("@/components/phone/PhonePlanner", () => ({
   PhonePlanner: ({ banner }: { banner: React.ReactNode }) => (
     <main data-testid="phone-planner">
@@ -69,7 +79,12 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-const toastStatus = () => screen.getAllByRole("status").find((element) => element.getAttribute("aria-label") !== "Selected course")!;
+const toastStatus = () =>
+  screen
+    .getAllByRole("status")
+    .find(
+      (element) => element.getAttribute("aria-label") !== "Selected course",
+    )!;
 
 describe("PlannerShell toast wiring", () => {
   it("shows the toast with the removed course code when one is pending", () => {
@@ -84,7 +99,9 @@ describe("PlannerShell toast wiring", () => {
     setPlanner({ courses: ["AE 2320", "AE 2410"], removedCourse: null });
     renderShell();
     expect(toastStatus()).toBeEmptyDOMElement();
-    expect(screen.queryByRole("button", { name: "Undo" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Undo" }),
+    ).not.toBeInTheDocument();
   });
 
   it("restores the course and clears the toast when Undo is clicked", async () => {
@@ -116,7 +133,9 @@ describe("PlannerShell toast wiring", () => {
     renderShell();
     await user.click(screen.getByRole("button", { name: "Undo" }));
 
-    const row = document.querySelector<HTMLElement>('[data-course-row="AE 2320"]');
+    const row = document.querySelector<HTMLElement>(
+      '[data-course-row="AE 2320"]',
+    );
     expect(row).not.toBeNull();
     expect(row).toHaveFocus();
   });

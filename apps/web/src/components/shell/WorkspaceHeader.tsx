@@ -24,7 +24,9 @@ export function WorkspaceHeader({
             {breadcrumbs}
           </div>
           <div className="flex flex-wrap items-center gap-6">
-            <h1 className="text-25 leading-30 font-700 tracking-title">{title}</h1>
+            <h1 className="text-25 leading-30 font-700 tracking-title">
+              {title}
+            </h1>
             {titleAside}
           </div>
         </div>
@@ -33,7 +35,9 @@ export function WorkspaceHeader({
           {actions}
         </div>
       </HeaderTop>
-      <div className="min-h-15 text-10 leading-14-5 text-ink-muted">{subtitle}</div>
+      <div className="min-h-15 text-10 leading-14-5 text-ink-muted">
+        {subtitle}
+      </div>
     </header>
   );
 }

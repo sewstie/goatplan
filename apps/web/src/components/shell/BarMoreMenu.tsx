@@ -16,10 +16,12 @@ export function BarMoreMenu({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!open) return;
     const away = (event: PointerEvent) => {
-      if (!modalOpen() && !root.current?.contains(event.target as Node)) setOpen(false);
+      if (!modalOpen() && !root.current?.contains(event.target as Node))
+        setOpen(false);
     };
     const leave = (event: KeyboardEvent) => {
-      if (event.key !== "Escape" || event.defaultPrevented || modalOpen()) return;
+      if (event.key !== "Escape" || event.defaultPrevented || modalOpen())
+        return;
       event.preventDefault();
       setOpen(false);
       trigger.current?.focus();
@@ -44,7 +46,12 @@ export function BarMoreMenu({ children }: { children: ReactNode }) {
       }
       hadDialog = hasDialog;
     });
-    observer.observe(element, { childList: true, subtree: true, attributes: true, attributeFilter: ["open"] });
+    observer.observe(element, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["open"],
+    });
     return () => observer.disconnect();
   }, []);
 
@@ -53,7 +60,12 @@ export function BarMoreMenu({ children }: { children: ReactNode }) {
       ref={root}
       className="relative"
       onBlur={(event) => {
-        if (open && !modalOpen() && !root.current?.contains(event.relatedTarget as Node | null)) setOpen(false);
+        if (
+          open &&
+          !modalOpen() &&
+          !root.current?.contains(event.relatedTarget as Node | null)
+        )
+          setOpen(false);
       }}
     >
       <button
@@ -72,7 +84,9 @@ export function BarMoreMenu({ children }: { children: ReactNode }) {
           open ? "flex" : "hidden",
         )}
       >
-        <ModalReturnFocusContext value={trigger}>{children}</ModalReturnFocusContext>
+        <ModalReturnFocusContext value={trigger}>
+          {children}
+        </ModalReturnFocusContext>
       </div>
     </div>
   );

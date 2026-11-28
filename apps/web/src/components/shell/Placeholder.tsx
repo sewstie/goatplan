@@ -6,5 +6,11 @@ type PlaceholderProps = {
 };
 
 export function Placeholder({ name, className }: PlaceholderProps) {
-  return <div aria-hidden data-placeholder={name} className={cx("shrink-0", className)} />;
+  return (
+    <div
+      aria-hidden
+      data-placeholder={name}
+      className={cx("shrink-0", className)}
+    />
+  );
 }

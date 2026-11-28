@@ -13,7 +13,8 @@ export function PlannerBootstrap() {
   useEffect(() => {
     void getPlannerStore().getState().init();
     const refresh = () => {
-      if (document.visibilityState === "visible") void getPlannerStore().getState().refreshSeats();
+      if (document.visibilityState === "visible")
+        void getPlannerStore().getState().refreshSeats();
     };
     const timer = setInterval(refresh, SEAT_POLL_MS);
     document.addEventListener("visibilitychange", refresh);

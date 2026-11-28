@@ -6,7 +6,10 @@ import { BlockTimeDialog } from "@/components/preferences/BlockTimeDialog";
 import { BLOCK_FROM, BLOCK_TO } from "@/components/preferences/timeOptions";
 import { changeText, mergeBlocked } from "@/components/schedule/dragBlock";
 import { count } from "@/components/schedule/scheduleCopy";
-import { GUIDE_SKIPPED_MESSAGE, useGuideSession } from "@/components/tutorial/guideSession";
+import {
+  GUIDE_SKIPPED_MESSAGE,
+  useGuideSession,
+} from "@/components/tutorial/guideSession";
 import { Toast } from "@/components/ui/Toast";
 import type { Day } from "@/lib/data/types";
 import { usePlanner, type BlockedChange } from "@/lib/store";
@@ -18,10 +21,14 @@ import { usePlanner, type BlockedChange } from "@/lib/store";
 export function PlannerToast() {
   const removedCourse = usePlanner((state) => state.removedCourse);
   const undoRemoveCourse = usePlanner((state) => state.undoRemoveCourse);
-  const dismissRemovedCourse = usePlanner((state) => state.dismissRemovedCourse);
+  const dismissRemovedCourse = usePlanner(
+    (state) => state.dismissRemovedCourse,
+  );
   const blockedChange = usePlanner((state) => state.blockedChange);
   const undoBlockedChange = usePlanner((state) => state.undoBlockedChange);
-  const dismissBlockedChange = usePlanner((state) => state.dismissBlockedChange);
+  const dismissBlockedChange = usePlanner(
+    (state) => state.dismissBlockedChange,
+  );
   const setPreferences = usePlanner((state) => state.setPreferences);
   const guideSkipped = useGuideSession((state) => state.skipped);
   const hideGuideSkipped = useGuideSession((state) => state.hideSkipped);
@@ -49,7 +56,9 @@ export function PlannerToast() {
     const code = undoneCodeRef.current;
     if (removedCourse !== null || !code) return;
     undoneCodeRef.current = null;
-    document.querySelector<HTMLElement>(`[data-course-row="${CSS.escape(code)}"]`)?.focus();
+    document
+      .querySelector<HTMLElement>(`[data-course-row="${CSS.escape(code)}"]`)
+      ?.focus();
   }, [removedCourse]);
 
   // Undo and Name it remove the button that had focus, so focus moves to "Block a time" once React is done.
@@ -65,27 +74,49 @@ export function PlannerToast() {
 
   // The name goes on the drawn time, on top of the blocked times from before the drag.
   function saveName(days: Day[], start: number, end: number, label: string) {
-    if (naming) setPreferences({ blocked: mergeBlocked(addBlocked(naming.previous, days, start, end, label)) });
+    if (naming)
+      setPreferences({
+        blocked: mergeBlocked(
+          addBlocked(naming.previous, days, start, end, label),
+        ),
+      });
     closeNaming();
   }
 
-  const nameable = blockedChange && !blockedChange.erased && blockedChange.start >= BLOCK_FROM && blockedChange.end <= BLOCK_TO;
+  const nameable =
+    blockedChange &&
+    !blockedChange.erased &&
+    blockedChange.start >= BLOCK_FROM &&
+    blockedChange.end <= BLOCK_TO;
   const toast = blockedChange
     ? {
-        message: (blockedChange.count ?? 1) > 1
-          ? `Removed ${count("blocked time", blockedChange.count ?? 0)}`
-          : changeText(blockedChange.days, blockedChange, blockedChange.erased),
+        message:
+          (blockedChange.count ?? 1) > 1
+            ? `Removed ${count("blocked time", blockedChange.count ?? 0)}`
+            : changeText(
+                blockedChange.days,
+                blockedChange,
+                blockedChange.erased,
+              ),
         actions: [
           ...(nameable
-            ? [{ label: "Name it", onAction: () => {
-                setNaming(blockedChange);
-                dismissBlockedChange();
-              } }]
+            ? [
+                {
+                  label: "Name it",
+                  onAction: () => {
+                    setNaming(blockedChange);
+                    dismissBlockedChange();
+                  },
+                },
+              ]
             : []),
-          { label: "Undo", onAction: () => {
-            undoBlockedChange();
-            setRefocus((count) => count + 1);
-          } },
+          {
+            label: "Undo",
+            onAction: () => {
+              undoBlockedChange();
+              setRefocus((count) => count + 1);
+            },
+          },
         ],
         onDismiss: dismissBlockedChange,
       }

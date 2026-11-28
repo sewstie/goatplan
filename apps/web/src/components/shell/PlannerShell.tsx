@@ -28,7 +28,17 @@ type PlannerShellProps = {
  * from the tablet breakpoint up, or the phone planner's one-screen-at-a-time layout below it. Only
  * one of the two is mounted, so the tutorial target IDs never appear twice in the DOM.
  */
-export function PlannerShell({ header, barCenter, barActions, barNavigation, barAppearance, phoneMenuActions, toolbar, banner, schedule }: PlannerShellProps) {
+export function PlannerShell({
+  header,
+  barCenter,
+  barActions,
+  barNavigation,
+  barAppearance,
+  phoneMenuActions,
+  toolbar,
+  banner,
+  schedule,
+}: PlannerShellProps) {
   const phone = usePhoneViewport();
 
   return (
@@ -52,9 +62,7 @@ export function PlannerShell({ header, barCenter, barActions, barNavigation, bar
           banner={banner}
           schedule={schedule}
           hideDetailsOnTermError
-          details={
-            <CourseDetailsPanel />
-          }
+          details={<CourseDetailsPanel />}
         />
       )}
       {/* Rendered last and fixed to the viewport, so it's the final Tab stop and sits above the shell. */}
