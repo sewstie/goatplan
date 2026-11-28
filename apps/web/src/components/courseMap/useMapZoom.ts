@@ -7,7 +7,10 @@ export const MIN_ZOOM = 0.5;
 export const MAX_ZOOM = 1.5;
 
 export function fitZoom(available: number, width: number) {
-  return Math.min(1, Math.max(SMALLEST_FIT, Math.floor((available / width) * 100) / 100));
+  return Math.min(
+    1,
+    Math.max(SMALLEST_FIT, Math.floor((available / width) * 100) / 100),
+  );
 }
 
 export function clampZoom(value: number) {
@@ -46,7 +49,12 @@ export function useMapZoom(width: number) {
       event.preventDefault();
       const box = element.getBoundingClientRect();
       const from = current.current;
-      anchor.current = { x: (element.scrollLeft + event.clientX - box.left) / from, y: (event.clientY - box.top) / from, left: event.clientX - box.left, from };
+      anchor.current = {
+        x: (element.scrollLeft + event.clientX - box.left) / from,
+        y: (event.clientY - box.top) / from,
+        left: event.clientX - box.left,
+        from,
+      };
       setChosen(wheelZoom(from, event.deltaY));
     };
     element.addEventListener("wheel", onWheel, { passive: false });

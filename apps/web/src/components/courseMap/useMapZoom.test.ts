@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { clampZoom, fitZoom, MAX_ZOOM, MIN_ZOOM, SMALLEST_FIT, wheelZoom } from "./useMapZoom";
+import {
+  clampZoom,
+  fitZoom,
+  MAX_ZOOM,
+  MIN_ZOOM,
+  SMALLEST_FIT,
+  wheelZoom,
+} from "./useMapZoom";
 
 describe("map zoom", () => {
   it("fits the map to the space but never past full size or below a readable size", () => {

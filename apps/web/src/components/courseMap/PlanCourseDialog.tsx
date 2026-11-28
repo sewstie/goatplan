@@ -16,7 +16,15 @@ import { useTermOffers } from "@/components/degree/useTermOfferings";
 import { firstOffered } from "@/lib/degree/termOfferings";
 import { planMapCourse } from "./planMapCourse";
 
-export function PlanCourseDialog({ node, open, close }: { node: MapNode | null; open: boolean; close(): void }) {
+export function PlanCourseDialog({
+  node,
+  open,
+  close,
+}: {
+  node: MapNode | null;
+  open: boolean;
+  close(): void;
+}) {
   const current = useCurrentTerm();
   const startYear = usePlanStart();
   const [chosen, setTerm] = useState<string | null>(null);
@@ -30,7 +38,16 @@ export function PlanCourseDialog({ node, open, close }: { node: MapNode | null; 
     if (!node) return;
     const source = getDegreeSource();
     const result = planMapCourse(source, node, term);
-    set({ toast: { message: result === "invalid" ? "This course couldn’t be planned." : result === "unsaved" ? `${node.code} planned for this visit. Browser storage is unavailable.` : `${node.code} planned for ${term}.` } });
+    set({
+      toast: {
+        message:
+          result === "invalid"
+            ? "This course couldn’t be planned."
+            : result === "unsaved"
+              ? `${node.code} planned for this visit. Browser storage is unavailable.`
+              : `${node.code} planned for ${term}.`,
+      },
+    });
     close();
   };
   return (
@@ -38,13 +55,25 @@ export function PlanCourseDialog({ node, open, close }: { node: MapNode | null; 
       open={open}
       onClose={close}
       title={`Plan ${node?.code ?? "course"}`}
-      footer={<>
-        {node && published.terms.some((item) => item.id === termId) && <OpenInPlanner termId={termId} code={node.code} size="lg" />}
-        <Button onClick={add}>Plan for {term}</Button>
-      </>}
+      footer={
+        <>
+          {node && published.terms.some((item) => item.id === termId) && (
+            <OpenInPlanner termId={termId} code={node.code} size="lg" />
+          )}
+          <Button onClick={add}>Plan for {term}</Button>
+        </>
+      }
     >
       <div className="pt-8">
-        <TermPicker label="Term" value={term} onChange={setTerm} startYear={startYear} current={current} offers={offers} hint={offerHintNode(node?.code, term, offers)} />
+        <TermPicker
+          label="Term"
+          value={term}
+          onChange={setTerm}
+          startYear={startYear}
+          current={current}
+          offers={offers}
+          hint={offerHintNode(node?.code, term, offers)}
+        />
       </div>
     </Dialog>
   );

@@ -25,54 +25,68 @@ interface MapDefinition {
 }
 
 const MAPS: Record<string, MapDefinition> = {
-  ...Object.fromEntries([
-    ["ae-aero-2030", aeBackground, aeLayout, "aerospace-engineering"],
-    ["ae-astro-2030", aeBackground, aeLayout, "aerospace-engineering"],
-    ["aren-2030", arenBackground, arenLayout, "architectural-engineering"],
-    ["bme-2030", bmeBackground, bmeLayout, "biomedical-engineering"],
-  ].map(([id, records, layout, department]) => [id, {
-    records: records as MapSource[], layout: layout as MapLayout,
-    source: `https://wpi.cleancatalog.net/${department}`,
-    areaHelp: "Arrows show recommended background from WPI course descriptions. Topic preparation and alternatives appear in course details.",
-    summarized: true,
-  }])),
+  ...Object.fromEntries(
+    [
+      ["ae-aero-2030", aeBackground, aeLayout, "aerospace-engineering"],
+      ["ae-astro-2030", aeBackground, aeLayout, "aerospace-engineering"],
+      ["aren-2030", arenBackground, arenLayout, "architectural-engineering"],
+      ["bme-2030", bmeBackground, bmeLayout, "biomedical-engineering"],
+    ].map(([id, records, layout, department]) => [
+      id,
+      {
+        records: records as MapSource[],
+        layout: layout as MapLayout,
+        source: `https://wpi.cleancatalog.net/${department}`,
+        areaHelp:
+          "Arrows show recommended background from WPI course descriptions. Topic preparation and alternatives appear in course details.",
+        summarized: true,
+      },
+    ]),
+  ),
   "cs-2030": {
     records: sources,
     layout: CS_LAYOUT,
     source: "https://wpi.cleancatalog.net/computer-science",
-    areaHelp: "Colors are the four areas the major needs one course from, plus Cybersecurity.",
+    areaHelp:
+      "Colors are the four areas the major needs one course from, plus Cybersecurity.",
     summarized: false,
   },
   "me-2030": {
     records: meBackground as MapSource[],
     layout: ME_LAYOUT,
     source: "https://wpi.cleancatalog.net/mechanical-and-materials-engineering",
-    areaHelp: "Colors group courses by topic. They don’t represent separate degree requirements. Background from courses outside this map appears on each card.",
+    areaHelp:
+      "Colors group courses by topic. They don’t represent separate degree requirements. Background from courses outside this map appears on each card.",
     summarized: true,
   },
   "ece-2030": {
     records: eceBackground as MapSource[],
     layout: ECE_LAYOUT,
     source: "https://wpi.cleancatalog.net/electrical-and-computer-engineering",
-    areaHelp: "Colors group courses by topic. They don’t represent separate degree requirements. Background from courses outside this map appears on each card.",
+    areaHelp:
+      "Colors group courses by topic. They don’t represent separate degree requirements. Background from courses outside this map appears on each card.",
     summarized: true,
   },
   "ds-2030": {
     records: dsBackground as MapSource[],
     layout: DS_LAYOUT,
     source: "https://wpi.cleancatalog.net/data-science",
-    areaHelp: "Colors group courses by topic. They don’t represent separate degree requirements. Background from courses outside this map appears on each card.",
+    areaHelp:
+      "Colors group courses by topic. They don’t represent separate degree requirements. Background from courses outside this map appears on each card.",
     summarized: true,
   },
   "rbe-2030": {
     records: rbeBackground as MapSource[],
     layout: RBE_LAYOUT,
     source: "https://wpi.cleancatalog.net/robotics-engineering",
-    areaHelp: "Colors group courses by topic. They don’t represent separate degree requirements. Background from CS, ECE, ES, math and physics appears on each course.",
+    areaHelp:
+      "Colors group courses by topic. They don’t represent separate degree requirements. Background from CS, ECE, ES, math and physics appears on each course.",
     summarized: true,
   },
 };
 
-export function getCourseMap(sheetId: string | null | undefined): MapDefinition | null {
-  return sheetId ? MAPS[sheetId] ?? null : null;
+export function getCourseMap(
+  sheetId: string | null | undefined,
+): MapDefinition | null {
+  return sheetId ? (MAPS[sheetId] ?? null) : null;
 }

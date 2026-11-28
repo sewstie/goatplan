@@ -7,11 +7,25 @@ import { getCourseMap } from "./maps";
 import { routeFlowchart, type Box, type Point } from "./routing";
 
 function crosses([a, b]: [Point, Point], box: Box) {
-  return Math.min(a[0], b[0]) < box.x + box.w - 1 && Math.max(a[0], b[0]) > box.x + 1
-    && Math.min(a[1], b[1]) < box.y + box.h - 1 && Math.max(a[1], b[1]) > box.y + 1;
+  return (
+    Math.min(a[0], b[0]) < box.x + box.w - 1 &&
+    Math.max(a[0], b[0]) > box.x + 1 &&
+    Math.min(a[1], b[1]) < box.y + box.h - 1 &&
+    Math.max(a[1], b[1]) > box.y + 1
+  );
 }
 
-const mappedIds = ["cs-2030", "rbe-2030", "me-2030", "ece-2030", "ds-2030", "ae-aero-2030", "ae-astro-2030", "aren-2030", "bme-2030"];
+const mappedIds = [
+  "cs-2030",
+  "rbe-2030",
+  "me-2030",
+  "ece-2030",
+  "ds-2030",
+  "ae-aero-2030",
+  "ae-astro-2030",
+  "aren-2030",
+  "bme-2030",
+];
 
 describe("majors with catalog course maps", () => {
   for (const sheet of SHEETS.filter((sheet) => mappedIds.includes(sheet.id))) {
@@ -20,20 +34,33 @@ describe("majors with catalog course maps", () => {
       expect(definition).not.toBeNull();
       const flow = buildFlowchart(definition.records, definition.layout);
       const layout = routeFlowchart(flow);
-      expect(new Set(definition.records.map((record) => record.code)).size).toBe(definition.records.length);
-      expect(new Set(flow.courses.map((course) => course.code)).size).toBe(flow.courses.length);
-      expect(layout.bands.map((band) => band.band)).toEqual([...new Set(flow.courses.map((course) => course.band))].sort());
+      expect(
+        new Set(definition.records.map((record) => record.code)).size,
+      ).toBe(definition.records.length);
+      expect(new Set(flow.courses.map((course) => course.code)).size).toBe(
+        flow.courses.length,
+      );
+      expect(layout.bands.map((band) => band.band)).toEqual(
+        [...new Set(flow.courses.map((course) => course.band))].sort(),
+      );
       for (const record of definition.records) {
         expect(record.source).toMatch(/^https:\/\/wpi\.cleancatalog\.net\//);
         expect(record.title.length).toBeGreaterThan(0);
         expect(record.wording.length).toBeGreaterThan(0);
       }
-      for (const course of flow.courses) if (course.area) expect(AREA_NAMES[course.area]).toBeTruthy();
+      for (const course of flow.courses)
+        if (course.area) expect(AREA_NAMES[course.area]).toBeTruthy();
       for (const edge of layout.edges) {
         for (let i = 1; i < edge.points.length; i++) {
           const segment: [Point, Point] = [edge.points[i - 1], edge.points[i]];
-          for (const [code, box] of Object.entries({ ...layout.boxes, ...layout.badges })) {
-            expect(crosses(segment, box), `${edge.from} → ${edge.to} crosses ${code}`).toBe(false);
+          for (const [code, box] of Object.entries({
+            ...layout.boxes,
+            ...layout.badges,
+          })) {
+            expect(
+              crosses(segment, box),
+              `${edge.from} → ${edge.to} crosses ${code}`,
+            ).toBe(false);
           }
         }
       }
@@ -41,7 +68,9 @@ describe("majors with catalog course maps", () => {
   }
 
   it("keeps PDF-only sheets independent of catalog course maps", () => {
-    for (const sheet of SHEETS.filter((sheet) => !mappedIds.includes(sheet.id))) {
+    for (const sheet of SHEETS.filter(
+      (sheet) => !mappedIds.includes(sheet.id),
+    )) {
       expect(getCourseMap(sheet.id)).toBeNull();
     }
   });
@@ -53,10 +82,16 @@ describe("majors with catalog course maps", () => {
     expect(flow.hidden).toEqual([]);
     expect(chainOf(flow, "ES 2501").after).toContain("ME 4320");
     expect(chainOf(flow, "ES 3004").after).toContain("ME 4430");
-    expect(flow.courses.find((course) => course.code === "ME 2300")?.extras).toEqual([]);
-    expect(flow.courses.find((course) => course.code === "ME 4322")?.aliases).toContain("RBE 4322");
+    expect(
+      flow.courses.find((course) => course.code === "ME 2300")?.extras,
+    ).toEqual([]);
+    expect(
+      flow.courses.find((course) => course.code === "ME 4322")?.aliases,
+    ).toContain("RBE 4322");
     expect(flow.edges.filter((edge) => edge.to === "ME 4512")).toEqual([]);
-    expect(definition.records.find((record) => record.code === "ME 4512")?.wording).toContain("both ES 2501 and ES 2502 or both CE 2000 and CE 2001");
+    expect(
+      definition.records.find((record) => record.code === "ME 4512")?.wording,
+    ).toContain("both ES 2501 and ES 2502 or both CE 2000 and CE 2001");
   });
 
   it("keeps ECE threshold and concurrent background explicit", () => {
@@ -66,8 +101,15 @@ describe("majors with catalog course maps", () => {
     expect(flow.hidden).toEqual([]);
     expect(chainOf(flow, "ECE 2049").after).toContain("ECE 4801");
     expect(flow.edges.filter((edge) => edge.to === "ECE 2799")).toEqual([]);
-    expect(definition.records.find((record) => record.code === "ECE 2799")?.background).toEqual({ note: "At least three of ECE 2019, ECE 2029, ECE 2049 and ECE 2311" });
-    expect(definition.records.find((record) => record.code === "ECE 2019")?.wording).toContain("concurrently");
+    expect(
+      definition.records.find((record) => record.code === "ECE 2799")
+        ?.background,
+    ).toEqual({
+      note: "At least three of ECE 2019, ECE 2029, ECE 2049 and ECE 2311",
+    });
+    expect(
+      definition.records.find((record) => record.code === "ECE 2019")?.wording,
+    ).toContain("concurrently");
   });
 
   it("connects DS to its computing and statistics foundations and preserves cross-list aliases", () => {
@@ -78,9 +120,15 @@ describe("majors with catalog course maps", () => {
     expect(chainOf(flow, "MA 2611").after).toContain("DS 3010");
     expect(chainOf(flow, "CS 3431").after).toContain("DS 4433");
     expect(chainOf(flow, "CS 4342").after).toContain("DS 4343");
-    expect(flow.courses.find((course) => course.code === "DS 4344")?.extras).toEqual([]);
-    expect(flow.courses.find((course) => course.code === "DS 4343")?.aliases).toContain("CS 4343");
+    expect(
+      flow.courses.find((course) => course.code === "DS 4344")?.extras,
+    ).toEqual([]);
+    expect(
+      flow.courses.find((course) => course.code === "DS 4343")?.aliases,
+    ).toContain("CS 4343");
     const map = buildCourseMap([], definition.records);
-    expect(map.nodes.find((node) => node.code === "DS 4635")?.aliases).toContain("MA 4635");
+    expect(
+      map.nodes.find((node) => node.code === "DS 4635")?.aliases,
+    ).toContain("MA 4635");
   });
 });
