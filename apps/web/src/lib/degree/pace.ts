@@ -17,12 +17,22 @@ export interface PaceEstimate {
   terms: number;
 }
 
-export function termLoad(letter: TermName["letter"], coursesPerSemester: number): number {
+export function termLoad(
+  letter: TermName["letter"],
+  coursesPerSemester: number,
+): number {
   if (letter === "E") return SUMMER_COURSES;
-  return letter === "A" || letter === "C" ? FIRST_HALF : Math.max(0, coursesPerSemester - FIRST_HALF);
+  return letter === "A" || letter === "C"
+    ? FIRST_HALF
+    : Math.max(0, coursesPerSemester - FIRST_HALF);
 }
 
-export function estimatePace({ linesToGo, coursesPerSemester, summer, openTerm }: PaceInput): PaceEstimate {
+export function estimatePace({
+  linesToGo,
+  coursesPerSemester,
+  summer,
+  openTerm,
+}: PaceInput): PaceEstimate {
   let left = Math.max(0, linesToGo);
   let finish = openTerm;
   let terms = 0;

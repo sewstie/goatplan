@@ -3,24 +3,52 @@ import type { Course } from "@/lib/data/types";
 import type { AuditRequest, AuditResponse, AuditSuccess } from "@/lib/engine";
 import { MemoryPlanStorage } from "@/lib/plans/testing";
 import { createGapSource } from "./courseGaps";
-import { AUDIT_DELAY_MS, createDegreeSource, type AuditEngine } from "./degreeSource";
+import {
+  AUDIT_DELAY_MS,
+  createDegreeSource,
+  type AuditEngine,
+} from "./degreeSource";
 import { typedCourse, writeHistory } from "./history";
 
-const course = (code: string, credits: number | null = 3, level: Course["level"] = "Undergraduate") =>
-  ({ code, subject: code.split(" ")[0], title: code, credits, level, description: "", sections: [], options: [] }) as Course;
+const course = (
+  code: string,
+  credits: number | null = 3,
+  level: Course["level"] = "Undergraduate",
+) =>
+  ({
+    code,
+    subject: code.split(" ")[0],
+    title: code,
+    credits,
+    level,
+    description: "",
+    sections: [],
+    options: [],
+  }) as Course;
 
 const answer = (request: AuditRequest): AuditSuccess => ({
   ok: true,
   version: 1,
-  sections: [{
-    name: "Computer Science",
-    done: 0,
-    planned: 0,
-    total: 18,
-    lines: [{ id: 17, label: "Computer Science", state: "empty", course: null }],
-  }],
-  checks: [{ id: "systems", label: "Systems area", state: "not-met", courses: [] }],
-  freeElectives: { creditsDone: 0, creditsPlanned: 0, creditsTotal: 9, courses: [] },
+  sections: [
+    {
+      name: "Computer Science",
+      done: 0,
+      planned: 0,
+      total: 18,
+      lines: [
+        { id: 17, label: "Computer Science", state: "empty", course: null },
+      ],
+    },
+  ],
+  checks: [
+    { id: "systems", label: "Systems area", state: "not-met", courses: [] },
+  ],
+  freeElectives: {
+    creditsDone: 0,
+    creditsPlanned: 0,
+    creditsTotal: 9,
+    courses: [],
+  },
   extra: [],
   candidateResults: (request.candidates ?? []).map(({ code }) => ({
     code,
@@ -31,13 +59,16 @@ const answer = (request: AuditRequest): AuditSuccess => ({
 
 const candidatesOnly = (request: AuditRequest) => request.candidates != null;
 
-function setup(audit: AuditEngine["audit"] = async (request) => answer(request)) {
+function setup(
+  audit: AuditEngine["audit"] = async (request) => answer(request),
+) {
   const storage = new MemoryPlanStorage();
   writeHistory(storage, { courses: [], manual: [] });
   const engine = { audit: vi.fn(audit) };
   const degree = createDegreeSource({ getStorage: () => storage, engine });
   const gaps = createGapSource({ degree, engine });
-  const asked = () => engine.audit.mock.calls.map(([request]) => request).filter(candidatesOnly);
+  const asked = () =>
+    engine.audit.mock.calls.map(([request]) => request).filter(candidatesOnly);
   return { engine, degree, gaps, asked };
 }
 
@@ -56,9 +87,19 @@ describe("what the audit is asked", () => {
   it("asks about each undergraduate course in the term, and no others", async () => {
     const { gaps, asked } = setup();
     gaps.subscribe(() => {});
-    gaps.setOpenTerm({ courses: [course("CS 3013"), course("CS 502", 3, "Graduate"), course("WPE 1001", 0.25)], planned: [] });
+    gaps.setOpenTerm({
+      courses: [
+        course("CS 3013"),
+        course("CS 502", 3, "Graduate"),
+        course("WPE 1001", 0.25),
+      ],
+      planned: [],
+    });
     await pause();
-    expect(asked()[0].candidates).toEqual([{ code: "CS 3013", credits: 3 }, { code: "WPE 1001", credits: 0.25 }]);
+    expect(asked()[0].candidates).toEqual([
+      { code: "CS 3013", credits: 3 },
+      { code: "WPE 1001", credits: 0.25 },
+    ]);
   });
 
   it("gives a course with no credits listed the same 3 credits a found course gets", async () => {
@@ -88,7 +129,10 @@ describe("what the audit is asked", () => {
     gaps.subscribe(() => {});
     await pause();
     expect(asked()).toEqual([]);
-    expect(gaps.getSnapshot()).toMatchObject({ status: "waiting", closes: null });
+    expect(gaps.getSnapshot()).toMatchObject({
+      status: "waiting",
+      closes: null,
+    });
   });
 
   it("doesn't run with nobody listening, and catches up when someone comes back", async () => {
@@ -121,12 +165,35 @@ describe("the stored answers", () => {
   it("leaves out a humanities course that would block breadth", async () => {
     const { gaps, degree } = setup(async (request) => ({
       ...answer(request),
-      sections: [{ name: "Humanities & arts", done: 4, planned: 0, total: 6, lines: [{ id: 5, label: "HUA elective", state: "empty", course: null }] }],
-      candidateResults: (request.candidates ?? []).map(({ code }) => ({ code, closesLines: [5], closesChecks: [] })),
+      sections: [
+        {
+          name: "Humanities & arts",
+          done: 4,
+          planned: 0,
+          total: 6,
+          lines: [
+            { id: 5, label: "HUA elective", state: "empty", course: null },
+          ],
+        },
+      ],
+      candidateResults: (request.candidates ?? []).map(({ code }) => ({
+        code,
+        closesLines: [5],
+        closesChecks: [],
+      })),
     }));
-    degree.addCourses(["EN 1251", "EN 2211", "EN 2221", "WR 1011"].map((code) => ({ ...typedCourse(code), status: "taken" as const, term: "A Term 2026" })));
+    degree.addCourses(
+      ["EN 1251", "EN 2211", "EN 2221", "WR 1011"].map((code) => ({
+        ...typedCourse(code),
+        status: "taken" as const,
+        term: "A Term 2026",
+      })),
+    );
     gaps.subscribe(() => {});
-    gaps.setOpenTerm({ courses: [course("EN 2231"), course("HI 1310")], planned: [] });
+    gaps.setOpenTerm({
+      courses: [course("EN 2231"), course("HI 1310")],
+      planned: [],
+    });
     await pause();
     expect([...(gaps.getSnapshot().closes?.keys() ?? [])]).toEqual(["HI 1310"]);
   });
@@ -134,11 +201,21 @@ describe("the stored answers", () => {
   it("names a section once when a course closes several of its lines", async () => {
     const { gaps } = setup(async (request) => ({
       ...answer(request),
-      sections: [{ name: "Mathematics", done: 0, planned: 0, total: 7, lines: [
-        { id: 34, label: "Mathematics", state: "empty", course: null },
-        { id: 38, label: "Mathematics", state: "empty", course: null },
-      ] }],
-      candidateResults: [{ code: "CS 3013", closesLines: [34, 38], closesChecks: [] }],
+      sections: [
+        {
+          name: "Mathematics",
+          done: 0,
+          planned: 0,
+          total: 7,
+          lines: [
+            { id: 34, label: "Mathematics", state: "empty", course: null },
+            { id: 38, label: "Mathematics", state: "empty", course: null },
+          ],
+        },
+      ],
+      candidateResults: [
+        { code: "CS 3013", closesLines: [34, 38], closesChecks: [] },
+      ],
     }));
     gaps.subscribe(() => {});
     gaps.setOpenTerm({ courses: term, planned: [] });
@@ -222,7 +299,11 @@ describe("when answers go stale", () => {
 
   it("drops an older answer that arrives after a newer change", async () => {
     const replies: ((response: AuditResponse) => void)[] = [];
-    const { gaps, asked } = setup((request) => candidatesOnly(request) ? new Promise((resolve) => replies.push(resolve)) : Promise.resolve(answer(request)));
+    const { gaps, asked } = setup((request) =>
+      candidatesOnly(request)
+        ? new Promise((resolve) => replies.push(resolve))
+        : Promise.resolve(answer(request)),
+    );
     gaps.subscribe(() => {});
     gaps.setOpenTerm({ courses: term, planned: [] });
     await pause();
@@ -232,7 +313,10 @@ describe("when answers go stale", () => {
     await vi.advanceTimersByTimeAsync(0);
     replies[0](answer(asked()[0]));
     await vi.advanceTimersByTimeAsync(0);
-    expect(gaps.getSnapshot()).toMatchObject({ status: "ready", closes: new Map() });
+    expect(gaps.getSnapshot()).toMatchObject({
+      status: "ready",
+      closes: new Map(),
+    });
   });
 });
 
@@ -246,7 +330,10 @@ describe("a failed audit", () => {
     gaps.subscribe(() => {});
     gaps.setOpenTerm({ courses: term, planned: [] });
     await pause();
-    expect(gaps.getSnapshot()).toMatchObject({ status: "failed", closes: null });
+    expect(gaps.getSnapshot()).toMatchObject({
+      status: "failed",
+      closes: null,
+    });
     failing = false;
     gaps.setOpenTerm({ courses: term, planned: ["CS 3013"] });
     await pause();
@@ -254,11 +341,18 @@ describe("a failed audit", () => {
   });
 
   it("treats an engine error answer as failed", async () => {
-    const { gaps } = setup(async () => ({ ok: false, version: 1, error: { code: "badRequest", message: "nope", detail: "candidates" } }));
+    const { gaps } = setup(async () => ({
+      ok: false,
+      version: 1,
+      error: { code: "badRequest", message: "nope", detail: "candidates" },
+    }));
     gaps.subscribe(() => {});
     gaps.setOpenTerm({ courses: term, planned: [] });
     await pause();
-    expect(gaps.getSnapshot()).toMatchObject({ status: "failed", closes: null });
+    expect(gaps.getSnapshot()).toMatchObject({
+      status: "failed",
+      closes: null,
+    });
   });
 
   it("tries again when someone comes back", async () => {

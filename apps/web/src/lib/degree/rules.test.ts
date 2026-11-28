@@ -5,7 +5,11 @@ import { crossListed, fitsLine, onlyOneRivals } from "./rules";
 describe("fitsLine", () => {
   it("uses the supplied sheet's filter without inheriting CS exclusions", async () => {
     const sheet = structuredClone(await loadSheet("cs-2030"));
-    sheet.lines[15].filter = { type: "subjectMinLevel", subject: "CS", minLevel: 2000 };
+    sheet.lines[15].filter = {
+      type: "subjectMinLevel",
+      subject: "CS",
+      minLevel: 2000,
+    };
     expect(fitsLine("CS 2119", 3, 16, sheet)).toBe(true);
   });
 

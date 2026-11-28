@@ -3,7 +3,8 @@
 import { useSyncExternalStore } from "react";
 import { getDegreeSource, type DegreeSnapshot } from "./degreeSource";
 
-const subscribe = (listener: () => void) => getDegreeSource().subscribe(listener);
+const subscribe = (listener: () => void) =>
+  getDegreeSource().subscribe(listener);
 const getSnapshot = () => getDegreeSource().getSnapshot();
 const getServerSnapshot = () => null;
 

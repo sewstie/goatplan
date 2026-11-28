@@ -16,11 +16,23 @@ describe("ME Class of 2030", () => {
   it("loads all 45 official numbered requirements as an unverified beta", async () => {
     const sheet = await loadSheet("me-2030");
     const metadata = SHEETS.find((item) => item.id === sheet.id)!;
-    expect(metadata).toMatchObject({ major: "Mechanical Engineering", status: "beta", verification: null });
-    expect(sheet).toMatchObject({ classYear: 2030, catalogYear: "2026-2027", totalUnits: 15,
-      source: "https://www.wpi.edu/sites/default/files/2026-06/ME-2030_fillable.pdf",
-      catalogSource: "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/mechanical-engineering-major" });
-    expect(sheet.lines.map((line) => line.line)).toEqual(Array.from({ length: 45 }, (_, index) => index + 1));
+    expect(metadata).toMatchObject({
+      major: "Mechanical Engineering",
+      status: "beta",
+      verification: null,
+    });
+    expect(sheet).toMatchObject({
+      classYear: 2030,
+      catalogYear: "2026-2027",
+      totalUnits: 15,
+      source:
+        "https://www.wpi.edu/sites/default/files/2026-06/ME-2030_fillable.pdf",
+      catalogSource:
+        "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/mechanical-engineering-major",
+    });
+    expect(sheet.lines.map((line) => line.line)).toEqual(
+      Array.from({ length: 45 }, (_, index) => index + 1),
+    );
     expect(validateSheet(sheet, metadata)).toEqual([]);
   });
 });

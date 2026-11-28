@@ -1,8 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { AuditResponse, AuditSuccess } from "@/lib/engine";
 import { MemoryPlanStorage } from "@/lib/plans/testing";
-import { AUDIT_DELAY_MS, createDegreeSource, type AuditEngine } from "./degreeSource";
-import { foundCourse, HISTORY_KEY, parseHistoryFile, typedCourse, writeHistory } from "./history";
+import {
+  AUDIT_DELAY_MS,
+  createDegreeSource,
+  type AuditEngine,
+} from "./degreeSource";
+import {
+  foundCourse,
+  HISTORY_KEY,
+  parseHistoryFile,
+  typedCourse,
+  writeHistory,
+} from "./history";
 import cs from "./sheets/cs-2030.json";
 import type { TrackingSheet } from "./sheets";
 import fixture from "../../../e2e/fixtures/degree-major-sheet.json";
@@ -13,12 +23,20 @@ const answer = (done: number): AuditSuccess => ({
   version: 1,
   sections: [{ name: "Mathematics", done, planned: 0, total: 7, lines: [] }],
   checks: [],
-  freeElectives: { creditsDone: 0, creditsPlanned: 0, creditsTotal: 9, courses: [] },
+  freeElectives: {
+    creditsDone: 0,
+    creditsPlanned: 0,
+    creditsTotal: 9,
+    courses: [],
+  },
   extra: [],
   candidateResults: [],
 });
 
-function setup(audit: AuditEngine["audit"] = async (request) => answer(request.taken?.length ?? 0)) {
+function setup(
+  audit: AuditEngine["audit"] = async (request) =>
+    answer(request.taken?.length ?? 0),
+) {
   const storage = new MemoryPlanStorage();
   const engine = { audit: vi.fn(audit) };
   const source = createDegreeSource({ getStorage: () => storage, engine });
@@ -45,15 +63,29 @@ describe("the history", () => {
     const engine = { audit: async () => answer(0) };
     const fresh = createDegreeSource({ getStorage: () => storage, engine });
     expect(fresh.getSnapshot().selectedSheetId).toBeNull();
-    writeHistory(storage, { courses: [typedCourse("MA 1021")], manual: ["iqp-1"], pins: [{ code: "MA 1021", line: 34 }] });
+    writeHistory(storage, {
+      courses: [typedCourse("MA 1021")],
+      manual: ["iqp-1"],
+      pins: [{ code: "MA 1021", line: 34 }],
+    });
     const legacy = createDegreeSource({ getStorage: () => storage, engine });
     expect(legacy.getSnapshot().selectedSheetId).toBe("cs-2030");
-    expect(JSON.parse(legacy.exportHistory())).toMatchObject({ sheetId: "cs-2030", sheets: { "cs-2030": { manual: ["iqp-1"], pins: [{ code: "MA 1021", line: 34 }] } } });
+    expect(JSON.parse(legacy.exportHistory())).toMatchObject({
+      sheetId: "cs-2030",
+      sheets: {
+        "cs-2030": { manual: ["iqp-1"], pins: [{ code: "MA 1021", line: 34 }] },
+      },
+    });
   });
   it("switches independent sheets while sharing courses and restoring each sheet's pins and confirmations", async () => {
     const storage = new MemoryPlanStorage();
     const second = fixture as TrackingSheet;
-    const source = createDegreeSource({ getStorage: () => storage, engine: { audit: async () => answer(0) }, loadSheet: async (id) => id === second.id ? second : cs as TrackingSheet });
+    const source = createDegreeSource({
+      getStorage: () => storage,
+      engine: { audit: async () => answer(0) },
+      loadSheet: async (id) =>
+        id === second.id ? second : (cs as TrackingSheet),
+    });
     source.subscribe(() => {});
     expect(source.selectSheet("cs-2030")).toBe(true);
     source.addCourse(typedCourse("MA 1021"));
@@ -61,17 +93,24 @@ describe("the history", () => {
     source.setManualItem("iqp-1", true);
     source.selectSheet("fixture-2030");
     await pause();
-    expect(source.getSnapshot()).toMatchObject({ sheet: { id: "fixture-2030" }, history: { courses: [typedCourse("MA 1021")], manual: [] } });
+    expect(source.getSnapshot()).toMatchObject({
+      sheet: { id: "fixture-2030" },
+      history: { courses: [typedCourse("MA 1021")], manual: [] },
+    });
     expect(source.getSnapshot().history.pins ?? []).toEqual([]);
     source.setManualItem("project", true);
     source.setPin({ code: "MA 1021", line: 35 });
     source.selectSheet("cs-2030");
     await pause();
     expect(source.getSnapshot().history.manual).toEqual(["iqp-1"]);
-    expect(source.getSnapshot().history.pins).toEqual([{ code: "MA 1021", line: 34 }]);
+    expect(source.getSnapshot().history.pins).toEqual([
+      { code: "MA 1021", line: 34 },
+    ]);
     source.selectSheet("fixture-2030");
     expect(source.getSnapshot().history.manual).toEqual(["project"]);
-    expect(source.getSnapshot().history.pins).toEqual([{ code: "MA 1021", line: 35 }]);
+    expect(source.getSnapshot().history.pins).toEqual([
+      { code: "MA 1021", line: 35 },
+    ]);
   });
 
   it("audits against the loaded sheet document", async () => {
@@ -81,7 +120,12 @@ describe("the history", () => {
       return answer(0);
     });
     await pause();
-    expect(sheet).toMatchObject({ id: "cs-2030", major: "Computer Science", classYear: 2030, totalUnits: 15 });
+    expect(sheet).toMatchObject({
+      id: "cs-2030",
+      major: "Computer Science",
+      classYear: 2030,
+      totalUnits: 15,
+    });
     expect(source.getSnapshot().audit.status).toBe("ready");
     stop();
   });
@@ -92,15 +136,37 @@ describe("the history", () => {
       sheets.push(request.sheet as TrackingSheet);
       return answer(0);
     });
-    const seminar = () => sheets.at(-1)!.lines.find((line) => line.line === 6)!.filter;
-    source.addCourse({ ...foundCourse({ code: "SP 1521", title: "Elementary Spanish I", credits: 3 }), term: "A Term 2026" });
+    const seminar = () =>
+      sheets.at(-1)!.lines.find((line) => line.line === 6)!.filter;
+    source.addCourse({
+      ...foundCourse({
+        code: "SP 1521",
+        title: "Elementary Spanish I",
+        credits: 3,
+      }),
+      term: "A Term 2026",
+    });
     await pause();
-    expect(source.getSnapshot().hua).toEqual({ path: { kind: "language", subject: "SP" }, chosen: false, first: "SP 1521" });
-    expect(seminar()).toEqual({ type: "subjectMinLevel", subject: "SP", minLevel: 3000 });
+    expect(source.getSnapshot().hua).toEqual({
+      path: { kind: "language", subject: "SP" },
+      chosen: false,
+      first: "SP 1521",
+    });
+    expect(seminar()).toEqual({
+      type: "subjectMinLevel",
+      subject: "SP",
+      minLevel: 3000,
+    });
     expect(source.setHuaPath({ kind: "depth-breadth" })).toBe(true);
     await pause();
-    expect(source.getSnapshot().hua).toMatchObject({ path: { kind: "depth-breadth" }, chosen: true });
-    expect(seminar()).toEqual({ type: "courses", courses: ["HU 3900", "HU 3910"] });
+    expect(source.getSnapshot().hua).toMatchObject({
+      path: { kind: "depth-breadth" },
+      chosen: true,
+    });
+    expect(seminar()).toEqual({
+      type: "courses",
+      courses: ["HU 3900", "HU 3910"],
+    });
     source.setHuaPath(null);
     await pause();
     expect(source.getSnapshot().history.huaPath).toBeUndefined();
@@ -110,20 +176,38 @@ describe("the history", () => {
 
   it("keeps the humanities choice when switching majors, since humanities are the same for everyone", () => {
     const storage = new MemoryPlanStorage();
-    const source = createDegreeSource({ getStorage: () => storage, engine: { audit: async () => answer(0) }, loadSheet: async () => cs as TrackingSheet });
+    const source = createDegreeSource({
+      getStorage: () => storage,
+      engine: { audit: async () => answer(0) },
+      loadSheet: async () => cs as TrackingSheet,
+    });
     source.selectSheet("cs-2030");
     source.setHuaPath({ kind: "language", subject: "GN" });
     source.selectSheet("fixture-2030");
     expect(source.getSnapshot().history.huaPath).toBe("language:GN");
     expect(JSON.parse(source.exportHistory()).huaPath).toBe("language:GN");
-    expect(parseHistoryFile(source.exportHistory())).toMatchObject({ ok: true, history: { huaPath: "language:GN" } });
-    expect(parseHistoryFile(JSON.stringify({ version: 1, courses: [], manual: [], huaPath: "language:EN" }))).toEqual({ ok: true, history: { courses: [], manual: [] } });
+    expect(parseHistoryFile(source.exportHistory())).toMatchObject({
+      ok: true,
+      history: { huaPath: "language:GN" },
+    });
+    expect(
+      parseHistoryFile(
+        JSON.stringify({
+          version: 1,
+          courses: [],
+          manual: [],
+          huaPath: "language:EN",
+        }),
+      ),
+    ).toEqual({ ok: true, history: { courses: [], manual: [] } });
   });
 
   it("stores an added course and lists it", () => {
     const { source, storage } = setup();
     expect(source.addCourse(typedCourse("CS 9999"))).toBe("added");
-    expect(source.getSnapshot().history.courses.map((course) => course.code)).toEqual(["CS 9999"]);
+    expect(
+      source.getSnapshot().history.courses.map((course) => course.code),
+    ).toEqual(["CS 9999"]);
     expect(storage.getItem(HISTORY_KEY)).toContain("CS 9999");
   });
 
@@ -139,14 +223,21 @@ describe("the history", () => {
     source.addCourse(typedCourse("CS 9999"));
     source.addCourse(typedCourse("MA 1021"));
     expect(source.removeCourse("CS 9999")).toBe(true);
-    expect(source.getSnapshot().history.courses.map((course) => course.code)).toEqual(["MA 1021"]);
+    expect(
+      source.getSnapshot().history.courses.map((course) => course.code),
+    ).toEqual(["MA 1021"]);
     expect(storage.getItem(HISTORY_KEY)).not.toContain("CS 9999");
   });
 
   it("reports a course the browser couldn't keep, and keeps it for this open page", () => {
-    const source = createDegreeSource({ getStorage: () => null, engine: { audit: vi.fn(async () => answer(0)) } });
+    const source = createDegreeSource({
+      getStorage: () => null,
+      engine: { audit: vi.fn(async () => answer(0)) },
+    });
     expect(source.addCourse(typedCourse("CS 9999"))).toBe("unsaved");
-    expect(source.getSnapshot().history.courses.map((course) => course.code)).toEqual(["CS 9999"]);
+    expect(
+      source.getSnapshot().history.courses.map((course) => course.code),
+    ).toEqual(["CS 9999"]);
     expect(source.getSnapshot().unsaved).toBe(true);
   });
 
@@ -167,7 +258,9 @@ describe("the history", () => {
 
   it("rejects a course with a broken code", () => {
     const { source } = setup();
-    expect(source.addCourse({ ...typedCourse("CS 9999"), code: "not a code" })).toBe("invalid");
+    expect(
+      source.addCourse({ ...typedCourse("CS 9999"), code: "not a code" }),
+    ).toBe("invalid");
     expect(source.getSnapshot().history.courses).toEqual([]);
   });
 
@@ -186,7 +279,14 @@ describe("the history", () => {
     const { source, storage, engine } = setup();
     await pause();
     engine.audit.mockClear();
-    storage.setItem(HISTORY_KEY, JSON.stringify({ version: 1, courses: [typedCourse("CS 9999")], manual: [] }));
+    storage.setItem(
+      HISTORY_KEY,
+      JSON.stringify({
+        version: 1,
+        courses: [typedCourse("CS 9999")],
+        manual: [],
+      }),
+    );
     window.dispatchEvent(new StorageEvent("storage", { key: HISTORY_KEY }));
     expect(source.getSnapshot().history.courses).toHaveLength(1);
     await pause();
@@ -198,7 +298,9 @@ describe("the history", () => {
     await pause();
     engine.audit.mockClear();
     const before = source.getSnapshot();
-    window.dispatchEvent(new StorageEvent("storage", { key: "goatplan:plans:v1:plan:1" }));
+    window.dispatchEvent(
+      new StorageEvent("storage", { key: "goatplan:plans:v1:plan:1" }),
+    );
     expect(source.getSnapshot()).toBe(before);
     await pause();
     expect(engine.audit).not.toHaveBeenCalled();
@@ -207,7 +309,10 @@ describe("the history", () => {
   it("marks a damaged history, and a good write clears the mark", () => {
     const storage = new MemoryPlanStorage();
     storage.setItem(HISTORY_KEY, "{not json");
-    const source = createDegreeSource({ getStorage: () => storage, engine: { audit: vi.fn(async () => answer(0)) } });
+    const source = createDegreeSource({
+      getStorage: () => storage,
+      engine: { audit: vi.fn(async () => answer(0)) },
+    });
     expect(source.getSnapshot().damaged).toBe(true);
     source.addCourse(typedCourse("CS 9999"));
     expect(source.getSnapshot().damaged).toBe(false);
@@ -220,30 +325,63 @@ describe("adding several courses", () => {
     await pause();
     engine.audit.mockClear();
     const write = vi.spyOn(storage, "setItem");
-    expect(source.addCourses([typedCourse("CS 9999"), { ...typedCourse("MA 1021"), status: "planned" }])).toEqual({ status: "added", added: 2 });
+    expect(
+      source.addCourses([
+        typedCourse("CS 9999"),
+        { ...typedCourse("MA 1021"), status: "planned" },
+      ]),
+    ).toEqual({ status: "added", added: 2 });
     expect(write).toHaveBeenCalledTimes(1);
     await pause();
     expect(engine.audit).toHaveBeenCalledTimes(1);
-    expect(engine.audit.mock.calls[0][0].taken).toEqual([{ code: "CS 9999", credits: 3 }]);
-    expect(engine.audit.mock.calls[0][0].planned).toEqual([{ code: "MA 1021", credits: 3 }]);
+    expect(engine.audit.mock.calls[0][0].taken).toEqual([
+      { code: "CS 9999", credits: 3 },
+    ]);
+    expect(engine.audit.mock.calls[0][0].planned).toEqual([
+      { code: "MA 1021", credits: 3 },
+    ]);
   });
 
   it("skips courses already there, or listed twice, and leaves the old copy alone", () => {
     const { source } = setup();
     source.addCourse({ ...typedCourse("CS 9999"), term: "A 2026" });
-    expect(source.addCourses([typedCourse("CS 9999"), typedCourse("MA 1021"), typedCourse("MA 1021")])).toEqual({ status: "added", added: 1 });
-    expect(source.getSnapshot().history.courses.map((course) => [course.code, course.term])).toEqual([["CS 9999", "A 2026"], ["MA 1021", undefined]]);
+    expect(
+      source.addCourses([
+        typedCourse("CS 9999"),
+        typedCourse("MA 1021"),
+        typedCourse("MA 1021"),
+      ]),
+    ).toEqual({ status: "added", added: 1 });
+    expect(
+      source
+        .getSnapshot()
+        .history.courses.map((course) => [course.code, course.term]),
+    ).toEqual([
+      ["CS 9999", "A 2026"],
+      ["MA 1021", undefined],
+    ]);
   });
 
   it("adds nothing if one of them is broken", () => {
     const { source } = setup();
-    expect(source.addCourses([typedCourse("CS 9999"), { ...typedCourse("MA 1021"), code: "nope" }])).toEqual({ status: "invalid", added: 0 });
+    expect(
+      source.addCourses([
+        typedCourse("CS 9999"),
+        { ...typedCourse("MA 1021"), code: "nope" },
+      ]),
+    ).toEqual({ status: "invalid", added: 0 });
     expect(source.getSnapshot().history.courses).toEqual([]);
   });
 
   it("reports a list the browser couldn't keep", () => {
-    const source = createDegreeSource({ getStorage: () => null, engine: { audit: vi.fn(async () => answer(0)) } });
-    expect(source.addCourses([typedCourse("CS 9999")])).toEqual({ status: "unsaved", added: 0 });
+    const source = createDegreeSource({
+      getStorage: () => null,
+      engine: { audit: vi.fn(async () => answer(0)) },
+    });
+    expect(source.addCourses([typedCourse("CS 9999")])).toEqual({
+      status: "unsaved",
+      added: 0,
+    });
     expect(source.getSnapshot().unsaved).toBe(true);
   });
 });
@@ -252,15 +390,21 @@ describe("editing a course", () => {
   function withCourses() {
     const made = setup();
     made.source.addCourse(typedCourse("EN 1000"));
-    made.source.addCourse(foundCourse({ code: "MA 1021", title: "Calculus I", credits: 3 }));
+    made.source.addCourse(
+      foundCourse({ code: "MA 1021", title: "Calculus I", credits: 3 }),
+    );
     return made;
   }
-  const saved = (source: ReturnType<typeof setup>["source"], code: string) => source.getSnapshot().history.courses.find((course) => course.code === code);
+  const saved = (source: ReturnType<typeof setup>["source"], code: string) =>
+    source.getSnapshot().history.courses.find((course) => course.code === code);
 
   it("changes credits and keeps the rest", () => {
     const { source } = withCourses();
     expect(source.editCourse("MA 1021", { credits: 1.5 })).toBe("saved");
-    expect(saved(source, "MA 1021")).toEqual({ ...foundCourse({ code: "MA 1021", title: "Calculus I", credits: 3 }), credits: 1.5 });
+    expect(saved(source, "MA 1021")).toEqual({
+      ...foundCourse({ code: "MA 1021", title: "Calculus I", credits: 3 }),
+      credits: 1.5,
+    });
   });
 
   it("adds, tidies and clears a term", () => {
@@ -285,9 +429,27 @@ describe("editing a course", () => {
 
   it("keeps a course's AP/IB mark through edits", () => {
     const { source } = setup();
-    source.replaceHistory({ courses: [{ ...foundCourse({ code: "EN 1100", title: "English Elective", credits: 3 }), apIb: true }], manual: [] });
-    expect(source.editCourse("EN 1100", { credits: 1.5, status: "planned" })).toBe("saved");
-    expect(saved(source, "EN 1100")).toMatchObject({ credits: 1.5, status: "planned", apIb: true });
+    source.replaceHistory({
+      courses: [
+        {
+          ...foundCourse({
+            code: "EN 1100",
+            title: "English Elective",
+            credits: 3,
+          }),
+          apIb: true,
+        },
+      ],
+      manual: [],
+    });
+    expect(
+      source.editCourse("EN 1100", { credits: 1.5, status: "planned" }),
+    ).toBe("saved");
+    expect(saved(source, "EN 1100")).toMatchObject({
+      credits: 1.5,
+      status: "planned",
+      apIb: true,
+    });
   });
 
   it("can't change a course that isn't there, or its code", () => {
@@ -312,17 +474,35 @@ describe("editing a course", () => {
     engine.audit.mockClear();
     source.editCourse("MA 1021", { status: "planned" });
     await pause();
-    expect(engine.audit.mock.lastCall?.[0].planned).toEqual([{ code: "MA 1021", credits: 3 }]);
-    expect(engine.audit.mock.lastCall?.[0].taken).toEqual([{ code: "EN 1000", credits: 3 }]);
+    expect(engine.audit.mock.lastCall?.[0].planned).toEqual([
+      { code: "MA 1021", credits: 3 },
+    ]);
+    expect(engine.audit.mock.lastCall?.[0].taken).toEqual([
+      { code: "EN 1000", credits: 3 },
+    ]);
 
-    source.addCourse({ ...foundCourse({ code: "EN 1100", title: "English Elective", credits: 3 }), apIb: true });
+    source.addCourse({
+      ...foundCourse({
+        code: "EN 1100",
+        title: "English Elective",
+        credits: 3,
+      }),
+      apIb: true,
+    });
     await pause();
-    expect(engine.audit.mock.lastCall?.[0].taken).toContainEqual({ code: "EN 1100", credits: 3, apIb: true });
+    expect(engine.audit.mock.lastCall?.[0].taken).toContainEqual({
+      code: "EN 1100",
+      credits: 3,
+      apIb: true,
+    });
 
     source.editCourse("MA 1021", { status: "taken" });
     await pause();
     expect(engine.audit.mock.lastCall?.[0].planned).toEqual([]);
-    expect(engine.audit.mock.lastCall?.[0].taken).toContainEqual({ code: "MA 1021", credits: 3 });
+    expect(engine.audit.mock.lastCall?.[0].taken).toContainEqual({
+      code: "MA 1021",
+      credits: 3,
+    });
   });
 });
 
@@ -331,11 +511,25 @@ describe("export and import", () => {
     { sheetId: 42, sheets: {} },
     { sheetId: "../cs", sheets: {} },
     { sheetId: "cs-2030", sheets: { "cs-2030": { manual: [42] } } },
-    { sheetId: "cs-2030", sheets: { "cs-2030": { manual: [], pins: [{ code: "MA 1021", line: "34" }] } } },
-    { sheetId: "cs-2030", sheets: { "cs-2030": { manual: [], pins: [{ code: "MA 1021", line: -1 }] } } },
+    {
+      sheetId: "cs-2030",
+      sheets: {
+        "cs-2030": { manual: [], pins: [{ code: "MA 1021", line: "34" }] },
+      },
+    },
+    {
+      sheetId: "cs-2030",
+      sheets: {
+        "cs-2030": { manual: [], pins: [{ code: "MA 1021", line: -1 }] },
+      },
+    },
     { sheetId: "cs-2030", sheets: [] },
   ])("rejects a backup with invalid sheet state: %j", (state) => {
-    expect(parseHistoryFile(JSON.stringify({ version: 1, courses: [], manual: [], ...state }))).toEqual({ ok: false, reason: "broken" });
+    expect(
+      parseHistoryFile(
+        JSON.stringify({ version: 1, courses: [], manual: [], ...state }),
+      ),
+    ).toEqual({ ok: false, reason: "broken" });
   });
   it("merges a complete backup and restores the selected sheet and all sheet state after reload", () => {
     const { source } = setup();
@@ -350,19 +544,32 @@ describe("export and import", () => {
     const other = setup();
     other.source.addCourse(typedCourse("CS 1101"));
     other.source.mergeHistory(parsed.history);
-    const reloaded = createDegreeSource({ getStorage: () => other.storage, engine: other.engine });
+    const reloaded = createDegreeSource({
+      getStorage: () => other.storage,
+      engine: other.engine,
+    });
     expect(reloaded.getSnapshot().selectedSheetId).toBe("fixture-2030");
     expect(reloaded.getSnapshot().history.manual).toEqual(["project"]);
-    expect(reloaded.getSnapshot().history.courses.map(({ code }) => code)).toEqual(["CS 1101", "MA 1021"]);
+    expect(
+      reloaded.getSnapshot().history.courses.map(({ code }) => code),
+    ).toEqual(["CS 1101", "MA 1021"]);
     reloaded.selectSheet("cs-2030");
     expect(reloaded.getSnapshot().history.manual).toEqual(["iqp-1"]);
-    expect(reloaded.getSnapshot().history.pins).toEqual([{ code: "MA 1021", line: 34 }]);
+    expect(reloaded.getSnapshot().history.pins).toEqual([
+      { code: "MA 1021", line: 34 },
+    ]);
   });
   it("restores an identical history on another device", () => {
     const { source } = setup();
-    source.addCourse(foundCourse({ code: "MA 1021", title: "Calculus I", credits: 3 }));
+    source.addCourse(
+      foundCourse({ code: "MA 1021", title: "Calculus I", credits: 3 }),
+    );
     source.addCourse({ ...typedCourse("EN 1000"), apIb: true, term: "AP" });
-    source.editCourse("MA 1021", { status: "planned", credits: 1.5, term: "A 2026" });
+    source.editCourse("MA 1021", {
+      status: "planned",
+      credits: 1.5,
+      term: "A 2026",
+    });
     const before = source.getSnapshot().history;
 
     const parsed = parseHistoryFile(source.exportHistory());
@@ -375,7 +582,10 @@ describe("export and import", () => {
 
   it("exports what's stored right now, including another tab's change", () => {
     const { source, storage } = setup();
-    writeHistory(storage, { courses: [typedCourse("CS 9999")], manual: ["iqp-1"] });
+    writeHistory(storage, {
+      courses: [typedCourse("CS 9999")],
+      manual: ["iqp-1"],
+    });
     const file = JSON.parse(source.exportHistory());
     expect(file.courses[0].code).toBe("CS 9999");
     expect(file.manual).toEqual(["iqp-1"]);
@@ -407,9 +617,23 @@ describe("export and import", () => {
   it("merges a file into what's here, skipping courses it already has", () => {
     const { source } = setup();
     source.addCourse(typedCourse("CS 9999"));
-    expect(source.mergeHistory({ courses: [{ ...typedCourse("CS 9999"), credits: 1 }, typedCourse("MA 1021")], manual: ["iqp-1"], pins: [{ code: "MA 1021", line: 34 }] })).toBe(true);
+    expect(
+      source.mergeHistory({
+        courses: [
+          { ...typedCourse("CS 9999"), credits: 1 },
+          typedCourse("MA 1021"),
+        ],
+        manual: ["iqp-1"],
+        pins: [{ code: "MA 1021", line: 34 }],
+      }),
+    ).toBe(true);
     const { history } = source.getSnapshot();
-    expect(history.courses.map((course) => [course.code, course.credits])).toEqual([["CS 9999", 3], ["MA 1021", 3]]);
+    expect(
+      history.courses.map((course) => [course.code, course.credits]),
+    ).toEqual([
+      ["CS 9999", 3],
+      ["MA 1021", 3],
+    ]);
     expect(history.manual).toEqual(["iqp-1"]);
     expect(history.pins).toEqual([{ code: "MA 1021", line: 34 }]);
   });
@@ -431,7 +655,9 @@ describe("pins", () => {
     source.setPin({ code: "CS 2022", line: 38 });
     source.setPin({ code: "CS 2022", line: 18 });
     source.setPin({ code: "MA 1021", line: 18 });
-    expect(source.getSnapshot().history.pins).toEqual([{ code: "MA 1021", line: 18 }]);
+    expect(source.getSnapshot().history.pins).toEqual([
+      { code: "MA 1021", line: 18 },
+    ]);
   });
 
   it("removes a course's pin along with the course", () => {
@@ -462,12 +688,19 @@ describe("the audit", () => {
     expect(gaps.getSnapshot().closes).not.toBeNull();
     storage.removeItem(HISTORY_KEY);
     window.dispatchEvent(new StorageEvent("storage", { key: HISTORY_KEY }));
-    expect(gaps.getSnapshot()).toMatchObject({ status: "waiting", closes: null });
+    expect(gaps.getSnapshot()).toMatchObject({
+      status: "waiting",
+      closes: null,
+    });
   });
   it("waits for a selection before downloading a sheet for search", async () => {
     const storage = new MemoryPlanStorage();
     const engine = { audit: vi.fn(async () => answer(0)) };
-    const source = createDegreeSource({ getStorage: () => storage, engine, requireSelection: true });
+    const source = createDegreeSource({
+      getStorage: () => storage,
+      engine,
+      requireSelection: true,
+    });
     const gaps = createGapSource({ degree: source, engine });
     gaps.subscribe(() => {});
     gaps.setOpenTerm({ courses: [], planned: [] });
@@ -483,13 +716,25 @@ describe("the audit", () => {
     await pause();
     expect(gaps.getSnapshot().closes).not.toBeNull();
     source.selectSheet("fixture-2030");
-    expect(gaps.getSnapshot()).toMatchObject({ status: "waiting", closes: null });
+    expect(gaps.getSnapshot()).toMatchObject({
+      status: "waiting",
+      closes: null,
+    });
   });
   it("uses the selected sheet for course-search audits too", async () => {
     const storage = new MemoryPlanStorage();
     const requests: string[] = [];
-    const engine = { audit: async (request: Parameters<AuditEngine["audit"]>[0]) => { requests.push(request.requirements!); return answer(0); } };
-    const source = createDegreeSource({ getStorage: () => storage, engine, loadSheet: async () => fixture as TrackingSheet });
+    const engine = {
+      audit: async (request: Parameters<AuditEngine["audit"]>[0]) => {
+        requests.push(request.requirements!);
+        return answer(0);
+      },
+    };
+    const source = createDegreeSource({
+      getStorage: () => storage,
+      engine,
+      loadSheet: async () => fixture as TrackingSheet,
+    });
     source.subscribe(() => {});
     source.selectSheet("fixture-2030");
     await pause();
@@ -503,10 +748,17 @@ describe("the audit", () => {
     const replies: ((response: AuditResponse) => void)[] = [];
     const requests: string[] = [];
     const storage = new MemoryPlanStorage();
-    const source = createDegreeSource({ getStorage: () => storage, loadSheet: async (id) => id === fixture.id ? fixture as TrackingSheet : cs as TrackingSheet, engine: { audit: (request) => {
-      requests.push(request.requirements!);
-      return new Promise((resolve) => replies.push(resolve));
-    } } });
+    const source = createDegreeSource({
+      getStorage: () => storage,
+      loadSheet: async (id) =>
+        id === fixture.id ? (fixture as TrackingSheet) : (cs as TrackingSheet),
+      engine: {
+        audit: (request) => {
+          requests.push(request.requirements!);
+          return new Promise((resolve) => replies.push(resolve));
+        },
+      },
+    });
     source.subscribe(() => {});
     source.selectSheet("cs-2030");
     await pause();
@@ -517,20 +769,32 @@ describe("the audit", () => {
     await vi.advanceTimersByTimeAsync(0);
     replies[0](answer(1));
     await vi.advanceTimersByTimeAsync(0);
-    expect(source.getSnapshot().audit).toEqual({ status: "ready", result: answer(2) });
+    expect(source.getSnapshot().audit).toEqual({
+      status: "ready",
+      result: answer(2),
+    });
   });
   it("clears the old sheet immediately when a replacement backup selects another major", async () => {
     const { source } = setup();
     await pause();
     source.replaceHistory({ courses: [], manual: [], sheetId: "fixture-2030" });
     expect(source.getSnapshot().sheet).toBeNull();
-    expect(source.getSnapshot().audit).toEqual({ status: "waiting", result: null });
+    expect(source.getSnapshot().audit).toEqual({
+      status: "waiting",
+      result: null,
+    });
   });
   it("starts waiting, then shows the engine's answer", async () => {
     const { source } = setup();
-    expect(source.getSnapshot().audit).toEqual({ status: "waiting", result: null });
+    expect(source.getSnapshot().audit).toEqual({
+      status: "waiting",
+      result: null,
+    });
     await pause();
-    expect(source.getSnapshot().audit).toEqual({ status: "ready", result: answer(0) });
+    expect(source.getSnapshot().audit).toEqual({
+      status: "ready",
+      result: answer(0),
+    });
   });
 
   it("doesn't run with nobody listening", async () => {
@@ -558,14 +822,22 @@ describe("the audit", () => {
     const { source } = setup();
     await pause();
     source.addCourse(typedCourse("CS 9999"));
-    expect(source.getSnapshot().audit).toEqual({ status: "waiting", result: answer(0) });
+    expect(source.getSnapshot().audit).toEqual({
+      status: "waiting",
+      result: answer(0),
+    });
     await pause();
-    expect(source.getSnapshot().audit).toEqual({ status: "ready", result: answer(1) });
+    expect(source.getSnapshot().audit).toEqual({
+      status: "ready",
+      result: answer(1),
+    });
   });
 
   it("drops an older answer that arrives after a newer change", async () => {
     const replies: ((response: AuditResponse) => void)[] = [];
-    const { source, engine } = setup(() => new Promise((resolve) => replies.push(resolve)));
+    const { source, engine } = setup(
+      () => new Promise((resolve) => replies.push(resolve)),
+    );
     await pause();
     source.addCourse(typedCourse("CS 9999"));
     await pause();
@@ -574,7 +846,10 @@ describe("the audit", () => {
     await vi.advanceTimersByTimeAsync(0);
     replies[0](answer(0));
     await vi.advanceTimersByTimeAsync(0);
-    expect(source.getSnapshot().audit).toEqual({ status: "ready", result: answer(1) });
+    expect(source.getSnapshot().audit).toEqual({
+      status: "ready",
+      result: answer(1),
+    });
   });
 
   it("reports a failed audit, and trying again works", async () => {
@@ -584,7 +859,10 @@ describe("the audit", () => {
       return answer(0);
     });
     await pause();
-    expect(source.getSnapshot().audit).toEqual({ status: "failed", result: null });
+    expect(source.getSnapshot().audit).toEqual({
+      status: "failed",
+      result: null,
+    });
     failing = false;
     source.retryAudit();
     await pause();
@@ -598,7 +876,10 @@ describe("the audit", () => {
       error: { code: "badRequest", message: "nope", detail: "taken" },
     }));
     await pause();
-    expect(source.getSnapshot().audit).toEqual({ status: "failed", result: null });
+    expect(source.getSnapshot().audit).toEqual({
+      status: "failed",
+      result: null,
+    });
   });
 
   it("stops its timer when the last listener leaves, and runs again when one comes back", async () => {
@@ -647,7 +928,10 @@ describe("tick boxes", () => {
   });
 
   it("reports a tick the browser couldn't keep, and keeps it for this open page", () => {
-    const source = createDegreeSource({ getStorage: () => null, engine: { audit: vi.fn(async () => answer(0)) } });
+    const source = createDegreeSource({
+      getStorage: () => null,
+      engine: { audit: vi.fn(async () => answer(0)) },
+    });
     expect(source.setManualItem("iqp-1", true)).toBe(false);
     expect(source.getSnapshot().history.manual).toEqual(["iqp-1"]);
     expect(source.getSnapshot().unsaved).toBe(true);
@@ -657,11 +941,18 @@ describe("tick boxes", () => {
 describe("planner independence", () => {
   it("ignores planner storage changes and only audits explicit history", async () => {
     const { source, engine } = setup();
-    source.addCourse({ ...typedCourse("MA 1021"), status: "planned", term: "A Term 2030" });
+    source.addCourse({
+      ...typedCourse("MA 1021"),
+      status: "planned",
+      term: "A Term 2030",
+    });
     await pause();
-    expect(engine.audit.mock.calls.at(-1)?.[0].planned).toEqual([{ code: "MA 1021", credits: 3 }]);
+    expect(engine.audit.mock.calls.at(-1)?.[0].planned).toEqual([
+      { code: "MA 1021", credits: 3 },
+    ]);
     engine.audit.mockClear();
-    for (const key of ["goatplan:draft:v1:2027-C", "goatplan:term:v1"]) window.dispatchEvent(new StorageEvent("storage", { key }));
+    for (const key of ["goatplan:draft:v1:2027-C", "goatplan:term:v1"])
+      window.dispatchEvent(new StorageEvent("storage", { key }));
     await pause();
     expect(engine.audit).not.toHaveBeenCalled();
   });

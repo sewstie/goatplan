@@ -30,9 +30,18 @@ export function expandSheetPatterns(sheet: TrackingSheet): TrackingSheet {
     lines: sheet.lines.map((line) => {
       const { coursePatterns, ...filter } = line.filter;
       if (!coursePatterns) return line;
-      return { ...line, filter: { ...filter, courses: [...new Set([
-        ...(filter.courses ?? []), ...coursePatterns.flatMap(expandCoursePattern),
-      ])] } };
+      return {
+        ...line,
+        filter: {
+          ...filter,
+          courses: [
+            ...new Set([
+              ...(filter.courses ?? []),
+              ...coursePatterns.flatMap(expandCoursePattern),
+            ]),
+          ],
+        },
+      };
     }),
   };
 }

@@ -3,14 +3,25 @@ import { seatMergeBytes } from "@/lib/data/seatMerge";
 import type { EngineClient } from "@/lib/engine";
 
 export type ScheduleFit = "fits" | "clashes" | "unknown";
-export interface ScheduleCheck { fit(file: TermFile, codes: readonly string[]): Promise<ScheduleFit> }
+export interface ScheduleCheck {
+  fit(file: TermFile, codes: readonly string[]): Promise<ScheduleFit>;
+}
 
-export function scheduledCodes(file: TermFile, codes: readonly string[]): string[] {
-  const listed = new Set(file.courses.filter((course) => course.sections.length > 0).map((course) => course.code));
+export function scheduledCodes(
+  file: TermFile,
+  codes: readonly string[],
+): string[] {
+  const listed = new Set(
+    file.courses
+      .filter((course) => course.sections.length > 0)
+      .map((course) => course.code),
+  );
   return [...new Set(codes)].filter((code) => listed.has(code)).sort();
 }
 
-export function createScheduleCheck(engine: Pick<EngineClient, "loadTerm" | "solve">): ScheduleCheck {
+export function createScheduleCheck(
+  engine: Pick<EngineClient, "loadTerm" | "solve">,
+): ScheduleCheck {
   const answers = new Map<string, Promise<ScheduleFit>>();
   let loaded: string | null = null;
   const unloadable = new Set<string>();
@@ -21,17 +32,39 @@ export function createScheduleCheck(engine: Pick<EngineClient, "loadTerm" | "sol
     try {
       if (unloadable.has(termId)) return "unknown";
       if (loaded !== termId) {
-        const available = { ...file, courses: file.courses.map((course) => ({
-          ...course,
-          sections: course.sections.map((section) => section.status === "open" && section.enrolled >= section.capacity ? { ...section, status: "closed" as const } : section),
-        })) };
-        const response = await engine.loadTerm(termId, seatMergeBytes(available));
-        if (!response.ok) { unloadable.add(termId); return "unknown"; }
+        const available = {
+          ...file,
+          courses: file.courses.map((course) => ({
+            ...course,
+            sections: course.sections.map((section) =>
+              section.status === "open" && section.enrolled >= section.capacity
+                ? { ...section, status: "closed" as const }
+                : section,
+            ),
+          })),
+        };
+        const response = await engine.loadTerm(
+          termId,
+          seatMergeBytes(available),
+        );
+        if (!response.ok) {
+          unloadable.add(termId);
+          return "unknown";
+        }
         loaded = termId;
       }
-      const response = await engine.solve({ version: 1, courses, preferences: { onlyOpen: true }, limits: { maxSchedules: 1, stepBudget: 2_000_000 } });
+      const response = await engine.solve({
+        version: 1,
+        courses,
+        preferences: { onlyOpen: true },
+        limits: { maxSchedules: 1, stepBudget: 2_000_000 },
+      });
       if (!response.ok) return "unknown";
-      return response.total > 0 ? "fits" : response.capped ? "unknown" : "clashes";
+      return response.total > 0
+        ? "fits"
+        : response.capped
+          ? "unknown"
+          : "clashes";
     } catch {
       loaded = null;
       return "unknown";

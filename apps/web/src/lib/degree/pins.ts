@@ -1,9 +1,24 @@
-import type { AuditCheck, AuditLine, AuditSection, AuditSuccess } from "@/lib/engine/types";
+import type {
+  AuditCheck,
+  AuditLine,
+  AuditSection,
+  AuditSuccess,
+} from "@/lib/engine/types";
 import type { TrackingSheet } from "./sheets";
 import { getRequirements } from "./requirements";
-import { crossListed as sheetCrossListed, fitsLine as sheetFitsLine, isMajorLine as sheetIsMajorLine, onlyOneRivals as sheetOnlyOneRivals } from "./rules";
+import {
+  crossListed as sheetCrossListed,
+  fitsLine as sheetFitsLine,
+  isMajorLine as sheetIsMajorLine,
+  onlyOneRivals as sheetOnlyOneRivals,
+} from "./rules";
 import type { LinePin } from "./history";
-import { areaCourses, crossListed, FREE_ELECTIVE_LINES, WPE_LINE } from "./rules";
+import {
+  areaCourses,
+  crossListed,
+  FREE_ELECTIVE_LINES,
+  WPE_LINE,
+} from "./rules";
 
 export interface PinCourse {
   credits: number;
@@ -26,53 +41,104 @@ export interface MoveOutcome {
   freeElectiveCourse: string | null;
 }
 
-const sameCourse = (a: string | null, b: string) => a !== null && crossListed(a).includes(b);
+const sameCourse = (a: string | null, b: string) =>
+  a !== null && crossListed(a).includes(b);
 
-const flatLines = (result: AuditSuccess) => result.sections.flatMap((section) => section.lines);
+const flatLines = (result: AuditSuccess) =>
+  result.sections.flatMap((section) => section.lines);
 
 export function filledLines(result: AuditSuccess): number {
-  return flatLines(result).filter((line) => !FREE_ELECTIVE_LINES.includes(line.id) && (line.state === "done" || line.state === "planned" || (line.id === WPE_LINE && line.state === "partial"))).length;
+  return flatLines(result).filter(
+    (line) =>
+      !FREE_ELECTIVE_LINES.includes(line.id) &&
+      (line.state === "done" ||
+        line.state === "planned" ||
+        (line.id === WPE_LINE && line.state === "partial")),
+  ).length;
 }
 
-function checksAfter(checks: readonly AuditCheck[], lines: ReadonlyMap<number, AuditLine>, courses: PinCourses, sheet: TrackingSheet): AuditCheck[] {
-  const areaIds = sheet.checks.filter((check) => check.type === "area").map((check) => check.id);
-  const areaSections = new Set(sheet.checks.filter((check) => check.type === "area").map((check) => check.section));
-  const majorLines = sheet.sections.filter((section) => areaSections.has(section.id)).flatMap((section) => section.lines);
+function checksAfter(
+  checks: readonly AuditCheck[],
+  lines: ReadonlyMap<number, AuditLine>,
+  courses: PinCourses,
+  sheet: TrackingSheet,
+): AuditCheck[] {
+  const areaIds = sheet.checks
+    .filter((check) => check.type === "area")
+    .map((check) => check.id);
+  const areaSections = new Set(
+    sheet.checks
+      .filter((check) => check.type === "area")
+      .map((check) => check.section),
+  );
+  const majorLines = sheet.sections
+    .filter((section) => areaSections.has(section.id))
+    .flatMap((section) => section.lines);
   return checks.map((check) => {
     if (!areaIds.includes(check.id) || check.state === "check") return check;
     const area = areaCourses(check.id, sheet);
     const onCs = majorLines.flatMap((id) => {
       const course = lines.get(id)?.course;
-      return course && crossListed(course, sheet).some((code) => area.includes(code)) ? [course] : [];
+      return course &&
+        crossListed(course, sheet).some((code) => area.includes(code))
+        ? [course]
+        : [];
     });
-    if (onCs.length === 0) return { ...check, state: "not-met" as const, courses: [] };
-    return { ...check, state: onCs.some((code) => courses.get(code)?.taken) ? ("met" as const) : ("planned" as const), courses: check.courses.length > 0 ? check.courses : onCs };
+    if (onCs.length === 0)
+      return { ...check, state: "not-met" as const, courses: [] };
+    return {
+      ...check,
+      state: onCs.some((code) => courses.get(code)?.taken)
+        ? ("met" as const)
+        : ("planned" as const),
+      courses: check.courses.length > 0 ? check.courses : onCs,
+    };
   });
 }
 
-export function applyPins(result: AuditSuccess, pins: readonly LinePin[], courses: PinCourses, sheet: TrackingSheet = getRequirements()): PinnedAudit {
-  const FREE_ELECTIVE_LINES = sheet.sections.filter((section) => section.creditPool).flatMap((section) => section.lines);
-  const areaSections = new Set(sheet.checks.filter((check) => check.type === "area").map((check) => check.section));
-  const MAJOR_LINES = sheet.sections.filter((section) => areaSections.has(section.id)).flatMap((section) => section.lines);
+export function applyPins(
+  result: AuditSuccess,
+  pins: readonly LinePin[],
+  courses: PinCourses,
+  sheet: TrackingSheet = getRequirements(),
+): PinnedAudit {
+  const FREE_ELECTIVE_LINES = sheet.sections
+    .filter((section) => section.creditPool)
+    .flatMap((section) => section.lines);
+  const areaSections = new Set(
+    sheet.checks
+      .filter((check) => check.type === "area")
+      .map((check) => check.section),
+  );
+  const MAJOR_LINES = sheet.sections
+    .filter((section) => areaSections.has(section.id))
+    .flatMap((section) => section.lines);
   const WPE_LINE = sheet.lines.find((line) => line.subSlots)?.line ?? 0;
   const crossListed = (code: string) => sheetCrossListed(code, sheet);
-  const fitsLine = (code: string, credits: number, line: number) => sheetFitsLine(code, credits, line, sheet);
+  const fitsLine = (code: string, credits: number, line: number) =>
+    sheetFitsLine(code, credits, line, sheet);
   const isMajorLine = (line: number) => sheetIsMajorLine(line, sheet);
   const onlyOneRivals = (code: string) => sheetOnlyOneRivals(code, sheet);
-  const sameCourse = (a: string | null, b: string) => a !== null && crossListed(a).includes(b);
+  const sameCourse = (a: string | null, b: string) =>
+    a !== null && crossListed(a).includes(b);
   const rejected: LinePin[] = [];
   if (pins.length === 0) return { result, pinned: new Map(), rejected };
 
-  const lines = new Map(flatLines(result).map((line) => [line.id, { ...line }]));
+  const lines = new Map(
+    flatLines(result).map((line) => [line.id, { ...line }]),
+  );
   const pool = new Set(result.freeElectives.courses);
   const extra = new Set(result.extra);
   const pinned = new Map<number, string>();
   const homeless: string[] = [];
   const size = (code: string) => courses.get(code)?.credits ?? 0;
-  const stateOf = (code: string): AuditLine["state"] => (courses.get(code)?.taken ? "done" : "planned");
+  const stateOf = (code: string): AuditLine["state"] =>
+    courses.get(code)?.taken ? "done" : "planned";
 
   function removeEverywhere(code: string, target: AuditLine): boolean {
-    const holding = [...lines.values()].filter((line) => sameCourse(line.course, code));
+    const holding = [...lines.values()].filter((line) =>
+      sameCourse(line.course, code),
+    );
     if (holding.length > 1) {
       if (holding.includes(target)) return true;
       holding[0].course = null;
@@ -101,11 +167,19 @@ export function applyPins(result: AuditSuccess, pins: readonly LinePin[], course
   function clashesOnCs(code: string, line: number) {
     if (!isMajorLine(line)) return false;
     const rivals = onlyOneRivals(code);
-    return MAJOR_LINES.some((id) => id !== line && lines.get(id)?.course && rivals.includes(lines.get(id)!.course!));
+    return MAJOR_LINES.some(
+      (id) =>
+        id !== line &&
+        lines.get(id)?.course &&
+        rivals.includes(lines.get(id)!.course!),
+    );
   }
 
-  const canTake = (code: string, id: number) => fitsLine(code, size(code), id) && !clashesOnCs(code, id);
-  const placeable = [...lines.keys()].filter((id) => !FREE_ELECTIVE_LINES.includes(id));
+  const canTake = (code: string, id: number) =>
+    fitsLine(code, size(code), id) && !clashesOnCs(code, id);
+  const placeable = [...lines.keys()].filter(
+    (id) => !FREE_ELECTIVE_LINES.includes(id),
+  );
 
   function put(code: string, id: number) {
     const line = lines.get(id)!;
@@ -115,7 +189,9 @@ export function applyPins(result: AuditSuccess, pins: readonly LinePin[], course
 
   function place(code: string, tried: Set<number>): boolean {
     const open = placeable.filter((id) => !tried.has(id) && canTake(code, id));
-    const empty = open.find((id) => !lines.get(id)!.course && lines.get(id)!.state === "empty");
+    const empty = open.find(
+      (id) => !lines.get(id)!.course && lines.get(id)!.state === "empty",
+    );
     if (empty !== undefined) {
       put(code, empty);
       return true;
@@ -123,7 +199,8 @@ export function applyPins(result: AuditSuccess, pins: readonly LinePin[], course
     for (const id of open) {
       tried.add(id);
       const holder = lines.get(id)!.course;
-      if (!holder || pinned.has(id) || onlyOneRivals(code).includes(holder)) continue;
+      if (!holder || pinned.has(id) || onlyOneRivals(code).includes(holder))
+        continue;
       if (place(holder, tried)) {
         put(code, id);
         return true;
@@ -135,8 +212,15 @@ export function applyPins(result: AuditSuccess, pins: readonly LinePin[], course
   for (const pin of pins) {
     const target = lines.get(pin.line);
     const course = courses.get(pin.code);
-    const isManual = target && target.course === null && target.state !== "empty";
-    if (!target || !course || isManual || !fitsLine(pin.code, course.credits, pin.line) || pinned.has(pin.line)) {
+    const isManual =
+      target && target.course === null && target.state !== "empty";
+    if (
+      !target ||
+      !course ||
+      isManual ||
+      !fitsLine(pin.code, course.credits, pin.line) ||
+      pinned.has(pin.line)
+    ) {
       rejected.push(pin);
       continue;
     }
@@ -162,7 +246,9 @@ export function applyPins(result: AuditSuccess, pins: readonly LinePin[], course
 
   const creditsTotal = result.freeElectives.creditsTotal;
   const perLine = creditsTotal / FREE_ELECTIVE_LINES.length;
-  const poolPinned = [...pinned].filter(([id]) => FREE_ELECTIVE_LINES.includes(id)).map(([, code]) => code);
+  const poolPinned = [...pinned]
+    .filter(([id]) => FREE_ELECTIVE_LINES.includes(id))
+    .map(([, code]) => code);
   const taken = [...pool].filter((code) => courses.get(code)?.taken);
   const planned = [...pool].filter((code) => !courses.get(code)?.taken);
   const fit: string[] = [];
@@ -176,8 +262,12 @@ export function applyPins(result: AuditSuccess, pins: readonly LinePin[], course
     fit.push(code);
   }
 
-  let doneCredits = poolPinned.filter((code) => courses.get(code)?.taken).reduce((sum, code) => sum + size(code), 0);
-  let plannedCredits = poolPinned.filter((code) => !courses.get(code)?.taken).reduce((sum, code) => sum + size(code), 0);
+  let doneCredits = poolPinned
+    .filter((code) => courses.get(code)?.taken)
+    .reduce((sum, code) => sum + size(code), 0);
+  let plannedCredits = poolPinned
+    .filter((code) => !courses.get(code)?.taken)
+    .reduce((sum, code) => sum + size(code), 0);
   for (const code of fit) {
     if (courses.get(code)?.taken) doneCredits += size(code);
     else plannedCredits += size(code);
@@ -207,27 +297,59 @@ export function applyPins(result: AuditSuccess, pins: readonly LinePin[], course
 
   const sections: AuditSection[] = result.sections.map((section) => {
     const next = section.lines.map((line) => lines.get(line.id)!);
-    if (section.lines.some((line) => line.id === WPE_LINE)) return { ...section, lines: next };
-    return { ...section, lines: next, done: next.filter((line) => line.state === "done").length, planned: next.filter((line) => line.state === "planned").length };
+    if (section.lines.some((line) => line.id === WPE_LINE))
+      return { ...section, lines: next };
+    return {
+      ...section,
+      lines: next,
+      done: next.filter((line) => line.state === "done").length,
+      planned: next.filter((line) => line.state === "planned").length,
+    };
   });
 
   const adjusted: AuditSuccess = {
     ...result,
     sections,
     checks: checksAfter(result.checks, lines, courses, sheet),
-    freeElectives: { ...result.freeElectives, creditsDone: doneCredits, creditsPlanned: plannedCredits, courses: [...poolPinned, ...fit] },
+    freeElectives: {
+      ...result.freeElectives,
+      creditsDone: doneCredits,
+      creditsPlanned: plannedCredits,
+      courses: [...poolPinned, ...fit],
+    },
     extra: [...extra].sort(),
   };
   return { result: adjusted, pinned, rejected };
 }
 
-export function moveOutcome(result: AuditSuccess, pins: readonly LinePin[], courses: PinCourses, next: LinePin): MoveOutcome {
-  const others = pins.filter((pin) => pin.code !== next.code && pin.line !== next.line);
+export function moveOutcome(
+  result: AuditSuccess,
+  pins: readonly LinePin[],
+  courses: PinCourses,
+  next: LinePin,
+): MoveOutcome {
+  const others = pins.filter(
+    (pin) => pin.code !== next.code && pin.line !== next.line,
+  );
   const applied = applyPins(result, [...others, next], courses).result;
   const before = new Map(flatLines(result).map((line) => [line.id, line]));
-  const emptied = flatLines(applied).filter((line) => line.state === "empty" && before.get(line.id)?.state !== "empty");
+  const emptied = flatLines(applied).filter(
+    (line) => line.state === "empty" && before.get(line.id)?.state !== "empty",
+  );
   const displaced = before.get(next.line)?.course ?? null;
-  const onALine = (code: string) => flatLines(applied).some((line) => sameCourse(line.course, code));
-  const freeElectiveCourse = displaced && !onALine(displaced) ? displaced : (applied.freeElectives.courses.find((code) => !sameCourse(next.code, code)) ?? null);
-  return { best: filledLines(result), withPin: filledLines(applied), emptied, displaced: sameCourse(displaced, next.code) ? null : displaced, freeElectiveCourse };
+  const onALine = (code: string) =>
+    flatLines(applied).some((line) => sameCourse(line.course, code));
+  const freeElectiveCourse =
+    displaced && !onALine(displaced)
+      ? displaced
+      : (applied.freeElectives.courses.find(
+          (code) => !sameCourse(next.code, code),
+        ) ?? null);
+  return {
+    best: filledLines(result),
+    withPin: filledLines(applied),
+    emptied,
+    displaced: sameCourse(displaced, next.code) ? null : displaced,
+    freeElectiveCourse,
+  };
 }

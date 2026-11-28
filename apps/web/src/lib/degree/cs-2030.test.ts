@@ -389,9 +389,7 @@ describe("cs-2030 degree rules", () => {
     });
 
     it("has a science depth check", () => {
-      const scienceDepth = rules.checks.find(
-        (c) => c.id === "science-depth",
-      )!;
+      const scienceDepth = rules.checks.find((c) => c.id === "science-depth")!;
       expect(scienceDepth.displayCourses).toBe(3);
       expect(scienceDepth.minFromOneDiscipline).toBe(2);
     });
@@ -413,9 +411,7 @@ describe("cs-2030 degree rules", () => {
 
     it("has residency and MA 1000-level limit checks", () => {
       expect(rules.checks.find((c) => c.id === "residency")).toBeDefined();
-      expect(
-        rules.checks.find((c) => c.id === "ma-1000-limit"),
-      ).toBeDefined();
+      expect(rules.checks.find((c) => c.id === "ma-1000-limit")).toBeDefined();
     });
 
     it("has graduate equivalence check", () => {

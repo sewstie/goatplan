@@ -1,7 +1,21 @@
 import type { Course } from "@/lib/data/types";
-import { getEngineClient, type AuditRequest, type AuditSuccess } from "@/lib/engine";
-import { AUDIT_DELAY_MS, getDegreeSource, type AuditEngine, type DegreeSource } from "./degreeSource";
-import { buildAuditRequest, foundCourse, hasRegistrationCode, type DegreeHistory } from "./history";
+import {
+  getEngineClient,
+  type AuditRequest,
+  type AuditSuccess,
+} from "@/lib/engine";
+import {
+  AUDIT_DELAY_MS,
+  getDegreeSource,
+  type AuditEngine,
+  type DegreeSource,
+} from "./degreeSource";
+import {
+  buildAuditRequest,
+  foundCourse,
+  hasRegistrationCode,
+  type DegreeHistory,
+} from "./history";
 import { huaProblem } from "./humanities";
 import { DEFAULT_SHEET_ID, loadSheet, type TrackingSheet } from "./sheets";
 
@@ -32,20 +46,42 @@ const asAuditCourse = (course: Course) => {
   return { code, credits };
 };
 
-function buildGapRequest(history: DegreeHistory, { courses }: OpenTerm, sheet: TrackingSheet): AuditRequest {
+function buildGapRequest(
+  history: DegreeHistory,
+  { courses }: OpenTerm,
+  sheet: TrackingSheet,
+): AuditRequest {
   const request = buildAuditRequest(history, sheet);
   return {
     ...request,
-    candidates: courses.filter((course) => course.level === "Undergraduate" && hasRegistrationCode(course.code)).map(asAuditCourse),
+    candidates: courses
+      .filter(
+        (course) =>
+          course.level === "Undergraduate" && hasRegistrationCode(course.code),
+      )
+      .map(asAuditCourse),
   };
 }
 
-function readAnswers({ sections, checks, candidateResults }: AuditSuccess): Map<string, string[]> {
-  const sectionOfLine = new Map(sections.flatMap((section) => section.lines.map((line) => [line.id, section.name] as const)));
-  const checkNames = new Map(checks.map((check) => [check.id, check.label.replace(/ area$/, "")]));
+function readAnswers({
+  sections,
+  checks,
+  candidateResults,
+}: AuditSuccess): Map<string, string[]> {
+  const sectionOfLine = new Map(
+    sections.flatMap((section) =>
+      section.lines.map((line) => [line.id, section.name] as const),
+    ),
+  );
+  const checkNames = new Map(
+    checks.map((check) => [check.id, check.label.replace(/ area$/, "")]),
+  );
   const closes = new Map<string, string[]>();
   for (const { code, closesLines, closesChecks } of candidateResults) {
-    const names = [...closesLines.map((id) => sectionOfLine.get(id)), ...closesChecks.map((id) => checkNames.get(id))];
+    const names = [
+      ...closesLines.map((id) => sectionOfLine.get(id)),
+      ...closesChecks.map((id) => checkNames.get(id)),
+    ];
     const known = names.filter((name) => name !== undefined);
     if (known.length > 0) closes.set(code, [...new Set(known)]);
   }
@@ -53,7 +89,17 @@ function readAnswers({ sections, checks, candidateResults }: AuditSuccess): Map<
 }
 
 function readDetails({ candidateResults }: AuditSuccess) {
-  return new Map(candidateResults.filter(({ closesLines, closesChecks }) => closesLines.length + closesChecks.length > 0).map(({ code, closesLines, closesChecks }) => [code, { lines: closesLines, checks: closesChecks }]));
+  return new Map(
+    candidateResults
+      .filter(
+        ({ closesLines, closesChecks }) =>
+          closesLines.length + closesChecks.length > 0,
+      )
+      .map(({ code, closesLines, closesChecks }) => [
+        code,
+        { lines: closesLines, checks: closesChecks },
+      ]),
+  );
 }
 
 const samePlan = (a: readonly string[], b: readonly string[]) =>
@@ -94,13 +140,26 @@ export function createGapSource({ degree, engine }: GapSourceDeps): GapSource {
     try {
       const snapshot = degree.getSnapshot();
       if (snapshot.selectedSheetId === null) return;
-      const sheet = snapshot.sheet ?? await loadSheet(snapshot.history.sheetId ?? DEFAULT_SHEET_ID);
+      const sheet =
+        snapshot.sheet ??
+        (await loadSheet(snapshot.history.sheetId ?? DEFAULT_SHEET_ID));
       if (asked !== latest) return;
       const history = degree.getSnapshot().history;
-      const response = await engine.audit(buildGapRequest(history, term, sheet));
+      const response = await engine.audit(
+        buildGapRequest(history, term, sheet),
+      );
       if (response.ok) {
-        const counted = { ...response, candidateResults: response.candidateResults.filter((candidate) => !huaProblem(candidate.code, history.courses, sheet)) };
-        next = { status: "ready", closes: readAnswers(counted), details: readDetails(counted) };
+        const counted = {
+          ...response,
+          candidateResults: response.candidateResults.filter(
+            (candidate) => !huaProblem(candidate.code, history.courses, sheet),
+          ),
+        };
+        next = {
+          status: "ready",
+          closes: readAnswers(counted),
+          details: readDetails(counted),
+        };
       }
     } catch {
       // Search carries on without badges.
@@ -127,7 +186,8 @@ export function createGapSource({ degree, engine }: GapSourceDeps): GapSource {
     const snapshot = degree.getSnapshot();
     const now = snapshot.history;
     if (now === history) return false;
-    if (selectedSheetId !== snapshot.selectedSheetId) gaps = { status: "waiting", closes: null, details: null };
+    if (selectedSheetId !== snapshot.selectedSheetId)
+      gaps = { status: "waiting", closes: null, details: null };
     selectedSheetId = snapshot.selectedSheetId;
     history = now;
     return true;
@@ -153,7 +213,12 @@ export function createGapSource({ degree, engine }: GapSourceDeps): GapSource {
     },
     getSnapshot: () => gaps,
     setOpenTerm(term) {
-      if (open && open.courses === term.courses && samePlan(open.planned, term.planned)) return;
+      if (
+        open &&
+        open.courses === term.courses &&
+        samePlan(open.planned, term.planned)
+      )
+        return;
       open = term;
       changed();
     },
@@ -163,6 +228,9 @@ export function createGapSource({ degree, engine }: GapSourceDeps): GapSource {
 let shared: GapSource | null = null;
 
 export function getGapSource(): GapSource {
-  shared ??= createGapSource({ degree: getDegreeSource(), engine: getEngineClient() });
+  shared ??= createGapSource({
+    degree: getDegreeSource(),
+    engine: getEngineClient(),
+  });
   return shared;
 }

@@ -40,9 +40,13 @@ export interface ExamCreditPlan {
 }
 
 export const EXAMS = data.exams as Exam[];
-export const EXAM_PROGRAMS = data.programs as Record<ExamProgram, ExamProgramRules>;
+export const EXAM_PROGRAMS = data.programs as Record<
+  ExamProgram,
+  ExamProgramRules
+>;
 
-export const examLabel = ({ program, name }: Exam) => `${program} ${name}${EXAM_PROGRAMS[program].level ? ` ${EXAM_PROGRAMS[program].level}` : ""}`;
+export const examLabel = ({ program, name }: Exam) =>
+  `${program} ${name}${EXAM_PROGRAMS[program].level ? ` ${EXAM_PROGRAMS[program].level}` : ""}`;
 
 export function findExam(id: string): Exam | undefined {
   return EXAMS.find((exam) => exam.id === id);
@@ -54,10 +58,17 @@ export function examScores(program: ExamProgram): number[] {
 }
 
 export function examAward(exam: Exam, score: number): ExamCourse[] {
-  return exam.courses.filter((course) => score >= (course.minScore ?? EXAM_PROGRAMS[exam.program].minScore));
+  return exam.courses.filter(
+    (course) =>
+      score >= (course.minScore ?? EXAM_PROGRAMS[exam.program].minScore),
+  );
 }
 
-export function planExamCredit(history: Pick<DegreeHistory, "courses">, picks: readonly ExamPick[], titleOf: (code: string) => string | undefined = () => undefined): ExamCreditPlan {
+export function planExamCredit(
+  history: Pick<DegreeHistory, "courses">,
+  picks: readonly ExamPick[],
+  titleOf: (code: string) => string | undefined = () => undefined,
+): ExamCreditPlan {
   const taken = new Set(history.courses.map((course) => course.code));
   const plan: ExamCreditPlan = { add: [], skipped: [] };
   for (const pick of picks) {
@@ -72,7 +83,13 @@ export function planExamCredit(history: Pick<DegreeHistory, "courses">, picks: r
         continue;
       }
       if (taken.has(course.code)) {
-        if (!plan.skipped.some((item) => item.code === course.code && item.exam === examLabel(exam))) plan.skipped.push({ code: course.code, exam: examLabel(exam) });
+        if (
+          !plan.skipped.some(
+            (item) =>
+              item.code === course.code && item.exam === examLabel(exam),
+          )
+        )
+          plan.skipped.push({ code: course.code, exam: examLabel(exam) });
         continue;
       }
       taken.add(course.code);

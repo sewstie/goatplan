@@ -37,7 +37,17 @@ export interface SheetSection {
 export interface SheetCheck {
   id: string;
   name: string;
-  type: "area" | "disciplineCount" | "groupDepth" | "groupBreadth" | "apIbLimit" | "residency" | "levelLimit" | "graduateEquivalence" | "minCourses" | "manual";
+  type:
+    | "area"
+    | "disciplineCount"
+    | "groupDepth"
+    | "groupBreadth"
+    | "apIbLimit"
+    | "residency"
+    | "levelLimit"
+    | "graduateEquivalence"
+    | "minCourses"
+    | "manual";
   section?: string;
   courses?: string[];
   externalCourses?: string[];

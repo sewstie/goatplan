@@ -1,4 +1,9 @@
-import { DEFAULT_SHEET_ID, loadSheet, SHEETS, type TrackingSheet } from "./sheets";
+import {
+  DEFAULT_SHEET_ID,
+  loadSheet,
+  SHEETS,
+  type TrackingSheet,
+} from "./sheets";
 import type { ManualItem, SheetSection } from "./sheets/types";
 
 export const REQUIREMENTS_ID = DEFAULT_SHEET_ID;
@@ -22,7 +27,9 @@ export function getRequirements(): TrackingSheet {
   return selected;
 }
 
-export async function loadRequirements(id = DEFAULT_SHEET_ID): Promise<TrackingSheet> {
+export async function loadRequirements(
+  id = DEFAULT_SHEET_ID,
+): Promise<TrackingSheet> {
   const sheet = await loadSheet(id);
   activateRequirements(sheet);
   return sheet;
@@ -36,12 +43,25 @@ export function activateRequirements(sheet: TrackingSheet): void {
   const breadth = sheet.checks.find((check) => check.type === "groupBreadth");
   DEPTH_CONFIRMATION = depth?.confirmation ?? "";
   DEPTH_COURSES = depth?.minCourses ?? 0;
-  HUMANITIES_GROUPINGS = (breadth?.groupingOrder ?? []).map((name) => breadth?.groupings?.[name] ?? []);
+  HUMANITIES_GROUPINGS = (breadth?.groupingOrder ?? []).map(
+    (name) => breadth?.groupings?.[name] ?? [],
+  );
   const slots = sheet.lines.find((line) => line.subSlots);
   WPE_LINE = slots?.line ?? 0;
-  SPORTS_ITEM = sheet.manualItems.find((item) => item.line === WPE_LINE)?.id ?? "";
-  FREE_ELECTIVE_LINES = sheet.sections.filter((section) => section.creditPool).flatMap((section) => section.lines);
-  const areaSections = new Set(sheet.checks.filter((check) => check.type === "area").map((check) => check.section));
-  MAJOR_LINES = sheet.sections.filter((section) => areaSections.has(section.id)).flatMap((section) => section.lines);
-  AREA_CHECK_IDS = sheet.checks.filter((check) => check.type === "area").map((check) => check.id);
+  SPORTS_ITEM =
+    sheet.manualItems.find((item) => item.line === WPE_LINE)?.id ?? "";
+  FREE_ELECTIVE_LINES = sheet.sections
+    .filter((section) => section.creditPool)
+    .flatMap((section) => section.lines);
+  const areaSections = new Set(
+    sheet.checks
+      .filter((check) => check.type === "area")
+      .map((check) => check.section),
+  );
+  MAJOR_LINES = sheet.sections
+    .filter((section) => areaSections.has(section.id))
+    .flatMap((section) => section.lines);
+  AREA_CHECK_IDS = sheet.checks
+    .filter((check) => check.type === "area")
+    .map((check) => check.id);
 }
