@@ -22,9 +22,13 @@
     "data:catalog": "node scripts/update-catalog.mjs",
     "data:normalize": "node scripts/normalize.mjs",
     "data:update": "npm run data:fetch && npm run data:normalize && npm run data:catalog",
-    "data:test": "node --test scripts/tests/*.test.mjs"
+    "data:test": "node --test scripts/tests/*.test.mjs",
+    "format": "prettier --write ."
   },
   "allowScripts": {
     "unrs-resolver@1.12.2": true
+  },
+  "devDependencies": {
+    "prettier": "3.10.1"
   }
 }
