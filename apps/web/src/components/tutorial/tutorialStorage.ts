@@ -21,7 +21,10 @@ export function tutorialStarted(storage: DraftStorage | null): boolean {
   return readStatus(storage) === "started";
 }
 
-export function rememberTutorial(storage: DraftStorage | null, outcome: TutorialOutcome): boolean {
+export function rememberTutorial(
+  storage: DraftStorage | null,
+  outcome: TutorialOutcome,
+): boolean {
   if (outcome === "dismissed" && tutorialFinished(storage)) return true;
   return writeProgress(storage, outcome);
 }

@@ -21,7 +21,8 @@ export const useGuideSession = create<GuideSessionState>()((set) => ({
   replayRequested: false,
   skipped: false,
   closedThisVisit: false,
-  requestReplay: () => set({ replayRequested: true, skipped: false, closedThisVisit: false }),
+  requestReplay: () =>
+    set({ replayRequested: true, skipped: false, closedThisVisit: false }),
   replayStarted: () => set({ replayRequested: false }),
   showSkipped: () => set({ skipped: true }),
   hideSkipped: () => set({ skipped: false }),
