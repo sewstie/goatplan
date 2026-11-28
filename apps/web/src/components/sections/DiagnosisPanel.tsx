@@ -11,31 +11,59 @@ import { CheckAnotherTermButton } from "./CheckAnotherTermButton";
 import { ProfessorPicker } from "./ProfessorPicker";
 import { usePlanner } from "@/lib/store";
 
-export function DiagnosisPanel({ course: selected, diagnosis, locks }: {
+export function DiagnosisPanel({
+  course: selected,
+  diagnosis,
+  locks,
+}: {
   course?: Course;
   diagnosis: ReturnType<typeof diagnosisText>;
   locks: Readonly<Record<string, readonly string[]>>;
 }) {
   const term = usePlanner((state) => state.term);
-  const ordered = [...diagnosis.issues].sort((a, b) => Number(b.courses.includes(selected?.code ?? "")) - Number(a.courses.includes(selected?.code ?? "")));
+  const ordered = [...diagnosis.issues].sort(
+    (a, b) =>
+      Number(b.courses.includes(selected?.code ?? "")) -
+      Number(a.courses.includes(selected?.code ?? "")),
+  );
   const primary = ordered[0];
   // The selected course only heads the card when the problem involves it.
-  const course = selected && (!primary || primary.courses.includes(selected.code))
-    ? selected
-    : term?.courses.find((item) => item.code === primary?.courses[0]);
-  const ids = [...(primary?.sectionIds ?? []), ...(course ? locks[course.code] ?? [] : [])];
-  const sections = course?.sections.filter((section) => ids.includes(section.id)) ?? [];
-  const waitlist = sections.some((section) => section.status === "waitlist") || primary?.kind === "full";
+  const course =
+    selected && (!primary || primary.courses.includes(selected.code))
+      ? selected
+      : term?.courses.find((item) => item.code === primary?.courses[0]);
+  const ids = [
+    ...(primary?.sectionIds ?? []),
+    ...(course ? (locks[course.code] ?? []) : []),
+  ];
+  const sections =
+    course?.sections.filter((section) => ids.includes(section.id)) ?? [];
+  const waitlist =
+    sections.some((section) => section.status === "waitlist") ||
+    primary?.kind === "full";
   return (
-    <div id="tutorial-diagnosis" tabIndex={-1} className="flex flex-col gap-4 rounded-control">
+    <div
+      id="tutorial-diagnosis"
+      tabIndex={-1}
+      className="flex flex-col gap-4 rounded-control"
+    >
       <p className="inline-flex w-fit items-center gap-6 rounded-badge bg-warning-soft px-7 py-3 text-8-5 leading-11-9 font-650 text-attention">
         <span aria-hidden className="size-6 rounded-full bg-attention" />
         Needs attention
       </p>
-      <h2 tabIndex={-1} className="mt-8 text-21 leading-25-2 font-700 tracking-heading text-ink">{course?.code ?? "No schedule fits"}</h2>
-      {course && <p className="text-11 leading-17-6 font-510 text-ink">{course.title}</p>}
+      <h2
+        tabIndex={-1}
+        className="mt-8 text-21 leading-25-2 font-700 tracking-heading text-ink"
+      >
+        {course?.code ?? "No schedule fits"}
+      </h2>
+      {course && (
+        <p className="text-11 leading-17-6 font-510 text-ink">{course.title}</p>
+      )}
       <div className="mt-12 flex flex-col gap-8">
-        {ordered.map((issue) => <DiagnosisIssueCard key={issue.key} issue={issue} />)}
+        {ordered.map((issue) => (
+          <DiagnosisIssueCard key={issue.key} issue={issue} />
+        ))}
       </div>
       {course && sections.length > 0 && (
         <div className="mt-8 flex flex-col gap-8">
@@ -53,9 +81,21 @@ export function DiagnosisPanel({ course: selected, diagnosis, locks }: {
         </div>
       )}
       <DiagnosisFixes fixes={diagnosis.fixes} />
-      {course && primary && (primary.kind === "pair" || primary.kind === "missing") && <CheckAnotherTermButton code={course.code} />}
+      {course &&
+        primary &&
+        (primary.kind === "pair" || primary.kind === "missing") && (
+          <CheckAnotherTermButton code={course.code} />
+        )}
       {waitlist && (
-        <ButtonLink href="https://workday.wpi.edu" external fullWidth variant="secondary" size="md" icon={<ArrowSquareOut aria-hidden />} className="mt-4">
+        <ButtonLink
+          href="https://workday.wpi.edu"
+          external
+          fullWidth
+          variant="secondary"
+          size="md"
+          icon={<ArrowSquareOut aria-hidden />}
+          className="mt-4"
+        >
           Join waitlist in Workday
         </ButtonLink>
       )}

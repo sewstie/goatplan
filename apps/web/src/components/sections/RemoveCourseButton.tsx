@@ -5,9 +5,18 @@ import { Button } from "@/components/ui/Button";
 import { usePlanner } from "@/lib/store";
 
 /** Removes the open course from the plan; the toast then offers Undo. Hidden for saved plans. */
-export function RemoveCourseButton({ className, onRemoved }: { className?: string; onRemoved?: () => void }) {
+export function RemoveCourseButton({
+  className,
+  onRemoved,
+}: {
+  className?: string;
+  onRemoved?: () => void;
+}) {
   const code = usePlanner((state) =>
-    state.savedPlanId === null && state.termStatus === "ready" && state.selectedCourse && state.courses.includes(state.selectedCourse)
+    state.savedPlanId === null &&
+    state.termStatus === "ready" &&
+    state.selectedCourse &&
+    state.courses.includes(state.selectedCourse)
       ? state.selectedCourse
       : null,
   );

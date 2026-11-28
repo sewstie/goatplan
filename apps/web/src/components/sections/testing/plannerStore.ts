@@ -6,7 +6,13 @@ import type { TermFile } from "@/lib/data/types";
 import type { SolveRequest, SolveResponse } from "@/lib/engine/types";
 import { createPlannerStore } from "@/lib/store/createPlannerStore";
 import { draftKey, emptyDraft } from "@/lib/store/draft";
-import { loaded, MemoryStorage, solved, termFile, termSummary } from "@/lib/store/testing/fixtures";
+import {
+  loaded,
+  MemoryStorage,
+  solved,
+  termFile,
+  termSummary,
+} from "@/lib/store/testing/fixtures";
 import type { Draft, PlannerStore } from "@/lib/store/types";
 
 // A real planner store with a fake engine, for component tests. Test files swap it in with:
@@ -32,9 +38,15 @@ type Options = {
 };
 
 /** Opens term 2027-C with this draft and waits for the first answer. */
-export async function startTestPlanner(draft: Partial<Draft> = {}, options: Options = {}) {
+export async function startTestPlanner(
+  draft: Partial<Draft> = {},
+  options: Options = {},
+) {
   const storage = new MemoryStorage();
-  storage.setItem(draftKey("2027-C"), JSON.stringify({ version: 1, ...emptyDraft(), ...draft }));
+  storage.setItem(
+    draftKey("2027-C"),
+    JSON.stringify({ version: 1, ...emptyDraft(), ...draft }),
+  );
   const requests: SolveRequest[] = [];
   const store = createPlannerStore({
     engine: {
@@ -45,7 +57,8 @@ export async function startTestPlanner(draft: Partial<Draft> = {}, options: Opti
       },
     },
     loadTermIndex: async () => ({ terms: [termSummary("2027-C")] }),
-    loadTerm: options.loadTerm ?? (async () => options.term ?? termFile("2027-C")),
+    loadTerm:
+      options.loadTerm ?? (async () => options.term ?? termFile("2027-C")),
     takeTermBuffer: () => null,
     storage,
     solveDelayMs: 0,
@@ -63,12 +76,16 @@ export async function startTestPlanner(draft: Partial<Draft> = {}, options: Opti
 
 /** Waits until the store has no solve waiting or running. */
 export async function waitForSolve(store: StoreApi<PlannerStore>) {
-  await waitFor(() => expect(["done", "idle", "error"]).toContain(store.getState().solveStatus));
+  await waitFor(() =>
+    expect(["done", "idle", "error"]).toContain(store.getState().solveStatus),
+  );
 }
 
 /** jsdom has no modal dialogs: open and close them by their attribute. */
 export function polyfillDialog() {
-  HTMLDialogElement.prototype.showModal = function showModal(this: HTMLDialogElement) {
+  HTMLDialogElement.prototype.showModal = function showModal(
+    this: HTMLDialogElement,
+  ) {
     this.setAttribute("open", "");
   };
   HTMLDialogElement.prototype.close = function close(this: HTMLDialogElement) {

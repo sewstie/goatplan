@@ -18,9 +18,18 @@ export function useSectionSteps(course: Course, displayed?: readonly string[]) {
 
   return useMemo(() => {
     const rest = Object.entries(chosen).flatMap(([code, ids]) => {
-      const other = code === course.code ? undefined : term?.courses.find((item) => item.code === code);
+      const other =
+        code === course.code
+          ? undefined
+          : term?.courses.find((item) => item.code === code);
       return other ? sectionsById(other, ids) : [];
     });
-    return sectionSteps(course, displayed ?? chosen[course.code] ?? NONE, locked, rest, { ...preferences, professor });
+    return sectionSteps(
+      course,
+      displayed ?? chosen[course.code] ?? NONE,
+      locked,
+      rest,
+      { ...preferences, professor },
+    );
   }, [course, term, chosen, displayed, locked, preferences, professor]);
 }

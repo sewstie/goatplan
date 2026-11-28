@@ -20,20 +20,31 @@ function section(code: string, extra: Partial<Section> = {}): Section {
 
 describe("describeText", () => {
   it("turns WPI's category into plain words", () => {
-    expect(describeText("Cat. I This course covers orbits.")).toEqual({ offered: "Offered every year", parts: [{ text: "This course covers orbits." }] });
-    expect(describeText("Cat. II. This course covers orbits.").offered).toBe("Offered at least every other year");
-    expect(describeText("Cat.III This course covers orbits.").offered).toBe("Offered only when enough students need it");
-    expect(describeText("Cat. I, Units 1/3. This course covers orbits.").parts).toEqual([{ text: "Units 1/3. This course covers orbits." }]);
+    expect(describeText("Cat. I This course covers orbits.")).toEqual({
+      offered: "Offered every year",
+      parts: [{ text: "This course covers orbits." }],
+    });
+    expect(describeText("Cat. II. This course covers orbits.").offered).toBe(
+      "Offered at least every other year",
+    );
+    expect(describeText("Cat.III This course covers orbits.").offered).toBe(
+      "Offered only when enough students need it",
+    );
+    expect(
+      describeText("Cat. I, Units 1/3. This course covers orbits.").parts,
+    ).toEqual([{ text: "Units 1/3. This course covers orbits." }]);
   });
 
   it("leaves text alone when the category isn't at the start", () => {
-    const text = "AR 1400 Digital Photography (1/3 units; Cat. II) This course teaches photography.";
+    const text =
+      "AR 1400 Digital Photography (1/3 units; Cat. II) This course teaches photography.";
     expect(describeText(text)).toEqual({ offered: null, parts: [{ text }] });
     expect(describeText("Cat.IT is not a category.").offered).toBeNull();
   });
 
   it("puts background and credit notes in their own paragraphs", () => {
-    const text = "Cat. I Fluid flows. Recommended background: MA 2051. Students may not receive credit for both AE 2110 and AE 3602.";
+    const text =
+      "Cat. I Fluid flows. Recommended background: MA 2051. Students may not receive credit for both AE 2110 and AE 3602.";
     expect(describeText(text).parts).toEqual([
       { text: "Fluid flows." },
       { label: "Recommended background", text: "MA 2051." },
@@ -49,14 +60,26 @@ describe("describeText", () => {
 describe("describeCourse", () => {
   it("adds each section topic once", () => {
     const sections = [
-      section("CL01", { title: "INQ SEM: Early American History", description: "Colonial life." }),
+      section("CL01", {
+        title: "INQ SEM: Early American History",
+        description: "Colonial life.",
+      }),
       section("CD01", { type: "discussion", description: "Colonial life." }),
       section("CL02"),
     ];
-    expect(describeCourse({ description: "Cat. I Inquiry seminar." }, sections)).toEqual({
+    expect(
+      describeCourse({ description: "Cat. I Inquiry seminar." }, sections),
+    ).toEqual({
       offered: "Offered every year",
       parts: [{ text: "Inquiry seminar." }],
-      topics: [{ section: "CL01", title: "INQ SEM: Early American History", offered: null, parts: [{ text: "Colonial life." }] }],
+      topics: [
+        {
+          section: "CL01",
+          title: "INQ SEM: Early American History",
+          offered: null,
+          parts: [{ text: "Colonial life." }],
+        },
+      ],
     });
   });
 });

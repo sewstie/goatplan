@@ -11,5 +11,10 @@ export const useSectionPreview = create<SectionPreview>()((set) => ({
   courseCode: null,
   sectionId: null,
   start: (courseCode, sectionId) => set({ courseCode, sectionId }),
-  end: (sectionId) => set((state) => state.sectionId === sectionId ? { courseCode: null, sectionId: null } : state),
+  end: (sectionId) =>
+    set((state) =>
+      state.sectionId === sectionId
+        ? { courseCode: null, sectionId: null }
+        : state,
+    ),
 }));

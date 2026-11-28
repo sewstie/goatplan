@@ -24,7 +24,8 @@ export function CheckAnotherTermButton({ code }: { code: string }) {
         document.getElementById("main")?.focus();
         await setTerm(term.id);
         const state = getPlannerStore().getState();
-        if (state.termId === term.id && state.termStatus === "ready") state.addCourse(code);
+        if (state.termId === term.id && state.termStatus === "ready")
+          state.addCourse(code);
       }}
     >
       Check another term

@@ -1,9 +1,20 @@
-import { formatDays, formatOpenSeats, formatTimeRange, isFull, roomName, sectionTypeName } from "@/lib/data";
+import {
+  formatDays,
+  formatOpenSeats,
+  formatTimeRange,
+  isFull,
+  roomName,
+  sectionTypeName,
+} from "@/lib/data";
 import type { Course, Delivery, Section, SectionType } from "@/lib/data/types";
 
 /** "Lecture CL01". Sections of type "other" show only their code ("ON01"). */
-export function sectionHeading(section: Pick<Section, "code" | "type">): string {
-  return section.type === "other" ? section.code : `${sectionTypeName(section.type)} ${section.code}`;
+export function sectionHeading(
+  section: Pick<Section, "code" | "type">,
+): string {
+  return section.type === "other"
+    ? section.code
+    : `${sectionTypeName(section.type)} ${section.code}`;
 }
 
 /** "lab", as in "View other lab choices" and "Only lab". */
@@ -16,11 +27,17 @@ export function hasSetTime(section: Pick<Section, "meetings">): boolean {
 }
 
 /** One line per meeting: "Mon–Fri · 9:00 AM–9:50 AM", or "Mon–Fri · 9:00–9:50 AM" in the shared style. */
-export function meetingLines(section: Pick<Section, "meetings">, style: Parameters<typeof formatTimeRange>[2] = "full"): string[] {
+export function meetingLines(
+  section: Pick<Section, "meetings">,
+  style: Parameters<typeof formatTimeRange>[2] = "full",
+): string[] {
   if (!hasSetTime(section)) return ["No scheduled meeting time"];
   return section.meetings
     .filter((meeting) => meeting.days.length > 0)
-    .map((meeting) => `${formatDays(meeting.days)} · ${formatTimeRange(meeting.start, meeting.end, style)}`);
+    .map(
+      (meeting) =>
+        `${formatDays(meeting.days)} · ${formatTimeRange(meeting.start, meeting.end, style)}`,
+    );
 }
 
 const ONLINE: Partial<Record<Delivery, string>> = {
@@ -33,15 +50,27 @@ const ONLINE: Partial<Record<Delivery, string>> = {
  * The rooms as building and number ("Higgins Labs 230"), or how an online section is taught, with the
  * rooms' full names. null when the data has neither.
  */
-export function placeLine(section: Pick<Section, "meetings" | "delivery">): { text: string; full: string } | null {
+export function placeLine(
+  section: Pick<Section, "meetings" | "delivery">,
+): { text: string; full: string } | null {
   const online = ONLINE[section.delivery];
   if (online) return { text: online, full: online };
-  const rooms = [...new Set(section.meetings.map((meeting) => meeting.location.trim()).filter(Boolean))];
-  return rooms.length > 0 ? { text: rooms.map(roomName).join(" · "), full: rooms.join(" · ") } : null;
+  const rooms = [
+    ...new Set(
+      section.meetings
+        .map((meeting) => meeting.location.trim())
+        .filter(Boolean),
+    ),
+  ];
+  return rooms.length > 0
+    ? { text: rooms.map(roomName).join(" · "), full: rooms.join(" · ") }
+    : null;
 }
 
 /** "36 of 120 seats open", with " · Full" when no seat is left. */
-export function seatsLine(section: Pick<Section, "enrolled" | "capacity">): string {
+export function seatsLine(
+  section: Pick<Section, "enrolled" | "capacity">,
+): string {
   const seats = formatOpenSeats(section, { seats: true });
   return isFull(section) ? `${seats} · Full` : seats;
 }
@@ -52,11 +81,22 @@ export function instructorLine(section: Pick<Section, "instructors">): string {
 }
 
 /** A section every option of the course uses: there's nothing else to pick, so it can't be locked. */
-export function isOnlyChoice(course: Pick<Course, "options">, sectionId: string): boolean {
-  return course.options.length > 0 && course.options.every((option) => option.includes(sectionId));
+export function isOnlyChoice(
+  course: Pick<Course, "options">,
+  sectionId: string,
+): boolean {
+  return (
+    course.options.length > 0 &&
+    course.options.every((option) => option.includes(sectionId))
+  );
 }
 
 /** The course's sections with these ids, in the given order. Unknown ids are skipped. */
-export function sectionsById(course: Pick<Course, "sections">, ids: readonly string[]): Section[] {
-  return ids.flatMap((id) => course.sections.find((section) => section.id === id) ?? []);
+export function sectionsById(
+  course: Pick<Course, "sections">,
+  ids: readonly string[],
+): Section[] {
+  return ids.flatMap(
+    (id) => course.sections.find((section) => section.id === id) ?? [],
+  );
 }

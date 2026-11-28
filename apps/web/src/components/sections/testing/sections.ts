@@ -2,7 +2,10 @@ import type { Course, Section } from "@/lib/data/types";
 
 // Hand-made sections shaped like the C Term 2027 examples in the designs.
 
-export function makeSection(id: string, changes: Partial<Section> = {}): Section {
+export function makeSection(
+  id: string,
+  changes: Partial<Section> = {},
+): Section {
   const [, code] = id.split("-");
   return {
     id,
@@ -14,12 +17,23 @@ export function makeSection(id: string, changes: Partial<Section> = {}): Section
     waitlist: { taken: 0, capacity: 0 },
     instructors: ["Ye Lu"],
     delivery: "in-person",
-    meetings: [{ days: ["Mon", "Tue", "Wed", "Thu", "Fri"], start: 540, end: 590, location: "Unity Hall 400" }],
+    meetings: [
+      {
+        days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+        start: 540,
+        end: 590,
+        location: "Unity Hall 400",
+      },
+    ],
     ...changes,
   };
 }
 
-const lab = (code: string, start: number, location = "Higgins Labs 230"): Section =>
+const lab = (
+  code: string,
+  start: number,
+  location = "Higgins Labs 230",
+): Section =>
   makeSection(`AE 2320-${code}`, {
     type: "lab",
     enrolled: 36,

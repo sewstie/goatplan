@@ -1,4 +1,11 @@
-import { meetingSpans, meetsRules, optionOpenSeats, roomName, spansOverlap, type FitRules } from "@/lib/data";
+import {
+  meetingSpans,
+  meetsRules,
+  optionOpenSeats,
+  roomName,
+  spansOverlap,
+  type FitRules,
+} from "@/lib/data";
 import type { Course, Section } from "@/lib/data/types";
 import { meetingLines, sectionsById, typeWord } from "./sectionDetails";
 
@@ -50,38 +57,69 @@ export function sectionChoices(
     if (option === currentIds) return false;
     const sections = sectionsById(course, option);
     const overlapsOwnSection = sections.some((section, index) =>
-      spansOverlap(meetingSpans([section]), meetingSpans(sections.slice(index + 1))),
+      spansOverlap(
+        meetingSpans([section]),
+        meetingSpans(sections.slice(index + 1)),
+      ),
     );
-    return !overlapsOwnSection && meetsRules(sections, rules) && !spansOverlap(meetingSpans(sections), busy);
+    return (
+      !overlapsOwnSection &&
+      meetsRules(sections, rules) &&
+      !spansOverlap(meetingSpans(sections), busy)
+    );
   });
   if (fitting.length === 0) return null;
 
   // Sections every listed option shares (like the only lecture) aren't part of the choice.
   const listed = [currentIds, ...fitting];
   const varies = (id: string) => !listed.every((option) => option.includes(id));
-  const timesOf = (option: readonly string[]) => sectionsById(course, option.filter(varies)).flatMap((section) => meetingLines(section)).join(", ");
+  const timesOf = (option: readonly string[]) =>
+    sectionsById(course, option.filter(varies))
+      .flatMap((section) => meetingLines(section))
+      .join(", ");
   const allTimes = listed.map(timesOf);
 
   const toChoice = (sectionIds: string[]): SectionChoice => {
     const sections = sectionsById(course, sectionIds.filter(varies));
     const times = timesOf(sectionIds);
-    const locations = [...new Set(sections.flatMap((section) => section.meetings.map((meeting) => meeting.location.trim())))]
-      .filter(Boolean);
+    const locations = [
+      ...new Set(
+        sections.flatMap((section) =>
+          section.meetings.map((meeting) => meeting.location.trim()),
+        ),
+      ),
+    ].filter(Boolean);
     return {
       sectionIds: [...sectionIds],
       sections,
       label: sections.map((section) => section.code).join(" · "),
       times,
       sharesTime: allTimes.filter((other) => other === times).length > 1,
-      rooms: { short: locations.map(roomName).join(" · "), full: locations.join(" · ") },
+      rooms: {
+        short: locations.map(roomName).join(" · "),
+        full: locations.join(" · "),
+      },
       openSeats: optionOpenSeats(sections),
     };
   };
 
   const current = toChoice(currentIds);
-  const others = fitting.map(toChoice).sort((a, b) => a.label.localeCompare(b.label, "en", { numeric: true }));
-  const kinds = new Set([current, ...others].flatMap((choice) => choice.sections.map((section) => section.type)));
-  const suggested = others.reduce((best, choice) => (choice.openSeats > best.openSeats ? choice : best));
+  const others = fitting
+    .map(toChoice)
+    .sort((a, b) => a.label.localeCompare(b.label, "en", { numeric: true }));
+  const kinds = new Set(
+    [current, ...others].flatMap((choice) =>
+      choice.sections.map((section) => section.type),
+    ),
+  );
+  const suggested = others.reduce((best, choice) =>
+    choice.openSeats > best.openSeats ? choice : best,
+  );
 
-  return { kind: kinds.size === 1 ? typeWord([...kinds][0]) : "section", current, others, suggested };
+  return {
+    kind: kinds.size === 1 ? typeWord([...kinds][0]) : "section",
+    current,
+    others,
+    suggested,
+  };
 }

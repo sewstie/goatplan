@@ -7,7 +7,16 @@ import { SectionStepDisclosure } from "./SectionStepDisclosure";
 import { usePlanner } from "@/lib/store";
 import type { Section } from "@/lib/data/types";
 
-export function LabSectionStep({ courseCode, choices, children, onChoosing, open, onOpenChange, busy = false, buttonRef }: {
+export function LabSectionStep({
+  courseCode,
+  choices,
+  children,
+  onChoosing,
+  open,
+  onOpenChange,
+  busy = false,
+  buttonRef,
+}: {
   courseCode: string;
   choices: LabChoices;
   children: ReactNode;
@@ -30,17 +39,39 @@ export function LabSectionStep({ courseCode, choices, children, onChoosing, open
   };
 
   return (
-    <div onKeyDown={(event) => {
-      if (event.key !== "Escape" || !open) return;
-      event.stopPropagation();
-      onOpenChange(false);
-      disclosure.current?.focus();
-    }}>
+    <div
+      onKeyDown={(event) => {
+        if (event.key !== "Escape" || !open) return;
+        event.stopPropagation();
+        onOpenChange(false);
+        disclosure.current?.focus();
+      }}
+    >
       {children}
-      {(choices.choices.length > 0 || open) && <>
-        <SectionStepDisclosure kind={kind} open={open} listId={listId} busy={busy} onToggle={() => onOpenChange(!open)} buttonRef={(button) => { disclosure.current = button; buttonRef?.(button); }} />
-        {open && !busy && <LabChoiceList id={listId} courseCode={courseCode} kind={kind} choices={choices.choices} onChoose={choose} />}
-      </>}
+      {(choices.choices.length > 0 || open) && (
+        <>
+          <SectionStepDisclosure
+            kind={kind}
+            open={open}
+            listId={listId}
+            busy={busy}
+            onToggle={() => onOpenChange(!open)}
+            buttonRef={(button) => {
+              disclosure.current = button;
+              buttonRef?.(button);
+            }}
+          />
+          {open && !busy && (
+            <LabChoiceList
+              id={listId}
+              courseCode={courseCode}
+              kind={kind}
+              choices={choices.choices}
+              onChoose={choose}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 }

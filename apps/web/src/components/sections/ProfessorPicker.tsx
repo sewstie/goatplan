@@ -7,8 +7,16 @@ import { usePlanner } from "@/lib/store";
 import { hasProfessorChoice } from "./professorChoice";
 
 /** "Lecture professor": limits the course's lectures to one professor. The phone gets the bigger top-bar style. */
-export function ProfessorPicker({ course, phone = false }: { course: Course; phone?: boolean }) {
-  const name = usePlanner((state) => state.professorByCourse[course.code] ?? null);
+export function ProfessorPicker({
+  course,
+  phone = false,
+}: {
+  course: Course;
+  phone?: boolean;
+}) {
+  const name = usePlanner(
+    (state) => state.professorByCourse[course.code] ?? null,
+  );
   const setProfessor = usePlanner((state) => state.setProfessor);
   const ready = usePlanner((state) => state.termStatus === "ready");
   const instructors = lectureInstructors(course.sections);
@@ -17,14 +25,31 @@ export function ProfessorPicker({ course, phone = false }: { course: Course; pho
     { value: "", label: "Any professor" },
     ...instructors.map((name) => ({ value: name, label: name })),
   ];
-  if (name && !options.some((option) => option.value.toLowerCase() === name.toLowerCase())) options.push({ value: name, label: name });
-  const value = options.find((option) => option.value.toLowerCase() === name?.toLowerCase())?.value ?? "";
+  if (
+    name &&
+    !options.some((option) => option.value.toLowerCase() === name.toLowerCase())
+  )
+    options.push({ value: name, label: name });
+  const value =
+    options.find((option) => option.value.toLowerCase() === name?.toLowerCase())
+      ?.value ?? "";
 
   return (
     <div className={cx("flex flex-col gap-5", phone ? "mt-16" : "mt-7")}>
       <div className="flex items-end justify-between">
-        <label id="lecture-professor-label" htmlFor="tutorial-professor" className={cx("font-650 text-ink", phone ? "text-11" : "text-10 leading-14-5")}>Lecture professor</label>
-        {instructors.length > 1 && <span className="text-8 leading-11-6 text-ink-muted">Optional</span>}
+        <label
+          id="lecture-professor-label"
+          htmlFor="tutorial-professor"
+          className={cx(
+            "font-650 text-ink",
+            phone ? "text-11" : "text-10 leading-14-5",
+          )}
+        >
+          Lecture professor
+        </label>
+        {instructors.length > 1 && (
+          <span className="text-8 leading-11-6 text-ink-muted">Optional</span>
+        )}
       </div>
       <Listbox
         key={course.code}

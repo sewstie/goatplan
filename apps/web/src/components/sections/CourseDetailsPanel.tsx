@@ -14,23 +14,40 @@ import { SavedCourseDetails } from "./SavedCourseDetails";
  * The details panel: section choices, Lock / Unlock and the professor, or the intro when no course is picked.
  * The phone passes its own layout for a course's sections.
  */
-export function CourseDetailsPanel({ renderCourse = (course) => <CourseDetails key={course.code} course={course} /> }: { renderCourse?: (course: Course) => ReactNode } = {}) {
+export function CourseDetailsPanel({
+  renderCourse = (course) => (
+    <CourseDetails key={course.code} course={course} />
+  ),
+}: { renderCourse?: (course: Course) => ReactNode } = {}) {
   const saved = usePlanner((state) => state.savedPlanId !== null);
   const code = usePlanner((state) => state.selectedCourse);
   const termStatus = usePlanner((state) => state.termStatus);
-  const course = usePlanner((state) => (code ? state.term?.courses.find((item) => item.code === code) : undefined));
+  const course = usePlanner((state) =>
+    code ? state.term?.courses.find((item) => item.code === code) : undefined,
+  );
   const locks = usePlanner((state) => state.locks);
   const diagnosis = useDiagnosis();
-  const busy = usePlanner((state) => state.solveStatus === "waiting" || state.solveStatus === "solving");
+  const busy = usePlanner(
+    (state) =>
+      state.solveStatus === "waiting" || state.solveStatus === "solving",
+  );
   const panel = useRef<HTMLDivElement>(null);
   const focused = useRef<HTMLElement | null>(null);
   const focusedByKeyboard = useRef(false);
   const wasBusy = useRef(false);
 
   useEffect(() => {
-    if (wasBusy.current && !busy && focused.current && !focused.current.isConnected && document.activeElement === document.body) {
+    if (
+      wasBusy.current &&
+      !busy &&
+      focused.current &&
+      !focused.current.isConnected &&
+      document.activeElement === document.body
+    ) {
       // A mouse user keeps their place. A keyboard user needs to see where focus went.
-      panel.current?.querySelector("h2")?.focus({ preventScroll: !focusedByKeyboard.current });
+      panel.current
+        ?.querySelector("h2")
+        ?.focus({ preventScroll: !focusedByKeyboard.current });
     }
     wasBusy.current = busy;
   }, [busy]);
@@ -39,9 +56,26 @@ export function CourseDetailsPanel({ renderCourse = (course) => <CourseDetails k
   if (saved) return <SavedCourseDetails />;
   if (termStatus === "error") return null;
   let content;
-  if (termStatus === "idle" || termStatus === "loading") content = <PanelSkeleton />;
-  else if (diagnosis && (diagnosis.issues.length > 0 || diagnosis.fixes.length > 0)) content = <DiagnosisPanel course={course} diagnosis={diagnosis} locks={locks} />;
+  if (termStatus === "idle" || termStatus === "loading")
+    content = <PanelSkeleton />;
+  else if (
+    diagnosis &&
+    (diagnosis.issues.length > 0 || diagnosis.fixes.length > 0)
+  )
+    content = (
+      <DiagnosisPanel course={course} diagnosis={diagnosis} locks={locks} />
+    );
   else if (!course) content = <PanelIntro />;
   else content = renderCourse(course);
-  return <div ref={panel} onFocusCapture={(event) => { focused.current = event.target as HTMLElement; focusedByKeyboard.current = focused.current.matches(":focus-visible"); }}>{content}</div>;
+  return (
+    <div
+      ref={panel}
+      onFocusCapture={(event) => {
+        focused.current = event.target as HTMLElement;
+        focusedByKeyboard.current = focused.current.matches(":focus-visible");
+      }}
+    >
+      {content}
+    </div>
+  );
 }

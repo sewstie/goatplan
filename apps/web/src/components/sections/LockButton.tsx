@@ -18,7 +18,16 @@ type LockButtonProps = {
 };
 
 /** "Lock" keeps only schedules with this section; "Unlock" lets the planner pick again. */
-export function LockButton({ courseCode, sectionId, sectionName, locked, onLock, onUnlocked, buttonRef, size = "xs" }: LockButtonProps) {
+export function LockButton({
+  courseCode,
+  sectionId,
+  sectionName,
+  locked,
+  onLock,
+  onUnlocked,
+  buttonRef,
+  size = "xs",
+}: LockButtonProps) {
   const lockSection = usePlanner((state) => state.lockSection);
   const unlockSection = usePlanner((state) => state.unlockSection);
   const action = locked ? "Unlock" : "Lock";
@@ -28,7 +37,9 @@ export function LockButton({ courseCode, sectionId, sectionName, locked, onLock,
       ref={buttonRef}
       variant="soft"
       size={size}
-      icon={locked ? <LockSimpleOpen aria-hidden /> : <LockSimple aria-hidden />}
+      icon={
+        locked ? <LockSimpleOpen aria-hidden /> : <LockSimple aria-hidden />
+      }
       aria-label={`${action} ${sectionName}`}
       onClick={() => {
         if (!locked) {
