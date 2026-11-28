@@ -9,8 +9,16 @@ export function ToggleDemo() {
 
   return (
     <>
-      <Toggle checked={onlyOpen} onCheckedChange={setOnlyOpen} label="Only open sections" />
-      <Toggle checked={other} onCheckedChange={setOther} label="Only open sections" />
+      <Toggle
+        checked={onlyOpen}
+        onCheckedChange={setOnlyOpen}
+        label="Only open sections"
+      />
+      <Toggle
+        checked={other}
+        onCheckedChange={setOther}
+        label="Only open sections"
+      />
       <Toggle checked onCheckedChange={() => {}} label="Disabled" disabled />
     </>
   );

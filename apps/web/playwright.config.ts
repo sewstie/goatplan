@@ -5,7 +5,9 @@ import { defineConfig, devices } from "@playwright/test";
 // runs on PORT + 1000.
 const port = Number(process.env.PORT ?? 3000);
 if (!Number.isInteger(port) || port < 1 || port > 64535) {
-  throw new Error(`PORT must be a port number below 64536, not "${process.env.PORT}".`);
+  throw new Error(
+    `PORT must be a port number below 64536, not "${process.env.PORT}".`,
+  );
 }
 const productionPort = port + 1000;
 const devUrl = `http://localhost:${port}`;
@@ -18,7 +20,11 @@ export default defineConfig({
   use: devices["Desktop Chrome"],
   projects: [
     // Every spec runs against the production build, except the /dev page specs: those pages 404 in production.
-    { name: "production", testIgnore: /(primitives|engine|phone)\.spec\.ts/, use: { baseURL: productionUrl } },
+    {
+      name: "production",
+      testIgnore: /(primitives|engine|phone)\.spec\.ts/,
+      use: { baseURL: productionUrl },
+    },
     // The phone shell specs run below the tablet breakpoint (768px) on a phone-sized viewport.
     {
       name: "phone",
@@ -31,7 +37,11 @@ export default defineConfig({
         userAgent: devices["iPhone 13"].userAgent,
       },
     },
-    { name: "dev-pages", testMatch: /(primitives|engine)\.spec\.ts/, use: { baseURL: devUrl } },
+    {
+      name: "dev-pages",
+      testMatch: /(primitives|engine)\.spec\.ts/,
+      use: { baseURL: devUrl },
+    },
   ],
   webServer: [
     {

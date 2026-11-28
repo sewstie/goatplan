@@ -41,19 +41,27 @@ const terms = [
   { value: "2027-D", label: "D Term · Spring 2027" },
 ];
 
-const times = ["8:00 AM", "9:00 AM", "10:00 AM"].map((time) => ({ value: time, label: time }));
+const times = ["8:00 AM", "9:00 AM", "10:00 AM"].map((time) => ({
+  value: time,
+  label: time,
+}));
 
 export default function UiPrimitivesPage() {
   return (
     <main className="mx-auto flex max-w-1100 flex-col gap-12 p-(--size-app-padding)">
       <header className="flex flex-col gap-7 px-4 pt-8 pb-12">
-        <h1 className="text-25 leading-30 font-700 tracking-title">UI primitives</h1>
+        <h1 className="text-25 leading-30 font-700 tracking-title">
+          UI primitives
+        </h1>
         <p className="text-10 leading-14-5 text-ink-muted">
           Every primitive in components/ui with its variants and states.
         </p>
       </header>
 
-      <DemoSection title="Button" note="Variants: primary, secondary, warning, soft. Sizes: lg 36, md 36, sm 32, xs 21.">
+      <DemoSection
+        title="Button"
+        note="Variants: primary, secondary, warning, soft. Sizes: lg 36, md 36, sm 32, xs 21."
+      >
         <DemoRow label="Primary">
           <Button icon={<BookmarkSimple />}>Save schedule</Button>
           <Button icon={<BookmarkSimple />} disabled>
@@ -65,12 +73,21 @@ export default function UiPrimitivesPage() {
           <Button size="sm" icon={<ArrowClockwise />}>
             Switch to C Term
           </Button>
-          <Button size="sm" icon={<Check />} className="w-112" aria-disabled="true">
+          <Button
+            size="sm"
+            icon={<Check />}
+            className="w-112"
+            aria-disabled="true"
+          >
             Saved
           </Button>
         </DemoRow>
         <DemoRow label="Links that look like buttons">
-          <ButtonLink href="https://workday.wpi.edu" external icon={<ArrowSquareOut />}>
+          <ButtonLink
+            href="https://workday.wpi.edu"
+            external
+            icon={<ArrowSquareOut />}
+          >
             Open Workday
           </ButtonLink>
           <ButtonLink href="/plans" size="sm" variant="secondary">
@@ -104,7 +121,12 @@ export default function UiPrimitivesPage() {
             <Button size="md" fullWidth icon={<X />}>
               Remove AB 1533
             </Button>
-            <Button variant="secondary" size="md" fullWidth icon={<CalendarBlank />}>
+            <Button
+              variant="secondary"
+              size="md"
+              fullWidth
+              icon={<CalendarBlank />}
+            >
               Check another term
             </Button>
           </div>
@@ -116,11 +138,19 @@ export default function UiPrimitivesPage() {
           <IconButton label="Previous schedule" icon={<CaretLeft />} />
           <IconButton label="Next schedule" icon={<CaretRight />} />
           <IconButton label="Next schedule" icon={<CaretRight />} disabled />
-          <IconButton variant="ghost" label="Remove" icon={<X />} className="text-ink" />
+          <IconButton
+            variant="ghost"
+            label="Remove"
+            icon={<X />}
+            className="text-ink"
+          />
         </DemoRow>
       </DemoSection>
 
-      <DemoSection title="Badge" note="Tones: success, warning, neutral, accent. Sizes: sm and md 12px, lg 13px.">
+      <DemoSection
+        title="Badge"
+        note="Tones: success, warning, neutral, accent. Sizes: sm and md 12px, lg 13px."
+      >
         <DemoRow label="Fit badges (md)">
           <Badge tone="success">Fits</Badge>
           <Badge tone="warning">Clashes with AE 2320 lecture</Badge>
@@ -144,7 +174,10 @@ export default function UiPrimitivesPage() {
         </DemoRow>
       </DemoSection>
 
-      <DemoSection title="Chip" note="Preference chips. The × removes a block, the dashed chip adds one.">
+      <DemoSection
+        title="Chip"
+        note="Preference chips. The × removes a block, the dashed chip adds one."
+      >
         <div className="flex flex-wrap items-center gap-7 rounded-card bg-canvas px-12 py-12">
           <ChipDemo />
         </div>
@@ -156,10 +189,18 @@ export default function UiPrimitivesPage() {
         </DemoRow>
       </DemoSection>
 
-      <DemoSection title="Select" note="Native select, styled closed. Variants: field, box, pill, menu.">
+      <DemoSection
+        title="Select"
+        note="Native select, styled closed. Variants: field, box, pill, menu."
+      >
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-16">
           <DemoRow label="Field (term)">
-            <Select label="Term" options={terms} defaultValue="2027-C" className="w-192" />
+            <Select
+              label="Term"
+              options={terms}
+              defaultValue="2027-C"
+              className="w-192"
+            />
           </DemoRow>
           <DemoRow label="Box (professor)">
             <Select
@@ -170,11 +211,22 @@ export default function UiPrimitivesPage() {
             />
           </DemoRow>
           <DemoRow label="Disabled field">
-            <Select label="Term" options={terms} defaultValue="2027-C" className="w-192" disabled />
+            <Select
+              label="Term"
+              options={terms}
+              defaultValue="2027-C"
+              className="w-192"
+              disabled
+            />
           </DemoRow>
         </div>
         <div className="flex flex-wrap items-center gap-7 rounded-card bg-canvas px-12 py-12">
-          <Select variant="pill" label="Starts after" options={times} defaultValue="9:00 AM" />
+          <Select
+            variant="pill"
+            label="Starts after"
+            options={times}
+            defaultValue="9:00 AM"
+          />
           <SortDemo />
         </div>
       </DemoSection>
@@ -212,7 +264,12 @@ export default function UiPrimitivesPage() {
             />
           </DemoRow>
           <DemoRow label="Visible label">
-            <TextInput label="Block name" placeholder="Work" hideLabel={false} className="w-192" />
+            <TextInput
+              label="Block name"
+              placeholder="Work"
+              hideLabel={false}
+              className="w-192"
+            />
           </DemoRow>
         </div>
       </DemoSection>
@@ -222,7 +279,9 @@ export default function UiPrimitivesPage() {
           <Card variant="panel" className="px-16 py-20 text-10">
             panel · sidebar, calendar, details
           </Card>
-          <Card className="px-10 pt-15 pb-10 text-10">outlined · section choice</Card>
+          <Card className="px-10 pt-15 pb-10 text-10">
+            outlined · section choice
+          </Card>
           <Card variant="subtle" className="px-10 py-23 text-10">
             subtle · skeleton card
           </Card>
@@ -244,19 +303,30 @@ export default function UiPrimitivesPage() {
         </div>
       </DemoSection>
 
-      <DemoSection title="Dialog and sheet" note={'Native modal dialog: focus moves in, Escape closes, focus returns. Sheets open from the right (default) or across the bottom (side="bottom"), with focus on the heading and kept inside.'}>
+      <DemoSection
+        title="Dialog and sheet"
+        note={
+          'Native modal dialog: focus moves in, Escape closes, focus returns. Sheets open from the right (default) or across the bottom (side="bottom"), with focus on the heading and kept inside.'
+        }
+      >
         <DemoRow label="Open">
           <DialogDemo />
         </DemoRow>
       </DemoSection>
 
-      <DemoSection title="Toast" note="One message and one action, bottom centre (full width minus 16 px on phone). It goes away after 6 seconds, waits while the pointer or focus is on it, and never takes focus.">
+      <DemoSection
+        title="Toast"
+        note="One message and one action, bottom centre (full width minus 16 px on phone). It goes away after 6 seconds, waits while the pointer or focus is on it, and never takes focus."
+      >
         <DemoRow label="Remove, then Undo">
           <ToastDemo />
         </DemoRow>
       </DemoSection>
 
-      <DemoSection title="Tooltip" note="Shows on hover and on keyboard focus. Escape hides it.">
+      <DemoSection
+        title="Tooltip"
+        note="Shows on hover and on keyboard focus. Escape hides it."
+      >
         <DemoRow label="Hovered block">
           <TooltipDemo />
         </DemoRow>

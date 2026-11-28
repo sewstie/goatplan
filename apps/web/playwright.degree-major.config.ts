@@ -10,7 +10,18 @@ export default defineConfig({
   use: { baseURL: "http://localhost:4784" },
   projects: [
     { name: "desktop", use: { viewport: { width: 1440, height: 900 } } },
-    { name: "touch", use: { viewport: { width: 375, height: 812 }, hasTouch: true, isMobile: true } },
+    {
+      name: "touch",
+      use: {
+        viewport: { width: 375, height: 812 },
+        hasTouch: true,
+        isMobile: true,
+      },
+    },
   ],
-  webServer: { command: "node e2e/fixtures/degreeMajorBuild.mjs", url: "http://localhost:4784", timeout: 180_000 },
+  webServer: {
+    command: "node e2e/fixtures/degreeMajorBuild.mjs",
+    url: "http://localhost:4784",
+    timeout: 180_000,
+  },
 });

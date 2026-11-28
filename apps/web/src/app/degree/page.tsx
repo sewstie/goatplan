@@ -28,7 +28,11 @@ export default function DegreePage() {
         >
           <TopBar appearance={<ThemeButton />} />
         </DegreeLayout>
-        <main id="main" tabIndex={-1} className="mx-auto flex w-full max-w-(--size-app-max) min-w-0 flex-1 flex-col px-(--size-phone-gutter) pt-18 pb-20 outline-none tablet:px-20 tablet:pt-12 tablet:pb-8">
+        <main
+          id="main"
+          tabIndex={-1}
+          className="mx-auto flex w-full max-w-(--size-app-max) min-w-0 flex-1 flex-col px-(--size-phone-gutter) pt-18 pb-20 outline-none tablet:px-20 tablet:pt-12 tablet:pb-8"
+        >
           <DegreeContent />
         </main>
         <DegreeFooter />

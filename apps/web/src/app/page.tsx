@@ -17,9 +17,19 @@ export default function PlannerPage() {
   return (
     <>
       <PlannerShell
-        header={<h1 data-screen-heading tabIndex={-1} className="sr-only"><PlannerTitle badge={false} /></h1>}
+        header={
+          <h1 data-screen-heading tabIndex={-1} className="sr-only">
+            <PlannerTitle badge={false} />
+          </h1>
+        }
         barCenter={
-          <div id="tutorial-schedules" role="region" aria-label="Schedule browser" tabIndex={-1} className="rounded-control">
+          <div
+            id="tutorial-schedules"
+            role="region"
+            aria-label="Schedule browser"
+            tabIndex={-1}
+            className="rounded-control"
+          >
             <ScheduleBrowser />
           </div>
         }
@@ -30,12 +40,22 @@ export default function PlannerPage() {
           <>
             <ScheduleSummary />
             <div className="flex items-start gap-8">
-              <div className="min-w-0 flex-1"><PreferencesBar /></div>
-              <div className="flex h-44 shrink-0 items-center empty:hidden"><SortSelect className="shrink-0" /></div>
+              <div className="min-w-0 flex-1">
+                <PreferencesBar />
+              </div>
+              <div className="flex h-44 shrink-0 items-center empty:hidden">
+                <SortSelect className="shrink-0" />
+              </div>
             </div>
           </>
         }
-        banner={<><PlannerViewSync /><FirstPlanTutorial /><ScheduleBanner /></>}
+        banner={
+          <>
+            <PlannerViewSync />
+            <FirstPlanTutorial />
+            <ScheduleBanner />
+          </>
+        }
         schedule={<ScheduleView />}
       />
       <PlannerBootstrap />

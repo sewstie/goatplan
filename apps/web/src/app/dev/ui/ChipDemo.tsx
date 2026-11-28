@@ -20,7 +20,11 @@ export function ChipDemo() {
           removeLabel="Remove Work block"
         />
       ))}
-      <Chip variant="dashed" icon={<Plus />} onClick={() => setBlocks((count) => count + 1)}>
+      <Chip
+        variant="dashed"
+        icon={<Plus />}
+        onClick={() => setBlocks((count) => count + 1)}
+      >
         Block a time
       </Chip>
     </>

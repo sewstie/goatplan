@@ -3,6 +3,8 @@ import { cleanup } from "@testing-library/react";
 import { afterEach, beforeAll } from "vitest";
 import { loadRequirements } from "./src/lib/degree/requirements";
 
-beforeAll(async () => { await loadRequirements(); });
+beforeAll(async () => {
+  await loadRequirements();
+});
 
 afterEach(cleanup);

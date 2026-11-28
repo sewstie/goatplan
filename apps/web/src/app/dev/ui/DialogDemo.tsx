@@ -18,7 +18,11 @@ export function DialogDemo() {
       <Button variant="secondary" size="md" onClick={() => setSheetOpen(true)}>
         Open sheet
       </Button>
-      <Button variant="secondary" size="md" onClick={() => setBottomSheetOpen(true)}>
+      <Button
+        variant="secondary"
+        size="md"
+        onClick={() => setBottomSheetOpen(true)}
+      >
         Open bottom sheet
       </Button>
 
@@ -29,7 +33,11 @@ export function DialogDemo() {
         description="Sample text. Escape, the close button or a click outside closes it, and focus goes back to the button that opened it."
         footer={
           <>
-            <Button variant="secondary" size="md" onClick={() => setDialogOpen(false)}>
+            <Button
+              variant="secondary"
+              size="md"
+              onClick={() => setDialogOpen(false)}
+            >
               Cancel
             </Button>
             <Button size="md" onClick={() => setDialogOpen(false)}>
@@ -39,17 +47,28 @@ export function DialogDemo() {
         }
       />
 
-      <Sheet open={sheetOpen} onClose={() => setSheetOpen(false)} title="Example sheet">
+      <Sheet
+        open={sheetOpen}
+        onClose={() => setSheetOpen(false)}
+        title="Example sheet"
+      >
         <p className="text-11 leading-20-35 text-ink-muted">
-          Sample text. On tablets the course details panel can open in this sheet.
+          Sample text. On tablets the course details panel can open in this
+          sheet.
         </p>
       </Sheet>
 
-      <Sheet side="bottom" open={bottomSheetOpen} onClose={() => setBottomSheetOpen(false)} title="Example bottom sheet">
+      <Sheet
+        side="bottom"
+        open={bottomSheetOpen}
+        onClose={() => setBottomSheetOpen(false)}
+        title="Example bottom sheet"
+      >
         <p className="text-11 leading-20-35 text-ink-muted">
-          Sample text. On a phone, course details open in this sheet. It&rsquo;s at most 85% of the
-          screen tall and scrolls inside. Focus starts on the heading and stays in the sheet; Escape,
-          Close or a tap outside closes it.
+          Sample text. On a phone, course details open in this sheet. It&rsquo;s
+          at most 85% of the screen tall and scrolls inside. Focus starts on the
+          heading and stays in the sheet; Escape, Close or a tap outside closes
+          it.
         </p>
         <div className="flex flex-wrap gap-8">
           <Button variant="soft" size="xs">
@@ -61,7 +80,8 @@ export function DialogDemo() {
         </div>
         {Array.from({ length: 12 }, (_, index) => (
           <p key={index} className="text-10 leading-14-5 text-ink">
-            Lab CX{String(index + 1).padStart(2, "0")} · Thu 3:00–4:50 PM · Higgins Labs 116
+            Lab CX{String(index + 1).padStart(2, "0")} · Thu 3:00–4:50 PM ·
+            Higgins Labs 116
           </p>
         ))}
       </Sheet>
