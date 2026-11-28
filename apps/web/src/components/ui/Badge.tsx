@@ -22,7 +22,12 @@ const sizeClasses: Record<BadgeSize, string> = {
   lg: "px-6 py-3 text-9 leading-12-6",
 };
 
-export function Badge({ tone = "neutral", size = "md", className, ...rest }: BadgeProps) {
+export function Badge({
+  tone = "neutral",
+  size = "md",
+  className,
+  ...rest
+}: BadgeProps) {
   return (
     <span
       className={cx(

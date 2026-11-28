@@ -22,7 +22,9 @@ describe("Tooltip", () => {
   it("opens on keyboard focus and closes with Escape", async () => {
     renderTooltip();
     await userEvent.tab();
-    expect(screen.getByRole("tooltip")).toHaveTextContent("Tue · 10:00–10:50 AM");
+    expect(screen.getByRole("tooltip")).toHaveTextContent(
+      "Tue · 10:00–10:50 AM",
+    );
 
     await userEvent.keyboard("{Escape}");
     expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
@@ -55,9 +57,9 @@ describe("Tooltip", () => {
         </Tooltip>
       </>,
     );
-    expect(screen.getByRole("button", { name: "AE 2320 CX02" })).toHaveAccessibleDescription(
-      "Locked section Thu · 3:00–3:50 PM",
-    );
+    expect(
+      screen.getByRole("button", { name: "AE 2320 CX02" }),
+    ).toHaveAccessibleDescription("Locked section Thu · 3:00–3:50 PM");
   });
 
   describe("in a portal", () => {
@@ -108,7 +110,10 @@ describe("Tooltip", () => {
       const trigger = renderPortal(false);
       await userEvent.hover(trigger);
       expect(trigger).not.toHaveAccessibleDescription();
-      expect(document.querySelector("[role=tooltip]")).toHaveAttribute("aria-hidden", "true");
+      expect(document.querySelector("[role=tooltip]")).toHaveAttribute(
+        "aria-hidden",
+        "true",
+      );
     });
   });
 

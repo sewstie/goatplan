@@ -1,11 +1,21 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, type MouseEvent, type PointerEvent, type RefObject } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  type MouseEvent,
+  type PointerEvent,
+  type RefObject,
+} from "react";
 
-export const ModalReturnFocusContext = createContext<RefObject<HTMLElement | null> | null>(null);
+export const ModalReturnFocusContext =
+  createContext<RefObject<HTMLElement | null> | null>(null);
 
 export const MODAL_OPEN = "dialog[open]";
-const FOCUSABLE = "button:not(:disabled):not([tabindex='-1']), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex='-1'])";
+const FOCUSABLE =
+  "button:not(:disabled):not([tabindex='-1']), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex='-1'])";
 
 /** Back to what opened the dialog, or to the screen's heading when that's gone. */
 function restoreFocus(target: HTMLElement | null) {
@@ -24,10 +34,14 @@ export function useModalDialog(open: boolean, onClose: () => void) {
     const dialog = ref.current;
     if (!dialog) return;
     if (open && !dialog.open) {
-      returnFocusTo.current = returnTarget?.current ?? document.activeElement as HTMLElement | null;
+      returnFocusTo.current =
+        returnTarget?.current ?? (document.activeElement as HTMLElement | null);
       dialog.showModal();
       const start = dialog.querySelector<HTMLElement>("[data-autofocus]");
-      (start?.matches(FOCUSABLE) || start?.hasAttribute("tabindex") ? start : start?.querySelector<HTMLElement>(FOCUSABLE))?.focus();
+      (start?.matches(FOCUSABLE) || start?.hasAttribute("tabindex")
+        ? start
+        : start?.querySelector<HTMLElement>(FOCUSABLE)
+      )?.focus();
     } else if (!open && dialog.open) {
       closingFromState.current = true;
       dialog.close();
@@ -61,7 +75,10 @@ export function useModalDialog(open: boolean, onClose: () => void) {
   }
 
   function handleBackdropClick(event: MouseEvent<HTMLDialogElement>) {
-    if (pressStartedOnBackdrop.current && event.target === event.currentTarget) {
+    if (
+      pressStartedOnBackdrop.current &&
+      event.target === event.currentTarget
+    ) {
       event.currentTarget.close();
     }
     pressStartedOnBackdrop.current = false;

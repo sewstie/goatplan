@@ -5,7 +5,9 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { Dialog } from "./Dialog";
 
 beforeAll(() => {
-  HTMLDialogElement.prototype.showModal = function showModal(this: HTMLDialogElement) {
+  HTMLDialogElement.prototype.showModal = function showModal(
+    this: HTMLDialogElement,
+  ) {
     this.setAttribute("open", "");
   };
   HTMLDialogElement.prototype.close = function close(this: HTMLDialogElement) {

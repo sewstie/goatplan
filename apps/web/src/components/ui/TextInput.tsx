@@ -28,11 +28,18 @@ export function TextInput({
     <div className={cx("flex flex-col", className)}>
       <label
         htmlFor={inputId}
-        className={hideLabel ? "sr-only" : "pb-5 text-10 leading-14-5 font-650 text-ink"}
+        className={
+          hideLabel ? "sr-only" : "pb-5 text-10 leading-14-5 font-650 text-ink"
+        }
       >
         {label}
       </label>
-      <div className={cx("group flex min-h-38 items-center gap-8 rounded-control border border-line bg-surface px-9 has-[:disabled]:border-line-disabled has-[:disabled]:bg-surface-disabled", focusWithin)}>
+      <div
+        className={cx(
+          "group flex min-h-38 items-center gap-8 rounded-control border border-line bg-surface px-9 has-[:disabled]:border-line-disabled has-[:disabled]:bg-surface-disabled",
+          focusWithin,
+        )}
+      >
         {icon && (
           <span
             aria-hidden

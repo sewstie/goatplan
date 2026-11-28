@@ -98,7 +98,8 @@ export function Tooltip({
   }, [portal, trigger, placement, offsetX, gap]);
 
   const own = children.props["aria-describedby"];
-  const describedBy = describes && (open || !portal) ? [own, id].filter(Boolean).join(" ") : own;
+  const describedBy =
+    describes && (open || !portal) ? [own, id].filter(Boolean).join(" ") : own;
 
   if (portal) {
     const props = children.props;
@@ -130,7 +131,11 @@ export function Tooltip({
               role="tooltip"
               id={id}
               aria-hidden={describes ? undefined : true}
-              className={cx("pointer-events-none invisible fixed z-30", surface, className)}
+              className={cx(
+                "pointer-events-none invisible fixed z-30",
+                surface,
+                className,
+              )}
             >
               {content}
             </div>,
@@ -157,7 +162,9 @@ export function Tooltip({
         className={cx(
           "absolute left-0 z-10 before:absolute before:inset-x-0 before:h-7",
           surface,
-          placement === "bottom" ? "top-full mt-6 before:-top-7" : "bottom-full mb-6 before:-bottom-7",
+          placement === "bottom"
+            ? "top-full mt-6 before:-top-7"
+            : "bottom-full mb-6 before:-bottom-7",
           className,
         )}
       >

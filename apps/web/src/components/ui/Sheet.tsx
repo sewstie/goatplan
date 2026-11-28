@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
 import { X } from "@phosphor-icons/react/ssr";
 import { cx } from "./cx";
 import { IconButton } from "./IconButton";
@@ -23,34 +29,49 @@ type SheetProps = {
 
 const sideClasses: Record<SheetSide, { dialog: string; body: string }> = {
   right: {
-    dialog: "my-0 mr-0 ml-auto h-dvh max-h-dvh w-[calc(var(--size-details)+2*var(--size-app-padding))] max-w-[calc(100vw-32px)] rounded-l-panel",
+    dialog:
+      "my-0 mr-0 ml-auto h-dvh max-h-dvh w-[calc(var(--size-details)+2*var(--size-app-padding))] max-w-[calc(100vw-32px)] rounded-l-panel",
     body: "h-full py-20",
   },
   // Full width and as tall as its content, up to 85% of the screen. It slides up as it opens.
   bottom: {
-    dialog: "mx-0 mt-auto mb-0 w-full max-w-none max-h-[85dvh] rounded-t-panel transition-[translate] duration-200 ease-out starting:translate-y-full motion-reduce:transition-none",
+    dialog:
+      "mx-0 mt-auto mb-0 w-full max-w-none max-h-[85dvh] rounded-t-panel transition-[translate] duration-200 ease-out starting:translate-y-full motion-reduce:transition-none",
     body: "max-h-[85dvh] pt-20 pb-[max(--spacing(20),env(safe-area-inset-bottom))]",
   },
 };
 
-const tabStops = "a[href], area[href], button, input, select, textarea, summary, iframe, [tabindex], [contenteditable]";
+const tabStops =
+  "a[href], area[href], button, input, select, textarea, summary, iframe, [tabindex], [contenteditable]";
 
 /**
  * Keeps Tab and Shift+Tab inside the sheet: past the last stop, focus goes back to the first, and
  * the other way round. The page behind is already inert while the sheet is open.
  */
 function keepFocusInside(event: KeyboardEvent<HTMLDialogElement>) {
-  if (event.key !== "Tab" || event.altKey || event.ctrlKey || event.metaKey || event.defaultPrevented) return;
+  if (
+    event.key !== "Tab" ||
+    event.altKey ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.defaultPrevented
+  )
+    return;
   const active = document.activeElement;
-  if (!(active instanceof HTMLElement) || !event.currentTarget.contains(active)) return;
-  const stops = [...event.currentTarget.querySelectorAll<HTMLElement>(tabStops)].filter(
+  if (!(active instanceof HTMLElement) || !event.currentTarget.contains(active))
+    return;
+  const stops = [
+    ...event.currentTarget.querySelectorAll<HTMLElement>(tabStops),
+  ].filter(
     (element) =>
       element.tabIndex >= 0 &&
       !element.matches(":disabled, input[type=hidden], [inert] *") &&
       (element.checkVisibility?.({ visibilityProperty: true }) ?? true),
   );
-  const ahead = (element: HTMLElement) => active.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_FOLLOWING;
-  const behind = (element: HTMLElement) => active.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_PRECEDING;
+  const ahead = (element: HTMLElement) =>
+    active.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_FOLLOWING;
+  const behind = (element: HTMLElement) =>
+    active.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_PRECEDING;
   const next = event.shiftKey
     ? !stops.some(behind) && stops.at(-1)
     : !stops.some(ahead) && stops[0];
@@ -60,10 +81,19 @@ function keepFocusInside(event: KeyboardEvent<HTMLDialogElement>) {
   }
 }
 
-export function Sheet({ open, onClose, title, focusKey, children, side = "right", lightScrim = false }: SheetProps) {
+export function Sheet({
+  open,
+  onClose,
+  title,
+  focusKey,
+  children,
+  side = "right",
+  lightScrim = false,
+}: SheetProps) {
   const titleId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
-  const { ref, handleClose, handlePointerDown, handleBackdropClick, close } = useModalDialog(open, onClose);
+  const { ref, handleClose, handlePointerDown, handleBackdropClick, close } =
+    useModalDialog(open, onClose);
   const swipe = useSwipeDown<HTMLDivElement>(close);
   const bottom = side === "bottom";
 
@@ -81,14 +111,43 @@ export function Sheet({ open, onClose, title, focusKey, children, side = "right"
       onPointerDown={handlePointerDown}
       onClick={handleBackdropClick}
       onKeyDown={keepFocusInside}
-      style={swipe.offset > 0 ? { translate: `0 ${swipe.offset}px`, transition: "none" } : undefined}
-      className={cx("bg-surface p-0 text-ink shadow-popover", lightScrim ? "backdrop:bg-scrim-flat" : "backdrop:bg-scrim", sideClasses[side].dialog)}
+      style={
+        swipe.offset > 0
+          ? { translate: `0 ${swipe.offset}px`, transition: "none" }
+          : undefined
+      }
+      className={cx(
+        "bg-surface p-0 text-ink shadow-popover",
+        lightScrim ? "backdrop:bg-scrim-flat" : "backdrop:bg-scrim",
+        sideClasses[side].dialog,
+      )}
     >
-      <div className={cx("flex flex-col gap-12 overflow-y-auto px-16", sideClasses[side].body)}>
+      <div
+        className={cx(
+          "flex flex-col gap-12 overflow-y-auto px-16",
+          sideClasses[side].body,
+        )}
+      >
         {/* On a phone the top of the sheet can be pulled down to close it. */}
-        <div {...(bottom ? swipe.handlers : {})} className={cx("flex items-start justify-between gap-12", bottom && "relative -mt-20 touch-none pt-20")}>
-          {bottom && <span aria-hidden className="absolute top-8 left-1/2 h-4 w-36 -translate-x-1/2 rounded-pill bg-line-strong" />}
-          <h2 ref={heading} id={titleId} tabIndex={-1} className="text-21 leading-25-2 font-700 tracking-heading outline-none">
+        <div
+          {...(bottom ? swipe.handlers : {})}
+          className={cx(
+            "flex items-start justify-between gap-12",
+            bottom && "relative -mt-20 touch-none pt-20",
+          )}
+        >
+          {bottom && (
+            <span
+              aria-hidden
+              className="absolute top-8 left-1/2 h-4 w-36 -translate-x-1/2 rounded-pill bg-line-strong"
+            />
+          )}
+          <h2
+            ref={heading}
+            id={titleId}
+            tabIndex={-1}
+            className="text-21 leading-25-2 font-700 tracking-heading outline-none"
+          >
             {title}
           </h2>
           <IconButton

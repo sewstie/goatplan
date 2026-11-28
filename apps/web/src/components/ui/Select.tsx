@@ -34,7 +34,8 @@ const labelClasses: Record<SelectVariant, string> = {
 // Only the field and box selects take their box's corners. The pill and menu selects stay square:
 // a 16px curve clipped the top and bottom of the value's first letter.
 const selectClasses: Record<SelectVariant, string> = {
-  field: "w-full rounded-[inherit] py-10 pr-31 pl-11 text-12 leading-17-4 font-700",
+  field:
+    "w-full rounded-[inherit] py-10 pr-31 pl-11 text-12 leading-17-4 font-700",
   box: "w-full rounded-[inherit] py-9 pr-28 pl-9 text-10 leading-14-5",
   pill: "field-sizing-content py-8.75 pr-28 text-10 leading-14-5 font-650",
   menu: "field-sizing-content py-7.5 pr-25 text-9 leading-13",
@@ -62,7 +63,11 @@ export function Select({
   const labelElement = (
     <label
       htmlFor={selectId}
-      className={labelAbove ? "pb-5 text-10 leading-14-5 font-650 text-ink" : labelClasses[variant]}
+      className={
+        labelAbove
+          ? "pb-5 text-10 leading-14-5 font-650 text-ink"
+          : labelClasses[variant]
+      }
     >
       {label}
     </label>
@@ -87,14 +92,21 @@ export function Select({
         {...rest}
       >
         {options.map((option) => (
-          <option key={option.value} value={option.value} disabled={option.disabled}>
+          <option
+            key={option.value}
+            value={option.value}
+            disabled={option.disabled}
+          >
             {option.label}
           </option>
         ))}
       </select>
       <CaretDown
         aria-hidden
-        className={cx("pointer-events-none absolute top-1/2 -translate-y-1/2", caretClasses[variant])}
+        className={cx(
+          "pointer-events-none absolute top-1/2 -translate-y-1/2",
+          caretClasses[variant],
+        )}
       />
     </div>
   );

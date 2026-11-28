@@ -27,7 +27,13 @@ export function ButtonLink({
 
   if (external) {
     return (
-      <a href={href} target="_blank" rel="noreferrer" className={classes} {...rest}>
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className={classes}
+        {...rest}
+      >
         {icon}
         {children}
         <span className="sr-only"> (opens in a new tab)</span>

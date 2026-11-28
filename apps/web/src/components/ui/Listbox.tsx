@@ -1,15 +1,29 @@
 "use client";
 
-import { useEffect, useId, useLayoutEffect, useRef, useState, type ComponentProps } from "react";
+import {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ComponentProps,
+} from "react";
 import { createPortal } from "react-dom";
 import { CaretDown, Check } from "@phosphor-icons/react/ssr";
 import { cx } from "./cx";
 import { floatingPosition } from "./floatingPosition";
 
-export type ListboxOption = { value: string; label: string; description?: string };
+export type ListboxOption = {
+  value: string;
+  label: string;
+  description?: string;
+};
 export type ListboxVariant = "field" | "menu" | "link" | "pill";
 
-type ListboxProps = Omit<ComponentProps<"button">, "onChange" | "children" | "onClick" | "onBlur" | "onKeyDown"> & {
+type ListboxProps = Omit<
+  ComponentProps<"button">,
+  "onChange" | "children" | "onClick" | "onBlur" | "onKeyDown"
+> & {
   label: string;
   /** Visible label shown before the value in the menu variant. Ignored for field. */
   menuLabel?: string;
@@ -25,8 +39,14 @@ const triggerBase =
 // The menu is the field look, sized to sit in the Preferences row. The link is plain muted text,
 // like the phone calendar's "Fewest early classes ⌄". The pill is the phone top bar's term picker.
 const triggerClasses: Record<ListboxVariant, string> = {
-  field: cx(triggerBase, "flex min-h-38 w-full items-center justify-between gap-6 rounded-control py-9 hover:border-line-strong"),
-  menu: cx(triggerBase, "relative inline-flex rounded-row min-h-32 min-w-146 items-center gap-6 py-7"),
+  field: cx(
+    triggerBase,
+    "flex min-h-38 w-full items-center justify-between gap-6 rounded-control py-9 hover:border-line-strong",
+  ),
+  menu: cx(
+    triggerBase,
+    "relative inline-flex rounded-row min-h-32 min-w-146 items-center gap-6 py-7",
+  ),
   pill: "flex min-h-40 w-full cursor-pointer items-center justify-end gap-8 rounded-row px-4 text-right text-8 font-510 text-ink-soft disabled:cursor-not-allowed disabled:text-ink-faint",
   link: "relative inline-flex min-w-0 cursor-pointer items-center gap-3 rounded-badge text-9 leading-13 text-ink-muted hover:text-ink",
 };
@@ -38,11 +58,27 @@ const JOINED = new Set<ListboxVariant>(["field", "menu"]);
 function popupJoin(variant: ListboxVariant, side: Side): string {
   const radius = variant === "field" ? "rounded-control" : "rounded-row";
   // The field's list is exactly as wide as the trigger; the menu's may be wider and lines up on the right.
-  const square = side === "below" ? (variant === "field" ? "rounded-t-none" : "rounded-tr-none") : variant === "field" ? "rounded-b-none" : "rounded-br-none";
+  const square =
+    side === "below"
+      ? variant === "field"
+        ? "rounded-t-none"
+        : "rounded-tr-none"
+      : variant === "field"
+        ? "rounded-b-none"
+        : "rounded-br-none";
   return cx("border-focus", radius, square);
 }
 
-export function Listbox({ label, menuLabel, options, value, onChange, variant = "field", className, ...props }: ListboxProps) {
+export function Listbox({
+  label,
+  menuLabel,
+  options,
+  value,
+  onChange,
+  variant = "field",
+  className,
+  ...props
+}: ListboxProps) {
   const id = useId();
   const popupId = `${id}-listbox`;
   const button = useRef<HTMLButtonElement>(null);
@@ -53,12 +89,20 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
   const [portal, setPortal] = useState<HTMLElement | null>(null);
   const [side, setSide] = useState<Side>("below");
   const joined = JOINED.has(variant);
-  const selected = Math.max(0, options.findIndex((option) => option.value === value));
+  const selected = Math.max(
+    0,
+    options.findIndex((option) => option.value === value),
+  );
 
   useEffect(() => {
     if (!open) return;
     function dismiss(event: PointerEvent) {
-      if (event.target instanceof Node && !button.current?.contains(event.target) && !popup.current?.contains(event.target)) setOpen(false);
+      if (
+        event.target instanceof Node &&
+        !button.current?.contains(event.target) &&
+        !popup.current?.contains(event.target)
+      )
+        setOpen(false);
     }
     document.addEventListener("pointerdown", dismiss);
     return () => document.removeEventListener("pointerdown", dismiss);
@@ -69,12 +113,18 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
     const anchor = button.current.getBoundingClientRect();
     // List is at least as wide as the trigger, and wide enough for content
     popup.current.style.minWidth = `${anchor.width}px`;
-    popup.current.style.width = variant === "field" ? `${anchor.width}px` : "max-content";
+    popup.current.style.width =
+      variant === "field" ? `${anchor.width}px` : "max-content";
     const size = popup.current.getBoundingClientRect();
     // The menu sits at the end of a row, so its list lines up with the trigger's right edge.
     const offsetX = variant === "field" ? 0 : anchor.width - size.width;
     // A joined list overlaps the trigger's border by 1px, so the two read as one box.
-    const position = floatingPosition(anchor, size, { width: window.innerWidth, height: window.innerHeight }, { gap: joined ? -1 : 0, offsetX });
+    const position = floatingPosition(
+      anchor,
+      size,
+      { width: window.innerWidth, height: window.innerHeight },
+      { gap: joined ? -1 : 0, offsetX },
+    );
     popup.current.style.left = `${position.left}px`;
     popup.current.style.top = `${position.top}px`;
     popup.current.style.visibility = "visible";
@@ -82,7 +132,10 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
   }, [open, variant, joined]);
 
   useLayoutEffect(() => {
-    if (open) popup.current?.children.item(active)?.scrollIntoView?.({ block: "nearest" });
+    if (open)
+      popup.current?.children
+        .item(active)
+        ?.scrollIntoView?.({ block: "nearest" });
   }, [active, open]);
 
   return (
@@ -97,8 +150,18 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
         aria-expanded={open}
         aria-controls={popupId}
         aria-activedescendant={open ? `${id}-option-${active}` : undefined}
-        className={cx(triggerClasses[variant], open && joined && (side === "below" ? "rounded-b-none" : "rounded-t-none"), className)}
-        onClick={(event) => { setPortal(event.currentTarget.closest("dialog")); setActive(selected); setOpen(!open); }}
+        className={cx(
+          triggerClasses[variant],
+          open &&
+            joined &&
+            (side === "below" ? "rounded-b-none" : "rounded-t-none"),
+          className,
+        )}
+        onClick={(event) => {
+          setPortal(event.currentTarget.closest("dialog"));
+          setActive(selected);
+          setOpen(!open);
+        }}
         onBlur={() => setOpen(false)}
         onKeyDown={(event) => {
           setPortal(event.currentTarget.closest("dialog"));
@@ -112,27 +175,56 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
             setOpen(false);
           } else if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
-            if (open) { onChange(options[active].value); setOpen(false); }
-            else { setActive(selected); setOpen(true); }
+            if (open) {
+              onChange(options[active].value);
+              setOpen(false);
+            } else {
+              setActive(selected);
+              setOpen(true);
+            }
           } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
             event.preventDefault();
-            if (!open) { setActive(selected); setOpen(true); }
-            else setActive(Math.max(0, Math.min(options.length - 1, active + (event.key === "ArrowDown" ? 1 : -1))));
+            if (!open) {
+              setActive(selected);
+              setOpen(true);
+            } else
+              setActive(
+                Math.max(
+                  0,
+                  Math.min(
+                    options.length - 1,
+                    active + (event.key === "ArrowDown" ? 1 : -1),
+                  ),
+                ),
+              );
           } else if (event.key === "Home" || event.key === "End") {
             event.preventDefault();
             setActive(event.key === "Home" ? 0 : options.length - 1);
             setOpen(true);
-          } else if (event.key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) {
+          } else if (
+            event.key.length === 1 &&
+            !event.altKey &&
+            !event.ctrlKey &&
+            !event.metaKey
+          ) {
             event.preventDefault();
             const key = event.key.toLowerCase();
-            const previous = Date.now() - search.current.time < 700 ? search.current.text : "";
+            const previous =
+              Date.now() - search.current.time < 700 ? search.current.text : "";
             const text = previous === key ? key : previous + key;
             search.current = { text, time: Date.now() };
             const start = open ? active : selected;
             if (!open) setActive(selected);
-            for (let offset = text.length === 1 ? 1 : 0; offset <= options.length; offset++) {
+            for (
+              let offset = text.length === 1 ? 1 : 0;
+              offset <= options.length;
+              offset++
+            ) {
               const index = (start + offset) % options.length;
-              if (options[index].label.toLowerCase().startsWith(text)) { setActive(index); break; }
+              if (options[index].label.toLowerCase().startsWith(text)) {
+                setActive(index);
+                break;
+              }
             }
             setOpen(true);
           }
@@ -141,39 +233,113 @@ export function Listbox({ label, menuLabel, options, value, onChange, variant = 
         {variant === "menu" && menuLabel && (
           <span className="text-ink-muted">{menuLabel}</span>
         )}
-        <span className={cx("truncate", variant === "menu" && "flex-1")}>{options[selected]?.label}</span>
+        <span className={cx("truncate", variant === "menu" && "flex-1")}>
+          {options[selected]?.label}
+        </span>
         <CaretDown
           aria-hidden
-          className={cx(variant === "link" ? "size-9" : "size-11", "shrink-0 transition-transform motion-reduce:transition-none", open && "rotate-180")}
+          className={cx(
+            variant === "link" ? "size-9" : "size-11",
+            "shrink-0 transition-transform motion-reduce:transition-none",
+            open && "rotate-180",
+          )}
         />
         {/* Invisible extended hit area for 44px tap target on menu variant */}
         {(variant === "menu" || variant === "link") && (
-          <span aria-hidden className="absolute inset-x-0 top-1/2 h-44 -translate-y-1/2" />
+          <span
+            aria-hidden
+            className="absolute inset-x-0 top-1/2 h-44 -translate-y-1/2"
+          />
         )}
       </button>
-      {open && createPortal(
-        <div ref={popup} id={popupId} role="listbox" aria-label={label} className={cx("invisible fixed z-40 max-h-[min(25rem,calc(100vh-16px))] overflow-y-auto border bg-surface p-5 shadow-listbox", joined ? popupJoin(variant, side) : "rounded-listbox border-listbox-line")}>
-          {options.map((option, index) => {
-            const chosen = option.value === value;
-            // A one-line list (professor names) stays short and light, marking the choice with text color and a check.
-            const rowClasses = option.description
-              ? cx("min-h-49 gap-2.5 py-9", chosen ? "bg-accent-soft text-accent" : cx("text-ink", index === active && "bg-surface-selected"))
-              : cx("min-h-32 py-7", chosen ? "text-accent" : "text-ink", index === active && "bg-surface-selected");
-            return (
-              <div key={option.value} id={`${id}-option-${index}`} role="option" aria-selected={chosen} aria-labelledby={`${id}-name-${index}`} aria-describedby={option.description ? `${id}-description-${index}` : undefined}
-                className={cx("relative flex cursor-pointer flex-col justify-center rounded-option px-9 pr-26", rowClasses)}
-                onMouseDown={(event) => event.preventDefault()}
-                onMouseEnter={() => setActive(index)}
-                onClick={() => { onChange(option.value); setOpen(false); button.current?.focus(); }}
-              >
-                <span id={`${id}-name-${index}`} className={cx("text-10 leading-14-5", option.description || chosen ? "font-700" : "font-510")}>{option.label}</span>
-                {option.description && <span id={`${id}-description-${index}`} className="text-8 leading-12-8 text-ink-muted">{option.description}</span>}
-                {chosen && <Check aria-hidden className={cx("absolute top-1/2 right-9 size-13 -translate-y-1/2", option.description ? "text-ink" : "text-accent")} />}
-              </div>
-            );
-          })}
-        </div>, portal ?? document.body,
-      )}
+      {open &&
+        createPortal(
+          <div
+            ref={popup}
+            id={popupId}
+            role="listbox"
+            aria-label={label}
+            className={cx(
+              "invisible fixed z-40 max-h-[min(25rem,calc(100vh-16px))] overflow-y-auto border bg-surface p-5 shadow-listbox",
+              joined
+                ? popupJoin(variant, side)
+                : "rounded-listbox border-listbox-line",
+            )}
+          >
+            {options.map((option, index) => {
+              const chosen = option.value === value;
+              // A one-line list (professor names) stays short and light, marking the choice with text color and a check.
+              const rowClasses = option.description
+                ? cx(
+                    "min-h-49 gap-2.5 py-9",
+                    chosen
+                      ? "bg-accent-soft text-accent"
+                      : cx(
+                          "text-ink",
+                          index === active && "bg-surface-selected",
+                        ),
+                  )
+                : cx(
+                    "min-h-32 py-7",
+                    chosen ? "text-accent" : "text-ink",
+                    index === active && "bg-surface-selected",
+                  );
+              return (
+                <div
+                  key={option.value}
+                  id={`${id}-option-${index}`}
+                  role="option"
+                  aria-selected={chosen}
+                  aria-labelledby={`${id}-name-${index}`}
+                  aria-describedby={
+                    option.description
+                      ? `${id}-description-${index}`
+                      : undefined
+                  }
+                  className={cx(
+                    "relative flex cursor-pointer flex-col justify-center rounded-option px-9 pr-26",
+                    rowClasses,
+                  )}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onMouseEnter={() => setActive(index)}
+                  onClick={() => {
+                    onChange(option.value);
+                    setOpen(false);
+                    button.current?.focus();
+                  }}
+                >
+                  <span
+                    id={`${id}-name-${index}`}
+                    className={cx(
+                      "text-10 leading-14-5",
+                      option.description || chosen ? "font-700" : "font-510",
+                    )}
+                  >
+                    {option.label}
+                  </span>
+                  {option.description && (
+                    <span
+                      id={`${id}-description-${index}`}
+                      className="text-8 leading-12-8 text-ink-muted"
+                    >
+                      {option.description}
+                    </span>
+                  )}
+                  {chosen && (
+                    <Check
+                      aria-hidden
+                      className={cx(
+                        "absolute top-1/2 right-9 size-13 -translate-y-1/2",
+                        option.description ? "text-ink" : "text-accent",
+                      )}
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>,
+          portal ?? document.body,
+        )}
     </>
   );
 }

@@ -25,7 +25,9 @@ describe("Button", () => {
         Save schedule
       </Button>,
     );
-    await userEvent.click(screen.getByRole("button", { name: "Save schedule" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Save schedule" }),
+    );
     expect(onClick).not.toHaveBeenCalled();
   });
 });
@@ -48,7 +50,9 @@ describe("ButtonLink", () => {
         Open Workday
       </ButtonLink>,
     );
-    const link = screen.getByRole("link", { name: /^Open Workday\s*\(opens in a new tab\)$/ });
+    const link = screen.getByRole("link", {
+      name: /^Open Workday\s*\(opens in a new tab\)$/,
+    });
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveClass("bg-surface");
   });
@@ -57,6 +61,8 @@ describe("ButtonLink", () => {
 describe("IconButton", () => {
   it("is named by its label", () => {
     render(<IconButton label="Next schedule" icon={<svg />} />);
-    expect(screen.getByRole("button", { name: "Next schedule" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Next schedule" }),
+    ).toBeInTheDocument();
   });
 });

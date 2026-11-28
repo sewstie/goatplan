@@ -2,7 +2,10 @@ import type { ComponentProps, ReactNode } from "react";
 import { Check, X } from "@phosphor-icons/react/ssr";
 import { cx } from "./cx";
 
-type ToggleProps = Omit<ComponentProps<"button">, "onChange" | "onClick" | "children"> & {
+type ToggleProps = Omit<
+  ComponentProps<"button">,
+  "onChange" | "onClick" | "children"
+> & {
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
   label: ReactNode;
@@ -37,7 +40,9 @@ export function Toggle({
         <span
           className={cx(
             "flex size-13 items-center justify-center rounded-knob bg-surface transition-transform motion-reduce:transition-none [&_svg]:size-9",
-            checked ? "translate-x-12 text-accent" : "translate-x-0 text-toggle-off",
+            checked
+              ? "translate-x-12 text-accent"
+              : "translate-x-0 text-toggle-off",
           )}
         >
           {checked ? <Check /> : <X />}

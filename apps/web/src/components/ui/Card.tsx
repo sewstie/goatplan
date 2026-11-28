@@ -27,6 +27,13 @@ const variantClasses: Record<CardVariant, string> = {
   strip: "rounded-card border border-line-soft bg-surface",
 };
 
-export function Card({ as: Element = "div", variant = "outlined", className, ...rest }: CardProps) {
-  return <Element className={cx(variantClasses[variant], className)} {...rest} />;
+export function Card({
+  as: Element = "div",
+  variant = "outlined",
+  className,
+  ...rest
+}: CardProps) {
+  return (
+    <Element className={cx(variantClasses[variant], className)} {...rest} />
+  );
 }

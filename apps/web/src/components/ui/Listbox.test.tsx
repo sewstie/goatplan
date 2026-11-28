@@ -6,14 +6,36 @@ import { Listbox, type ListboxVariant } from "./Listbox";
 
 const options = [
   { value: "", label: "Any professor", description: "All 4 lecture times" },
-  { value: "alex", label: "Alex Rivera", description: "3 lecture times · includes co-teaching" },
+  {
+    value: "alex",
+    label: "Alex Rivera",
+    description: "3 lecture times · includes co-teaching",
+  },
   { value: "jordan", label: "Jordan Kim", description: "1 co-taught lecture" },
   { value: "morgan", label: "Morgan Lee", description: "1 lecture time" },
 ];
 
-function Field({ disabled = false, variant }: { disabled?: boolean; variant?: ListboxVariant }) {
+function Field({
+  disabled = false,
+  variant,
+}: {
+  disabled?: boolean;
+  variant?: ListboxVariant;
+}) {
   const [value, setValue] = useState("");
-  return <><Listbox label="Lecture professor" options={options} value={value} onChange={setValue} disabled={disabled} variant={variant} /><button>Next field</button></>;
+  return (
+    <>
+      <Listbox
+        label="Lecture professor"
+        options={options}
+        value={value}
+        onChange={setValue}
+        disabled={disabled}
+        variant={variant}
+      />
+      <button>Next field</button>
+    </>
+  );
 }
 
 function MenuField({ disabled = false }: { disabled?: boolean }) {
@@ -23,7 +45,20 @@ function MenuField({ disabled = false }: { disabled?: boolean }) {
     { value: "fewest-early", label: "Fewest early" },
     { value: "latest", label: "Latest start" },
   ];
-  return <><Listbox label="Sort" menuLabel="Sort" options={sortOptions} value={value} onChange={setValue} disabled={disabled} variant="menu" /><button>Next field</button></>;
+  return (
+    <>
+      <Listbox
+        label="Sort"
+        menuLabel="Sort"
+        options={sortOptions}
+        value={value}
+        onChange={setValue}
+        disabled={disabled}
+        variant="menu"
+      />
+      <button>Next field</button>
+    </>
+  );
 }
 
 // ── Field variant (default) ───────────────────────────────────────────
@@ -36,7 +71,10 @@ describe("field variant", () => {
     expect(field).toHaveAttribute("aria-expanded", "false");
     await user.click(field);
     const popup = screen.getByRole("listbox", { name: "Lecture professor" });
-    const selected = screen.getByRole("option", { name: "Any professor", selected: true });
+    const selected = screen.getByRole("option", {
+      name: "Any professor",
+      selected: true,
+    });
     expect(field).toHaveAttribute("aria-controls", popup.id);
     expect(field).toHaveAttribute("aria-activedescendant", selected.id);
     expect(field).toHaveAttribute("aria-expanded", "true");
@@ -45,25 +83,36 @@ describe("field variant", () => {
     expect(screen.getAllByRole("option")).toHaveLength(4);
   });
 
-  it.each(["{Enter}", " ", "{ArrowDown}", "{Alt>}{ArrowDown}{/Alt}"])("opens with %s, explores without changing the value, and commits with Enter", async (key) => {
-    const user = userEvent.setup();
-    render(<Field />);
-    const field = screen.getByRole("combobox");
-    await user.tab();
-    await user.keyboard(key);
-    expect(screen.getByRole("listbox")).toBeInTheDocument();
-    await user.keyboard("{ArrowDown}{ArrowDown}{ArrowUp}");
-    expect(field).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Alex Rivera" }).id);
-    expect(screen.getByRole("option", { name: "Any professor" })).toHaveAttribute("aria-selected", "true");
-    expect(field).toHaveTextContent("Any professor");
-    await user.keyboard("{Enter}");
-    expect(field).toHaveTextContent("Alex Rivera");
-    expect(field).toHaveAttribute("aria-expanded", "false");
-    expect(field).not.toHaveAttribute("aria-activedescendant");
-    expect(field).toHaveFocus();
-    await user.keyboard("{ArrowDown}");
-    expect(field).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Alex Rivera", selected: true }).id);
-  });
+  it.each(["{Enter}", " ", "{ArrowDown}", "{Alt>}{ArrowDown}{/Alt}"])(
+    "opens with %s, explores without changing the value, and commits with Enter",
+    async (key) => {
+      const user = userEvent.setup();
+      render(<Field />);
+      const field = screen.getByRole("combobox");
+      await user.tab();
+      await user.keyboard(key);
+      expect(screen.getByRole("listbox")).toBeInTheDocument();
+      await user.keyboard("{ArrowDown}{ArrowDown}{ArrowUp}");
+      expect(field).toHaveAttribute(
+        "aria-activedescendant",
+        screen.getByRole("option", { name: "Alex Rivera" }).id,
+      );
+      expect(
+        screen.getByRole("option", { name: "Any professor" }),
+      ).toHaveAttribute("aria-selected", "true");
+      expect(field).toHaveTextContent("Any professor");
+      await user.keyboard("{Enter}");
+      expect(field).toHaveTextContent("Alex Rivera");
+      expect(field).toHaveAttribute("aria-expanded", "false");
+      expect(field).not.toHaveAttribute("aria-activedescendant");
+      expect(field).toHaveFocus();
+      await user.keyboard("{ArrowDown}");
+      expect(field).toHaveAttribute(
+        "aria-activedescendant",
+        screen.getByRole("option", { name: "Alex Rivera", selected: true }).id,
+      );
+    },
+  );
 
   it("jumps to both ends, stops at the edges and selects with Space", async () => {
     const user = userEvent.setup();
@@ -71,9 +120,15 @@ describe("field variant", () => {
     const field = screen.getByRole("combobox");
     await user.tab();
     await user.keyboard("{End}{ArrowDown}");
-    expect(field).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Morgan Lee" }).id);
+    expect(field).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Morgan Lee" }).id,
+    );
     await user.keyboard("{Home}{ArrowUp}");
-    expect(field).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Any professor" }).id);
+    expect(field).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Any professor" }).id,
+    );
     await user.keyboard("{End} ");
     expect(field).toHaveTextContent("Morgan Lee");
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
@@ -85,29 +140,46 @@ describe("field variant", () => {
     const field = screen.getByRole("combobox");
     await user.tab();
     await user.keyboard("a");
-    expect(field).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Alex Rivera" }).id);
+    expect(field).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Alex Rivera" }).id,
+    );
     await user.keyboard("a");
-    expect(field).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Any professor" }).id);
+    expect(field).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Any professor" }).id,
+    );
     await user.keyboard("lex");
-    expect(field).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Alex Rivera" }).id);
+    expect(field).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Alex Rivera" }).id,
+    );
     expect(field).toHaveTextContent("Any professor");
     await user.keyboard("{Enter}");
     expect(field).toHaveTextContent("Alex Rivera");
   });
 
-  it.each(["{Escape}", "{Tab}", "outside"])("dismisses with %s and leaves the chosen professor unchanged", async (action) => {
-    const user = userEvent.setup();
-    render(<Field />);
-    const field = screen.getByRole("combobox");
-    await user.click(field);
-    await user.keyboard("{End}");
-    if (action === "outside") await user.click(screen.getByRole("button", { name: "Next field" }));
-    else await user.keyboard(action);
-    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
-    expect(field).toHaveAttribute("aria-expanded", "false");
-    expect(field).toHaveTextContent("Any professor");
-    expect(action === "{Escape}" ? field : screen.getByRole("button", { name: "Next field" })).toHaveFocus();
-  });
+  it.each(["{Escape}", "{Tab}", "outside"])(
+    "dismisses with %s and leaves the chosen professor unchanged",
+    async (action) => {
+      const user = userEvent.setup();
+      render(<Field />);
+      const field = screen.getByRole("combobox");
+      await user.click(field);
+      await user.keyboard("{End}");
+      if (action === "outside")
+        await user.click(screen.getByRole("button", { name: "Next field" }));
+      else await user.keyboard(action);
+      expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+      expect(field).toHaveAttribute("aria-expanded", "false");
+      expect(field).toHaveTextContent("Any professor");
+      expect(
+        action === "{Escape}"
+          ? field
+          : screen.getByRole("button", { name: "Next field" }),
+      ).toHaveFocus();
+    },
+  );
 
   it("starts a fresh name search after reopening or navigating", async () => {
     const user = userEvent.setup();
@@ -115,9 +187,15 @@ describe("field variant", () => {
     const field = screen.getByRole("combobox");
     await user.tab();
     await user.keyboard("alex{Enter}m");
-    expect(field).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Morgan Lee" }).id);
+    expect(field).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Morgan Lee" }).id,
+    );
     await user.keyboard("{Home}j");
-    expect(field).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Jordan Kim" }).id);
+    expect(field).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Jordan Kim" }).id,
+    );
   });
 
   it("keeps the chosen option active when a new search has no matching name", async () => {
@@ -126,7 +204,10 @@ describe("field variant", () => {
     const field = screen.getByRole("combobox");
     await user.click(field);
     await user.keyboard("{End}{Escape}z");
-    expect(field).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Any professor", selected: true }).id);
+    expect(field).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Any professor", selected: true }).id,
+    );
     await user.keyboard("{Enter}");
     expect(field).toHaveTextContent("Any professor");
   });
@@ -140,7 +221,10 @@ describe("field variant", () => {
     expect(field).toHaveTextContent("Jordan Kim");
     expect(field).toHaveFocus();
     await user.click(field);
-    expect(screen.getByRole("option", { name: "Jordan Kim" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("option", { name: "Jordan Kim" })).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
     await user.click(screen.getByRole("option", { name: "Any professor" }));
     expect(field).toHaveTextContent("Any professor");
     expect(field).toHaveFocus();
@@ -179,13 +263,16 @@ describe("menu variant", () => {
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
   });
 
-  it.each(["{Enter}", " ", "{ArrowDown}", "{ArrowUp}"])("opens with %s", async (key) => {
-    const user = userEvent.setup();
-    render(<MenuField />);
-    await user.tab();
-    await user.keyboard(key);
-    expect(screen.getByRole("listbox", { name: "Sort" })).toBeInTheDocument();
-  });
+  it.each(["{Enter}", " ", "{ArrowDown}", "{ArrowUp}"])(
+    "opens with %s",
+    async (key) => {
+      const user = userEvent.setup();
+      render(<MenuField />);
+      await user.tab();
+      await user.keyboard(key);
+      expect(screen.getByRole("listbox", { name: "Sort" })).toBeInTheDocument();
+    },
+  );
 
   it("dismisses with Escape and does not change the value", async () => {
     const user = userEvent.setup();
@@ -221,9 +308,13 @@ describe("menu variant", () => {
     const listWidth = 180;
     beforeEach(() => {
       triggerBox = new DOMRect(700, 100, 146, 28);
-      vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
+      vi.spyOn(
+        HTMLElement.prototype,
+        "getBoundingClientRect",
+      ).mockImplementation(function (this: HTMLElement) {
         if (this.getAttribute("role") === "combobox") return triggerBox;
-        if (this.getAttribute("role") === "listbox") return new DOMRect(0, 0, listWidth, 300);
+        if (this.getAttribute("role") === "listbox")
+          return new DOMRect(0, 0, listWidth, 300);
         return new DOMRect();
       });
     });
@@ -252,8 +343,12 @@ describe("menu variant", () => {
     it("keeps the field variant's list lined up with its left edge", async () => {
       const user = userEvent.setup();
       render(<Field />);
-      await user.click(screen.getByRole("combobox", { name: "Lecture professor" }));
-      expect(screen.getByRole("listbox", { name: "Lecture professor" }).style.left).toBe("700px");
+      await user.click(
+        screen.getByRole("combobox", { name: "Lecture professor" }),
+      );
+      expect(
+        screen.getByRole("listbox", { name: "Lecture professor" }).style.left,
+      ).toBe("700px");
     });
   });
 });
@@ -277,7 +372,10 @@ describe("hover highlight", () => {
     await user.click(screen.getByRole("combobox", { name: "Sort" }));
     const option = screen.getByRole("option", { name: "Latest start" });
     await user.hover(option);
-    expect(screen.getByRole("combobox")).toHaveAttribute("aria-activedescendant", option.id);
+    expect(screen.getByRole("combobox")).toHaveAttribute(
+      "aria-activedescendant",
+      option.id,
+    );
   });
 
   it("arrow keys move the highlight after a pointer hover", async () => {
@@ -297,7 +395,11 @@ describe("hover highlight", () => {
     render(<MenuField />);
     await user.click(screen.getByRole("combobox"));
     const selected = screen.getByRole("option", { selected: true });
-    expect(selected).toHaveClass("text-accent", "min-h-32", "bg-surface-selected");
+    expect(selected).toHaveClass(
+      "text-accent",
+      "min-h-32",
+      "bg-surface-selected",
+    );
     expect(selected).not.toHaveClass("bg-accent-soft", "min-h-49");
 
     const other = screen.getAllByRole("option", { selected: false })[0];
@@ -347,9 +449,15 @@ describe("accessibility", () => {
     await user.click(screen.getByRole("combobox"));
     const listbox = screen.getByRole("listbox", { name: "Lecture professor" });
     expect(listbox).toBeInTheDocument();
-    const selected = screen.getByRole("option", { name: "Any professor", selected: true });
+    const selected = screen.getByRole("option", {
+      name: "Any professor",
+      selected: true,
+    });
     expect(selected).toBeInTheDocument();
-    const unselected = screen.getByRole("option", { name: "Alex Rivera", selected: false });
+    const unselected = screen.getByRole("option", {
+      name: "Alex Rivera",
+      selected: false,
+    });
     expect(unselected).toBeInTheDocument();
   });
 
@@ -365,9 +473,15 @@ describe("accessibility", () => {
     render(<Field />);
     const trigger = screen.getByRole("combobox");
     await user.click(trigger);
-    expect(trigger).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Any professor" }).id);
+    expect(trigger).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Any professor" }).id,
+    );
     await user.keyboard("{ArrowDown}");
-    expect(trigger).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Alex Rivera" }).id);
+    expect(trigger).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Alex Rivera" }).id,
+    );
   });
 
   it("activedescendant is cleared when the list closes", async () => {
@@ -384,18 +498,42 @@ describe("accessibility", () => {
 
 describe("option names and descriptions", () => {
   const sortOptions = [
-    { value: "bestOverall", label: "Best overall", description: "A balance of start time, gaps and days" },
-    { value: "latestStart", label: "Latest start", description: "Classes start as late as possible each day" },
-    { value: "fewestDays", label: "Most days off", description: "Fewer days on campus" },
+    {
+      value: "bestOverall",
+      label: "Best overall",
+      description: "A balance of start time, gaps and days",
+    },
+    {
+      value: "latestStart",
+      label: "Latest start",
+      description: "Classes start as late as possible each day",
+    },
+    {
+      value: "fewestDays",
+      label: "Most days off",
+      description: "Fewer days on campus",
+    },
     { value: "plain", label: "No description" },
   ];
 
   function SortMenu() {
     const [value, setValue] = useState("latestStart");
-    return <Listbox variant="menu" label="Sort" menuLabel="Sort" options={sortOptions} value={value} onChange={setValue} />;
+    return (
+      <Listbox
+        variant="menu"
+        label="Sort"
+        menuLabel="Sort"
+        options={sortOptions}
+        value={value}
+        onChange={setValue}
+      />
+    );
   }
 
-  it.each([["field", Field, options], ["menu", SortMenu, sortOptions]] as const)(
+  it.each([
+    ["field", Field, options],
+    ["menu", SortMenu, sortOptions],
+  ] as const)(
     "names every option by its label only and describes it by its description (%s variant)",
     async (_, Component, expected) => {
       const user = userEvent.setup();
@@ -405,10 +543,13 @@ describe("option names and descriptions", () => {
       expect(shown).toHaveLength(expected.length);
       expected.forEach((option, index) => {
         expect(shown[index]).toHaveAccessibleName(option.label);
-        if ("description" in option && option.description) expect(shown[index]).toHaveAccessibleDescription(option.description);
+        if ("description" in option && option.description)
+          expect(shown[index]).toHaveAccessibleDescription(option.description);
         else expect(shown[index]).not.toHaveAccessibleDescription();
         // Found by name exactly as a person reads it, so tests can pick it by role and name.
-        expect(screen.getByRole("option", { name: option.label })).toBe(shown[index]);
+        expect(screen.getByRole("option", { name: option.label })).toBe(
+          shown[index],
+        );
       });
     },
   );
@@ -419,10 +560,13 @@ describe("option names and descriptions", () => {
     await user.click(screen.getByRole("combobox", { name: "Sort" }));
     const selected = screen.getByRole("option", { selected: true });
     expect(selected).toHaveAccessibleName("Latest start");
-    expect(selected).toHaveAccessibleDescription("Classes start as late as possible each day");
+    expect(selected).toHaveAccessibleDescription(
+      "Classes start as late as possible each day",
+    );
     const check = selected.querySelector("svg");
     expect(check).toHaveAttribute("aria-hidden", "true");
-    for (const option of screen.getAllByRole("option", { selected: false })) expect(option.querySelector("svg")).toBeNull();
+    for (const option of screen.getAllByRole("option", { selected: false }))
+      expect(option.querySelector("svg")).toBeNull();
   });
 
   it("keeps the label and description visible as text, with no visual change", async () => {

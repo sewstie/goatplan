@@ -18,13 +18,28 @@ export function floatingPosition(
   anchor: Pick<DOMRect, "left" | "top" | "bottom">,
   size: Box,
   viewport: Box,
-  { placement = "bottom", offsetX = 0, gap = 6, margin = 8 }: FloatingOptions = {},
+  {
+    placement = "bottom",
+    offsetX = 0,
+    gap = 6,
+    margin = 8,
+  }: FloatingOptions = {},
 ): { left: number; top: number } {
-  const left = Math.max(margin, Math.min(anchor.left + offsetX, viewport.width - size.width - margin));
+  const left = Math.max(
+    margin,
+    Math.min(anchor.left + offsetX, viewport.width - size.width - margin),
+  );
   const below = anchor.bottom + gap;
   const above = anchor.top - gap - size.height;
   const fitsBelow = below + size.height <= viewport.height - margin;
   const fitsAbove = above >= margin;
-  const top = placement === "bottom" ? (fitsBelow || !fitsAbove ? below : above) : fitsAbove || !fitsBelow ? above : below;
+  const top =
+    placement === "bottom"
+      ? fitsBelow || !fitsAbove
+        ? below
+        : above
+      : fitsAbove || !fitsBelow
+        ? above
+        : below;
   return { left, top };
 }

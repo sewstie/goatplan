@@ -3,7 +3,11 @@
 import { useEffect, type RefObject } from "react";
 
 /** Closes a small popup on a press outside it or on Escape, and keeps that Escape from closing anything behind it. */
-export function useDismiss(open: boolean, root: RefObject<HTMLElement | null>, close: () => void) {
+export function useDismiss(
+  open: boolean,
+  root: RefObject<HTMLElement | null>,
+  close: () => void,
+) {
   useEffect(() => {
     if (!open) return;
     const away = (event: PointerEvent) => {

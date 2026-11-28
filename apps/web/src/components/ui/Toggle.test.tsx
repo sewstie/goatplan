@@ -6,13 +6,21 @@ import { Toggle } from "./Toggle";
 
 function ControlledToggle() {
   const [checked, setChecked] = useState(true);
-  return <Toggle checked={checked} onCheckedChange={setChecked} label="Only open sections" />;
+  return (
+    <Toggle
+      checked={checked}
+      onCheckedChange={setChecked}
+      label="Only open sections"
+    />
+  );
 }
 
 describe("Toggle", () => {
   it("is a switch named by its label", () => {
     render(<ControlledToggle />);
-    expect(screen.getByRole("switch", { name: "Only open sections" })).toBeChecked();
+    expect(
+      screen.getByRole("switch", { name: "Only open sections" }),
+    ).toBeChecked();
   });
 
   it("flips with Space, Enter and clicks", async () => {

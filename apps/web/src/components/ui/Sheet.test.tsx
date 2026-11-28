@@ -6,22 +6,34 @@ import { Sheet, type SheetSide } from "./Sheet";
 
 // jsdom has no modal dialogs. This stands in for the browser: showModal opens the dialog, and
 // Escape (unless something inside already handled it) sends `cancel` and then closes it.
-const native = { showModal: HTMLDialogElement.prototype.showModal, close: HTMLDialogElement.prototype.close };
-const escapeHandlers = new WeakMap<HTMLDialogElement, (event: KeyboardEvent) => void>();
+const native = {
+  showModal: HTMLDialogElement.prototype.showModal,
+  close: HTMLDialogElement.prototype.close,
+};
+const escapeHandlers = new WeakMap<
+  HTMLDialogElement,
+  (event: KeyboardEvent) => void
+>();
 
 beforeAll(() => {
-  HTMLDialogElement.prototype.showModal = function showModal(this: HTMLDialogElement) {
+  HTMLDialogElement.prototype.showModal = function showModal(
+    this: HTMLDialogElement,
+  ) {
     this.setAttribute("open", "");
     const onEscape = (event: KeyboardEvent) => {
       if (event.key !== "Escape" || event.defaultPrevented) return;
-      if (this.dispatchEvent(new Event("cancel", { cancelable: true }))) this.close();
+      if (this.dispatchEvent(new Event("cancel", { cancelable: true })))
+        this.close();
     };
     escapeHandlers.set(this, onEscape);
     this.ownerDocument.addEventListener("keydown", onEscape);
   };
   HTMLDialogElement.prototype.close = function close(this: HTMLDialogElement) {
     if (!this.hasAttribute("open")) return;
-    this.ownerDocument.removeEventListener("keydown", escapeHandlers.get(this)!);
+    this.ownerDocument.removeEventListener(
+      "keydown",
+      escapeHandlers.get(this)!,
+    );
     this.removeAttribute("open");
     this.dispatchEvent(new Event("close"));
   };
@@ -67,7 +79,11 @@ async function openSheet(side?: SheetSide) {
   render(<SheetExample side={side} />);
   const opener = screen.getByRole("button", { name: "AE 2320" });
   await user.click(opener);
-  return { user, opener, sheet: screen.getByRole("dialog", { name: "AE 2320" }) };
+  return {
+    user,
+    opener,
+    sheet: screen.getByRole("dialog", { name: "AE 2320" }),
+  };
 }
 
 describe("Sheet", () => {
@@ -80,20 +96,36 @@ describe("Sheet", () => {
   it("opens across the bottom: full width, at most 85% of the screen, rounded top corners, scrolling inside", async () => {
     const { sheet } = await openSheet("bottom");
     expect(sheet).toHaveAttribute("open");
-    expect(sheet).toHaveClass("mt-auto", "mb-0", "w-full", "max-w-none", "max-h-[85dvh]", "rounded-t-panel");
+    expect(sheet).toHaveClass(
+      "mt-auto",
+      "mb-0",
+      "w-full",
+      "max-w-none",
+      "max-h-[85dvh]",
+      "rounded-t-panel",
+    );
     expect(sheet).not.toHaveClass("rounded-l-panel", "h-dvh");
-    expect(sheet.firstElementChild).toHaveClass("max-h-[85dvh]", "overflow-y-auto");
+    expect(sheet.firstElementChild).toHaveClass(
+      "max-h-[85dvh]",
+      "overflow-y-auto",
+    );
   });
 
   it("slides up, with the slide turned off for reduced motion", async () => {
     const { sheet } = await openSheet("bottom");
-    expect(sheet).toHaveClass("starting:translate-y-full", "motion-reduce:transition-none");
+    expect(sheet).toHaveClass(
+      "starting:translate-y-full",
+      "motion-reduce:transition-none",
+    );
   });
 
-  it.each(["bottom", "right"] as const)("moves focus to its heading on open (%s)", async (side) => {
-    await openSheet(side);
-    expect(screen.getByRole("heading", { name: "AE 2320" })).toHaveFocus();
-  });
+  it.each(["bottom", "right"] as const)(
+    "moves focus to its heading on open (%s)",
+    async (side) => {
+      await openSheet(side);
+      expect(screen.getByRole("heading", { name: "AE 2320" })).toHaveFocus();
+    },
+  );
 
   it("keeps Tab and Shift+Tab inside the sheet", async () => {
     const { user, sheet } = await openSheet("bottom");
@@ -124,7 +156,9 @@ describe("Sheet", () => {
   it("goes back from the heading to the last control with Shift+Tab", async () => {
     const { user } = await openSheet("bottom");
     await user.tab({ shift: true });
-    expect(screen.getByRole("link", { name: "Rate My Professors" })).toHaveFocus();
+    expect(
+      screen.getByRole("link", { name: "Rate My Professors" }),
+    ).toHaveFocus();
   });
 
   it("closes with Escape and returns focus to what opened it", async () => {

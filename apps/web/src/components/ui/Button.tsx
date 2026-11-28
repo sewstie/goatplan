@@ -21,8 +21,10 @@ type ButtonProps = ComponentProps<"button"> &
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
     "border-accent bg-accent text-on-accent not-disabled:not-aria-disabled:hover:border-transparent not-disabled:not-aria-disabled:hover:bg-accent/90 disabled:border-button-disabled disabled:bg-button-disabled disabled:text-button-disabled-ink disabled:[&_svg]:opacity-45",
-  secondary: "border-line-button bg-surface text-ink not-disabled:not-aria-disabled:hover:bg-surface-selected",
-  warning: "border-warning-line bg-surface text-ink not-disabled:not-aria-disabled:hover:bg-issue-surface",
+  secondary:
+    "border-line-button bg-surface text-ink not-disabled:not-aria-disabled:hover:bg-surface-selected",
+  warning:
+    "border-warning-line bg-surface text-ink not-disabled:not-aria-disabled:hover:bg-issue-surface",
   soft: "border-transparent bg-accent-soft text-accent not-disabled:not-aria-disabled:hover:bg-accent-line",
 };
 
@@ -34,7 +36,11 @@ const sizeClasses: Record<ButtonSize, string> = {
 };
 
 /** The look of a button, for links that look like one (ButtonLink). */
-export function buttonClasses({ variant = "primary", size = "lg", fullWidth = false }: ButtonStyle = {}): string {
+export function buttonClasses({
+  variant = "primary",
+  size = "lg",
+  fullWidth = false,
+}: ButtonStyle = {}): string {
   return cx(
     "inline-flex shrink-0 cursor-pointer items-center justify-center border font-570 whitespace-nowrap transition-[color,background-color,border-color] disabled:cursor-not-allowed aria-disabled:cursor-default [&_svg]:shrink-0",
     variantClasses[variant],
@@ -54,7 +60,11 @@ export function Button({
   ...rest
 }: ButtonProps) {
   return (
-    <button type={type} className={cx(buttonClasses({ variant, size, fullWidth }), className)} {...rest}>
+    <button
+      type={type}
+      className={cx(buttonClasses({ variant, size, fullWidth }), className)}
+      {...rest}
+    >
       {icon}
       {children}
     </button>

@@ -97,12 +97,20 @@ export function Chip({
         type="button"
         aria-pressed={pressed}
         onClick={onClick}
-        className={cx(pill, "cursor-pointer transition-[color,background-color,border-color]", !pressed && "hover:bg-surface-selected")}
+        className={cx(
+          pill,
+          "cursor-pointer transition-[color,background-color,border-color]",
+          !pressed && "hover:bg-surface-selected",
+        )}
       >
         {content}
       </button>
     );
   }
 
-  return <span id={id} className={pill}>{content}</span>;
+  return (
+    <span id={id} className={pill}>
+      {content}
+    </span>
+  );
 }

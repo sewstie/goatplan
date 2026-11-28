@@ -14,7 +14,8 @@ const wait = (ms: number) => act(() => vi.advanceTimersByTime(ms));
 const box = () => screen.getByRole("status").firstElementChild!;
 const hover = () => fireEvent.pointerEnter(box());
 const unhover = () => fireEvent.pointerLeave(box());
-const focus = (name: string) => act(() => screen.getByRole("button", { name }).focus());
+const focus = (name: string) =>
+  act(() => screen.getByRole("button", { name }).focus());
 
 function setup(message: string | null = "Removed MA 1024") {
   const onAction = vi.fn();
@@ -23,7 +24,11 @@ function setup(message: string | null = "Removed MA 1024") {
   const view = render(
     <>
       <button type="button">Remove CS 2022</button>
-      <Toast message={message} actions={[{ label: "Undo", onAction }]} onDismiss={onDismiss} />
+      <Toast
+        message={message}
+        actions={[{ label: "Undo", onAction }]}
+        onDismiss={onDismiss}
+      />
       <button type="button">Page end</button>
     </>,
   );
@@ -31,7 +36,11 @@ function setup(message: string | null = "Removed MA 1024") {
     view.rerender(
       <>
         <button type="button">Remove CS 2022</button>
-        <Toast message={next} actions={[{ label: "Undo", onAction }]} onDismiss={onDismiss} />
+        <Toast
+          message={next}
+          actions={[{ label: "Undo", onAction }]}
+          onDismiss={onDismiss}
+        />
         <button type="button">Page end</button>
       </>,
     );
@@ -44,22 +53,30 @@ describe("Toast", () => {
     const status = screen.getByRole("status");
     expect(status).toHaveAttribute("aria-live", "polite");
     expect(status).toHaveTextContent("Removed MA 1024 · Undo");
-    expect(status).toContainElement(screen.getByRole("button", { name: "Undo" }));
+    expect(status).toContainElement(
+      screen.getByRole("button", { name: "Undo" }),
+    );
   });
 
   it("keeps the live region on the page while there's nothing to show, so a new message is announced", () => {
     const { rerender } = setup(null);
     expect(screen.getByRole("status")).toBeEmptyDOMElement();
-    expect(screen.queryByRole("button", { name: "Undo" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Undo" }),
+    ).not.toBeInTheDocument();
     rerender("Removed MA 1024");
-    expect(screen.getByRole("status")).toHaveTextContent("Removed MA 1024 · Undo");
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Removed MA 1024 · Undo",
+    );
   });
 
   it("never moves focus to itself", async () => {
     const { user, rerender } = setup(null);
     await user.click(screen.getByRole("button", { name: "Remove CS 2022" }));
     rerender("Removed CS 2022");
-    expect(screen.getByRole("button", { name: "Remove CS 2022" })).toHaveFocus();
+    expect(
+      screen.getByRole("button", { name: "Remove CS 2022" }),
+    ).toHaveFocus();
   });
 
   describe("timer", () => {
@@ -137,7 +154,9 @@ describe("Toast", () => {
       const { onDismiss, rerender } = setup();
       wait(4000);
       rerender("Removed CS 2022");
-      expect(screen.getByRole("status")).toHaveTextContent("Removed CS 2022 · Undo");
+      expect(screen.getByRole("status")).toHaveTextContent(
+        "Removed CS 2022 · Undo",
+      );
       wait(5999);
       expect(onDismiss).not.toHaveBeenCalled();
       wait(1);
@@ -162,14 +181,20 @@ describe("Toast", () => {
         return (
           <>
             <p>Dismissed {dismissed}</p>
-            <Toast message={dismissed ? null : "Removed MA 1024"} actions={[{ label: "Undo", onAction: () => {} }]} onDismiss={() => setDismissed(dismissed + 1)} />
+            <Toast
+              message={dismissed ? null : "Removed MA 1024"}
+              actions={[{ label: "Undo", onAction: () => {} }]}
+              onDismiss={() => setDismissed(dismissed + 1)}
+            />
           </>
         );
       }
       render(<Shell />);
       wait(6000);
       expect(screen.getByText("Dismissed 1")).toBeInTheDocument();
-      expect(screen.queryByRole("button", { name: "Undo" })).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: "Undo" }),
+      ).not.toBeInTheDocument();
     });
   });
 
@@ -195,9 +220,22 @@ describe("Toast", () => {
     const name = vi.fn();
     const undo = vi.fn();
     const user = userEvent.setup();
-    render(<Toast message="Blocked Mon–Wed 12–1 PM" actions={[{ label: "Name it", onAction: name }, { label: "Undo", onAction: undo }]} onDismiss={() => {}} />);
-    expect(screen.getByRole("status")).toHaveTextContent("Blocked Mon–Wed 12–1 PM · Name it · Undo");
-    expect(screen.getAllByRole("button").map((button) => button.textContent)).toEqual(["Name it", "Undo"]);
+    render(
+      <Toast
+        message="Blocked Mon–Wed 12–1 PM"
+        actions={[
+          { label: "Name it", onAction: name },
+          { label: "Undo", onAction: undo },
+        ]}
+        onDismiss={() => {}}
+      />,
+    );
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Blocked Mon–Wed 12–1 PM · Name it · Undo",
+    );
+    expect(
+      screen.getAllByRole("button").map((button) => button.textContent),
+    ).toEqual(["Name it", "Undo"]);
     await user.click(screen.getByRole("button", { name: "Name it" }));
     expect(name).toHaveBeenCalledTimes(1);
     expect(undo).not.toHaveBeenCalled();
@@ -206,10 +244,22 @@ describe("Toast", () => {
   it("uses tokens only: surface, popover border and shadow, card radius, 11 px / 570 ink, accent action at 650", () => {
     setup();
     expect(box()).toHaveClass(
-      "bg-surface", "border", "border-line-popover", "shadow-popover", "rounded-card",
-      "text-11", "font-570", "text-ink", "px-14", "py-10", "gap-12",
+      "bg-surface",
+      "border",
+      "border-line-popover",
+      "shadow-popover",
+      "rounded-card",
+      "text-11",
+      "font-570",
+      "text-ink",
+      "px-14",
+      "py-10",
+      "gap-12",
     );
-    expect(screen.getByRole("button", { name: "Undo" })).toHaveClass("text-accent", "font-650");
+    expect(screen.getByRole("button", { name: "Undo" })).toHaveClass(
+      "text-accent",
+      "font-650",
+    );
   });
 
   it("sits full width minus 16 px on phone and bottom centre from the tablet breakpoint", () => {
@@ -222,7 +272,9 @@ describe("Toast", () => {
   it("fades and slides in by 8 px, with no motion for reduced motion", () => {
     setup();
     expect(box()).toHaveClass(
-      "starting:opacity-0", "starting:translate-y-8", "motion-reduce:transition-none",
+      "starting:opacity-0",
+      "starting:translate-y-8",
+      "motion-reduce:transition-none",
     );
   });
 });

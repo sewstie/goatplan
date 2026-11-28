@@ -14,8 +14,17 @@ describe("Chip", () => {
 
   it("has a named remove button", async () => {
     const onRemove = vi.fn();
-    render(<Chip label="Blocked" value="Work" onRemove={onRemove} removeLabel="Remove Work block" />);
-    await userEvent.click(screen.getByRole("button", { name: "Remove Work block" }));
+    render(
+      <Chip
+        label="Blocked"
+        value="Work"
+        onRemove={onRemove}
+        removeLabel="Remove Work block"
+      />,
+    );
+    await userEvent.click(
+      screen.getByRole("button", { name: "Remove Work block" }),
+    );
     expect(onRemove).toHaveBeenCalledOnce();
   });
 
@@ -33,9 +42,19 @@ describe("Chip", () => {
   });
 
   it("is a toggle button when it has a pressed state", async () => {
-    const { rerender } = render(<Chip variant="dashed" pressed={false} onClick={() => {}}>Block a time</Chip>);
-    expect(screen.getByRole("button", { name: "Block a time" })).toHaveAttribute("aria-pressed", "false");
-    rerender(<Chip variant="dashed" pressed onClick={() => {}}>Drawing busy times</Chip>);
+    const { rerender } = render(
+      <Chip variant="dashed" pressed={false} onClick={() => {}}>
+        Block a time
+      </Chip>,
+    );
+    expect(
+      screen.getByRole("button", { name: "Block a time" }),
+    ).toHaveAttribute("aria-pressed", "false");
+    rerender(
+      <Chip variant="dashed" pressed onClick={() => {}}>
+        Drawing busy times
+      </Chip>,
+    );
     const chip = screen.getByRole("button", { name: "Drawing busy times" });
     expect(chip).toHaveAttribute("aria-pressed", "true");
     expect(chip.className).toContain("bg-accent-soft");
