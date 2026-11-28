@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-:root { color-scheme: light; }
+:root {
+  color-scheme: light;
+}
 
 @media screen {
   :root[data-theme="dark"] .brand-logo {
@@ -482,7 +484,9 @@
 
 /* Over a blocked time in drawing mode, where a drag removes it. The hotspot is the eraser's tip. */
 @utility cursor-erase {
-  cursor: url("/cursors/erase.svg") 3 20, not-allowed;
+  cursor:
+    url("/cursors/erase.svg") 3 20,
+    not-allowed;
 }
 
 @layer base {
@@ -521,13 +525,21 @@
 .pace-slider::-webkit-slider-runnable-track {
   height: 0.3125rem;
   border-radius: 1rem;
-  background: linear-gradient(to right, var(--color-chart-planned) var(--pace-fill), var(--color-track) var(--pace-fill));
+  background: linear-gradient(
+    to right,
+    var(--color-chart-planned) var(--pace-fill),
+    var(--color-track) var(--pace-fill)
+  );
 }
 
 .pace-slider::-moz-range-track {
   height: 0.3125rem;
   border-radius: 1rem;
-  background: linear-gradient(to right, var(--color-chart-planned) var(--pace-fill), var(--color-track) var(--pace-fill));
+  background: linear-gradient(
+    to right,
+    var(--color-chart-planned) var(--pace-fill),
+    var(--color-track) var(--pace-fill)
+  );
 }
 
 .pace-slider::-webkit-slider-thumb {
