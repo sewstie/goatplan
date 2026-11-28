@@ -5,7 +5,15 @@ import { useRouter } from "next/navigation";
 import { Button, type ButtonSize } from "@/components/ui/Button";
 import { usePlannerStore } from "@/lib/store";
 
-export function OpenInPlanner({ termId, code, size = "sm" }: { termId: string; code?: string; size?: ButtonSize }) {
+export function OpenInPlanner({
+  termId,
+  code,
+  size = "sm",
+}: {
+  termId: string;
+  code?: string;
+  size?: ButtonSize;
+}) {
   const store = usePlannerStore();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
@@ -15,7 +23,11 @@ export function OpenInPlanner({ termId, code, size = "sm" }: { termId: string; c
     setBusy(true);
     setError("");
     await store.getState().init();
-    if (store.getState().termId !== termId || store.getState().termStatus !== "ready") await store.getState().setTerm(termId);
+    if (
+      store.getState().termId !== termId ||
+      store.getState().termStatus !== "ready"
+    )
+      await store.getState().setTerm(termId);
     const state = store.getState();
     if (state.termId !== termId || state.termStatus !== "ready") {
       setError("This term couldn’t be opened. Try again.");
@@ -27,5 +39,21 @@ export function OpenInPlanner({ termId, code, size = "sm" }: { termId: string; c
     router.push("/");
   }
 
-  return <div><Button variant="secondary" size={size} disabled={busy} onClick={() => void open()}>{code ? "Add to schedule" : "Open in planner"}</Button>{error && <p role="alert" className="pt-6 text-8 text-warning-ink">{error}</p>}</div>;
+  return (
+    <div>
+      <Button
+        variant="secondary"
+        size={size}
+        disabled={busy}
+        onClick={() => void open()}
+      >
+        {code ? "Add to schedule" : "Open in planner"}
+      </Button>
+      {error && (
+        <p role="alert" className="pt-6 text-8 text-warning-ink">
+          {error}
+        </p>
+      )}
+    </div>
+  );
 }

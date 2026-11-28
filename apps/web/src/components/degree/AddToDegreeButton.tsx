@@ -26,7 +26,13 @@ export function AddToDegreeButton() {
       >
         <span className="tablet:max-wide:sr-only">Add to degree</span>
       </Button>
-      {open && <AddToDegreePanel id={panelId} anchor={button} onClose={() => setOpen(false)} />}
+      {open && (
+        <AddToDegreePanel
+          id={panelId}
+          anchor={button}
+          onClose={() => setOpen(false)}
+        />
+      )}
     </>
   );
 }

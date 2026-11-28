@@ -11,20 +11,40 @@ export function PlanningFirstCard({ view }: { view: DegreeView }) {
     <InsightCard title="What needs planning first">
       <ol className="degree-planning-first flex flex-col pl-10 tablet:pl-0">
         {items.map((item, index) => (
-          <li key={item.title} className="flex gap-7 border-b border-line py-12 tablet:py-6 last:border-b-0">
-            <span className="text-tile leading-14-4 text-ink-muted">{index + 1}.</span>
+          <li
+            key={item.title}
+            className="flex gap-7 border-b border-line py-12 tablet:py-6 last:border-b-0"
+          >
+            <span className="text-tile leading-14-4 text-ink-muted">
+              {index + 1}.
+            </span>
             <div className="min-w-0 flex-1">
               <div className="flex items-baseline justify-between gap-12">
                 <p className="text-tile leading-16 font-600">{item.title}</p>
                 {item.aside ? (
-                  <span className="shrink-0 text-caption leading-14-4 text-ink-muted">{item.aside}</span>
+                  <span className="shrink-0 text-caption leading-14-4 text-ink-muted">
+                    {item.aside}
+                  </span>
                 ) : (
-                  <button type="button" aria-label="Go to your sheet" onClick={() => document.querySelector('[aria-label="Your sheet"], [aria-label="Your requirements"]')?.scrollIntoView()} className="cursor-pointer rounded-badge text-ink">
+                  <button
+                    type="button"
+                    aria-label="Go to your sheet"
+                    onClick={() =>
+                      document
+                        .querySelector(
+                          '[aria-label="Your sheet"], [aria-label="Your requirements"]',
+                        )
+                        ?.scrollIntoView()
+                    }
+                    className="cursor-pointer rounded-badge text-ink"
+                  >
                     <ArrowUpRight aria-hidden className="size-13" />
                   </button>
                 )}
               </div>
-              <p className="pt-3 text-tile leading-14-4 text-ink-muted">{item.text}</p>
+              <p className="pt-3 text-tile leading-14-4 text-ink-muted">
+                {item.text}
+              </p>
             </div>
           </li>
         ))}

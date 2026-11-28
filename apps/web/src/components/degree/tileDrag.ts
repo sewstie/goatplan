@@ -5,10 +5,17 @@ import type { DegreeView } from "./useDegreeView";
 
 export const DRAG_TYPE = "application/x-goatplan-course";
 
-export function lineDropProps(view: DegreeView, history: DegreeHistory, line: number, current: string | null = null) {
+export function lineDropProps(
+  view: DegreeView,
+  history: DegreeHistory,
+  line: number,
+  current: string | null = null,
+) {
   const allowed = (code: string) => {
     const credits = view.courses.get(code)?.credits;
-    return credits !== undefined && code !== current && fitsLine(code, credits, line);
+    return (
+      credits !== undefined && code !== current && fitsLine(code, credits, line)
+    );
   };
   return {
     onDragOver(event: DragEvent) {

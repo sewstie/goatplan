@@ -6,7 +6,17 @@ import { ChoiceChips } from "./ChoiceChips";
 
 function Score() {
   const [value, setValue] = useState("");
-  return <><button type="button">Before</button><ChoiceChips label="Score" options={["5", "4", "3"].map((item) => ({ value: item, label: item }))} value={value} onChange={setValue} /></>;
+  return (
+    <>
+      <button type="button">Before</button>
+      <ChoiceChips
+        label="Score"
+        options={["5", "4", "3"].map((item) => ({ value: item, label: item }))}
+        value={value}
+        onChange={setValue}
+      />
+    </>
+  );
 }
 
 describe("choice chips", () => {
@@ -18,6 +28,9 @@ describe("choice chips", () => {
     expect(screen.getByRole("radio", { name: "5" })).toHaveFocus();
     await user.keyboard("{ArrowRight}");
     expect(screen.getByRole("radio", { name: "4" })).toHaveFocus();
-    expect(screen.getByRole("radio", { name: "4" })).toHaveAttribute("aria-checked", "true");
+    expect(screen.getByRole("radio", { name: "4" })).toHaveAttribute(
+      "aria-checked",
+      "true",
+    );
   });
 });

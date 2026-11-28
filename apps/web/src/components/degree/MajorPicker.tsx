@@ -8,7 +8,9 @@ import { MajorPickerFields } from "./MajorPickerFields";
 export function MajorPicker({ selected }: { selected: string | null }) {
   const [open, setOpen] = useState(false);
   const title = "Choose your major";
-  const form = <MajorPickerFields selected={selected} onDone={() => setOpen(false)} />;
+  const form = (
+    <MajorPickerFields selected={selected} onDone={() => setOpen(false)} />
+  );
 
   if (!selected) {
     return (
@@ -21,7 +23,14 @@ export function MajorPicker({ selected }: { selected: string | null }) {
 
   return (
     <>
-      <Button variant="secondary" className="min-h-44" aria-label="Change major" onClick={() => setOpen(true)}>Change</Button>
+      <Button
+        variant="secondary"
+        className="min-h-44"
+        aria-label="Change major"
+        onClick={() => setOpen(true)}
+      >
+        Change
+      </Button>
       <Dialog open={open} onClose={() => setOpen(false)} title={title}>
         {open && form}
       </Dialog>

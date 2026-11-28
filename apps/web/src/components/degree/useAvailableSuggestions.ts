@@ -5,8 +5,18 @@ import type { TermFile } from "@/lib/data/types";
 import { EngineClient } from "@/lib/engine";
 import { createScheduleCheck } from "@/lib/degree/recommendations/schedules";
 
-export function useAvailableSuggestions(file: TermFile | null, candidates: readonly string[], chosen: readonly string[], attempt = 0) {
-  const [answer, setAnswer] = useState<{ file: TermFile; key: string; available: Set<string>; unchecked: boolean } | null>(null);
+export function useAvailableSuggestions(
+  file: TermFile | null,
+  candidates: readonly string[],
+  chosen: readonly string[],
+  attempt = 0,
+) {
+  const [answer, setAnswer] = useState<{
+    file: TermFile;
+    key: string;
+    available: Set<string>;
+    unchecked: boolean;
+  } | null>(null);
   const key = JSON.stringify([candidates, chosen, attempt]);
 
   useEffect(() => {
@@ -26,10 +36,15 @@ export function useAvailableSuggestions(file: TermFile | null, candidates: reado
           if (fit === "unknown") unchecked = true;
         }
         if (live) setAnswer({ file: file!, key, available, unchecked });
-      } finally { engine.dispose(); }
+      } finally {
+        engine.dispose();
+      }
     }
     void check();
-    return () => { live = false; engine.dispose(); };
+    return () => {
+      live = false;
+      engine.dispose();
+    };
   }, [file, key]);
 
   return file && answer?.file === file && answer.key === key ? answer : null;

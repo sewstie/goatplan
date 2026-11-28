@@ -19,5 +19,10 @@ export function useCourseCatalog() {
     return loading.current;
   }, []);
 
-  return { courses: catalog?.courses ?? NO_COURSES, ready: catalog?.complete === true, failed: catalog?.complete === false, load };
+  return {
+    courses: catalog?.courses ?? NO_COURSES,
+    ready: catalog?.complete === true,
+    failed: catalog?.complete === false,
+    load,
+  };
 }

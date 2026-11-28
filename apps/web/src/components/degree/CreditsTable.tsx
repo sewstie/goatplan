@@ -8,19 +8,29 @@ export function CreditsTable({ credits }: { credits: CreditsPerTerm }) {
       <caption className="sr-only">Units per term</caption>
       <thead className="text-caption text-ink-muted">
         <tr className="border-b border-line">
-          <th scope="col" className="w-1/3 px-4 py-8 font-510">Term</th>
-          <th scope="col" className="w-1/3 px-4 py-8 font-510">Done</th>
-          <th scope="col" className="w-1/3 px-4 py-8 font-510">Planned</th>
+          <th scope="col" className="w-1/3 px-4 py-8 font-510">
+            Term
+          </th>
+          <th scope="col" className="w-1/3 px-4 py-8 font-510">
+            Done
+          </th>
+          <th scope="col" className="w-1/3 px-4 py-8 font-510">
+            Planned
+          </th>
         </tr>
       </thead>
       <tbody>
-        {[...credits.bars, credits.prior, credits.noTerm].filter((bar) => bar.key !== null || bar.done + bar.planned > 0).map((bar) => (
-          <tr key={bar.label} className="border-b border-line">
-            <th scope="row" className="px-4 py-11 font-400">{bar.label}</th>
-            <td className="px-4 py-11">{amount(bar.done)}</td>
-            <td className="px-4 py-11">{amount(bar.planned)}</td>
-          </tr>
-        ))}
+        {[...credits.bars, credits.prior, credits.noTerm]
+          .filter((bar) => bar.key !== null || bar.done + bar.planned > 0)
+          .map((bar) => (
+            <tr key={bar.label} className="border-b border-line">
+              <th scope="row" className="px-4 py-11 font-400">
+                {bar.label}
+              </th>
+              <td className="px-4 py-11">{amount(bar.done)}</td>
+              <td className="px-4 py-11">{amount(bar.planned)}</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );

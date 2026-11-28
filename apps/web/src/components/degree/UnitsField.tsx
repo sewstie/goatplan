@@ -19,7 +19,9 @@ type UnitsFieldProps = {
 };
 
 export function UnitsField({ value, onChange, problem }: UnitsFieldProps) {
-  const common = COMMON.some((option) => option.value === value && option.value !== "other");
+  const common = COMMON.some(
+    (option) => option.value === value && option.value !== "other",
+  );
   const [other, setOther] = useState(!common);
   const [picked, setPicked] = useState(false);
   return (
@@ -41,7 +43,13 @@ export function UnitsField({ value, onChange, problem }: UnitsFieldProps) {
           autoComplete="off"
           value={value}
           aria-invalid={problem ? true : undefined}
-          hint={problem ? <span role="alert">{problem}</span> : "Enter WPI units, like 1/12. Not semester credits."}
+          hint={
+            problem ? (
+              <span role="alert">{problem}</span>
+            ) : (
+              "Enter WPI units, like 1/12. Not semester credits."
+            )
+          }
           onChange={(event) => onChange(event.target.value)}
         />
       )}

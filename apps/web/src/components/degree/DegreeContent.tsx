@@ -29,12 +29,22 @@ export function DegreeContent() {
   return (
     <>
       <div className="flex flex-col gap-18 tablet:gap-12">
-          <DegreeTitle hasCourses={degree.history.courses.length > 0} selectedSheetId={degree.selectedSheetId}  />
-          <DegreeTabs value={tab} onChange={setTab} mapAvailable={map !== null} />
-          {tab === "sheet" && <DegreeMain degree={degree} view={view} />}
-          {tab === "plan" && <PlanAhead degree={degree} view={view} />}
-          {tab === "suggestions" && <SuggestCoursesPanel history={degree.history} inline />}
-          {tab === "map" && <DegreeCourseMap key={degree.selectedSheetId} history={degree.history} />}
+        <DegreeTitle
+          hasCourses={degree.history.courses.length > 0}
+          selectedSheetId={degree.selectedSheetId}
+        />
+        <DegreeTabs value={tab} onChange={setTab} mapAvailable={map !== null} />
+        {tab === "sheet" && <DegreeMain degree={degree} view={view} />}
+        {tab === "plan" && <PlanAhead degree={degree} view={view} />}
+        {tab === "suggestions" && (
+          <SuggestCoursesPanel history={degree.history} inline />
+        )}
+        {tab === "map" && (
+          <DegreeCourseMap
+            key={degree.selectedSheetId}
+            history={degree.history}
+          />
+        )}
       </div>
       <DegreePanels degree={degree} view={view} />
       <KeepPinDialog />

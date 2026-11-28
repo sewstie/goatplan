@@ -12,7 +12,19 @@ export function DegreeToastBar() {
     <Toast
       dark
       message={toast?.message ?? null}
-      actions={undo ? [{ label: "Undo", onAction: () => { undoTo(undo); set({ toast: null }); } }] : []}
+      actions={
+        undo
+          ? [
+              {
+                label: "Undo",
+                onAction: () => {
+                  undoTo(undo);
+                  set({ toast: null });
+                },
+              },
+            ]
+          : []
+      }
       onDismiss={() => set({ toast: null })}
     />
   );

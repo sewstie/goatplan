@@ -8,7 +8,13 @@ import type { DegreeHistory } from "@/lib/degree";
 import { undoTo } from "./degreeActions";
 import { useDegreeUi } from "./degreeUi";
 
-export function RemovedPanel({ code, previous }: { code: string; previous: DegreeHistory }) {
+export function RemovedPanel({
+  code,
+  previous,
+}: {
+  code: string;
+  previous: DegreeHistory;
+}) {
   const close = useDegreeUi((state) => state.close);
   const open = useDegreeUi((state) => state.open);
   return (
@@ -17,12 +23,24 @@ export function RemovedPanel({ code, previous }: { code: string; previous: Degre
       onClose={close}
       footer={
         <>
-          <Button variant="secondary" size="md" className="min-h-40" onClick={() => open({ kind: "history", tab: "history" })}>Course history</Button>
-          <Button size="md" className="ml-auto min-h-40" onClick={close}>Back to the sheet</Button>
+          <Button
+            variant="secondary"
+            size="md"
+            className="min-h-40"
+            onClick={() => open({ kind: "history", tab: "history" })}
+          >
+            Course history
+          </Button>
+          <Button size="md" className="ml-auto min-h-40" onClick={close}>
+            Back to the sheet
+          </Button>
         </>
       }
     >
-      <div role="status" className="flex items-center gap-10 rounded-card bg-toast-dark px-15 py-12 text-8-5 leading-16 text-on-dark shadow-guide">
+      <div
+        role="status"
+        className="flex items-center gap-10 rounded-card bg-toast-dark px-15 py-12 text-8-5 leading-16 text-on-dark shadow-guide"
+      >
         <CheckCircle aria-hidden className="size-16 shrink-0" />
         <span className="flex-1">{code} removed from history.</span>
         <button
@@ -36,8 +54,13 @@ export function RemovedPanel({ code, previous }: { code: string; previous: Degre
           Undo
         </button>
       </div>
-      <p className="py-20 text-8-5 leading-17 text-ink-muted">The course and its pin are removed together. The sheet is recalculated from the remaining history.</p>
-      <Notice title="Planned copies stay planned">Removing a completed record never marks an in-progress copy as done.</Notice>
+      <p className="py-20 text-8-5 leading-17 text-ink-muted">
+        The course and its pin are removed together. The sheet is recalculated
+        from the remaining history.
+      </p>
+      <Notice title="Planned copies stay planned">
+        Removing a completed record never marks an in-progress copy as done.
+      </Notice>
     </DrawerFrame>
   );
 }

@@ -1,7 +1,13 @@
 "use client";
 
 import { create } from "zustand";
-import { DEFAULT_SEMESTER_LOAD, type DegreeHistory, type LinePin, type MoveOutcome, type SheetFilter } from "@/lib/degree";
+import {
+  DEFAULT_SEMESTER_LOAD,
+  type DegreeHistory,
+  type LinePin,
+  type MoveOutcome,
+  type SheetFilter,
+} from "@/lib/degree";
 
 export type HistoryTab = "history" | "search";
 
@@ -40,7 +46,6 @@ interface DegreeUi {
   close(): void;
   set(changes: Partial<Omit<DegreeUi, "open" | "close" | "set">>): void;
 }
-
 
 export const useDegreeUi = create<DegreeUi>((set) => ({
   panel: null,
