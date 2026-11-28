@@ -1,9 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { buildSearchIndex, SEARCH_RANK, searchCourses, suggestCourseCode } from "./searchCourses";
+import {
+  buildSearchIndex,
+  SEARCH_RANK,
+  searchCourses,
+  suggestCourseCode,
+} from "./searchCourses";
 import { allCourses, course, section } from "./testing/courses";
 
 const index = buildSearchIndex(allCourses);
-const codes = (query: string) => searchCourses(index, query).map((result) => result.course.code);
+const codes = (query: string) =>
+  searchCourses(index, query).map((result) => result.course.code);
 
 describe("searchCourses", () => {
   it("finds a code typed without the space", () => {
@@ -33,8 +39,14 @@ describe("searchCourses", () => {
 
   it("ranks titles that start with the query above titles that only contain its words", () => {
     const results = searchCourses(index, "object-oriented design");
-    expect(results.map((result) => result.course.code)).toEqual(["CS 2102", "CS 2103"]);
-    expect(results.map((result) => result.rank)).toEqual([SEARCH_RANK.titleStart, SEARCH_RANK.titleWords]);
+    expect(results.map((result) => result.course.code)).toEqual([
+      "CS 2102",
+      "CS 2103",
+    ]);
+    expect(results.map((result) => result.rank)).toEqual([
+      SEARCH_RANK.titleStart,
+      SEARCH_RANK.titleWords,
+    ]);
   });
 
   it("finds instructors by first name, last name or both", () => {
@@ -46,8 +58,14 @@ describe("searchCourses", () => {
   it("doesn't find a course by its lab or discussion instructors, which aren't shown", () => {
     const physics = course("PH 1110", "General Physics-Mechanics", [
       section("PH 1110", "CL01", { instructors: ["Germano Iannacchione"] }),
-      section("PH 1110", "CX01", { type: "lab", instructors: ["Veneta Tountcheva"] }),
-      section("PH 1110", "CD01", { type: "discussion", instructors: ["Riley Chen"] }),
+      section("PH 1110", "CX01", {
+        type: "lab",
+        instructors: ["Veneta Tountcheva"],
+      }),
+      section("PH 1110", "CD01", {
+        type: "discussion",
+        instructors: ["Riley Chen"],
+      }),
     ]);
     const physicsIndex = buildSearchIndex([physics]);
     expect(searchCourses(physicsIndex, "iannacchione")).toHaveLength(1);
@@ -65,7 +83,10 @@ describe("searchCourses", () => {
 
   it("ranks code matches above title matches above instructor matches", () => {
     const results = searchCourses(index, "operating");
-    expect(results.map((result) => result.course.code)).toEqual(["CS 3013", "CS 502"]);
+    expect(results.map((result) => result.course.code)).toEqual([
+      "CS 3013",
+      "CS 502",
+    ]);
 
     // "Shue" teaches both Operating Systems courses; the subject still decides the order of equal ranks.
     expect(codes("shue")).toEqual(["CS 3013", "CS 502"]);
@@ -73,19 +94,24 @@ describe("searchCourses", () => {
 
   it("mixes fields when each word matches something", () => {
     expect(codes("ae orbital")).toEqual(["AE 2320"]);
-    expect(searchCourses(index, "ae orbital")[0].rank).toBe(SEARCH_RANK.anyField);
+    expect(searchCourses(index, "ae orbital")[0].rank).toBe(
+      SEARCH_RANK.anyField,
+    );
   });
 
   it("doesn't match a code's number against another course's title", () => {
     const withAesthetics = buildSearchIndex([
       ...allCourses,
-      { ...allCourses[0], code: "AR 2750", subject: "AR", title: "Topics in Aesthetics" },
+      {
+        ...allCourses[0],
+        code: "AR 2750",
+        subject: "AR",
+        title: "Topics in Aesthetics",
+      },
     ]);
-    expect(searchCourses(withAesthetics, "ae 2").map((result) => result.course.code)).toEqual([
-      "AE 2210",
-      "AE 2320",
-      "AE 2410",
-    ]);
+    expect(
+      searchCourses(withAesthetics, "ae 2").map((result) => result.course.code),
+    ).toEqual(["AE 2210", "AE 2320", "AE 2410"]);
   });
 
   it("returns nothing for an empty query or a typo in a code", () => {

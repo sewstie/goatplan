@@ -17,7 +17,13 @@ type SearchResultCardProps = {
 };
 
 /** A course in the search results: code, Add, title, credits and fit badge. */
-export function SearchResultCard({ course, fit, added, countsToward, onAdd }: SearchResultCardProps) {
+export function SearchResultCard({
+  course,
+  fit,
+  added,
+  countsToward,
+  onAdd,
+}: SearchResultCardProps) {
   return (
     <li className="flex flex-col gap-4 rounded-control border border-line p-9">
       <div className="flex items-center justify-between gap-8">
@@ -35,7 +41,11 @@ export function SearchResultCard({ course, fit, added, countsToward, onAdd }: Se
         </Button>
       </div>
       <p className="text-10 leading-14-5">{course.title}</p>
-      {course.credits !== null && <p className="text-9 leading-13-5 text-ink-muted">{formatCredits(course.credits)}</p>}
+      {course.credits !== null && (
+        <p className="text-9 leading-13-5 text-ink-muted">
+          {formatCredits(course.credits)}
+        </p>
+      )}
       {fit && (
         <div className="mt-5 flex">
           <FitBadge fit={fit} />
@@ -43,7 +53,11 @@ export function SearchResultCard({ course, fit, added, countsToward, onAdd }: Se
       )}
       {countsToward && (
         <div className="flex flex-wrap gap-4">
-          {countsToward.map((name) => <Badge key={name} tone="accent" className="whitespace-normal!">Counts toward: {name}</Badge>)}
+          {countsToward.map((name) => (
+            <Badge key={name} tone="accent" className="whitespace-normal!">
+              Counts toward: {name}
+            </Badge>
+          ))}
         </div>
       )}
     </li>

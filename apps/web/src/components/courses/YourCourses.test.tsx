@@ -2,7 +2,10 @@ import { render, screen } from "@testing-library/react";
 import { createRef } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import { YourCourses } from "./YourCourses";
-import { resetPlanner, setPlanner } from "@/components/schedule/testing/plannerFixtures";
+import {
+  resetPlanner,
+  setPlanner,
+} from "@/components/schedule/testing/plannerFixtures";
 
 afterEach(resetPlanner);
 

@@ -20,10 +20,25 @@ export function TermPicker({ inline = false }: { inline?: boolean }) {
           label: `${term.name} · ${term.year}`,
           description: `${term.season} ${term.year} · ${term.courses.toLocaleString("en-US")} courses`,
         }))
-      : [{ value: "", label: noTerms ? "No terms available" : "Loading terms…" }];
+      : [
+          {
+            value: "",
+            label: noTerms ? "No terms available" : "Loading terms…",
+          },
+        ];
 
   if (inline) {
-    return <Listbox label="Term" variant="menu" menuLabel="Term" options={options} value={current?.id ?? ""} disabled={terms.length === 0} onChange={(value) => void setTerm(value)} />;
+    return (
+      <Listbox
+        label="Term"
+        variant="menu"
+        menuLabel="Term"
+        options={options}
+        value={current?.id ?? ""}
+        disabled={terms.length === 0}
+        onChange={(value) => void setTerm(value)}
+      />
+    );
   }
 
   // The wrapper is the guide's outline target for the term step.

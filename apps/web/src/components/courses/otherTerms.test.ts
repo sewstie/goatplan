@@ -18,16 +18,28 @@ function summary(id: string, name: string): TermSummary {
   };
 }
 
-const terms = [summary("2026-B", "B Term"), summary("2027-C", "C Term"), summary("2027-D", "D Term")];
+const terms = [
+  summary("2026-B", "B Term"),
+  summary("2027-C", "C Term"),
+  summary("2027-D", "D Term"),
+];
 
 function file(id: string, courses: TermFile["courses"]): TermFile {
-  return { term: summary(id, id), generatedAt: "2026-10-17T12:52:39Z", courses };
+  return {
+    term: summary(id, id),
+    generatedAt: "2026-10-17T12:52:39Z",
+    courses,
+  };
 }
 
 describe("termsWithCourse", () => {
   it("finds the other terms that list the course, skipping the current one", async () => {
     const loadTerm = vi.fn(async (id: string) =>
-      id === "2027-C" ? file(id, [ae2320]) : id === "2026-B" ? file(id, [cs2102]) : file(id, []),
+      id === "2027-C"
+        ? file(id, [ae2320])
+        : id === "2026-B"
+          ? file(id, [cs2102])
+          : file(id, []),
     );
     const found = await termsWithCourse("AE 2320", terms, "2027-D", loadTerm);
     expect(found.map((term) => term.id)).toEqual(["2027-C"]);
@@ -48,7 +60,15 @@ describe("joinTermNames", () => {
   it("joins names in plain English", () => {
     expect(joinTermNames([])).toBe("");
     expect(joinTermNames([{ name: "C Term" }])).toBe("C Term");
-    expect(joinTermNames([{ name: "B Term" }, { name: "C Term" }])).toBe("B Term and C Term");
-    expect(joinTermNames([{ name: "A Term" }, { name: "B Term" }, { name: "C Term" }])).toBe("A Term, B Term and C Term");
+    expect(joinTermNames([{ name: "B Term" }, { name: "C Term" }])).toBe(
+      "B Term and C Term",
+    );
+    expect(
+      joinTermNames([
+        { name: "A Term" },
+        { name: "B Term" },
+        { name: "C Term" },
+      ]),
+    ).toBe("A Term, B Term and C Term");
   });
 });

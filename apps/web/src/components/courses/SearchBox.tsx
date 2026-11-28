@@ -13,7 +13,14 @@ type SearchBoxProps = {
   inputRef: Ref<HTMLInputElement>;
 };
 
-export function SearchBox({ value, onChange, onKeyDown, disabled, resultsId, inputRef }: SearchBoxProps) {
+export function SearchBox({
+  value,
+  onChange,
+  onKeyDown,
+  disabled,
+  resultsId,
+  inputRef,
+}: SearchBoxProps) {
   return (
     <TextInput
       id="tutorial-search"

@@ -14,7 +14,15 @@ type CourseRowProps = {
 };
 
 /** A planned course in "Your courses" (div.app-3.md). The remove button shows on hover and keyboard focus. */
-export function CourseRow({ code, title, swatch, locked, selected, onSelect, onRemove }: CourseRowProps) {
+export function CourseRow({
+  code,
+  title,
+  swatch,
+  locked,
+  selected,
+  onSelect,
+  onRemove,
+}: CourseRowProps) {
   const showPhoneScreen = useShowPhoneScreen();
   return (
     <li className="group relative">
@@ -31,7 +39,10 @@ export function CourseRow({ code, title, swatch, locked, selected, onSelect, onR
           selected ? "bg-surface-selected" : "hover:bg-surface-subtle",
         )}
       >
-        <span aria-hidden className={cx("mt-5 size-8 shrink-0 rounded-swatch", swatch)} />
+        <span
+          aria-hidden
+          className={cx("mt-5 size-8 shrink-0 rounded-swatch", swatch)}
+        />
         <span className="flex min-w-0 flex-col gap-3">
           <span className="flex items-center gap-4 text-11 leading-15-95 font-700">
             {code}

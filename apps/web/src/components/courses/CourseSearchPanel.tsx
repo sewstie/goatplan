@@ -1,6 +1,14 @@
 "use client";
 
-import { useDeferredValue, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import {
+  useDeferredValue,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useCourseGaps } from "@/lib/degree";
 import { selectChosenSections, usePlanner } from "@/lib/store";
@@ -11,7 +19,11 @@ import { NoMatchMessage } from "./NoMatchMessage";
 import { NotOfferedMessage } from "./NotOfferedMessage";
 import { joinTermNames } from "./otherTerms";
 import { SearchBox } from "./SearchBox";
-import { buildSearchIndex, searchCourses, suggestCourseCode } from "./searchCourses";
+import {
+  buildSearchIndex,
+  searchCourses,
+  suggestCourseCode,
+} from "./searchCourses";
 import { SearchResults } from "./SearchResults";
 import { useTermsWithCourse } from "./useTermsWithCourse";
 import { YourCourses } from "./YourCourses";
@@ -30,7 +42,9 @@ export function CourseSearchPanel() {
 
   const termStatus = usePlanner((state) => state.termStatus);
   const term = usePlanner((state) => state.term);
-  const termName = usePlanner((state) => state.terms.find((item) => item.id === state.termId)?.name ?? "");
+  const termName = usePlanner(
+    (state) => state.terms.find((item) => item.id === state.termId)?.name ?? "",
+  );
   const planned = usePlanner((state) => state.courses);
   const locks = usePlanner((state) => state.locks);
   const preferences = usePlanner((state) => state.preferences);
@@ -44,31 +58,48 @@ export function CourseSearchPanel() {
   const resultsId = useId();
 
   const ready = termStatus === "ready" && term !== null;
-  const index = useMemo(() => (term ? buildSearchIndex(term.courses) : []), [term]);
-  const matches = useMemo(() => (ready && search ? searchCourses(index, search) : []), [ready, index, search]);
+  const index = useMemo(
+    () => (term ? buildSearchIndex(term.courses) : []),
+    [term],
+  );
+  const matches = useMemo(
+    () => (ready && search ? searchCourses(index, search) : []),
+    [ready, index, search],
+  );
   const gaps = useCourseGaps(ready ? term.courses : null, planned);
   const closes = gaps?.closes ?? null;
 
   const shown = useMemo(() => {
     if (!term) return [];
-    const courses = planned.flatMap((code) => term.courses.find((course) => course.code === code) ?? []);
+    const courses = planned.flatMap(
+      (code) => term.courses.find((course) => course.code === code) ?? [],
+    );
     const plan = { courses, chosen, locks, preferences };
     return matches.slice(0, MAX_RESULTS).map(({ course }) => {
       const isAdded = planned.includes(course.code);
-      return { course, added: isAdded, fit: isAdded ? null : courseFit(course, plan), countsToward: closes?.get(course.code) };
+      return {
+        course,
+        added: isAdded,
+        fit: isAdded ? null : courseFit(course, plan),
+        countsToward: closes?.get(course.code),
+      };
     });
   }, [term, planned, chosen, locks, preferences, matches, closes]);
 
   const code = normalizeCourseCode(search);
-  const missingCode = ready && matches.length === 0 && code !== null ? code : null;
+  const missingCode =
+    ready && matches.length === 0 && code !== null ? code : null;
   const runsIn = useTermsWithCourse(missingCode);
-  const notOffered = missingCode !== null && runsIn !== null && runsIn.length > 0;
+  const notOffered =
+    missingCode !== null && runsIn !== null && runsIn.length > 0;
   const showResults = ready && search !== "";
   const waiting = missingCode !== null && runsIn === null;
 
   let status = "";
-  if (showResults && matches.length > 0) status = `${courseCount(matches.length)} found.`;
-  else if (showResults && notOffered) status = `${missingCode} isn’t offered in ${termName}. It runs in ${joinTermNames(runsIn)}.`;
+  if (showResults && matches.length > 0)
+    status = `${courseCount(matches.length)} found.`;
+  else if (showResults && notOffered)
+    status = `${missingCode} isn’t offered in ${termName}. It runs in ${joinTermNames(runsIn)}.`;
   else if (showResults && !waiting) status = `No course matches ‘${search}’.`;
 
   function changeQuery(value: string) {
@@ -84,7 +115,12 @@ export function CourseSearchPanel() {
   function onSearchKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === "ArrowDown" || event.key === "Enter") {
       const exact = normalizeCourseCode(query);
-      if (event.key === "Enter" && ready && exact && term.courses.some((course) => course.code === exact)) {
+      if (
+        event.key === "Enter" &&
+        ready &&
+        exact &&
+        term.courses.some((course) => course.code === exact)
+      ) {
         event.preventDefault();
         if (planned.includes(exact)) {
           setNotice(`${exact} is already in your courses.`);
@@ -94,7 +130,9 @@ export function CourseSearchPanel() {
         }
         return;
       }
-      const first = listRef.current?.querySelector<HTMLElement>("[data-result-action]");
+      const first = listRef.current?.querySelector<HTMLElement>(
+        "[data-result-action]",
+      );
       if (first) {
         event.preventDefault();
         first.focus();
@@ -145,7 +183,10 @@ export function CourseSearchPanel() {
               }}
             />
           ) : (
-            <NoMatchMessage query={search} suggestion={suggestCourseCode(search, term.courses)} />
+            <NoMatchMessage
+              query={search}
+              suggestion={suggestCourseCode(search, term.courses)}
+            />
           ))}
       </div>
       <p className="sr-only" aria-live="polite">

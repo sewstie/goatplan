@@ -7,7 +7,12 @@ import { courseCount } from "./courseSummary";
 import { nextIndex } from "./listNavigation";
 import { SearchResultCard } from "./SearchResultCard";
 
-export type ShownResult = { course: Course; fit: CourseFit | null; added: boolean; countsToward?: readonly string[] };
+export type ShownResult = {
+  course: Course;
+  fit: CourseFit | null;
+  added: boolean;
+  countsToward?: readonly string[];
+};
 
 type SearchResultsProps = {
   results: ShownResult[];
@@ -18,7 +23,13 @@ type SearchResultsProps = {
 };
 
 /** "Search results" and the result cards. Up and down arrows move between the Add buttons. */
-export function SearchResults({ results, total, onAdd, onLeave, listRef }: SearchResultsProps) {
+export function SearchResults({
+  results,
+  total,
+  onAdd,
+  onLeave,
+  listRef,
+}: SearchResultsProps) {
   const headingId = useId();
 
   function onKeyDown(event: KeyboardEvent<HTMLUListElement>) {
@@ -29,7 +40,11 @@ export function SearchResults({ results, total, onAdd, onLeave, listRef }: Searc
     }
     const target = event.target as HTMLElement;
     if (!target.matches("[data-result-action]")) return;
-    const actions = [...event.currentTarget.querySelectorAll<HTMLElement>("[data-result-action]")];
+    const actions = [
+      ...event.currentTarget.querySelectorAll<HTMLElement>(
+        "[data-result-action]",
+      ),
+    ];
     const index = nextIndex(actions.indexOf(target), actions.length, event.key);
     if (index === null) return;
     event.preventDefault();
@@ -38,16 +53,25 @@ export function SearchResults({ results, total, onAdd, onLeave, listRef }: Searc
   }
 
   return (
-    <section aria-labelledby={headingId} className="flex shrink-0 flex-col pb-18">
+    <section
+      aria-labelledby={headingId}
+      className="flex shrink-0 flex-col pb-18"
+    >
       <div className="flex items-end justify-between gap-8 pb-10">
         <h2 id={headingId} className="text-11 leading-15-95 font-650">
           Search results
         </h2>
-        <span className="text-9 leading-13 font-450 text-ink-muted">{courseCount(total)}</span>
+        <span className="text-9 leading-13 font-450 text-ink-muted">
+          {courseCount(total)}
+        </span>
       </div>
       <ul ref={listRef} onKeyDown={onKeyDown} className="flex flex-col gap-5">
         {results.map((result) => (
-          <SearchResultCard key={result.course.code} {...result} onAdd={onAdd} />
+          <SearchResultCard
+            key={result.course.code}
+            {...result}
+            onAdd={onAdd}
+          />
         ))}
       </ul>
       {total > results.length && (

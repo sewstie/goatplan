@@ -38,7 +38,9 @@ describe("CourseRow", () => {
     const user = userEvent.setup();
     const onSelect = vi.fn();
     const { container } = render(row({ onSelect }));
-    await user.click(container.querySelector<HTMLElement>('[data-course-row="AE 2320"]')!);
+    await user.click(
+      container.querySelector<HTMLElement>('[data-course-row="AE 2320"]')!,
+    );
     expect(onSelect).toHaveBeenCalledTimes(1);
     expect(usePhoneScreen.getState().screen).toBe("course");
   });
@@ -47,7 +49,9 @@ describe("CourseRow", () => {
     const user = userEvent.setup();
     const onSelect = vi.fn();
     const { container } = render(row({ onSelect }));
-    await user.click(container.querySelector<HTMLElement>('[data-course-row="AE 2320"]')!);
+    await user.click(
+      container.querySelector<HTMLElement>('[data-course-row="AE 2320"]')!,
+    );
     expect(onSelect).toHaveBeenCalledTimes(1);
     expect(usePhoneScreen.getState().screen).toBe("schedule");
   });
@@ -63,6 +67,8 @@ describe("CourseRow", () => {
   it("widens the remove button's hit area to 44px on coarse pointers", () => {
     // The ghost icon is 10px; after:-inset-17 grows its hit area by 17px each side (10 + 2*17 = 44).
     render(row());
-    expect(screen.getByRole("button", { name: "Remove AE 2320" })).toHaveClass("pointer-coarse:after:-inset-17");
+    expect(screen.getByRole("button", { name: "Remove AE 2320" })).toHaveClass(
+      "pointer-coarse:after:-inset-17",
+    );
   });
 });

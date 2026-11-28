@@ -13,7 +13,9 @@ export async function termsWithCourse(
       .map(async (term) => {
         try {
           const file = await loadTerm(term.id);
-          return file.courses.some((course) => course.code === code) ? term : null;
+          return file.courses.some((course) => course.code === code)
+            ? term
+            : null;
         } catch {
           return null;
         }
@@ -23,7 +25,11 @@ export async function termsWithCourse(
 }
 
 /** "C Term", "B Term and C Term", "A Term, B Term and C Term" */
-export function joinTermNames(terms: readonly Pick<TermSummary, "name">[]): string {
+export function joinTermNames(
+  terms: readonly Pick<TermSummary, "name">[],
+): string {
   const names = terms.map((term) => term.name);
-  return names.length <= 1 ? (names[0] ?? "") : `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
+  return names.length <= 1
+    ? (names[0] ?? "")
+    : `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
 }

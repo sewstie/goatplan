@@ -1,7 +1,11 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { resetPlanner, setPlanner, term } from "@/components/schedule/testing/plannerFixtures";
+import {
+  resetPlanner,
+  setPlanner,
+  term,
+} from "@/components/schedule/testing/plannerFixtures";
 import { getPlannerStore } from "@/lib/store";
 import { CourseSearchPanel } from "./CourseSearchPanel";
 
@@ -12,16 +16,32 @@ vi.mock("@/lib/data", async (importOriginal) => ({
 
 afterEach(resetPlanner);
 
-const summary = (id: string, name: string) => ({ ...term.term, id, name, status: "upcoming" as const, courses: 3, sections: 6, generatedAt: term.generatedAt });
+const summary = (id: string, name: string) => ({
+  ...term.term,
+  id,
+  name,
+  status: "upcoming" as const,
+  courses: 3,
+  sections: 6,
+  generatedAt: term.generatedAt,
+});
 
-const searchBox = () => screen.getByRole("searchbox", { name: "Search courses" });
+const searchBox = () =>
+  screen.getByRole("searchbox", { name: "Search courses" });
 
 /** D Term without AE 2320, and a Switch to C Term button whose term stays loading until the test finishes it. */
 async function switchToCTerm() {
   const empty = { ...term, courses: [] };
-  setPlanner({ terms: [summary("2027-C", "C Term"), summary("2027-D", "D Term")], termId: "2027-D", term: empty, courses: [], response: null });
+  setPlanner({
+    terms: [summary("2027-C", "C Term"), summary("2027-D", "D Term")],
+    termId: "2027-D",
+    term: empty,
+    courses: [],
+    response: null,
+  });
   getPlannerStore().setState({
-    setTerm: async (termId) => getPlannerStore().setState({ termId, term: null, termStatus: "loading" }),
+    setTerm: async (termId) =>
+      getPlannerStore().setState({ termId, term: null, termStatus: "loading" }),
   });
   render(
     <>
@@ -31,12 +51,15 @@ async function switchToCTerm() {
   );
   const user = userEvent.setup();
   await user.type(searchBox(), "AE 2320");
-  await user.click(await screen.findByRole("button", { name: "Switch to C Term" }));
+  await user.click(
+    await screen.findByRole("button", { name: "Switch to C Term" }),
+  );
   expect(searchBox()).toBeDisabled();
   return user;
 }
 
-const finishLoading = () => act(() => getPlannerStore().setState({ term, termStatus: "ready" }));
+const finishLoading = () =>
+  act(() => getPlannerStore().setState({ term, termStatus: "ready" }));
 
 describe("switching to the term that has the course", () => {
   it("moves focus to the search box once the term has loaded, keeping the search", async () => {

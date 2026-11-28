@@ -21,7 +21,11 @@ function EmptyText({ lines }: { lines: [string, string] }) {
 }
 
 /** "Your courses": the planned courses with their sections, a count and the credit total. */
-export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputElement | null> }) {
+export function YourCourses({
+  searchRef,
+}: {
+  searchRef: RefObject<HTMLInputElement | null>;
+}) {
   const termStatus = usePlanner((state) => state.termStatus);
   const term = usePlanner((state) => state.term);
   const codes = usePlanner((state) => state.courses);
@@ -36,11 +40,17 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
 
   const ready = termStatus === "ready" && term !== null;
   const courses = ready
-    ? codes.flatMap((code) => term.courses.find((course) => course.code === code) ?? [])
+    ? codes.flatMap(
+        (code) => term.courses.find((course) => course.code === code) ?? [],
+      )
     : [];
 
   const rows = courses.map((course: Course) => {
-    const sections = rowSections(course, chosen[course.code], locks[course.code]);
+    const sections = rowSections(
+      course,
+      chosen[course.code],
+      locks[course.code],
+    );
     return { course, sections, credits: courseCredits(course, sections) };
   });
   const counted = rows.flatMap((row) => row.credits ?? []);
@@ -50,7 +60,9 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
     const target = focusAfterRemove.current;
     if (target === null) return;
     focusAfterRemove.current = null;
-    const row = listRef.current?.querySelector<HTMLElement>(`[data-course-row="${CSS.escape(target)}"]`);
+    const row = listRef.current?.querySelector<HTMLElement>(
+      `[data-course-row="${CSS.escape(target)}"]`,
+    );
     (row ?? searchRef.current)?.focus();
   }, [codes, searchRef]);
 
@@ -63,17 +75,29 @@ export function YourCourses({ searchRef }: { searchRef: RefObject<HTMLInputEleme
   return (
     <section aria-labelledby={headingId} className="flex shrink-0 flex-col">
       <div className="flex flex-wrap items-end justify-between gap-x-8 pb-10">
-        <h2 id={headingId} className="text-11 leading-15-95 font-650 whitespace-nowrap">
+        <h2
+          id={headingId}
+          className="text-11 leading-15-95 font-650 whitespace-nowrap"
+        >
           Your courses
         </h2>
-        <span className="text-8 leading-13 font-450 whitespace-nowrap text-ink-muted">{count}</span>
+        <span className="text-8 leading-13 font-450 whitespace-nowrap text-ink-muted">
+          {count}
+        </span>
       </div>
       {termStatus === "error" ? (
-        <EmptyText lines={["Your courses will appear here", "once sections load."]} />
+        <EmptyText
+          lines={["Your courses will appear here", "once sections load."]}
+        />
       ) : !ready ? (
         <CourseListSkeleton />
       ) : rows.length === 0 ? (
-        <EmptyText lines={["Your courses will appear here.", "Search above to get started."]} />
+        <EmptyText
+          lines={[
+            "Your courses will appear here.",
+            "Search above to get started.",
+          ]}
+        />
       ) : (
         <ul ref={listRef} className="flex flex-col gap-5">
           {rows.map(({ course }) => (

@@ -15,12 +15,18 @@ describe("normalizeCourseCode", () => {
     expect(normalizeCourseCode(text)).toBe(code);
   });
 
-  it.each(["", "cs", "2102", "c 2102", "cs 21", "AE 23200", "computer science", "cs 2102 lab"])(
-    "returns null for %j",
-    (text) => {
-      expect(normalizeCourseCode(text)).toBeNull();
-    },
-  );
+  it.each([
+    "",
+    "cs",
+    "2102",
+    "c 2102",
+    "cs 21",
+    "AE 23200",
+    "computer science",
+    "cs 2102 lab",
+  ])("returns null for %j", (text) => {
+    expect(normalizeCourseCode(text)).toBeNull();
+  });
 });
 
 describe("compactCode", () => {

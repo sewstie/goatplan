@@ -1,4 +1,10 @@
-import { meetingSpans, meetsRules, sectionTypeName, spansOverlap, type Span } from "@/lib/data";
+import {
+  meetingSpans,
+  meetsRules,
+  sectionTypeName,
+  spansOverlap,
+  type Span,
+} from "@/lib/data";
 import type { Course, Section, SectionType } from "@/lib/data/types";
 import type { PlanPreferences } from "@/lib/store/types";
 
@@ -17,11 +23,17 @@ export interface FitPlan {
 }
 
 function sectionsOf(course: Course, ids: readonly string[]): Section[] {
-  return ids.flatMap((id) => course.sections.find((section) => section.id === id) ?? []);
+  return ids.flatMap(
+    (id) => course.sections.find((section) => section.id === id) ?? [],
+  );
 }
 
 /** The options the engine would keep for this course, with the same rules as its filters. */
-function keptOptions(course: Course, preferences: PlanPreferences, locked: readonly string[]): Section[][] {
+function keptOptions(
+  course: Course,
+  preferences: PlanPreferences,
+  locked: readonly string[],
+): Section[][] {
   return course.options
     .filter((option) => locked.every((id) => option.includes(id)))
     .map((option) => sectionsOf(course, option))
@@ -29,7 +41,10 @@ function keptOptions(course: Course, preferences: PlanPreferences, locked: reado
 }
 
 /** The type of the planned section that most of the new course's options run into. */
-function clashingType(ours: readonly Span[][], theirs: readonly Section[]): SectionType {
+function clashingType(
+  ours: readonly Span[][],
+  theirs: readonly Section[],
+): SectionType {
   let best = theirs[0];
   let bestCount = -1;
   for (const section of theirs) {
@@ -56,26 +71,48 @@ export function courseFit(course: Course, plan: FitPlan): CourseFit | null {
     const allFull =
       plan.preferences.onlyOpen &&
       course.options.length > 0 &&
-      course.options.every((option) => sectionsOf(course, option).some((section) => section.status !== "open"));
+      course.options.every((option) =>
+        sectionsOf(course, option).some((section) => section.status !== "open"),
+      );
     return allFull ? { kind: "full" } : null;
   }
   if (plan.courses.length === 0) return { kind: "fits" };
 
   const ours = kept.map(meetingSpans);
-  const scheduled = plan.courses.every((planned) => (plan.chosen[planned.code]?.length ?? 0) > 0);
+  const scheduled = plan.courses.every(
+    (planned) => (plan.chosen[planned.code]?.length ?? 0) > 0,
+  );
   if (scheduled) {
-    const busy = meetingSpans(plan.courses.flatMap((planned) => sectionsOf(planned, plan.chosen[planned.code])));
-    if (ours.some((option) => !spansOverlap(option, busy))) return { kind: "fits" };
+    const busy = meetingSpans(
+      plan.courses.flatMap((planned) =>
+        sectionsOf(planned, plan.chosen[planned.code]),
+      ),
+    );
+    if (ours.some((option) => !spansOverlap(option, busy)))
+      return { kind: "fits" };
   }
 
   for (const planned of plan.courses) {
-    const theirOptions = keptOptions(planned, plan.preferences, plan.locks[planned.code] ?? []);
+    const theirOptions = keptOptions(
+      planned,
+      plan.preferences,
+      plan.locks[planned.code] ?? [],
+    );
     if (theirOptions.length === 0) continue;
     const theirs = theirOptions.map(meetingSpans);
-    if (ours.every((option) => theirs.every((other) => spansOverlap(option, other)))) {
+    if (
+      ours.every((option) =>
+        theirs.every((other) => spansOverlap(option, other)),
+      )
+    ) {
       const shown = sectionsOf(planned, plan.chosen[planned.code] ?? []);
-      const candidates = shown.length > 0 ? shown : [...new Set(theirOptions.flat())];
-      return { kind: "clash", course: planned.code, sectionType: clashingType(ours, candidates) };
+      const candidates =
+        shown.length > 0 ? shown : [...new Set(theirOptions.flat())];
+      return {
+        kind: "clash",
+        course: planned.code,
+        sectionType: clashingType(ours, candidates),
+      };
     }
   }
   return null;
