@@ -7,9 +7,20 @@ export const DEGREE_FLAG_KEY = "goatplan:degree:v1";
 
 const fixtures = path.join(__dirname, "../../../../data/fixtures");
 
-export type FixtureCourse = { code: string; credits: number; term?: string; apIb?: boolean };
+export type FixtureCourse = {
+  code: string;
+  credits: number;
+  term?: string;
+  apIb?: boolean;
+};
 
-export const savedCourse = (course: FixtureCourse, planned = false) => ({ title: "", apIb: false, source: "found", ...course, status: planned ? "planned" : "taken" });
+export const savedCourse = (course: FixtureCourse, planned = false) => ({
+  title: "",
+  apIb: false,
+  source: "found",
+  ...course,
+  status: planned ? "planned" : "taken",
+});
 
 export function readFixture(name: string) {
   return JSON.parse(readFileSync(path.join(fixtures, name), "utf8")) as {
@@ -17,21 +28,36 @@ export function readFixture(name: string) {
     plannedCourses: FixtureCourse[];
     confirmedManualItems: string[];
     expectedLines: Record<string, { course?: string | null; state: string }>;
-    expectedSections: Record<string, { done: number; planned: number; total: number }>;
+    expectedSections: Record<
+      string,
+      { done: number; planned: number; total: number }
+    >;
   };
 }
 
 export function fixtureHistory(name: string) {
   const fixture = readFixture(name);
   return {
-    courses: [...fixture.takenCourses.map((course) => savedCourse(course)), ...fixture.plannedCourses.map((course) => savedCourse(course, true))],
+    courses: [
+      ...fixture.takenCourses.map((course) => savedCourse(course)),
+      ...fixture.plannedCourses.map((course) => savedCourse(course, true)),
+    ],
     manual: fixture.confirmedManualItems,
   };
 }
 
 /** Opens My degree with this history already stored, once per test, so a reload shows what the app saved. */
-export async function openDegree(page: Page, history: { courses: object[]; manual?: string[]; pins?: object[] } | string = { courses: [] }) {
-  const text = typeof history === "string" ? history : JSON.stringify({ version: 1, manual: [], ...history });
+export async function openDegree(
+  page: Page,
+  history:
+    { courses: object[]; manual?: string[]; pins?: object[] } | string = {
+    courses: [],
+  },
+) {
+  const text =
+    typeof history === "string"
+      ? history
+      : JSON.stringify({ version: 1, manual: [], ...history });
   await page.addInitScript(
     ([key, flagKey, value]) => {
       localStorage.setItem("goatplan:tutorial:v1", "dismissed");
@@ -47,21 +73,39 @@ export async function openDegree(page: Page, history: { courses: object[]; manua
 }
 
 export const auditReady = (page: Page) =>
-  expect(page.locator("[data-degree-audit-status]")).toHaveAttribute("data-degree-audit-status", "ready", { timeout: 30_000 });
+  expect(page.locator("[data-degree-audit-status]")).toHaveAttribute(
+    "data-degree-audit-status",
+    "ready",
+    { timeout: 30_000 },
+  );
 
-export const stored = (page: Page) => page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? '{"courses":[],"manual":[]}'), HISTORY_KEY);
+export const stored = (page: Page) =>
+  page.evaluate(
+    (key) =>
+      JSON.parse(localStorage.getItem(key) ?? '{"courses":[],"manual":[]}'),
+    HISTORY_KEY,
+  );
 
-export const storedCodes = async (page: Page) => ((await stored(page)).courses as { code: string }[]).map((course) => course.code);
+export const storedCodes = async (page: Page) =>
+  ((await stored(page)).courses as { code: string }[]).map(
+    (course) => course.code,
+  );
 
 /** A phone folds the sheet into cards, wider screens fold finished sections and stack empty lines. This opens them all. */
 export async function openAllSections(page: Page) {
-  const closed = page.getByRole("region", { name: "Your sheet" }).locator('button[aria-expanded="false"]:visible');
+  const closed = page
+    .getByRole("region", { name: "Your sheet" })
+    .locator('button[aria-expanded="false"]:visible');
   while ((await closed.count()) > 0) await closed.first().click();
 }
 
-export const panel = (page: Page, name: string) => page.getByRole("region", { name, exact: true });
+export const panel = (page: Page, name: string) =>
+  page.getByRole("region", { name, exact: true });
 
 export async function openHistory(page: Page) {
-  await page.getByRole("button", { name: "Course history", exact: true }).first().click();
+  await page
+    .getByRole("button", { name: "Course history", exact: true })
+    .first()
+    .click();
   return panel(page, "Course history");
 }

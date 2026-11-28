@@ -3,7 +3,11 @@ import type { Page } from "@playwright/test";
 
 const screenshotDir = "e2e/screenshots";
 
-type Seed = { term: string; courses?: string[]; locks?: Record<string, string[]> };
+type Seed = {
+  term: string;
+  courses?: string[];
+  locks?: Record<string, string[]>;
+};
 
 /** Opens the planner on a term, with these courses already planned. */
 async function open(page: Page, { term, courses = [], locks = {} }: Seed) {
@@ -28,18 +32,30 @@ async function open(page: Page, { term, courses = [], locks = {} }: Seed) {
     ] as const,
   );
   await page.goto("/");
-  await expect(page.locator("[data-planner-term-status]")).toHaveAttribute("data-planner-term-status", "ready", {
-    timeout: 30_000,
-  });
+  await expect(page.locator("[data-planner-term-status]")).toHaveAttribute(
+    "data-planner-term-status",
+    "ready",
+    {
+      timeout: 30_000,
+    },
+  );
 }
 
 const termLoaded = (page: Page, termId: string) =>
-  expect(page.locator(`[data-planner-term="${termId}"][data-planner-term-status="ready"]`)).toBeAttached({ timeout: 30_000 });
+  expect(
+    page.locator(
+      `[data-planner-term="${termId}"][data-planner-term-status="ready"]`,
+    ),
+  ).toBeAttached({ timeout: 30_000 });
 
-const sidebar = (page: Page) => page.getByRole("complementary", { name: "Term and courses" });
-const searchBox = (page: Page) => page.getByRole("searchbox", { name: "Search courses" });
-const results = (page: Page) => page.getByRole("region", { name: "Search results" });
-const yourCourses = (page: Page) => page.getByRole("region", { name: "Your courses" });
+const sidebar = (page: Page) =>
+  page.getByRole("complementary", { name: "Term and courses" });
+const searchBox = (page: Page) =>
+  page.getByRole("searchbox", { name: "Search courses" });
+const results = (page: Page) =>
+  page.getByRole("region", { name: "Search results" });
+const yourCourses = (page: Page) =>
+  page.getByRole("region", { name: "Your courses" });
 /** The row's own button, not its "Remove" button. */
 const courseRow = (page: Page, code: string) =>
   yourCourses(page).getByRole("button", { name: new RegExp(`^${code}`) });
@@ -50,47 +66,72 @@ test("the term picker switches terms", async ({ page }) => {
   await expect(term).toHaveText("C Term · 2027");
   await term.click();
   const list = page.getByRole("listbox", { name: "Term" });
-  await expect(list.getByRole("option")).toContainText(["C Term · 2027", "D Term · 2027"]);
+  await expect(list.getByRole("option")).toContainText([
+    "C Term · 2027",
+    "D Term · 2027",
+  ]);
   await list.getByRole("option", { name: /^D Term/ }).click();
   await expect(term).toHaveText("D Term · 2027");
   await expect(term).toBeFocused();
 });
 
-test("“cs2102” finds CS 2102, and Enter adds it with its credits", async ({ page }) => {
+test("“cs2102” finds CS 2102, and Enter adds it with its credits", async ({
+  page,
+}) => {
   await open(page, { term: "2027-D" });
   await searchBox(page).fill("cs2102");
-  await expect(results(page).getByRole("heading", { level: 3 }).first()).toHaveText("CS 2102");
+  await expect(
+    results(page).getByRole("heading", { level: 3 }).first(),
+  ).toHaveText("CS 2102");
 
   await searchBox(page).press("Enter");
   await expect(searchBox(page)).toHaveValue("");
   await expect(searchBox(page)).toBeFocused();
   await expect(courseRow(page, "CS 2102")).toBeVisible();
-  await expect(courseRow(page, "CS 2102")).toHaveAttribute("aria-current", "true");
-  await expect(yourCourses(page).getByText("1 selected · 3 credits")).toBeVisible();
+  await expect(courseRow(page, "CS 2102")).toHaveAttribute(
+    "aria-current",
+    "true",
+  );
+  await expect(
+    yourCourses(page).getByText("1 selected · 3 credits"),
+  ).toBeVisible();
 });
 
-test("Enter on a course that's already planned says so and keeps the search", async ({ page }) => {
+test("Enter on a course that's already planned says so and keeps the search", async ({
+  page,
+}) => {
   await open(page, { term: "2027-C", courses: ["AE 2320"] });
   await searchBox(page).fill("ae2320");
   await searchBox(page).press("Enter");
   await expect(searchBox(page)).toHaveValue("ae2320");
-  await expect(sidebar(page).locator('[aria-live="polite"]')).toContainText("AE 2320 is already in your courses.");
-  await expect(yourCourses(page).getByText("1 selected · 3 credits")).toBeVisible();
+  await expect(sidebar(page).locator('[aria-live="polite"]')).toContainText(
+    "AE 2320 is already in your courses.",
+  );
+  await expect(
+    yourCourses(page).getByText("1 selected · 3 credits"),
+  ).toBeVisible();
 });
 
 test("search finds titles and instructors", async ({ page }) => {
   await open(page, { term: "2027-C" });
   await searchBox(page).fill("orbital mechanics");
-  await expect(results(page).getByRole("heading", { level: 3 })).toHaveText(["AE 2320"]);
+  await expect(results(page).getByRole("heading", { level: 3 })).toHaveText([
+    "AE 2320",
+  ]);
 
   await searchBox(page).fill("Hamzaoui");
-  await expect(results(page).getByRole("heading", { level: 3 }).first()).toHaveText("AB 1533");
+  await expect(
+    results(page).getByRole("heading", { level: 3 }).first(),
+  ).toHaveText("AB 1533");
 });
 
-test("arrow keys move through the results, Escape goes back and clears", async ({ page }) => {
+test("arrow keys move through the results, Escape goes back and clears", async ({
+  page,
+}) => {
   await open(page, { term: "2027-C" });
   await searchBox(page).fill("ae 2");
-  const add = (code: string) => results(page).getByRole("button", { name: `Add ${code}` });
+  const add = (code: string) =>
+    results(page).getByRole("button", { name: `Add ${code}` });
   await expect(add("AE 2210")).toBeVisible();
 
   await searchBox(page).press("ArrowDown");
@@ -104,7 +145,9 @@ test("arrow keys move through the results, Escape goes back and clears", async (
 
   await searchBox(page).press("ArrowDown");
   await page.keyboard.press("Enter");
-  await expect(results(page).getByRole("button", { name: "AE 2210 added" })).toBeFocused();
+  await expect(
+    results(page).getByRole("button", { name: "AE 2210 added" }),
+  ).toBeFocused();
   await expect(courseRow(page, "AE 2210")).toBeVisible();
 
   await page.keyboard.press("Escape");
@@ -117,7 +160,9 @@ test("arrow keys move through the results, Escape goes back and clears", async (
 test("results say whether the course fits the plan", async ({ page }) => {
   await open(page, { term: "2027-C", courses: ["AE 2320"] });
   await searchBox(page).fill("ab 1533");
-  await expect(results(page).getByText("Clashes with AE 2320 lecture")).toBeVisible();
+  await expect(
+    results(page).getByText("Clashes with AE 2320 lecture"),
+  ).toBeVisible();
 
   await searchBox(page).fill("ae 2210");
   await expect(results(page).getByText("Fits", { exact: true })).toBeVisible();
@@ -126,37 +171,67 @@ test("results say whether the course fits the plan", async ({ page }) => {
 test("a typo in a code suggests a real one", async ({ page }) => {
   await open(page, { term: "2027-C" });
   await searchBox(page).fill("AE 23200");
-  await expect(sidebar(page).getByRole("heading", { name: "No course matches ‘AE 23200’." })).toBeVisible();
-  await expect(sidebar(page).getByText("Try a code like AE 2320 or a professor’s name.")).toBeVisible();
+  await expect(
+    sidebar(page).getByRole("heading", {
+      name: "No course matches ‘AE 23200’.",
+    }),
+  ).toBeVisible();
+  await expect(
+    sidebar(page).getByText("Try a code like AE 2320 or a professor’s name."),
+  ).toBeVisible();
 });
 
-test("a course from another term offers to switch, keeping the search", async ({ page }) => {
+test("a course from another term offers to switch, keeping the search", async ({
+  page,
+}) => {
   await open(page, { term: "2027-D" });
   await searchBox(page).fill("AE 2320");
-  await expect(sidebar(page).getByRole("heading", { name: "AE 2320 isn’t offered in D Term." })).toBeVisible();
-  await expect(sidebar(page).getByText("It runs in C Term.", { exact: true })).toBeVisible();
+  await expect(
+    sidebar(page).getByRole("heading", {
+      name: "AE 2320 isn’t offered in D Term.",
+    }),
+  ).toBeVisible();
+  await expect(
+    sidebar(page).getByText("It runs in C Term.", { exact: true }),
+  ).toBeVisible();
 
   await sidebar(page).getByRole("button", { name: "Switch to C Term" }).click();
-  await expect(page.getByRole("combobox", { name: "Term" })).toHaveText("C Term · 2027");
+  await expect(page.getByRole("combobox", { name: "Term" })).toHaveText(
+    "C Term · 2027",
+  );
   await termLoaded(page, "2027-C");
   await expect(searchBox(page)).toBeFocused();
   await expect(searchBox(page)).toHaveValue("AE 2320");
-  await expect(results(page).getByRole("heading", { level: 3 })).toHaveText(["AE 2320"]);
+  await expect(results(page).getByRole("heading", { level: 3 })).toHaveText([
+    "AE 2320",
+  ]);
 });
 
-test("a result shows the course's name and credits, not its sections", async ({ page }) => {
+test("a result shows the course's name and credits, not its sections", async ({
+  page,
+}) => {
   await open(page, { term: "2027-C" });
   await searchBox(page).fill("ae2320");
-  const card = results(page).getByRole("listitem").filter({ hasText: "AE 2320" });
+  const card = results(page)
+    .getByRole("listitem")
+    .filter({ hasText: "AE 2320" });
   await expect(card).toContainText("Orbital Mechanics");
   await expect(card.getByText("3 credits", { exact: true })).toBeVisible();
   await expect(card).not.toContainText(/lecture|lab/i);
   await expect(card.getByRole("button", { name: /Sections/ })).toHaveCount(0);
 });
 
-test("removing courses keeps focus in the list, then returns to the search box", async ({ page }) => {
-  await open(page, { term: "2027-C", courses: ["AE 2320", "AE 2210"], locks: { "AE 2320": ["AE 2320-CX02"] } });
-  await expect(yourCourses(page).getByText("2 selected · 6 credits")).toBeVisible();
+test("removing courses keeps focus in the list, then returns to the search box", async ({
+  page,
+}) => {
+  await open(page, {
+    term: "2027-C",
+    courses: ["AE 2320", "AE 2210"],
+    locks: { "AE 2320": ["AE 2320-CX02"] },
+  });
+  await expect(
+    yourCourses(page).getByText("2 selected · 6 credits"),
+  ).toBeVisible();
   const row = (code: string) => courseRow(page, code);
   await expect(row("AE 2320")).toHaveAttribute("aria-current", "true");
   await expect(row("AE 2320")).not.toContainText("CX02");
@@ -166,8 +241,14 @@ test("removing courses keeps focus in the list, then returns to the search box",
   await expect(row("AE 2210")).toHaveAttribute("aria-current", "true");
 
   // The × hides at rest and shows on hover, inside its row.
-  await expect(yourCourses(page).getByRole("button", { name: "Remove AE 2320" }).locator("..")).toHaveCSS("opacity", "0");
-  const remove = yourCourses(page).getByRole("button", { name: "Remove AE 2210" });
+  await expect(
+    yourCourses(page)
+      .getByRole("button", { name: "Remove AE 2320" })
+      .locator(".."),
+  ).toHaveCSS("opacity", "0");
+  const remove = yourCourses(page).getByRole("button", {
+    name: "Remove AE 2210",
+  });
   await row("AE 2210").hover();
   await expect(remove.locator("..")).toHaveCSS("opacity", "1");
   const rowBox = (await row("AE 2210").boundingBox())!;
@@ -180,25 +261,39 @@ test("removing courses keeps focus in the list, then returns to the search box",
 
   await row("AE 2320").focus();
   await page.keyboard.press("Tab");
-  await expect(yourCourses(page).getByRole("button", { name: "Remove AE 2320" })).toBeFocused();
+  await expect(
+    yourCourses(page).getByRole("button", { name: "Remove AE 2320" }),
+  ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(row("AE 2210")).toBeFocused();
-  await expect(yourCourses(page).getByText("1 selected · 3 credits")).toBeVisible();
+  await expect(
+    yourCourses(page).getByText("1 selected · 3 credits"),
+  ).toBeVisible();
 
   await page.keyboard.press("Tab");
   await page.keyboard.press("Enter");
   await expect(searchBox(page)).toBeFocused();
   await expect(yourCourses(page).getByText("0 selected")).toBeVisible();
-  await expect(yourCourses(page).getByText("Search above to get started.")).toBeVisible();
+  await expect(
+    yourCourses(page).getByText("Search above to get started."),
+  ).toBeVisible();
 });
 
-test("search waits for sections when the term file fails to load", async ({ page }) => {
+test("search waits for sections when the term file fails to load", async ({
+  page,
+}) => {
   await page.route("**/data/2027-C.json", (route) => route.abort());
-  await page.addInitScript(() => localStorage.setItem("goatplan:term:v1", "2027-C"));
+  await page.addInitScript(() =>
+    localStorage.setItem("goatplan:term:v1", "2027-C"),
+  );
   await page.goto("/");
   await expect(searchBox(page)).toBeDisabled();
-  await expect(sidebar(page).getByText("Search works once sections load.")).toBeVisible();
-  await expect(yourCourses(page)).toContainText("Your courses will appear hereonce sections load.");
+  await expect(
+    sidebar(page).getByText("Search works once sections load."),
+  ).toBeVisible();
+  await expect(yourCourses(page)).toContainText(
+    "Your courses will appear hereonce sections load.",
+  );
 });
 
 test("the term field says when there are no terms", async ({ page }) => {
@@ -209,12 +304,18 @@ test("the term field says when there are no terms", async ({ page }) => {
   await expect(term).toHaveText("No terms available");
 });
 
-test("the no-match card shows while other terms are still being checked", async ({ page }) => {
+test("the no-match card shows while other terms are still being checked", async ({
+  page,
+}) => {
   // C Term never answers, so the lookup from D Term can't finish.
   await page.route("**/data/2027-C.json", () => {});
   await open(page, { term: "2027-D" });
   await searchBox(page).fill("AE 2320");
-  await expect(sidebar(page).getByRole("heading", { name: "No course matches ‘AE 2320’." })).toBeVisible();
+  await expect(
+    sidebar(page).getByRole("heading", {
+      name: "No course matches ‘AE 2320’.",
+    }),
+  ).toBeVisible();
 });
 
 test.describe("screenshots", () => {
@@ -226,27 +327,48 @@ test.describe("screenshots", () => {
       await page.setViewportSize({ width, height });
       await open(page, { term: "2027-C", courses: ["AE 2320"] });
       // Save schedule fades in once the engine answers; screenshots wait for it.
-      await expect(page.getByRole("button", { name: "Save schedule" })).toBeEnabled({ timeout: 30_000 });
+      await expect(
+        page.getByRole("button", { name: "Save schedule" }),
+      ).toBeEnabled({ timeout: 30_000 });
       await page.waitForTimeout(300);
-      await page.screenshot({ path: `${screenshotDir}/search-planned-${width}.png`, fullPage: true });
+      await page.screenshot({
+        path: `${screenshotDir}/search-planned-${width}.png`,
+        fullPage: true,
+      });
 
       await searchBox(page).fill("ae 2");
       await expect(results(page)).toBeVisible();
-      await page.screenshot({ path: `${screenshotDir}/search-results-${width}.png`, fullPage: true });
+      await page.screenshot({
+        path: `${screenshotDir}/search-results-${width}.png`,
+        fullPage: true,
+      });
 
       await searchBox(page).fill("AE 23200");
-      await expect(sidebar(page).getByRole("heading", { name: /No course matches/ })).toBeVisible();
-      await page.screenshot({ path: `${screenshotDir}/search-no-match-${width}.png`, fullPage: true });
+      await expect(
+        sidebar(page).getByRole("heading", { name: /No course matches/ }),
+      ).toBeVisible();
+      await page.screenshot({
+        path: `${screenshotDir}/search-no-match-${width}.png`,
+        fullPage: true,
+      });
 
       await searchBox(page).fill("ae2320");
       await expect(results(page)).toBeVisible();
 
       await page.getByRole("combobox", { name: "Term" }).click();
-      await page.getByRole("listbox", { name: "Term" }).getByRole("option", { name: /^D Term/ }).click();
+      await page
+        .getByRole("listbox", { name: "Term" })
+        .getByRole("option", { name: /^D Term/ })
+        .click();
       await termLoaded(page, "2027-D");
       await expect(searchBox(page)).toHaveValue("ae2320");
-      await expect(sidebar(page).getByRole("heading", { name: /isn’t offered in D Term/ })).toBeVisible();
-      await page.screenshot({ path: `${screenshotDir}/search-not-offered-${width}.png`, fullPage: true });
+      await expect(
+        sidebar(page).getByRole("heading", { name: /isn’t offered in D Term/ }),
+      ).toBeVisible();
+      await page.screenshot({
+        path: `${screenshotDir}/search-not-offered-${width}.png`,
+        fullPage: true,
+      });
     });
   }
 });

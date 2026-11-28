@@ -1,4 +1,10 @@
-import { openCourseDetails, expect, test, pickStartsAfter, startsAfterText } from "./fixtures/test";
+import {
+  openCourseDetails,
+  expect,
+  test,
+  pickStartsAfter,
+  startsAfterText,
+} from "./fixtures/test";
 import type { Page } from "@playwright/test";
 import { chooseOption } from "./fixtures/pickers";
 
@@ -54,33 +60,54 @@ async function openPlanner(page: Page, draft: Draft) {
       localStorage.setItem("goatplan:term:v1", "2027-C");
       localStorage.setItem(key, value);
     },
-    { key: DRAFT_KEY, value: JSON.stringify({ version: 1, sortPreset: "fewestEarly", alternatives: {}, ...draft }) },
+    {
+      key: DRAFT_KEY,
+      value: JSON.stringify({
+        version: 1,
+        sortPreset: "fewestEarly",
+        alternatives: {},
+        ...draft,
+      }),
+    },
   );
   await page.goto("/");
   await waitForSchedules(page);
 }
 
 async function waitForSchedules(page: Page) {
-  await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute("data-planner-solve-status", "done", {
-    timeout: 30_000,
-  });
+  await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute(
+    "data-planner-solve-status",
+    "done",
+    {
+      timeout: 30_000,
+    },
+  );
 }
 
 async function savedDraft(page: Page): Promise<Draft> {
-  return page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? "null"), DRAFT_KEY);
+  return page.evaluate(
+    (key) => JSON.parse(localStorage.getItem(key) ?? "null"),
+    DRAFT_KEY,
+  );
 }
 
-const preferencesRow = (page: Page) => page.getByRole("group", { name: "Preferences" });
+const preferencesRow = (page: Page) =>
+  page.getByRole("group", { name: "Preferences" });
 test.use({ viewport: { width: 1680, height: 900 } });
 
-const details = (page: Page) => page.getByRole("complementary", { name: "Course details" });
+const details = (page: Page) =>
+  page.getByRole("complementary", { name: "Course details" });
 
 test("the preferences row changes the plan and is saved", async ({ page }) => {
   await openPlanner(page, regular);
   const row = preferencesRow(page);
 
-  await expect(row.getByRole("button", { name: /^Remove blocked time / })).toHaveCount(1);
-  await expect(page.getByRole("combobox", { name: "Sort" })).toHaveText("SortFewest early classes");
+  await expect(
+    row.getByRole("button", { name: /^Remove blocked time / }),
+  ).toHaveCount(1);
+  await expect(page.getByRole("combobox", { name: "Sort" })).toHaveText(
+    "SortFewest early classes",
+  );
 
   await pickStartsAfter(row, 600);
   await waitForSchedules(page);
@@ -95,9 +122,15 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
   await chooseOption(dialog, "To", "1:00 PM");
   await dialog.getByRole("button", { name: "Block time" }).click();
   await expect(dialog).toBeHidden();
-  await expect(row.getByRole("button", { name: /^Remove blocked time Lunch, Mon, Wed 12/ })).toBeVisible();
+  await expect(
+    row.getByRole("button", {
+      name: /^Remove blocked time Lunch, Mon, Wed 12/,
+    }),
+  ).toBeVisible();
 
-  await row.getByRole("button", { name: /^Remove blocked time Tue, Fri 2/ }).click();
+  await row
+    .getByRole("button", { name: /^Remove blocked time Tue, Fri 2/ })
+    .click();
   await row.getByRole("switch", { name: "Only open sections" }).click();
   await waitForSchedules(page);
 
@@ -112,22 +145,34 @@ test("the preferences row changes the plan and is saved", async ({ page }) => {
 
   await page.reload();
   await waitForSchedules(page);
-  await expect(row.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(600));
+  await expect(row.getByRole("combobox", { name: "Starts after" })).toHaveText(
+    startsAfterText(600),
+  );
   await expect(row.getByText("Lunch")).toBeVisible();
-  await expect(row.getByRole("switch", { name: "Only open sections" })).toHaveAttribute("aria-checked", "false");
+  await expect(
+    row.getByRole("switch", { name: "Only open sections" }),
+  ).toHaveAttribute("aria-checked", "false");
 });
 
-test("the block form works with the keyboard and checks its days", async ({ page }) => {
+test("the block form works with the keyboard and checks its days", async ({
+  page,
+}) => {
   await openPlanner(page, regular);
 
-  await preferencesRow(page).getByRole("button", { name: "Block a time" }).focus();
+  await preferencesRow(page)
+    .getByRole("button", { name: "Block a time" })
+    .focus();
   await page.keyboard.press("Enter");
-  await expect(preferencesRow(page).getByRole("button", { name: "Drawing busy times" })).toHaveAttribute("aria-pressed", "true");
+  await expect(
+    preferencesRow(page).getByRole("button", { name: "Drawing busy times" }),
+  ).toHaveAttribute("aria-pressed", "true");
   await page.getByRole("button", { name: "Type a time instead" }).focus();
   await page.keyboard.press("Enter");
   const dialog = page.getByRole("dialog", { name: "Block a time" });
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole("textbox", { name: "Name (optional)" })).toBeFocused();
+  await expect(
+    dialog.getByRole("textbox", { name: "Name (optional)" }),
+  ).toBeFocused();
   const before = await dialog.boundingBox();
   await dialog.getByRole("button", { name: "Block time" }).click();
   await expect(dialog.getByRole("alert")).toHaveText("Pick at least one day.");
@@ -136,23 +181,33 @@ test("the block form works with the keyboard and checks its days", async ({ page
 
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
-  await expect(preferencesRow(page).getByRole("button", { name: "Block a time" })).toBeFocused();
+  await expect(
+    preferencesRow(page).getByRole("button", { name: "Block a time" }),
+  ).toBeFocused();
 });
 
-test("the block form opens without a ring on Close and keeps its size while hovering", async ({ page }) => {
+test("the block form opens without a ring on Close and keeps its size while hovering", async ({
+  page,
+}) => {
   await openPlanner(page, regular);
 
-  await preferencesRow(page).getByRole("button", { name: "Block a time" }).click();
+  await preferencesRow(page)
+    .getByRole("button", { name: "Block a time" })
+    .click();
   await page.getByRole("button", { name: "Type a time instead" }).click();
   const dialog = page.getByRole("dialog", { name: "Block a time" });
-  await expect(dialog.getByRole("textbox", { name: "Name (optional)" })).toBeFocused();
+  await expect(
+    dialog.getByRole("textbox", { name: "Name (optional)" }),
+  ).toBeFocused();
   await expect(dialog.getByRole("button", { name: "Close" })).not.toBeFocused();
 
   const size = await dialog.boundingBox();
   const parts = [
     dialog.getByRole("button", { name: "Close" }),
     dialog.getByRole("textbox", { name: "Name (optional)" }),
-    ...["Monday", "Thursday", "Sunday"].map((day) => dialog.getByRole("checkbox", { name: day })),
+    ...["Monday", "Thursday", "Sunday"].map((day) =>
+      dialog.getByRole("checkbox", { name: day }),
+    ),
     dialog.getByRole("combobox", { name: "From" }),
     dialog.getByRole("combobox", { name: "To" }),
     dialog.getByRole("button", { name: "Cancel" }),
@@ -167,29 +222,46 @@ test("the block form opens without a ring on Close and keeps its size while hove
   expect(await dialog.boundingBox()).toEqual(size);
 });
 
-test("a section can be locked and unlocked from the details panel", async ({ page }) => {
+test("a section can be locked and unlocked from the details panel", async ({
+  page,
+}) => {
   await openPlanner(page, regular);
   const panel = details(page);
 
-  await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
-  await expect(panel.getByRole("article").filter({ hasText: "Lecture CL01" }).getByText("Only lecture")).toBeVisible();
+  await expect(
+    panel.getByRole("heading", { level: 2, name: "AE 2320" }),
+  ).toBeVisible();
+  await expect(
+    panel
+      .getByRole("article")
+      .filter({ hasText: "Lecture CL01" })
+      .getByText("Only lecture"),
+  ).toBeVisible();
 
   const lock = panel.getByRole("button", { name: /^Lock Lab CX0\d$/ });
   const lab = (await lock.getAttribute("aria-label"))!.replace("Lock ", "");
   await lock.click();
   await waitForSchedules(page);
-  await expect(panel.getByRole("button", { name: `Unlock ${lab}` })).toBeVisible();
-  expect((await savedDraft(page)).locks).toEqual({ "AE 2320": [`AE 2320-${lab.split(" ")[1]}`] });
+  await expect(
+    panel.getByRole("button", { name: `Unlock ${lab}` }),
+  ).toBeVisible();
+  expect((await savedDraft(page)).locks).toEqual({
+    "AE 2320": [`AE 2320-${lab.split(" ")[1]}`],
+  });
 
   await page.reload();
   await waitForSchedules(page);
   await panel.getByRole("button", { name: `Unlock ${lab}` }).click();
   await waitForSchedules(page);
-  await expect(panel.getByRole("button", { name: `Lock ${lab}` })).toBeVisible();
+  await expect(
+    panel.getByRole("button", { name: `Lock ${lab}` }),
+  ).toBeVisible();
   expect((await savedDraft(page)).locks).toEqual({});
 });
 
-test("the details panel swaps a lab for one at the same time, and locks the one picked", async ({ page }) => {
+test("the details panel swaps a lab for one at the same time, and locks the one picked", async ({
+  page,
+}) => {
   await openPlanner(page, sameTimeLabs);
   const panel = details(page);
   const shownLab = panel.getByRole("heading", { name: /^Lab CX(02|10)$/ });
@@ -198,42 +270,70 @@ test("the details panel swaps a lab for one at the same time, and locks the one 
 
   await panel.getByRole("button", { name: "View other lab choices" }).click();
   const list = panel.getByRole("list", { name: "Other lab choices" });
-  await expect(list.getByRole("button", { name: `Choose Lab ${before}` })).toHaveCount(0);
+  await expect(
+    list.getByRole("button", { name: `Choose Lab ${before}` }),
+  ).toHaveCount(0);
   const row = list.getByRole("button", { name: `Choose Lab ${other}` });
   await expect(row).toContainText("Mon, Thu · 12:00 PM–1:50 PM");
 
   await row.click();
   await waitForSchedules(page);
-  await expect(panel.getByRole("heading", { name: `Lab ${other}` })).toBeVisible();
-  await expect(panel.getByRole("button", { name: `Unlock Lab ${other}` })).toBeVisible();
-  expect((await savedDraft(page)).locks).toEqual({ "CH 1010": [`CH 1010-${other}`] });
+  await expect(
+    panel.getByRole("heading", { name: `Lab ${other}` }),
+  ).toBeVisible();
+  await expect(
+    panel.getByRole("button", { name: `Unlock Lab ${other}` }),
+  ).toBeVisible();
+  expect((await savedDraft(page)).locks).toEqual({
+    "CH 1010": [`CH 1010-${other}`],
+  });
 });
 
-test("a second click on a selected calendar block opens no section sheet", async ({ page }) => {
+test("a second click on a selected calendar block opens no section sheet", async ({
+  page,
+}) => {
   await openPlanner(page, regular);
-  const block = page.locator("button[data-block]").and(page.getByRole("button", { name: /^AE 2320 CX/ })).first();
+  const block = page
+    .locator("button[data-block]")
+    .and(page.getByRole("button", { name: /^AE 2320 CX/ }))
+    .first();
   await block.click();
   await expect(block).toHaveAttribute("aria-pressed", "true");
   await block.click();
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
 
-test("the details panel follows the course picked in the sidebar or on the calendar", async ({ page }) => {
+test("the details panel follows the course picked in the sidebar or on the calendar", async ({
+  page,
+}) => {
   await openPlanner(page, regular);
   const panel = details(page);
-  await expect(panel.getByRole("heading", { level: 2, name: "AE 2320" })).toBeVisible();
+  await expect(
+    panel.getByRole("heading", { level: 2, name: "AE 2320" }),
+  ).toBeVisible();
 
-  await page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: /^AE 2410/ }).click();
-  await expect(panel.getByRole("heading", { level: 2, name: "AE 2410" })).toBeVisible();
+  await page
+    .getByRole("region", { name: "Your courses" })
+    .getByRole("button", { name: /^AE 2410/ })
+    .click();
+  await expect(
+    panel.getByRole("heading", { level: 2, name: "AE 2410" }),
+  ).toBeVisible();
   await expect(panel.getByText("Selected course")).toHaveCount(0);
 
-  await page.getByRole("region", { name: "Weekly schedule" }).getByRole("button", { name: /^AE 2210 C01, .*Wednesday/ }).click();
-  await expect(panel.getByRole("heading", { level: 2, name: "AE 2210" })).toBeVisible();
+  await page
+    .getByRole("region", { name: "Weekly schedule" })
+    .getByRole("button", { name: /^AE 2210 C01, .*Wednesday/ })
+    .click();
+  await expect(
+    panel.getByRole("heading", { level: 2, name: "AE 2210" }),
+  ).toBeVisible();
   await expect(panel.getByText("Selected course")).toBeVisible();
-  await expect(page.getByRole("region", { name: "Your courses" }).getByRole("button", { name: /^AE 2210/ })).toHaveAttribute(
-    "aria-current",
-    "true",
-  );
+  await expect(
+    page
+      .getByRole("region", { name: "Your courses" })
+      .getByRole("button", { name: /^AE 2210/ }),
+  ).toHaveAttribute("aria-current", "true");
 });
 
 for (const [width, height] of [
@@ -244,18 +344,33 @@ for (const [width, height] of [
     await page.setViewportSize({ width, height });
     await openPlanner(page, regular);
     await openCourseDetails(page, "AE 2320");
-    await page.screenshot({ path: `${screenshotDir}/prefs-planner-${width}.png`, fullPage: width === 834, animations: "disabled" });
+    await page.screenshot({
+      path: `${screenshotDir}/prefs-planner-${width}.png`,
+      fullPage: width === 834,
+      animations: "disabled",
+    });
 
     await page.getByRole("button", { name: /^Lock Lab CX0\d$/ }).click();
     await waitForSchedules(page);
     await page.mouse.move(0, 0);
-    await page.screenshot({ path: `${screenshotDir}/prefs-locked-${width}.png`, fullPage: width === 834, animations: "disabled" });
+    await page.screenshot({
+      path: `${screenshotDir}/prefs-locked-${width}.png`,
+      fullPage: width === 834,
+      animations: "disabled",
+    });
 
     await page.keyboard.press("Escape");
-    await preferencesRow(page).getByRole("button", { name: "Block a time" }).click();
+    await preferencesRow(page)
+      .getByRole("button", { name: "Block a time" })
+      .click();
     await page.getByRole("button", { name: "Type a time instead" }).click();
     await page.getByRole("checkbox", { name: "Monday" }).check();
-    await page.screenshot({ path: `${screenshotDir}/prefs-block-form-${width}.png`, animations: "disabled" });
-    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    await page.screenshot({
+      path: `${screenshotDir}/prefs-block-form-${width}.png`,
+      animations: "disabled",
+    });
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+    ).toBeLessThanOrEqual(width);
   });
 }

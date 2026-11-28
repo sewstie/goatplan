@@ -4,7 +4,16 @@ import type { Locator, Page } from "@playwright/test";
 import type { TermFile } from "../src/lib/data/types";
 import type { Draft, SortPresetId } from "../src/lib/store/types";
 import { coursePanelTerm } from "./fixtures/coursePanel";
-import { pickSort, SORT_LABELS as LABELS, SORT_MENU_COURSES, sortControl, sortList, sortMenuTerm, sortMenuTops, sortOption } from "./fixtures/sortMenu";
+import {
+  pickSort,
+  SORT_LABELS as LABELS,
+  SORT_MENU_COURSES,
+  sortControl,
+  sortList,
+  sortMenuTerm,
+  sortMenuTops,
+  sortOption,
+} from "./fixtures/sortMenu";
 
 const screenshotDir = "e2e/screenshots";
 const DRAFT_KEY = "goatplan:draft:v1:2027-C";
@@ -36,7 +45,9 @@ const sortDraft = (sortPreset: SortPresetId): Draft => ({
 
 /** Opens the planner on C Term with this term data and draft. Reloads keep what the page saved since. */
 async function openPlanner(page: Page, data: TermFile, draft: Draft) {
-  await page.route("**/data/2027-C.json", (route) => route.fulfill({ json: data }));
+  await page.route("**/data/2027-C.json", (route) =>
+    route.fulfill({ json: data }),
+  );
   await page.addInitScript(
     ({ key, draft }) => {
       if (sessionStorage.getItem("sort-menu-seeded")) return;
@@ -52,10 +63,24 @@ async function openPlanner(page: Page, data: TermFile, draft: Draft) {
 }
 
 const settled = (page: Page) =>
-  expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
-const calendarHeader = (page: Page) => page.locator("main div").filter({ has: page.getByRole("group", { name: "Preferences" }) }).filter({ has: page.getByRole("combobox", { name: "Sort" }) }).last();
-const firstBadge = (page: Page) => page.getByRole("list", { name: "This schedule" }).getByRole("listitem").first();
-const storedDraft = (page: Page): Promise<Draft> => page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), DRAFT_KEY);
+  expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute(
+    "data-planner-solve-status",
+    "done",
+    { timeout: 30_000 },
+  );
+const calendarHeader = (page: Page) =>
+  page
+    .locator("main div")
+    .filter({ has: page.getByRole("group", { name: "Preferences" }) })
+    .filter({ has: page.getByRole("combobox", { name: "Sort" }) })
+    .last();
+const firstBadge = (page: Page) =>
+  page
+    .getByRole("list", { name: "This schedule" })
+    .getByRole("listitem")
+    .first();
+const storedDraft = (page: Page): Promise<Draft> =>
+  page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), DRAFT_KEY);
 const header = (page: Page) => page.getByRole("banner").first();
 
 /** The lecture each DEMO course takes in the shown schedule. */
@@ -64,8 +89,12 @@ const shownSections = lecturesByCourse;
 /** The order is on, its top schedule is shown as schedule 1, and its badge leads. */
 async function expectTopOf(page: Page, preset: SortPresetId) {
   await expect(sortControl(page)).toHaveText(`Sort${LABELS[preset]}`);
-  await expect(page.getByText("Schedule 1 of 48", { exact: true })).toBeVisible();
-  await expect.poll(() => shownSections(page)).toEqual(sortMenuTops[preset].sections);
+  await expect(
+    page.getByText("Schedule 1 of 48", { exact: true }),
+  ).toBeVisible();
+  await expect
+    .poll(() => shownSections(page))
+    .toEqual(sortMenuTops[preset].sections);
   await expect(firstBadge(page)).toHaveText(sortMenuTops[preset].firstBadge);
 }
 
@@ -83,7 +112,9 @@ async function box(locator: Locator) {
   return found!;
 }
 
-test("picking each order re-ranks the schedules in the engine and goes back to schedule 1", async ({ page }) => {
+test("picking each order re-ranks the schedules in the engine and goes back to schedule 1", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlanner(page, sortMenuTerm(), sortDraft("bestOverall"));
   await expectTopOf(page, "bestOverall");
@@ -95,33 +126,55 @@ test("picking each order re-ranks the schedules in the engine and goes back to s
     await expect(options.nth(index)).toHaveAccessibleName(label);
     await expect(sortOption(page, label)).toHaveCount(1);
   }
-  await expect(sortList(page).getByRole("option", { selected: true })).toHaveAccessibleName("Best overall");
+  await expect(
+    sortList(page).getByRole("option", { selected: true }),
+  ).toHaveAccessibleName("Best overall");
   await page.keyboard.press("Escape");
 
   // Ends on Best overall again, so every order is picked once while another one is on. The order of
   // picks makes each one move the top: Fewest early classes keeps Best overall's top (see sortMenuTerm).
-  expect(sortMenuTops.fewestEarly.sections).toEqual(sortMenuTops.bestOverall.sections);
+  expect(sortMenuTops.fewestEarly.sections).toEqual(
+    sortMenuTops.bestOverall.sections,
+  );
   let previous: SortPresetId = "bestOverall";
-  for (const preset of ["latestStart", "fewestEarly", "earliestFinish", "fewestDays", "fewestGaps", "bestOverall"] as const) {
+  for (const preset of [
+    "latestStart",
+    "fewestEarly",
+    "earliestFinish",
+    "fewestDays",
+    "fewestGaps",
+    "bestOverall",
+  ] as const) {
     await page.getByRole("button", { name: "Next schedule" }).click();
-    await expect(page.getByText("Schedule 2 of 48", { exact: true })).toBeVisible();
+    await expect(
+      page.getByText("Schedule 2 of 48", { exact: true }),
+    ).toBeVisible();
 
     await pickSort(page, LABELS[preset]);
     await expect(sortControl(page)).toBeFocused();
 
     await expectTopOf(page, preset);
-    expect(sortMenuTops[preset].sections).not.toEqual(sortMenuTops[previous].sections);
+    expect(sortMenuTops[preset].sections).not.toEqual(
+      sortMenuTops[previous].sections,
+    );
     expect((await storedDraft(page)).sortPreset).toBe(preset);
     previous = preset;
   }
 });
 
-test("keyboard only: Tab to Sort, open with Enter, type L for Latest start, pick with Enter", async ({ page }) => {
+test("keyboard only: Tab to Sort, open with Enter, type L for Latest start, pick with Enter", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlanner(page, sortMenuTerm(), sortDraft("bestOverall"));
 
   const sort = sortControl(page);
-  for (let index = 0; index < 60 && !(await sort.evaluate((element) => element === document.activeElement)); index++) {
+  for (
+    let index = 0;
+    index < 60 &&
+    !(await sort.evaluate((element) => element === document.activeElement));
+    index++
+  ) {
     await page.keyboard.press("Tab");
   }
   await expect(sort).toBeFocused();
@@ -131,7 +184,10 @@ test("keyboard only: Tab to Sort, open with Enter, type L for Latest start, pick
   const list = sortList(page);
   await expect(list).toBeVisible();
   await expect(sort).toHaveAttribute("aria-expanded", "true");
-  const active = () => sort.getAttribute("aria-activedescendant").then((id) => page.locator(`[id="${id}"] span`).first().innerText());
+  const active = () =>
+    sort
+      .getAttribute("aria-activedescendant")
+      .then((id) => page.locator(`[id="${id}"] span`).first().innerText());
   await expect.poll(active).toBe("Best overall");
 
   await page.keyboard.press("L");
@@ -157,10 +213,16 @@ test("keyboard only: Tab to Sort, open with Enter, type L for Latest start, pick
   // Sort is the last stop in its row: Tab moves out of it without opening the list.
   await page.keyboard.press("Tab");
   await expect(list).toBeHidden();
-  expect(await calendarHeader(page).evaluate((row) => row.contains(document.activeElement))).toBe(false);
+  expect(
+    await calendarHeader(page).evaluate((row) =>
+      row.contains(document.activeElement),
+    ),
+  ).toBe(false);
 });
 
-test("the order survives a reload and a save-and-open, and a saved plan shows its label", async ({ page }) => {
+test("the order survives a reload and a save-and-open, and a saved plan shows its label", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await openPlanner(page, sortMenuTerm(), sortDraft("bestOverall"));
 
@@ -174,25 +236,48 @@ test("the order survives a reload and a save-and-open, and a saved plan shows it
   expect((await storedDraft(page)).sortPreset).toBe("fewestDays");
 
   await header(page).getByRole("button", { name: "Save schedule" }).click();
-  await page.getByRole("dialog", { name: "Save schedule" }).getByRole("textbox", { name: "Plan name" }).fill("Days off");
+  await page
+    .getByRole("dialog", { name: "Save schedule" })
+    .getByRole("textbox", { name: "Plan name" })
+    .fill("Days off");
   await page.keyboard.press("Enter");
-  await expect(header(page).getByRole("button", { name: "Schedule saved", exact: true })).toBeVisible();
+  await expect(
+    header(page).getByRole("button", { name: "Schedule saved", exact: true }),
+  ).toBeVisible();
   const saved = await page.evaluate(() =>
     Object.keys(localStorage)
       .filter((key) => key.startsWith("goatplan:plans:v1:plan:"))
-      .map((key) => JSON.parse(localStorage.getItem(key)!) as { id: string; sortPreset: string }),
+      .map(
+        (key) =>
+          JSON.parse(localStorage.getItem(key)!) as {
+            id: string;
+            sortPreset: string;
+          },
+      ),
   );
   expect(saved).toHaveLength(1);
   expect(saved[0].sortPreset).toBe("fewestDays");
 
   // A new plan starts on Best overall; opening the saved plan brings its order back.
   await header(page).getByRole("button", { name: "Saved plans" }).click();
-  await page.getByRole("list", { name: "Plan actions" }).getByRole("button", { name: "Start a new plan" }).click();
-  await expect(page.getByRole("region", { name: "Your courses" }).locator("[data-course-row]")).toHaveCount(0);
-  await expect.poll(async () => (await storedDraft(page)).sortPreset).toBe("bestOverall");
+  await page
+    .getByRole("list", { name: "Plan actions" })
+    .getByRole("button", { name: "Start a new plan" })
+    .click();
+  await expect(
+    page
+      .getByRole("region", { name: "Your courses" })
+      .locator("[data-course-row]"),
+  ).toHaveCount(0);
+  await expect
+    .poll(async () => (await storedDraft(page)).sortPreset)
+    .toBe("bestOverall");
 
   await header(page).getByRole("button", { name: "Saved plans" }).click();
-  await page.getByRole("list", { name: /^Saved plans for/ }).getByRole("button", { name: /Days off/ }).click();
+  await page
+    .getByRole("list", { name: /^Saved plans for/ })
+    .getByRole("button", { name: /Days off/ })
+    .click();
   await settled(page);
   await expectTopOf(page, "fewestDays");
   expect((await storedDraft(page)).sortPreset).toBe("fewestDays");
@@ -208,7 +293,9 @@ for (const [width, height] of [
   [1440, 900],
   [834, 1194],
 ] as const) {
-  test(`the Sort control and its list at ${width} px, with screenshots`, async ({ page }) => {
+  test(`the Sort control and its list at ${width} px, with screenshots`, async ({
+    page,
+  }) => {
     await page.setViewportSize({ width, height });
     await openPlanner(page, coursePanelTerm("07"), designDraft);
     await page.evaluate(() => document.fonts.ready);
@@ -220,17 +307,29 @@ for (const [width, height] of [
     const rowBox = await box(row);
     const sortBox = await box(sort);
     const items = await row.evaluate((element) =>
-      [...element.querySelectorAll(":scope > *")].filter((child) => child.getBoundingClientRect().width > 0).map((child) => {
-        const rect = child.getBoundingClientRect();
-        return { middle: rect.top + rect.height / 2, right: rect.right, isSort: child.querySelector('[role="combobox"]') !== null };
-      }),
+      [...element.querySelectorAll(":scope > *")]
+        .filter((child) => child.getBoundingClientRect().width > 0)
+        .map((child) => {
+          const rect = child.getBoundingClientRect();
+          return {
+            middle: rect.top + rect.height / 2,
+            right: rect.right,
+            isSort: child.querySelector('[role="combobox"]') !== null,
+          };
+        }),
     );
 
     // Sort is the last item, at the right end of the row, and never squeezed below 146.
     expect(items.at(-1)?.isSort).toBe(true);
     expect(sortBox.width).toBeGreaterThanOrEqual(146);
-    const rowPaddingRight = await row.evaluate((element) => parseFloat(getComputedStyle(element).paddingRight));
-    expect(Math.abs(rowBox.x + rowBox.width - rowPaddingRight - (sortBox.x + sortBox.width))).toBeLessThanOrEqual(1);
+    const rowPaddingRight = await row.evaluate((element) =>
+      parseFloat(getComputedStyle(element).paddingRight),
+    );
+    expect(
+      Math.abs(
+        rowBox.x + rowBox.width - rowPaddingRight - (sortBox.x + sortBox.width),
+      ),
+    ).toBeLessThanOrEqual(1);
 
     // The closed control looks like the professor field: surface fill, line border, row radius, 7 / 9 padding, gap 6,
     // "Sort" in muted ink and the order in ink at 14 px, an 11 px caret.
@@ -244,19 +343,32 @@ for (const [width, height] of [
         return computed;
       };
       const style = getComputedStyle(element);
-      const [label, value] = [...element.querySelectorAll("span")].map((span) => getComputedStyle(span));
+      const [label, value] = [...element.querySelectorAll("span")].map((span) =>
+        getComputedStyle(span),
+      );
       const caret = element.querySelector("svg")!.getBoundingClientRect();
       return {
-        background: style.backgroundColor === probe("background-color", "var(--color-surface)"),
-        border: style.borderTopColor === probe("color", "var(--color-line)") && style.borderTopWidth === "1px",
-        radius: style.borderTopLeftRadius === probe("border-top-left-radius", "var(--radius-row)"),
+        background:
+          style.backgroundColor ===
+          probe("background-color", "var(--color-surface)"),
+        border:
+          style.borderTopColor === probe("color", "var(--color-line)") &&
+          style.borderTopWidth === "1px",
+        radius:
+          style.borderTopLeftRadius ===
+          probe("border-top-left-radius", "var(--radius-row)"),
         padding: style.padding,
         gap: style.columnGap,
         minWidth: style.minWidth,
         labelColor: label.color === probe("color", "var(--color-ink-muted)"),
         valueColor: value.color === probe("color", "var(--color-ink)"),
         fontSizes: [label.fontSize, value.fontSize],
-        fontFamily: style.fontFamily.includes(getComputedStyle(document.documentElement).getPropertyValue("--font-dm-sans").split(",")[0].trim()),
+        fontFamily: style.fontFamily.includes(
+          getComputedStyle(document.documentElement)
+            .getPropertyValue("--font-dm-sans")
+            .split(",")[0]
+            .trim(),
+        ),
         cursor: style.cursor,
         caret: [caret.width, caret.height],
       };
@@ -276,21 +388,35 @@ for (const [width, height] of [
       caret: [11, 11],
     });
     // The tap area reaches 44 px without changing the layout.
-    const hitArea = await sort.evaluate((element) => element.querySelector("span[aria-hidden]:last-child")!.getBoundingClientRect().height);
+    const hitArea = await sort.evaluate(
+      (element) =>
+        element
+          .querySelector("span[aria-hidden]:last-child")!
+          .getBoundingClientRect().height,
+    );
     expect(hitArea).toBeGreaterThanOrEqual(44);
 
     await noSidewaysScroll(page);
     await expect(sort).toHaveScreenshot(`sort-closed-${width}.png`);
-    await sort.screenshot({ path: `${screenshotDir}/sort-closed-control-${width}.png` });
-    await page.screenshot({ path: `${screenshotDir}/sort-closed-${width}.png`, animations: "disabled" });
+    await sort.screenshot({
+      path: `${screenshotDir}/sort-closed-control-${width}.png`,
+    });
+    await page.screenshot({
+      path: `${screenshotDir}/sort-closed-${width}.png`,
+      animations: "disabled",
+    });
 
     await sort.click();
     const list = sortList(page);
     await expect(list).toBeVisible();
     const listBox = await box(list);
     // Below the control, lined up with its right edge and at least 8 px inside the window.
-    expect(Math.abs(listBox.y - (sortBox.y + sortBox.height))).toBeLessThanOrEqual(1);
-    expect(Math.abs(listBox.x + listBox.width - (sortBox.x + sortBox.width))).toBeLessThanOrEqual(1);
+    expect(
+      Math.abs(listBox.y - (sortBox.y + sortBox.height)),
+    ).toBeLessThanOrEqual(1);
+    expect(
+      Math.abs(listBox.x + listBox.width - (sortBox.x + sortBox.width)),
+    ).toBeLessThanOrEqual(1);
     expect(listBox.width).toBeGreaterThanOrEqual(sortBox.width);
     expect(listBox.x).toBeGreaterThanOrEqual(8);
     expect(listBox.x + listBox.width).toBeLessThanOrEqual(width - 8);
@@ -299,12 +425,21 @@ for (const [width, height] of [
       const optionBox = await box(option);
       expect(optionBox.height).toBeGreaterThanOrEqual(49);
       // No label is cut off.
-      expect(await option.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+      expect(
+        await option.evaluate(
+          (element) => element.scrollWidth <= element.clientWidth,
+        ),
+      ).toBe(true);
     }
     await noSidewaysScroll(page);
     await page.mouse.move(0, 0);
-    await page.screenshot({ path: `${screenshotDir}/sort-open-${width}.png`, animations: "disabled" });
-    await list.screenshot({ path: `${screenshotDir}/sort-open-list-${width}.png` });
+    await page.screenshot({
+      path: `${screenshotDir}/sort-open-${width}.png`,
+      animations: "disabled",
+    });
+    await list.screenshot({
+      path: `${screenshotDir}/sort-open-list-${width}.png`,
+    });
 
     await page.keyboard.press("Escape");
     await expect(list).toBeHidden();

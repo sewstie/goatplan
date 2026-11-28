@@ -5,9 +5,16 @@ import type { Draft } from "../src/lib/store/types";
 
 const source: TermFile = frozenTerm("2027-C");
 const key = "goatplan:draft:v1:2027-C";
-const details = (page: Page) => page.getByRole("complementary", { name: "Course details" });
-const settled = (page: Page) => expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute("data-planner-solve-status", "done", { timeout: 30_000 });
-const draft = (page: Page): Promise<Draft> => page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), key);
+const details = (page: Page) =>
+  page.getByRole("complementary", { name: "Course details" });
+const settled = (page: Page) =>
+  expect(page.locator("[data-planner-solve-status]").last()).toHaveAttribute(
+    "data-planner-solve-status",
+    "done",
+    { timeout: 30_000 },
+  );
+const draft = (page: Page): Promise<Draft> =>
+  page.evaluate((key) => JSON.parse(localStorage.getItem(key)!), key);
 
 /**
  * Build term data for the allow-any-professor tests.
@@ -28,15 +35,33 @@ function termData(): TermFile {
   const template = term.courses[0].sections[0];
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri"] as const;
 
-  const section = (id: string, code: string, type: "lecture" | "lab", instructor: string, start: number) => ({
-    ...template, id, code, type,
-    instructors: [instructor], status: "open" as const, capacity: 40, enrolled: 10,
-    meetings: [{ days: [...days], start, end: start + 50, location: "Unity Hall 400" }],
+  const section = (
+    id: string,
+    code: string,
+    type: "lecture" | "lab",
+    instructor: string,
+    start: number,
+  ) => ({
+    ...template,
+    id,
+    code,
+    type,
+    instructors: [instructor],
+    status: "open" as const,
+    capacity: 40,
+    enrolled: 10,
+    meetings: [
+      { days: [...days], start, end: start + 50, location: "Unity Hall 400" },
+    ],
   });
 
   const ph: TermFile["courses"][0] = {
-    code: "PH 1110", subject: "PH", title: "Introductory Physics I",
-    credits: 3, level: "Undergraduate", description: "",
+    code: "PH 1110",
+    subject: "PH",
+    title: "Introductory Physics I",
+    credits: 3,
+    level: "Undergraduate",
+    description: "",
     sections: [
       section("PH 1110-CL01", "CL01", "lecture", "Prof Alpha", 540),
       section("PH 1110-CL02", "CL02", "lecture", "Prof Beta", 660),
@@ -51,15 +76,23 @@ function termData(): TermFile {
   };
 
   const cs: TermFile["courses"][0] = {
-    code: "CS 2022", subject: "CS", title: "Discrete Mathematics",
-    credits: 3, level: "Undergraduate", description: "",
+    code: "CS 2022",
+    subject: "CS",
+    title: "Discrete Mathematics",
+    credits: 3,
+    level: "Undergraduate",
+    description: "",
     sections: [section("CS 2022-C01", "C01", "lecture", "Dr CS", 720)],
     options: [["CS 2022-C01"]],
   };
 
   const ma: TermFile["courses"][0] = {
-    code: "MA 1024", subject: "MA", title: "Calculus IV",
-    credits: 3, level: "Undergraduate", description: "",
+    code: "MA 1024",
+    subject: "MA",
+    title: "Calculus IV",
+    credits: 3,
+    level: "Undergraduate",
+    description: "",
     sections: [section("MA 1024-C01", "C01", "lecture", "Dr MA", 840)],
     options: [["MA 1024-C01"]],
   };
@@ -68,21 +101,33 @@ function termData(): TermFile {
   return term;
 }
 
-async function open(page: Page, changes: Partial<Draft> = {}, data = termData()) {
+async function open(
+  page: Page,
+  changes: Partial<Draft> = {},
+  data = termData(),
+) {
   const plan: Draft = {
     courses: ["PH 1110", "CS 2022", "MA 1024"],
     preferences: { startsAfter: 0, blocked: [], onlyOpen: true },
-    locks: {}, professorByCourse: {}, sortPreset: "fewestEarly", alternatives: {},
+    locks: {},
+    professorByCourse: {},
+    sortPreset: "fewestEarly",
+    alternatives: {},
     ...changes,
   };
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.route("**/data/2027-C.json", (route) => route.fulfill({ json: data }));
-  await page.addInitScript(({ key, plan }) => {
-    if (sessionStorage.getItem("anyprof-seeded")) return;
-    sessionStorage.setItem("anyprof-seeded", "1");
-    localStorage.setItem("goatplan:term:v1", "2027-C");
-    localStorage.setItem(key, JSON.stringify({ version: 1, ...plan }));
-  }, { key, plan });
+  await page.route("**/data/2027-C.json", (route) =>
+    route.fulfill({ json: data }),
+  );
+  await page.addInitScript(
+    ({ key, plan }) => {
+      if (sessionStorage.getItem("anyprof-seeded")) return;
+      sessionStorage.setItem("anyprof-seeded", "1");
+      localStorage.setItem("goatplan:term:v1", "2027-C");
+      localStorage.setItem(key, JSON.stringify({ version: 1, ...plan }));
+    },
+    { key, plan },
+  );
   await page.goto("/");
   await settled(page);
 }
@@ -91,22 +136,35 @@ async function screenshots(page: Page, name: string) {
   await page.mouse.move(0, 0);
   for (const width of [1440, 834]) {
     await page.setViewportSize({ width, height: width === 834 ? 1194 : 900 });
-    await page.screenshot({ path: `e2e/screenshots/allow-any-professor-${name}-${width}.png`, fullPage: true, animations: "disabled" });
+    await page.screenshot({
+      path: `e2e/screenshots/allow-any-professor-${name}-${width}.png`,
+      fullPage: true,
+      animations: "disabled",
+    });
   }
 }
 
 // 11 AM case (plain fix): startsAfter=660, professor=Alpha.
 // Alpha's only lecture CL01 (540) is excluded by startsAfter. PH empty.
 // clearAnyOf alone restores Beta CL02 (660) and Gamma CL03 (720). CL02 + CS (720) + MA (840) fit.
-for (const [label, action] of [["by click", "click"], ["by keyboard", "keyboard"]] as const) {
-  test(`11 AM (plain fix): Allow any professor for PH 1110 applied ${label}`, async ({ page }) => {
+for (const [label, action] of [
+  ["by click", "click"],
+  ["by keyboard", "keyboard"],
+] as const) {
+  test(`11 AM (plain fix): Allow any professor for PH 1110 applied ${label}`, async ({
+    page,
+  }) => {
     await open(page, {
       preferences: { startsAfter: 660, blocked: [], onlyOpen: true },
       professorByCourse: { "PH 1110": "Prof Alpha" },
     });
 
-    await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
-    const fix = details(page).getByRole("button", { name: /^Allow any professor for PH 1110/ });
+    await expect(
+      page.getByText("0 schedules fit", { exact: true }),
+    ).toBeVisible();
+    const fix = details(page).getByRole("button", {
+      name: /^Allow any professor for PH 1110/,
+    });
     await expect(fix).toContainText("Allow any professor for PH 1110");
     await expect(fix).not.toContainText("and change to");
     await expect(fix).toContainText(/\d+ schedule/);
@@ -123,7 +181,9 @@ for (const [label, action] of [["by click", "click"], ["by keyboard", "keyboard"
     const stored = await draft(page);
     expect(stored.professorByCourse["PH 1110"]).toBeNull();
     expect(stored.preferences.startsAfter).toBe(660);
-    await expect(page.getByText(/Schedule 1 of \d/, { exact: true })).toBeVisible();
+    await expect(
+      page.getByText(/Schedule 1 of \d/, { exact: true }),
+    ).toBeVisible();
     await expect(details(page).getByText("Needs attention")).toHaveCount(0);
   });
 }
@@ -132,16 +192,27 @@ for (const [label, action] of [["by click", "click"], ["by keyboard", "keyboard"
 // clearAnyOf alone leaves only CL03 (720) which clashes with CS (720). No schedule.
 // Relaxing startsAfter to 660 adds CL02 (660). CL02 + CS (720) + MA (840) fit.
 // Combined fix: "Allow any professor for PH 1110 and change to 11:00 AM".
-for (const [label, action] of [["by click", "click"], ["by keyboard", "keyboard"]] as const) {
-  test(`12 PM (combined fix): Allow any professor and change to 11:00 AM applied ${label}`, async ({ page }) => {
+for (const [label, action] of [
+  ["by click", "click"],
+  ["by keyboard", "keyboard"],
+] as const) {
+  test(`12 PM (combined fix): Allow any professor and change to 11:00 AM applied ${label}`, async ({
+    page,
+  }) => {
     await open(page, {
       preferences: { startsAfter: 720, blocked: [], onlyOpen: true },
       professorByCourse: { "PH 1110": "Prof Alpha" },
     });
 
-    await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
-    const fix = details(page).getByRole("button", { name: /^Allow any professor for PH 1110 and change to/ });
-    await expect(fix).toContainText("Allow any professor for PH 1110 and change to 11:00 AM");
+    await expect(
+      page.getByText("0 schedules fit", { exact: true }),
+    ).toBeVisible();
+    const fix = details(page).getByRole("button", {
+      name: /^Allow any professor for PH 1110 and change to/,
+    });
+    await expect(fix).toContainText(
+      "Allow any professor for PH 1110 and change to 11:00 AM",
+    );
     await expect(fix).toContainText(/\d+ schedule/);
     if (action === "click") await screenshots(page, "12pm-combined");
 
@@ -156,24 +227,41 @@ for (const [label, action] of [["by click", "click"], ["by keyboard", "keyboard"
     const stored = await draft(page);
     expect(stored.professorByCourse["PH 1110"]).toBeNull();
     expect(stored.preferences.startsAfter).toBe(660);
-    await expect(page.getByText(/Schedule 1 of \d/, { exact: true })).toBeVisible();
+    await expect(
+      page.getByText(/Schedule 1 of \d/, { exact: true }),
+    ).toBeVisible();
     await expect(details(page).getByText("Needs attention")).toHaveCount(0);
-    await expect(page.getByRole("combobox", { name: "Starts after" })).toHaveText(startsAfterText(660));
+    await expect(
+      page.getByRole("combobox", { name: "Starts after" }),
+    ).toHaveText(startsAfterText(660));
   });
 }
 
 // Unavailable professor: professor has no lectures at all.
 // Client-side generates the clearAnyOf fix.
-for (const [label, action] of [["by click", "click"], ["by keyboard", "keyboard"]] as const) {
-  test(`unavailable professor: Allow any professor applied ${label}`, async ({ page }) => {
+for (const [label, action] of [
+  ["by click", "click"],
+  ["by keyboard", "keyboard"],
+] as const) {
+  test(`unavailable professor: Allow any professor applied ${label}`, async ({
+    page,
+  }) => {
     await open(page, {
       preferences: { startsAfter: 0, blocked: [], onlyOpen: true },
       professorByCourse: { "PH 1110": "Former Professor" },
     });
 
-    await expect(page.getByText("0 schedules fit", { exact: true })).toBeVisible();
-    await expect(details(page).getByRole("heading", { name: "Your selected professor is unavailable" })).toBeVisible();
-    const fix = details(page).getByRole("button", { name: /^Allow any professor for PH 1110/ });
+    await expect(
+      page.getByText("0 schedules fit", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      details(page).getByRole("heading", {
+        name: "Your selected professor is unavailable",
+      }),
+    ).toBeVisible();
+    const fix = details(page).getByRole("button", {
+      name: /^Allow any professor for PH 1110/,
+    });
     await expect(fix).toContainText("Allow any professor for PH 1110");
     await expect(fix).not.toContainText("and change to");
     await expect(fix).toContainText(/\d+ schedule/);
@@ -189,7 +277,9 @@ for (const [label, action] of [["by click", "click"], ["by keyboard", "keyboard"
 
     const stored = await draft(page);
     expect(stored.professorByCourse["PH 1110"]).toBeNull();
-    await expect(page.getByText(/Schedule 1 of \d/, { exact: true })).toBeVisible();
+    await expect(
+      page.getByText(/Schedule 1 of \d/, { exact: true }),
+    ).toBeVisible();
     await expect(details(page).getByText("Needs attention")).toHaveCount(0);
   });
 }

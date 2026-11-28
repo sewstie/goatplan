@@ -25,7 +25,11 @@ async function openPlan(page: Page, plan: Plan) {
       draft: {
         version: 1,
         courses: plan.courses,
-        preferences: { startsAfter: plan.startsAfter ?? 540, blocked: plan.blocked ?? [], onlyOpen: true },
+        preferences: {
+          startsAfter: plan.startsAfter ?? 540,
+          blocked: plan.blocked ?? [],
+          onlyOpen: true,
+        },
         locks: plan.locks ?? {},
         sortPreset: plan.sortPreset ?? "bestOverall",
         alternatives: {},
@@ -34,16 +38,25 @@ async function openPlan(page: Page, plan: Plan) {
     },
   );
   await page.goto("/");
-  await expect(page.locator("[data-planner-term-status]")).toHaveAttribute("data-planner-term-status", "ready", {
-    timeout: 30_000,
-  });
-  await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute("data-planner-solve-status", "done");
+  await expect(page.locator("[data-planner-term-status]")).toHaveAttribute(
+    "data-planner-term-status",
+    "ready",
+    {
+      timeout: 30_000,
+    },
+  );
+  await expect(page.locator("[data-planner-solve-status]")).toHaveAttribute(
+    "data-planner-solve-status",
+    "done",
+  );
 }
 
-const badgeList = (page: Page) => page.getByRole("list", { name: "This schedule" });
+const badgeList = (page: Page) =>
+  page.getByRole("list", { name: "This schedule" });
 
 /** The free-time badge's wording: minutes under an hour, then hours to the nearest half hour. */
-const FREE_TIME = /^(No gaps between classes|\d+ min free between classes|\d+(\.5)? h free between classes)$/;
+const FREE_TIME =
+  /^(No gaps between classes|\d+ min free between classes|\d+(\.5)? h free between classes)$/;
 /** The old badge counted breaks of 30 minutes or more. */
 const GAP_COUNT = /^(No gaps|\d+ gaps?)$/;
 
@@ -59,7 +72,10 @@ function freeMinutes(shown: string): number {
 test("flipping to the next schedule updates the badges", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   // MA 1023 and PH 1110 give many schedules to page through.
-  await openPlan(page, { courses: ["MA 1023", "PH 1110"], sortPreset: "bestOverall" });
+  await openPlan(page, {
+    courses: ["MA 1023", "PH 1110"],
+    sortPreset: "bestOverall",
+  });
 
   const list = badgeList(page);
   await expect(list).toBeVisible();
@@ -88,15 +104,21 @@ test("flipping to the next schedule updates the badges", async ({ page }) => {
   await page.screenshot({ path: `${screenshotDir}/badges-1440.png` });
 });
 
-test("under Most compact the free time leads, and #1 never shows more of it than #2", async ({ page }) => {
+test("under Most compact the free time leads, and #1 never shows more of it than #2", async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   // MA 1024 and PH 1110 have schedules with and without breaks longer than the 10-minute walk.
-  await openPlan(page, { courses: ["MA 1024", "PH 1110"], sortPreset: "fewestGaps" });
+  await openPlan(page, {
+    courses: ["MA 1024", "PH 1110"],
+    sortPreset: "fewestGaps",
+  });
 
   const lead = badgeList(page).getByRole("listitem").first();
   const shown: number[] = [];
   for (let position = 1; position <= 5; position++) {
-    if (position > 1) await page.getByRole("button", { name: "Next schedule" }).click();
+    if (position > 1)
+      await page.getByRole("button", { name: "Next schedule" }).click();
     await expect(page.getByText(`Schedule ${position} of`)).toBeVisible();
     await expect(lead).toHaveText(FREE_TIME);
     shown.push(freeMinutes(await lead.innerText()));
@@ -107,7 +129,9 @@ test("under Most compact the free time leads, and #1 never shows more of it than
   expect(shown).toEqual([...shown].sort((a, b) => a - b));
 
   await page.getByRole("button", { name: "Previous schedule" }).click();
-  await page.screenshot({ path: `${screenshotDir}/badges-most-compact-1440.png` });
+  await page.screenshot({
+    path: `${screenshotDir}/badges-most-compact-1440.png`,
+  });
 });
 
 test("badges wrap without overflow at 834 px", async ({ page }) => {
@@ -133,5 +157,8 @@ test("badges wrap without overflow at 834 px", async ({ page }) => {
     expect(box!.x + box!.width).toBeLessThanOrEqual(834 + 1);
   }
 
-  await page.screenshot({ path: `${screenshotDir}/badges-834.png`, fullPage: true });
+  await page.screenshot({
+    path: `${screenshotDir}/badges-834.png`,
+    fullPage: true,
+  });
 });
