@@ -26,34 +26,52 @@ describe("ScheduleSummary", () => {
     }));
     setPlanner({ response });
     render(<ScheduleSummary />);
-    expect(screen.getByRole("list", { name: "This schedule" })).toHaveTextContent("40 min free between classes");
+    expect(
+      screen.getByRole("list", { name: "This schedule" }),
+    ).toHaveTextContent("40 min free between classes");
   });
 
   it("puts the badges on their own line, bolds the sort's measure and tints an early start", () => {
     setPlanner({ sortPreset: "earliestFinish" });
     render(<ScheduleSummary />);
     expect(screen.getByText("This schedule:")).toBeInTheDocument();
-    const lead = screen.getByRole("listitem", { description: "What this sort ranks by" });
+    const lead = screen.getByRole("listitem", {
+      description: "What this sort ranks by",
+    });
     expect(lead).toHaveTextContent(/^Done by /);
     expect(lead).toHaveClass("font-700");
-    expect(screen.getAllByRole("listitem").filter((badge) => badge.classList.contains("font-700"))).toHaveLength(1);
+    expect(
+      screen
+        .getAllByRole("listitem")
+        .filter((badge) => badge.classList.contains("font-700")),
+    ).toHaveLength(1);
   });
 
   it("highlights no badge under Best overall", () => {
     setPlanner({ sortPreset: "bestOverall" });
     render(<ScheduleSummary />);
-    expect(screen.queryByRole("listitem", { description: "What this sort ranks by" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("listitem", {
+        description: "What this sort ranks by",
+      }),
+    ).not.toBeInTheDocument();
   });
 
   it("on the phone keeps the badge line's space when no schedule fits", () => {
     setPlanner({ response: solved([], { total: 0, patterns: 0 }) });
     const { container, unmount } = render(<ScheduleSummary steady />);
-    expect(screen.queryByRole("list", { name: "This schedule" })).not.toBeInTheDocument();
-    expect(container.querySelector("[aria-hidden].invisible")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("list", { name: "This schedule" }),
+    ).not.toBeInTheDocument();
+    expect(
+      container.querySelector("[aria-hidden].invisible"),
+    ).toBeInTheDocument();
     unmount();
 
     render(<ScheduleSummary />);
-    expect(document.querySelector("[aria-hidden].invisible")).not.toBeInTheDocument();
+    expect(
+      document.querySelector("[aria-hidden].invisible"),
+    ).not.toBeInTheDocument();
   });
 
   it("says which term is loading", () => {
@@ -66,7 +84,9 @@ describe("ScheduleSummary", () => {
 
 describe("ScheduleBanner", () => {
   it("notes when only the best schedules are shown", () => {
-    setPlanner({ response: solved(["CX01", "CX02"], { patterns: 3252, total: 4076 }) });
+    setPlanner({
+      response: solved(["CX01", "CX02"], { patterns: 3252, total: 4076 }),
+    });
     render(<ScheduleBanner />);
     expect(screen.getByRole("status")).toHaveTextContent(
       "Showing the best 2 of 3,252 schedules. Lock a section or add preferences to narrow it down.",
@@ -79,7 +99,12 @@ describe("ScheduleBanner", () => {
     expect(container).toBeEmptyDOMElement();
     unmount();
 
-    setPlanner({ termStatus: "loading", term: null, response: null, solveStatus: "solving" });
+    setPlanner({
+      termStatus: "loading",
+      term: null,
+      response: null,
+      solveStatus: "solving",
+    });
     expect(render(<ScheduleBanner />).container).toBeEmptyDOMElement();
   });
 });

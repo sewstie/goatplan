@@ -5,14 +5,25 @@ import { useHeldHeight } from "./useHeldHeight";
 let report: (height: number) => void = () => {};
 
 beforeEach(() => {
-  vi.stubGlobal("ResizeObserver", class {
-    constructor(callback: ResizeObserverCallback) {
-      report = (height) =>
-        callback([{ borderBoxSize: [{ blockSize: height }], contentRect: { height } } as unknown as ResizeObserverEntry], this as unknown as ResizeObserver);
-    }
-    observe() {}
-    disconnect() {}
-  });
+  vi.stubGlobal(
+    "ResizeObserver",
+    class {
+      constructor(callback: ResizeObserverCallback) {
+        report = (height) =>
+          callback(
+            [
+              {
+                borderBoxSize: [{ blockSize: height }],
+                contentRect: { height },
+              } as unknown as ResizeObserverEntry,
+            ],
+            this as unknown as ResizeObserver,
+          );
+      }
+      observe() {}
+      disconnect() {}
+    },
+  );
 });
 
 afterEach(() => {

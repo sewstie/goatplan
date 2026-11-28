@@ -7,9 +7,12 @@ afterEach(() => vi.useRealTimers());
 
 describe("useDelayedFlag", () => {
   it("turns on only after the delay, and off as soon as the work stops", () => {
-    const { result, rerender } = renderHook(({ active }) => useDelayedFlag(active, 600), {
-      initialProps: { active: true },
-    });
+    const { result, rerender } = renderHook(
+      ({ active }) => useDelayedFlag(active, 600),
+      {
+        initialProps: { active: true },
+      },
+    );
     expect(result.current).toBe(false);
     act(() => vi.advanceTimersByTime(599));
     expect(result.current).toBe(false);
@@ -21,9 +24,12 @@ describe("useDelayedFlag", () => {
   });
 
   it("starts over for the next piece of work", () => {
-    const { result, rerender } = renderHook(({ active }) => useDelayedFlag(active, 600), {
-      initialProps: { active: true },
-    });
+    const { result, rerender } = renderHook(
+      ({ active }) => useDelayedFlag(active, 600),
+      {
+        initialProps: { active: true },
+      },
+    );
     act(() => vi.advanceTimersByTime(600));
     rerender({ active: false });
     rerender({ active: true });
@@ -33,9 +39,12 @@ describe("useDelayedFlag", () => {
   });
 
   it("never turns on for quick work", () => {
-    const { result, rerender } = renderHook(({ active }) => useDelayedFlag(active, 600), {
-      initialProps: { active: true },
-    });
+    const { result, rerender } = renderHook(
+      ({ active }) => useDelayedFlag(active, 600),
+      {
+        initialProps: { active: true },
+      },
+    );
     act(() => vi.advanceTimersByTime(100));
     rerender({ active: false });
     act(() => vi.advanceTimersByTime(1000));

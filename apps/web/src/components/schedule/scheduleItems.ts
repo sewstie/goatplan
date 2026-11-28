@@ -45,20 +45,26 @@ const EMPTY: ScheduleItems = { classes: [], untimed: [], waitlisted: [] };
  * engine answers again.
  */
 export function scheduleItems(
-  term: { courses: readonly Pick<Course, "code" | "title" | "sections">[] } | null,
+  term: {
+    courses: readonly Pick<Course, "code" | "title" | "sections">[];
+  } | null,
   courses: readonly string[],
   chosen: Readonly<Record<string, readonly string[]>>,
   locks: Readonly<Record<string, readonly string[]>>,
 ): ScheduleItems {
   if (!term) return EMPTY;
-  const courseByCode = new Map(term.courses.map((course) => [course.code, course]));
+  const courseByCode = new Map(
+    term.courses.map((course) => [course.code, course]),
+  );
   const result: ScheduleItems = { classes: [], untimed: [], waitlisted: [] };
 
   for (const code of courses) {
     const course = courseByCode.get(code);
     const sectionIds = chosen[code];
     if (!course || !sectionIds) continue;
-    const sectionById = new Map<string, Section>(course.sections.map((section) => [section.id, section]));
+    const sectionById = new Map<string, Section>(
+      course.sections.map((section) => [section.id, section]),
+    );
 
     for (const sectionId of sectionIds) {
       const section = sectionById.get(sectionId);
@@ -72,7 +78,8 @@ export function scheduleItems(
         slot: courseSlot(courses, code),
         locked: locks[code]?.includes(sectionId) ?? false,
       };
-      if (section.status === "waitlist") result.waitlisted.push({ courseCode: code, sectionCode: section.code });
+      if (section.status === "waitlist")
+        result.waitlisted.push({ courseCode: code, sectionCode: section.code });
       if (section.meetings.length === 0) {
         result.untimed.push({ ...base, delivery: section.delivery });
         continue;

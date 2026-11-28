@@ -16,13 +16,22 @@ export function CalendarHeader() {
   const plan = usePlanner(selectReadOnlyPlan);
   if (plan) return <ReadOnlyCalendarHeader plan={plan} />;
   return (
-    <div data-calendar-header className="@container shrink-0 border-b border-line">
+    <div
+      data-calendar-header
+      className="@container shrink-0 border-b border-line"
+    >
       <div className="border-b border-line px-8">
         <PreferencesBar />
       </div>
       <div className="flex flex-wrap items-center gap-x-8 px-8 @[45rem]:h-46 @[45rem]:flex-nowrap">
         <div className="flex h-44 min-w-0 items-center gap-4">
-          <div id="tutorial-schedules" role="region" aria-label="Schedule browser" tabIndex={-1} className="min-w-0 rounded-control">
+          <div
+            id="tutorial-schedules"
+            role="region"
+            aria-label="Schedule browser"
+            tabIndex={-1}
+            className="min-w-0 rounded-control"
+          >
             <ScheduleBrowser />
           </div>
           <ScheduleCountNote />

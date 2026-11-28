@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useEffectEvent,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { CircleNotch, DotsThree, Warning } from "@phosphor-icons/react/ssr";
 import { useDismiss } from "@/components/ui/useDismiss";
 import { wrappedHeight } from "./chipRows";
@@ -18,8 +24,16 @@ function useOverflows() {
   const [overflows, setOverflows] = useState(false);
   const check = useEffectEvent(() => {
     if (!root.current || !chips.current) return;
-    const sized = [...chips.current.querySelectorAll("li")].map((element) => ({ width: element.offsetWidth, height: element.offsetHeight })).filter((size) => size.width > 0);
-    setOverflows(wrappedHeight(sized, root.current.clientWidth, GAP_X, GAP_Y) > root.current.clientHeight);
+    const sized = [...chips.current.querySelectorAll("li")]
+      .map((element) => ({
+        width: element.offsetWidth,
+        height: element.offsetHeight,
+      }))
+      .filter((size) => size.width > 0);
+    setOverflows(
+      wrappedHeight(sized, root.current.clientWidth, GAP_X, GAP_Y) >
+        root.current.clientHeight,
+    );
   });
   useLayoutEffect(() => check());
   useEffect(() => {
@@ -47,37 +61,79 @@ export function ToolbarSummary() {
   useDismiss(showDetails, rootRef, () => setOpen(false));
 
   return (
-    <div ref={rootRef} className="relative flex h-full min-w-0 flex-1 flex-wrap content-center items-center gap-x-4 gap-y-2 text-8 leading-12 text-ink-muted">
+    <div
+      ref={rootRef}
+      className="relative flex h-full min-w-0 flex-1 flex-wrap content-center items-center gap-x-4 gap-y-2 text-8 leading-12 text-ink-muted"
+    >
       {/* Whatever isn't shown word for word, so a screen reader hears all of it. */}
       <p role="status" className="sr-only">
         {!plainText && <span>{text}</span>}
-        {message && <> <span>{message.title} {message.detail}</span></>}
+        {message && (
+          <>
+            {" "}
+            <span>
+              {message.title} {message.detail}
+            </span>
+          </>
+        )}
       </p>
       {problem && (
-        <p aria-hidden title={text ?? undefined} className="flex shrink-0 items-center gap-5 font-600 whitespace-nowrap text-warning-ink">
+        <p
+          aria-hidden
+          title={text ?? undefined}
+          className="flex shrink-0 items-center gap-5 font-600 whitespace-nowrap text-warning-ink"
+        >
           <Warning aria-hidden className="size-13 shrink-0" />
           No schedule fits.
         </p>
       )}
       {warning && (
-        <p aria-hidden title={message.detail} className="flex shrink-0 items-center gap-5 font-600 whitespace-nowrap text-warning-ink">
+        <p
+          aria-hidden
+          title={message.detail}
+          className="flex shrink-0 items-center gap-5 font-600 whitespace-nowrap text-warning-ink"
+        >
           <Warning aria-hidden className="size-13 shrink-0" />
           {message.title}
         </p>
       )}
       {finding && (
-        <p aria-hidden className="flex shrink-0 items-center gap-5 whitespace-nowrap">
-          <CircleNotch aria-hidden className="size-13 shrink-0 motion-safe:animate-spin" />
+        <p
+          aria-hidden
+          className="flex shrink-0 items-center gap-5 whitespace-nowrap"
+        >
+          <CircleNotch
+            aria-hidden
+            className="size-13 shrink-0 motion-safe:animate-spin"
+          />
           {message.title}
         </p>
       )}
-      {plainText && <p title={text ?? undefined} className="min-w-0">{text}</p>}
+      {plainText && (
+        <p title={text ?? undefined} className="min-w-0">
+          {text}
+        </p>
+      )}
       {/* Folded chips stay mounted, out of the flow, to be measured. */}
-      <div ref={chips} className={!showBadges ? "hidden" : collapsed ? "invisible absolute top-0 left-0 flex w-max" : "contents"}>
+      <div
+        ref={chips}
+        className={
+          !showBadges
+            ? "hidden"
+            : collapsed
+              ? "invisible absolute top-0 left-0 flex w-max"
+              : "contents"
+        }
+      >
         <ScoreChips chips={badges} short flat />
       </div>
       {collapsed && (
-        <button type="button" aria-expanded={showDetails} onClick={() => setOpen(!open)} className="flex min-h-24 shrink-0 cursor-pointer items-center gap-4 rounded-row px-6 font-600 whitespace-nowrap text-ink-soft hover:bg-surface-selected">
+        <button
+          type="button"
+          aria-expanded={showDetails}
+          onClick={() => setOpen(!open)}
+          className="flex min-h-24 shrink-0 cursor-pointer items-center gap-4 rounded-row px-6 font-600 whitespace-nowrap text-ink-soft hover:bg-surface-selected"
+        >
           <DotsThree aria-hidden weight="bold" className="size-14" />
           details
         </button>

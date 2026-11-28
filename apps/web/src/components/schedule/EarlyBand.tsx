@@ -2,7 +2,13 @@ import { formatTime } from "@/lib/data/time";
 import { percentOf, type TimeRange } from "./timeRange";
 
 /** The hatched band across every day before the start-time preference (div.app-3.md). */
-export function EarlyBand({ range, startsAfter }: { range: TimeRange; startsAfter: number }) {
+export function EarlyBand({
+  range,
+  startsAfter,
+}: {
+  range: TimeRange;
+  startsAfter: number;
+}) {
   if (startsAfter <= range.start) return null;
   const height = percentOf(range, Math.min(startsAfter, range.end));
   return (

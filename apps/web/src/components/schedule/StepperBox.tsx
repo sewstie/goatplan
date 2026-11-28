@@ -3,7 +3,12 @@ import { CaretLeft, CaretRight } from "@phosphor-icons/react/ssr";
 import { cx } from "@/components/ui/cx";
 
 export type StepperSize = "default" | "wide" | "compact";
-export type StepperArrow = { label: string; disabled: boolean; onClick: () => void; shortcut?: string };
+export type StepperArrow = {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+  shortcut?: string;
+};
 
 const BOX: Record<StepperSize, string> = {
   default: "h-36",
@@ -18,7 +23,9 @@ const ARROW: Record<StepperSize, string> = {
   compact: "relative w-30 after:absolute after:inset-x-0 after:-inset-y-7",
 };
 
-const DIVIDER = <span aria-hidden className="my-6 w-px shrink-0 bg-line-control" />;
+const DIVIDER = (
+  <span aria-hidden className="my-6 w-px shrink-0 bg-line-control" />
+);
 
 /** The joined ‹ count › box for schedules and saved plans. Without arrows it's just the count, in the same box. */
 export function StepperBox({
@@ -40,17 +47,34 @@ export function StepperBox({
     <div
       role={label ? "group" : undefined}
       aria-label={label}
-      className={cx("flex items-stretch rounded-row border border-line-control bg-surface", BOX[size])}
+      className={cx(
+        "flex items-stretch rounded-row border border-line-control bg-surface",
+        BOX[size],
+      )}
       onKeyDown={onKeyDown}
     >
-      {previous && <>{arrow(previous, size, "start")}{DIVIDER}</>}
+      {previous && (
+        <>
+          {arrow(previous, size, "start")}
+          {DIVIDER}
+        </>
+      )}
       {children}
-      {next && <>{DIVIDER}{arrow(next, size, "end")}</>}
+      {next && (
+        <>
+          {DIVIDER}
+          {arrow(next, size, "end")}
+        </>
+      )}
     </div>
   );
 }
 
-function arrow({ label, disabled, onClick, shortcut }: StepperArrow, size: StepperSize, side: "start" | "end") {
+function arrow(
+  { label, disabled, onClick, shortcut }: StepperArrow,
+  size: StepperSize,
+  side: "start" | "end",
+) {
   return (
     <button
       type="button"
@@ -65,7 +89,11 @@ function arrow({ label, disabled, onClick, shortcut }: StepperArrow, size: Stepp
         ARROW[size],
       )}
     >
-      {side === "start" ? <CaretLeft aria-hidden /> : <CaretRight aria-hidden />}
+      {side === "start" ? (
+        <CaretLeft aria-hidden />
+      ) : (
+        <CaretRight aria-hidden />
+      )}
     </button>
   );
 }

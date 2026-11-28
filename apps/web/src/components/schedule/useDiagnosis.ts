@@ -11,8 +11,32 @@ export function useDiagnosis() {
   const professorByCourse = usePlanner((state) => state.professorByCourse);
   const professorFixes = usePlanner((state) => state.professorFixes);
   const response = usePlanner((state) => state.response);
-  const done = usePlanner((state) => state.solveStatus === "done" && state.termStatus === "ready");
-  return useMemo(() => done && response?.ok && response.total === 0 && response.diagnosis && !response.diagnosis.unsure
-    ? diagnosisText(response.diagnosis, { term, preferences, locks, professorByCourse, professorFixes })
-    : null, [done, response, term, preferences, locks, professorByCourse, professorFixes]);
+  const done = usePlanner(
+    (state) => state.solveStatus === "done" && state.termStatus === "ready",
+  );
+  return useMemo(
+    () =>
+      done &&
+      response?.ok &&
+      response.total === 0 &&
+      response.diagnosis &&
+      !response.diagnosis.unsure
+        ? diagnosisText(response.diagnosis, {
+            term,
+            preferences,
+            locks,
+            professorByCourse,
+            professorFixes,
+          })
+        : null,
+    [
+      done,
+      response,
+      term,
+      preferences,
+      locks,
+      professorByCourse,
+      professorFixes,
+    ],
+  );
 }

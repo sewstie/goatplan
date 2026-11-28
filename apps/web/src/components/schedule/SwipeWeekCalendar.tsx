@@ -36,7 +36,17 @@ function axisLabel(minute: number): string {
  * The phone calendar card: two days side by side at a fixed hour height, swiped sideways for the rest
  * of the week. The time labels stay put while the days scroll. The page scrolls down, not the card.
  */
-export function SwipeWeekCalendar({ days, range, note, renderDay, background, overlay, footer, busy, drag }: SwipeWeekCalendarProps) {
+export function SwipeWeekCalendar({
+  days,
+  range,
+  note,
+  renderDay,
+  background,
+  overlay,
+  footer,
+  busy,
+  drag,
+}: SwipeWeekCalendarProps) {
   const scroller = useRef<HTMLDivElement>(null);
   const [atEnd, setAtEnd] = useState(false);
   useKeptScrollLeft(scroller);
@@ -46,14 +56,21 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
   const pixelsPerHour = axisHeight === null ? null : axisHeight / hours;
   const marks = hourMarks(range);
   const empty = !renderDay && !busy;
-  const { selection, announcement, surfaceProps } = useBlockDrag(days, range, drag);
+  const { selection, announcement, surfaceProps } = useBlockDrag(
+    days,
+    range,
+    drag,
+  );
   const first = selection ? Math.min(selection.from, selection.to) : -1;
   const last = selection ? Math.max(selection.from, selection.to) : -1;
 
   function swipe() {
     const element = scroller.current;
     if (!element) return;
-    element.scrollTo({ left: atEnd ? 0 : element.scrollLeft + element.clientWidth * 0.88, behavior: "smooth" });
+    element.scrollTo({
+      left: atEnd ? 0 : element.scrollLeft + element.clientWidth * 0.88,
+      behavior: "smooth",
+    });
   }
 
   return (
@@ -77,7 +94,17 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
               onClick={swipe}
               className="inline-flex min-h-24 cursor-pointer items-center gap-3 rounded-badge text-8 leading-11-6 font-570 text-accent"
             >
-              {atEnd ? <><CaretLeft aria-hidden className="size-9" />Back to {DAY_NAMES[days[0]]}</> : <>Swipe for more days<CaretRight aria-hidden className="size-9" /></>}
+              {atEnd ? (
+                <>
+                  <CaretLeft aria-hidden className="size-9" />
+                  Back to {DAY_NAMES[days[0]]}
+                </>
+              ) : (
+                <>
+                  Swipe for more days
+                  <CaretRight aria-hidden className="size-9" />
+                </>
+              )}
             </button>
           )}
         </div>
@@ -90,7 +117,10 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
           tabIndex={0}
           onScroll={(event) => {
             const element = event.currentTarget;
-            setAtEnd(element.scrollLeft + element.clientWidth >= element.scrollWidth - 4);
+            setAtEnd(
+              element.scrollLeft + element.clientWidth >=
+                element.scrollWidth - 4,
+            );
           }}
           className="@container scroll-pl-(--size-phone-axis) snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
@@ -99,16 +129,28 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
             className={cx(
               "relative flex w-max pr-8 pb-10",
               drag && "select-none [-webkit-touch-callout:none]",
-              selection && (selection.erase ? "**:cursor-erase" : "**:cursor-crosshair"),
+              selection &&
+                (selection.erase ? "**:cursor-erase" : "**:cursor-crosshair"),
             )}
           >
-            <div aria-hidden className="absolute top-(--size-phone-day-header) right-0 left-(--size-phone-axis)" style={{ height }}>
+            <div
+              aria-hidden
+              className="absolute top-(--size-phone-day-header) right-0 left-(--size-phone-axis)"
+              style={{ height }}
+            >
               {marks.map((minute) => (
-                <div key={minute} className="absolute inset-x-0 border-t border-line" style={{ top: `${percentOf(range, minute)}%` }} />
+                <div
+                  key={minute}
+                  className="absolute inset-x-0 border-t border-line"
+                  style={{ top: `${percentOf(range, minute)}%` }}
+                />
               ))}
               {background}
             </div>
-            <div aria-hidden className="sticky left-0 z-2 w-(--size-phone-axis) shrink-0 bg-surface pt-(--size-phone-day-header)">
+            <div
+              aria-hidden
+              className="sticky left-0 z-2 w-(--size-phone-axis) shrink-0 bg-surface pt-(--size-phone-day-header)"
+            >
               <div ref={axisRef} className="relative" style={{ height }}>
                 {marks.map((minute) => (
                   <span
@@ -122,8 +164,14 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
               </div>
             </div>
             {days.map((day, index) => (
-              <div key={day} className="w-[44cqw] shrink-0 snap-start border-l border-line">
-                <p aria-hidden className="flex h-(--size-phone-day-header) items-center justify-center text-10 font-650">
+              <div
+                key={day}
+                className="w-[44cqw] shrink-0 snap-start border-l border-line"
+              >
+                <p
+                  aria-hidden
+                  className="flex h-(--size-phone-day-header) items-center justify-center text-10 font-650"
+                >
                   {day}
                 </p>
                 <div
@@ -137,7 +185,15 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
                   {selection && index >= first && index <= last && (
                     <DragSelectionBox
                       erase={selection.erase}
-                      text={index === first ? selectionText(days.slice(first, last + 1), selection.time, selection.erase) : undefined}
+                      text={
+                        index === first
+                          ? selectionText(
+                              days.slice(first, last + 1),
+                              selection.time,
+                              selection.erase,
+                            )
+                          : undefined
+                      }
                       style={{
                         top: `${percentOf(range, selection.time.start)}%`,
                         height: `${percentOf(range, selection.time.end) - percentOf(range, selection.time.start)}%`,
@@ -151,7 +207,11 @@ export function SwipeWeekCalendar({ days, range, note, renderDay, background, ov
         </div>
         {overlay}
       </div>
-      {drag && <p aria-live="polite" className="sr-only">{announcement}</p>}
+      {drag && (
+        <p aria-live="polite" className="sr-only">
+          {announcement}
+        </p>
+      )}
       {footer}
       <div className="flex justify-between gap-12 px-12 pt-6 pb-12 text-8 leading-11-6 text-ink-muted">
         <p>{note}</p>

@@ -7,7 +7,13 @@ function Grid() {
   return (
     <>
       <button type="button">Before</button>
-      <div role="group" aria-label="Grid" tabIndex={0} data-pointer-focus={focus.byPointer || undefined} {...focus.handlers}>
+      <div
+        role="group"
+        aria-label="Grid"
+        tabIndex={0}
+        data-pointer-focus={focus.byPointer || undefined}
+        {...focus.handlers}
+      >
         <button type="button">Block</button>
       </div>
     </>

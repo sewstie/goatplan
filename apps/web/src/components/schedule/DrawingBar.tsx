@@ -7,9 +7,11 @@ import { usePhoneScreen } from "@/components/phone/phoneScreen";
 import type { Day } from "@/lib/data/types";
 import { usePlanner } from "@/lib/store";
 
-const LINK = "inline-flex min-h-24 cursor-pointer items-center rounded-badge font-650 underline-offset-2 hover:underline";
+const LINK =
+  "inline-flex min-h-24 cursor-pointer items-center rounded-badge font-650 underline-offset-2 hover:underline";
 
-const focusToggle = () => document.getElementById("tutorial-block-time")?.focus();
+const focusToggle = () =>
+  document.getElementById("tutorial-block-time")?.focus();
 
 /**
  * The slim bar above the calendar in drawing mode: "Drag on the calendar to block time, or start on a
@@ -44,7 +46,11 @@ export function DrawingBar() {
       if (document.querySelector("dialog[open]")) setDrawing(false);
     });
     window.addEventListener("keydown", leave);
-    watch.observe(document.body, { subtree: true, attributes: true, attributeFilter: ["open"] });
+    watch.observe(document.body, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["open"],
+    });
     return () => {
       window.removeEventListener("keydown", leave);
       watch.disconnect();
@@ -61,7 +67,12 @@ export function DrawingBar() {
     setRefocus((count) => count + 1);
   }
 
-  function handleSubmit(days: Day[], start: number, end: number, label: string) {
+  function handleSubmit(
+    days: Day[],
+    start: number,
+    end: number,
+    label: string,
+  ) {
     setPreferences({ blocked: addBlocked(blocked, days, start, end, label) });
     closeForm();
   }
@@ -75,8 +86,13 @@ export function DrawingBar() {
           aria-label="Drawing mode"
           className="flex shrink-0 flex-wrap items-center gap-x-6 border-b border-accent-line bg-accent-soft px-12 py-3 text-9 leading-13 text-accent"
         >
-          <p className="basis-full tablet:basis-auto">Drag on the calendar to block time, or start on a blocked time to erase it</p>
-          <span aria-hidden className="hidden tablet:inline">·</span>
+          <p className="basis-full tablet:basis-auto">
+            Drag on the calendar to block time, or start on a blocked time to
+            erase it
+          </p>
+          <span aria-hidden className="hidden tablet:inline">
+            ·
+          </span>
           <button
             type="button"
             className={LINK}
@@ -100,7 +116,11 @@ export function DrawingBar() {
           </button>
         </div>
       )}
-      <BlockTimeDialog open={typing} onClose={closeForm} onSubmit={handleSubmit} />
+      <BlockTimeDialog
+        open={typing}
+        onClose={closeForm}
+        onSubmit={handleSubmit}
+      />
     </>
   );
 }

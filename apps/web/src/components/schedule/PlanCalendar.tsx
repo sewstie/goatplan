@@ -3,8 +3,20 @@
 import { useMemo, type ReactNode } from "react";
 import { formatTimeRange } from "@/lib/data/time";
 import type { Day } from "@/lib/data/types";
-import { selectReadOnlyPlan, selectSchedules, selectViewedCourse, selectViewedSection, usePlanner } from "@/lib/store";
-import { BLOCKED_TIERS, blockHeight, blockLayout, CLASS_TIERS, NAMED_BLOCKED_TIERS } from "./blockLayout";
+import {
+  selectReadOnlyPlan,
+  selectSchedules,
+  selectViewedCourse,
+  selectViewedSection,
+  usePlanner,
+} from "@/lib/store";
+import {
+  BLOCKED_TIERS,
+  blockHeight,
+  blockLayout,
+  CLASS_TIERS,
+  NAMED_BLOCKED_TIERS,
+} from "./blockLayout";
 import { blockPosition } from "./blockStyles";
 import { BlockedTimeBlock } from "./BlockedTimeBlock";
 import { blockedKey, useBlockedTimeMenu } from "./useBlockedTimeMenu";
@@ -32,13 +44,24 @@ const SHORT_CLASS_MINUTES = 40;
 const CLASS_END_GAP = 3;
 const NO_PREVIEWS: readonly ClassItem[] = [];
 
-export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: readonly ClassItem[]; overlay?: ReactNode }) {
+export function PlanCalendar({
+  previews = NO_PREVIEWS,
+  overlay,
+}: {
+  previews?: readonly ClassItem[];
+  overlay?: ReactNode;
+}) {
   const saved = usePlanner(selectReadOnlyPlan);
   const shared = usePlanner((state) => state.temporaryPlan !== null);
   const term = usePlanner((state) => state.term);
   const schedules = usePlanner(selectSchedules);
-  const pending = usePlanner((state) => state.solveStatus === "waiting" || state.solveStatus === "solving");
-  const preferences = usePlanner((state) => selectReadOnlyPlan(state)?.preferences ?? state.preferences);
+  const pending = usePlanner(
+    (state) =>
+      state.solveStatus === "waiting" || state.solveStatus === "solving",
+  );
+  const preferences = usePlanner(
+    (state) => selectReadOnlyPlan(state)?.preferences ?? state.preferences,
+  );
   const selectedCourse = usePlanner(selectViewedCourse);
   const selectedSection = usePlanner(selectViewedSection);
   const selectCourse = usePlanner((state) => state.selectCourse);
@@ -53,28 +76,61 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
   const { classes: scheduled, untimed } = useScheduleItems();
   const diagnostic = useDiagnosticPreview();
   const sectionPreviews = useSectionPreviewItems();
-  const previewItems = useMemo(() => saved ? [] : [...previews, ...diagnostic.classes, ...sectionPreviews], [saved, previews, diagnostic.classes, sectionPreviews]);
-  const classes = useMemo(() => [...scheduled, ...previewItems], [scheduled, previewItems]);
+  const previewItems = useMemo(
+    () =>
+      saved ? [] : [...previews, ...diagnostic.classes, ...sectionPreviews],
+    [saved, previews, diagnostic.classes, sectionPreviews],
+  );
+  const classes = useMemo(
+    () => [...scheduled, ...previewItems],
+    [scheduled, previewItems],
+  );
 
   // The phone grid is tall, so it starts at the start-time preference instead of under a hatched band.
   const startsAfter = phone ? preferences.startsAfter : 0;
   const drawingHere = drawing && !saved;
   const { range: fitted, days } = useMemo(
-    () => saved ? calendarBounds(null, [], preferences.blocked, scheduled, startsAfter) : calendarBounds(term, schedules, preferences.blocked, previewItems, startsAfter),
-    [saved, scheduled, term, schedules, preferences.blocked, previewItems, startsAfter],
+    () =>
+      saved
+        ? calendarBounds(null, [], preferences.blocked, scheduled, startsAfter)
+        : calendarBounds(
+            term,
+            schedules,
+            preferences.blocked,
+            previewItems,
+            startsAfter,
+          ),
+    [
+      saved,
+      scheduled,
+      term,
+      schedules,
+      preferences.blocked,
+      previewItems,
+      startsAfter,
+    ],
   );
   const range = useHeldRange(fitted, drawingHere);
   // Each day's blocks in time order, so screen readers and Tab go through the day as it happens.
   const byDay = useMemo(() => {
     const groups = new Map<Day, ClassItem[]>();
-    for (const item of classes) groups.set(item.day, [...(groups.get(item.day) ?? []), item]);
-    for (const items of groups.values()) items.sort((a, b) => a.start - b.start || a.end - b.end);
+    for (const item of classes)
+      groups.set(item.day, [...(groups.get(item.day) ?? []), item]);
+    for (const items of groups.values())
+      items.sort((a, b) => a.start - b.start || a.end - b.end);
     return groups;
   }, [classes]);
   const lanes = useMemo(() => {
-    const result = new Map([...byDay.values()].flatMap((items) => [...assignLanes(items.filter((item) => !item.choicePreview))]));
-    const problemLanes = new Map(classes.filter((item) => item.problem && (result.get(item)?.lanes ?? 0) > 1)
-      .map((item) => [item.sectionId, result.get(item)!]));
+    const result = new Map(
+      [...byDay.values()].flatMap((items) => [
+        ...assignLanes(items.filter((item) => !item.choicePreview)),
+      ]),
+    );
+    const problemLanes = new Map(
+      classes
+        .filter((item) => item.problem && (result.get(item)?.lanes ?? 0) > 1)
+        .map((item) => [item.sectionId, result.get(item)!]),
+    );
     for (const item of classes) {
       const lane = problemLanes.get(item.sectionId);
       if (item.problem && lane) result.set(item, lane);
@@ -93,9 +149,20 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             start={block.start}
             end={block.end}
             label={block.label ?? (shared ? "Unavailable" : undefined)}
-            layout={blockLayout(blockHeight(block.end - block.start, pixelsPerHour), phone ? undefined : block.label ? NAMED_BLOCKED_TIERS : BLOCKED_TIERS)}
+            layout={blockLayout(
+              blockHeight(block.end - block.start, pixelsPerHour),
+              phone
+                ? undefined
+                : block.label
+                  ? NAMED_BLOCKED_TIERS
+                  : BLOCKED_TIERS,
+            )}
             erasable={drawingHere}
-            onOpen={drawing || saved ? undefined : (anchor) => toggleMenu(block, anchor)}
+            onOpen={
+              drawing || saved
+                ? undefined
+                : (anchor) => toggleMenu(block, anchor)
+            }
             expanded={openMenu?.block === block}
             selected={!saved && selectedBlocks.includes(blockedKey(block))}
             onToggleSelected={saved ? undefined : () => toggleSelected(block)}
@@ -104,7 +171,9 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
           />
         ))}
       {(byDay.get(day) ?? []).map((item) => {
-        const selected = item.courseCode === selectedCourse && item.sectionId === selectedSection;
+        const selected =
+          item.courseCode === selectedCourse &&
+          item.sectionId === selectedSection;
         const minutes = item.end - item.start;
         const height = blockHeight(minutes, pixelsPerHour, CLASS_END_GAP);
         return (
@@ -112,9 +181,20 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
             key={item.key}
             item={item}
             density={phone ? "regular" : blockDensity(height)}
-            layout={phone ? (minutes < SHORT_CLASS_MINUTES ? blockLayout(height) : "full") : blockLayout(height, CLASS_TIERS)}
+            layout={
+              phone
+                ? minutes < SHORT_CLASS_MINUTES
+                  ? blockLayout(height)
+                  : "full"
+                : blockLayout(height, CLASS_TIERS)
+            }
             drawing={drawingHere}
-            style={blockPosition(range, item, lanes.get(item) ?? FULL_COLUMN, CLASS_END_GAP)}
+            style={blockPosition(
+              range,
+              item,
+              lanes.get(item) ?? FULL_COLUMN,
+              CLASS_END_GAP,
+            )}
             selected={selected}
             onSelect={(clicked, fromKeyboard) => {
               // On a phone a tap opens the course screen with that section picked.
@@ -123,7 +203,10 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
                 showPhoneScreen("course");
                 return;
               }
-              selectCourse(clicked.courseCode, selected ? null : clicked.sectionId);
+              selectCourse(
+                clicked.courseCode,
+                selected ? null : clicked.sectionId,
+              );
               if (fromKeyboard) focusDetails();
             }}
           />
@@ -134,26 +217,58 @@ export function PlanCalendar({ previews = NO_PREVIEWS, overlay }: { previews?: r
 
   const hasTimes = classes.length > 0 || preferences.blocked.length > 0;
 
-  const drag: BlockDrag | undefined = !drawingHere ? undefined : {
-    blocked: preferences.blocked,
-    onDrop(ranges, erase) {
-      const next = erase ? subtractBlocked(preferences.blocked, ranges) : addRanges(preferences.blocked, ranges);
-      const days = changedDays(preferences.blocked, next, ranges);
-      if (days.length > 0) changeBlocked(next, { days, start: ranges[0].start, end: ranges[0].end, erased: erase });
-      return days;
-    },
-  };
+  const drag: BlockDrag | undefined = !drawingHere
+    ? undefined
+    : {
+        blocked: preferences.blocked,
+        onDrop(ranges, erase) {
+          const next = erase
+            ? subtractBlocked(preferences.blocked, ranges)
+            : addRanges(preferences.blocked, ranges);
+          const days = changedDays(preferences.blocked, next, ranges);
+          if (days.length > 0)
+            changeBlocked(next, {
+              days,
+              start: ranges[0].start,
+              end: ranges[0].end,
+              erased: erase,
+            });
+          return days;
+        },
+      };
 
   return (
     <WeekCalendar
       busy={!saved && pending}
       days={days}
       range={range}
-      caption={hasTimes ? `${saved ? (shared ? "Shared plan" : "Saved plan") : diagnostic.hasDiagnosis ? "Preview" : "Auto-fit"} · ${formatTimeRange(range.start, range.end)}` : diagnostic.hasDiagnosis && !saved ? "No schedule fits" : "No timed courses yet"}
-      note={saved ? (shared ? "Shared plan" : "Saved plan") : diagnostic.hasDiagnosis ? "Preview" : "Auto-fit to your schedule"}
+      caption={
+        hasTimes
+          ? `${saved ? (shared ? "Shared plan" : "Saved plan") : diagnostic.hasDiagnosis ? "Preview" : "Auto-fit"} · ${formatTimeRange(range.start, range.end)}`
+          : diagnostic.hasDiagnosis && !saved
+            ? "No schedule fits"
+            : "No timed courses yet"
+      }
+      note={
+        saved
+          ? shared
+            ? "Shared plan"
+            : "Saved plan"
+          : diagnostic.hasDiagnosis
+            ? "Preview"
+            : "Auto-fit to your schedule"
+      }
       renderDay={renderDay}
-      background={hasTimes && <EarlyBand range={range} startsAfter={preferences.startsAfter} />}
-      footer={<NoTimeStrip items={saved || untimed.length > 0 ? untimed : diagnostic.untimed} />}
+      background={
+        hasTimes && (
+          <EarlyBand range={range} startsAfter={preferences.startsAfter} />
+        )
+      }
+      footer={
+        <NoTimeStrip
+          items={saved || untimed.length > 0 ? untimed : diagnostic.untimed}
+        />
+      }
       overlay={overlay}
       drag={drag}
     />

@@ -21,12 +21,27 @@ export function ScheduleBanner() {
   const shownSchedules = usePlanner((state) => selectSchedules(state).length);
   const { waitlisted } = useScheduleItems();
   const diagnosis = useDiagnosis();
-  const slow = useDelayedFlag(solveStatus === "waiting" || solveStatus === "solving", SLOW_SOLVE_MS);
+  const slow = useDelayedFlag(
+    solveStatus === "waiting" || solveStatus === "solving",
+    SLOW_SOLVE_MS,
+  );
   const drawing = usePlanner((state) => state.drawing);
 
   if (saved || termStatus !== "ready") return null;
-  const message = bannerMessage({ courseCount, solveStatus, slow, solveError, response, shownSchedules, waitlisted });
-  const banner = diagnosis?.issues[0] ? <Banner message={{ tone: "warning", ...diagnosis.issues[0].banner }} /> : message && <Banner message={message} />;
+  const message = bannerMessage({
+    courseCount,
+    solveStatus,
+    slow,
+    solveError,
+    response,
+    shownSchedules,
+    waitlisted,
+  });
+  const banner = diagnosis?.issues[0] ? (
+    <Banner message={{ tone: "warning", ...diagnosis.issues[0].banner }} />
+  ) : (
+    message && <Banner message={message} />
+  );
   if (!drawing) return banner;
   // Drawing keeps the grid still between drags, so the message is only announced. The summary line above says it too.
   return banner && <div className="sr-only">{banner}</div>;

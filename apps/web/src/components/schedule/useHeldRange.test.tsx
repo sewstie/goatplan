@@ -7,7 +7,9 @@ const NORMAL = { start: 480, end: 1020 };
 const EVENING = { start: 480, end: 1200 };
 
 function setup(range: TimeRange, active: boolean) {
-  return renderHook((props) => useHeldRange(props.range, props.active), { initialProps: { range, active } });
+  return renderHook((props) => useHeldRange(props.range, props.active), {
+    initialProps: { range, active },
+  });
 }
 
 describe("useHeldRange", () => {

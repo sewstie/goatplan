@@ -3,7 +3,9 @@ import { blockPosition } from "./blockStyles";
 import { DEFAULT_RANGE } from "./timeRange";
 
 // Made-up class times for the phone, shaped like a real week. They don't come from data.
-const PLACEHOLDERS: Readonly<Partial<Record<Day, readonly [number, number][]>>> = {
+const PLACEHOLDERS: Readonly<
+  Partial<Record<Day, readonly [number, number][]>>
+> = {
   Mon: [
     [540, 590],
     [660, 710],

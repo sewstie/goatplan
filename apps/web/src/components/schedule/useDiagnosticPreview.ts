@@ -16,9 +16,23 @@ export function useDiagnosticPreview() {
   const diagnosis = useDiagnosis();
   return useMemo(() => {
     const issues = diagnosis?.issues ?? [];
-    const chosen = diagnosticPreview(term, courses, { preferences, locks, professorByCourse }, last, issues);
+    const chosen = diagnosticPreview(
+      term,
+      courses,
+      { preferences, locks, professorByCourse },
+      last,
+      issues,
+    );
     const items = scheduleItems(term, courses, chosen, locks);
     const problem = new Set(issues.flatMap((issue) => issue.problemSectionIds));
-    return { ...items, hasDiagnosis: issues.length > 0, classes: items.classes.map((item) => ({ ...item, preview: true, problem: problem.has(item.sectionId) })) };
+    return {
+      ...items,
+      hasDiagnosis: issues.length > 0,
+      classes: items.classes.map((item) => ({
+        ...item,
+        preview: true,
+        problem: problem.has(item.sectionId),
+      })),
+    };
   }, [term, courses, preferences, locks, professorByCourse, last, diagnosis]);
 }

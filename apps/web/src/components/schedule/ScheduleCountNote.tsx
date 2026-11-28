@@ -12,7 +12,10 @@ export function ScheduleCountNote() {
   const diagnosis = useDiagnosis();
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
-  const shown = message && message.tone !== "loading" && !diagnosis?.issues[0] ? message : null;
+  const shown =
+    message && message.tone !== "loading" && !diagnosis?.issues[0]
+      ? message
+      : null;
   const expanded = open && shown !== null;
   useDismiss(expanded, root, () => setOpen(false));
 

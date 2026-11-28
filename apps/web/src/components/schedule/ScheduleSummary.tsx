@@ -1,7 +1,11 @@
 "use client";
 
 import { cx } from "@/components/ui/cx";
-import { selectCurrentSchedule, selectReadOnlyPlan, usePlanner } from "@/lib/store";
+import {
+  selectCurrentSchedule,
+  selectReadOnlyPlan,
+  usePlanner,
+} from "@/lib/store";
 import { count, scheduleBadgeDetails, summaryText } from "./scheduleCopy";
 import { ScoreChips } from "./ScoreChips";
 import { useScheduleItems } from "./useScheduleItems";
@@ -14,10 +18,16 @@ import { useHeldHeight } from "./useHeldHeight";
  * keeps the badge line's space when no schedule fits, and in drawing mode keeps it to one line of text
  * and one row of badges, so it's the same height whether schedules fit or not.
  */
-export function ScheduleSummary({ steady = false, aside = null }: { steady?: boolean; aside?: string | null } = {}) {
+export function ScheduleSummary({
+  steady = false,
+  aside = null,
+}: { steady?: boolean; aside?: string | null } = {}) {
   const saved = usePlanner(selectReadOnlyPlan);
   const termStatus = usePlanner((state) => state.termStatus);
-  const termName = usePlanner((state) => state.terms.find((term) => term.id === state.termId)?.name ?? null);
+  const termName = usePlanner(
+    (state) =>
+      state.terms.find((term) => term.id === state.termId)?.name ?? null,
+  );
   const courseCount = usePlanner((state) => state.courses.length);
   const response = usePlanner((state) => state.response);
   const solveStatus = usePlanner((state) => state.solveStatus);
@@ -28,34 +38,64 @@ export function ScheduleSummary({ steady = false, aside = null }: { steady?: boo
   const diagnosis = useDiagnosis();
   const drawing = usePlanner((state) => state.drawing);
   const oneRow = steady;
-  const [heldRef, heldStyle] = useHeldHeight<HTMLDivElement>(drawing && !oneRow);
+  const [heldRef, heldStyle] = useHeldHeight<HTMLDivElement>(
+    drawing && !oneRow,
+  );
 
   // A course has no set time only when none of its chosen sections meet.
   const timed = new Set(classes.map((item) => item.courseCode));
-  const untimedCourses = new Set(untimed.map((item) => item.courseCode).filter((code) => !timed.has(code))).size;
+  const untimedCourses = new Set(
+    untimed.map((item) => item.courseCode).filter((code) => !timed.has(code)),
+  ).size;
 
-  if (saved) return <span>{count("course", saved.courses.length)} · {saved.id === "__temporary__" ? "Shared plan" : "Saved plan"}</span>;
+  if (saved)
+    return (
+      <span>
+        {count("course", saved.courses.length)} ·{" "}
+        {saved.id === "__temporary__" ? "Shared plan" : "Saved plan"}
+      </span>
+    );
 
   const issue = diagnosis?.issues[0];
-  const text = issue ? (issue.kind === "pair" ? `${count("course", courseCount)} · ${issue.summary}` : issue.summary) : summaryText({
-    termStatus,
-    termName,
-    courseCount,
-    response,
-    solveStatus,
-    untimedCourses,
-    hasWaitlist: waitlisted.length > 0,
-  });
+  const text = issue
+    ? issue.kind === "pair"
+      ? `${count("course", courseCount)} · ${issue.summary}`
+      : issue.summary
+    : summaryText({
+        termStatus,
+        termName,
+        courseCount,
+        response,
+        solveStatus,
+        untimedCourses,
+        hasWaitlist: waitlisted.length > 0,
+      });
   if (!text) return null;
 
-  const showChips = termStatus === "ready" && solveStatus === "done" && courseCount > 0 && schedule;
-  const badges = showChips ? scheduleBadgeDetails(classes, schedule.score, sortPreset, startsAfter) : [];
+  const showChips =
+    termStatus === "ready" &&
+    solveStatus === "done" &&
+    courseCount > 0 &&
+    schedule;
+  const badges = showChips
+    ? scheduleBadgeDetails(classes, schedule.score, sortPreset, startsAfter)
+    : [];
 
   return (
-    <div ref={heldRef} style={heldStyle} className={oneRow ? "flex flex-col gap-4" : "flex flex-wrap items-center gap-x-12 gap-y-4"}>
+    <div
+      ref={heldRef}
+      style={heldStyle}
+      className={
+        oneRow
+          ? "flex flex-col gap-4"
+          : "flex flex-wrap items-center gap-x-12 gap-y-4"
+      }
+    >
       <span className="flex min-w-0 justify-between gap-8">
         <span className={cx("min-w-0", oneRow && "truncate")}>{text}</span>
-        {aside && <span className="shrink-0 font-570 text-ink-soft">{aside}</span>}
+        {aside && (
+          <span className="shrink-0 font-570 text-ink-soft">{aside}</span>
+        )}
       </span>
       {badges.length > 0 ? (
         oneRow ? (
@@ -67,9 +107,15 @@ export function ScheduleSummary({ steady = false, aside = null }: { steady?: boo
         )
       ) : (
         // The badge line keeps its space while schedules come and go, so the calendar below doesn't move.
-        (drawing || steady) && courseCount > 0 && (
+        (drawing || steady) &&
+        courseCount > 0 && (
           <div aria-hidden className="invisible">
-            <ScoreChips chips={[{ text: "Starts", short: "Starts", tone: "plain", lead: false }]} oneRow={oneRow} />
+            <ScoreChips
+              chips={[
+                { text: "Starts", short: "Starts", tone: "plain", lead: false },
+              ]}
+              oneRow={oneRow}
+            />
           </div>
         )
       )}

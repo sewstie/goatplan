@@ -8,7 +8,11 @@ import { DEFAULT_RANGE } from "./timeRange";
 import { WeekCalendar } from "./WeekCalendar";
 
 /** While the term file loads (div.app-1.md). The phone gets its own blocks, shaped like its class blocks. */
-export function LoadingCalendar({ caption = "Awaiting term data" }: { caption?: string }) {
+export function LoadingCalendar({
+  caption = "Awaiting term data",
+}: {
+  caption?: string;
+}) {
   const phone = usePhoneViewport();
   return (
     <WeekCalendar
@@ -16,7 +20,9 @@ export function LoadingCalendar({ caption = "Awaiting term data" }: { caption?: 
       days={WEEK.slice(0, 5)}
       range={DEFAULT_RANGE}
       caption={caption}
-      renderDay={(day) => (phone ? <PhoneLoadingBlocks day={day} /> : <LoadingBlocks day={day} />)}
+      renderDay={(day) =>
+        phone ? <PhoneLoadingBlocks day={day} /> : <LoadingBlocks day={day} />
+      }
     />
   );
 }

@@ -1,6 +1,20 @@
 import { describe, expect, it } from "vitest";
 import type { Day } from "@/lib/data/types";
-import { addRanges, blockedAt, changedDays, changeText, dayIndexAt, dayRanges, mergeBlocked, minuteAt, removeBlocked, replaceBlocked, selectionText, snapRange, subtractBlocked } from "./dragBlock";
+import {
+  addRanges,
+  blockedAt,
+  changedDays,
+  changeText,
+  dayIndexAt,
+  dayRanges,
+  mergeBlocked,
+  minuteAt,
+  removeBlocked,
+  replaceBlocked,
+  selectionText,
+  snapRange,
+  subtractBlocked,
+} from "./dragBlock";
 
 const RANGE = { start: 480, end: 1020 };
 const WEEKDAYS: Day[] = ["Mon", "Tue", "Wed", "Thu", "Fri"];
@@ -51,9 +65,15 @@ describe("dayRanges", () => {
       { day: "Tue", start: 720, end: 780 },
       { day: "Wed", start: 720, end: 780 },
     ];
-    expect(dayRanges(WEEKDAYS, 0, 2, { start: 720, end: 780 })).toEqual(expected);
-    expect(dayRanges(WEEKDAYS, 2, 0, { start: 720, end: 780 })).toEqual(expected);
-    expect(dayRanges(WEEKDAYS, 4, 4, { start: 600, end: 630 })).toEqual([{ day: "Fri", start: 600, end: 630 }]);
+    expect(dayRanges(WEEKDAYS, 0, 2, { start: 720, end: 780 })).toEqual(
+      expected,
+    );
+    expect(dayRanges(WEEKDAYS, 2, 0, { start: 720, end: 780 })).toEqual(
+      expected,
+    );
+    expect(dayRanges(WEEKDAYS, 4, 4, { start: 600, end: 630 })).toEqual([
+      { day: "Fri", start: 600, end: 630 },
+    ]);
   });
 });
 
@@ -84,15 +104,21 @@ describe("mergeBlocked", () => {
   });
 
   it("treats an empty name as no name", () => {
-    expect(mergeBlocked([{ day: "Mon", start: 720, end: 780, label: " " }, { day: "Mon", start: 780, end: 810 }])).toEqual([
-      { day: "Mon", start: 720, end: 810, label: " " },
-    ]);
+    expect(
+      mergeBlocked([
+        { day: "Mon", start: 720, end: 780, label: " " },
+        { day: "Mon", start: 780, end: 810 },
+      ]),
+    ).toEqual([{ day: "Mon", start: 720, end: 810, label: " " }]);
   });
 
   it("joins a block that runs past the visible range with one inside it", () => {
-    expect(mergeBlocked([{ day: "Wed", start: 420, end: 540 }, { day: "Wed", start: 510, end: 600 }])).toEqual([
-      { day: "Wed", start: 420, end: 600 },
-    ]);
+    expect(
+      mergeBlocked([
+        { day: "Wed", start: 420, end: 540 },
+        { day: "Wed", start: 510, end: 600 },
+      ]),
+    ).toEqual([{ day: "Wed", start: 420, end: 600 }]);
   });
 
   it("joins a chain that only connects through a later block", () => {
@@ -110,7 +136,12 @@ describe("subtractBlocked", () => {
   const work = { day: "Mon" as const, start: 720, end: 900, label: "Work" };
 
   it("splits a block when only its middle is removed, keeping its name and place", () => {
-    expect(subtractBlocked([work, { day: "Tue", start: 600, end: 660 }], [{ day: "Mon", start: 780, end: 840 }])).toEqual([
+    expect(
+      subtractBlocked(
+        [work, { day: "Tue", start: 600, end: 660 }],
+        [{ day: "Mon", start: 780, end: 840 }],
+      ),
+    ).toEqual([
       { day: "Mon", start: 720, end: 780, label: "Work" },
       { day: "Mon", start: 840, end: 900, label: "Work" },
       { day: "Tue", start: 600, end: 660 },
@@ -118,24 +149,41 @@ describe("subtractBlocked", () => {
   });
 
   it("trims an end, drops a block that is fully covered and leaves other days alone", () => {
-    const blocked = [work, { day: "Mon" as const, start: 600, end: 630 }, { day: "Wed" as const, start: 720, end: 780 }];
-    expect(subtractBlocked(blocked, [{ day: "Mon", start: 570, end: 780 }, { day: "Tue", start: 570, end: 780 }])).toEqual([
+    const blocked = [
+      work,
+      { day: "Mon" as const, start: 600, end: 630 },
+      { day: "Wed" as const, start: 720, end: 780 },
+    ];
+    expect(
+      subtractBlocked(blocked, [
+        { day: "Mon", start: 570, end: 780 },
+        { day: "Tue", start: 570, end: 780 },
+      ]),
+    ).toEqual([
       { day: "Mon", start: 780, end: 900, label: "Work" },
       { day: "Wed", start: 720, end: 780 },
     ]);
   });
 
   it("keeps the part of a block that runs past the visible range", () => {
-    expect(subtractBlocked([{ day: "Thu", start: 420, end: 540 }], [{ day: "Thu", start: 480, end: 540 }])).toEqual([
-      { day: "Thu", start: 420, end: 480 },
-    ]);
+    expect(
+      subtractBlocked(
+        [{ day: "Thu", start: 420, end: 540 }],
+        [{ day: "Thu", start: 480, end: 540 }],
+      ),
+    ).toEqual([{ day: "Thu", start: 420, end: 480 }]);
   });
 });
 
 describe("addRanges", () => {
   it("adds the time to every day and joins it with unnamed blocks it touches", () => {
-    const blocked = [{ day: "Mon" as const, start: 780, end: 840 }, { day: "Tue" as const, start: 750, end: 810, label: "Work" }];
-    expect(addRanges(blocked, dayRanges(WEEKDAYS, 0, 2, { start: 720, end: 780 }))).toEqual([
+    const blocked = [
+      { day: "Mon" as const, start: 780, end: 840 },
+      { day: "Tue" as const, start: 750, end: 810, label: "Work" },
+    ];
+    expect(
+      addRanges(blocked, dayRanges(WEEKDAYS, 0, 2, { start: 720, end: 780 })),
+    ).toEqual([
       { day: "Mon", start: 720, end: 840 },
       { day: "Tue", start: 750, end: 810, label: "Work" },
       { day: "Tue", start: 720, end: 780 },
@@ -144,8 +192,13 @@ describe("addRanges", () => {
   });
 
   it("leaves a day alone, name and all, when that time is already blocked there", () => {
-    const blocked = [{ day: "Mon" as const, start: 720, end: 780, label: "Work" }, { day: "Tue" as const, start: 690, end: 810, label: "Gym" }];
-    expect(addRanges(blocked, dayRanges(WEEKDAYS, 0, 1, { start: 720, end: 780 }))).toEqual(blocked);
+    const blocked = [
+      { day: "Mon" as const, start: 720, end: 780, label: "Work" },
+      { day: "Tue" as const, start: 690, end: 810, label: "Gym" },
+    ];
+    expect(
+      addRanges(blocked, dayRanges(WEEKDAYS, 0, 1, { start: 720, end: 780 })),
+    ).toEqual(blocked);
   });
 });
 
@@ -161,20 +214,37 @@ describe("blockedAt", () => {
 
 describe("selectionText and changeText", () => {
   it("names the days and the time while dragging, then in the toast", () => {
-    expect(selectionText(["Mon", "Tue", "Wed"], { start: 720, end: 780 }, false)).toBe("Mon–Wed 12:00–1:00 PM");
-    expect(selectionText(["Mon"], { start: 720, end: 780 }, true)).toBe("Remove Mon 12:00–1:00 PM");
-    expect(changeText(["Mon", "Tue", "Wed"], { start: 720, end: 780 }, false)).toBe("Blocked Mon–Wed 12–1 PM");
-    expect(changeText(["Thu", "Fri"], { start: 690, end: 810 }, true)).toBe("Unblocked Thu, Fri 11:30 AM–1:30 PM");
-    expect(changeText(["Tue"], { start: 750, end: 780 }, false)).toBe("Blocked Tue 12:30–1 PM");
+    expect(
+      selectionText(["Mon", "Tue", "Wed"], { start: 720, end: 780 }, false),
+    ).toBe("Mon–Wed 12:00–1:00 PM");
+    expect(selectionText(["Mon"], { start: 720, end: 780 }, true)).toBe(
+      "Remove Mon 12:00–1:00 PM",
+    );
+    expect(
+      changeText(["Mon", "Tue", "Wed"], { start: 720, end: 780 }, false),
+    ).toBe("Blocked Mon–Wed 12–1 PM");
+    expect(changeText(["Thu", "Fri"], { start: 690, end: 810 }, true)).toBe(
+      "Unblocked Thu, Fri 11:30 AM–1:30 PM",
+    );
+    expect(changeText(["Tue"], { start: 750, end: 780 }, false)).toBe(
+      "Blocked Tue 12:30–1 PM",
+    );
   });
 });
 
 describe("changedDays", () => {
   it("lists only the days whose blocked times changed, so the toast and Name it leave the rest alone", () => {
-    const before = [{ day: "Thu" as const, start: 720, end: 840, label: "Work" }];
+    const before = [
+      { day: "Thu" as const, start: 720, end: 840, label: "Work" },
+    ];
     const ranges = dayRanges(WEEKDAYS, 2, 4, { start: 720, end: 780 });
-    expect(changedDays(before, addRanges(before, ranges), ranges)).toEqual(["Wed", "Fri"]);
-    expect(changedDays(before, subtractBlocked(before, ranges), ranges)).toEqual(["Thu"]);
+    expect(changedDays(before, addRanges(before, ranges), ranges)).toEqual([
+      "Wed",
+      "Fri",
+    ]);
+    expect(
+      changedDays(before, subtractBlocked(before, ranges), ranges),
+    ).toEqual(["Thu"]);
     expect(changedDays(before, before, ranges)).toEqual([]);
   });
 });
@@ -185,19 +255,28 @@ describe("replaceBlocked", () => {
 
   it("removes just that blocked time, not others it overlaps", () => {
     const gym = { day: "Mon" as const, start: 690, end: 780, label: "Gym" };
-    expect(removeBlocked([work, gym, other], { ...work })).toEqual([gym, other]);
+    expect(removeBlocked([work, gym, other], { ...work })).toEqual([
+      gym,
+      other,
+    ]);
   });
 
   it("renames one blocked time and leaves the others alone", () => {
-    expect(replaceBlocked([work, other], work, ["Mon"], 720, 750, "Gym")).toEqual([other, { ...work, label: "Gym" }]);
+    expect(
+      replaceBlocked([work, other], work, ["Mon"], 720, 750, "Gym"),
+    ).toEqual([other, { ...work, label: "Gym" }]);
   });
 
   it("moves it to the form's days and times, and joins it with a block it now touches", () => {
     const lunch = { day: "Wed" as const, start: 750, end: 780, label: "Work" };
-    expect(replaceBlocked([work, lunch], work, ["Wed"], 720, 750, "Work")).toEqual([{ ...lunch, start: 720 }]);
+    expect(
+      replaceBlocked([work, lunch], work, ["Wed"], 720, 750, "Work"),
+    ).toEqual([{ ...lunch, start: 720 }]);
   });
 
   it("drops the name when the field is cleared", () => {
-    expect(replaceBlocked([work], work, ["Mon"], 720, 750, " ")).toEqual([{ day: "Mon", start: 720, end: 750 }]);
+    expect(replaceBlocked([work], work, ["Mon"], 720, 750, " ")).toEqual([
+      { day: "Mon", start: 720, end: 750 },
+    ]);
   });
 });

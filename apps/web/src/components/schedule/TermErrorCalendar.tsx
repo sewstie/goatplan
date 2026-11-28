@@ -11,7 +11,10 @@ import { WeekCalendar } from "./WeekCalendar";
 /** The term file didn't load (div.app-2.md). */
 export function TermErrorCalendar() {
   const termId = usePlanner((state) => state.termId);
-  const termName = usePlanner((state) => state.terms.find((term) => term.id === state.termId)?.name ?? null);
+  const termName = usePlanner(
+    (state) =>
+      state.terms.find((term) => term.id === state.termId)?.name ?? null,
+  );
   const setTerm = usePlanner((state) => state.setTerm);
   const init = usePlanner((state) => state.init);
 
@@ -25,7 +28,11 @@ export function TermErrorCalendar() {
         <CalendarMessage
           role="alert"
           icon={<Warning className="text-ink" />}
-          title={termName ? `Couldn’t load ${termName} sections.` : "Couldn’t load course sections."}
+          title={
+            termName
+              ? `Couldn’t load ${termName} sections.`
+              : "Couldn’t load course sections."
+          }
           actions={
             <Button
               icon={<ArrowClockwise aria-hidden />}

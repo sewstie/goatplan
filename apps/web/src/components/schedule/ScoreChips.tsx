@@ -12,16 +12,40 @@ const TONE: Readonly<Record<ScheduleBadge["tone"], string>> = {
  * What the shown schedule is like. Good news is green, an early start is orange, and the badge the sort
  * ranks by is bold. `oneRow` never wraps; the row then scrolls sideways. `flat` hands the chips to the parent's flow.
  */
-export function ScoreChips({ chips, oneRow = false, short = false, flat = false }: { chips: readonly ScheduleBadge[]; oneRow?: boolean; short?: boolean; flat?: boolean }) {
+export function ScoreChips({
+  chips,
+  oneRow = false,
+  short = false,
+  flat = false,
+}: {
+  chips: readonly ScheduleBadge[];
+  oneRow?: boolean;
+  short?: boolean;
+  flat?: boolean;
+}) {
   const id = useId();
   const leadId = `${id}-lead`;
   return (
-    <div className={flat ? "contents" : cx("flex items-center gap-x-6 gap-y-4", oneRow ? "w-max whitespace-nowrap" : "flex-wrap")}>
+    <div
+      className={
+        flat
+          ? "contents"
+          : cx(
+              "flex items-center gap-x-6 gap-y-4",
+              oneRow ? "w-max whitespace-nowrap" : "flex-wrap",
+            )
+      }
+    >
       {!short && <span aria-hidden>This schedule:</span>}
-      <ul aria-label="This schedule" className={flat ? "contents" : cx("flex gap-4", !oneRow && "flex-wrap")}>
+      <ul
+        aria-label="This schedule"
+        className={flat ? "contents" : cx("flex gap-4", !oneRow && "flex-wrap")}
+      >
         {chips.map((chip, index) => {
           const noteId = chip.note ? `${id}-note-${index}` : null;
-          const described = [noteId, chip.lead ? leadId : null].filter(Boolean).join(" ");
+          const described = [noteId, chip.lead ? leadId : null]
+            .filter(Boolean)
+            .join(" ");
           return (
             <li
               key={chip.text}
@@ -30,16 +54,36 @@ export function ScoreChips({ chips, oneRow = false, short = false, flat = false 
                 "rounded-pill py-1 text-8-5 leading-11-9 whitespace-nowrap",
                 oneRow ? "px-5" : "px-7",
                 TONE[chip.tone],
-                chip.lead ? "font-700 ring-1 ring-current ring-inset" : "font-570",
+                chip.lead
+                  ? "font-700 ring-1 ring-current ring-inset"
+                  : "font-570",
               )}
             >
-              {short ? <span title={chip.text}>{chip.short}<span className="sr-only">{chip.text.slice(chip.short.length)}</span></span> : chip.text}
+              {short ? (
+                <span title={chip.text}>
+                  {chip.short}
+                  <span className="sr-only">
+                    {chip.text.slice(chip.short.length)}
+                  </span>
+                </span>
+              ) : (
+                chip.text
+              )}
             </li>
           );
         })}
       </ul>
-      {chips.map((chip, index) => chip.note && <span key={chip.text} id={`${id}-note-${index}`} hidden>{chip.note}</span>)}
-      <span id={leadId} hidden>What this sort ranks by</span>
+      {chips.map(
+        (chip, index) =>
+          chip.note && (
+            <span key={chip.text} id={`${id}-note-${index}`} hidden>
+              {chip.note}
+            </span>
+          ),
+      )}
+      <span id={leadId} hidden>
+        What this sort ranks by
+      </span>
     </div>
   );
 }

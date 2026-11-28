@@ -19,13 +19,21 @@ export function NoTimeStrip({ items }: { items: readonly UntimedItem[] }) {
       </h3>
       {/* Capped so many untimed sections can't squeeze the grid; the rest scroll. */}
       <ul className="flex max-h-120 flex-col gap-6 overflow-y-auto">
-
         {items.map((item) => (
           <li
             key={item.sectionId}
-            className={cx("flex items-center gap-8 rounded-row px-10 py-9", COURSE_COLORS[item.slot].soft)}
+            className={cx(
+              "flex items-center gap-8 rounded-row px-10 py-9",
+              COURSE_COLORS[item.slot].soft,
+            )}
           >
-            <span aria-hidden className={cx("size-8 shrink-0 rounded-swatch", COURSE_COLORS[item.slot].swatch)} />
+            <span
+              aria-hidden
+              className={cx(
+                "size-8 shrink-0 rounded-swatch",
+                COURSE_COLORS[item.slot].swatch,
+              )}
+            />
             <span className="flex min-w-0 flex-1 flex-col gap-2.5">
               <span className="truncate text-10 leading-14-5 font-700">
                 {item.courseCode} · {item.sectionCode}

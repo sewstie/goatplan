@@ -3,7 +3,12 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 import { getPlannerStore } from "@/lib/store";
 import { ScheduleView } from "./ScheduleView";
-import { resetPlanner, setPlanner, solved, term } from "./testing/plannerFixtures";
+import {
+  resetPlanner,
+  setPlanner,
+  solved,
+  term,
+} from "./testing/plannerFixtures";
 
 afterEach(resetPlanner);
 
@@ -18,31 +23,56 @@ function renderInCard() {
 describe("ScheduleView", () => {
   it("keeps the full answer's range while paging and ignores the starts-after band", () => {
     const data = structuredClone(term);
-    data.courses[0].sections.find((section) => section.code === "CX02")!.meetings[0].end = 1200;
+    data.courses[0].sections.find(
+      (section) => section.code === "CX02",
+    )!.meetings[0].end = 1200;
     setPlanner({ term: data, response: solved(["CX01", "CX02"]) });
     renderInCard();
     expect(screen.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeInTheDocument();
     act(() => getPlannerStore().setState({ scheduleIndex: 1 }));
     expect(screen.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeInTheDocument();
-    act(() => getPlannerStore().setState({ preferences: { startsAfter: 60, blocked: [], onlyOpen: true } }));
+    act(() =>
+      getPlannerStore().setState({
+        preferences: { startsAfter: 60, blocked: [], onlyOpen: true },
+      }),
+    );
     expect(screen.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeInTheDocument();
-    act(() => getPlannerStore().setState({ response: solved(["CX01"]), scheduleIndex: 0 }));
+    act(() =>
+      getPlannerStore().setState({
+        response: solved(["CX01"]),
+        scheduleIndex: 0,
+      }),
+    );
     expect(screen.getByText("Auto-fit · 8:00 AM–5:00 PM")).toBeInTheDocument();
   });
 
   it("draws evening blocked times on an empty plan", () => {
-    setPlanner({ courses: [], response: null, preferences: { startsAfter: 540, blocked: [{ day: "Sat", start: 1080, end: 1200 }], onlyOpen: true } });
+    setPlanner({
+      courses: [],
+      response: null,
+      preferences: {
+        startsAfter: 540,
+        blocked: [{ day: "Sat", start: 1080, end: 1200 }],
+        onlyOpen: true,
+      },
+    });
     renderInCard();
     expect(screen.getByText("Auto-fit · 8:00 AM–8:00 PM")).toBeInTheDocument();
     expect(screen.getByText("7 days")).toBeInTheDocument();
-    expect(screen.getByRole("group", { name: "Saturday" })).toHaveTextContent("6 PM–8 PM");
+    expect(screen.getByRole("group", { name: "Saturday" })).toHaveTextContent(
+      "6 PM–8 PM",
+    );
   });
 
   it("draws one labelled block per meeting, by day", () => {
     setPlanner({ locks: { "AE 2320": ["AE 2320-CX01"] } });
     renderInCard();
     const thursday = screen.getByRole("group", { name: "Thursday" });
-    expect(within(thursday).getAllByRole("button").map((block) => block.getAttribute("aria-label"))).toEqual([
+    expect(
+      within(thursday)
+        .getAllByRole("button")
+        .map((block) => block.getAttribute("aria-label")),
+    ).toEqual([
       "AE 2320 CL01, Introduction to Orbital Mechanics, Thursday, 9:00 AM–9:50 AM, Unity Hall 400, Ye Lu",
       "AE 2410 C01, Introduction to Aerospace Structures, Thursday, 10:00 AM–10:50 AM, Higgins Labs 116, Mark Richman",
       "AE 2320 CX01, Introduction to Orbital Mechanics, Thursday, 2:00 PM–2:50 PM, Higgins Labs 230 Geom Modeling Computer Lab, locked",
@@ -50,7 +80,11 @@ describe("ScheduleView", () => {
     expect(screen.getByText("No classes before 9:00 AM")).toBeInTheDocument();
     expect(screen.getByText("Auto-fit · 8:00 AM–5:00 PM")).toBeInTheDocument();
     expect(screen.getByText("Monday–Friday")).toBeInTheDocument();
-    expect(within(screen.getByRole("group", { name: "Tuesday" })).getByText("2 PM–4 PM")).toBeInTheDocument();
+    expect(
+      within(screen.getByRole("group", { name: "Tuesday" })).getByText(
+        "2 PM–4 PM",
+      ),
+    ).toBeInTheDocument();
   });
 
   it("selects a section's blocks, and a second click clears the section but keeps the course open", async () => {
@@ -61,20 +95,37 @@ describe("ScheduleView", () => {
     expect(lab).toHaveAttribute("aria-pressed", "false");
     await user.click(lab);
     expect(lab).toHaveAttribute("aria-pressed", "true");
-    expect(getPlannerStore().getState()).toMatchObject({ selectedCourse: "AE 2320", selectedSection: "AE 2320-CX01" });
-    expect(screen.getByRole("button", { name: /^AE 2320 CL01, .*Monday/ })).toHaveAttribute("aria-pressed", "false");
+    expect(getPlannerStore().getState()).toMatchObject({
+      selectedCourse: "AE 2320",
+      selectedSection: "AE 2320-CX01",
+    });
+    expect(
+      screen.getByRole("button", { name: /^AE 2320 CL01, .*Monday/ }),
+    ).toHaveAttribute("aria-pressed", "false");
     await user.click(lab);
     expect(lab).toHaveAttribute("aria-pressed", "false");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(getPlannerStore().getState()).toMatchObject({ selectedCourse: "AE 2320", selectedSection: null });
+    expect(getPlannerStore().getState()).toMatchObject({
+      selectedCourse: "AE 2320",
+      selectedSection: null,
+    });
 
-    await user.click(screen.getByRole("button", { name: /^AE 2410 C01, .*Monday/ }));
-    expect(getPlannerStore().getState()).toMatchObject({ selectedCourse: "AE 2410", selectedSection: "AE 2410-C01" });
+    await user.click(
+      screen.getByRole("button", { name: /^AE 2410 C01, .*Monday/ }),
+    );
+    expect(getPlannerStore().getState()).toMatchObject({
+      selectedCourse: "AE 2410",
+      selectedSection: "AE 2410-C01",
+    });
   });
 
   it("names blocked times, and shows short room names with the full name in the accessible label", () => {
     setPlanner({
-      preferences: { startsAfter: 540, blocked: [{ day: "Tue", start: 840, end: 960, label: "Work" }], onlyOpen: true },
+      preferences: {
+        startsAfter: 540,
+        blocked: [{ day: "Tue", start: 840, end: 960, label: "Work" }],
+        onlyOpen: true,
+      },
     });
     renderInCard();
     const tuesday = within(screen.getByRole("group", { name: "Tuesday" }));
@@ -85,36 +136,66 @@ describe("ScheduleView", () => {
     const lab = screen.getByRole("button", { name: /^AE 2320 CX01/ });
     expect(lab).toHaveTextContent("Higgins Labs 230");
     expect(lab).not.toHaveTextContent("Computer Lab");
-    expect(lab).toHaveAccessibleName(/Higgins Labs 230 Geom Modeling Computer Lab/);
+    expect(lab).toHaveAccessibleName(
+      /Higgins Labs 230 Geom Modeling Computer Lab/,
+    );
   });
 
   it("swaps the first-course message for a grid to draw on in drawing mode", () => {
-    setPlanner({ courses: [], response: null, preferences: { startsAfter: 0, blocked: [], onlyOpen: true } });
+    setPlanner({
+      courses: [],
+      response: null,
+      preferences: { startsAfter: 0, blocked: [], onlyOpen: true },
+    });
     renderInCard();
-    expect(screen.getByRole("heading", { name: "Add your first course" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Add your first course" }),
+    ).toBeInTheDocument();
 
     act(() => getPlannerStore().getState().setDrawing(true));
-    expect(screen.queryByRole("heading", { name: "Add your first course" })).not.toBeInTheDocument();
-    expect(screen.getByRole("group", { name: "Drawing mode" })).toBeInTheDocument();
-    expect(screen.getByRole("group", { name: "Monday" })).toHaveAttribute("data-drag-day", "Mon");
+    expect(
+      screen.queryByRole("heading", { name: "Add your first course" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("group", { name: "Drawing mode" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Monday" })).toHaveAttribute(
+      "data-drag-day",
+      "Mon",
+    );
     expect(screen.getByText("No timed courses yet")).toBeInTheDocument();
 
     act(() => getPlannerStore().getState().setDrawing(false));
-    expect(screen.getByRole("heading", { name: "Add your first course" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Add your first course" }),
+    ).toBeInTheDocument();
   });
 
   it("lists sections with no set time under the grid", () => {
-    setPlanner({ courses: ["AE 2320", "AE 2410", "AE 5131"], response: solved(["CX02"], {}, true) });
+    setPlanner({
+      courses: ["AE 2320", "AE 2410", "AE 5131"],
+      response: solved(["CX02"], {}, true),
+    });
     renderInCard();
     const strip = screen.getByRole("region", { name: "No set time" });
     expect(within(strip).getByText("AE 5131 · C01")).toBeInTheDocument();
-    expect(within(strip).getByText("Incompressible Fluid Dynamics · Online, asynchronous")).toBeInTheDocument();
+    expect(
+      within(strip).getByText(
+        "Incompressible Fluid Dynamics · Online, asynchronous",
+      ),
+    ).toBeInTheDocument();
   });
 
   it("shows the first-visit message, the loading placeholders and the load error", async () => {
-    setPlanner({ courses: [], response: null, preferences: { startsAfter: 540, blocked: [], onlyOpen: true } });
+    setPlanner({
+      courses: [],
+      response: null,
+      preferences: { startsAfter: 540, blocked: [], onlyOpen: true },
+    });
     const { unmount } = renderInCard();
-    expect(screen.getByRole("heading", { name: "Add your first course" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Add your first course" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("No timed courses yet")).toBeInTheDocument();
     unmount();
 
@@ -125,8 +206,12 @@ describe("ScheduleView", () => {
 
     setPlanner({ termStatus: "error", term: null, response: null });
     renderInCard();
-    expect(screen.getByRole("alert")).toHaveTextContent("Couldn’t load C Term sections.");
-    expect(screen.getByRole("heading", { name: "Couldn’t load C Term sections." })).toBeInTheDocument();
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Couldn’t load C Term sections.",
+    );
+    expect(
+      screen.getByRole("heading", { name: "Couldn’t load C Term sections." }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Retry" })).toBeInTheDocument();
   });
 });

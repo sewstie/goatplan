@@ -13,11 +13,15 @@ describe("wrappedHeight", () => {
   });
 
   it("counts the gaps between chips when deciding", () => {
-    expect(wrappedHeight([chip(100), chip(100), chip(100)], 300, 4, 2)).toBe(38);
+    expect(wrappedHeight([chip(100), chip(100), chip(100)], 300, 4, 2)).toBe(
+      38,
+    );
   });
 
   it("makes a row as tall as its tallest chip", () => {
-    expect(wrappedHeight([chip(250), chip(80), chip(180, 24)], 270, 4, 2)).toBe(44);
+    expect(wrappedHeight([chip(250), chip(80), chip(180, 24)], 270, 4, 2)).toBe(
+      44,
+    );
   });
 
   it("lets a chip wider than the row have a row to itself", () => {

@@ -7,7 +7,10 @@ const realMatchMedia = window.matchMedia;
 
 afterEach(() => {
   resetPlanner();
-  Object.defineProperty(window, "matchMedia", { writable: true, value: realMatchMedia });
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: realMatchMedia,
+  });
 });
 
 function mockViewport(phone: boolean) {

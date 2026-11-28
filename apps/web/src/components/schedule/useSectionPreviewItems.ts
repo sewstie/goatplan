@@ -14,8 +14,23 @@ export function useSectionPreviewItems() {
   const solveStatus = usePlanner((state) => state.solveStatus);
 
   return useMemo(() => {
-    if (!courseCode || !sectionId || selectedCourse !== courseCode || solveStatus !== "done") return [];
-    return scheduleItems(term, courses, { [courseCode]: [sectionId] }, {}).classes
-      .map((item) => ({ ...item, key: `preview:${item.key}`, preview: true, choicePreview: true }));
+    if (
+      !courseCode ||
+      !sectionId ||
+      selectedCourse !== courseCode ||
+      solveStatus !== "done"
+    )
+      return [];
+    return scheduleItems(
+      term,
+      courses,
+      { [courseCode]: [sectionId] },
+      {},
+    ).classes.map((item) => ({
+      ...item,
+      key: `preview:${item.key}`,
+      preview: true,
+      choicePreview: true,
+    }));
   }, [courseCode, sectionId, term, courses, selectedCourse, solveStatus]);
 }

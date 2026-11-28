@@ -14,13 +14,17 @@ export function EmptyCalendar() {
       note="Auto-fit to your schedule"
       overlay={
         <div data-guide-hide>
-        <CalendarMessage icon={<BookOpen className="text-accent" />} title="Add your first course">
-          <p>
-            Search by course code or professor <span className="tablet:hidden">above</span>
-            <span className="hidden tablet:inline">in the sidebar</span>.
-          </p>
-          <p className="font-600 text-ink">Try CS 2102</p>
-        </CalendarMessage>
+          <CalendarMessage
+            icon={<BookOpen className="text-accent" />}
+            title="Add your first course"
+          >
+            <p>
+              Search by course code or professor{" "}
+              <span className="tablet:hidden">above</span>
+              <span className="hidden tablet:inline">in the sidebar</span>.
+            </p>
+            <p className="font-600 text-ink">Try CS 2102</p>
+          </CalendarMessage>
         </div>
       }
     />

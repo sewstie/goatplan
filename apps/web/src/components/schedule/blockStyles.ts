@@ -5,7 +5,17 @@ import { percentOf, type TimeRange } from "./timeRange";
 
 /** Text sizes of a class block at each density. A phone is always regular, so compact has no phone sizes. */
 export const densityClasses: Readonly<
-  Record<Density, { box: string; title: string; code: string; section: string; time: string; room: string }>
+  Record<
+    Density,
+    {
+      box: string;
+      title: string;
+      code: string;
+      section: string;
+      time: string;
+      room: string;
+    }
+  >
 > = {
   regular: {
     box: "gap-3 px-7 py-6 tablet:gap-0 tablet:px-4 tablet:py-1",
@@ -32,7 +42,12 @@ const LANE_GAP = 2;
  * Where an item sits in its day column: 3px in from both sides, side by side with items it overlaps.
  * Class blocks end 3px early so back-to-back classes don't touch (div.app-3.md).
  */
-export function blockPosition(range: TimeRange, item: { start: number; end: number }, lane: Lane, endGap = 3): CSSProperties {
+export function blockPosition(
+  range: TimeRange,
+  item: { start: number; end: number },
+  lane: Lane,
+  endGap = 3,
+): CSSProperties {
   const top = percentOf(range, item.start);
   const height = percentOf(range, item.end) - top;
   const taken = INSET * 2 + (lane.lanes - 1) * LANE_GAP;

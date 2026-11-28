@@ -18,9 +18,21 @@ export function useScheduleMessage(): BannerMessage | null {
   const shownSchedules = usePlanner((state) => selectSchedules(state).length);
   const { waitlisted } = useScheduleItems();
   const diagnosis = useDiagnosis();
-  const slow = useDelayedFlag(solveStatus === "waiting" || solveStatus === "solving", SLOW_SOLVE_MS);
+  const slow = useDelayedFlag(
+    solveStatus === "waiting" || solveStatus === "solving",
+    SLOW_SOLVE_MS,
+  );
 
   if (saved || termStatus !== "ready") return null;
-  if (diagnosis?.issues[0]) return { tone: "warning", ...diagnosis.issues[0].banner };
-  return bannerMessage({ courseCount, solveStatus, slow, solveError, response, shownSchedules, waitlisted });
+  if (diagnosis?.issues[0])
+    return { tone: "warning", ...diagnosis.issues[0].banner };
+  return bannerMessage({
+    courseCount,
+    solveStatus,
+    slow,
+    solveError,
+    response,
+    shownSchedules,
+    waitlisted,
+  });
 }

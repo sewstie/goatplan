@@ -10,7 +10,10 @@ afterEach(resetPlanner);
 const index = () => getPlannerStore().getState().scheduleIndex;
 
 /** "Schedule 1 of 3", whose numbers sit in their own spans. */
-const position = (text: string) => screen.getByText((_, element) => element?.tagName === "P" && element.textContent === text);
+const position = (text: string) =>
+  screen.getByText(
+    (_, element) => element?.tagName === "P" && element.textContent === text,
+  );
 
 describe("ScheduleSwitcher", () => {
   it("pages through schedules with the arrows and the arrow keys", async () => {
@@ -73,7 +76,20 @@ describe("ScheduleSwitcher", () => {
   });
 
   it("doesn't call an unfinished search a proven no-fit result", () => {
-    setPlanner({ response: solved([], { total: 0, patterns: 0, capped: true, diagnosis: { unsure: true, emptyCourses: [], clashingPairs: [], minimalClash: [], fixes: [] } }) });
+    setPlanner({
+      response: solved([], {
+        total: 0,
+        patterns: 0,
+        capped: true,
+        diagnosis: {
+          unsure: true,
+          emptyCourses: [],
+          clashingPairs: [],
+          minimalClash: [],
+          fixes: [],
+        },
+      }),
+    });
     render(<ScheduleSwitcher />);
     expect(screen.getByText("Search incomplete")).toBeInTheDocument();
     expect(screen.queryByText("0 schedules fit")).not.toBeInTheDocument();

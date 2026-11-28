@@ -6,7 +6,10 @@ export interface TimeRange {
 export const DEFAULT_RANGE: Readonly<TimeRange> = { start: 480, end: 1020 };
 
 /** Grows to fit every item. A start-time preference moves the default start later, to skip the empty morning. */
-export function fitRange(items: readonly TimeRange[], startsAfter = 0): TimeRange {
+export function fitRange(
+  items: readonly TimeRange[],
+  startsAfter = 0,
+): TimeRange {
   let start = Math.max(DEFAULT_RANGE.start, Math.floor(startsAfter / 60) * 60);
   let end = Math.max(DEFAULT_RANGE.end, start + 60);
   for (const item of items) {
@@ -19,7 +22,11 @@ export function fitRange(items: readonly TimeRange[], startsAfter = 0): TimeRang
 /** Where the time labels and lines go: both ends of the range and every full hour between them. */
 export function hourMarks(range: TimeRange): number[] {
   const marks = [range.start];
-  for (let minute = Math.floor(range.start / 60) * 60 + 60; minute < range.end; minute += 60) {
+  for (
+    let minute = Math.floor(range.start / 60) * 60 + 60;
+    minute < range.end;
+    minute += 60
+  ) {
     marks.push(minute);
   }
   if (range.end > range.start) marks.push(range.end);

@@ -52,7 +52,12 @@ const SHORT_DAY: Readonly<Record<Day, string>> = {
 /** Badge category keys, in the default display order (after any lead badge). */
 type BadgeKind = "DaysOff" | "Start" | "FreeTime" | "Finish";
 
-const DEFAULT_ORDER: readonly BadgeKind[] = ["FreeTime", "Start", "Finish", "DaysOff"];
+const DEFAULT_ORDER: readonly BadgeKind[] = [
+  "FreeTime",
+  "Start",
+  "Finish",
+  "DaysOff",
+];
 
 /** Which badge kind leads for each sort preset. bestOverall has no lead. */
 const LEAD_BADGE: Partial<Record<SortPresetId, BadgeKind>> = {
@@ -97,7 +102,9 @@ export function scheduleBadges(
   score: Readonly<Pick<Score, "freeMinutes">>,
   preset: SortPresetId,
 ): string[] {
-  return scheduleBadgeDetails(meetings, score, preset, 0).map((badge) => badge.text);
+  return scheduleBadgeDetails(meetings, score, preset, 0).map(
+    (badge) => badge.text,
+  );
 }
 
 /** The same badges with their tint. An early start is one before "Starts after", or before 9 AM when it's off. */
@@ -155,7 +162,8 @@ export function scheduleBadgeDetails(
       case "DaysOff": {
         if (freeDays.length === 0) return null;
         if (freeDays.length === 1) return `${SHORT_DAY[freeDays[0]]} off`;
-        if (freeDays.length === 2) return `${SHORT_DAY[freeDays[0]]}, ${SHORT_DAY[freeDays[1]]} off`;
+        if (freeDays.length === 2)
+          return `${SHORT_DAY[freeDays[0]]}, ${SHORT_DAY[freeDays[1]]} off`;
         return `${freeDays.length} days off`;
       }
       case "FreeTime": {
@@ -177,7 +185,9 @@ export function scheduleBadgeDetails(
   function badgeTone(kind: BadgeKind): Pick<ScheduleBadge, "tone" | "note"> {
     switch (kind) {
       case "Start":
-        return earliestStart < comfort ? { tone: "warning", note: `before ${formatTimeShort(comfort)}` } : { tone: "plain" };
+        return earliestStart < comfort
+          ? { tone: "warning", note: `before ${formatTimeShort(comfort)}` }
+          : { tone: "plain" };
       case "Finish":
         return { tone: latestEnd <= GOOD_FINISH ? "good" : "plain" };
       case "DaysOff":
@@ -191,7 +201,13 @@ export function scheduleBadgeDetails(
   for (const kind of order) {
     if (badges.length >= MAX_BADGES) break;
     const text = badgeText(kind);
-    if (text !== null) badges.push({ text, short: text.replace(" between classes", ""), lead: kind === lead, ...badgeTone(kind) });
+    if (text !== null)
+      badges.push({
+        text,
+        short: text.replace(" between classes", ""),
+        lead: kind === lead,
+        ...badgeTone(kind),
+      });
   }
 
   return badges;
@@ -200,7 +216,9 @@ export function scheduleBadgeDetails(
 /** "1,234 schedules fit", or "1,234+ schedules fit" when the engine stopped counting. */
 function fitCount(response: Extract<SolveResponse, { ok: true }>): string {
   const amount = `${numberFormat.format(response.patterns)}${response.capped ? "+" : ""}`;
-  return response.patterns === 1 && !response.capped ? "1 schedule fits" : `${amount} schedules fit`;
+  return response.patterns === 1 && !response.capped
+    ? "1 schedule fits"
+    : `${amount} schedules fit`;
 }
 
 export interface SummaryInput {
@@ -216,20 +234,25 @@ export interface SummaryInput {
 /** The line under the title (div.app-1.md, div.app-4.md, div.app-13.md, div.app-15.md). */
 export function summaryText(input: SummaryInput): string | null {
   const { termStatus, termName, courseCount, response } = input;
-  if (termStatus === "loading") return termName ? `Loading ${termName} sections…` : null;
+  if (termStatus === "loading")
+    return termName ? `Loading ${termName} sections…` : null;
   if (termStatus !== "ready") return null;
   if (courseCount === 0) return "Add courses to start planning your term.";
-  if (input.solveStatus && input.solveStatus !== "done") return count("course", courseCount);
+  if (input.solveStatus && input.solveStatus !== "done")
+    return count("course", courseCount);
 
   const parts = [count("course", courseCount)];
   if (response?.ok && response.patterns > 0) {
     parts.push(fitCount(response));
     if (input.untimedCourses > 0) {
-      parts.push(`${count("course", input.untimedCourses)} ${input.untimedCourses === 1 ? "has" : "have"} no set time`);
+      parts.push(
+        `${count("course", input.untimedCourses)} ${input.untimedCourses === 1 ? "has" : "have"} no set time`,
+      );
     }
     if (input.hasWaitlist) parts.push("includes a waitlist section");
   } else if (response?.ok) {
-    if (response.diagnosis?.unsure) return `${count("course", courseCount)} · Search incomplete`;
+    if (response.diagnosis?.unsure)
+      return `${count("course", courseCount)} · Search incomplete`;
     const pair = response.diagnosis?.clashingPairs[0];
     parts.push(pair ? `${pair[0]} and ${pair[1]} overlap` : "no schedule fits");
   }
@@ -271,7 +294,13 @@ export function bannerMessage(input: BannerInput): BannerMessage | null {
     };
   }
   if (input.solveStatus === "waiting" || input.solveStatus === "solving") {
-    return input.slow ? { tone: "loading", title: "Finding schedules…", detail: "This can take a few seconds with many courses." } : null;
+    return input.slow
+      ? {
+          tone: "loading",
+          title: "Finding schedules…",
+          detail: "This can take a few seconds with many courses.",
+        }
+      : null;
   }
   if (!response) return null;
   if (!response.ok) {
@@ -285,22 +314,29 @@ export function bannerMessage(input: BannerInput): BannerMessage | null {
   if (response.total === 0) {
     const diagnosis = response.diagnosis;
     if (diagnosis?.unsure) {
-      return { tone: "warning", title: "Too many combinations to check.", detail: "Try fewer courses." };
+      return {
+        tone: "warning",
+        title: "Too many combinations to check.",
+        detail: "Try fewer courses.",
+      };
     }
     const pair = diagnosis?.clashingPairs[0];
     const empty = diagnosis?.emptyCourses[0];
     const group = diagnosis?.minimalClash ?? [];
     let detail = "Try removing a course or changing your preferences.";
-    if (empty) detail = `${empty.code} has no sections that fit your preferences.`;
+    if (empty)
+      detail = `${empty.code} has no sections that fit your preferences.`;
     else if (pair) detail = `${pair[0]} and ${pair[1]} overlap.`;
-    else if (group.length > 0) detail = `${listNames(group)} can’t all fit together.`;
+    else if (group.length > 0)
+      detail = `${listNames(group)} can’t all fit together.`;
     return { tone: "warning", title: "No schedule fits.", detail };
   }
 
   if (response.capped) {
-    const waitlist = input.waitlisted.length > 0
-      ? ` ${listNames(input.waitlisted.map((section) => `${section.courseCode} ${section.sectionCode}`))} ${input.waitlisted.length === 1 ? "is" : "are"} waitlist only. Registration is not guaranteed.`
-      : "";
+    const waitlist =
+      input.waitlisted.length > 0
+        ? ` ${listNames(input.waitlisted.map((section) => `${section.courseCode} ${section.sectionCode}`))} ${input.waitlisted.length === 1 ? "is" : "are"} waitlist only. Registration is not guaranteed.`
+        : "";
     return {
       tone: "info",
       title: "There are too many combinations to check them all.",
@@ -308,7 +344,9 @@ export function bannerMessage(input: BannerInput): BannerMessage | null {
     };
   }
   if (input.waitlisted.length > 0) {
-    const names = input.waitlisted.map((section) => `${section.courseCode} ${section.sectionCode}`);
+    const names = input.waitlisted.map(
+      (section) => `${section.courseCode} ${section.sectionCode}`,
+    );
     return {
       tone: "info",
       title: `${listNames(names)} ${names.length === 1 ? "is" : "are"} waitlist only.`,

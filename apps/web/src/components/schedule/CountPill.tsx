@@ -7,7 +7,17 @@ const toneClasses = {
 };
 
 /** "Schedule 3 of 24", or the warning "0 schedules fit" (div.app-3.md, div.app-7.md). */
-export function CountPill({ tone = "accent", compact = false, wide = false, children }: { tone?: keyof typeof toneClasses; compact?: boolean; wide?: boolean; children: ReactNode }) {
+export function CountPill({
+  tone = "accent",
+  compact = false,
+  wide = false,
+  children,
+}: {
+  tone?: keyof typeof toneClasses;
+  compact?: boolean;
+  wide?: boolean;
+  children: ReactNode;
+}) {
   return (
     <p
       aria-live="polite"

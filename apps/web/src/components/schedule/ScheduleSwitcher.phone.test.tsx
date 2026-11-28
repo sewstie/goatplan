@@ -10,7 +10,10 @@ const realMatchMedia = window.matchMedia;
 
 afterEach(() => {
   resetPlanner();
-  Object.defineProperty(window, "matchMedia", { writable: true, value: realMatchMedia });
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: realMatchMedia,
+  });
 });
 
 function mockPhoneViewport() {
@@ -59,8 +62,12 @@ describe("ScheduleSwitcher as one control", () => {
     const group = switcherGroup();
     expect(group.className).toContain("border");
     expect(group.className).not.toContain("flex-wrap");
-    expect(group).toContainElement(screen.getByRole("button", { name: "Previous schedule" }));
-    expect(group).toContainElement(screen.getByRole("button", { name: "Next schedule" }));
+    expect(group).toContainElement(
+      screen.getByRole("button", { name: "Previous schedule" }),
+    );
+    expect(group).toContainElement(
+      screen.getByRole("button", { name: "Next schedule" }),
+    );
     expect(group).toHaveTextContent("Schedule 1 of 3");
   });
 });
@@ -74,7 +81,9 @@ describe("ScheduleSwitcher touch targets on a phone", () => {
     // The spacing scale is 1px per step (--spacing: 1px): the box is at least 44 tall and each arrow 44 wide.
     expect(switcherGroup().className).toMatch(/\bmin-h-44\b/);
     for (const name of ["Previous schedule", "Next schedule"]) {
-      expect(screen.getByRole("button", { name }).className).toMatch(/\bw-44\b/);
+      expect(screen.getByRole("button", { name }).className).toMatch(
+        /\bw-44\b/,
+      );
     }
   });
 });

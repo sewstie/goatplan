@@ -9,6 +9,9 @@ it.each([
   expect(roomParts(room)).toEqual({ building, number });
 });
 
-it.each(["Online-synchronous", "Recreation Center Crew"])("leaves %s whole, since it has no number", (room) => {
-  expect(roomParts(room)).toEqual({ building: room, number: "" });
-});
+it.each(["Online-synchronous", "Recreation Center Crew"])(
+  "leaves %s whole, since it has no number",
+  (room) => {
+    expect(roomParts(room)).toEqual({ building: room, number: "" });
+  },
+);

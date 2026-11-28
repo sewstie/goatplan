@@ -101,15 +101,24 @@ describe("blocked block text", () => {
   });
 
   it("says the whole thing in the label", () => {
-    expect(blockedLabel("Mon", 720, 750, "Work")).toBe("Work, Monday 12:00 to 12:30 PM, blocked");
-    expect(blockedLabel("Tue", 690, 780)).toBe("Tuesday 11:30 AM to 1:00 PM, blocked");
+    expect(blockedLabel("Mon", 720, 750, "Work")).toBe(
+      "Work, Monday 12:00 to 12:30 PM, blocked",
+    );
+    expect(blockedLabel("Tue", 690, 780)).toBe(
+      "Tuesday 11:30 AM to 1:00 PM, blocked",
+    );
   });
 });
 
 describe("coveredTextMask", () => {
   it("is nothing when no class touches the block", () => {
     expect(coveredTextMask(600, 660, [])).toBeUndefined();
-    expect(coveredTextMask(600, 660, [{ start: 540, end: 600 }, { start: 660, end: 720 }])).toBeUndefined();
+    expect(
+      coveredTextMask(600, 660, [
+        { start: 540, end: 600 },
+        { start: 660, end: 720 },
+      ]),
+    ).toBeUndefined();
   });
 
   it("hides the text in the part a class covers, clipped to the block", () => {
@@ -122,7 +131,13 @@ describe("coveredTextMask", () => {
   });
 
   it("joins classes that overlap each other and keeps the gaps between others", () => {
-    expect(coveredTextMask(600, 800, [{ start: 750, end: 800 }, { start: 600, end: 640 }, { start: 620, end: 650 }])).toBe(
+    expect(
+      coveredTextMask(600, 800, [
+        { start: 750, end: 800 },
+        { start: 600, end: 640 },
+        { start: 620, end: 650 },
+      ]),
+    ).toBe(
       "linear-gradient(to bottom, black 0%, transparent 0%, transparent 25%, black 25%, black 75%, transparent 75%, transparent 100%, black 100%)",
     );
   });

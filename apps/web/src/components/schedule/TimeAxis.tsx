@@ -1,7 +1,13 @@
 import { formatTimeShort } from "@/lib/data/time";
 import { percentOf, type TimeRange } from "./timeRange";
 
-export function TimeAxis({ range, marks }: { range: TimeRange; marks: readonly number[] }) {
+export function TimeAxis({
+  range,
+  marks,
+}: {
+  range: TimeRange;
+  marks: readonly number[];
+}) {
   return (
     <div aria-hidden className="relative w-(--size-time-axis) shrink-0">
       {marks.map((minute) => (

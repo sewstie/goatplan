@@ -22,10 +22,15 @@ export function SavedPlanSwitcher({ wide = false }: { wide?: boolean }) {
     <StepperBox
       label="Saved plans"
       size={size}
-      previous={{ label: "Previous saved plan", disabled: atStart, onClick: previous }}
+      previous={{
+        label: "Previous saved plan",
+        disabled: atStart,
+        onClick: previous,
+      }}
       next={{ label: "Next saved plan", disabled: atEnd, onClick: next }}
       onKeyDown={(event) => {
-        if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+        if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey)
+          return;
         if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
           event.preventDefault();
           if (event.key === "ArrowLeft") previous();

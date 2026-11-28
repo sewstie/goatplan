@@ -12,13 +12,22 @@ export function calendarBounds(
   previews: readonly CalendarItem[] = [],
   startsAfter = 0,
 ) {
-  const sectionIds = new Set(schedules.flatMap((schedule) =>
-    schedule.courses.flatMap((course) => [...course.sections, ...course.alternatives.flat()]),
-  ));
-  const meetings = (term?.courses ?? []).flatMap((course) =>
-    course.sections.filter((section) => sectionIds.has(section.id)).flatMap((section) =>
-      section.meetings.flatMap((meeting) => meeting.days.map((day) => ({ ...meeting, day }))),
+  const sectionIds = new Set(
+    schedules.flatMap((schedule) =>
+      schedule.courses.flatMap((course) => [
+        ...course.sections,
+        ...course.alternatives.flat(),
+      ]),
     ),
+  );
+  const meetings = (term?.courses ?? []).flatMap((course) =>
+    course.sections
+      .filter((section) => sectionIds.has(section.id))
+      .flatMap((section) =>
+        section.meetings.flatMap((meeting) =>
+          meeting.days.map((day) => ({ ...meeting, day })),
+        ),
+      ),
   );
   const items = [...meetings, ...blocked, ...previews];
   return { range: fitRange(items, startsAfter), days: visibleDays(items) };

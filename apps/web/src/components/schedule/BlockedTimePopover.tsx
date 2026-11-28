@@ -20,7 +20,8 @@ type BlockedTimePopoverProps = {
   onClose(focusAnchor: boolean): void;
 };
 
-const FOCUSABLE = "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea, [tabindex]:not([tabindex='-1'])";
+const FOCUSABLE =
+  "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea, [tabindex]:not([tabindex='-1'])";
 
 /** The next place Tab would go after the element, outside the card. */
 function focusAfter(element: HTMLElement, card: HTMLElement | null) {
@@ -35,7 +36,15 @@ function focusAfter(element: HTMLElement, card: HTMLElement | null) {
  * The small card a blocked time opens: its name, day and time, Rename and Remove. It renders into
  * the body like a portal Tooltip, so the calendar card can't clip it, and closes on scroll.
  */
-export function BlockedTimePopover({ id, block, anchor, canRename, onRename, onRemove, onClose }: BlockedTimePopoverProps) {
+export function BlockedTimePopover({
+  id,
+  block,
+  anchor,
+  canRename,
+  onRename,
+  onRemove,
+  onClose,
+}: BlockedTimePopoverProps) {
   const card = useRef<HTMLDivElement>(null);
   const title = block.label?.trim() || "Blocked time";
 
@@ -55,9 +64,14 @@ export function BlockedTimePopover({ id, block, anchor, canRename, onRename, onR
   }, [anchor]);
 
   useEffect(() => {
-    const inside = (target: EventTarget | null) => target instanceof Node && !!card.current?.contains(target);
+    const inside = (target: EventTarget | null) =>
+      target instanceof Node && !!card.current?.contains(target);
     const away = (event: Event) => {
-      if (!inside(event.target) && !(event.target instanceof Node && anchor.contains(event.target))) onClose(false);
+      if (
+        !inside(event.target) &&
+        !(event.target instanceof Node && anchor.contains(event.target))
+      )
+        onClose(false);
     };
     const scrolled = (event: Event) => {
       if (!inside(event.target)) onClose(false);
@@ -103,7 +117,8 @@ export function BlockedTimePopover({ id, block, anchor, canRename, onRename, onR
     >
       <p className="truncate text-10 leading-14-5 font-700">{title}</p>
       <p className="text-9 leading-13 text-ink-muted">
-        {DAY_NAMES[block.day]} {formatTimeRange(block.start, block.end, "shared")}
+        {DAY_NAMES[block.day]}{" "}
+        {formatTimeRange(block.start, block.end, "shared")}
       </p>
       <div className="flex gap-6 pt-8">
         {canRename && (

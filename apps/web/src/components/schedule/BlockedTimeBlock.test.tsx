@@ -6,51 +6,106 @@ import { BlockedTimeBlock } from "./BlockedTimeBlock";
 const work = { day: "Mon" as const, start: 720, end: 750, label: "Work" };
 
 describe("BlockedTimeBlock", () => {
-  it("shows its name, time and \"blocked\" when there's room", () => {
+  it('shows its name, time and "blocked" when there\'s room', () => {
     render(<BlockedTimeBlock {...work} end={840} layout="full" style={{}} />);
-    const block = screen.getByRole("img", { name: "Work, Monday 12:00 to 2:00 PM, blocked" });
-    expect(block.querySelector(".tablet\\:hidden")).toHaveTextContent("12:00 PM–2:00 PM");
-    expect(block.querySelector(".tablet\\:block")).toHaveTextContent("12 PM–2 PM");
+    const block = screen.getByRole("img", {
+      name: "Work, Monday 12:00 to 2:00 PM, blocked",
+    });
+    expect(block.querySelector(".tablet\\:hidden")).toHaveTextContent(
+      "12:00 PM–2:00 PM",
+    );
+    expect(block.querySelector(".tablet\\:block")).toHaveTextContent(
+      "12 PM–2 PM",
+    );
     expect(block).toHaveTextContent(/^Work.*blocked$/);
   });
 
   it("explains itself in a tooltip even with all its text, which can be cut short in a narrow column", async () => {
-    render(<BlockedTimeBlock {...work} end={840} label="Part-time job at the library" layout="full" style={{}} />);
+    render(
+      <BlockedTimeBlock
+        {...work}
+        end={840}
+        label="Part-time job at the library"
+        layout="full"
+        style={{}}
+      />,
+    );
     await userEvent.hover(screen.getByRole("img"));
-    expect(screen.getByRole("tooltip", { hidden: true })).toHaveTextContent("Part-time job at the libraryMonday 12:00–2:00 PMblocked");
+    expect(screen.getByRole("tooltip", { hidden: true })).toHaveTextContent(
+      "Part-time job at the libraryMonday 12:00–2:00 PMblocked",
+    );
   });
 
   it("fits a short block on one centered line and keeps the full text in its label and tooltip", async () => {
     render(<BlockedTimeBlock {...work} layout="line" style={{}} />);
-    const block = screen.getByRole("img", { name: "Work, Monday 12:00 to 12:30 PM, blocked" });
+    const block = screen.getByRole("img", {
+      name: "Work, Monday 12:00 to 12:30 PM, blocked",
+    });
     expect(block).toHaveTextContent(/^Work · 12–12:30$/);
     const text = block.querySelector("[data-blocked-text]")!;
     expect(text.className).toContain("items-center");
     expect(text.className).not.toContain("pt-12.5");
 
     await userEvent.hover(block);
-    expect(screen.getByRole("tooltip", { hidden: true })).toHaveTextContent("WorkMonday 12:00–12:30 PMblocked");
+    expect(screen.getByRole("tooltip", { hidden: true })).toHaveTextContent(
+      "WorkMonday 12:00–12:30 PMblocked",
+    );
   });
 
   it("hides its text only where a class lies on top of it", () => {
-    render(<BlockedTimeBlock {...work} end={840} layout="full" style={{}} coveredBy={[{ start: 690, end: 750 }]} />);
-    const text = screen.getByRole("img").querySelector<HTMLElement>("[data-blocked-text]")!;
-    expect(text.style.maskImage).toMatch(/transparent 0%, transparent 25%, black 25%/);
+    render(
+      <BlockedTimeBlock
+        {...work}
+        end={840}
+        layout="full"
+        style={{}}
+        coveredBy={[{ start: 690, end: 750 }]}
+      />,
+    );
+    const text = screen
+      .getByRole("img")
+      .querySelector<HTMLElement>("[data-blocked-text]")!;
+    expect(text.style.maskImage).toMatch(
+      /transparent 0%, transparent 25%, black 25%/,
+    );
   });
 
   it("keeps its text whole when nothing covers it", () => {
-    render(<BlockedTimeBlock {...work} end={840} layout="full" style={{}} coveredBy={[{ start: 600, end: 720 }]} />);
-    expect(screen.getByRole("img").querySelector<HTMLElement>("[data-blocked-text]")!.style.maskImage).toBe("");
+    render(
+      <BlockedTimeBlock
+        {...work}
+        end={840}
+        layout="full"
+        style={{}}
+        coveredBy={[{ start: 600, end: 720 }]}
+      />,
+    );
+    expect(
+      screen.getByRole("img").querySelector<HTMLElement>("[data-blocked-text]")!
+        .style.maskImage,
+    ).toBe("");
   });
 
   it("writes the short time when it has no name", () => {
-    render(<BlockedTimeBlock day="Tue" start={900} end={930} layout="line" style={{}} />);
-    expect(screen.getByRole("img", { name: "Tuesday 3:00 to 3:30 PM, blocked" })).toHaveTextContent(/^3–3:30 PM$/);
+    render(
+      <BlockedTimeBlock
+        day="Tue"
+        start={900}
+        end={930}
+        layout="line"
+        style={{}}
+      />,
+    );
+    expect(
+      screen.getByRole("img", { name: "Tuesday 3:00 to 3:30 PM, blocked" }),
+    ).toHaveTextContent(/^3–3:30 PM$/);
   });
 
   it("is only hatching when even one line doesn't fit", async () => {
     render(<BlockedTimeBlock {...work} layout="none" style={{}} />);
-    const block = screen.getByRole("img", { name: "Work, Monday 12:00 to 12:30 PM, blocked" });
+    const block = screen.getByRole("img", {
+      name: "Work, Monday 12:00 to 12:30 PM, blocked",
+    });
     expect(block).toHaveTextContent(/^$/);
     await userEvent.hover(block);
     expect(screen.getByRole("tooltip", { hidden: true })).toBeInTheDocument();
@@ -59,19 +114,27 @@ describe("BlockedTimeBlock", () => {
   it("has a tooltip when its range can lose AM and PM in a narrow column", async () => {
     render(<BlockedTimeBlock {...work} layout="full" style={{}} />);
     await userEvent.hover(screen.getByRole("img"));
-    expect(screen.getByRole("tooltip", { hidden: true })).toHaveTextContent("WorkMonday 12:00–12:30 PMblocked");
+    expect(screen.getByRole("tooltip", { hidden: true })).toHaveTextContent(
+      "WorkMonday 12:00–12:30 PMblocked",
+    );
   });
 
   it("has no tooltip when its whole text always shows", async () => {
     render(<BlockedTimeBlock {...work} end={840} layout="full" style={{}} />);
     await userEvent.hover(screen.getByRole("img"));
-    expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("tooltip", { hidden: true }),
+    ).not.toBeInTheDocument();
   });
 
   it("is a button that opens its popover with a click or Enter", async () => {
     const onOpen = vi.fn();
-    render(<BlockedTimeBlock {...work} layout="line" style={{}} onOpen={onOpen} />);
-    const button = screen.getByRole("button", { name: "Work, Monday 12:00 to 12:30 PM, blocked" });
+    render(
+      <BlockedTimeBlock {...work} layout="line" style={{}} onOpen={onOpen} />,
+    );
+    const button = screen.getByRole("button", {
+      name: "Work, Monday 12:00 to 12:30 PM, blocked",
+    });
     expect(button).toHaveAttribute("aria-expanded", "false");
     await userEvent.click(button);
     button.focus();
@@ -85,15 +148,27 @@ describe("BlockedTimeBlock", () => {
     const block = screen.getByRole("img");
     expect(block.className).toContain("cursor-erase");
     await userEvent.hover(block);
-    expect(screen.queryByRole("tooltip", { hidden: true })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("tooltip", { hidden: true }),
+    ).not.toBeInTheDocument();
   });
 
   it("adds itself to the selection with ⌘-click, Ctrl-click or Ctrl+Enter instead of opening", async () => {
     const user = userEvent.setup();
     const onOpen = vi.fn();
     const onToggleSelected = vi.fn();
-    render(<BlockedTimeBlock {...work} layout="line" style={{}} onOpen={onOpen} onToggleSelected={onToggleSelected} />);
-    const button = screen.getByRole("button", { name: "Work, Monday 12:00 to 12:30 PM, blocked" });
+    render(
+      <BlockedTimeBlock
+        {...work}
+        layout="line"
+        style={{}}
+        onOpen={onOpen}
+        onToggleSelected={onToggleSelected}
+      />,
+    );
+    const button = screen.getByRole("button", {
+      name: "Work, Monday 12:00 to 12:30 PM, blocked",
+    });
 
     await user.keyboard("{Meta>}");
     await user.click(button);
@@ -108,15 +183,33 @@ describe("BlockedTimeBlock", () => {
   });
 
   it("says when it's selected and shows it with an accent ring", () => {
-    render(<BlockedTimeBlock {...work} layout="line" style={{}} onOpen={() => {}} selected />);
-    const button = screen.getByRole("button", { name: "Work, Monday 12:00 to 12:30 PM, blocked, selected" });
+    render(
+      <BlockedTimeBlock
+        {...work}
+        layout="line"
+        style={{}}
+        onOpen={() => {}}
+        selected
+      />,
+    );
+    const button = screen.getByRole("button", {
+      name: "Work, Monday 12:00 to 12:30 PM, blocked, selected",
+    });
     expect(button.className).toContain("ring-accent");
   });
 
   it("can be picked with ⌘-click in drawing mode too", async () => {
     const user = userEvent.setup();
     const onToggleSelected = vi.fn();
-    render(<BlockedTimeBlock {...work} layout="line" style={{}} erasable onToggleSelected={onToggleSelected} />);
+    render(
+      <BlockedTimeBlock
+        {...work}
+        layout="line"
+        style={{}}
+        erasable
+        onToggleSelected={onToggleSelected}
+      />,
+    );
     const block = screen.getByRole("img");
     await user.click(block);
     expect(onToggleSelected).not.toHaveBeenCalled();

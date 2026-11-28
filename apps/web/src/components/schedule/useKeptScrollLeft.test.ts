@@ -15,7 +15,10 @@ class FakeResizeObserver {
 }
 
 function setWidth(element: HTMLElement, width: number) {
-  Object.defineProperty(element, "clientWidth", { value: width, configurable: true });
+  Object.defineProperty(element, "clientWidth", {
+    value: width,
+    configurable: true,
+  });
 }
 
 function scrollTo(element: HTMLElement, left: number) {

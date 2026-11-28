@@ -1,7 +1,12 @@
 export type ChipSize = { width: number; height: number };
 
 /** How tall a row of chips gets once it wraps to `width`, filling each row before starting the next. */
-export function wrappedHeight(chips: readonly ChipSize[], width: number, gapX: number, gapY: number): number {
+export function wrappedHeight(
+  chips: readonly ChipSize[],
+  width: number,
+  gapX: number,
+  gapY: number,
+): number {
   let total = 0;
   let rowWidth = 0;
   let rowHeight = 0;

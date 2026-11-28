@@ -7,7 +7,9 @@ export interface Lane {
  * Items of one day that overlap share the column side by side (div.app-7.md). Each item gets the first
  * free lane; every item in a group of overlapping items gets the group's lane count.
  */
-export function assignLanes<T extends { start: number; end: number }>(items: readonly T[]): Map<T, Lane> {
+export function assignLanes<T extends { start: number; end: number }>(
+  items: readonly T[],
+): Map<T, Lane> {
   const sorted = [...items].sort((a, b) => a.start - b.start || a.end - b.end);
   const result = new Map<T, Lane>();
   let group: T[] = [];
@@ -15,7 +17,11 @@ export function assignLanes<T extends { start: number; end: number }>(items: rea
   let groupEnd = -Infinity;
 
   const closeGroup = () => {
-    for (const item of group) result.set(item, { lane: result.get(item)!.lane, lanes: laneEnds.length });
+    for (const item of group)
+      result.set(item, {
+        lane: result.get(item)!.lane,
+        lanes: laneEnds.length,
+      });
     group = [];
     laneEnds = [];
   };

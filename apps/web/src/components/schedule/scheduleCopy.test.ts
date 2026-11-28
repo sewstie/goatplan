@@ -2,7 +2,16 @@ import { describe, expect, it } from "vitest";
 import type { Day } from "@/lib/data/types";
 import type { Diagnosis, SolveResponse } from "@/lib/engine/types";
 import type { SortPresetId } from "@/lib/store/types";
-import { bannerMessage, count, formatDuration, listNames, scheduleBadgeDetails, scheduleBadges, summaryText, type BannerInput } from "./scheduleCopy";
+import {
+  bannerMessage,
+  count,
+  formatDuration,
+  listNames,
+  scheduleBadgeDetails,
+  scheduleBadges,
+  summaryText,
+  type BannerInput,
+} from "./scheduleCopy";
 
 // ── helpers ──
 
@@ -12,7 +21,9 @@ interface Meeting {
   end: number;
 }
 
-function solved(changes: Partial<Extract<SolveResponse, { ok: true }>> = {}): SolveResponse {
+function solved(
+  changes: Partial<Extract<SolveResponse, { ok: true }>> = {},
+): SolveResponse {
   return {
     ok: true,
     version: 1,
@@ -32,20 +43,40 @@ function noFit(diagnosis: Partial<Diagnosis>): SolveResponse {
   return solved({
     total: 0,
     patterns: 0,
-    diagnosis: { unsure: false, emptyCourses: [], clashingPairs: [], minimalClash: [], fixes: [], ...diagnosis },
+    diagnosis: {
+      unsure: false,
+      emptyCourses: [],
+      clashingPairs: [],
+      minimalClash: [],
+      fixes: [],
+      ...diagnosis,
+    },
   });
 }
 
 /** The badges for these meetings, with the engine's free time when given (a score without it is from an older plan). */
-function badges(meetings: Meeting[], preset: SortPresetId = "bestOverall", freeMinutes?: number): string[] {
-  return scheduleBadges(meetings, freeMinutes === undefined ? {} : { freeMinutes }, preset);
+function badges(
+  meetings: Meeting[],
+  preset: SortPresetId = "bestOverall",
+  freeMinutes?: number,
+): string[] {
+  return scheduleBadges(
+    meetings,
+    freeMinutes === undefined ? {} : { freeMinutes },
+    preset,
+  );
 }
 
 const FREE_TIME = /free between classes$|^No gaps between classes$/;
 
 /** The free-time badge, found by its wording wherever it sits. */
-function freeTime(meetings: Meeting[], freeMinutes?: number): string | undefined {
-  return badges(meetings, "fewestGaps", freeMinutes).find((badge) => FREE_TIME.test(badge));
+function freeTime(
+  meetings: Meeting[],
+  freeMinutes?: number,
+): string | undefined {
+  return badges(meetings, "fewestGaps", freeMinutes).find((badge) =>
+    FREE_TIME.test(badge),
+  );
 }
 
 // ── small helpers (unchanged) ──
@@ -92,7 +123,11 @@ describe("scheduleBadges", () => {
   describe("each rule", () => {
     it("formats Start as the earliest start of the week", () => {
       // Single class at 10 AM.
-      const result = badges([{ day: "Mon", start: 600, end: 650 }], "bestOverall", 0);
+      const result = badges(
+        [{ day: "Mon", start: 600, end: 650 }],
+        "bestOverall",
+        0,
+      );
       expect(result).toContain("Starts 10 AM");
     });
 
@@ -180,13 +215,19 @@ describe("scheduleBadges", () => {
         return Number(text?.match(/^(\d+) min /)?.[1] ?? 0);
       };
       for (let less = 0; less < 300; less++) {
-        expect(minutes(freeTime(mondayWithBreak, less))).toBeLessThanOrEqual(minutes(freeTime(mondayWithBreak, less + 1)));
+        expect(minutes(freeTime(mondayWithBreak, less))).toBeLessThanOrEqual(
+          minutes(freeTime(mondayWithBreak, less + 1)),
+        );
       }
     });
 
     it("has no count of gaps any more", () => {
       for (const minutes of [0, 40, 150]) {
-        expect(badges(fullWeek, "bestOverall", minutes).some((badge) => /^\d+ gaps?$|^No gaps$/.test(badge))).toBe(false);
+        expect(
+          badges(fullWeek, "bestOverall", minutes).some((badge) =>
+            /^\d+ gaps?$|^No gaps$/.test(badge),
+          ),
+        ).toBe(false);
       }
     });
   });
@@ -241,23 +282,35 @@ describe("scheduleBadges", () => {
     });
 
     it("gives the same badges as the score would", () => {
-      for (const preset of ["bestOverall", "fewestGaps", "fewestDays"] as const) {
-        expect(badges(fullWeek, preset)).toEqual(badges(fullWeek, preset, fullWeekFree));
+      for (const preset of [
+        "bestOverall",
+        "fewestGaps",
+        "fewestDays",
+      ] as const) {
+        expect(badges(fullWeek, preset)).toEqual(
+          badges(fullWeek, preset, fullWeekFree),
+        );
       }
     });
   });
 
   describe("lead badge for each sort order", () => {
     it("latestStart → Start first", () => {
-      expect(badges(fullWeek, "latestStart", fullWeekFree)[0]).toBe("Starts 9 AM");
+      expect(badges(fullWeek, "latestStart", fullWeekFree)[0]).toBe(
+        "Starts 9 AM",
+      );
     });
 
     it("fewestEarly → Start first", () => {
-      expect(badges(fullWeek, "fewestEarly", fullWeekFree)[0]).toBe("Starts 9 AM");
+      expect(badges(fullWeek, "fewestEarly", fullWeekFree)[0]).toBe(
+        "Starts 9 AM",
+      );
     });
 
     it("earliestFinish → Finish first", () => {
-      expect(badges(fullWeek, "earliestFinish", fullWeekFree)[0]).toBe("Done by 3 PM");
+      expect(badges(fullWeek, "earliestFinish", fullWeekFree)[0]).toBe(
+        "Done by 3 PM",
+      );
     });
 
     it("fewestDays → Days off first", () => {
@@ -270,13 +323,23 @@ describe("scheduleBadges", () => {
     });
 
     it("fewestGaps → free time first", () => {
-      expect(badges(fullWeek, "fewestGaps", fullWeekFree)).toEqual(["20 h free between classes", "Starts 9 AM", "Done by 3 PM"]);
-      expect(badges(fullWeek, "fewestGaps", 0)[0]).toBe("No gaps between classes");
+      expect(badges(fullWeek, "fewestGaps", fullWeekFree)).toEqual([
+        "20 h free between classes",
+        "Starts 9 AM",
+        "Done by 3 PM",
+      ]);
+      expect(badges(fullWeek, "fewestGaps", 0)[0]).toBe(
+        "No gaps between classes",
+      );
     });
 
     it("bestOverall has no lead badge, uses default order", () => {
       // Full week: no days off, so free time, Start, Finish.
-      expect(badges(fullWeek, "bestOverall", fullWeekFree)).toEqual(["20 h free between classes", "Starts 9 AM", "Done by 3 PM"]);
+      expect(badges(fullWeek, "bestOverall", fullWeekFree)).toEqual([
+        "20 h free between classes",
+        "Starts 9 AM",
+        "Done by 3 PM",
+      ]);
     });
 
     it("keeps free time, start and done by, with days off last", () => {
@@ -284,9 +347,24 @@ describe("scheduleBadges", () => {
         { day: "Mon", start: 540, end: 600 },
         { day: "Mon", start: 640, end: 700 },
       ];
-      expect(badges(meetings, "bestOverall", 40)).toEqual(["40 min free between classes", "Starts 9 AM", "Done by 11:40 AM", "4 days off"]);
-      expect(badges(meetings, "latestStart", 40)).toEqual(["Starts 9 AM", "40 min free between classes", "Done by 11:40 AM", "4 days off"]);
-      expect(badges(meetings, "earliestFinish", 40)).toEqual(["Done by 11:40 AM", "40 min free between classes", "Starts 9 AM", "4 days off"]);
+      expect(badges(meetings, "bestOverall", 40)).toEqual([
+        "40 min free between classes",
+        "Starts 9 AM",
+        "Done by 11:40 AM",
+        "4 days off",
+      ]);
+      expect(badges(meetings, "latestStart", 40)).toEqual([
+        "Starts 9 AM",
+        "40 min free between classes",
+        "Done by 11:40 AM",
+        "4 days off",
+      ]);
+      expect(badges(meetings, "earliestFinish", 40)).toEqual([
+        "Done by 11:40 AM",
+        "40 min free between classes",
+        "Starts 9 AM",
+        "4 days off",
+      ]);
     });
   });
 
@@ -331,7 +409,9 @@ describe("scheduleBadgeDetails", () => {
   ];
 
   function tones(preset: SortPresetId = "bestOverall", startsAfter = 0) {
-    return scheduleBadgeDetails(week, {}, preset, startsAfter).map(({ text, tone, lead }) => ({ text, tone, lead }));
+    return scheduleBadgeDetails(week, {}, preset, startsAfter).map(
+      ({ text, tone, lead }) => ({ text, tone, lead }),
+    );
   }
 
   it("warns about an 8 AM start and marks good news green", () => {
@@ -344,27 +424,54 @@ describe("scheduleBadgeDetails", () => {
   });
 
   it("says when the start is early, for screen readers", () => {
-    const start = scheduleBadgeDetails(week, {}, "bestOverall", 0).find((badge) => badge.text === "Starts 8 AM");
+    const start = scheduleBadgeDetails(week, {}, "bestOverall", 0).find(
+      (badge) => badge.text === "Starts 8 AM",
+    );
     expect(start?.note).toBe("before 9 AM");
   });
 
   it("measures an early start against Starts after when it's set", () => {
     const later: Meeting[] = [{ day: "Mon", start: 570, end: 620 }];
-    expect(scheduleBadgeDetails(later, {}, "latestStart", 0)[0]).toMatchObject({ text: "Starts 9:30 AM", tone: "plain" });
-    expect(scheduleBadgeDetails(later, {}, "latestStart", 600)[0]).toMatchObject({ text: "Starts 9:30 AM", tone: "warning", note: "before 10 AM" });
+    expect(scheduleBadgeDetails(later, {}, "latestStart", 0)[0]).toMatchObject({
+      text: "Starts 9:30 AM",
+      tone: "plain",
+    });
+    expect(
+      scheduleBadgeDetails(later, {}, "latestStart", 600)[0],
+    ).toMatchObject({
+      text: "Starts 9:30 AM",
+      tone: "warning",
+      note: "before 10 AM",
+    });
   });
 
   it("highlights only the badge the sort ranks by", () => {
-    expect(tones("earliestFinish").filter((badge) => badge.lead)).toEqual([{ text: "Done by 1:50 PM", tone: "good", lead: true }]);
+    expect(tones("earliestFinish").filter((badge) => badge.lead)).toEqual([
+      { text: "Done by 1:50 PM", tone: "good", lead: true },
+    ]);
     expect(tones("bestOverall").some((badge) => badge.lead)).toBe(false);
   });
 
   it("keeps a late finish and no gaps plain", () => {
     const long: Meeting[] = [{ day: "Mon", start: 600, end: 1080 }];
-    const finish = scheduleBadgeDetails(long, { freeMinutes: 0 }, "earliestFinish", 0);
-    const gaps = scheduleBadgeDetails(long, { freeMinutes: 0 }, "fewestGaps", 0);
-    expect(finish.find((badge) => badge.text === "Done by 6 PM")?.tone).toBe("plain");
-    expect(gaps.find((badge) => badge.text === "No gaps between classes")?.tone).toBe("plain");
+    const finish = scheduleBadgeDetails(
+      long,
+      { freeMinutes: 0 },
+      "earliestFinish",
+      0,
+    );
+    const gaps = scheduleBadgeDetails(
+      long,
+      { freeMinutes: 0 },
+      "fewestGaps",
+      0,
+    );
+    expect(finish.find((badge) => badge.text === "Done by 6 PM")?.tone).toBe(
+      "plain",
+    );
+    expect(
+      gaps.find((badge) => badge.text === "No gaps between classes")?.tone,
+    ).toBe("plain");
   });
 });
 
@@ -381,41 +488,69 @@ describe("summaryText", () => {
   };
 
   it("follows the designs", () => {
-    expect(summaryText({ ...base, termStatus: "loading" })).toBe("Loading C Term sections…");
-    expect(summaryText({ ...base, courseCount: 0 })).toBe("Add courses to start planning your term.");
+    expect(summaryText({ ...base, termStatus: "loading" })).toBe(
+      "Loading C Term sections…",
+    );
+    expect(summaryText({ ...base, courseCount: 0 })).toBe(
+      "Add courses to start planning your term.",
+    );
     expect(summaryText(base)).toBe("3 courses · 24 schedules fit");
-    expect(summaryText({ ...base, response: solved({ patterns: 1, total: 1 }) })).toBe("3 courses · 1 schedule fits");
-    expect(summaryText({ ...base, courseCount: 4, untimedCourses: 1, response: solved({ patterns: 1 }) })).toBe(
-      "4 courses · 1 schedule fits · 1 course has no set time",
-    );
-    expect(summaryText({ ...base, hasWaitlist: true, response: solved({ patterns: 1 }) })).toBe(
-      "3 courses · 1 schedule fits · includes a waitlist section",
-    );
-    expect(summaryText({ ...base, courseCount: 4, response: noFit({ clashingPairs: [["AB 1533", "AE 2320"]] }) })).toBe(
-      "4 courses · AB 1533 and AE 2320 overlap",
-    );
+    expect(
+      summaryText({ ...base, response: solved({ patterns: 1, total: 1 }) }),
+    ).toBe("3 courses · 1 schedule fits");
+    expect(
+      summaryText({
+        ...base,
+        courseCount: 4,
+        untimedCourses: 1,
+        response: solved({ patterns: 1 }),
+      }),
+    ).toBe("4 courses · 1 schedule fits · 1 course has no set time");
+    expect(
+      summaryText({
+        ...base,
+        hasWaitlist: true,
+        response: solved({ patterns: 1 }),
+      }),
+    ).toBe("3 courses · 1 schedule fits · includes a waitlist section");
+    expect(
+      summaryText({
+        ...base,
+        courseCount: 4,
+        response: noFit({ clashingPairs: [["AB 1533", "AE 2320"]] }),
+      }),
+    ).toBe("4 courses · AB 1533 and AE 2320 overlap");
   });
 
   it("marks counts the engine couldn't finish", () => {
-    expect(summaryText({ ...base, response: solved({ patterns: 16544, capped: true }) })).toBe(
-      "3 courses · 16,544+ schedules fit",
-    );
+    expect(
+      summaryText({
+        ...base,
+        response: solved({ patterns: 16544, capped: true }),
+      }),
+    ).toBe("3 courses · 16,544+ schedules fit");
   });
 
   it("doesn't describe stale schedules as fitting while solving or after an engine crash", () => {
     expect(summaryText({ ...base, solveStatus: "solving" })).toBe("3 courses");
     expect(summaryText({ ...base, solveStatus: "error" })).toBe("3 courses");
-    expect(summaryText({ ...base, response: noFit({ unsure: true }) })).toBe("3 courses · Search incomplete");
+    expect(summaryText({ ...base, response: noFit({ unsure: true }) })).toBe(
+      "3 courses · Search incomplete",
+    );
   });
 
   it("says nothing while there is no term", () => {
     expect(summaryText({ ...base, termStatus: "idle" })).toBeNull();
     expect(summaryText({ ...base, termStatus: "error" })).toBeNull();
-    expect(summaryText({ ...base, termStatus: "loading", termName: null })).toBeNull();
+    expect(
+      summaryText({ ...base, termStatus: "loading", termName: null }),
+    ).toBeNull();
   });
 
   it("only counts courses before the engine answers", () => {
-    expect(summaryText({ ...base, courseCount: 1, response: null })).toBe("1 course");
+    expect(summaryText({ ...base, courseCount: 1, response: null })).toBe(
+      "1 course",
+    );
   });
 });
 
@@ -434,64 +569,119 @@ describe("bannerMessage", () => {
 
   it("shows nothing for a normal answer or an empty plan", () => {
     expect(bannerMessage(base)).toBeNull();
-    expect(bannerMessage({ ...base, courseCount: 0, solveStatus: "error" })).toBeNull();
+    expect(
+      bannerMessage({ ...base, courseCount: 0, solveStatus: "error" }),
+    ).toBeNull();
   });
 
   it("notes when only the best schedules are shown", () => {
-    expect(bannerMessage({ ...base, response: solved({ patterns: 3252 }), shownSchedules: 200 })).toEqual({
+    expect(
+      bannerMessage({
+        ...base,
+        response: solved({ patterns: 3252 }),
+        shownSchedules: 200,
+      }),
+    ).toEqual({
       tone: "info",
       title: "Showing the best 200 of 3,252 schedules.",
       detail: "Lock a section or add preferences to narrow it down.",
     });
-    expect(bannerMessage({ ...base, response: solved({ patterns: 16544, capped: true }), shownSchedules: 200 })).toEqual({
+    expect(
+      bannerMessage({
+        ...base,
+        response: solved({ patterns: 16544, capped: true }),
+        shownSchedules: 200,
+      }),
+    ).toEqual({
       tone: "info",
       title: "There are too many combinations to check them all.",
-      detail: "Showing the best 200 schedules found. Lock a section or add preferences to narrow it down.",
+      detail:
+        "Showing the best 200 schedules found. Lock a section or add preferences to narrow it down.",
     });
   });
 
   it("says the engine is working only once it's slow", () => {
     expect(bannerMessage({ ...base, solveStatus: "solving" })).toBeNull();
-    expect(bannerMessage({ ...base, solveStatus: "solving", slow: true })).toMatchObject({
+    expect(
+      bannerMessage({ ...base, solveStatus: "solving", slow: true }),
+    ).toMatchObject({
       tone: "loading",
       title: "Finding schedules…",
     });
   });
 
   it("warns when the engine fails or nothing fits", () => {
-    expect(bannerMessage({ ...base, solveStatus: "error", solveError: "The worker crashed." })).toMatchObject({
+    expect(
+      bannerMessage({
+        ...base,
+        solveStatus: "error",
+        solveError: "The worker crashed.",
+      }),
+    ).toMatchObject({
       tone: "warning",
       title: "Couldn\u2019t check your schedules.",
     });
     expect(
       bannerMessage({
         ...base,
-        response: { ok: false, version: 1, error: { code: "unknownCourse", message: "No course PH 9999 in 2027-C", detail: "PH 9999" } },
+        response: {
+          ok: false,
+          version: 1,
+          error: {
+            code: "unknownCourse",
+            message: "No course PH 9999 in 2027-C",
+            detail: "PH 9999",
+          },
+        },
       }),
     ).toEqual({
       tone: "warning",
       title: "Couldn\u2019t check your schedules.",
-      detail: "PH 9999 isn\u2019t offered this term any more. Remove it to see your schedules.",
+      detail:
+        "PH 9999 isn\u2019t offered this term any more. Remove it to see your schedules.",
     });
-    expect(bannerMessage({ ...base, response: noFit({ clashingPairs: [["AB 1533", "AE 2320"]] }) })).toEqual({
+    expect(
+      bannerMessage({
+        ...base,
+        response: noFit({ clashingPairs: [["AB 1533", "AE 2320"]] }),
+      }),
+    ).toEqual({
       tone: "warning",
       title: "No schedule fits.",
       detail: "AB 1533 and AE 2320 overlap.",
     });
-    expect(bannerMessage({ ...base, response: noFit({ minimalClash: ["A", "B", "C"] }) })?.detail).toBe(
-      "A, B and C can\u2019t all fit together.",
-    );
-    expect(bannerMessage({ ...base, response: noFit({ unsure: true }) })?.title).toBe("Too many combinations to check.");
+    expect(
+      bannerMessage({
+        ...base,
+        response: noFit({ minimalClash: ["A", "B", "C"] }),
+      })?.detail,
+    ).toBe("A, B and C can\u2019t all fit together.");
+    expect(
+      bannerMessage({ ...base, response: noFit({ unsure: true }) })?.title,
+    ).toBe("Too many combinations to check.");
   });
 
   it("tells about waitlist-only sections (div.app-15.md)", () => {
-    expect(bannerMessage({ ...base, waitlisted: [{ courseCode: "AE 2410", sectionCode: "C01" }] })).toEqual({
+    expect(
+      bannerMessage({
+        ...base,
+        waitlisted: [{ courseCode: "AE 2410", sectionCode: "C01" }],
+      }),
+    ).toEqual({
       tone: "info",
       title: "AE 2410 C01 is waitlist only.",
       detail: "It fits your times, but registration is not guaranteed.",
     });
-    const capped = bannerMessage({ ...base, response: solved({ capped: true }), waitlisted: [{ courseCode: "AE 2410", sectionCode: "C01" }] });
-    expect(capped?.title).toBe("There are too many combinations to check them all.");
-    expect(capped?.detail).toContain("AE 2410 C01 is waitlist only. Registration is not guaranteed.");
+    const capped = bannerMessage({
+      ...base,
+      response: solved({ capped: true }),
+      waitlisted: [{ courseCode: "AE 2410", sectionCode: "C01" }],
+    });
+    expect(capped?.title).toBe(
+      "There are too many combinations to check them all.",
+    );
+    expect(capped?.detail).toContain(
+      "AE 2410 C01 is waitlist only. Registration is not guaranteed.",
+    );
   });
 });

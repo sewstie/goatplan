@@ -9,7 +9,12 @@ import type { TimeRange } from "./timeRange";
  */
 export function useHeldRange(range: TimeRange, active: boolean): TimeRange {
   const [held, setHeld] = useState(range);
-  const next = active ? { start: Math.min(held.start, range.start), end: Math.max(held.end, range.end) } : range;
+  const next = active
+    ? {
+        start: Math.min(held.start, range.start),
+        end: Math.max(held.end, range.end),
+      }
+    : range;
   if (next.start !== held.start || next.end !== held.end) setHeld(next);
   return next;
 }

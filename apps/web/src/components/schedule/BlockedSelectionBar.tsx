@@ -7,10 +7,13 @@ import { usePlanner } from "@/lib/store";
 import { count } from "./scheduleCopy";
 import { blockedKey, useBlockedTimeMenu } from "./useBlockedTimeMenu";
 
-const focusToggle = () => document.getElementById("tutorial-block-time")?.focus();
+const focusToggle = () =>
+  document.getElementById("tutorial-block-time")?.focus();
 
 const typing = (target: EventTarget | null) =>
-  target instanceof HTMLElement && (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
+  target instanceof HTMLElement &&
+  (target.isContentEditable ||
+    ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
 
 /**
  * "2 selected · Delete · Clear" over the bottom of the calendar while blocked times are picked with
@@ -23,11 +26,15 @@ export function BlockedSelectionBar() {
   const saved = usePlanner((state) => state.savedPlanId !== null);
   const selected = useBlockedTimeMenu((state) => state.selected);
   const clearSelected = useBlockedTimeMenu((state) => state.clearSelected);
-  const picked = useMemo(() => blocked.filter((block) => selected.includes(blockedKey(block))), [blocked, selected]);
+  const picked = useMemo(
+    () => blocked.filter((block) => selected.includes(blockedKey(block))),
+    [blocked, selected],
+  );
 
   // Times removed or changed some other way drop out of the pick.
   useEffect(() => {
-    if (picked.length !== selected.length) useBlockedTimeMenu.setState({ selected: picked.map(blockedKey) });
+    if (picked.length !== selected.length)
+      useBlockedTimeMenu.setState({ selected: picked.map(blockedKey) });
   }, [picked, selected]);
 
   useEffect(() => {
@@ -38,25 +45,34 @@ export function BlockedSelectionBar() {
 
   function remove() {
     if (picked.length === 0) return;
-    const days = WEEK.filter((day) => picked.some((block) => block.day === day));
-    changeBlocked(blocked.filter((block) => !picked.includes(block)), {
-      days,
-      start: Math.min(...picked.map((block) => block.start)),
-      end: Math.max(...picked.map((block) => block.end)),
-      erased: true,
-      count: picked.length,
-    });
+    const days = WEEK.filter((day) =>
+      picked.some((block) => block.day === day),
+    );
+    changeBlocked(
+      blocked.filter((block) => !picked.includes(block)),
+      {
+        days,
+        start: Math.min(...picked.map((block) => block.start)),
+        end: Math.max(...picked.map((block) => block.end)),
+        erased: true,
+        count: picked.length,
+      },
+    );
     clearSelected();
     focusToggle();
   }
 
   const onKey = useEffectEvent((event: KeyboardEvent) => {
-    if (document.querySelector("dialog[open]") || event.defaultPrevented) return;
+    if (document.querySelector("dialog[open]") || event.defaultPrevented)
+      return;
     if (event.key === "Escape") {
       // Before drawing mode's own Escape, so the first one only clears the pick.
       event.preventDefault();
       clearSelected();
-    } else if ((event.key === "Delete" || event.key === "Backspace") && !typing(event.target)) {
+    } else if (
+      (event.key === "Delete" || event.key === "Backspace") &&
+      !typing(event.target)
+    ) {
       event.preventDefault();
       remove();
     }
@@ -73,7 +89,9 @@ export function BlockedSelectionBar() {
   return (
     <>
       <p aria-live="polite" className="sr-only">
-        {active ? `${count("blocked time", picked.length)} selected. Press Delete to remove.` : ""}
+        {active
+          ? `${count("blocked time", picked.length)} selected. Press Delete to remove.`
+          : ""}
       </p>
       {active && (
         <div
