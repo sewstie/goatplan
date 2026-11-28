@@ -8,18 +8,23 @@ export function scheduleKey(schedule: Schedule): string {
 
 const NO_SCHEDULES: Schedule[] = [];
 
-export function selectSchedules(state: Pick<PlannerState, "response">): Schedule[] {
+export function selectSchedules(
+  state: Pick<PlannerState, "response">,
+): Schedule[] {
   return state.response?.ok ? state.response.schedules : NO_SCHEDULES;
 }
 
-export function selectCurrentSchedule(state: Pick<PlannerState, "response" | "scheduleIndex">): Schedule | null {
+export function selectCurrentSchedule(
+  state: Pick<PlannerState, "response" | "scheduleIndex">,
+): Schedule | null {
   return selectSchedules(state)[state.scheduleIndex] ?? null;
 }
 
 const sameSections = (a: readonly string[], b: readonly string[]) =>
   a.length === b.length && a.every((id, index) => id === b[index]);
 
-const sameSet = (a: readonly string[], b: readonly string[]) => a.length === b.length && a.every((id) => b.includes(id));
+const sameSet = (a: readonly string[], b: readonly string[]) =>
+  a.length === b.length && a.every((id) => b.includes(id));
 
 /**
  * The first schedule that can show these sections (course code → section ids) for all its courses,
@@ -33,7 +38,9 @@ export function findSchedule(
     const choices: Record<string, string[]> = {};
     const fits = schedule.courses.every((course) => {
       const ids = wanted[course.code];
-      const option = ids && course.alternatives.find((alternative) => sameSet(alternative, ids));
+      const option =
+        ids &&
+        course.alternatives.find((alternative) => sameSet(alternative, ids));
       if (!option) return false;
       if (!sameSet(option, course.sections)) choices[course.code] = option;
       return true;
@@ -56,7 +63,9 @@ export function selectChosenSections(
   return Object.fromEntries(
     schedule.courses.map((course) => {
       const picked = choices[course.code];
-      const valid = picked && course.alternatives.some((option) => sameSections(option, picked));
+      const valid =
+        picked &&
+        course.alternatives.some((option) => sameSections(option, picked));
       return [course.code, valid ? picked : course.sections];
     }),
   );

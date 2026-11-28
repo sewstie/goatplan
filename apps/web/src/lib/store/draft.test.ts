@@ -15,10 +15,18 @@ import type { Draft } from "./types";
 const saved: Draft = {
   courses: ["AE 2320"],
   professorByCourse: {},
-  preferences: { startsAfter: 600, blocked: [{ day: "Fri", start: 840, end: 960 }], onlyOpen: false },
+  preferences: {
+    startsAfter: 600,
+    blocked: [{ day: "Fri", start: 840, end: 960 }],
+    onlyOpen: false,
+  },
   locks: { "AE 2320": ["AE 2320-CX02"] },
   sortPreset: "fewestGaps",
-  alternatives: { "AE 2320-CL01+AE 2320-CX01": { "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"] } },
+  alternatives: {
+    "AE 2320-CL01+AE 2320-CX01": {
+      "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"],
+    },
+  },
 };
 
 const throwingStorage = {
@@ -38,17 +46,32 @@ describe("draft storage", () => {
   it("round-trips a draft", () => {
     const storage = new MemoryStorage();
     writeDraft(storage, "2027-C", saved);
-    expect(JSON.parse(storage.getItem("goatplan:draft:v1:2027-C")!)).toMatchObject({ version: 1 });
+    expect(
+      JSON.parse(storage.getItem("goatplan:draft:v1:2027-C")!),
+    ).toMatchObject({ version: 1 });
     expect(readDraft(storage, "2027-C")).toEqual(saved);
     expect(readDraft(storage, "2027-D")).toBeNull();
   });
 
   it("keeps professor choices, accepts old drafts and rejects malformed choices", () => {
-    const value = { version: 1, ...saved, professorByCourse: { "AE 2320": " Ye Lu ", "AE 2410": null } };
-    expect(parseDraft(value)?.professorByCourse).toEqual({ "AE 2320": "Ye Lu", "AE 2410": null });
-    expect(parseDraft({ ...value, professorByCourse: undefined })?.professorByCourse).toEqual({});
-    expect(parseDraft({ ...value, professorByCourse: { "AE 2320": 42 } })).toBeNull();
-    expect(parseDraft({ ...value, professorByCourse: { "AE 2320": "  " } })).toBeNull();
+    const value = {
+      version: 1,
+      ...saved,
+      professorByCourse: { "AE 2320": " Ye Lu ", "AE 2410": null },
+    };
+    expect(parseDraft(value)?.professorByCourse).toEqual({
+      "AE 2320": "Ye Lu",
+      "AE 2410": null,
+    });
+    expect(
+      parseDraft({ ...value, professorByCourse: undefined })?.professorByCourse,
+    ).toEqual({});
+    expect(
+      parseDraft({ ...value, professorByCourse: { "AE 2320": 42 } }),
+    ).toBeNull();
+    expect(
+      parseDraft({ ...value, professorByCourse: { "AE 2320": "  " } }),
+    ).toBeNull();
   });
 
   it("keeps the names of blocked times and drops empty ones", () => {
@@ -57,7 +80,10 @@ describe("draft storage", () => {
       { day: "Tue" as const, start: 840, end: 960, label: " Work " },
       { day: "Wed" as const, start: 720, end: 780, label: "  " },
     ];
-    writeDraft(storage, "2027-C", { ...saved, preferences: { ...saved.preferences, blocked } });
+    writeDraft(storage, "2027-C", {
+      ...saved,
+      preferences: { ...saved.preferences, blocked },
+    });
     expect(readDraft(storage, "2027-C")?.preferences.blocked).toEqual([
       { day: "Tue", start: 840, end: 960, label: "Work" },
       { day: "Wed", start: 720, end: 780 },
@@ -68,19 +94,59 @@ describe("draft storage", () => {
     ["not JSON", "{oops"],
     ["another version", JSON.stringify({ ...saved, version: 2 })],
     ["no version", JSON.stringify(saved)],
-    ["courses not a list", JSON.stringify({ ...saved, version: 1, courses: "AE 2320" })],
-    ["a bad time", JSON.stringify({ ...saved, version: 1, preferences: { ...saved.preferences, startsAfter: 2000 } })],
+    [
+      "courses not a list",
+      JSON.stringify({ ...saved, version: 1, courses: "AE 2320" }),
+    ],
+    [
+      "a bad time",
+      JSON.stringify({
+        ...saved,
+        version: 1,
+        preferences: { ...saved.preferences, startsAfter: 2000 },
+      }),
+    ],
     [
       "a block that ends before it starts",
-      JSON.stringify({ ...saved, version: 1, preferences: { ...saved.preferences, blocked: [{ day: "Mon", start: 900, end: 800 }] } }),
+      JSON.stringify({
+        ...saved,
+        version: 1,
+        preferences: {
+          ...saved.preferences,
+          blocked: [{ day: "Mon", start: 900, end: 800 }],
+        },
+      }),
     ],
-    ["an unknown day", JSON.stringify({ ...saved, version: 1, preferences: { ...saved.preferences, blocked: [{ day: "Xyz", start: 1, end: 2 }] } })],
+    [
+      "an unknown day",
+      JSON.stringify({
+        ...saved,
+        version: 1,
+        preferences: {
+          ...saved.preferences,
+          blocked: [{ day: "Xyz", start: 1, end: 2 }],
+        },
+      }),
+    ],
     [
       "a block name that isn't text",
-      JSON.stringify({ ...saved, version: 1, preferences: { ...saved.preferences, blocked: [{ day: "Mon", start: 1, end: 2, label: 5 }] } }),
+      JSON.stringify({
+        ...saved,
+        version: 1,
+        preferences: {
+          ...saved.preferences,
+          blocked: [{ day: "Mon", start: 1, end: 2, label: 5 }],
+        },
+      }),
     ],
-    ["an unknown sort", JSON.stringify({ ...saved, version: 1, sortPreset: "random" })],
-    ["locks not lists", JSON.stringify({ ...saved, version: 1, locks: { "AE 2320": "CX02" } })],
+    [
+      "an unknown sort",
+      JSON.stringify({ ...saved, version: 1, sortPreset: "random" }),
+    ],
+    [
+      "locks not lists",
+      JSON.stringify({ ...saved, version: 1, locks: { "AE 2320": "CX02" } }),
+    ],
     ["null", "null"],
   ])("ignores broken data: %s", (_, raw) => {
     const storage = new MemoryStorage();
@@ -113,7 +179,11 @@ describe("draft storage", () => {
 
 describe("emptyDraft", () => {
   it("starts at Any time with no blocked time and only open sections", () => {
-    expect(emptyDraft().preferences).toEqual({ startsAfter: 0, blocked: [], onlyOpen: true });
+    expect(emptyDraft().preferences).toEqual({
+      startsAfter: 0,
+      blocked: [],
+      onlyOpen: true,
+    });
   });
 });
 
@@ -122,7 +192,10 @@ describe("sanitizeDraft", () => {
     const draft: Draft = {
       ...emptyDraft(),
       courses: ["AE 2320", "ZZ 9999", "AE 2320"],
-      locks: { "AE 2320": ["AE 2320-CX02", "AE 2320-ZZ99"], "ZZ 9999": ["ZZ 9999-A01"] },
+      locks: {
+        "AE 2320": ["AE 2320-CX02", "AE 2320-ZZ99"],
+        "ZZ 9999": ["ZZ 9999-A01"],
+      },
       professorByCourse: { "AE 2320": "Ye Lu", "ZZ 9999": "Someone Else" },
       alternatives: {
         a: { "AE 2320": ["AE 2320-CL01"], "ZZ 9999": ["x"] },

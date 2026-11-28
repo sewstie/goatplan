@@ -3,7 +3,11 @@ import { selectChosenSections, selectCurrentSchedule } from "./selectors";
 import type { PlannerState } from "./types";
 
 export function selectSavedPlan(state: PlannerState) {
-  return state.savedPlans.find((plan) => plan.id === state.savedPlanId && plan.termId === state.termId) ?? null;
+  return (
+    state.savedPlans.find(
+      (plan) => plan.id === state.savedPlanId && plan.termId === state.termId,
+    ) ?? null
+  );
 }
 
 export function selectReadOnlyPlan(state: PlannerState) {
@@ -16,7 +20,9 @@ export function selectTermSavedPlans(state: PlannerState) {
 
 const viewedSchedules = new WeakMap<PlannerState, SavedCourse[] | null>();
 
-export function selectViewedSchedule(state: PlannerState): SavedCourse[] | null {
+export function selectViewedSchedule(
+  state: PlannerState,
+): SavedCourse[] | null {
   const saved = selectReadOnlyPlan(state);
   if (saved) return saved.schedule;
   if (!state.term || !selectCurrentSchedule(state)) return null;
@@ -24,7 +30,18 @@ export function selectViewedSchedule(state: PlannerState): SavedCourse[] | null 
   const chosen = selectChosenSections(state);
   const schedule = state.courses.flatMap((code) => {
     const course = state.term!.courses.find((item) => item.code === code);
-    return course && chosen[code] ? [{ code, title: course.title, sections: chosen[code].flatMap((id) => course.sections.find((section) => section.id === id) ?? []) }] : [];
+    return course && chosen[code]
+      ? [
+          {
+            code,
+            title: course.title,
+            sections: chosen[code].flatMap(
+              (id) =>
+                course.sections.find((section) => section.id === id) ?? [],
+            ),
+          },
+        ]
+      : [];
   });
   viewedSchedules.set(state, schedule);
   return schedule;

@@ -1,4 +1,7 @@
-import { lectureInstructors, lecturesByProfessor } from "@/lib/data/instructors";
+import {
+  lectureInstructors,
+  lecturesByProfessor,
+} from "@/lib/data/instructors";
 import type { TermFile } from "@/lib/data/types";
 import type { SolveRequest, SolveResponse } from "@/lib/engine/types";
 import type { ProfessorFix } from "./types";
@@ -29,13 +32,25 @@ export async function findProfessorFixes(
     const fixes: ProfessorFix[] = [];
     for (const professor of others) {
       if (!stillWanted()) return found;
-      const anyOf = { ...request.preferences?.anyOf, [code]: lecturesByProfessor(course.sections, professor).map((section) => section.id) };
+      const anyOf = {
+        ...request.preferences?.anyOf,
+        [code]: lecturesByProfessor(course.sections, professor).map(
+          (section) => section.id,
+        ),
+      };
       const answer = await solve({
         ...request,
         preferences: { ...request.preferences, anyOf },
         limits: { ...request.limits, maxSchedules: 1 },
       });
-      if (answer.ok && answer.total > 0) fixes.push({ kind: "switchProfessor", course: code, professor, schedules: answer.total, capped: answer.capped });
+      if (answer.ok && answer.total > 0)
+        fixes.push({
+          kind: "switchProfessor",
+          course: code,
+          professor,
+          schedules: answer.total,
+          capped: answer.capped,
+        });
     }
     found.push(...fixes.sort((a, b) => b.schedules - a.schedules));
   }

@@ -1,5 +1,11 @@
 import type { TermFile } from "@/lib/data/types";
-import { ENGINE_API_VERSION, type Fix, type SolveRequest, type SolveResponse, type SolveSuccess } from "@/lib/engine/types";
+import {
+  ENGINE_API_VERSION,
+  type Fix,
+  type SolveRequest,
+  type SolveResponse,
+  type SolveSuccess,
+} from "@/lib/engine/types";
 
 /**
  * The answer when a chosen professor teaches no lecture of a course this term. Its `anyOf` list is
@@ -17,19 +23,31 @@ export function unavailableProfessorResponse(
   solve: (request: SolveRequest) => Promise<SolveResponse>,
 ): Promise<SolveSuccess> | null {
   const anyOf = request.preferences?.anyOf ?? {};
-  const unavailable = request.courses.filter((code) => anyOf[code]?.length === 0);
+  const unavailable = request.courses.filter(
+    (code) => anyOf[code]?.length === 0,
+  );
   if (unavailable.length === 0) return null;
 
   const withoutRules: SolveRequest = {
     ...request,
-    preferences: { ...request.preferences, anyOf: Object.fromEntries(Object.entries(anyOf).filter(([code]) => !unavailable.includes(code))) },
+    preferences: {
+      ...request.preferences,
+      anyOf: Object.fromEntries(
+        Object.entries(anyOf).filter(([code]) => !unavailable.includes(code)),
+      ),
+    },
     // Only the count is used, and total counts every schedule however many come back.
     limits: { ...request.limits, maxSchedules: 1 },
   };
   const counted = solve(withoutRules).then(
     (answer): Fix[] =>
       answer.ok && answer.total > 0
-        ? unavailable.map((course) => ({ kind: "clearAnyOf", course, schedules: answer.total, capped: answer.capped }))
+        ? unavailable.map((course) => ({
+            kind: "clearAnyOf",
+            course,
+            schedules: answer.total,
+            capped: answer.capped,
+          }))
         : [],
     (): Fix[] => [],
   );
@@ -47,11 +65,19 @@ export function unavailableProfessorResponse(
     diagnosis: {
       unsure: false,
       emptyCourses: unavailable.map((code) => {
-        const optionsInData = term.courses.find((course) => course.code === code)?.options.length ?? 0;
+        const optionsInData =
+          term.courses.find((course) => course.code === code)?.options.length ??
+          0;
         return {
           code,
           optionsInData,
-          removed: { notAnyOf: optionsInData, notLocked: 0, notOpen: 0, startsTooEarly: 0, blocked: 0 },
+          removed: {
+            notAnyOf: optionsInData,
+            notLocked: 0,
+            notOpen: 0,
+            startsTooEarly: 0,
+            blocked: 0,
+          },
           latestStartsAfter: null,
         };
       }),

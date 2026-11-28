@@ -16,7 +16,13 @@ export { buildRequest, MAX_SCHEDULES } from "./buildRequest";
 export { SORT_PRESETS, SORT_PRESET_IDS } from "./sortPresets";
 export { DEFAULT_PREFERENCES } from "./draft";
 export { SOLVE_DELAY_MS } from "./createPlannerStore";
-export { findSchedule, scheduleKey, selectChosenSections, selectCurrentSchedule, selectSchedules } from "./selectors";
+export {
+  findSchedule,
+  scheduleKey,
+  selectChosenSections,
+  selectCurrentSchedule,
+  selectSchedules,
+} from "./selectors";
 
 let store: StoreApi<PlannerStore> | null = null;
 

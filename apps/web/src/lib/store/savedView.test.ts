@@ -3,14 +3,25 @@ import { designPlan } from "@/lib/plans/testing";
 import { createPlannerStore } from "./createPlannerStore";
 import { draftKey, readDraft } from "./draft";
 import { selectViewedSchedule } from "./viewSelectors";
-import { loaded, MemoryStorage, solved, termFile, termSummary } from "./testing/fixtures";
+import {
+  loaded,
+  MemoryStorage,
+  solved,
+  termFile,
+  termSummary,
+} from "./testing/fixtures";
 
 async function setup() {
   const storage = new MemoryStorage();
   const store = createPlannerStore({
     storage,
-    engine: { loadTerm: async (id) => loaded(id), solve: async (request) => solved(request) },
-    loadTermIndex: async () => ({ terms: [termSummary("2027-C"), termSummary("2027-D")] }),
+    engine: {
+      loadTerm: async (id) => loaded(id),
+      solve: async (request) => solved(request),
+    },
+    loadTermIndex: async () => ({
+      terms: [termSummary("2027-C"), termSummary("2027-D")],
+    }),
     loadTerm: async (id) => termFile(id),
     takeTermBuffer: () => null,
     now: () => new Date("2026-10-17T12:00:00Z"),
@@ -78,7 +89,10 @@ describe("saved view", () => {
     state().chooseAlternative("AE 2320", ["AE 2320-CL01", "AE 2320-CX02"]);
     state().selectCourse("AE 2320", "AE 2320-CX02");
     const found = selectViewedSchedule(state());
-    expect(found?.[0].sections.map((section) => section.id)).toEqual(["AE 2320-CL01", "AE 2320-CX02"]);
+    expect(found?.[0].sections.map((section) => section.id)).toEqual([
+      "AE 2320-CL01",
+      "AE 2320-CX02",
+    ]);
     const plan = designPlan();
     state().setSavedPlans([plan]);
     state().showSaved(plan.id);
@@ -95,7 +109,11 @@ describe("saved view", () => {
     const found = state().response;
     const first = designPlan();
     const second = designPlan({ id: "second", name: "Later classes" });
-    state().setSavedPlans([first, designPlan({ id: "other-term", termId: "2027-D" }), second]);
+    state().setSavedPlans([
+      first,
+      designPlan({ id: "other-term", termId: "2027-D" }),
+      second,
+    ]);
     state().showSaved();
     expect(state().savedPlanId).toBe(first.id);
     state().previousSavedPlan();
@@ -107,6 +125,8 @@ describe("saved view", () => {
     expect(state().savedPlanId).toBeNull();
     expect(state().response).toBe(found);
     expect(readDraft(storage, "2027-C")).toEqual(before);
-    expect(JSON.parse(storage.getItem(draftKey("2027-C"))!)).not.toHaveProperty("savedPlanId");
+    expect(JSON.parse(storage.getItem(draftKey("2027-C"))!)).not.toHaveProperty(
+      "savedPlanId",
+    );
   });
 });

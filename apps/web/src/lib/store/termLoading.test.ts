@@ -1,6 +1,11 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { clearDataCache, loadTerm, loadTermIndex, takeTermBuffer } from "@/lib/data/load";
+import {
+  clearDataCache,
+  loadTerm,
+  loadTermIndex,
+  takeTermBuffer,
+} from "@/lib/data/load";
 import { EngineClient, type EngineWorker } from "@/lib/engine/EngineClient";
 import { createEngineHost, type GoatplanModule } from "@/lib/engine/engineHost";
 import type { WorkerReply, WorkerRequest } from "@/lib/engine/protocol";
@@ -18,14 +23,20 @@ class InProcessWorker implements EngineWorker {
 
   postMessage(message: WorkerRequest, transfer: Transferable[] = []) {
     const received = structuredClone(message, { transfer });
-    void this.host.handle(received).then((reply) => this.onmessage?.({ data: reply } as MessageEvent<WorkerReply>));
+    void this.host
+      .handle(received)
+      .then((reply) =>
+        this.onmessage?.({ data: reply } as MessageEvent<WorkerReply>),
+      );
   }
 
   terminate() {}
 }
 
 const files: Record<string, string> = {
-  "/data/index.json": JSON.stringify({ terms: [termSummary("2027-C"), termSummary("2027-D", "2027-05-05")] }),
+  "/data/index.json": JSON.stringify({
+    terms: [termSummary("2027-C"), termSummary("2027-D", "2027-05-05")],
+  }),
   "/data/2027-C.json": JSON.stringify(termFile("2027-C")),
   "/data/2027-D.json": JSON.stringify(termFile("2027-D")),
 };
@@ -36,19 +47,26 @@ const fetchMock = vi.fn(async (input: string | URL | Request) => {
 });
 
 function requestsFor(path: string): number {
-  return fetchMock.mock.calls.filter(([input]) => String(input) === path).length;
+  return fetchMock.mock.calls.filter(([input]) => String(input) === path)
+    .length;
 }
 
 function setup() {
   const engineModule: GoatplanModule = {
     loadTerm: vi.fn((text: string) =>
-      JSON.stringify({ ok: true, version: 1, termId: JSON.parse(text).term.id, courses: 3 }),
+      JSON.stringify({
+        ok: true,
+        version: 1,
+        termId: JSON.parse(text).term.id,
+        courses: 3,
+      }),
     ),
     handle: vi.fn((text: string) => JSON.stringify(solved(JSON.parse(text)))),
   };
   const host = createEngineHost({
     loadModule: async () => engineModule,
-    fetchTermText: async (termId) => (await fetchMock(`/data/${termId}.json`)).text(),
+    fetchTermText: async (termId) =>
+      (await fetchMock(`/data/${termId}.json`)).text(),
   });
   const takeBuffer = vi.fn(takeTermBuffer);
   const store = createPlannerStore({
@@ -75,7 +93,9 @@ describe("loading a term", () => {
 
     expect(store.getState().termStatus).toBe("ready");
     expect(requestsFor("/data/2027-C.json")).toBe(1);
-    expect(engineModule.loadTerm).toHaveBeenCalledWith(files["/data/2027-C.json"]);
+    expect(engineModule.loadTerm).toHaveBeenCalledWith(
+      files["/data/2027-C.json"],
+    );
   });
 
   it("moves the bytes to the worker instead of copying them", async () => {

@@ -3,7 +3,13 @@ import type { Day, TermFile, TermSummary } from "@/lib/data/types";
 import type { BlockedTime, Fix, SolveResponse } from "@/lib/engine/types";
 import type { SavedPlan } from "@/lib/plans/types";
 
-export type SortPresetId = "bestOverall" | "fewestEarly" | "latestStart" | "earliestFinish" | "fewestDays" | "fewestGaps";
+export type SortPresetId =
+  | "bestOverall"
+  | "fewestEarly"
+  | "latestStart"
+  | "earliestFinish"
+  | "fewestDays"
+  | "fewestGaps";
 
 /** A blocked time with the name the student gave it, like "Work". The name never goes to the engine. */
 export interface PlanBlockedTime extends BlockedTime {
@@ -78,7 +84,11 @@ export interface ProfessorFix {
 /** A fix the engine suggested, or a professor switch the planner found. */
 export type PlanFix = Fix | ProfessorFix;
 
-export type TemporaryPlan = OpenedPlan & { view?: SavedPlan; warnings?: string[]; missing?: MissingItem[] };
+export type TemporaryPlan = OpenedPlan & {
+  view?: SavedPlan;
+  warnings?: string[];
+  missing?: MissingItem[];
+};
 
 export interface PlannerState extends Draft {
   savedPlans: SavedPlan[];
@@ -135,7 +145,11 @@ export interface PlannerActions {
    * with the `chosen` sections (course code → section ids) when the answer has one. Resolves to false
    * when the term couldn't load or something else changed the plan first.
    */
-  openPlan(termId: string, plan: OpenedPlan, chosen?: Record<string, readonly string[]>): Promise<boolean>;
+  openPlan(
+    termId: string,
+    plan: OpenedPlan,
+    chosen?: Record<string, readonly string[]>,
+  ): Promise<boolean>;
   addCourse(code: string): void;
   /** Removes a course and keeps it in removedCourse, replacing an earlier one, so it can be undone. */
   removeCourse(code: string): void;
@@ -146,7 +160,10 @@ export interface PlannerActions {
   selectCourse(code: string | null, sectionId?: string | null): void;
   setPreferences(changes: Partial<PlanPreferences>): void;
   /** Replaces the blocked times after a drag and keeps the old list in blockedChange, so it can be undone. */
-  changeBlocked(blocked: PlanBlockedTime[], change: Omit<BlockedChange, "previous">): void;
+  changeBlocked(
+    blocked: PlanBlockedTime[],
+    change: Omit<BlockedChange, "previous">,
+  ): void;
   /** Puts blockedChange.previous back and solves once. */
   undoBlockedChange(): void;
   dismissBlockedChange(): void;
