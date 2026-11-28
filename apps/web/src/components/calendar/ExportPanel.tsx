@@ -15,7 +15,9 @@ import { termCalendar } from "@/lib/calendar/term-calendar";
 import { selectViewedSchedule, usePlannerStore } from "@/lib/store";
 
 function download(fileName: string, text: string) {
-  const url = URL.createObjectURL(new Blob([text], { type: "text/calendar;charset=utf-8" }));
+  const url = URL.createObjectURL(
+    new Blob([text], { type: "text/calendar;charset=utf-8" }),
+  );
   const link = document.createElement("a");
   link.href = url;
   link.download = fileName;
@@ -23,17 +25,35 @@ function download(fileName: string, text: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-function DetailList({ title, items }: { title: string; items: readonly string[] }) {
+function DetailList({
+  title,
+  items,
+}: {
+  title: string;
+  items: readonly string[];
+}) {
   if (items.length === 0) return null;
   return (
     <div className="pt-8">
       <p className="text-8 leading-14-4 font-650">{title}</p>
-      <ul className="text-8 leading-14-4 text-ink-muted">{items.map((item) => <li key={item}>{item}</li>)}</ul>
+      <ul className="text-8 leading-14-4 text-ink-muted">
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export function ExportPanel({ id, anchor, onClose }: { id: string; anchor: RefObject<HTMLElement | null>; onClose(): void }) {
+export function ExportPanel({
+  id,
+  anchor,
+  onClose,
+}: {
+  id: string;
+  anchor: RefObject<HTMLElement | null>;
+  onClose(): void;
+}) {
   const store = usePlannerStore();
   const phone = usePhoneViewport();
   const state = store.getState();
@@ -59,25 +79,54 @@ export function ExportPanel({ id, anchor, onClose }: { id: string; anchor: RefOb
   }
 
   return (
-    <AnchoredPanel id={id} title="Export to calendar" anchor={anchor} onClose={onClose} initialFocus={downloadButton}>
-      <p className="pt-2 text-8-5 leading-16 text-ink-muted">{hasEvents ? exportLine(summary) : "None of the classes in this schedule have dates and times to add."}</p>
+    <AnchoredPanel
+      id={id}
+      title="Export to calendar"
+      anchor={anchor}
+      onClose={onClose}
+      initialFocus={downloadButton}
+    >
+      <p className="pt-2 text-8-5 leading-16 text-ink-muted">
+        {hasEvents
+          ? exportLine(summary)
+          : "None of the classes in this schedule have dates and times to add."}
+      </p>
 
       {downloaded ? (
         <>
-          <p role="status" className="pt-12 text-10 leading-16 font-650">Downloaded ✓ <span className="font-510 text-ink-muted">{fileName}</span></p>
+          <p role="status" className="pt-12 text-10 leading-16 font-650">
+            Downloaded ✓{" "}
+            <span className="font-510 text-ink-muted">{fileName}</span>
+          </p>
           <ul className="list-disc pt-6 pl-16 text-8-5 leading-16 text-ink-muted">
             <li>Open the file in Apple Calendar or Outlook.</li>
-            <li>If Outlook shows every class in one color, assign a color to each course code in Manage Categories.</li>
+            <li>
+              If Outlook shows every class in one color, assign a color to each
+              course code in Manage Categories.
+            </li>
             <li>Google Calendar: Settings, then Import &amp; export.</li>
             <li>Export again if your sections change.</li>
           </ul>
-          <Button ref={againButton} variant="secondary" size={size} className="mt-12 w-full max-tablet:min-h-44" icon={<DownloadSimple aria-hidden />} onClick={save}>Download again</Button>
+          <Button
+            ref={againButton}
+            variant="secondary"
+            size={size}
+            className="mt-12 w-full max-tablet:min-h-44"
+            icon={<DownloadSimple aria-hidden />}
+            onClick={save}
+          >
+            Download again
+          </Button>
         </>
       ) : (
         <>
           {!calendar && (
             <>
-              <Notice tone="warning" title="WPI calendar information is unavailable" className="mt-12">
+              <Notice
+                tone="warning"
+                title="WPI calendar information is unavailable"
+                className="mt-12"
+              >
                 Holidays and alternate weekday schedules may be missing.
               </Notice>
               <CheckField
@@ -106,21 +155,39 @@ export function ExportPanel({ id, anchor, onClose }: { id: string; anchor: RefOb
         {hasEvents && (
           <ul aria-label="Dates for each section">
             {summary.sections.map((section) => (
-              <li key={section.id} className="flex items-start justify-between gap-12 border-b border-line py-6 last:border-b-0">
+              <li
+                key={section.id}
+                className="flex items-start justify-between gap-12 border-b border-line py-6 last:border-b-0"
+              >
                 <div className="min-w-0">
                   <p className="text-8 leading-14-4 font-650">{section.name}</p>
-                  <p className="text-8 leading-14-4 text-ink-muted">{section.times}</p>
+                  <p className="text-8 leading-14-4 text-ink-muted">
+                    {section.times}
+                  </p>
                 </div>
-                <span className="shrink-0 text-8 leading-14-4 text-ink-muted">{section.dates}</span>
+                <span className="shrink-0 text-8 leading-14-4 text-ink-muted">
+                  {section.dates}
+                </span>
               </li>
             ))}
           </ul>
         )}
-        {summary.untimed.length > 0 && <p className="pt-8 text-8 leading-14-4 text-ink-muted">No set time, so left out: {summary.untimed.join(", ")}</p>}
+        {summary.untimed.length > 0 && (
+          <p className="pt-8 text-8 leading-14-4 text-ink-muted">
+            No set time, so left out: {summary.untimed.join(", ")}
+          </p>
+        )}
         <DetailList title="No classes" items={summary.holidays} />
         <DetailList title="Schedule swaps" items={summary.swaps} />
-        {summary.notes.map((note) => <p key={note} className="pt-8 text-8 leading-14-4 text-ink-muted">{note}</p>)}
-        <p className="pt-8 text-8 leading-14-4 text-ink-muted">Times are New York time and follow daylight saving. Blocked times stay out of the file.</p>
+        {summary.notes.map((note) => (
+          <p key={note} className="pt-8 text-8 leading-14-4 text-ink-muted">
+            {note}
+          </p>
+        ))}
+        <p className="pt-8 text-8 leading-14-4 text-ink-muted">
+          Times are New York time and follow daylight saving. Blocked times stay
+          out of the file.
+        </p>
       </Disclosure>
     </AnchoredPanel>
   );

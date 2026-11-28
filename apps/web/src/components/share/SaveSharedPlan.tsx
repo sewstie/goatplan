@@ -18,14 +18,21 @@ export function SaveSharedPlan({ view }: { view: SavedPlan | undefined }) {
   const [savedId, setSavedId] = useState<string | null>(null);
   const [showSaved, setShowSaved] = useState(false);
   const [failed, setFailed] = useState(false);
-  const saved = usePlanner((state) => state.savedPlans.find((plan) => plan.id === savedId) ?? null);
+  const saved = usePlanner(
+    (state) => state.savedPlans.find((plan) => plan.id === savedId) ?? null,
+  );
   const { requestOpen, dialog } = useOpenPlan();
   const canSave = Boolean(view && canSaveCopy(view));
 
   function save(): SavedPlan | null {
     if (saved) return saved;
     const source = getPlansSource();
-    const copy = view && savedCopy(view, source.getSnapshot().plans, { id: newPlanId(), savedAt: new Date() });
+    const copy =
+      view &&
+      savedCopy(view, source.getSnapshot().plans, {
+        id: newPlanId(),
+        savedAt: new Date(),
+      });
     if (!copy) return null;
     const stored = source.save(copy);
     setFailed(!stored);
@@ -39,7 +46,14 @@ export function SaveSharedPlan({ view }: { view: SavedPlan | undefined }) {
 
   return (
     <>
-      <Button variant="secondary" className="max-tablet:min-h-44" icon={<X aria-hidden />} onClick={close}>Close preview</Button>
+      <Button
+        variant="secondary"
+        className="max-tablet:min-h-44"
+        icon={<X aria-hidden />}
+        onClick={close}
+      >
+        Close preview
+      </Button>
       <Button
         variant="secondary"
         className="max-tablet:min-h-44"
@@ -61,7 +75,14 @@ export function SaveSharedPlan({ view }: { view: SavedPlan | undefined }) {
       >
         Open for editing
       </Button>
-      {failed && <p role="alert" className="basis-full text-right text-8 leading-12 text-warning tablet:absolute tablet:top-full tablet:right-20 tablet:z-30 tablet:mt-4 tablet:rounded-row tablet:border tablet:border-line-popover tablet:bg-surface tablet:px-8 tablet:py-4 tablet:shadow-popover">{COULDNT_SAVE}</p>}
+      {failed && (
+        <p
+          role="alert"
+          className="basis-full text-right text-8 leading-12 text-warning tablet:absolute tablet:top-full tablet:right-20 tablet:z-30 tablet:mt-4 tablet:rounded-row tablet:border tablet:border-line-popover tablet:bg-surface tablet:px-8 tablet:py-4 tablet:shadow-popover"
+        >
+          {COULDNT_SAVE}
+        </p>
+      )}
       {saved && showSaved && (
         <CopySavedDialog
           plan={saved}

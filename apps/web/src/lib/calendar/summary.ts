@@ -21,30 +21,60 @@ export interface ExportSummary {
   notes: string[];
 }
 
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const DAY_NAMES: Record<string, string> = { Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday" };
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+const DAY_NAMES: Record<string, string> = {
+  Mon: "Monday",
+  Tue: "Tuesday",
+  Wed: "Wednesday",
+  Thu: "Thursday",
+  Fri: "Friday",
+};
 
 function shortDate(date: string): string {
   const [, month, day] = date.split("-").map(Number);
   return `${MONTHS[month - 1]} ${day}`;
 }
 
-const span = ({ start, end }: DateRange) => `${shortDate(start)}–${shortDate(end)}`;
+const span = ({ start, end }: DateRange) =>
+  `${shortDate(start)}–${shortDate(end)}`;
 
-const sectionCode = (course: string, id: string) => (id.startsWith(`${course}-`) ? id.slice(course.length + 1) : id);
+const sectionCode = (course: string, id: string) =>
+  id.startsWith(`${course}-`) ? id.slice(course.length + 1) : id;
 
-const inRange = (date: string, { start, end }: DateRange) => start <= date && date <= end;
+const inRange = (date: string, { start, end }: DateRange) =>
+  start <= date && date <= end;
 
 /** "4 classes · Jan 13–Mar 5, 2027 · 1 left out", the line at the top of Export. */
 export function exportLine(summary: ExportSummary): string {
   const count = summary.sections.length;
-  const parts = [`${count} ${count === 1 ? "class" : "classes"}`, summary.termDates];
-  if (summary.untimed.length > 0) parts.push(`${summary.untimed.length} left out`);
+  const parts = [
+    `${count} ${count === 1 ? "class" : "classes"}`,
+    summary.termDates,
+  ];
+  if (summary.untimed.length > 0)
+    parts.push(`${summary.untimed.length} left out`);
   return parts.join(" · ");
 }
 
 /** What the calendar file will hold, in the words the export screen uses. */
-export function exportSummary(schedule: readonly SavedCourse[], term: DateRange, calendar: TermCalendar | null): ExportSummary {
+export function exportSummary(
+  schedule: readonly SavedCourse[],
+  term: DateRange,
+  calendar: TermCalendar | null,
+): ExportSummary {
   const sections: ExportSection[] = [];
   const untimed: string[] = [];
   const ranges: DateRange[] = [];
@@ -56,11 +86,22 @@ export function exportSummary(schedule: readonly SavedCourse[], term: DateRange,
         continue;
       }
       ranges.push(section.dates ?? term);
-      const times = section.meetings.map((meeting) => `${formatDays(meeting.days)} · ${formatTimeRange(meeting.start, meeting.end)}`).join(", ");
-      sections.push({ id: section.id, name, times, dates: span(section.dates ?? term) });
+      const times = section.meetings
+        .map(
+          (meeting) =>
+            `${formatDays(meeting.days)} · ${formatTimeRange(meeting.start, meeting.end)}`,
+        )
+        .join(", ");
+      sections.push({
+        id: section.id,
+        name,
+        times,
+        dates: span(section.dates ?? term),
+      });
     }
   }
-  const included = ({ date }: { date: string }) => ranges.some((range) => inRange(date, range));
+  const included = ({ date }: { date: string }) =>
+    ranges.some((range) => inRange(date, range));
   const noClass = calendar?.noClass.filter(included) ?? [];
   const swaps = calendar?.swaps.filter(included) ?? [];
   const notes = calendar?.notes.filter(included).map((note) => note.text) ?? [];
@@ -69,7 +110,10 @@ export function exportSummary(schedule: readonly SavedCourse[], term: DateRange,
     sections,
     untimed,
     holidays: noClass.map((day) => `${shortDate(day.date)} · ${day.name}`),
-    swaps: swaps.map((day) => `${shortDate(day.date)} follows ${DAY_NAMES[day.runs] ?? day.runs}’s schedule`),
+    swaps: swaps.map(
+      (day) =>
+        `${shortDate(day.date)} follows ${DAY_NAMES[day.runs] ?? day.runs}’s schedule`,
+    ),
     notes,
   };
 }

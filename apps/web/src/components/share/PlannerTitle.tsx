@@ -11,7 +11,9 @@ export function PlannerTitle({ badge = true }: { badge?: boolean } = {}) {
   return (
     <span className="inline-flex flex-wrap items-center gap-12">
       Shared schedule
-      <Badge tone="accent" size="lg" className="font-570 [letter-spacing:0]">Shared snapshot</Badge>
+      <Badge tone="accent" size="lg" className="font-570 [letter-spacing:0]">
+        Shared snapshot
+      </Badge>
     </span>
   );
 }

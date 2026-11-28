@@ -23,20 +23,33 @@ export function buildSharedPlan(plan: SharedPlan, term: TermFile) {
     const sections = (plan.chosen[code] ?? []).flatMap((id) => {
       const section = course.sections.find((item) => item.id === id);
       if (!section) {
-        const short = id.startsWith(`${code}-`) ? id.slice(code.length + 1) : id;
+        const short = id.startsWith(`${code}-`)
+          ? id.slice(code.length + 1)
+          : id;
         warnings.push(`${code} ${short} is no longer offered.`);
-        missing.push({ course: code, section: short, sectionType: /^(CX|X|L[A-Z]?\d)/.test(short) ? "lab" : "section" });
+        missing.push({
+          course: code,
+          section: short,
+          sectionType: /^(CX|X|L[A-Z]?\d)/.test(short) ? "lab" : "section",
+        });
       }
       return section ?? [];
     });
     return [{ code, title: course.title, sections }];
   });
-  const { courses, locks, professorByCourse } = sanitizeDraft({ ...plan, alternatives: {} }, term);
+  const { courses, locks, professorByCourse } = sanitizeDraft(
+    { ...plan, alternatives: {} },
+    term,
+  );
   const view: SavedPlan = {
     id: "__temporary__",
     name: `${term.term.name} · Shared copy`,
     termId: plan.termId,
-    term: { name: term.term.name, season: term.term.season, year: term.term.year },
+    term: {
+      name: term.term.name,
+      season: term.term.season,
+      year: term.term.year,
+    },
     savedAt: term.generatedAt,
     courses,
     schedule,
@@ -45,5 +58,13 @@ export function buildSharedPlan(plan: SharedPlan, term: TermFile) {
     preferences: plan.preferences,
     sortPreset: plan.sortPreset,
   };
-  return { ...plan, courses, locks, professorByCourse, view, warnings, missing };
+  return {
+    ...plan,
+    courses,
+    locks,
+    professorByCourse,
+    view,
+    warnings,
+    missing,
+  };
 }

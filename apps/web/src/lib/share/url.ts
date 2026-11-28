@@ -7,7 +7,11 @@ export function shareData(hash: string): string | null {
 
 export function clearShareData(href: string): string {
   const url = new URL(href);
-  url.hash = url.hash.slice(1).split("&").filter((part) => !part.startsWith("p=")).join("&");
+  url.hash = url.hash
+    .slice(1)
+    .split("&")
+    .filter((part) => !part.startsWith("p="))
+    .join("&");
   return url.href;
 }
 
