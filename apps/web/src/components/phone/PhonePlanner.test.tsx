@@ -2,13 +2,22 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { usePhoneScreen } from "./phoneScreen";
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/", useRouter: () => ({ push: vi.fn() }) }));
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+  useRouter: () => ({ push: vi.fn() }),
+}));
 vi.mock("@/components/shell/Brand", () => ({ Brand: () => null }));
 vi.mock("./PhoneTermSelect", () => ({ PhoneTermSelect: () => null }));
 vi.mock("./PhoneSearchScreen", () => ({ PhoneSearchScreen: () => null }));
-vi.mock("./PhonePreferencesScreen", () => ({ PhonePreferencesScreen: () => null }));
-vi.mock("./PhoneCourseScreen", () => ({ PhoneCourseScreen: () => <p>Course screen</p> }));
-vi.mock("./PhoneScheduleScreen", () => ({ PhoneScheduleScreen: () => <p>Schedule screen</p> }));
+vi.mock("./PhonePreferencesScreen", () => ({
+  PhonePreferencesScreen: () => null,
+}));
+vi.mock("./PhoneCourseScreen", () => ({
+  PhoneCourseScreen: () => <p>Course screen</p>,
+}));
+vi.mock("./PhoneScheduleScreen", () => ({
+  PhoneScheduleScreen: () => <p>Schedule screen</p>,
+}));
 
 import { PhonePlanner } from "./PhonePlanner";
 

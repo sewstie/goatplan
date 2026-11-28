@@ -24,7 +24,11 @@ type PhonePlannerProps = {
   menuActions?: ReactNode;
 };
 
-export function PhonePlanner({ banner, notices, menuActions }: PhonePlannerProps) {
+export function PhonePlanner({
+  banner,
+  notices,
+  menuActions,
+}: PhonePlannerProps) {
   const screen = usePhoneScreen((state) => state.screen);
   const main = useRef<HTMLElement>(null);
   const first = useRef(true);
@@ -33,7 +37,8 @@ export function PhonePlanner({ banner, notices, menuActions }: PhonePlannerProps
 
   useEffect(() => {
     const remember = () => {
-      if (usePhoneScreen.getState().screen === "schedule") scheduleScroll.current = window.scrollY;
+      if (usePhoneScreen.getState().screen === "schedule")
+        scheduleScroll.current = window.scrollY;
     };
     window.addEventListener("scroll", remember, { passive: true });
     return () => window.removeEventListener("scroll", remember);
@@ -55,13 +60,24 @@ export function PhonePlanner({ banner, notices, menuActions }: PhonePlannerProps
       first.current = false;
       return;
     }
-    window.scrollTo?.({ top: screen === "schedule" ? scheduleScroll.current : 0 });
+    window.scrollTo?.({
+      top: screen === "schedule" ? scheduleScroll.current : 0,
+    });
     if (screen === "search") return;
-    main.current?.querySelector<HTMLElement>("[data-phone-screen]:not([hidden]) [data-screen-heading]")?.focus({ preventScroll: true });
+    main.current
+      ?.querySelector<HTMLElement>(
+        "[data-phone-screen]:not([hidden]) [data-screen-heading]",
+      )
+      ?.focus({ preventScroll: true });
   }, [screen]);
 
   return (
-    <div className={cx("flex flex-col bg-canvas", course ? "h-dvh overflow-hidden" : "min-h-dvh")}>
+    <div
+      className={cx(
+        "flex flex-col bg-canvas",
+        course ? "h-dvh overflow-hidden" : "min-h-dvh",
+      )}
+    >
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-8 focus:left-8 focus:z-20 focus:rounded-control focus:bg-surface focus:px-11 focus:py-9 focus:text-11 focus:font-570 focus:text-accent focus:shadow-popover"
@@ -80,13 +96,31 @@ export function PhonePlanner({ banner, notices, menuActions }: PhonePlannerProps
           course && "relative min-h-0 overflow-y-auto overscroll-contain",
         )}
       >
-        {screen === "search" && <div data-phone-screen><PhoneSearchScreen /></div>}
-        {course && <div data-phone-screen className="flex flex-1 flex-col"><PhoneCourseScreen /></div>}
-        {screen === "preferences" && <div data-phone-screen><PhonePreferencesScreen /></div>}
+        {screen === "search" && (
+          <div data-phone-screen>
+            <PhoneSearchScreen />
+          </div>
+        )}
+        {course && (
+          <div data-phone-screen className="flex flex-1 flex-col">
+            <PhoneCourseScreen />
+          </div>
+        )}
+        {screen === "preferences" && (
+          <div data-phone-screen>
+            <PhonePreferencesScreen />
+          </div>
+        )}
         <div data-phone-screen hidden={screen !== "schedule"}>
-          <PhoneScheduleScreen banner={banner} notices={notices} menuActions={menuActions} />
+          <PhoneScheduleScreen
+            banner={banner}
+            notices={notices}
+            menuActions={menuActions}
+          />
         </div>
-        <PhoneFooter extra={<SeatStatus className="items-center text-center" />} />
+        <PhoneFooter
+          extra={<SeatStatus className="items-center text-center" />}
+        />
       </main>
     </div>
   );

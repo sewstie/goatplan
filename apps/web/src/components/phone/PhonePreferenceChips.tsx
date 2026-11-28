@@ -4,7 +4,11 @@ import { useMemo } from "react";
 import { CaretDown, Clock } from "@phosphor-icons/react/ssr";
 import { BlockedTimesMenu } from "@/components/preferences/BlockedTimesMenu";
 import { BlockTimeButton } from "@/components/preferences/BlockTimeButton";
-import { groupBlocked, groupDays, groupTimes } from "@/components/preferences/blockedTimes";
+import {
+  groupBlocked,
+  groupDays,
+  groupTimes,
+} from "@/components/preferences/blockedTimes";
 import { ReadOnlyPreferences } from "@/components/preferences/ReadOnlyPreferences";
 import { startsAfterOptions } from "@/components/preferences/timeOptions";
 import { focusWithin } from "@/components/ui/focusRing";
@@ -13,7 +17,8 @@ import { formatTimeShort } from "@/lib/data/time";
 import { selectReadOnlyPlan, usePlanner } from "@/lib/store";
 import { usePhoneScreen } from "./phoneScreen";
 
-const PILL = "relative inline-flex min-h-36 shrink-0 items-center gap-6 rounded-pill border border-line bg-surface px-8 text-9 after:absolute after:inset-x-0 after:-inset-y-4";
+const PILL =
+  "relative inline-flex min-h-36 shrink-0 items-center gap-6 rounded-pill border border-line bg-surface px-8 text-9 after:absolute after:inset-x-0 after:-inset-y-4";
 
 /**
  * The phone preferences: "After 9 AM ⌄", Only open and "+ Block a time" share one row (two on the
@@ -35,14 +40,22 @@ export function PhonePreferenceChips() {
   return (
     <div role="group" aria-label="Preferences" className="flex flex-col gap-8">
       <div className="flex flex-wrap items-center gap-6">
-        <div className={`${PILL} min-w-0 flex-auto justify-center ${focusWithin}`}>
+        <div
+          className={`${PILL} min-w-0 flex-auto justify-center ${focusWithin}`}
+        >
           <Clock aria-hidden className="size-12 shrink-0" />
-          <span aria-hidden className="truncate font-570">{startsAfter === 0 ? "Any time" : `After ${formatTimeShort(startsAfter)}`}</span>
+          <span aria-hidden className="truncate font-570">
+            {startsAfter === 0
+              ? "Any time"
+              : `After ${formatTimeShort(startsAfter)}`}
+          </span>
           <CaretDown aria-hidden className="size-10 shrink-0" />
           <select
             aria-label="Starts after"
             value={String(startsAfter)}
-            onChange={(event) => setPreferences({ startsAfter: Number(event.target.value) })}
+            onChange={(event) =>
+              setPreferences({ startsAfter: Number(event.target.value) })
+            }
             className="absolute inset-x-0 -inset-y-4 z-1 cursor-pointer appearance-none opacity-0"
           >
             {options.map((option) => (
@@ -61,7 +74,10 @@ export function PhonePreferenceChips() {
             className="relative z-1 -my-4"
           />
         </span>
-        <BlockTimeButton label="Block time" className="min-w-0 flex-auto justify-center px-8" />
+        <BlockTimeButton
+          label="Block time"
+          className="min-w-0 flex-auto justify-center px-8"
+        />
       </div>
       {/* While drawing, one pill stands for them all, so the calendar below doesn't move. */}
       {drawing && <BlockedTimesMenu className="self-start" />}
@@ -76,7 +92,9 @@ export function PhonePreferenceChips() {
               className={`${PILL} cursor-pointer hover:bg-surface-selected`}
             >
               {group.label && <b className="font-700">{group.label}</b>}
-              <span>{groupDays(group)} {groupTimes(group)}</span>
+              <span>
+                {groupDays(group)} {groupTimes(group)}
+              </span>
               <CaretDown aria-hidden className="size-10" />
             </button>
           ))}

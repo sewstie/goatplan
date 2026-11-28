@@ -1,7 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
-import { resetPlanner, setPlanner } from "@/components/schedule/testing/plannerFixtures";
+import {
+  resetPlanner,
+  setPlanner,
+} from "@/components/schedule/testing/plannerFixtures";
 import { getPlannerStore } from "@/lib/store";
 import { PhoneCourseScreen } from "./PhoneCourseScreen";
 import { usePhoneScreen } from "./phoneScreen";
@@ -17,7 +20,9 @@ describe("PhoneCourseScreen", () => {
     usePhoneScreen.setState({ screen: "course" });
     render(<PhoneCourseScreen />);
 
-    await userEvent.click(screen.getByRole("button", { name: "Remove course AE 2410" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Remove course AE 2410" }),
+    );
     expect(getPlannerStore().getState().courses).not.toContain("AE 2410");
     expect(getPlannerStore().getState().removedCourse?.code).toBe("AE 2410");
     expect(usePhoneScreen.getState().screen).toBe("schedule");
@@ -26,6 +31,8 @@ describe("PhoneCourseScreen", () => {
   it("has no remove button for a saved plan", () => {
     setPlanner({ selectedCourse: "AE 2410", savedPlanId: "plan-1" });
     render(<PhoneCourseScreen />);
-    expect(screen.queryByRole("button", { name: /^Remove/ })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /^Remove/ }),
+    ).not.toBeInTheDocument();
   });
 });
