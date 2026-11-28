@@ -1,6 +1,6 @@
 {
   "term": {"id":"2027-D","name":"D Term","season":"Spring","year":2027,"start":"2027-03-15","end":"2027-05-05"},
-  "generatedAt": "2026-11-27T18:48:15Z",
+  "generatedAt": "2026-11-28T17:27:52Z",
   "courses": [
     {
       "code": "ACC 2060",
@@ -2087,7 +2087,7 @@
       "description": "Cat. I This course makes the student aware of the social, moral, ethical, and philosophical impact of computers and computer-based systems on society, both now and in the future. Topics include major computer-based applications and their impact, human machine relationships, and the major problems of controlling the use of computers. Students will be expected to contribute to classroom discussions and to complete a number of significant writing assignments. This course is recommended for juniors and seniors. The Social Science Requirement cannot be satisfied by this course. Undergraduate credit may not be earned both for this course and for CS 505. Recommended background: a general knowledge of computers and computer systems",
       "sections": [
         {"id":"CS 3043-D02","code":"D02","type":"lecture","status":"open","enrolled":31,"capacity":35,"waitlist":{"taken":4,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 405"}]},
-        {"id":"CS 3043-D03","code":"D03","type":"lecture","status":"open","enrolled":32,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["EJ Néel"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
+        {"id":"CS 3043-D03","code":"D03","type":"lecture","status":"open","enrolled":32,"capacity":35,"waitlist":{"taken":1,"capacity":10},"instructors":["EJ Néel"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
         ["CS 3043-D02"],
@@ -5541,7 +5541,7 @@
       "level": "Graduate",
       "description": "This seminar introduces students to issues andtrends in modern statistics. In the seminar, studentsand faculty will read and discuss survey andresearch papers, make and attend presentations,and participate in brainstorming sessions towardthe solution of advanced statistical problems.",
       "sections": [
-        {"id":"MA 559-S01","code":"S01","type":"seminar","status":"open","enrolled":1,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Buddika Peiris"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Thu"],"start":840,"end":890,"location":"Stratton Hall 207"}]}
+        {"id":"MA 559-S01","code":"S01","type":"seminar","status":"open","enrolled":2,"capacity":20,"waitlist":{"taken":0,"capacity":5},"instructors":["Buddika Peiris"],"delivery":"in-person","dates":{"start":"2027-01-13","end":"2027-05-05"},"meetings":[{"days":["Thu"],"start":840,"end":890,"location":"Stratton Hall 207"}]}
       ],
       "options": [
         ["MA 559-S01"]
@@ -7838,7 +7838,7 @@
       "description": "Cat. I This course makes the student aware of the social, moral, ethical, and philosophical impact of computers and computer-based systems on society, both now and in the future. Topics include major computer-based applications and their impact, human machine relationships, and the major problems of controlling the use of computers. Students will be expected to contribute to classroom discussions and to complete a number of significant writing assignments. This course is recommended for juniors and seniors. The Social Science Requirement cannot be satisfied by this course. Undergraduate credit may not be earned both for this course and for CS 505. Recommended background: a general knowledge of computers and computer systems",
       "sections": [
         {"id":"SS 3043-D02","code":"D02","type":"lecture","status":"open","enrolled":31,"capacity":35,"waitlist":{"taken":4,"capacity":10},"instructors":["Michelle Borowski"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":840,"end":950,"location":"Unity Hall 405"}]},
-        {"id":"SS 3043-D03","code":"D03","type":"lecture","status":"open","enrolled":32,"capacity":35,"waitlist":{"taken":0,"capacity":10},"instructors":["EJ Néel"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
+        {"id":"SS 3043-D03","code":"D03","type":"lecture","status":"open","enrolled":32,"capacity":35,"waitlist":{"taken":1,"capacity":10},"instructors":["EJ Néel"],"delivery":"in-person","meetings":[{"days":["Tue","Fri"],"start":600,"end":710,"location":"Innovation Studio 205 Active Learning Classroom North"}]}
       ],
       "options": [
         ["SS 3043-D02"],
