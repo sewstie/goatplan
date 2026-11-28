@@ -17,7 +17,7 @@ const metadata = {
   status: "beta", verification: null, officialLines: [34, 35, 36],
 };
 writeFileSync(registry, readFileSync(registry, "utf8")
-  .replace("readonly SheetMetadata[] = [{", `readonly SheetMetadata[] = [${JSON.stringify(metadata)}, {`)
+  .replace("readonly SheetMetadata[] = [", `readonly SheetMetadata[] = [${JSON.stringify(metadata)},`)
   .replace('  "cs-2030": async', '  "fixture-2030": async () => (await import("./fixture-2030.json")).default as TrackingSheet,\n  "cs-2030": async'));
 cpSync(path.join(web, "e2e/fixtures/degree-major-sheet.json"), path.join(target, "src/lib/degree/sheets/fixture-2030.json"));
 const config = path.join(target, "next.config.ts");
