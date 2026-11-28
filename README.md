@@ -51,28 +51,28 @@ pages on port 3000. Set `PORT` to change both; production uses `PORT + 1000`.
 
 ## Repository
 
-| Path | Purpose |
-| --- | --- |
-| `apps/web/` | Next.js App Router frontend, server routes and browser tests |
-| `engine/` | C++20 scheduler, generic degree audit, CLI and WebAssembly build |
-| `scripts/` | Course download, normalization, catalog update and data checks |
-| `data/catalog.json` | Persistent degree-search catalog |
-| `data/fixtures/` | Data samples and worked degree histories |
-| `apps/web/public/data/` | Generated term files and term index |
-| `apps/web/public/engine/` | Committed WebAssembly runtime |
-| `docs/` | Architecture, workflows, contracts and source interpretations |
-| `.github/workflows/` | CI and the daily course-data update |
+| Path                      | Purpose                                                          |
+| ------------------------- | ---------------------------------------------------------------- |
+| `apps/web/`               | Next.js App Router frontend, server routes and browser tests     |
+| `engine/`                 | C++20 scheduler, generic degree audit, CLI and WebAssembly build |
+| `scripts/`                | Course download, normalization, catalog update and data checks   |
+| `data/catalog.json`       | Persistent degree-search catalog                                 |
+| `data/fixtures/`          | Data samples and worked degree histories                         |
+| `apps/web/public/data/`   | Generated term files and term index                              |
+| `apps/web/public/engine/` | Committed WebAssembly runtime                                    |
+| `docs/`                   | Architecture, workflows, contracts and source interpretations    |
+| `.github/workflows/`      | CI and the daily course-data update                              |
 
 ## Other commands
 
-| Command | Purpose |
-| --- | --- |
-| `npm run engine:test` | Configure, build and test the native engine |
-| `npm run engine:wasm` | Rebuild WebAssembly with Emscripten 6.0.12 |
-| `npm run engine:wasm:test` | Compare native and WebAssembly responses |
-| `npm run data:update` | Fetch WPI listings, normalize terms and update the catalog |
-| `npm run data:catalog` | Merge observed offerings into the persistent catalog |
-| `npm run data:test` | Run the data-script tests |
+| Command                    | Purpose                                                    |
+| -------------------------- | ---------------------------------------------------------- |
+| `npm run engine:test`      | Configure, build and test the native engine                |
+| `npm run engine:wasm`      | Rebuild WebAssembly with Emscripten 6.0.12                 |
+| `npm run engine:wasm:test` | Compare native and WebAssembly responses                   |
+| `npm run data:update`      | Fetch WPI listings, normalize terms and update the catalog |
+| `npm run data:catalog`     | Merge observed offerings into the persistent catalog       |
+| `npm run data:test`        | Run the data-script tests                                  |
 
 Native builds need CMake 3.20+ and a C++20 compiler. Frontend-only work does not
 need them. Keep the Emscripten version aligned with CI when rebuilding generated

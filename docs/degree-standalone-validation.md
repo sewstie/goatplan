@@ -10,15 +10,15 @@ The remaining sections retain the original validation record.
 
 Checked on November 6, 2026. Existing local major-release edits were preserved.
 
-| Check | Result |
-| --- | --- |
-| `npm run lint` | Passed without warnings |
-| `npm run test` | 1,694 passed, 10 skipped |
-| `npm run build` | Passed, including the static catalog route |
-| `npm run engine:test` | 163 passed |
-| `npm run data:test` | 132 passed |
-| `npm run test:e2e -w web -- degree course-map --workers=4` | 98 passed, 5 fixture tests skipped |
-| `git diff --check` | Passed |
+| Check                                                      | Result                                     |
+| ---------------------------------------------------------- | ------------------------------------------ |
+| `npm run lint`                                             | Passed without warnings                    |
+| `npm run test`                                             | 1,694 passed, 10 skipped                   |
+| `npm run build`                                            | Passed, including the static catalog route |
+| `npm run engine:test`                                      | 163 passed                                 |
+| `npm run data:test`                                        | 132 passed                                 |
+| `npm run test:e2e -w web -- degree course-map --workers=4` | 98 passed, 5 fixture tests skipped         |
+| `git diff --check`                                         | Passed                                     |
 
 The browser run covers migration without published term data, catalog-only and
 unusual identifiers, catalog retry, explicit planner transfer, Add to schedule,

@@ -6,22 +6,22 @@ The PDF states “Effective for students entering AY 2026-2027”. Status stays 
 
 ## Requirement mapping
 
-| App rows | Requirement |
-| --- | --- |
-| 1, 2, 3, 4, 5, 6 | Humanities and Arts |
-| 7 | Wellness and Physical Education |
-| 8, 9 | Social Science |
-| 10, 11, 12 | Interactive Qualifying Project |
-| 13, 14, 15 | Free Electives |
-| 16, 17, 18 | Computer Science Foundation |
-| 19, 20, 21, 22, 23 | Mathematical Sciences |
-| 24, 25, 26 | AI Foundations |
-| 27, 28, 29, 30, 31 | AI Core |
-| 32 | AI Ethics and Social Implications |
-| 33, 34 | Disciplinary Electives |
-| 35, 36, 37, 38, 39, 40 | Concentration |
-| 41, 42 | Natural and Engineering Science |
-| 43, 44, 45 | Major Qualifying Project |
+| App rows               | Requirement                       |
+| ---------------------- | --------------------------------- |
+| 1, 2, 3, 4, 5, 6       | Humanities and Arts               |
+| 7                      | Wellness and Physical Education   |
+| 8, 9                   | Social Science                    |
+| 10, 11, 12             | Interactive Qualifying Project    |
+| 13, 14, 15             | Free Electives                    |
+| 16, 17, 18             | Computer Science Foundation       |
+| 19, 20, 21, 22, 23     | Mathematical Sciences             |
+| 24, 25, 26             | AI Foundations                    |
+| 27, 28, 29, 30, 31     | AI Core                           |
+| 32                     | AI Ethics and Social Implications |
+| 33, 34                 | Disciplinary Electives            |
+| 35, 36, 37, 38, 39, 40 | Concentration                     |
+| 41, 42                 | Natural and Engineering Science   |
+| 43, 44, 45             | Major Qualifying Project          |
 
 The rows total 15 units. WPE and projects need explicit completion. Unlisted equivalents and fractional lab allocations require review.
 

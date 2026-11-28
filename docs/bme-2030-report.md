@@ -8,27 +8,27 @@ The PDF uses Fall 2026 wording, not the literal AY header. Its requirement rows 
 
 ## Requirement mapping
 
-| App rows | Requirement |
-| --- | --- |
-| 1, 2, 3, 4, 5, 6 | Humanities and Arts |
-| 7 | Wellness and Physical Education |
-| 8, 9 | Social Science |
-| 10, 11, 12 | Interactive Qualifying Project |
-| 13 | Free Electives |
-| 14, 15, 16, 17, 18, 19 | Mathematics |
-| 20, 21 | Biology |
-| 22, 23 | Chemistry |
-| 24, 25 | Physics |
-| 26 | Supplemental Science |
-| 27 | Computer Programming |
-| 28 | Human Physiology 3000+ |
-| 29, 30, 31 | Major Qualifying Project |
-| 32, 33, 34, 35 | Engineering Distribution |
-| 36, 37, 38 | Engineering 2000+ |
-| 39 | Engineering Design |
-| 40, 41, 42, 43 | BME Laboratories |
-| 44, 45 | Engineering 3000+ |
-| 46, 47 | BME Depth 4000+ |
+| App rows               | Requirement                     |
+| ---------------------- | ------------------------------- |
+| 1, 2, 3, 4, 5, 6       | Humanities and Arts             |
+| 7                      | Wellness and Physical Education |
+| 8, 9                   | Social Science                  |
+| 10, 11, 12             | Interactive Qualifying Project  |
+| 13                     | Free Electives                  |
+| 14, 15, 16, 17, 18, 19 | Mathematics                     |
+| 20, 21                 | Biology                         |
+| 22, 23                 | Chemistry                       |
+| 24, 25                 | Physics                         |
+| 26                     | Supplemental Science            |
+| 27                     | Computer Programming            |
+| 28                     | Human Physiology 3000+          |
+| 29, 30, 31             | Major Qualifying Project        |
+| 32, 33, 34, 35         | Engineering Distribution        |
+| 36, 37, 38             | Engineering 2000+               |
+| 39                     | Engineering Design              |
+| 40, 41, 42, 43         | BME Laboratories                |
+| 44, 45                 | Engineering 3000+               |
+| 46, 47                 | BME Depth 4000+                 |
 
 The rows total 15 units. WPE and projects need explicit completion. Unlisted equivalents and fractional lab allocations require review.
 

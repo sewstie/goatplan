@@ -6,22 +6,22 @@ The PDF states “Effective for students entering AY 2026-2027”. Status stays 
 
 ## Requirement mapping
 
-| App rows | Requirement |
-| --- | --- |
-| 1, 2, 3, 4, 5, 6 | Humanities and Arts |
-| 7 | Wellness and Physical Education |
-| 8, 9 | Social Science |
-| 10, 11, 12 | Interactive Qualifying Project |
-| 13, 14, 15 | Free Electives |
-| 16, 17, 18 | Transition Courses |
-| 19, 20, 21, 22 | Core Mathematics |
-| 23 | Actuarial Mathematics |
-| 24, 25, 26 | Actuarial Electives |
+| App rows                       | Requirement                        |
+| ------------------------------ | ---------------------------------- |
+| 1, 2, 3, 4, 5, 6               | Humanities and Arts                |
+| 7                              | Wellness and Physical Education    |
+| 8, 9                           | Social Science                     |
+| 10, 11, 12                     | Interactive Qualifying Project     |
+| 13, 14, 15                     | Free Electives                     |
+| 16, 17, 18                     | Transition Courses                 |
+| 19, 20, 21, 22                 | Core Mathematics                   |
+| 23                             | Actuarial Mathematics              |
+| 24, 25, 26                     | Actuarial Electives                |
 | 27, 28, 29, 30, 31, 32, 33, 34 | Introductory and Other Mathematics |
-| 35, 36, 37 | Major Qualifying Project |
-| 38, 39 | Basic Science |
-| 40, 41 | Computer Science or Data Science |
-| 42, 43, 44, 45 | Business |
+| 35, 36, 37                     | Major Qualifying Project           |
+| 38, 39                         | Basic Science                      |
+| 40, 41                         | Computer Science or Data Science   |
+| 42, 43, 44, 45                 | Business                           |
 
 The rows total 15 units. WPE and projects need explicit completion. Unlisted equivalents and fractional lab allocations require review.
 

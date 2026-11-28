@@ -8,21 +8,21 @@ The entering-year header reads “Effective for students entering AY 2026 (2026-
 
 ## Requirement mapping
 
-| Lines | Requirement | Units |
-| --- | --- | --- |
-| 1, 2, 3, 4, 5, 6 | Humanities and Arts | 2 |
-| 7 | Wellness and Physical Education | 0.333333 |
-| 8, 9, 10, 11, 12 | Mathematics | 1.666667 |
-| 13 | Computer Science | 0.333333 |
-| 14, 15 | Basic Science | 0.666667 |
-| 16, 17 | Social Sciences | 0.666667 |
-| 18, 19, 20 | Interactive Qualifying Project | 1.0 |
-| 21, 22, 23, 24, 25 | Business Foundation Courses | 1.666667 |
-| 26, 27, 28, 29 | Technical and AI Foundation Courses | 1.333333 |
-| 30, 31, 32, 33 | Analytics Foundation Courses | 1.333333 |
-| 34, 35, 36, 37, 38, 39 | Marketing Analytics Electives | 2.0 |
-| 40, 41, 42 | Major Qualifying Project | 1.0 |
-| 43, 44, 45 | Free Electives | 1.0 |
+| Lines                  | Requirement                         | Units    |
+| ---------------------- | ----------------------------------- | -------- |
+| 1, 2, 3, 4, 5, 6       | Humanities and Arts                 | 2        |
+| 7                      | Wellness and Physical Education     | 0.333333 |
+| 8, 9, 10, 11, 12       | Mathematics                         | 1.666667 |
+| 13                     | Computer Science                    | 0.333333 |
+| 14, 15                 | Basic Science                       | 0.666667 |
+| 16, 17                 | Social Sciences                     | 0.666667 |
+| 18, 19, 20             | Interactive Qualifying Project      | 1.0      |
+| 21, 22, 23, 24, 25     | Business Foundation Courses         | 1.666667 |
+| 26, 27, 28, 29         | Technical and AI Foundation Courses | 1.333333 |
+| 30, 31, 32, 33         | Analytics Foundation Courses        | 1.333333 |
+| 34, 35, 36, 37, 38, 39 | Marketing Analytics Electives       | 2.0      |
+| 40, 41, 42             | Major Qualifying Project            | 1.0      |
+| 43, 44, 45             | Free Electives                      | 1.0      |
 
 The numbered lines total 15 units. WPE requires four courses or an explicit sports confirmation. Empty history never satisfies WPE. Projects require explicit confirmation.
 

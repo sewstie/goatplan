@@ -7,19 +7,19 @@ must not be treated as a current full-suite pass.
 
 ## Implemented scope
 
-| Area | Current behavior |
-| --- | --- |
-| Planner | Published-term search, six sort presets, professor choices, locks, blocked times and schedule browsing |
-| Diagnosis | Engine explanations and tested fixes, plus frontend searches for another lecture professor |
-| Live seats | Server cache, visible-tab refresh, daily fallback, freshness and Retry |
-| Plans | Browser-local saving, editable copies and registration snapshots |
-| Sharing | Schedule payload in the URL fragment; explicit save/edit actions |
-| Calendar | `.ics` downloads using term dates and calendar exceptions |
-| My degree | Direct navigation; five Class of 2030 sheets, history, pins, confirmations and Plan ahead |
-| Field choices | Requirement-specific catalog courses across terms, with usual offering letters |
-| Recommendations | CS next-term previews check published seats and timetable fit before applying |
-| Maps | Enabled for CS, RBE, ME, ECE and Data Science |
-| Theme | Light/Dark across routes, with Light print output |
+| Area            | Current behavior                                                                                       |
+| --------------- | ------------------------------------------------------------------------------------------------------ |
+| Planner         | Published-term search, six sort presets, professor choices, locks, blocked times and schedule browsing |
+| Diagnosis       | Engine explanations and tested fixes, plus frontend searches for another lecture professor             |
+| Live seats      | Server cache, visible-tab refresh, daily fallback, freshness and Retry                                 |
+| Plans           | Browser-local saving, editable copies and registration snapshots                                       |
+| Sharing         | Schedule payload in the URL fragment; explicit save/edit actions                                       |
+| Calendar        | `.ics` downloads using term dates and calendar exceptions                                              |
+| My degree       | Direct navigation; five Class of 2030 sheets, history, pins, confirmations and Plan ahead              |
+| Field choices   | Requirement-specific catalog courses across terms, with usual offering letters                         |
+| Recommendations | CS next-term previews check published seats and timetable fit before applying                          |
+| Maps            | Enabled for CS, RBE, ME, ECE and Data Science                                                          |
+| Theme           | Light/Dark across routes, with Light print output                                                      |
 
 Individual Suggestions remains disabled by `SUGGESTIONS_ON = false`. This does
 not disable field lists, candidate badges or CS next-term previews. The Workday
@@ -89,15 +89,15 @@ planner-to-degree review controls, seat-test updates and phone dialog focus fix.
 Local Markdown file links, heading targets, code fences and the data-format JSON
 example were validated. No engine, script or generated asset files were changed.
 
-| Check | Result |
-| --- | --- |
-| `npm run lint` | Passed |
-| `npm run test -w web -- --maxWorkers=2` | 1,911 passed, 10 skipped |
-| `npx tsc --noEmit -p apps/web/tsconfig.json` | Passed |
-| `npm run build` | Passed |
-| `npm run data:test` | 119 passed |
-| `npm run test:e2e` | 539 passed, 9 skipped, 17 failed at screenshot comparisons |
-| `npm run test:e2e -w web -- --ignore-snapshots` | 556 passed, 9 skipped; matches CI configuration |
+| Check                                           | Result                                                     |
+| ----------------------------------------------- | ---------------------------------------------------------- |
+| `npm run lint`                                  | Passed                                                     |
+| `npm run test -w web -- --maxWorkers=2`         | 1,911 passed, 10 skipped                                   |
+| `npx tsc --noEmit -p apps/web/tsconfig.json`    | Passed                                                     |
+| `npm run build`                                 | Passed                                                     |
+| `npm run data:test`                             | 119 passed                                                 |
+| `npm run test:e2e`                              | 539 passed, 9 skipped, 17 failed at screenshot comparisons |
+| `npm run test:e2e -w web -- --ignore-snapshots` | 556 passed, 9 skipped; matches CI configuration            |
 
 The default-concurrency unit run initially hit six timeouts while other checks
 were running. The complete lower-concurrency rerun passed. The recorded E2E

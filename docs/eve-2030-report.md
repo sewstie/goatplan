@@ -8,21 +8,21 @@ The entering-year header reads â€œEffective for students entering AY 2026-2027â€
 
 ## Requirement mapping
 
-| Lines | Requirement | Units |
-| --- | --- | --- |
-| 1, 2, 3, 4, 5, 6 | Humanities and Arts | 2 |
-| 7 | Wellness and Physical Education | 0.333333 |
-| 8, 9 | Social Science | 0.666667 |
-| 10, 11, 12 | Interactive Qualifying Project | 1 |
-| 13, 14, 15, 16, 17, 18 | Mathematics | 2.0 |
-| 19, 20, 21, 22, 23, 24 | Basic Science | 2.0 |
-| 25 | Supplemental Science | 0.333333 |
-| 26, 27, 28, 29, 30, 31 | Fundamental Engineering Science | 2.0 |
-| 32, 33 | Environmental Engineering Core | 0.666667 |
-| 34, 35 | Laboratory Experimentation | 0.666667 |
-| 36, 37, 38, 39, 40 | Environmental Engineering Breadth and Depth | 1.666667 |
-| 41, 42, 43 | Major Qualifying Project | 1.0 |
-| 44, 45 | Free Electives | 0.666667 |
+| Lines                  | Requirement                                 | Units    |
+| ---------------------- | ------------------------------------------- | -------- |
+| 1, 2, 3, 4, 5, 6       | Humanities and Arts                         | 2        |
+| 7                      | Wellness and Physical Education             | 0.333333 |
+| 8, 9                   | Social Science                              | 0.666667 |
+| 10, 11, 12             | Interactive Qualifying Project              | 1        |
+| 13, 14, 15, 16, 17, 18 | Mathematics                                 | 2.0      |
+| 19, 20, 21, 22, 23, 24 | Basic Science                               | 2.0      |
+| 25                     | Supplemental Science                        | 0.333333 |
+| 26, 27, 28, 29, 30, 31 | Fundamental Engineering Science             | 2.0      |
+| 32, 33                 | Environmental Engineering Core              | 0.666667 |
+| 34, 35                 | Laboratory Experimentation                  | 0.666667 |
+| 36, 37, 38, 39, 40     | Environmental Engineering Breadth and Depth | 1.666667 |
+| 41, 42, 43             | Major Qualifying Project                    | 1.0      |
+| 44, 45                 | Free Electives                              | 0.666667 |
 
 The numbered lines total 15 units. WPE requires four courses or an explicit sports confirmation. Empty history never satisfies WPE. Projects require explicit confirmation.
 

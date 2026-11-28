@@ -6,26 +6,26 @@ counts are not a claim about the current checkout.
 
 ## Development and contracts
 
-| Guide | Use it for |
-| --- | --- |
-| [Development](development.md) | Setup, commands, CI, ports, native/WASM builds and local limitations |
-| [Planner and saved schedules](planner.md) | Course choices, diagnosis, saving, sharing and calendar export |
-| [Frontend architecture](frontend-architecture.md) | Routes, module boundaries, state, responsive UI and focus behavior |
-| [Data format](data-format.md) | Published term JSON, sections, valid options and the persistent catalog |
-| [Engine API](engine-api.md) | Version 1 solve, diagnosis and generic audit contracts |
-| [Live seats](seats.md) | Server caching, refresh, merging and fallback behavior |
-| [Theme behavior](degree-dark-theme.md) | Theme persistence, controls, tokens, contrast and print |
-| [Current project checks](launch-check.md) | Implemented scope, verification commands and remaining external checks |
+| Guide                                             | Use it for                                                              |
+| ------------------------------------------------- | ----------------------------------------------------------------------- |
+| [Development](development.md)                     | Setup, commands, CI, ports, native/WASM builds and local limitations    |
+| [Planner and saved schedules](planner.md)         | Course choices, diagnosis, saving, sharing and calendar export          |
+| [Frontend architecture](frontend-architecture.md) | Routes, module boundaries, state, responsive UI and focus behavior      |
+| [Data format](data-format.md)                     | Published term JSON, sections, valid options and the persistent catalog |
+| [Engine API](engine-api.md)                       | Version 1 solve, diagnosis and generic audit contracts                  |
+| [Live seats](seats.md)                            | Server caching, refresh, merging and fallback behavior                  |
+| [Theme behavior](degree-dark-theme.md)            | Theme persistence, controls, tokens, contrast and print                 |
+| [Current project checks](launch-check.md)         | Implemented scope, verification commands and remaining external checks  |
 
 ## My degree
 
-| Guide | Use it for |
-| --- | --- |
-| [Tracking sheet](degree-tracking-sheet.md) | History, credit entry, fields, plan grid and planner connections |
+| Guide                                        | Use it for                                                             |
+| -------------------------------------------- | ---------------------------------------------------------------------- |
+| [Tracking sheet](degree-tracking-sheet.md)   | History, credit entry, fields, plan grid and planner connections       |
 | [Major selection](degree-major-selection.md) | Supported sheets, switching, per-sheet state and verification metadata |
-| [Recommendations](course-recommendations.md) | Area-specific courses and CS next-term selection |
-| [Course maps](degree-course-map.md) | Shared map behavior and non-CS maps |
-| [CS map](cs-course-map.md) | CS layout, background expressions and arrow routing |
+| [Recommendations](course-recommendations.md) | Area-specific courses and CS next-term selection                       |
+| [Course maps](degree-course-map.md)          | Shared map behavior and non-CS maps                                    |
+| [CS map](cs-course-map.md)                   | CS layout, background expressions and arrow routing                    |
 
 ## Requirement sources and interpretations
 

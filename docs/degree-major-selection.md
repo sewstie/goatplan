@@ -9,21 +9,21 @@ A Term 2026; other class years, minors and double majors are not supported.
 
 `lib/degree/sheets/index.ts` is the registry and lazy-loader map.
 
-| ID | Major | Numbered lines | Registry status |
-| --- | --- | --- | --- |
-| `cs-2030` | Computer Science | 45 | beta |
-| `rbe-2030` | Robotics Engineering | 46 | beta |
-| `me-2030` | Mechanical Engineering | 45 | beta |
-| `ece-2030` | Electrical and Computer Engineering | 45 | beta |
-| `ds-2030` | Data Science | 45 | beta |
-| `bbt-2030` | Biology and Biotechnology | 45 | beta |
-| `bc-2030` | Biochemistry | 45 | beta |
-| `ch-2030` | Chemistry | 45 | beta |
-| `bcb-2030` | Bioinformatics and Computational Biology | 45 | beta |
-| `eve-2030` | Environmental Engineering | 45 | beta |
-| `baaai-2030` | Business Analytics and Applied AI | 45 | beta |
-| `mkt-2030` | Marketing Analytics | 45 | beta |
-| `pw-2030` | Professional Writing | 45 | beta |
+| ID           | Major                                    | Numbered lines | Registry status |
+| ------------ | ---------------------------------------- | -------------- | --------------- |
+| `cs-2030`    | Computer Science                         | 45             | beta            |
+| `rbe-2030`   | Robotics Engineering                     | 46             | beta            |
+| `me-2030`    | Mechanical Engineering                   | 45             | beta            |
+| `ece-2030`   | Electrical and Computer Engineering      | 45             | beta            |
+| `ds-2030`    | Data Science                             | 45             | beta            |
+| `bbt-2030`   | Biology and Biotechnology                | 45             | beta            |
+| `bc-2030`    | Biochemistry                             | 45             | beta            |
+| `ch-2030`    | Chemistry                                | 45             | beta            |
+| `bcb-2030`   | Bioinformatics and Computational Biology | 45             | beta            |
+| `eve-2030`   | Environmental Engineering                | 45             | beta            |
+| `baaai-2030` | Business Analytics and Applied AI        | 45             | beta            |
+| `mkt-2030`   | Marketing Analytics                      | 45             | beta            |
+| `pw-2030`    | Professional Writing                     | 45             | beta            |
 
 | `mac-2030` | Actuarial Mathematics | 45 | beta |
 | `ae-aero-2030` | Aerospace Engineering, Aeronautical | 45 | beta |

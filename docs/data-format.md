@@ -29,8 +29,14 @@ out as one course with four sections and three options.
 
 ```json
 {
-  "term": { "id": "2027-C", "name": "C Term", "season": "Spring", "year": 2027,
-            "start": "2027-01-13", "end": "2027-03-05" },
+  "term": {
+    "id": "2027-C",
+    "name": "C Term",
+    "season": "Spring",
+    "year": 2027,
+    "start": "2027-01-13",
+    "end": "2027-03-05"
+  },
   "generatedAt": "2026-10-11T21:26:05Z",
   "courses": [
     {
@@ -42,31 +48,45 @@ out as one course with four sections and three options.
       "description": "An introductory course that covers the fundamentals of space flight...",
       "sections": [
         {
-          "id": "AE 2320-CL01", "code": "CL01", "type": "lecture",
-          "status": "open", "enrolled": 85, "capacity": 120,
+          "id": "AE 2320-CL01",
+          "code": "CL01",
+          "type": "lecture",
+          "status": "open",
+          "enrolled": 85,
+          "capacity": 120,
           "waitlist": { "taken": 0, "capacity": 20 },
           "instructors": ["Ye Lu"],
           "delivery": "in-person",
           "meetings": [
-            { "days": ["Mon","Tue","Wed","Thu","Fri"], "start": 540, "end": 590,
-              "location": "Unity Hall 400" }
+            {
+              "days": ["Mon", "Tue", "Wed", "Thu", "Fri"],
+              "start": 540,
+              "end": 590,
+              "location": "Unity Hall 400"
+            }
           ]
         },
         {
-          "id": "AE 2320-CX01", "code": "CX01", "type": "lab",
-          "status": "closed", "enrolled": 40, "capacity": 40,
+          "id": "AE 2320-CX01",
+          "code": "CX01",
+          "type": "lab",
+          "status": "closed",
+          "enrolled": 40,
+          "capacity": 40,
           "waitlist": { "taken": 0, "capacity": 0 },
           "instructors": ["Ye Lu"],
           "delivery": "in-person",
           "meetings": [
-            { "days": ["Thu"], "start": 840, "end": 890,
-              "location": "Higgins Labs 230 Geom Modeling Computer Lab" }
+            {
+              "days": ["Thu"],
+              "start": 840,
+              "end": 890,
+              "location": "Higgins Labs 230 Geom Modeling Computer Lab"
+            }
           ]
         }
       ],
-      "options": [
-        ["AE 2320-CL01", "AE 2320-CX01"]
-      ]
+      "options": [["AE 2320-CL01", "AE 2320-CX01"]]
     }
   ]
 }
@@ -80,29 +100,29 @@ earlier data snapshot.)
 
 ### Term
 
-| Field          | Example                        | Notes                                           |
-| -------------- | ------------------------------ | ----------------------------------------------- |
-| `id`           | `"2027-C"`                     | Also the file name.                             |
-| `name`         | `"C Term"`                     |                                                 |
-| `season`       | `"Spring"`                     |                                                 |
-| `year`         | `2027`                         |                                                 |
-| `start`, `end` | `"2027-01-13"`, `"2027-03-05"` | The dates most sections of the term share.      |
+| Field          | Example                        | Notes                                      |
+| -------------- | ------------------------------ | ------------------------------------------ |
+| `id`           | `"2027-C"`                     | Also the file name.                        |
+| `name`         | `"C Term"`                     |                                            |
+| `season`       | `"Spring"`                     |                                            |
+| `year`         | `2027`                         |                                            |
+| `start`, `end` | `"2027-01-13"`, `"2027-03-05"` | The dates most sections of the term share. |
 
 `generatedAt` is when WPI's file was fetched, for the last run that changed
 this term. If nothing changed, it stays the same.
 
 ### Course
 
-| Field         | Example                               | Notes                                                 |
-| ------------- | ------------------------------------- | ----------------------------------------------------- |
-| `code`        | `"AE 2320"`                           | Taken from the course title.                          |
-| `subject`     | `"AE"`                                |                                                       |
-| `title`       | `"Introduction to Orbital Mechanics"` |                                                       |
+| Field         | Example                               | Notes                                                  |
+| ------------- | ------------------------------------- | ------------------------------------------------------ |
+| `code`        | `"AE 2320"`                           | Taken from the course title.                           |
+| `subject`     | `"AE"`                                |                                                        |
+| `title`       | `"Introduction to Orbital Mechanics"` |                                                        |
 | `credits`     | `3`                                   | 3 is a normal 1/3-unit course. `null` if WPI has none. |
-| `level`       | `"Undergraduate"`                     | Or `"Graduate"`.                                      |
-| `description` | `"An introductory course..."`         | Plain text. `""` if WPI has none.                     |
-| `sections`    |                                       | Sorted by `id`.                                       |
-| `options`     |                                       | See [Options](#options).                              |
+| `level`       | `"Undergraduate"`                     | Or `"Graduate"`.                                       |
+| `description` | `"An introductory course..."`         | Plain text. `""` if WPI has none.                      |
+| `sections`    |                                       | Sorted by `id`.                                        |
+| `options`     |                                       | See [Options](#options).                               |
 
 ### Instructor ratings
 
@@ -139,20 +159,20 @@ accepted metadata for compatibility and tests. The engine does not use them.
 Four more fields show up on a section only when it differs from its course or
 term. If the field isn't there, use the course's value (or the term's dates).
 
-| Field         | Example                                          | When you'll see it                                       |
-| ------------- | ------------------------------------------------ | -------------------------------------------------------- |
+| Field         | Example                                          | When you'll see it                                                |
+| ------------- | ------------------------------------------------ | ----------------------------------------------------------------- |
 | `title`       | `"INQ SEM: Early American History"`              | Topic courses like HU 3900, where every section is its own topic. |
-| `description` |                                                  | The topic has its own description.                       |
-| `credits`     | `0`                                              | The zero-credit sections of the music ensembles.         |
-| `dates`       | `{ "start": "2026-08-20", "end": "2026-12-11" }` | Semester-long and late-start sections.                   |
+| `description` |                                                  | The topic has its own description.                                |
+| `credits`     | `0`                                              | The zero-credit sections of the music ensembles.                  |
+| `dates`       | `{ "start": "2026-08-20", "end": "2026-12-11" }` | Semester-long and late-start sections.                            |
 
 ### Meeting
 
-| Field          | Example            | Notes                                                              |
-| -------------- | ------------------ | ------------------------------------------------------------------ |
-| `days`         | `["Mon", "Thu"]`   | `Mon` to `Sun`, in week order.                                     |
-| `start`, `end` | `540`, `590`       | Minutes after midnight.                                            |
-| `location`     | `"Unity Hall 400"` | Two rooms at once are joined: `"Little Theatre / Riley Commons"`.  |
+| Field          | Example            | Notes                                                             |
+| -------------- | ------------------ | ----------------------------------------------------------------- |
+| `days`         | `["Mon", "Thu"]`   | `Mon` to `Sun`, in week order.                                    |
+| `start`, `end` | `540`, `590`       | Minutes after midnight.                                           |
+| `location`     | `"Unity Hall 400"` | Two rooms at once are joined: `"Little Theatre / Riley Commons"`. |
 
 A section has more than one meeting when its days have different times or
 rooms.
@@ -203,9 +223,18 @@ The list of terms for the term picker, in date order:
 ```json
 {
   "terms": [
-    { "id": "2026-B", "name": "B Term", "season": "Fall", "year": 2026,
-      "start": "2026-10-19", "end": "2026-12-11", "status": "upcoming",
-      "courses": 588, "sections": 1145, "generatedAt": "2026-10-11T21:26:05Z" }
+    {
+      "id": "2026-B",
+      "name": "B Term",
+      "season": "Fall",
+      "year": 2026,
+      "start": "2026-10-19",
+      "end": "2026-12-11",
+      "status": "upcoming",
+      "courses": 588,
+      "sections": 1145,
+      "generatedAt": "2026-10-11T21:26:05Z"
+    }
   ]
 }
 ```

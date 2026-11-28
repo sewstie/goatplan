@@ -7,7 +7,6 @@ below describe the original feature snapshot, not the current test suite. See
 [major selection](degree-major-selection.md) and [current project checks](launch-check.md)
 for current access and verification behavior.
 
-
 ## Sources
 
 Reviewed November 5, 2026:
@@ -21,26 +20,26 @@ chart; the third is a planning template. Concentrations are outside this sheet.
 
 ## Numbered requirements
 
-| Lines | Matching treatment |
-| --- | --- |
-| 1–6 | Humanities depth, Inquiry at 4, breadth at 5, elective at 6. |
-| 7 | Four WPE slots. Completion requires courses or explicit confirmation. |
-| 8–9 | Social science, including ID 2050. |
-| 10–12 | IQP confirmation items. |
-| 13–15 | One nine-credit free elective pool. |
-| 16–21 | MA 1021–1024, MA 2051, MA 2071. |
+| Lines | Matching treatment                                                                         |
+| ----- | ------------------------------------------------------------------------------------------ |
+| 1–6   | Humanities depth, Inquiry at 4, breadth at 5, elective at 6.                               |
+| 7     | Four WPE slots. Completion requires courses or explicit confirmation.                      |
+| 8–9   | Social science, including ID 2050.                                                         |
+| 10–12 | IQP confirmation items.                                                                    |
+| 13–15 | One nine-credit free elective pool.                                                        |
+| 16–21 | MA 1021–1024, MA 2051, MA 2071.                                                            |
 | 22–24 | Chemistry, physics, then either discipline. This allocation enforces both science options. |
-| 25–26 | Additional MA, BB, CH, PH or GE. |
-| 27–29 | ES 2501, ES 2502, ES 2503. |
-| 30 | ME 4320, 4322, 4323 or 4324. RBE 4322 is cross-listed. |
-| 31–33 | ES 3001, ES 3004, ES 3003. |
-| 34 | ME 4422 or ME 4429. |
-| 35 | ES 2001. |
-| 36 | ECE courses except ECE 1799, including cross-listed equivalents. |
-| 37 | ME 3901 or ME 3902. |
-| 38 | Programming choices from the tracking sheet. |
-| 39–41 | MQP confirmation items. |
-| 42–45 | Engineering elective candidates with a separate eligibility check. |
+| 25–26 | Additional MA, BB, CH, PH or GE.                                                           |
+| 27–29 | ES 2501, ES 2502, ES 2503.                                                                 |
+| 30    | ME 4320, 4322, 4323 or 4324. RBE 4322 is cross-listed.                                     |
+| 31–33 | ES 3001, ES 3004, ES 3003.                                                                 |
+| 34    | ME 4422 or ME 4429.                                                                        |
+| 35    | ES 2001.                                                                                   |
+| 36    | ECE courses except ECE 1799, including cross-listed equivalents.                           |
+| 37    | ME 3901 or ME 3902.                                                                        |
+| 38    | Programming choices from the tracking sheet.                                               |
+| 39–41 | MQP confirmation items.                                                                    |
+| 42–45 | Engineering elective candidates with a separate eligibility check.                         |
 
 ## Interpretations
 

@@ -10,14 +10,14 @@ and [the engine API](engine-api.md).
 
 ## Routes
 
-| Route | Responsibility |
-| --- | --- |
-| `/` | Editable term planner, saved snapshots and shared-link previews |
-| `/plans` | Saved plans and Sections to register |
-| `/degree` | Major selection, degree tracking, Plan ahead and Course map |
-| `/data/catalog.json` | Persistent degree catalog from `data/catalog.json` |
-| `/api/seats` | Server-side live seat proxy and cache |
-| `/dev/ui`, `/dev/engine` | Development-only UI and engine pages |
+| Route                    | Responsibility                                                  |
+| ------------------------ | --------------------------------------------------------------- |
+| `/`                      | Editable term planner, saved snapshots and shared-link previews |
+| `/plans`                 | Saved plans and Sections to register                            |
+| `/degree`                | Major selection, degree tracking, Plan ahead and Course map     |
+| `/data/catalog.json`     | Persistent degree catalog from `data/catalog.json`              |
+| `/api/seats`             | Server-side live seat proxy and cache                           |
+| `/dev/ui`, `/dev/engine` | Development-only UI and engine pages                            |
 
 My degree is linked in the main navigation without a browser invitation or
 release flag. All nineteen registered Class of 2030 sheets are selectable. Their
@@ -30,29 +30,29 @@ inside Plan ahead independently of that flag.
 
 Paths below are relative to `apps/web/src/`.
 
-| Path | Responsibility |
-| --- | --- |
-| `app/` | Route composition, layout, DM Sans, tokens and server endpoints |
-| `components/ui/` | Buttons, fields, dialogs, sheets, drawers, popovers and focus utilities |
-| `components/shell/` | Responsive shell, top bar, theme, seat status and planner bootstrap |
-| `components/phone/` | Phone schedule, search, preferences and course screens |
-| `components/courses/` | Published-term search and chosen-course list |
-| `components/schedule/` | Calendar, schedule browsing, previews and blocked-time editing |
-| `components/sections/` | Section choices, professor controls, locks and diagnosis actions |
-| `components/preferences/` | Availability controls and sort presets |
-| `components/plans/` | Plan saving, opening, saved views and registration sheets |
-| `components/share/`, `components/calendar/` | Shared links and calendar export |
-| `components/degree/` | Degree UI, history entry, plan grid and planner transfer |
-| `components/courseMap/` | Background maps, course selection and map details |
-| `components/tutorial/` | First-plan guide and its persistence |
-| `lib/store/` | Working draft, solves, selection, live seats and planner view state |
-| `lib/engine/` | EngineClient, worker protocol, host and contract types |
-| `lib/data/` | Term loading, seat loading/merging, section rules and formatting |
-| `lib/degree/` | History, source state, sheet registry, matching and recommendations |
-| `lib/courseMap/` | Curated background expressions, map layouts and arrow routing |
-| `lib/plans/`, `lib/share/`, `lib/calendar/` | Plan persistence, share codec and ICS generation |
-| `lib/diagnosis/` | Diagnosis wording and calendar previews |
-| `lib/theme.ts`, `lib/analytics/` | Theme subscription and optional event reporting |
+| Path                                        | Responsibility                                                          |
+| ------------------------------------------- | ----------------------------------------------------------------------- |
+| `app/`                                      | Route composition, layout, DM Sans, tokens and server endpoints         |
+| `components/ui/`                            | Buttons, fields, dialogs, sheets, drawers, popovers and focus utilities |
+| `components/shell/`                         | Responsive shell, top bar, theme, seat status and planner bootstrap     |
+| `components/phone/`                         | Phone schedule, search, preferences and course screens                  |
+| `components/courses/`                       | Published-term search and chosen-course list                            |
+| `components/schedule/`                      | Calendar, schedule browsing, previews and blocked-time editing          |
+| `components/sections/`                      | Section choices, professor controls, locks and diagnosis actions        |
+| `components/preferences/`                   | Availability controls and sort presets                                  |
+| `components/plans/`                         | Plan saving, opening, saved views and registration sheets               |
+| `components/share/`, `components/calendar/` | Shared links and calendar export                                        |
+| `components/degree/`                        | Degree UI, history entry, plan grid and planner transfer                |
+| `components/courseMap/`                     | Background maps, course selection and map details                       |
+| `components/tutorial/`                      | First-plan guide and its persistence                                    |
+| `lib/store/`                                | Working draft, solves, selection, live seats and planner view state     |
+| `lib/engine/`                               | EngineClient, worker protocol, host and contract types                  |
+| `lib/data/`                                 | Term loading, seat loading/merging, section rules and formatting        |
+| `lib/degree/`                               | History, source state, sheet registry, matching and recommendations     |
+| `lib/courseMap/`                            | Curated background expressions, map layouts and arrow routing           |
+| `lib/plans/`, `lib/share/`, `lib/calendar/` | Plan persistence, share codec and ICS generation                        |
+| `lib/diagnosis/`                            | Diagnosis wording and calendar previews                                 |
+| `lib/theme.ts`, `lib/analytics/`            | Theme subscription and optional event reporting                         |
 
 ## Boundaries and ownership
 
@@ -83,17 +83,17 @@ through `PlannerProvider`. Select stable values; object or array selectors need
 does not initialize the planner. `lib/store/types.ts` is the complete state and
 action reference.
 
-| State | Purpose |
-| --- | --- |
-| `termId`, `term`, `terms`, `termStatus`, `termError` | Published term and load state |
-| `courses`, `preferences`, `locks`, `professorByCourse`, `sortPreset`, `alternatives` | Working draft |
-| `response`, `scheduleIndex`, `solveStatus`, `solveError` | Latest accepted engine response and displayed schedule |
-| `selectedCourse`, `selectedSection`, `lastChosenSections` | Section details and selection continuity |
-| `savedPlans`, `savedPlanId`, saved selection fields | Saved snapshot view |
-| `temporaryPlan` | Shared preview or another temporary view |
-| `seatsUpdatedAt`, `seatRefresh` | Current draft's seat freshness |
-| `professorFixes`, `checkingProfessors` | Tested alternative-professor fixes |
-| `drawing`, `removedCourse`, `blockedChange` | Unsaved interaction and Undo state |
+| State                                                                                | Purpose                                                |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------ |
+| `termId`, `term`, `terms`, `termStatus`, `termError`                                 | Published term and load state                          |
+| `courses`, `preferences`, `locks`, `professorByCourse`, `sortPreset`, `alternatives` | Working draft                                          |
+| `response`, `scheduleIndex`, `solveStatus`, `solveError`                             | Latest accepted engine response and displayed schedule |
+| `selectedCourse`, `selectedSection`, `lastChosenSections`                            | Section details and selection continuity               |
+| `savedPlans`, `savedPlanId`, saved selection fields                                  | Saved snapshot view                                    |
+| `temporaryPlan`                                                                      | Shared preview or another temporary view               |
+| `seatsUpdatedAt`, `seatRefresh`                                                      | Current draft's seat freshness                         |
+| `professorFixes`, `checkingProfessors`                                               | Tested alternative-professor fixes                     |
+| `drawing`, `removedCourse`, `blockedChange`                                          | Unsaved interaction and Undo state                     |
 
 New drafts start with no courses, Any time, no blocked times and only open
 sections. Restored drafts keep their saved settings. The main actions add/remove
@@ -147,16 +147,16 @@ app links to those services; it does not fetch or display numeric ratings.
 
 ## Plans, sharing and storage
 
-| Storage | Contents |
-| --- | --- |
-| `goatplan:term:v1` | Last planner term |
-| `goatplan:draft:v1:<termId>` | Per-term working draft |
-| `goatplan:plans:v1:plan:<id>` | Saved plan and section snapshots |
-| `goatplan:plans:v1:current:<termId>` | Plan associated with a term's draft |
-| `goatplan:history:v1` | Version 2 degree history and per-sheet state |
-| `goatplan:degree:projects` | Four-year-plan project reservations |
-| `goatplan:theme:v1` | Light or Dark preference |
-| `goatplan:tutorial:v1` | First-plan guide state |
+| Storage                              | Contents                                     |
+| ------------------------------------ | -------------------------------------------- |
+| `goatplan:term:v1`                   | Last planner term                            |
+| `goatplan:draft:v1:<termId>`         | Per-term working draft                       |
+| `goatplan:plans:v1:plan:<id>`        | Saved plan and section snapshots             |
+| `goatplan:plans:v1:current:<termId>` | Plan associated with a term's draft          |
+| `goatplan:history:v1`                | Version 2 degree history and per-sheet state |
+| `goatplan:degree:projects`           | Four-year-plan project reservations          |
+| `goatplan:theme:v1`                  | Light or Dark preference                     |
+| `goatplan:tutorial:v1`               | First-plan guide state                       |
 
 Selecting Found shows generated schedules; Saved shows snapshots. Draft edits
 and Found paging do not alter a saved snapshot. Opening a saved plan for editing

@@ -8,18 +8,18 @@ The entering-year header reads “STUDENTS ENTERING AY 2026-2027”. The registr
 
 ## Requirement mapping
 
-| Lines | Requirement | Units |
-| --- | --- | --- |
-| 1, 2, 3, 4, 5, 6, 7 | Writing and Rhetoric Core | 2.333333 |
-| 8, 9 | Communication Electives | 0.666667 |
-| 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 | Subject-Matter Concentration | 4.0 |
-| 22, 23, 24, 25, 26, 27 | Scientific/Technical Electives | 2.0 |
-| 28, 29, 30, 31, 32, 33 | Humanities and Arts | 2.0 |
-| 34, 35 | Social Science | 0.666667 |
-| 36, 37, 38 | Interactive Qualifying Project | 1.0 |
-| 39, 40, 41 | Free Electives | 1.0 |
-| 42 | Physical Education | 0.333333 |
-| 43, 44, 45 | Major Qualifying Project | 1.0 |
+| Lines                                          | Requirement                    | Units    |
+| ---------------------------------------------- | ------------------------------ | -------- |
+| 1, 2, 3, 4, 5, 6, 7                            | Writing and Rhetoric Core      | 2.333333 |
+| 8, 9                                           | Communication Electives        | 0.666667 |
+| 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 | Subject-Matter Concentration   | 4.0      |
+| 22, 23, 24, 25, 26, 27                         | Scientific/Technical Electives | 2.0      |
+| 28, 29, 30, 31, 32, 33                         | Humanities and Arts            | 2.0      |
+| 34, 35                                         | Social Science                 | 0.666667 |
+| 36, 37, 38                                     | Interactive Qualifying Project | 1.0      |
+| 39, 40, 41                                     | Free Electives                 | 1.0      |
+| 42                                             | Physical Education             | 0.333333 |
+| 43, 44, 45                                     | Major Qualifying Project       | 1.0      |
 
 The numbered lines total 15 units. WPE requires four courses or an explicit sports confirmation. Empty history never satisfies WPE. Projects require explicit confirmation.
 

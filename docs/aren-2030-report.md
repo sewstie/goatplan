@@ -6,24 +6,24 @@ The PDF states “Effective for students entering in AY 2026-2027”. Status sta
 
 ## Requirement mapping
 
-| App rows | Requirement |
-| --- | --- |
-| 1, 2, 3, 4, 5, 6 | Humanities and Arts |
-| 7 | Wellness and Physical Education |
-| 8, 9 | Social Science |
-| 10, 11, 12 | Interactive Qualifying Project |
-| 13, 14, 15, 16, 17, 18, 19 | Mathematics |
-| 20, 21 | Physics |
-| 22 | Chemistry |
-| 23, 24 | Math and Basic Science Electives |
-| 25, 26 | Architectural Engineering Complements |
-| 27, 28 | Construction and Construction Management |
-| 29, 30, 31, 32, 33 | Building Mechanical Systems |
-| 34, 35 | Building Electrical Systems |
-| 36, 37, 38 | Building Structural Engineering |
-| 39, 40 | Structural Design Electives |
-| 41, 42 | General Architectural Design |
-| 43, 44, 45 | Major Qualifying Project |
+| App rows                   | Requirement                              |
+| -------------------------- | ---------------------------------------- |
+| 1, 2, 3, 4, 5, 6           | Humanities and Arts                      |
+| 7                          | Wellness and Physical Education          |
+| 8, 9                       | Social Science                           |
+| 10, 11, 12                 | Interactive Qualifying Project           |
+| 13, 14, 15, 16, 17, 18, 19 | Mathematics                              |
+| 20, 21                     | Physics                                  |
+| 22                         | Chemistry                                |
+| 23, 24                     | Math and Basic Science Electives         |
+| 25, 26                     | Architectural Engineering Complements    |
+| 27, 28                     | Construction and Construction Management |
+| 29, 30, 31, 32, 33         | Building Mechanical Systems              |
+| 34, 35                     | Building Electrical Systems              |
+| 36, 37, 38                 | Building Structural Engineering          |
+| 39, 40                     | Structural Design Electives              |
+| 41, 42                     | General Architectural Design             |
+| 43, 44, 45                 | Major Qualifying Project                 |
 
 The rows total 15 units. WPE and projects need explicit completion. Unlisted equivalents and fractional lab allocations require review.
 

@@ -7,7 +7,6 @@ below describe the original feature snapshot, not the current test suite. See
 [major selection](degree-major-selection.md) and [current project checks](launch-check.md)
 for current access and verification behavior.
 
-
 ## Sources
 
 Reviewed November 5, 2026:
@@ -21,21 +20,21 @@ and a planning template on page three.
 
 ## Numbered requirements
 
-| Lines | Treatment |
-| --- | --- |
-| 1–6 | Humanities depth, Inquiry at 4, breadth at 5 and elective at 6. |
-| 7 | Four WPE slots. Courses or explicit sports confirmation are required. |
-| 8–9 | Social science, including ID 2050. |
-| 10–12 | IQP confirmations. |
-| 13–15 | One nine-credit free elective pool. |
-| 16–18 | DS 1010, DS 2010 and DS 3010. |
-| 19–21 | Algorithms plus two CS foundation courses, with at most one introductory 1000-level course. |
-| 22–26 | Statistics I and II, linear algebra, and two calculus or approved mathematics electives. |
-| 27–28 | Business analysis and entrepreneurship/innovation alternatives. |
+| Lines | Treatment                                                                                          |
+| ----- | -------------------------------------------------------------------------------------------------- |
+| 1–6   | Humanities depth, Inquiry at 4, breadth at 5 and elective at 6.                                    |
+| 7     | Four WPE slots. Courses or explicit sports confirmation are required.                              |
+| 8–9   | Social science, including ID 2050.                                                                 |
+| 10–12 | IQP confirmations.                                                                                 |
+| 13–15 | One nine-credit free elective pool.                                                                |
+| 16–18 | DS 1010, DS 2010 and DS 3010.                                                                      |
+| 19–21 | Algorithms plus two CS foundation courses, with at most one introductory 1000-level course.        |
+| 22–26 | Statistics I and II, linear algebra, and two calculus or approved mathematics electives.           |
+| 27–28 | Business analysis and entrepreneurship/innovation alternatives.                                    |
 | 29–39 | Eleven disciplinary electives with four at 4000-level or above and three required category checks. |
-| 40 | One approved data privacy and ethics course. |
-| 41–42 | Natural or engineering sciences from the catalog departments. |
-| 43–45 | MQP confirmations and a separate DS faculty-advisor check. |
+| 40    | One approved data privacy and ethics course.                                                       |
+| 41–42 | Natural or engineering sciences from the catalog departments.                                      |
+| 43–45 | MQP confirmations and a separate DS faculty-advisor check.                                         |
 
 The PDF leaves the elective rows interchangeable. The audit reserves rows 29–32
 for the four advanced electives and uses rows 33–39 for other approved electives.

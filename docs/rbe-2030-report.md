@@ -7,7 +7,6 @@ below describe the original feature snapshot, not the current test suite. See
 [major selection](degree-major-selection.md) and [current project checks](launch-check.md)
 for current access and verification behavior.
 
-
 ## Sources
 
 Reviewed on November 5, 2026:
@@ -21,34 +20,34 @@ a planning template, not another set of requirements.
 
 ## Numbered requirements
 
-| Lines | Requirement and treatment |
-| --- | --- |
-| 1–3 | Humanities depth. Three related courses in one grouping need explicit theme confirmation. |
-| 4 | HU 3900 or HU 3910. This differs from CS's Inquiry line number. |
-| 5 | Humanities breadth. The five official subject groupings and modern-language exception are represented in data. |
-| 6 | Humanities elective. |
-| 7 | Four WPE slots. Courses or explicit confirmations fill individual slots. The sports alternative needs student confirmation; it is never assumed. |
-| 8–9 | Social science in ECON, ENV, GOV, PSY, SD, SOC, SS, STS, DEV, or ID 2050. |
-| 10–12 | IQP. Three manual completion items. |
-| 13–15 | Free electives. One shared nine-credit pool. |
-| 16–19 | MA 1021, 1022, 1023, 1024. Other calculus sequences need advisor review. |
-| 20 | MA 2051, differential equations. |
-| 21 | MA 2071, linear algebra. |
-| 22 | MA 2621 or MA 2631, probability. |
-| 23–24 | Physics. PH 1110/1111 and PH 1120/1121 are recommendations, so the filters accept PH courses. |
-| 25–26 | Other science in BB, CH, GE or PH. |
-| 27 | Entrepreneurship. ETR courses or BUS 2001, subject to explicit approval review. |
-| 28–32 | RBE 1001, 2001, 2002, 3001 and 3002. The sheet excludes RBE 2020, RBE 300X and RBE 3100 from this five-course group. |
-| 33 | A CS course. CS 1005 and CS 1101/1102 are examples, not mandatory choices. |
-| 34 | Object-oriented programming. The initial matching choices are CS 2102, CS 2103 and CS 2119; confirm approval. |
-| 35 | Software engineering. CS 3733 or RBE 300X, with approval review for equivalents. |
-| 36 | An ECE course. ECE 2010 is recommended. |
-| 37 | Embedded systems. ECE 2049 or RBE 2020. |
-| 38 | Statics. ES 2501 is the initial matching example; alternatives need review. |
-| 39 | Classical controls. ES 3011, ME 3703, ECE 3012 or AE 2310 remain subject to confirmation because the sources differ. RBE 502 does not fill this line. |
+| Lines | Requirement and treatment                                                                                                                                           |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1–3   | Humanities depth. Three related courses in one grouping need explicit theme confirmation.                                                                           |
+| 4     | HU 3900 or HU 3910. This differs from CS's Inquiry line number.                                                                                                     |
+| 5     | Humanities breadth. The five official subject groupings and modern-language exception are represented in data.                                                      |
+| 6     | Humanities elective.                                                                                                                                                |
+| 7     | Four WPE slots. Courses or explicit confirmations fill individual slots. The sports alternative needs student confirmation; it is never assumed.                    |
+| 8–9   | Social science in ECON, ENV, GOV, PSY, SD, SOC, SS, STS, DEV, or ID 2050.                                                                                           |
+| 10–12 | IQP. Three manual completion items.                                                                                                                                 |
+| 13–15 | Free electives. One shared nine-credit pool.                                                                                                                        |
+| 16–19 | MA 1021, 1022, 1023, 1024. Other calculus sequences need advisor review.                                                                                            |
+| 20    | MA 2051, differential equations.                                                                                                                                    |
+| 21    | MA 2071, linear algebra.                                                                                                                                            |
+| 22    | MA 2621 or MA 2631, probability.                                                                                                                                    |
+| 23–24 | Physics. PH 1110/1111 and PH 1120/1121 are recommendations, so the filters accept PH courses.                                                                       |
+| 25–26 | Other science in BB, CH, GE or PH.                                                                                                                                  |
+| 27    | Entrepreneurship. ETR courses or BUS 2001, subject to explicit approval review.                                                                                     |
+| 28–32 | RBE 1001, 2001, 2002, 3001 and 3002. The sheet excludes RBE 2020, RBE 300X and RBE 3100 from this five-course group.                                                |
+| 33    | A CS course. CS 1005 and CS 1101/1102 are examples, not mandatory choices.                                                                                          |
+| 34    | Object-oriented programming. The initial matching choices are CS 2102, CS 2103 and CS 2119; confirm approval.                                                       |
+| 35    | Software engineering. CS 3733 or RBE 300X, with approval review for equivalents.                                                                                    |
+| 36    | An ECE course. ECE 2010 is recommended.                                                                                                                             |
+| 37    | Embedded systems. ECE 2049 or RBE 2020.                                                                                                                             |
+| 38    | Statics. ES 2501 is the initial matching example; alternatives need review.                                                                                         |
+| 39    | Classical controls. ES 3011, ME 3703, ECE 3012 or AE 2310 remain subject to confirmation because the sources differ. RBE 502 does not fill this line.               |
 | 40–42 | Three engineering science and design electives. Department matches are provisional; approval and two courses at 4000-level or higher require explicit confirmation. |
-| 43 | Social implications: CS/SS 3043, GOV 2302, GOV/ID 2314 or RBE 3100. |
-| 44–46 | MQP. Three manual completion items and a separate robotics capstone design check. |
+| 43    | Social implications: CS/SS 3043, GOV 2302, GOV/ID 2314 or RBE 3100.                                                                                                 |
+| 44–46 | MQP. Three manual completion items and a separate robotics capstone design check.                                                                                   |
 
 The 46 numbered course equivalents total 46/3 units including WPE. The PDF's
 minimum academic credit is 15 units; WPE is additional. The registry and

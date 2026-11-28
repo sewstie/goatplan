@@ -8,21 +8,21 @@ The entering-year header reads â€œEffective for students entering AY 2026-2027â€
 
 ## Requirement mapping
 
-| Lines | Requirement | Units |
-| --- | --- | --- |
-| 1, 2, 3, 4, 5, 6 | Humanities and Arts | 2 |
-| 7 | Wellness and Physical Education | 0.333333 |
-| 8, 9 | Social Science | 0.666667 |
-| 10, 11, 12 | Interactive Qualifying Project | 1 |
-| 13, 14, 15 | Free Electives | 1 |
-| 16, 17, 18, 19, 20 | Mathematics Foundation | 1.666667 |
-| 21, 22, 23, 24 | Computer Science Foundation | 1.333333 |
-| 25, 26, 27, 28, 29 | Biology Foundation | 1.666667 |
-| 30, 31, 32, 33 | Chemistry Foundation | 1.333333 |
-| 34, 35 | Bioinformatics and Computational Biology | 0.666667 |
-| 36 | Social Implications | 0.333333 |
-| 37, 38, 39, 40, 41, 42 | Advanced Elective Courses | 2.0 |
-| 43, 44, 45 | Major Qualifying Project | 1.0 |
+| Lines                  | Requirement                              | Units    |
+| ---------------------- | ---------------------------------------- | -------- |
+| 1, 2, 3, 4, 5, 6       | Humanities and Arts                      | 2        |
+| 7                      | Wellness and Physical Education          | 0.333333 |
+| 8, 9                   | Social Science                           | 0.666667 |
+| 10, 11, 12             | Interactive Qualifying Project           | 1        |
+| 13, 14, 15             | Free Electives                           | 1        |
+| 16, 17, 18, 19, 20     | Mathematics Foundation                   | 1.666667 |
+| 21, 22, 23, 24         | Computer Science Foundation              | 1.333333 |
+| 25, 26, 27, 28, 29     | Biology Foundation                       | 1.666667 |
+| 30, 31, 32, 33         | Chemistry Foundation                     | 1.333333 |
+| 34, 35                 | Bioinformatics and Computational Biology | 0.666667 |
+| 36                     | Social Implications                      | 0.333333 |
+| 37, 38, 39, 40, 41, 42 | Advanced Elective Courses                | 2.0      |
+| 43, 44, 45             | Major Qualifying Project                 | 1.0      |
 
 The numbered lines total 15 units. WPE requires four courses or an explicit sports confirmation. Empty history never satisfies WPE. Projects require explicit confirmation.
 

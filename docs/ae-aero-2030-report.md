@@ -6,20 +6,20 @@ The PDF states “Effective for students entering AY 2026-2027”. Status stays 
 
 ## Requirement mapping
 
-| App rows | Requirement |
-| --- | --- |
-| 1, 2, 3, 4, 5, 6 | Humanities and Arts |
-| 7 | Wellness and Physical Education |
-| 8, 9 | Social Science |
-| 10, 11, 12 | Interactive Qualifying Project |
-| 13, 14, 15 | Free Electives |
-| 16, 17, 18, 19, 20, 21, 22 | Mathematics |
-| 23, 24 | Physics |
-| 25 | Chemistry |
-| 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36 | Core Aerospace Engineering |
-| 37, 38, 39, 40, 41 | Aeronautics Track |
-| 42, 43, 44 | Major Qualifying Project |
-| 45 | Astronautics Elective |
+| App rows                                   | Requirement                     |
+| ------------------------------------------ | ------------------------------- |
+| 1, 2, 3, 4, 5, 6                           | Humanities and Arts             |
+| 7                                          | Wellness and Physical Education |
+| 8, 9                                       | Social Science                  |
+| 10, 11, 12                                 | Interactive Qualifying Project  |
+| 13, 14, 15                                 | Free Electives                  |
+| 16, 17, 18, 19, 20, 21, 22                 | Mathematics                     |
+| 23, 24                                     | Physics                         |
+| 25                                         | Chemistry                       |
+| 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36 | Core Aerospace Engineering      |
+| 37, 38, 39, 40, 41                         | Aeronautics Track               |
+| 42, 43, 44                                 | Major Qualifying Project        |
+| 45                                         | Astronautics Elective           |
 
 The rows total 15 units. WPE and projects need explicit completion. Unlisted equivalents and fractional lab allocations require review.
 

@@ -17,13 +17,13 @@ Test histories: `data/fixtures/degree-history-mid.json`, `data/fixtures/degree-h
 These are the differences between the tracking sheet (PDF) and the 2026-27 online catalog.
 The tracking sheet is authoritative for the Class of 2030.
 
-| Item | Sheet (PDF) | Catalog | Decision |
-|---|---|---|---|
-| Social Implications courses | CS 3043, GOV/ID 2314, GOV 2315, IMGD 2000, RBE 3100 | Same as sheet plus IMGD 2002 | Used the sheet's list. IMGD 2002 is not on the sheet and is omitted from the rules file. If it's added to a future sheet revision, the rules file should be updated. |
-| Science line 41-43 disciplines | "BB, CH, GE, PH" on the printed lines | Full Note 4 list applies to all science lines; catalog enumerates eligible courses per discipline | Used the sheet's interpretation: lines 41-43 are restricted to BB/CH/GE/PH; lines 44-45 accept the full Note 4 set (AE, BB, BME, CE, CH, CHE, ECE, ES, GE, ME, PH, RBE) minus RBE 3100 and BME 1004. |
-| Cross-listed courses listed | Only a few examples (CS 2022/MA 2201, CS 4032/MA 3257, CS 4033/MA 3457) mentioned in Note 2 | Full list of cross-listed pairs per discipline | Included all cross-listed pairs that could affect CS/Math/Science lines. |
-| Only one of CS 1101/1102 | Not explicitly stated on sheet; Note 1a says "Only CS 1101, CS 1102 and computer science courses at the 2000-level or higher" | Catalog says "Only ONE of CS 1101 and CS 1102 may count" | Used catalog's explicit rule. Added as an only-one-of set. |
-| Course enumeration | Not enumerated | Full course lists per discipline | The rules file uses subject+level filters, not enumerated lists. The catalog's enumeration was used to verify the filter logic. |
+| Item                           | Sheet (PDF)                                                                                                                   | Catalog                                                                                           | Decision                                                                                                                                                                                             |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Social Implications courses    | CS 3043, GOV/ID 2314, GOV 2315, IMGD 2000, RBE 3100                                                                           | Same as sheet plus IMGD 2002                                                                      | Used the sheet's list. IMGD 2002 is not on the sheet and is omitted from the rules file. If it's added to a future sheet revision, the rules file should be updated.                                 |
+| Science line 41-43 disciplines | "BB, CH, GE, PH" on the printed lines                                                                                         | Full Note 4 list applies to all science lines; catalog enumerates eligible courses per discipline | Used the sheet's interpretation: lines 41-43 are restricted to BB/CH/GE/PH; lines 44-45 accept the full Note 4 set (AE, BB, BME, CE, CH, CHE, ECE, ES, GE, ME, PH, RBE) minus RBE 3100 and BME 1004. |
+| Cross-listed courses listed    | Only a few examples (CS 2022/MA 2201, CS 4032/MA 3257, CS 4033/MA 3457) mentioned in Note 2                                   | Full list of cross-listed pairs per discipline                                                    | Included all cross-listed pairs that could affect CS/Math/Science lines.                                                                                                                             |
+| Only one of CS 1101/1102       | Not explicitly stated on sheet; Note 1a says "Only CS 1101, CS 1102 and computer science courses at the 2000-level or higher" | Catalog says "Only ONE of CS 1101 and CS 1102 may count"                                          | Used catalog's explicit rule. Added as an only-one-of set.                                                                                                                                           |
+| Course enumeration             | Not enumerated                                                                                                                | Full course lists per discipline                                                                  | The rules file uses subject+level filters, not enumerated lists. The catalog's enumeration was used to verify the filter logic.                                                                      |
 
 ## Rule interpretations
 
@@ -117,6 +117,7 @@ This is a "check-yourself" check. The app cannot determine which courses were ta
 ## Test history coverage
 
 ### Mid-degree history (degree-history-mid.json)
+
 - 22 taken courses, 2 planned (sophomore entering 3rd year)
 - Partial HUA (2 of 6 lines), partial WPE (2 of 4 sub-slots)
 - Social Implications check not met (no course from the list)
@@ -128,6 +129,7 @@ This is a "check-yourself" check. The app cannot determine which courses were ta
 - 15 lines unfilled, no surplus or Extra courses
 
 ### Complete-degree history (degree-history-complete.json)
+
 - 43 taken courses with all 45 lines filled (including 6 manual items)
 - Only-one-of triggered: CS 2102 and CS 2103 both taken; CS 2102 used for CS, CS 2103 → free electives
 - Non-CS Social Implications: GOV 2314 satisfies check but doesn't count as CS

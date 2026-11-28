@@ -7,7 +7,6 @@ below describe the original feature snapshot, not the current test suite. See
 [major selection](degree-major-selection.md) and [current project checks](launch-check.md)
 for current access and verification behavior.
 
-
 ## Sources
 
 Reviewed November 5, 2026:
@@ -21,25 +20,25 @@ planning template. Concentrations are outside this sheet.
 
 ## Numbered requirements
 
-| Lines | Treatment |
-| --- | --- |
-| 1–6 | Humanities depth, Inquiry at 4, breadth at 5 and elective at 6. |
-| 7 | Four WPE slots. Courses or explicit sports confirmation are required. |
-| 8–9 | Social science, including ID 2050. |
-| 10–12 | IQP confirmations. |
-| 13–15 | One nine-credit free elective pool. |
-| 16–19 | MA 1021, MA 1022, MA 2051 and MA 2621. |
-| 20–22 | Three more mathematics courses. |
-| 23–24 | Two physics courses. |
-| 25 | Chemistry or biology. |
-| 26–27 | Additional mathematics or basic science. |
-| 28–30 | MQP confirmations, with a separate capstone-content check. |
-| 31 | Computational engineering, with the stated CS exclusions. |
-| 32–34 | Three approved electrical engineering choices from the PDF. |
-| 35 | Digital circuit design. |
-| 36 | Embedded computing. |
-| 37–43 | Additional ECE at 2000-level or above, or ES 3011. |
-| 44–45 | Additional engineering science and design. |
+| Lines | Treatment                                                             |
+| ----- | --------------------------------------------------------------------- |
+| 1–6   | Humanities depth, Inquiry at 4, breadth at 5 and elective at 6.       |
+| 7     | Four WPE slots. Courses or explicit sports confirmation are required. |
+| 8–9   | Social science, including ID 2050.                                    |
+| 10–12 | IQP confirmations.                                                    |
+| 13–15 | One nine-credit free elective pool.                                   |
+| 16–19 | MA 1021, MA 1022, MA 2051 and MA 2621.                                |
+| 20–22 | Three more mathematics courses.                                       |
+| 23–24 | Two physics courses.                                                  |
+| 25    | Chemistry or biology.                                                 |
+| 26–27 | Additional mathematics or basic science.                              |
+| 28–30 | MQP confirmations, with a separate capstone-content check.            |
+| 31    | Computational engineering, with the stated CS exclusions.             |
+| 32–34 | Three approved electrical engineering choices from the PDF.           |
+| 35    | Digital circuit design.                                               |
+| 36    | Embedded computing.                                                   |
+| 37–43 | Additional ECE at 2000-level or above, or ES 3011.                    |
+| 44–45 | Additional engineering science and design.                            |
 
 The numbered lines total 15 units including WPE. Engineering contributes six
 units including the MQP. The ECE portion contributes five units including the

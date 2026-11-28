@@ -8,19 +8,19 @@ The entering-year header reads â€œEffective for students entering AY 2026-2027â€
 
 ## Requirement mapping
 
-| Lines | Requirement | Units |
-| --- | --- | --- |
-| 1, 2, 3, 4, 5, 6 | Humanities and Arts | 2 |
-| 7 | Wellness and Physical Education | 0.333333 |
-| 8, 9 | Social Science | 0.666667 |
-| 10, 11, 12 | Interactive Qualifying Project | 1 |
-| 13, 14, 15 | Free Electives | 1 |
-| 16, 17, 18, 19, 20 | Quantitative Reasoning | 1.666667 |
-| 21, 22, 23, 24, 25 | Chemistry | 1.666667 |
-| 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 | Biology and Biotechnology | 3.333333 |
-| 36, 37, 38, 39 | Laboratory Experience | 1.333333 |
-| 40, 41, 42 | Related Courses | 1.0 |
-| 43, 44, 45 | Major Qualifying Project | 1.0 |
+| Lines                                  | Requirement                     | Units    |
+| -------------------------------------- | ------------------------------- | -------- |
+| 1, 2, 3, 4, 5, 6                       | Humanities and Arts             | 2        |
+| 7                                      | Wellness and Physical Education | 0.333333 |
+| 8, 9                                   | Social Science                  | 0.666667 |
+| 10, 11, 12                             | Interactive Qualifying Project  | 1        |
+| 13, 14, 15                             | Free Electives                  | 1        |
+| 16, 17, 18, 19, 20                     | Quantitative Reasoning          | 1.666667 |
+| 21, 22, 23, 24, 25                     | Chemistry                       | 1.666667 |
+| 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 | Biology and Biotechnology       | 3.333333 |
+| 36, 37, 38, 39                         | Laboratory Experience           | 1.333333 |
+| 40, 41, 42                             | Related Courses                 | 1.0      |
+| 43, 44, 45                             | Major Qualifying Project        | 1.0      |
 
 The numbered lines total 15 units. WPE requires four courses or an explicit sports confirmation. Empty history never satisfies WPE. Projects require explicit confirmation.
 

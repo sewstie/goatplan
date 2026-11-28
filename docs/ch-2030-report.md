@@ -8,22 +8,22 @@ The entering-year header reads â€œEffective for students entering AY 2026-2027â€
 
 ## Requirement mapping
 
-| Lines | Requirement | Units |
-| --- | --- | --- |
-| 1, 2, 3, 4, 5, 6 | Humanities and Arts | 2 |
-| 7 | Wellness and Physical Education | 0.333333 |
-| 8, 9 | Social Science | 0.666667 |
-| 10, 11, 12 | Interactive Qualifying Project | 1 |
-| 13, 14, 15 | Free Electives | 1 |
-| 16, 17, 18, 19, 20, 21, 22 | Mathematics and Physics | 2.333333 |
-| 23, 24, 25 | Experimental Chemistry | 1.0 |
-| 26 | Inorganic Chemistry | 0.333333 |
-| 27, 28, 29 | Organic Chemistry | 1.0 |
-| 30, 31, 32 | Physical Chemistry | 1.0 |
-| 33 | Biochemistry | 0.333333 |
-| 34 | Experimental Chemistry or Biochemistry | 0.333333 |
-| 35, 36, 37, 38, 39, 40, 41, 42 | Additional Science/Engineering | 2.666667 |
-| 43, 44, 45 | Major Qualifying Project | 1.0 |
+| Lines                          | Requirement                            | Units    |
+| ------------------------------ | -------------------------------------- | -------- |
+| 1, 2, 3, 4, 5, 6               | Humanities and Arts                    | 2        |
+| 7                              | Wellness and Physical Education        | 0.333333 |
+| 8, 9                           | Social Science                         | 0.666667 |
+| 10, 11, 12                     | Interactive Qualifying Project         | 1        |
+| 13, 14, 15                     | Free Electives                         | 1        |
+| 16, 17, 18, 19, 20, 21, 22     | Mathematics and Physics                | 2.333333 |
+| 23, 24, 25                     | Experimental Chemistry                 | 1.0      |
+| 26                             | Inorganic Chemistry                    | 0.333333 |
+| 27, 28, 29                     | Organic Chemistry                      | 1.0      |
+| 30, 31, 32                     | Physical Chemistry                     | 1.0      |
+| 33                             | Biochemistry                           | 0.333333 |
+| 34                             | Experimental Chemistry or Biochemistry | 0.333333 |
+| 35, 36, 37, 38, 39, 40, 41, 42 | Additional Science/Engineering         | 2.666667 |
+| 43, 44, 45                     | Major Qualifying Project               | 1.0      |
 
 The numbered lines total 15 units. WPE requires four courses or an explicit sports confirmation. Empty history never satisfies WPE. Projects require explicit confirmation.
 

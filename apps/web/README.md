@@ -23,14 +23,14 @@ Only one dev server should use a worktree's `.next` output.
 
 ## Routes and data
 
-| Route | Purpose |
-| --- | --- |
-| `/` | Schedule planner, including shared-link and saved-plan views |
-| `/plans` | Saved plans and their registration sheets |
-| `/degree` | Major selection, tracking sheet, four-year plan and course maps |
-| `/data/catalog.json` | Persistent catalog served from the root `data/` directory |
-| `/api/seats?term=2027-C` | Cached live seat snapshot for a published term |
-| `/dev/ui`, `/dev/engine` | Development pages; return 404 in production |
+| Route                    | Purpose                                                         |
+| ------------------------ | --------------------------------------------------------------- |
+| `/`                      | Schedule planner, including shared-link and saved-plan views    |
+| `/plans`                 | Saved plans and their registration sheets                       |
+| `/degree`                | Major selection, tracking sheet, four-year plan and course maps |
+| `/data/catalog.json`     | Persistent catalog served from the root `data/` directory       |
+| `/api/seats?term=2027-C` | Cached live seat snapshot for a published term                  |
+| `/dev/ui`, `/dev/engine` | Development pages; return 404 in production                     |
 
 The UI reads normalized term JSON and uses `lib/engine/EngineClient` for schedule
 searches and audits. The scheduler runs in a worker. Search, section presentation,
