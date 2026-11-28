@@ -27,7 +27,9 @@ export interface PlansSource {
 }
 
 /** Saved plans read from storage, kept in step with writes here and in other tabs. */
-export function createPlansSource(getStorage: () => PlanStorage | null): PlansSource {
+export function createPlansSource(
+  getStorage: () => PlanStorage | null,
+): PlansSource {
   const listeners = new Set<() => void>();
   let snapshot: PlansSnapshot | null = null;
 
@@ -37,24 +39,30 @@ export function createPlansSource(getStorage: () => PlanStorage | null): PlansSo
   }
 
   function onStorage(event: StorageEvent) {
-    if (event.key === null || event.key.startsWith(PLANS_STORAGE_PREFIX)) changed();
+    if (event.key === null || event.key.startsWith(PLANS_STORAGE_PREFIX))
+      changed();
   }
 
   function getSnapshot(): PlansSnapshot {
     if (!snapshot) {
       const storage = getStorage();
-      snapshot = { plans: readPlans(storage), current: readCurrentPlanIds(storage) };
+      snapshot = {
+        plans: readPlans(storage),
+        current: readCurrentPlanIds(storage),
+      };
     }
     return snapshot;
   }
 
   return {
     subscribe(listener) {
-      if (listeners.size === 0 && typeof window !== "undefined") window.addEventListener("storage", onStorage);
+      if (listeners.size === 0 && typeof window !== "undefined")
+        window.addEventListener("storage", onStorage);
       listeners.add(listener);
       return () => {
         listeners.delete(listener);
-        if (listeners.size === 0 && typeof window !== "undefined") window.removeEventListener("storage", onStorage);
+        if (listeners.size === 0 && typeof window !== "undefined")
+          window.removeEventListener("storage", onStorage);
       };
     },
     getSnapshot,

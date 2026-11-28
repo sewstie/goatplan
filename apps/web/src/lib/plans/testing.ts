@@ -32,7 +32,11 @@ export class MemoryPlanStorage implements PlanStorage {
   }
 }
 
-export function section(course: string, code: string, overrides: Partial<Section> = {}): Section {
+export function section(
+  course: string,
+  code: string,
+  overrides: Partial<Section> = {},
+): Section {
   return {
     id: `${course}-${code}`,
     code,
@@ -43,7 +47,14 @@ export function section(course: string, code: string, overrides: Partial<Section
     waitlist: { taken: 0, capacity: 20 },
     instructors: ["Ye Lu"],
     delivery: "in-person",
-    meetings: [{ days: ["Mon", "Tue", "Wed", "Thu", "Fri"], start: 540, end: 590, location: "Unity Hall 400" }],
+    meetings: [
+      {
+        days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+        start: 540,
+        end: 590,
+        location: "Unity Hall 400",
+      },
+    ],
     ...overrides,
   };
 }
@@ -67,7 +78,14 @@ export function designPlan(overrides: Partial<SavedPlan> = {}): SavedPlan {
             enrolled: 36,
             capacity: 40,
             waitlist: { taken: 0, capacity: 0 },
-            meetings: [{ days: ["Thu"], start: 900, end: 950, location: "Higgins Labs 230" }],
+            meetings: [
+              {
+                days: ["Thu"],
+                start: 900,
+                end: 950,
+                location: "Higgins Labs 230",
+              },
+            ],
           }),
           section("AE 2320", "CL01"),
         ],
@@ -80,7 +98,14 @@ export function designPlan(overrides: Partial<SavedPlan> = {}): SavedPlan {
             enrolled: 32,
             capacity: 50,
             instructors: ["Mark Richman"],
-            meetings: [{ days: ["Mon", "Tue", "Wed", "Thu", "Fri"], start: 600, end: 650, location: "Higgins Labs 116" }],
+            meetings: [
+              {
+                days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                start: 600,
+                end: 650,
+                location: "Higgins Labs 116",
+              },
+            ],
           }),
         ],
       },
@@ -92,14 +117,25 @@ export function designPlan(overrides: Partial<SavedPlan> = {}): SavedPlan {
             enrolled: 66,
             capacity: 70,
             instructors: ["David Olinger"],
-            meetings: [{ days: ["Mon", "Tue", "Wed", "Thu", "Fri"], start: 660, end: 710, location: "Salisbury Labs 104" }],
+            meetings: [
+              {
+                days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                start: 660,
+                end: 710,
+                location: "Salisbury Labs 104",
+              },
+            ],
           }),
         ],
       },
     ],
     locks: { "AE 2320": ["AE 2320-CX02"] },
     professorByCourse: {},
-    preferences: { startsAfter: 540, blocked: [{ day: "Tue", start: 840, end: 960 }], onlyOpen: true },
+    preferences: {
+      startsAfter: 540,
+      blocked: [{ day: "Tue", start: 840, end: 960 }],
+      onlyOpen: true,
+    },
     sortPreset: "fewestEarly",
     ...overrides,
   };
@@ -108,7 +144,12 @@ export function designPlan(overrides: Partial<SavedPlan> = {}): SavedPlan {
 /** A term file whose courses hold exactly the plan's sections, as the latest data. */
 export function termWith(plan: SavedPlan): TermFile {
   return {
-    term: { id: plan.termId, ...plan.term, start: "2027-01-13", end: "2027-03-05" },
+    term: {
+      id: plan.termId,
+      ...plan.term,
+      start: "2027-01-13",
+      end: "2027-03-05",
+    },
     generatedAt: "2026-10-18T12:00:00Z",
     courses: plan.schedule.map((course) => ({
       code: course.code,

@@ -10,7 +10,12 @@ function Example({ onFallback }: { onFallback: () => void }) {
   const ref = useRef<HTMLPreElement>(null);
   return (
     <>
-      <CopySectionListButton text={TEXT} previewRef={ref} onCopied={() => {}} onFallback={onFallback} />
+      <CopySectionListButton
+        text={TEXT}
+        previewRef={ref}
+        onCopied={() => {}}
+        onFallback={onFallback}
+      />
       <pre ref={ref}>{TEXT}</pre>
     </>
   );
@@ -30,15 +35,21 @@ describe("CopySectionListButton", () => {
     expect(writeText).toHaveBeenCalledWith(TEXT);
     expect(await navigator.clipboard.readText()).toBe(TEXT);
     expect(screen.getByRole("button", { name: "Copied" })).toBeInTheDocument();
-    expect(screen.getByRole("status")).toHaveTextContent("Section list copied.");
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Section list copied.",
+    );
 
     act(() => vi.advanceTimersByTime(2000));
-    expect(screen.getByRole("button", { name: "Copy section list" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Copy section list" }),
+    ).toBeInTheDocument();
   });
 
   it("selects the list for copying by hand when the clipboard is blocked", async () => {
     const user = userEvent.setup();
-    vi.spyOn(navigator.clipboard, "writeText").mockRejectedValue(new Error("Not allowed"));
+    vi.spyOn(navigator.clipboard, "writeText").mockRejectedValue(
+      new Error("Not allowed"),
+    );
     const onFallback = vi.fn();
     render(<Example onFallback={onFallback} />);
     await user.click(screen.getByRole("button", { name: "Copy section list" }));

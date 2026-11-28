@@ -33,20 +33,30 @@ export interface RegistrationRow {
 
 /** Lectures first, then the other types; otherwise the saved order. */
 export function registrationOrder(sections: readonly Section[]): Section[] {
-  return [...sections].sort((a, b) => Number(a.type !== "lecture") - Number(b.type !== "lecture"));
+  return [...sections].sort(
+    (a, b) => Number(a.type !== "lecture") - Number(b.type !== "lecture"),
+  );
 }
 
 /** "Mon–Fri · 9:00–9:50 AM" per meeting, or "No set time". */
 export function meetingLines(section: Pick<Section, "meetings">): string[] {
   if (section.meetings.length === 0) return ["No set time"];
   return section.meetings.map(
-    (meeting) => `${formatDays(meeting.days)} · ${formatTimeRange(meeting.start, meeting.end, "shared")}`,
+    (meeting) =>
+      `${formatDays(meeting.days)} · ${formatTimeRange(meeting.start, meeting.end, "shared")}`,
   );
 }
 
 function rooms(section: Section): { room: string; roomFull: string } {
-  const names = [...new Set(section.meetings.map((meeting) => meeting.location.trim()).filter(Boolean))];
-  if (names.length === 0) return { room: "No room listed", roomFull: "No room listed" };
+  const names = [
+    ...new Set(
+      section.meetings
+        .map((meeting) => meeting.location.trim())
+        .filter(Boolean),
+    ),
+  ];
+  if (names.length === 0)
+    return { room: "No room listed", roomFull: "No room listed" };
   return { room: names.map(roomName).join(", "), roomFull: names.join(", ") };
 }
 
@@ -60,23 +70,34 @@ function instructors(section: Section): string {
  * One row per saved section, grouped by course in plan order, lecture before lab. Rows show the
  * latest data when the term file is known and the section still exists, else the saved copy.
  */
-export function registrationRows(plan: SavedPlan, term: TermFile | null): RegistrationRow[] {
+export function registrationRows(
+  plan: SavedPlan,
+  term: TermFile | null,
+): RegistrationRow[] {
   const courses = new Map(term?.courses.map((course) => [course.code, course]));
   return plan.schedule.flatMap((saved) => {
     const course = courses.get(saved.code);
     return registrationOrder(saved.sections).map((savedSection) => {
-      const latest = course?.sections.find((section) => section.id === savedSection.id);
+      const latest = course?.sections.find(
+        (section) => section.id === savedSection.id,
+      );
       const shown = latest ?? savedSection;
       let change: PlanChange | null = null;
-      if (term) change = course ? sectionChange(saved.code, savedSection, latest) : { kind: "courseRemoved", course: saved.code };
-      const gone = change?.kind === "sectionRemoved" || change?.kind === "courseRemoved";
+      if (term)
+        change = course
+          ? sectionChange(saved.code, savedSection, latest)
+          : { kind: "courseRemoved", course: saved.code };
+      const gone =
+        change?.kind === "sectionRemoved" || change?.kind === "courseRemoved";
       return {
         id: savedSection.id,
         course: saved.code,
         courseTitle: course?.title ?? saved.title,
         section: shown.code,
         // A removed section's old seat count would mislead.
-        seats: gone ? sectionTypeName(shown.type) : `${sectionTypeName(shown.type)} · ${openSeats(shown)} open`,
+        seats: gone
+          ? sectionTypeName(shown.type)
+          : `${sectionTypeName(shown.type)} · ${openSeats(shown)} open`,
         meetings: meetingLines(shown),
         ...rooms(shown),
         instructors: instructors(shown),
@@ -91,7 +112,8 @@ export function sectionListText(schedule: readonly SavedCourse[]): string {
   return schedule
     .map((course) => {
       const sections = registrationOrder(course.sections).map(
-        (section) => `${section.code} (${sectionTypeName(section.type).toLowerCase()})`,
+        (section) =>
+          `${section.code} (${sectionTypeName(section.type).toLowerCase()})`,
       );
       return `${course.code} — ${sections.join(", ")}`;
     })
@@ -99,7 +121,10 @@ export function sectionListText(schedule: readonly SavedCourse[]): string {
 }
 
 export function sectionCount(plan: Pick<SavedPlan, "schedule">): number {
-  return plan.schedule.reduce((count, course) => count + course.sections.length, 0);
+  return plan.schedule.reduce(
+    (count, course) => count + course.sections.length,
+    0,
+  );
 }
 
 export function countLabel(count: number, noun: string): string {
@@ -107,14 +132,22 @@ export function countLabel(count: number, noun: string): string {
 }
 
 /** "C Term · Spring 2027" */
-export function termLabel(term: Pick<Term, "name" | "season" | "year">): string {
+export function termLabel(
+  term: Pick<Term, "name" | "season" | "year">,
+): string {
   return `${term.name} · ${term.season} ${term.year}`;
 }
 
-const savedDate = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" });
+const savedDate = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
 
 /** "Saved Oct 17, 2026", in the browser's time zone. */
 export function savedLabel(savedAt: string): string {
   const date = new Date(savedAt);
-  return Number.isNaN(date.getTime()) ? "Saved" : `Saved ${savedDate.format(date)}`;
+  return Number.isNaN(date.getTime())
+    ? "Saved"
+    : `Saved ${savedDate.format(date)}`;
 }

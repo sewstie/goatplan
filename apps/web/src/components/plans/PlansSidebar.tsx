@@ -13,14 +13,27 @@ export function PlansSidebar() {
   const { plan: selectedPlan } = useSelectedPlan();
   const plan = useReadOnlyPlan();
   const { requestOpen, dialog } = useOpenPlan();
-  if (!selectedPlan || !plan) return <><div className="pb-10"><TermPicker /></div><CourseSearchPanel /></>;
+  if (!selectedPlan || !plan)
+    return (
+      <>
+        <div className="pb-10">
+          <TermPicker />
+        </div>
+        <CourseSearchPanel />
+      </>
+    );
   return (
     <>
       <p className="mb-15 rounded-control border border-line-control px-11 py-10 text-11 font-650">
         {termFieldLabel(plan.term)}
       </p>
       <SavedPlanCourses plan={plan} />
-      <Button variant="secondary" fullWidth onClick={() => requestOpen(plan, "/")} className="mt-12">
+      <Button
+        variant="secondary"
+        fullWidth
+        onClick={() => requestOpen(plan, "/")}
+        className="mt-12"
+      >
         Open in planner to edit
       </Button>
       {dialog}

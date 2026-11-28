@@ -15,7 +15,14 @@ type TermPlanGroupProps = {
 };
 
 /** One term's saved plans, checked against that term's latest data. */
-export function TermPlanGroup({ plans, openPlanId, openDisabled, onOpen, onRename, onDelete }: TermPlanGroupProps) {
+export function TermPlanGroup({
+  plans,
+  openPlanId,
+  openDisabled,
+  onOpen,
+  onRename,
+  onDelete,
+}: TermPlanGroupProps) {
   const headingId = useId();
   const data = useTermFile(plans[0].termId);
   return (

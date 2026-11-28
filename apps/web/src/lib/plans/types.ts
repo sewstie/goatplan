@@ -31,5 +31,11 @@ export type PlanChange =
   | { kind: "courseRemoved"; course: string }
   | { kind: "sectionRemoved"; course: string; section: string }
   | { kind: "filled"; course: string; section: string }
-  | { kind: "seats"; course: string; section: string; before: number; after: number }
+  | {
+      kind: "seats";
+      course: string;
+      section: string;
+      before: number;
+      after: number;
+    }
   | { kind: "time"; course: string; section: string };

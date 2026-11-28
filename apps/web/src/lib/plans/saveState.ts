@@ -26,5 +26,10 @@ export function getSaveState(input: {
   }
   if (!currentPlan) return { status: "none", currentPlan, canSave: true, busy };
   const unsaved = hasUnsavedChanges(currentPlan, input.working);
-  return { status: unsaved ? "unsaved" : "saved", currentPlan, canSave: unsaved, busy };
+  return {
+    status: unsaved ? "unsaved" : "saved",
+    currentPlan,
+    canSave: unsaved,
+    busy,
+  };
 }

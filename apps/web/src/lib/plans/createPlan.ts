@@ -3,7 +3,16 @@ import type { SavedPlan } from "./types";
 
 export type PlanSource = Pick<
   PlannerState,
-  "termId" | "term" | "courses" | "locks" | "professorByCourse" | "preferences" | "sortPreset" | "response" | "scheduleIndex" | "alternatives"
+  | "termId"
+  | "term"
+  | "courses"
+  | "locks"
+  | "professorByCourse"
+  | "preferences"
+  | "sortPreset"
+  | "response"
+  | "scheduleIndex"
+  | "alternatives"
 >;
 
 export const MAX_PLAN_NAME_LENGTH = 60;
@@ -34,33 +43,54 @@ export function createPlan(
 
   const kept = new Set(state.courses);
   const locks = Object.fromEntries(
-    Object.entries(state.locks).filter(([code, ids]) => kept.has(code) && ids.length > 0).map(([code, ids]) => [code, [...ids]]),
+    Object.entries(state.locks)
+      .filter(([code, ids]) => kept.has(code) && ids.length > 0)
+      .map(([code, ids]) => [code, [...ids]]),
   );
 
   return {
     id: details.id,
     name: details.name,
     termId,
-    term: { name: term.term.name, season: term.term.season, year: term.term.year },
+    term: {
+      name: term.term.name,
+      season: term.term.season,
+      year: term.term.year,
+    },
     savedAt: details.savedAt.toISOString(),
     courses: [...state.courses],
     schedule,
     locks,
-    professorByCourse: Object.fromEntries(Object.entries(state.professorByCourse).filter(([code]) => kept.has(code))),
+    professorByCourse: Object.fromEntries(
+      Object.entries(state.professorByCourse).filter(([code]) =>
+        kept.has(code),
+      ),
+    ),
     preferences: structuredClone(state.preferences),
     sortPreset: state.sortPreset,
   };
 }
 
 /** The plan's new contents, keeping its id and name. */
-export function updatePlan(plan: SavedPlan, state: PlanSource, savedAt: Date): SavedPlan | null {
+export function updatePlan(
+  plan: SavedPlan,
+  state: PlanSource,
+  savedAt: Date,
+): SavedPlan | null {
   if (state.termId !== plan.termId) return null;
   return createPlan(state, { id: plan.id, name: plan.name, savedAt });
 }
 
 /** "Plan 1", "Plan 2", …: the first name not taken in the term. */
-export function defaultPlanName(plans: readonly Pick<SavedPlan, "name" | "termId">[], termId: string): string {
-  const taken = new Set(plans.filter((plan) => plan.termId === termId).map((plan) => plan.name.trim().toLowerCase()));
+export function defaultPlanName(
+  plans: readonly Pick<SavedPlan, "name" | "termId">[],
+  termId: string,
+): string {
+  const taken = new Set(
+    plans
+      .filter((plan) => plan.termId === termId)
+      .map((plan) => plan.name.trim().toLowerCase()),
+  );
   let number = 1;
   while (taken.has(`plan ${number}`)) number += 1;
   return `Plan ${number}`;
@@ -73,6 +103,7 @@ export function cleanPlanName(name: string): string | null {
 }
 
 export function newPlanId(): string {
-  if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto)
+    return crypto.randomUUID();
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }

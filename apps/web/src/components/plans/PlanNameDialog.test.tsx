@@ -4,7 +4,9 @@ import { beforeAll, describe, expect, it, vi } from "vitest";
 import { PlanNameDialog } from "./PlanNameDialog";
 
 beforeAll(() => {
-  HTMLDialogElement.prototype.showModal = function showModal(this: HTMLDialogElement) {
+  HTMLDialogElement.prototype.showModal = function showModal(
+    this: HTMLDialogElement,
+  ) {
     this.setAttribute("open", "");
   };
   HTMLDialogElement.prototype.close = function close(this: HTMLDialogElement) {
@@ -25,13 +27,18 @@ function renderDialog(onSubmit = vi.fn((): string | null => null)) {
       onClose={() => {}}
     />,
   );
-  return { onSubmit, field: screen.getByRole("textbox", { name: "Plan name" }) };
+  return {
+    onSubmit,
+    field: screen.getByRole("textbox", { name: "Plan name" }),
+  };
 }
 
 describe("PlanNameDialog", () => {
   it("suggests a name, selected so typing replaces it", async () => {
     const { field } = renderDialog();
-    expect(screen.getByRole("dialog", { name: "Save schedule" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("dialog", { name: "Save schedule" }),
+    ).toBeInTheDocument();
     expect(field).toHaveValue("Plan 2");
     expect(field).toHaveFocus();
     await userEvent.keyboard("Mornings free{Enter}");
@@ -58,9 +65,13 @@ describe("PlanNameDialog", () => {
   });
 
   it("shows why a save failed", async () => {
-    renderDialog(vi.fn(() => "Couldn’t save. Browser storage is full or blocked."));
+    renderDialog(
+      vi.fn(() => "Couldn’t save. Browser storage is full or blocked."),
+    );
     await userEvent.click(screen.getByRole("button", { name: "Save" }));
-    expect(screen.getByRole("textbox", { name: "Plan name" })).toHaveAccessibleDescription(
+    expect(
+      screen.getByRole("textbox", { name: "Plan name" }),
+    ).toHaveAccessibleDescription(
       "Couldn’t save. Browser storage is full or blocked.",
     );
   });

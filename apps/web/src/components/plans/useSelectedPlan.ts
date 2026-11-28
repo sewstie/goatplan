@@ -16,6 +16,8 @@ export interface SelectedPlan {
 export function useSelectedPlan(): SelectedPlan {
   const planId = useSearchParams().get("plan");
   const snapshot = usePlans();
-  const plan = planId ? (snapshot?.plans.find((item) => item.id === planId) ?? null) : null;
+  const plan = planId
+    ? (snapshot?.plans.find((item) => item.id === planId) ?? null)
+    : null;
   return { planId, plan, snapshot };
 }

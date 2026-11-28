@@ -11,13 +11,21 @@ type OpenPlanDialogProps = {
 };
 
 /** Asks before a plan replaces a working draft with unsaved changes. */
-export function OpenPlanDialog({ plan, onConfirm, onClose }: OpenPlanDialogProps) {
+export function OpenPlanDialog({
+  plan,
+  onConfirm,
+  onClose,
+}: OpenPlanDialogProps) {
   return (
     <Dialog
       open={plan !== null}
       onClose={onClose}
       title={plan ? `Open “${plan.name}”?` : ""}
-      description={plan ? `Your unsaved changes to the ${plan.term.name} schedule will be lost.` : undefined}
+      description={
+        plan
+          ? `Your unsaved changes to the ${plan.term.name} schedule will be lost.`
+          : undefined
+      }
       footer={
         <>
           <Button variant="secondary" onClick={onClose}>

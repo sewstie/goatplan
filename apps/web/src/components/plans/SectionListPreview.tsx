@@ -8,7 +8,11 @@ type SectionListPreviewProps = {
 };
 
 /** "Section list": the text that Copy section list puts on the clipboard. */
-export function SectionListPreview({ text, ref, className }: SectionListPreviewProps) {
+export function SectionListPreview({
+  text,
+  ref,
+  className,
+}: SectionListPreviewProps) {
   return (
     <div className={cx("flex flex-col gap-10", className)}>
       <h3 className="text-10 leading-14-5 font-650 text-ink">Section list</h3>

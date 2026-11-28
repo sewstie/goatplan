@@ -3,7 +3,8 @@
 import { useSyncExternalStore } from "react";
 import { getPlansSource, type PlansSnapshot } from "./plansSource";
 
-const subscribe = (listener: () => void) => getPlansSource().subscribe(listener);
+const subscribe = (listener: () => void) =>
+  getPlansSource().subscribe(listener);
 const getSnapshot = () => getPlansSource().getSnapshot();
 const getServerSnapshot = () => null;
 

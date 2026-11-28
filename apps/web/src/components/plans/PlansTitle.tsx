@@ -8,7 +8,12 @@ export function PlansTitle() {
   return (
     <>
       Sections to register
-      {plan && <span className="font-650 break-words text-ink-muted"> · {plan.name}</span>}
+      {plan && (
+        <span className="font-650 break-words text-ink-muted">
+          {" "}
+          · {plan.name}
+        </span>
+      )}
     </>
   );
 }

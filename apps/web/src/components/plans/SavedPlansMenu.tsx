@@ -63,7 +63,11 @@ export function SavedPlansMenu({
         }
       }}
       onBlur={(event) => {
-        if (open && !rootRef.current?.contains(event.relatedTarget as Node | null)) setOpen(false);
+        if (
+          open &&
+          !rootRef.current?.contains(event.relatedTarget as Node | null)
+        )
+          setOpen(false);
       }}
     >
       <button
@@ -76,7 +80,10 @@ export function SavedPlansMenu({
         className="inline-flex min-h-44 cursor-pointer items-center gap-5 rounded-badge py-4 text-10 whitespace-nowrap leading-14-5 text-ink-soft tablet:min-h-0 enabled:hover:text-ink disabled:cursor-not-allowed disabled:opacity-45"
       >
         Saved plans
-        <CaretDown aria-hidden className={cx("size-10 transition-transform", open && "rotate-180")} />
+        <CaretDown
+          aria-hidden
+          className={cx("size-10 transition-transform", open && "rotate-180")}
+        />
       </button>
 
       <div
@@ -84,9 +91,17 @@ export function SavedPlansMenu({
         hidden={!open}
         className="absolute top-[calc(100%+--spacing(6))] right-0 z-30 w-260 rounded-card border border-line-popover bg-surface p-6 shadow-popover"
       >
-        {termName && <p className="px-8 pt-4 pb-4 text-9 leading-13 font-600 text-ink-muted">{termName}</p>}
+        {termName && (
+          <p className="px-8 pt-4 pb-4 text-9 leading-13 font-600 text-ink-muted">
+            {termName}
+          </p>
+        )}
         {plans && plans.length > 0 ? (
-          <ul aria-label={termName ? `Saved plans for ${termName}` : "Saved plans"}>
+          <ul
+            aria-label={
+              termName ? `Saved plans for ${termName}` : "Saved plans"
+            }
+          >
             {plans.map((plan) => (
               <SavedPlansMenuItem
                 key={plan.id}
@@ -98,12 +113,16 @@ export function SavedPlansMenu({
                 <span className="flex min-w-0 flex-1 flex-col">
                   <span className="truncate font-650">{plan.name}</span>
                   <span className="text-9 leading-13 text-ink-muted">
-                    {countLabel(plan.schedule.length, "course")} · {countLabel(sectionCount(plan), "section")}
+                    {countLabel(plan.schedule.length, "course")} ·{" "}
+                    {countLabel(sectionCount(plan), "section")}
                   </span>
                 </span>
                 {plan.id === currentPlan?.id && (
                   <>
-                    <Check aria-hidden className="size-12 shrink-0 text-accent" />
+                    <Check
+                      aria-hidden
+                      className="size-12 shrink-0 text-accent"
+                    />
                     <span className="sr-only">(open now)</span>
                   </>
                 )}
@@ -112,14 +131,21 @@ export function SavedPlansMenu({
           </ul>
         ) : (
           <p className="px-8 py-6 text-9 leading-13 text-ink-muted">
-            {termName ? `No saved plans for ${termName} yet.` : "No saved plans yet."}
+            {termName
+              ? `No saved plans for ${termName} yet.`
+              : "No saved plans yet."}
           </p>
         )}
-        <ul aria-label="Plan actions" className="mt-6 border-t border-line pt-6">
-          <SavedPlansMenuItem onSelect={() => {
-            closeToTrigger();
-            onNewPlan();
-          }}>
+        <ul
+          aria-label="Plan actions"
+          className="mt-6 border-t border-line pt-6"
+        >
+          <SavedPlansMenuItem
+            onSelect={() => {
+              closeToTrigger();
+              onNewPlan();
+            }}
+          >
             Start a new plan
           </SavedPlansMenuItem>
           {canSaveAsNew && (

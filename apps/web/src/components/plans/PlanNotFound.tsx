@@ -9,9 +9,12 @@ export function PlanNotFound() {
         <span className="flex size-42 items-center justify-center rounded-tile bg-accent-soft text-accent">
           <Warning aria-hidden className="size-23" />
         </span>
-        <h2 className="pt-7 text-17 leading-23-8 font-700 tracking-message text-ink">This plan isn’t here</h2>
+        <h2 className="pt-7 text-17 leading-23-8 font-700 tracking-message text-ink">
+          This plan isn’t here
+        </h2>
         <p className="text-11 leading-19-8 text-ink-muted">
-          Saved plans stay in the browser they were saved in. It may have been deleted.
+          Saved plans stay in the browser they were saved in. It may have been
+          deleted.
         </p>
         <ButtonLink href="/plans" className="mt-8">
           See your saved plans

@@ -33,13 +33,19 @@ describe("registrationRows", () => {
       change: null,
     });
     // Lab instructors are often wrong, so the lab row leaves them out.
-    expect(rows[1]).toMatchObject({ seats: "Lab · 4 open", meetings: ["Thu · 3:00–3:50 PM"], room: "Higgins Labs 230", instructors: "" });
+    expect(rows[1]).toMatchObject({
+      seats: "Lab · 4 open",
+      meetings: ["Thu · 3:00–3:50 PM"],
+      room: "Higgins Labs 230",
+      instructors: "",
+    });
   });
 
   it("shows a room as building and number, and keeps its full name", () => {
     const plan = designPlan();
-    plan.schedule[0].sections.find((item) => item.code === "CX02")!.meetings[0].location =
-      "Higgins Labs 230 Geom Modeling Computer Lab";
+    plan.schedule[0].sections.find(
+      (item) => item.code === "CX02",
+    )!.meetings[0].location = "Higgins Labs 230 Geom Modeling Computer Lab";
     expect(registrationRows(plan, null)[1]).toMatchObject({
       room: "Higgins Labs 230",
       roomFull: "Higgins Labs 230 Geom Modeling Computer Lab",
@@ -49,10 +55,17 @@ describe("registrationRows", () => {
   it("shows the latest seats and flags the change", () => {
     const plan = designPlan();
     const term = termWith(plan);
-    term.courses[0].sections.find((item) => item.code === "CX02")!.enrolled = 40;
-    const row = registrationRows(plan, term).find((item) => item.section === "CX02")!;
+    term.courses[0].sections.find((item) => item.code === "CX02")!.enrolled =
+      40;
+    const row = registrationRows(plan, term).find(
+      (item) => item.section === "CX02",
+    )!;
     expect(row.seats).toBe("Lab · 0 open");
-    expect(row.change).toEqual({ kind: "filled", course: "AE 2320", section: "CX02" });
+    expect(row.change).toEqual({
+      kind: "filled",
+      course: "AE 2320",
+      section: "CX02",
+    });
   });
 
   it("falls back to the saved copy for removed sections and while the latest data is unknown", () => {
@@ -66,12 +79,22 @@ describe("registrationRows", () => {
       room: "Salisbury Labs 104",
       change: { kind: "courseRemoved" },
     });
-    expect(registrationRows(plan, null).every((row) => row.change === null)).toBe(true);
+    expect(
+      registrationRows(plan, null).every((row) => row.change === null),
+    ).toBe(true);
   });
 
   it("says when there's no room, instructor or set time", () => {
     const plan = designPlan({
-      schedule: [{ code: "ID 2050", title: "Social Science Research", sections: [section("ID 2050", "D01", { instructors: [], meetings: [] })] }],
+      schedule: [
+        {
+          code: "ID 2050",
+          title: "Social Science Research",
+          sections: [
+            section("ID 2050", "D01", { instructors: [], meetings: [] }),
+          ],
+        },
+      ],
       courses: ["ID 2050"],
     });
     expect(registrationRows(plan, null)[0]).toMatchObject({
@@ -98,7 +121,11 @@ describe("meetingLines", () => {
 describe("sectionListText", () => {
   it("lists each course's sections with an em dash and lowercase types", () => {
     expect(sectionListText(designPlan().schedule)).toBe(
-      ["AE 2320 — CL01 (lecture), CX02 (lab)", "AE 2410 — C01 (lecture)", "AE 2210 — C01 (lecture)"].join("\n"),
+      [
+        "AE 2320 — CL01 (lecture), CX02 (lab)",
+        "AE 2410 — C01 (lecture)",
+        "AE 2210 — C01 (lecture)",
+      ].join("\n"),
     );
   });
 });
@@ -108,7 +135,9 @@ describe("labels", () => {
     expect(sectionCount(designPlan())).toBe(4);
     expect(countLabel(1, "course")).toBe("1 course");
     expect(countLabel(3, "section")).toBe("3 sections");
-    expect(termLabel({ name: "C Term", season: "Spring", year: 2027 })).toBe("C Term · Spring 2027");
+    expect(termLabel({ name: "C Term", season: "Spring", year: 2027 })).toBe(
+      "C Term · Spring 2027",
+    );
   });
 
   it("shows when a plan was saved", () => {

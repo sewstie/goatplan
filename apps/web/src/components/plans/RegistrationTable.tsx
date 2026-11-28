@@ -1,12 +1,23 @@
 import { Badge } from "@/components/ui/Badge";
 import { cx } from "@/components/ui/cx";
-import { isSeriousChange, rowChangeLabel, type RegistrationRow } from "@/lib/plans";
+import {
+  isSeriousChange,
+  rowChangeLabel,
+  type RegistrationRow,
+} from "@/lib/plans";
 
-const headerCell = "border-b border-line px-5 py-9.5 text-left align-bottom text-9 leading-13 font-600 text-ink-muted";
+const headerCell =
+  "border-b border-line px-5 py-9.5 text-left align-bottom text-9 leading-13 font-600 text-ink-muted";
 const bodyCell = "border-b border-line px-5 py-14.5 align-top";
 
 /** The sections to register, one row each (div.app-22). */
-export function RegistrationTable({ rows, className }: { rows: RegistrationRow[]; className?: string }) {
+export function RegistrationTable({
+  rows,
+  className,
+}: {
+  rows: RegistrationRow[];
+  className?: string;
+}) {
   return (
     <table className={cx("w-full table-fixed border-collapse", className)}>
       <colgroup>
@@ -33,19 +44,34 @@ export function RegistrationTable({ rows, className }: { rows: RegistrationRow[]
       </thead>
       <tbody>
         {rows.map((row) => (
-          <tr key={row.id} className="h-(--size-registration-row) break-inside-avoid">
+          <tr
+            key={row.id}
+            className="h-(--size-registration-row) break-inside-avoid"
+          >
             <td className={bodyCell}>
               <div className="flex flex-col gap-3.5">
-                <span className="text-11 leading-17-6 font-700 text-ink">{row.course}</span>
-                <span className="text-9 leading-14-85 text-ink-muted">{row.courseTitle}</span>
+                <span className="text-11 leading-17-6 font-700 text-ink">
+                  {row.course}
+                </span>
+                <span className="text-9 leading-14-85 text-ink-muted">
+                  {row.courseTitle}
+                </span>
               </div>
             </td>
             <td className={bodyCell}>
               <div className="flex flex-col items-start gap-3.5">
-                <span className="text-11 leading-17-6 font-700 text-ink">{row.section}</span>
-                <span className="text-9 leading-14-85 text-ink-muted">{row.seats}</span>
+                <span className="text-11 leading-17-6 font-700 text-ink">
+                  {row.section}
+                </span>
+                <span className="text-9 leading-14-85 text-ink-muted">
+                  {row.seats}
+                </span>
                 {row.change && (
-                  <Badge tone={isSeriousChange(row.change) ? "warning" : "neutral"} size="sm" className="mt-2">
+                  <Badge
+                    tone={isSeriousChange(row.change) ? "warning" : "neutral"}
+                    size="sm"
+                    className="mt-2"
+                  >
                     {rowChangeLabel(row.change)}
                   </Badge>
                 )}
@@ -60,10 +86,17 @@ export function RegistrationTable({ rows, className }: { rows: RegistrationRow[]
             </td>
             <td className={cx(bodyCell, "pt-15.5")}>
               <div className="flex flex-col gap-3">
-                <span title={row.roomFull === row.room ? undefined : row.roomFull} className="text-10 leading-16 text-ink">
+                <span
+                  title={row.roomFull === row.room ? undefined : row.roomFull}
+                  className="text-10 leading-16 text-ink"
+                >
                   {row.room}
                 </span>
-                {row.instructors && <span className="text-9 leading-13 text-ink-muted">{row.instructors}</span>}
+                {row.instructors && (
+                  <span className="text-9 leading-13 text-ink-muted">
+                    {row.instructors}
+                  </span>
+                )}
               </div>
             </td>
           </tr>

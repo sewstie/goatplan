@@ -14,7 +14,9 @@ export function RegistrationPrint() {
   if (!snapshot) return null;
   return (
     <div className="hidden bg-surface text-ink print:block">
-      <h1 className="text-25 leading-30 font-700 tracking-title">Sections to register</h1>
+      <h1 className="text-25 leading-30 font-700 tracking-title">
+        Sections to register
+      </h1>
       {plan ? (
         <PrintedPlan plan={plan} />
       ) : planId ? null : (
@@ -23,7 +25,10 @@ export function RegistrationPrint() {
             <h2 className="text-12 leading-17-4 font-700">
               {item.name} · {termLabel(item.term)}
             </h2>
-            <SectionListPreview text={sectionListText(item.schedule)} className="mt-8" />
+            <SectionListPreview
+              text={sectionListText(item.schedule)}
+              className="mt-8"
+            />
           </section>
         ))
       )}

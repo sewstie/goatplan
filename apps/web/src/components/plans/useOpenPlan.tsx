@@ -2,13 +2,26 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
-import { getPlansSource, openPlanInPlanner, wouldDiscardWork, type SavedPlan, type WorkingPlan } from "@/lib/plans";
-import { selectChosenSections, selectCurrentSchedule, storedDraft, usePlannerStore, type PlannerState } from "@/lib/store";
+import {
+  getPlansSource,
+  openPlanInPlanner,
+  wouldDiscardWork,
+  type SavedPlan,
+  type WorkingPlan,
+} from "@/lib/plans";
+import {
+  selectChosenSections,
+  selectCurrentSchedule,
+  storedDraft,
+  usePlannerStore,
+  type PlannerState,
+} from "@/lib/store";
 import { emptyDraft } from "@/lib/store/draft";
 import { OpenPlanDialog } from "./OpenPlanDialog";
 import { NewPlanDialog } from "./NewPlanDialog";
 
-type PlanRequest = { plan: SavedPlan; destination?: string } | { termId: string };
+type PlanRequest =
+  { plan: SavedPlan; destination?: string } | { termId: string };
 
 /** The draft a plan of this term would replace: the live one, or the one stored for another term. */
 function workingDraft(termId: string, state: PlannerState): WorkingPlan | null {
@@ -26,7 +39,11 @@ function workingDraft(termId: string, state: PlannerState): WorkingPlan | null {
   return draft && { ...draft, chosen: null };
 }
 
-export function useOpenPlan(onOpened?: (plan: SavedPlan | null) => void): { requestOpen: (plan: SavedPlan, destination?: string) => void; requestNewPlan: () => void; dialog: ReactNode } {
+export function useOpenPlan(onOpened?: (plan: SavedPlan | null) => void): {
+  requestOpen: (plan: SavedPlan, destination?: string) => void;
+  requestNewPlan: () => void;
+  dialog: ReactNode;
+} {
   const store = usePlannerStore();
   const router = useRouter();
   const pathname = usePathname();
@@ -62,8 +79,11 @@ export function useOpenPlan(onOpened?: (plan: SavedPlan | null) => void): { requ
   function request(request: PlanRequest) {
     const termId = "plan" in request ? request.plan.termId : request.termId;
     const snapshot = getPlansSource().getSnapshot();
-    const currentPlan = snapshot.plans.find((item) => item.id === snapshot.current[termId]) ?? null;
-    if (wouldDiscardWork(currentPlan, workingDraft(termId, store.getState()))) setPending(request);
+    const currentPlan =
+      snapshot.plans.find((item) => item.id === snapshot.current[termId]) ??
+      null;
+    if (wouldDiscardWork(currentPlan, workingDraft(termId, store.getState())))
+      setPending(request);
     else void go(request);
   }
 
@@ -73,7 +93,8 @@ export function useOpenPlan(onOpened?: (plan: SavedPlan | null) => void): { requ
 
   function requestNewPlan() {
     const state = store.getState();
-    if (state.termStatus === "ready" && state.termId) request({ termId: state.termId });
+    if (state.termStatus === "ready" && state.termId)
+      request({ termId: state.termId });
   }
 
   function confirm() {
@@ -83,8 +104,16 @@ export function useOpenPlan(onOpened?: (plan: SavedPlan | null) => void): { requ
 
   const dialog = (
     <>
-      <OpenPlanDialog plan={pending && "plan" in pending ? pending.plan : null} onClose={() => setPending(null)} onConfirm={confirm} />
-      <NewPlanDialog open={pending !== null && !("plan" in pending)} onClose={() => setPending(null)} onConfirm={confirm} />
+      <OpenPlanDialog
+        plan={pending && "plan" in pending ? pending.plan : null}
+        onClose={() => setPending(null)}
+        onConfirm={confirm}
+      />
+      <NewPlanDialog
+        open={pending !== null && !("plan" in pending)}
+        onClose={() => setPending(null)}
+        onConfirm={confirm}
+      />
     </>
   );
 

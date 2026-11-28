@@ -7,12 +7,23 @@ import { SavedPlansMenu } from "./SavedPlansMenu";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/plans" }));
 vi.mock("next/link", () => ({
-  default: ({ href, ...rest }: ComponentProps<"a"> & { href: string }) => <a href={href} {...rest} />,
+  default: ({ href, ...rest }: ComponentProps<"a"> & { href: string }) => (
+    <a href={href} {...rest} />
+  ),
 }));
 
-function renderMenu(props: Partial<ComponentProps<typeof SavedPlansMenu>> = {}) {
-  const plans = [designPlan(), designPlan({ id: "plan-2", name: "Mornings free" })];
-  const handlers = { onOpenPlan: vi.fn(), onSaveAsNew: vi.fn(), onNewPlan: vi.fn() };
+function renderMenu(
+  props: Partial<ComponentProps<typeof SavedPlansMenu>> = {},
+) {
+  const plans = [
+    designPlan(),
+    designPlan({ id: "plan-2", name: "Mornings free" }),
+  ];
+  const handlers = {
+    onOpenPlan: vi.fn(),
+    onSaveAsNew: vi.fn(),
+    onNewPlan: vi.fn(),
+  };
   render(
     <>
       <SavedPlansMenu
@@ -27,7 +38,10 @@ function renderMenu(props: Partial<ComponentProps<typeof SavedPlansMenu>> = {}) 
       <button type="button">Elsewhere</button>
     </>,
   );
-  return { ...handlers, trigger: screen.getByRole("button", { name: "Saved plans" }) };
+  return {
+    ...handlers,
+    trigger: screen.getByRole("button", { name: "Saved plans" }),
+  };
 }
 
 describe("SavedPlansMenu", () => {
@@ -36,16 +50,28 @@ describe("SavedPlansMenu", () => {
     expect(trigger).toHaveAttribute("aria-expanded", "false");
     await userEvent.click(trigger);
     expect(trigger).toHaveAttribute("aria-expanded", "true");
-    const list = screen.getByRole("list", { name: "Saved plans for C Term · Spring 2027" });
+    const list = screen.getByRole("list", {
+      name: "Saved plans for C Term · Spring 2027",
+    });
     expect(list).toHaveTextContent("Plan 13 courses · 4 sections(open now)");
     const actions = screen.getByRole("list", { name: "Plan actions" });
     expect(within(actions).getAllByRole("listitem")).toHaveLength(3);
-    expect(within(actions).getByRole("button", { name: "Save as a new plan" })).toBeVisible();
-    expect(screen.queryByRole("link", { name: "Sections to register" })).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "All saved plans" })).toHaveAttribute("href", "/plans");
-    expect(screen.queryByRole("link", { name: "Back to planner" })).not.toBeInTheDocument();
+    expect(
+      within(actions).getByRole("button", { name: "Save as a new plan" }),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("link", { name: "Sections to register" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "All saved plans" }),
+    ).toHaveAttribute("href", "/plans");
+    expect(
+      screen.queryByRole("link", { name: "Back to planner" }),
+    ).not.toBeInTheDocument();
     await userEvent.click(trigger);
-    expect(screen.queryByRole("list", { name: /Saved plans for/ })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("list", { name: /Saved plans for/ }),
+    ).not.toBeInTheDocument();
   });
 
   it("closes with Escape and gives focus back to its button", async () => {
@@ -68,21 +94,37 @@ describe("SavedPlansMenu", () => {
   it("opens a plan or saves a copy, then closes", async () => {
     const { trigger, onOpenPlan, onSaveAsNew } = renderMenu();
     await userEvent.click(trigger);
-    await userEvent.click(screen.getByRole("button", { name: /Mornings free/ }));
-    expect(onOpenPlan).toHaveBeenCalledWith(expect.objectContaining({ id: "plan-2" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: /Mornings free/ }),
+    );
+    expect(onOpenPlan).toHaveBeenCalledWith(
+      expect.objectContaining({ id: "plan-2" }),
+    );
     expect(trigger).toHaveAttribute("aria-expanded", "false");
     expect(trigger).toHaveFocus();
     await userEvent.click(trigger);
-    await userEvent.click(screen.getByRole("button", { name: "Save as a new plan" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Save as a new plan" }),
+    );
     expect(onSaveAsNew).toHaveBeenCalled();
   });
 
   it("says when the term has no plans, and can't open while the term loads", async () => {
-    const { trigger } = renderMenu({ plans: [], currentPlan: null, canSaveAsNew: false });
+    const { trigger } = renderMenu({
+      plans: [],
+      currentPlan: null,
+      canSaveAsNew: false,
+    });
     await userEvent.click(trigger);
-    expect(screen.getByText("No saved plans for C Term · Spring 2027 yet.")).toBeVisible();
-    expect(screen.queryByRole("link", { name: "Sections to register" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Save as a new plan" })).not.toBeInTheDocument();
+    expect(
+      screen.getByText("No saved plans for C Term · Spring 2027 yet."),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("link", { name: "Sections to register" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Save as a new plan" }),
+    ).not.toBeInTheDocument();
   });
 
   it("is disabled while the term loads", () => {

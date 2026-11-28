@@ -28,13 +28,23 @@ function selectContents(element: HTMLElement) {
 }
 
 /** "Copy section list". After copying it reads "Copied" with a check for a moment, like "Saved". */
-export function CopySectionListButton({ text, previewRef, onCopied, onFallback, fullWidth, phone }: CopySectionListButtonProps) {
+export function CopySectionListButton({
+  text,
+  previewRef,
+  onCopied,
+  onFallback,
+  fullWidth,
+  phone,
+}: CopySectionListButtonProps) {
   const [copied, setCopied] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => () => {
-    if (timer.current) clearTimeout(timer.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    [],
+  );
 
   async function copy() {
     try {

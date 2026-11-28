@@ -10,7 +10,11 @@ type DeletePlanDialogProps = {
   onClose: () => void;
 };
 
-export function DeletePlanDialog({ plan, onConfirm, onClose }: DeletePlanDialogProps) {
+export function DeletePlanDialog({
+  plan,
+  onConfirm,
+  onClose,
+}: DeletePlanDialogProps) {
   return (
     <Dialog
       open={plan !== null}

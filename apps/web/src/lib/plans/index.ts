@@ -9,4 +9,9 @@ export * from "./groups";
 export * from "./registration";
 export * from "./saveState";
 export { openPlanInPlanner, settled } from "./openPlan";
-export { createPlansSource, getPlansSource, type PlansSnapshot, type PlansSource } from "./plansSource";
+export {
+  createPlansSource,
+  getPlansSource,
+  type PlansSnapshot,
+  type PlansSource,
+} from "./plansSource";

@@ -1,6 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
-import { resetPlanner, setPlanner } from "@/components/schedule/testing/plannerFixtures";
+import {
+  resetPlanner,
+  setPlanner,
+} from "@/components/schedule/testing/plannerFixtures";
 import { createPlan, getPlansSource } from "@/lib/plans";
 import { getPlannerStore } from "@/lib/store";
 import { PlanActions } from "./PlanActions";
@@ -22,7 +25,9 @@ vi.mock("next/navigation", () => ({
 }));
 
 beforeAll(() => {
-  HTMLDialogElement.prototype.showModal = function showModal(this: HTMLDialogElement) {
+  HTMLDialogElement.prototype.showModal = function showModal(
+    this: HTMLDialogElement,
+  ) {
     this.setAttribute("open", "");
   };
   HTMLDialogElement.prototype.close = function close(this: HTMLDialogElement) {
@@ -38,7 +43,10 @@ afterEach(() => {
   getPlansSource().remove("header-plan");
   getPlansSource().setCurrent("2027-C", null);
   resetPlanner();
-  Object.defineProperty(window, "matchMedia", { writable: true, value: realMatchMedia });
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: realMatchMedia,
+  });
 });
 
 function mockPhoneViewport() {
@@ -90,7 +98,9 @@ describe("PlanActions on a phone", () => {
     setPlanner();
     render(<PlanActions />);
 
-    expect(screen.getByRole("button", { name: "Save" })).toHaveTextContent("Save");
+    expect(screen.getByRole("button", { name: "Save" })).toHaveTextContent(
+      "Save",
+    );
   });
 
   it("gives the Save button a 44px touch target", () => {
@@ -98,7 +108,9 @@ describe("PlanActions on a phone", () => {
     setPlanner();
     render(<PlanActions />);
 
-    expect(screen.getByRole("button", { name: "Save" })).toHaveClass("min-h-44");
+    expect(screen.getByRole("button", { name: "Save" })).toHaveClass(
+      "min-h-44",
+    );
   });
 
   it("shows Saved once the plan is saved, with no extra status line", () => {
@@ -107,7 +119,9 @@ describe("PlanActions on a phone", () => {
     withSavedPlan();
     render(<PlanActions />);
 
-    expect(screen.getByRole("button", { name: "Schedule saved" })).toHaveTextContent("Saved");
+    expect(
+      screen.getByRole("button", { name: "Schedule saved" }),
+    ).toHaveTextContent("Saved");
     expect(screen.queryByText("Schedule saved")).not.toBeInTheDocument();
   });
 
@@ -147,6 +161,8 @@ describe("PlanActions on a tablet and wider", () => {
     withSavedPlan();
     render(<PlanActions />);
 
-    expect(screen.getByRole("button", { name: "Schedule saved" })).toHaveTextContent("Saved");
+    expect(
+      screen.getByRole("button", { name: "Schedule saved" }),
+    ).toHaveTextContent("Saved");
   });
 });

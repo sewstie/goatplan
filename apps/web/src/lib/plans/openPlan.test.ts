@@ -3,16 +3,30 @@ import type { TermFile } from "@/lib/data";
 import type { SolveRequest, SolveResponse } from "@/lib/engine/types";
 import { selectChosenSections } from "@/lib/store";
 import { createPlannerStore } from "@/lib/store/createPlannerStore";
-import { loaded, MemoryStorage, solved, termFile, termSummary } from "@/lib/store/testing/fixtures";
+import {
+  loaded,
+  MemoryStorage,
+  solved,
+  termFile,
+  termSummary,
+} from "@/lib/store/testing/fixtures";
 import { createPlan } from "./createPlan";
 import { openPlanInPlanner, settled } from "./openPlan";
 import type { SavedPlan } from "./types";
 
-function setup(solve: (request: SolveRequest) => Promise<SolveResponse> = async (request) => solved(request)) {
-  const engine = { loadTerm: vi.fn(async (termId: string) => loaded(termId)), solve: vi.fn(solve) };
+function setup(
+  solve: (request: SolveRequest) => Promise<SolveResponse> = async (request) =>
+    solved(request),
+) {
+  const engine = {
+    loadTerm: vi.fn(async (termId: string) => loaded(termId)),
+    solve: vi.fn(solve),
+  };
   const store = createPlannerStore({
     engine,
-    loadTermIndex: async () => ({ terms: [termSummary("2027-C"), termSummary("2027-D", "2027-05-05")] }),
+    loadTermIndex: async () => ({
+      terms: [termSummary("2027-C"), termSummary("2027-D", "2027-05-05")],
+    }),
     loadTerm: async (termId: string): Promise<TermFile> => termFile(termId),
     takeTermBuffer: () => null,
     storage: new MemoryStorage(),
@@ -30,19 +44,31 @@ async function savedPlanForTermD(): Promise<SavedPlan> {
   await store.getState().setTerm("2027-D");
   store.getState().addCourse("AE 2410");
   store.getState().addCourse("AE 2320");
-  store.getState().setPreferences({ startsAfter: 600, blocked: [{ day: "Fri", start: 840, end: 960 }] });
+  store.getState().setPreferences({
+    startsAfter: 600,
+    blocked: [{ day: "Fri", start: 840, end: 960 }],
+  });
   store.getState().lockSection("AE 2320", "AE 2320-CX02");
   await vi.runAllTimersAsync();
-  store.getState().chooseAlternative("AE 2320", ["AE 2320-CL01", "AE 2320-CX02"]);
-  return createPlan(store.getState(), { id: "p1", name: "Plan 1", savedAt: new Date() })!;
+  store
+    .getState()
+    .chooseAlternative("AE 2320", ["AE 2320-CL01", "AE 2320-CX02"]);
+  return createPlan(store.getState(), {
+    id: "p1",
+    name: "Plan 1",
+    savedAt: new Date(),
+  })!;
 }
 
 /** Like the fixture engine, but without same-time alternatives, so each lab is its own schedule. */
-async function solvedWithoutAlternatives(request: SolveRequest): Promise<SolveResponse> {
+async function solvedWithoutAlternatives(
+  request: SolveRequest,
+): Promise<SolveResponse> {
   const response = solved(request);
   if (!response.ok) return response;
   for (const schedule of response.schedules) {
-    for (const course of schedule.courses) course.alternatives = [course.sections];
+    for (const course of schedule.courses)
+      course.alternatives = [course.sections];
   }
   return response;
 }
@@ -75,14 +101,20 @@ describe("openPlanInPlanner", () => {
       courses: ["AE 2410", "AE 2320"],
       locks: { "AE 2320": ["AE 2320-CX02"] },
       professorByCourse: plan.professorByCourse,
-      preferences: { startsAfter: 600, blocked: [{ day: "Fri", start: 840, end: 960 }], onlyOpen: true },
+      preferences: {
+        startsAfter: 600,
+        blocked: [{ day: "Fri", start: 840, end: 960 }],
+        onlyOpen: true,
+      },
       solveStatus: "done",
     });
     expect(selectChosenSections(store.getState())).toEqual({
       "AE 2410": ["AE 2410-C01"],
       "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"],
     });
-    expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({ "AE 2320": ["AE 2320-CL01"] });
+    expect(engine.solve.mock.calls[0][0].preferences?.anyOf).toEqual({
+      "AE 2320": ["AE 2320-CL01"],
+    });
   });
 
   it("pages to the saved schedule when it isn't the first one", async () => {
@@ -93,11 +125,17 @@ describe("openPlanInPlanner", () => {
     await vi.runAllTimersAsync();
     await opened;
     expect(store.getState().scheduleIndex).toBe(1);
-    expect(selectChosenSections(store.getState())["AE 2320"]).toEqual(["AE 2320-CL01", "AE 2320-CX02"]);
+    expect(selectChosenSections(store.getState())["AE 2320"]).toEqual([
+      "AE 2320-CL01",
+      "AE 2320-CX02",
+    ]);
   });
 
   it("leaves out sections the term no longer has", async () => {
-    const plan: SavedPlan = { ...(await savedPlanForTermD()), locks: { "AE 2320": ["AE 2320-CX09"] } };
+    const plan: SavedPlan = {
+      ...(await savedPlanForTermD()),
+      locks: { "AE 2320": ["AE 2320-CX09"] },
+    };
     const { store } = setup();
     const opened = openPlanInPlanner(store, plan);
     await vi.runAllTimersAsync();
@@ -106,7 +144,10 @@ describe("openPlanInPlanner", () => {
   });
 
   it("gives up when the plan's term can't load", async () => {
-    const plan: SavedPlan = { ...(await savedPlanForTermD()), termId: "not-a-term" };
+    const plan: SavedPlan = {
+      ...(await savedPlanForTermD()),
+      termId: "not-a-term",
+    };
     const { store } = setup();
     const opened = openPlanInPlanner(store, plan);
     await vi.runAllTimersAsync();

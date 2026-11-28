@@ -63,13 +63,19 @@ function mockTabletViewport() {
 beforeAll(() => {
   // jsdom doesn't support clipboard.writeText; stub it so CopySectionListButton works.
   Object.defineProperty(navigator, "clipboard", {
-    value: { writeText: vi.fn().mockResolvedValue(undefined), readText: vi.fn() },
+    value: {
+      writeText: vi.fn().mockResolvedValue(undefined),
+      readText: vi.fn(),
+    },
     configurable: true,
   });
 });
 
 afterEach(() => {
-  Object.defineProperty(window, "matchMedia", { writable: true, value: realMatchMedia });
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: realMatchMedia,
+  });
 });
 
 describe("RegistrationSheetView on a phone", () => {
@@ -92,7 +98,9 @@ describe("RegistrationSheetView on a phone", () => {
 
     // The AE 2320 card holds both of its sections (lecture CL01 and lab CX02).
     const firstCard = screen.getAllByRole("article")[0];
-    expect(within(firstCard).getByRole("heading", { name: "AE 2320" })).toBeInTheDocument();
+    expect(
+      within(firstCard).getByRole("heading", { name: "AE 2320" }),
+    ).toBeInTheDocument();
     expect(within(firstCard).getByText("CL01")).toBeInTheDocument();
     expect(within(firstCard).getByText("CX02")).toBeInTheDocument();
   });
@@ -104,28 +112,40 @@ describe("RegistrationSheetView on a phone", () => {
     const cards = screen.getAllByRole("article");
     const firstCard = cards[0];
     expect(within(firstCard).getByText("AE 2320")).toBeInTheDocument();
-    expect(within(firstCard).getByText("Introduction to Orbital Mechanics")).toBeInTheDocument();
+    expect(
+      within(firstCard).getByText("Introduction to Orbital Mechanics"),
+    ).toBeInTheDocument();
   });
 
   it("keeps only Copy and Workday above the cards: no Print, no section list, no closing note", () => {
     mockPhoneViewport();
     render(<RegistrationSheetView plan={plan} />);
 
-    const copyButton = screen.getByRole("button", { name: "Copy section list" });
+    const copyButton = screen.getByRole("button", {
+      name: "Copy section list",
+    });
     expect(copyButton.className).toMatch(/w-full/);
     expect(copyButton.className).toMatch(/min-h-44/);
-    expect(screen.queryByRole("button", { name: "Print" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Print" }),
+    ).not.toBeInTheDocument();
     expect(screen.queryByText("Section list")).not.toBeInTheDocument();
-    expect(screen.queryByText(/Complete registration in Workday/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Complete registration in Workday/),
+    ).not.toBeInTheDocument();
   });
 
   it("shows the section list to copy by hand when the clipboard is blocked", async () => {
     mockPhoneViewport();
-    vi.mocked(navigator.clipboard.writeText).mockRejectedValueOnce(new Error("blocked"));
+    vi.mocked(navigator.clipboard.writeText).mockRejectedValueOnce(
+      new Error("blocked"),
+    );
     render(<RegistrationSheetView plan={plan} />);
 
     screen.getByRole("button", { name: "Copy section list" }).click();
-    expect(await screen.findByRole("alert")).toHaveTextContent("Press and hold the list below to copy it.");
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "Press and hold the list below to copy it.",
+    );
     expect(screen.getByText("Section list")).toBeInTheDocument();
   });
 
@@ -145,7 +165,9 @@ describe("RegistrationSheetView on a phone", () => {
     render(<RegistrationSheetView plan={plan} />);
 
     // The primary fill uses the accent background; only Copy should carry it.
-    const copyButton = screen.getByRole("button", { name: "Copy section list" });
+    const copyButton = screen.getByRole("button", {
+      name: "Copy section list",
+    });
     const workday = screen.getByRole("link", { name: /Open Workday/i });
     expect(copyButton.className).toMatch(/bg-accent(?![\w-])/);
     expect(workday.className).not.toMatch(/bg-accent(?![\w-])/);
@@ -156,7 +178,9 @@ describe("RegistrationSheetView on a phone", () => {
     render(<RegistrationSheetView plan={plan} />);
 
     // The Copy button is present and uses the same text
-    const copyButton = screen.getByRole("button", { name: "Copy section list" });
+    const copyButton = screen.getByRole("button", {
+      name: "Copy section list",
+    });
     expect(copyButton).toBeInTheDocument();
   });
 });
@@ -174,7 +198,9 @@ describe("RegistrationSheetView on a tablet", () => {
     mockTabletViewport();
     render(<RegistrationSheetView plan={plan} />);
 
-    const copyButton = screen.getByRole("button", { name: "Copy section list" });
+    const copyButton = screen.getByRole("button", {
+      name: "Copy section list",
+    });
     expect(copyButton.className).not.toMatch(/w-full/);
   });
 
@@ -183,6 +209,8 @@ describe("RegistrationSheetView on a tablet", () => {
     render(<RegistrationSheetView plan={plan} />);
 
     // On tablet, Open Workday stays in the DetailsPanel (PlanSummary), not in the sheet
-    expect(screen.queryByRole("link", { name: /Open Workday/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: /Open Workday/i }),
+    ).not.toBeInTheDocument();
   });
 });

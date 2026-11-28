@@ -3,7 +3,11 @@ import { BookmarkSimple } from "@phosphor-icons/react/ssr";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 
 /** The empty list, in the style of the calendar's message card (div.app.md). */
-export function NoSavedPlans({ headingRef }: { headingRef?: Ref<HTMLHeadingElement> }) {
+export function NoSavedPlans({
+  headingRef,
+}: {
+  headingRef?: Ref<HTMLHeadingElement>;
+}) {
   return (
     <div className="flex flex-1 items-center justify-center p-20">
       <div className="flex w-full max-w-(--size-message) flex-col items-center gap-6 rounded-message border border-line bg-surface-overlay px-20 py-28 text-center">

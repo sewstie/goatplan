@@ -4,7 +4,12 @@ import { PencilSimple, Trash } from "@phosphor-icons/react/ssr";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { usePhoneViewport } from "@/components/shell/usePhoneViewport";
-import { countLabel, savedLabel, sectionCount, type SavedPlan } from "@/lib/plans";
+import {
+  countLabel,
+  savedLabel,
+  sectionCount,
+  type SavedPlan,
+} from "@/lib/plans";
 import type { TermFileState } from "@/lib/plans/useTermFile";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { IconButton } from "@/components/ui/IconButton";
@@ -21,7 +26,15 @@ type SavedPlanRowProps = {
 };
 
 /** One saved plan in the list on /plans, with what changed since it was saved. */
-export function SavedPlanRow({ plan, data, isOpen, disabled, onOpen, onRename, onDelete }: SavedPlanRowProps) {
+export function SavedPlanRow({
+  plan,
+  data,
+  isOpen,
+  disabled,
+  onOpen,
+  onRename,
+  onDelete,
+}: SavedPlanRowProps) {
   const name = <span className="sr-only"> {plan.name}</span>;
   const phone = usePhoneViewport();
   const sectionsHref = `/plans?plan=${encodeURIComponent(plan.id)}`;
@@ -33,22 +46,52 @@ export function SavedPlanRow({ plan, data, isOpen, disabled, onOpen, onRename, o
         <div className="flex items-start justify-between gap-8">
           <div className="flex min-w-0 flex-col gap-4">
             <div className="flex flex-wrap items-center gap-8">
-              <h4 className="text-11 font-700 break-words text-ink">{plan.name}</h4>
-              {isOpen && <Badge tone="accent" size="sm">In the planner</Badge>}
+              <h4 className="text-11 font-700 break-words text-ink">
+                {plan.name}
+              </h4>
+              {isOpen && (
+                <Badge tone="accent" size="sm">
+                  In the planner
+                </Badge>
+              )}
             </div>
             <p className="text-9 text-ink-muted">{meta}</p>
             <PlanChangeNote plan={plan} data={data} quiet />
           </div>
           <div className="-mt-10 -mr-12 flex shrink-0">
-            <IconButton variant="ghost" label={`Rename ${plan.name}`} icon={<PencilSimple aria-hidden />} onClick={onRename} className="size-44 text-ink-muted [&_svg]:size-16" />
-            <IconButton variant="ghost" label={`Delete ${plan.name}`} icon={<Trash aria-hidden />} onClick={onDelete} className="size-44 text-ink-muted [&_svg]:size-16" />
+            <IconButton
+              variant="ghost"
+              label={`Rename ${plan.name}`}
+              icon={<PencilSimple aria-hidden />}
+              onClick={onRename}
+              className="size-44 text-ink-muted [&_svg]:size-16"
+            />
+            <IconButton
+              variant="ghost"
+              label={`Delete ${plan.name}`}
+              icon={<Trash aria-hidden />}
+              onClick={onDelete}
+              className="size-44 text-ink-muted [&_svg]:size-16"
+            />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-8">
-          <ButtonLink size="sm" fullWidth href={sectionsHref} className="min-h-44">
+          <ButtonLink
+            size="sm"
+            fullWidth
+            href={sectionsHref}
+            className="min-h-44"
+          >
             Sections to register{name}
           </ButtonLink>
-          <Button size="sm" variant="secondary" fullWidth disabled={disabled} onClick={onOpen} className="min-h-44">
+          <Button
+            size="sm"
+            variant="secondary"
+            fullWidth
+            disabled={disabled}
+            onClick={onOpen}
+            className="min-h-44"
+          >
             Open in planner{name}
           </Button>
         </div>
@@ -60,7 +103,9 @@ export function SavedPlanRow({ plan, data, isOpen, disabled, onOpen, onRename, o
     <li className="flex flex-wrap items-start justify-between gap-x-16 gap-y-10 rounded-card border border-line bg-surface px-14 py-12">
       <div className="flex min-w-0 flex-col gap-4">
         <div className="flex flex-wrap items-center gap-8">
-          <h4 className="text-12 leading-17-4 font-700 break-words text-ink">{plan.name}</h4>
+          <h4 className="text-12 leading-17-4 font-700 break-words text-ink">
+            {plan.name}
+          </h4>
           {isOpen && (
             <Badge tone="accent" size="sm">
               In the planner
@@ -74,7 +119,12 @@ export function SavedPlanRow({ plan, data, isOpen, disabled, onOpen, onRename, o
         <ButtonLink size="sm" href={sectionsHref}>
           Sections to register{name}
         </ButtonLink>
-        <Button size="sm" variant="secondary" disabled={disabled} onClick={onOpen}>
+        <Button
+          size="sm"
+          variant="secondary"
+          disabled={disabled}
+          onClick={onOpen}
+        >
           Open in planner{name}
         </Button>
         <Button size="sm" variant="secondary" onClick={onRename}>

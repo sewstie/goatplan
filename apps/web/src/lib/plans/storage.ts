@@ -1,5 +1,9 @@
 import { WEEK, type Day, type Meeting, type Section } from "@/lib/data";
-import { SORT_PRESET_IDS, type PlanBlockedTime, type SortPresetId } from "@/lib/store";
+import {
+  SORT_PRESET_IDS,
+  type PlanBlockedTime,
+  type SortPresetId,
+} from "@/lib/store";
 import type { SavedCourse, SavedPlan } from "./types";
 import { parseProfessors } from "@/lib/store/draft";
 
@@ -10,7 +14,10 @@ export const PLANS_VERSION = 1;
 const PLAN_PREFIX = `${PLANS_STORAGE_PREFIX}v${PLANS_VERSION}:plan:`;
 const CURRENT_PREFIX = `${PLANS_STORAGE_PREFIX}v${PLANS_VERSION}:current:`;
 
-export type PlanStorage = Pick<Storage, "getItem" | "setItem" | "removeItem" | "key" | "length">;
+export type PlanStorage = Pick<
+  Storage,
+  "getItem" | "setItem" | "removeItem" | "key" | "length"
+>;
 
 export function planKey(id: string): string {
   return `${PLAN_PREFIX}${id}`;
@@ -35,9 +42,12 @@ type Json = Record<string, unknown>;
 const isObject = (value: unknown): value is Json =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 const isString = (value: unknown): value is string => typeof value === "string";
-const isStringArray = (value: unknown): value is string[] => Array.isArray(value) && value.every(isString);
-const isCount = (value: unknown): value is number => Number.isInteger(value) && (value as number) >= 0;
-const isMinute = (value: unknown): value is number => isCount(value) && (value as number) <= 1440;
+const isStringArray = (value: unknown): value is string[] =>
+  Array.isArray(value) && value.every(isString);
+const isCount = (value: unknown): value is number =>
+  Number.isInteger(value) && (value as number) >= 0;
+const isMinute = (value: unknown): value is number =>
+  isCount(value) && (value as number) <= 1440;
 const isDayList = (value: unknown): value is Day[] =>
   Array.isArray(value) && value.every((day) => WEEK.includes(day as Day));
 
@@ -93,7 +103,12 @@ function isBlockedTime(value: unknown): value is PlanBlockedTime {
 }
 
 /** Keeps a blocked time's name, like "Work", when it has some text. */
-function copyBlockedTime({ day, start, end, label }: PlanBlockedTime): PlanBlockedTime {
+function copyBlockedTime({
+  day,
+  start,
+  end,
+  label,
+}: PlanBlockedTime): PlanBlockedTime {
   const name = label?.trim();
   return name ? { day, start, end, label: name } : { day, start, end };
 }
@@ -104,15 +119,53 @@ const isLocks = (value: unknown): value is Record<string, string[]> =>
 /** A stored plan, or null if the data is broken or from another version. Never throws. */
 export function parsePlan(value: unknown): SavedPlan | null {
   if (!isObject(value) || value.version !== PLANS_VERSION) return null;
-  const { id, name, termId, term, savedAt, courses, schedule, locks, preferences, sortPreset } = value;
+  const {
+    id,
+    name,
+    termId,
+    term,
+    savedAt,
+    courses,
+    schedule,
+    locks,
+    preferences,
+    sortPreset,
+  } = value;
   const professorByCourse = parseProfessors(value.professorByCourse);
   if (!professorByCourse) return null;
-  if (!isString(id) || !isString(name) || !isString(termId) || !isString(savedAt)) return null;
-  if (!isObject(term) || !isString(term.name) || !isString(term.season) || !Number.isInteger(term.year)) return null;
-  if (!isStringArray(courses) || !Array.isArray(schedule) || !schedule.every(isSavedCourse)) return null;
-  if (!isLocks(locks) || !SORT_PRESET_IDS.includes(sortPreset as SortPresetId)) return null;
-  if (!isObject(preferences) || !isMinute(preferences.startsAfter) || typeof preferences.onlyOpen !== "boolean") return null;
-  if (!Array.isArray(preferences.blocked) || !preferences.blocked.every(isBlockedTime)) return null;
+  if (
+    !isString(id) ||
+    !isString(name) ||
+    !isString(termId) ||
+    !isString(savedAt)
+  )
+    return null;
+  if (
+    !isObject(term) ||
+    !isString(term.name) ||
+    !isString(term.season) ||
+    !Number.isInteger(term.year)
+  )
+    return null;
+  if (
+    !isStringArray(courses) ||
+    !Array.isArray(schedule) ||
+    !schedule.every(isSavedCourse)
+  )
+    return null;
+  if (!isLocks(locks) || !SORT_PRESET_IDS.includes(sortPreset as SortPresetId))
+    return null;
+  if (
+    !isObject(preferences) ||
+    !isMinute(preferences.startsAfter) ||
+    typeof preferences.onlyOpen !== "boolean"
+  )
+    return null;
+  if (
+    !Array.isArray(preferences.blocked) ||
+    !preferences.blocked.every(isBlockedTime)
+  )
+    return null;
 
   return {
     id,
@@ -155,17 +208,26 @@ export function readPlans(storage: PlanStorage | null): SavedPlan[] {
         // One broken plan doesn't hide the others.
       }
     }
-    return plans.sort((a, b) => b.savedAt.localeCompare(a.savedAt) || a.name.localeCompare(b.name));
+    return plans.sort(
+      (a, b) =>
+        b.savedAt.localeCompare(a.savedAt) || a.name.localeCompare(b.name),
+    );
   } catch {
     return [];
   }
 }
 
 /** Returns false when the plan couldn't be stored (no storage, or it's full or blocked). */
-export function writePlan(storage: PlanStorage | null, plan: SavedPlan): boolean {
+export function writePlan(
+  storage: PlanStorage | null,
+  plan: SavedPlan,
+): boolean {
   if (!storage) return false;
   try {
-    storage.setItem(planKey(plan.id), JSON.stringify({ version: PLANS_VERSION, ...plan }));
+    storage.setItem(
+      planKey(plan.id),
+      JSON.stringify({ version: PLANS_VERSION, ...plan }),
+    );
     return true;
   } catch {
     return false;
@@ -186,7 +248,9 @@ export function removePlan(storage: PlanStorage | null, id: string): void {
 }
 
 /** term id → the id of that term's current plan. */
-export function readCurrentPlanIds(storage: PlanStorage | null): Record<string, string> {
+export function readCurrentPlanIds(
+  storage: PlanStorage | null,
+): Record<string, string> {
   if (!storage) return {};
   try {
     const current: Record<string, string> = {};
@@ -200,7 +264,11 @@ export function readCurrentPlanIds(storage: PlanStorage | null): Record<string, 
   }
 }
 
-export function writeCurrentPlanId(storage: PlanStorage | null, termId: string, id: string | null): void {
+export function writeCurrentPlanId(
+  storage: PlanStorage | null,
+  termId: string,
+  id: string | null,
+): void {
   if (!storage) return;
   try {
     if (id) storage.setItem(currentPlanKey(termId), id);

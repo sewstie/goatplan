@@ -93,7 +93,9 @@ export function PlanNameDialog({
             if (error) setError(null);
           }}
           aria-invalid={error ? true : undefined}
-          hint={error ? <span className="text-warning">{error}</span> : undefined}
+          hint={
+            error ? <span className="text-warning">{error}</span> : undefined
+          }
         />
         <span role="alert" className="sr-only">
           {error ?? ""}

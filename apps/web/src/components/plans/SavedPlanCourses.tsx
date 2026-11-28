@@ -8,16 +8,24 @@ export function SavedPlanCourses({ plan }: { plan: SavedPlan }) {
     <section aria-label="Your courses" className="flex shrink-0 flex-col">
       <div className="flex items-end justify-between gap-8 pb-10">
         <h2 className="text-11 leading-15-95 font-650">Your courses</h2>
-        <span className="text-9 leading-13 font-450 text-ink-muted">{plan.courses.length} selected</span>
+        <span className="text-9 leading-13 font-450 text-ink-muted">
+          {plan.courses.length} selected
+        </span>
       </div>
       <ul className="flex flex-col gap-5">
         {plan.courses.map((code) => {
           const course = plan.schedule.find((item) => item.code === code);
           return (
-            <li key={code} className="flex gap-9 rounded-card border border-transparent px-10 py-12">
+            <li
+              key={code}
+              className="flex gap-9 rounded-card border border-transparent px-10 py-12"
+            >
               <span
                 aria-hidden
-                className={cx("mt-5 size-8 shrink-0 rounded-swatch", COURSE_COLORS[courseSlot(plan.courses, code)].swatch)}
+                className={cx(
+                  "mt-5 size-8 shrink-0 rounded-swatch",
+                  COURSE_COLORS[courseSlot(plan.courses, code)].swatch,
+                )}
               />
               <div className="flex min-w-0 flex-col gap-3">
                 <span className="flex items-center gap-4 text-11 leading-15-95 font-700">
@@ -29,7 +37,9 @@ export function SavedPlanCourses({ plan }: { plan: SavedPlan }) {
                     </>
                   )}
                 </span>
-                {course && <span className="text-10 leading-16">{course.title}</span>}
+                {course && (
+                  <span className="text-10 leading-16">{course.title}</span>
+                )}
               </div>
             </li>
           );

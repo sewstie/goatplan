@@ -21,9 +21,17 @@ import { SaveScheduleButton } from "./SaveScheduleButton";
 import { useOpenPlan } from "./useOpenPlan";
 import { usePlanSaveState } from "./usePlanSaveState";
 
-export const COULDNT_SAVE = "Couldn’t save. Browser storage is full or blocked.";
+export const COULDNT_SAVE =
+  "Couldn’t save. Browser storage is full or blocked.";
 
-type PlanActionsLayout = (parts: { menu: ReactNode; save: ReactNode; share: ReactNode; exportButton: ReactNode; saveButton: ReactNode; unsaved: boolean }) => ReactNode;
+type PlanActionsLayout = (parts: {
+  menu: ReactNode;
+  save: ReactNode;
+  share: ReactNode;
+  exportButton: ReactNode;
+  saveButton: ReactNode;
+  unsaved: boolean;
+}) => ReactNode;
 
 const besideEachOther: PlanActionsLayout = ({ menu, save }) => (
   <>
@@ -36,20 +44,35 @@ const besideEachOther: PlanActionsLayout = ({ menu, save }) => (
  * Saved plans, Share, Export and Save. The phone header puts them in different rows and folds some into a
  * menu, and the top bar keeps them in one row, so each passes its own `layout`.
  */
-export function PlanActions({ layout = besideEachOther }: { layout?: PlanActionsLayout } = {}) {
+export function PlanActions({
+  layout = besideEachOther,
+}: { layout?: PlanActionsLayout } = {}) {
   const store = usePlannerStore();
   const temporary = usePlanner((state) => state.temporaryPlan);
   const viewed = usePlanner(selectSavedPlan);
   const save = usePlanSaveState();
   const term = usePlanner((state) => state.term?.term ?? null);
-  const [opened, setOpened] = useState<{ name: string | null; sequence: number } | null>(null);
-  const { requestOpen, requestNewPlan, dialog } = useOpenPlan((plan) => setOpened((previous) => ({ name: plan?.name ?? null, sequence: (previous?.sequence ?? 0) + 1 })));
+  const [opened, setOpened] = useState<{
+    name: string | null;
+    sequence: number;
+  } | null>(null);
+  const { requestOpen, requestNewPlan, dialog } = useOpenPlan((plan) =>
+    setOpened((previous) => ({
+      name: plan?.name ?? null,
+      sequence: (previous?.sequence ?? 0) + 1,
+    })),
+  );
   const [naming, setNaming] = useState<"first" | "copy" | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (opened) document.getElementById(opened.name === null ? "tutorial-search" : "tutorial-schedules")?.focus();
+    if (opened)
+      document
+        .getElementById(
+          opened.name === null ? "tutorial-search" : "tutorial-schedules",
+        )
+        ?.focus();
   }, [opened]);
 
   async function saveChanges() {
@@ -64,14 +87,19 @@ export function PlanActions({ layout = besideEachOther }: { layout?: PlanActions
     const updated = updatePlan(plan, store.getState(), new Date());
     setSaving(false);
     if (updated && !getPlansSource().save(updated)) setError(COULDNT_SAVE);
-    else if (updated) track("plan_saved", save.termId ? { term: save.termId } : undefined);
+    else if (updated)
+      track("plan_saved", save.termId ? { term: save.termId } : undefined);
   }
 
   async function saveAsNew(name: string): Promise<string | null> {
     if (!viewed) await settled(store);
     const details = { id: newPlanId(), name, savedAt: new Date() };
     const plan = viewed
-      ? { ...structuredClone(viewed), ...details, savedAt: details.savedAt.toISOString() }
+      ? {
+          ...structuredClone(viewed),
+          ...details,
+          savedAt: details.savedAt.toISOString(),
+        }
       : createPlan(store.getState(), details);
     if (!plan) return "There’s no schedule to save right now.";
     const source = getPlansSource();
@@ -85,8 +113,23 @@ export function PlanActions({ layout = besideEachOther }: { layout?: PlanActions
   }
 
   if (temporary) {
-    const saveShared = <div className="flex flex-wrap items-center gap-8 tablet:flex-nowrap tablet:gap-6"><SaveSharedPlan view={temporary.view} /></div>;
-    return <>{layout({ menu: null, save: saveShared, share: null, exportButton: null, saveButton: saveShared, unsaved: false })}</>;
+    const saveShared = (
+      <div className="flex flex-wrap items-center gap-8 tablet:flex-nowrap tablet:gap-6">
+        <SaveSharedPlan view={temporary.view} />
+      </div>
+    );
+    return (
+      <>
+        {layout({
+          menu: null,
+          save: saveShared,
+          share: null,
+          exportButton: null,
+          saveButton: saveShared,
+          unsaved: false,
+        })}
+      </>
+    );
   }
 
   const share = <ShareButton />;
@@ -108,7 +151,9 @@ export function PlanActions({ layout = besideEachOther }: { layout?: PlanActions
             termName={term ? termLabel(term) : null}
             currentPlan={viewed ?? save.currentPlan}
             disabled={!viewed && save.busy}
-            canSaveAsNew={viewed !== null || save.canSave || save.status === "saved"}
+            canSaveAsNew={
+              viewed !== null || save.canSave || save.status === "saved"
+            }
             onOpenPlan={(plan) => requestOpen(plan, "/")}
             onSaveAsNew={() => setNaming("copy")}
             onNewPlan={requestNewPlan}
@@ -126,9 +171,27 @@ export function PlanActions({ layout = besideEachOther }: { layout?: PlanActions
         saveButton,
         unsaved: viewed === null && save.status === "unsaved",
       })}
-      {error && <p role="alert" className="text-9 leading-13 text-warning tablet:absolute tablet:top-full tablet:right-20 tablet:z-30 tablet:mt-4 tablet:rounded-row tablet:border tablet:border-line-popover tablet:bg-surface tablet:px-8 tablet:py-4 tablet:shadow-popover">{error}</p>}
-      <span role="status" aria-live="polite" aria-atomic="true" className="sr-only">
-        {opened && <span key={opened.sequence}>{opened.name === null ? "Started a new plan." : `Opened “${opened.name}” for editing.`}</span>}
+      {error && (
+        <p
+          role="alert"
+          className="text-9 leading-13 text-warning tablet:absolute tablet:top-full tablet:right-20 tablet:z-30 tablet:mt-4 tablet:rounded-row tablet:border tablet:border-line-popover tablet:bg-surface tablet:px-8 tablet:py-4 tablet:shadow-popover"
+        >
+          {error}
+        </p>
+      )}
+      <span
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
+        {opened && (
+          <span key={opened.sequence}>
+            {opened.name === null
+              ? "Started a new plan."
+              : `Opened “${opened.name}” for editing.`}
+          </span>
+        )}
       </span>
       <PlanNameDialog
         open={naming !== null}

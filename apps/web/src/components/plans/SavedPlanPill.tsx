@@ -10,7 +10,13 @@ export function SavedPlanPill() {
   if (!plan) return null;
   return (
     <StepperBox>
-      <PositionText noun="Schedule" index={1} total={1} aria-live={undefined} aria-atomic={undefined} />
+      <PositionText
+        noun="Schedule"
+        index={1}
+        total={1}
+        aria-live={undefined}
+        aria-atomic={undefined}
+      />
     </StepperBox>
   );
 }

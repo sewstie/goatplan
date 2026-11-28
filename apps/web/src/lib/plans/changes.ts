@@ -1,4 +1,9 @@
-import { openSeats, type Meeting, type Section, type TermFile } from "@/lib/data";
+import {
+  openSeats,
+  type Meeting,
+  type Section,
+  type TermFile,
+} from "@/lib/data";
 import type { PlanChange, SavedPlan } from "./types";
 
 const sameMeetingTimes = (a: readonly Meeting[], b: readonly Meeting[]) =>
@@ -11,13 +16,20 @@ const sameMeetingTimes = (a: readonly Meeting[], b: readonly Meeting[]) =>
   );
 
 /** The change for one saved section, or null if its seats and times are the same as when saved. */
-export function sectionChange(course: string, saved: Section, latest: Section | undefined): PlanChange | null {
+export function sectionChange(
+  course: string,
+  saved: Section,
+  latest: Section | undefined,
+): PlanChange | null {
   if (!latest) return { kind: "sectionRemoved", course, section: saved.code };
-  if (!sameMeetingTimes(saved.meetings, latest.meetings)) return { kind: "time", course, section: saved.code };
+  if (!sameMeetingTimes(saved.meetings, latest.meetings))
+    return { kind: "time", course, section: saved.code };
   const before = openSeats(saved);
   const after = openSeats(latest);
-  if (before > 0 && after === 0) return { kind: "filled", course, section: saved.code };
-  if (before !== after) return { kind: "seats", course, section: saved.code, before, after };
+  if (before > 0 && after === 0)
+    return { kind: "filled", course, section: saved.code };
+  if (before !== after)
+    return { kind: "seats", course, section: saved.code, before, after };
   return null;
 }
 
@@ -32,7 +44,11 @@ export function findPlanChanges(plan: SavedPlan, term: TermFile): PlanChange[] {
       continue;
     }
     for (const section of saved.sections) {
-      const change = sectionChange(saved.code, section, course.sections.find((item) => item.id === section.id));
+      const change = sectionChange(
+        saved.code,
+        section,
+        course.sections.find((item) => item.id === section.id),
+      );
       if (change) changes.push(change);
     }
   }

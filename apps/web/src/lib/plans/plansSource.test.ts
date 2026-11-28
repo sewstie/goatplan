@@ -23,7 +23,10 @@ describe("createPlansSource", () => {
     expect(source.save(designPlan())).toBe(true);
     source.setCurrent("2027-C", "plan-1");
     expect(source.rename("plan-1", "Mornings free")).toBe(true);
-    expect(source.getSnapshot()).toMatchObject({ plans: [{ name: "Mornings free" }], current: { "2027-C": "plan-1" } });
+    expect(source.getSnapshot()).toMatchObject({
+      plans: [{ name: "Mornings free" }],
+      current: { "2027-C": "plan-1" },
+    });
 
     source.remove("plan-1");
     expect(source.getSnapshot()).toEqual({ plans: [], current: {} });
@@ -38,10 +41,17 @@ describe("createPlansSource", () => {
     const unsubscribe = source.subscribe(listener);
     expect(source.getSnapshot().plans).toEqual([]);
 
-    storage.setItem(planKey("plan-1"), JSON.stringify({ version: PLANS_VERSION, ...designPlan() }));
-    window.dispatchEvent(new StorageEvent("storage", { key: "goatplan:draft:v1:2027-C" }));
+    storage.setItem(
+      planKey("plan-1"),
+      JSON.stringify({ version: PLANS_VERSION, ...designPlan() }),
+    );
+    window.dispatchEvent(
+      new StorageEvent("storage", { key: "goatplan:draft:v1:2027-C" }),
+    );
     expect(listener).not.toHaveBeenCalled();
-    window.dispatchEvent(new StorageEvent("storage", { key: planKey("plan-1") }));
+    window.dispatchEvent(
+      new StorageEvent("storage", { key: planKey("plan-1") }),
+    );
     expect(listener).toHaveBeenCalledTimes(1);
     expect(source.getSnapshot().plans).toHaveLength(1);
 

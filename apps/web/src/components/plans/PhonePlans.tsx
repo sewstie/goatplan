@@ -13,10 +13,14 @@ import { useSelectedPlan } from "./useSelectedPlan";
 /** /plans below the tablet breakpoint: the planner's top bar, a way back, then the plans or one plan's sections. */
 export function PhonePlans() {
   const { planId, plan, snapshot } = useSelectedPlan();
-  const back = planId ? { href: "/plans", label: "All saved plans" } : { href: "/", label: "Back to planner" };
+  const back = planId
+    ? { href: "/plans", label: "All saved plans" }
+    : { href: "/", label: "Back to planner" };
   let subtitle = "";
-  if (plan) subtitle = `${termLabel(plan.term)} · ${countLabel(plan.schedule.length, "course")} · ${countLabel(sectionCount(plan), "section")}`;
-  else if (!planId && snapshot && snapshot.plans.length > 0) subtitle = countLabel(snapshot.plans.length, "plan");
+  if (plan)
+    subtitle = `${termLabel(plan.term)} · ${countLabel(plan.schedule.length, "course")} · ${countLabel(sectionCount(plan), "section")}`;
+  else if (!planId && snapshot && snapshot.plans.length > 0)
+    subtitle = countLabel(snapshot.plans.length, "plan");
 
   return (
     <div className="flex min-h-dvh flex-col bg-canvas">
@@ -27,15 +31,26 @@ export function PhonePlans() {
         Skip to main content
       </a>
       <PhoneTopBar>
-        <BarMoreMenu><ThemeSwitch /></BarMoreMenu>
+        <BarMoreMenu>
+          <ThemeSwitch />
+        </BarMoreMenu>
       </PhoneTopBar>
-      <main id="main" tabIndex={-1} className="flex min-w-0 flex-1 flex-col gap-12 px-(--size-phone-gutter) pt-14 pb-20 outline-none">
-        <Link href={back.href} className="-ml-4 inline-flex min-h-44 items-center gap-6 self-start rounded-badge px-4 text-9 text-ink-muted hover:text-ink">
+      <main
+        id="main"
+        tabIndex={-1}
+        className="flex min-w-0 flex-1 flex-col gap-12 px-(--size-phone-gutter) pt-14 pb-20 outline-none"
+      >
+        <Link
+          href={back.href}
+          className="-ml-4 inline-flex min-h-44 items-center gap-6 self-start rounded-badge px-4 text-9 text-ink-muted hover:text-ink"
+        >
           <CaretLeft aria-hidden className="size-12" />
           {back.label}
         </Link>
         <header className="flex flex-col gap-4">
-          <h1 className="text-21 leading-30 font-700 tracking-title break-words">{plan ? plan.name : planId ? "Saved plan" : "Saved plans"}</h1>
+          <h1 className="text-21 leading-30 font-700 tracking-title break-words">
+            {plan ? plan.name : planId ? "Saved plan" : "Saved plans"}
+          </h1>
           {subtitle && <p className="text-9 text-ink-muted">{subtitle}</p>}
         </header>
         <RegistrationSheet />

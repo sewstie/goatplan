@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { buildRequest, type PlannerState } from "@/lib/store";
 import { solved, termFile } from "@/lib/store/testing/fixtures";
-import { cleanPlanName, createPlan, defaultPlanName, updatePlan, type PlanSource } from "./createPlan";
+import {
+  cleanPlanName,
+  createPlan,
+  defaultPlanName,
+  updatePlan,
+  type PlanSource,
+} from "./createPlan";
 import { designPlan } from "./testing";
 
 const SAVED_AT = new Date("2026-10-17T12:00:00Z");
@@ -20,12 +26,19 @@ function plannerState(changes: Partial<PlannerState> = {}): PlanSource {
     alternatives: {},
   };
   const state = { ...base, ...changes };
-  return { ...state, response: changes.response ?? solved(buildRequest(state)!) };
+  return {
+    ...state,
+    response: changes.response ?? solved(buildRequest(state)!),
+  };
 }
 
 describe("createPlan", () => {
   it("copies the shown schedule's sections, the courses, locks and preferences", () => {
-    const plan = createPlan(plannerState({ scheduleIndex: 1 }), { id: "p1", name: "Plan 1", savedAt: SAVED_AT })!;
+    const plan = createPlan(plannerState({ scheduleIndex: 1 }), {
+      id: "p1",
+      name: "Plan 1",
+      savedAt: SAVED_AT,
+    })!;
     expect(plan).toMatchObject({
       id: "p1",
       name: "Plan 1",
@@ -37,45 +50,81 @@ describe("createPlan", () => {
       preferences: { startsAfter: 540, blocked: [], onlyOpen: true },
       sortPreset: "fewestEarly",
     });
-    expect(plan.schedule.map((course) => [course.code, course.sections.map((item) => item.id)])).toEqual([
+    expect(
+      plan.schedule.map((course) => [
+        course.code,
+        course.sections.map((item) => item.id),
+      ]),
+    ).toEqual([
       ["AE 2320", ["AE 2320-CL01", "AE 2320-CX02"]],
       ["AE 2410", ["AE 2410-C01"]],
     ]);
   });
 
   it("keeps its own copy, so later changes to the term data don't touch it", () => {
-    const state = plannerState({ professorByCourse: { "AE 2320": "Ye Lu", "AB 1533": "Someone Else", "AE 2410": null } });
-    const plan = createPlan(state, { id: "p1", name: "Plan 1", savedAt: SAVED_AT })!;
+    const state = plannerState({
+      professorByCourse: {
+        "AE 2320": "Ye Lu",
+        "AB 1533": "Someone Else",
+        "AE 2410": null,
+      },
+    });
+    const plan = createPlan(state, {
+      id: "p1",
+      name: "Plan 1",
+      savedAt: SAVED_AT,
+    })!;
     state.term!.courses[0].sections[0].enrolled = 999;
     state.preferences.blocked.push({ day: "Mon", start: 600, end: 660 });
     state.professorByCourse["AE 2320"] = null;
     expect(plan.schedule[0].sections[0].enrolled).toBe(10);
     expect(plan.preferences.blocked).toEqual([]);
-    expect(plan.professorByCourse).toEqual({ "AE 2320": "Ye Lu", "AE 2410": null });
+    expect(plan.professorByCourse).toEqual({
+      "AE 2320": "Ye Lu",
+      "AE 2410": null,
+    });
   });
 
   it("saves the same-time alternative the student picked", () => {
     const state = plannerState();
     const key = "AE 2320-CL01+AE 2320-CX01|AE 2410-C01";
     const plan = createPlan(
-      { ...state, alternatives: { [key]: { "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"] } } },
+      {
+        ...state,
+        alternatives: {
+          [key]: { "AE 2320": ["AE 2320-CL01", "AE 2320-CX02"] },
+        },
+      },
       { id: "p1", name: "Plan 1", savedAt: SAVED_AT },
     )!;
-    expect(plan.schedule[0].sections.map((item) => item.code)).toEqual(["CL01", "CX02"]);
+    expect(plan.schedule[0].sections.map((item) => item.code)).toEqual([
+      "CL01",
+      "CX02",
+    ]);
   });
 
   it("returns null when there's no schedule or no loaded term", () => {
     const details = { id: "p1", name: "Plan 1", savedAt: SAVED_AT };
-    expect(createPlan({ ...plannerState(), response: null }, details)).toBeNull();
+    expect(
+      createPlan({ ...plannerState(), response: null }, details),
+    ).toBeNull();
     expect(createPlan({ ...plannerState(), term: null }, details)).toBeNull();
-    expect(createPlan({ ...plannerState(), termId: "2027-D" }, details)).toBeNull();
+    expect(
+      createPlan({ ...plannerState(), termId: "2027-D" }, details),
+    ).toBeNull();
   });
 
   it("updates a plan in place, keeping its id and name", () => {
     const plan = designPlan({ termId: "2027-C" });
     const updated = updatePlan(plan, plannerState(), SAVED_AT)!;
-    expect(updated).toMatchObject({ id: plan.id, name: plan.name, courses: ["AE 2320", "AE 2410"] });
-    expect(updatePlan(designPlan({ termId: "2027-D" }), plannerState(), SAVED_AT)).toBeNull();
+    expect(updated).toMatchObject({
+      id: plan.id,
+      name: plan.name,
+      courses: ["AE 2320", "AE 2410"],
+    });
+    expect(
+      updatePlan(designPlan({ termId: "2027-D" }), plannerState(), SAVED_AT),
+    ).toBeNull();
   });
 });
 

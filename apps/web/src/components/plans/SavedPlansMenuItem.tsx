@@ -11,7 +11,11 @@ type SavedPlansMenuItemProps = {
   children: ReactNode;
 };
 
-export function SavedPlansMenuItem({ href, onSelect, children }: SavedPlansMenuItemProps) {
+export function SavedPlansMenuItem({
+  href,
+  onSelect,
+  children,
+}: SavedPlansMenuItemProps) {
   return (
     <li>
       {href ? (
