@@ -14,17 +14,33 @@ export function AddBlockedTimeButton() {
   const setPreferences = usePlanner((state) => state.setPreferences);
   const [open, setOpen] = useState(false);
 
-  function handleSubmit(days: Day[], start: number, end: number, label: string) {
+  function handleSubmit(
+    days: Day[],
+    start: number,
+    end: number,
+    label: string,
+  ) {
     setPreferences({ blocked: addBlocked(blocked, days, start, end, label) });
     setOpen(false);
   }
 
   return (
     <>
-      <Button variant="soft" size="sm" icon={<Plus aria-hidden />} aria-label="Add a blocked time" onClick={() => setOpen(true)} className="min-h-36">
+      <Button
+        variant="soft"
+        size="sm"
+        icon={<Plus aria-hidden />}
+        aria-label="Add a blocked time"
+        onClick={() => setOpen(true)}
+        className="min-h-36"
+      >
         Add
       </Button>
-      <BlockTimeDialog open={open} onClose={() => setOpen(false)} onSubmit={handleSubmit} />
+      <BlockTimeDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        onSubmit={handleSubmit}
+      />
     </>
   );
 }

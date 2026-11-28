@@ -3,7 +3,12 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Chip } from "@/components/ui/Chip";
 import { usePlanner } from "@/lib/store";
-import { groupBlocked, groupDays, groupTimes, removeGroup } from "./blockedTimes";
+import {
+  groupBlocked,
+  groupDays,
+  groupTimes,
+  removeGroup,
+} from "./blockedTimes";
 
 type BlockedTimeChipsProps = {
   /** Called after the last pill is removed, to move focus somewhere useful. */

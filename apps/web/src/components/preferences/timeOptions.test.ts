@@ -21,7 +21,9 @@ describe("startsAfterOptions", () => {
     expect(options[0]).toEqual({ value: "0", label: "Any time" });
     expect(options[1]).toEqual({ value: "420", label: "7:00 AM" });
     expect(options.at(-1)).toEqual({ value: "780", label: "1:00 PM" });
-    expect(options.find((option) => option.value === "540")?.label).toBe("9:00 AM");
+    expect(options.find((option) => option.value === "540")?.label).toBe(
+      "9:00 AM",
+    );
     expect(options).toHaveLength(14);
   });
 
@@ -34,7 +36,9 @@ describe("startsAfterOptions", () => {
   });
 
   it("doesn't add Any time twice", () => {
-    expect(startsAfterOptions(ANY_TIME).filter((option) => option.value === "0")).toHaveLength(1);
+    expect(
+      startsAfterOptions(ANY_TIME).filter((option) => option.value === "0"),
+    ).toHaveLength(1);
   });
 });
 

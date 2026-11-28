@@ -8,7 +8,12 @@ import type { Day } from "@/lib/data/types";
 import { DayCheckbox } from "./DayCheckbox";
 import { blockEndOptions, blockStartOptions, endAfter } from "./timeOptions";
 
-export type BlockTimeValues = { days: Day[]; start: number; end: number; label?: string };
+export type BlockTimeValues = {
+  days: Day[];
+  start: number;
+  end: number;
+  label?: string;
+};
 
 type BlockTimeFormProps = {
   id: string;
@@ -25,14 +30,23 @@ type BlockTimeFormProps = {
 const START_OPTIONS = blockStartOptions();
 
 /** A name, days and a time range to keep free. The dialog's footer holds its submit button. */
-export function BlockTimeForm({ id, onSubmit, onError, errorId, nameRef, initial }: BlockTimeFormProps) {
+export function BlockTimeForm({
+  id,
+  onSubmit,
+  onError,
+  errorId,
+  nameRef,
+  initial,
+}: BlockTimeFormProps) {
   const [label, setLabel] = useState(initial?.label ?? "");
   const [days, setDays] = useState<Day[]>(initial?.days ?? []);
   const [start, setStart] = useState(initial?.start ?? 12 * 60);
   const [end, setEnd] = useState(initial?.end ?? 13 * 60);
 
   function toggleDay(day: Day, checked: boolean) {
-    setDays((current) => (checked ? [...current, day] : current.filter((item) => item !== day)));
+    setDays((current) =>
+      checked ? [...current, day] : current.filter((item) => item !== day),
+    );
     if (checked) onError(null);
   }
 
@@ -46,7 +60,12 @@ export function BlockTimeForm({ id, onSubmit, onError, errorId, nameRef, initial
   }
 
   return (
-    <form id={id} noValidate onSubmit={handleSubmit} className="flex flex-col gap-14 pt-8">
+    <form
+      id={id}
+      noValidate
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-14 pt-8"
+    >
       <TextInput
         ref={nameRef}
         label="Name (optional)"
@@ -57,7 +76,9 @@ export function BlockTimeForm({ id, onSubmit, onError, errorId, nameRef, initial
         onChange={(event) => setLabel(event.target.value)}
       />
       <fieldset aria-describedby={errorId} className="flex flex-col">
-        <legend className="mb-6 text-10 leading-14-5 font-650 text-ink">Days</legend>
+        <legend className="mb-6 text-10 leading-14-5 font-650 text-ink">
+          Days
+        </legend>
         <div className="flex flex-wrap gap-5">
           {WEEK.map((day) => (
             <DayCheckbox
@@ -80,7 +101,12 @@ export function BlockTimeForm({ id, onSubmit, onError, errorId, nameRef, initial
             setEnd((current) => endAfter(next, current));
           }}
         />
-        <ListboxField label="To" options={blockEndOptions(start)} value={String(end)} onChange={(value) => setEnd(Number(value))} />
+        <ListboxField
+          label="To"
+          options={blockEndOptions(start)}
+          value={String(end)}
+          onChange={(value) => setEnd(Number(value))}
+        />
       </div>
     </form>
   );

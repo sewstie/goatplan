@@ -17,7 +17,12 @@ type BlockTimeDialogProps = {
 };
 
 /** The "Block a time" form: a bottom Sheet on a phone, a Dialog on tablet and up. */
-export function BlockTimeDialog({ open, onClose, onSubmit, initial }: BlockTimeDialogProps) {
+export function BlockTimeDialog({
+  open,
+  onClose,
+  onSubmit,
+  initial,
+}: BlockTimeDialogProps) {
   // A new key each time it opens, so the form starts over.
   const [formKey, setFormKey] = useState(0);
   const [wasOpen, setWasOpen] = useState(open);
@@ -57,7 +62,11 @@ export function BlockTimeDialog({ open, onClose, onSubmit, initial }: BlockTimeD
   const footer = (
     <>
       {error && (
-        <p id={errorId} role="alert" className="mr-auto self-center text-9 leading-13-5 text-warning">
+        <p
+          id={errorId}
+          role="alert"
+          className="mr-auto self-center text-9 leading-13-5 text-warning"
+        >
           {error}
         </p>
       )}

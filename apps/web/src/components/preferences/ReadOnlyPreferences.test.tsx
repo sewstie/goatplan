@@ -15,13 +15,22 @@ const LABELS: [SortPresetId, string][] = [
 ];
 
 describe("ReadOnlyPreferences", () => {
-  it.each(LABELS)("shows %s as “Sort %s”, with no description and nothing to pick", (sortPreset, label) => {
-    render(<ReadOnlyPreferences plan={designPlan({ sortPreset })} />);
+  it.each(LABELS)(
+    "shows %s as “Sort %s”, with no description and nothing to pick",
+    (sortPreset, label) => {
+      render(<ReadOnlyPreferences plan={designPlan({ sortPreset })} />);
 
-    const preferences = screen.getByRole("group", { name: "Preferences" });
-    expect(preferences).toHaveTextContent(`Sort${label}`);
-    expect(within(preferences).getByText(label, { exact: true })).toBeInTheDocument();
-    expect(preferences).not.toHaveTextContent(/as (late|early) as possible|Fewer|balance|Less free time/);
-    expect(within(preferences).queryByRole("combobox")).not.toBeInTheDocument();
-  });
+      const preferences = screen.getByRole("group", { name: "Preferences" });
+      expect(preferences).toHaveTextContent(`Sort${label}`);
+      expect(
+        within(preferences).getByText(label, { exact: true }),
+      ).toBeInTheDocument();
+      expect(preferences).not.toHaveTextContent(
+        /as (late|early) as possible|Fewer|balance|Less free time/,
+      );
+      expect(
+        within(preferences).queryByRole("combobox"),
+      ).not.toBeInTheDocument();
+    },
+  );
 });

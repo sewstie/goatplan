@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { SORT_PRESETS, SORT_PRESET_IDS } from "@/lib/store/sortPresets";
 import type { SortPresetId } from "@/lib/store/types";
-import { scheduleBadges, type BadgeMeeting } from "@/components/schedule/scheduleCopy";
+import {
+  scheduleBadges,
+  type BadgeMeeting,
+} from "@/components/schedule/scheduleCopy";
 
 /**
  * Ticket 05: Honest sorting end to end.
@@ -24,11 +27,15 @@ describe("ticket 05: sort menu labels and descriptions", () => {
   });
 
   it("Latest start description is 'Classes start as late as possible each day'", () => {
-    expect(SORT_PRESETS.latestStart.description).toBe("Classes start as late as possible each day");
+    expect(SORT_PRESETS.latestStart.description).toBe(
+      "Classes start as late as possible each day",
+    );
   });
 
   it("Earliest finish description is 'Classes end as early as possible each day'", () => {
-    expect(SORT_PRESETS.earliestFinish.description).toBe("Classes end as early as possible each day");
+    expect(SORT_PRESETS.earliestFinish.description).toBe(
+      "Classes end as early as possible each day",
+    );
   });
 
   it("every preset has a non-empty label and description", () => {
@@ -58,11 +65,14 @@ describe("ticket 05: leading badge correctness", () => {
     ["fewestGaps", /free between classes$|^No gaps between classes$/],
   ];
 
-  it.each(EXPECTED_LEAD)("%s has its primary-measure badge first", (preset, pattern) => {
-    const badges = scheduleBadges(meetings, {}, preset);
-    expect(badges.length).toBeGreaterThan(0);
-    expect(badges[0]).toMatch(pattern);
-  });
+  it.each(EXPECTED_LEAD)(
+    "%s has its primary-measure badge first",
+    (preset, pattern) => {
+      const badges = scheduleBadges(meetings, {}, preset);
+      expect(badges.length).toBeGreaterThan(0);
+      expect(badges[0]).toMatch(pattern);
+    },
+  );
 
   it("bestOverall has no forced lead badge", () => {
     const badges = scheduleBadges(meetings, {}, "bestOverall");
@@ -143,13 +153,19 @@ describe("ticket 05: sort presets have correct primary measures", () => {
 function parseStartTime(badge: string): number {
   const match = badge.match(/Starts (\d{1,2})(?::(\d{2}))? (AM|PM)/);
   if (!match) throw new Error(`Cannot parse start time from "${badge}"`);
-  return ((Number(match[1]) % 12) + (match[3] === "PM" ? 12 : 0)) * 60 + Number(match[2] ?? 0);
+  return (
+    ((Number(match[1]) % 12) + (match[3] === "PM" ? 12 : 0)) * 60 +
+    Number(match[2] ?? 0)
+  );
 }
 
 function parseFinishTime(badge: string): number {
   const match = badge.match(/Done by (\d{1,2})(?::(\d{2}))? (AM|PM)/);
   if (!match) throw new Error(`Cannot parse finish time from "${badge}"`);
-  return ((Number(match[1]) % 12) + (match[3] === "PM" ? 12 : 0)) * 60 + Number(match[2] ?? 0);
+  return (
+    ((Number(match[1]) % 12) + (match[3] === "PM" ? 12 : 0)) * 60 +
+    Number(match[2] ?? 0)
+  );
 }
 
 function parseDaysOff(badge: string): number {

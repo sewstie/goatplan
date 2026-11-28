@@ -5,7 +5,13 @@ import type { SavedPlan } from "@/lib/plans";
 import { SORT_PRESETS } from "@/lib/store";
 import { groupBlocked, groupDays, groupTimes } from "./blockedTimes";
 
-export function ReadOnlyPreferences({ plan, withSort = true }: { plan: SavedPlan; withSort?: boolean }) {
+export function ReadOnlyPreferences({
+  plan,
+  withSort = true,
+}: {
+  plan: SavedPlan;
+  withSort?: boolean;
+}) {
   const { startsAfter, blocked, onlyOpen } = plan.preferences;
   const shared = plan.id === "__temporary__";
   return (
@@ -14,19 +20,40 @@ export function ReadOnlyPreferences({ plan, withSort = true }: { plan: SavedPlan
       aria-label="Preferences"
       className="flex min-h-35.5 shrink-0 flex-wrap items-center gap-7 px-2 py-1.5"
     >
-      <span className="text-9 leading-13 font-600 text-ink-muted">Preferences</span>
-      <Chip label="Starts after" value={startsAfter === 0 ? "Any time" : formatTime(startsAfter)} />
-      {shared && blocked.length > 0 && <Chip label="Blocked" value={`${blocked.length} time ${blocked.length === 1 ? "block" : "blocks"}`} />}
-      {!shared && groupBlocked(blocked).map((group) => (
+      <span className="text-9 leading-13 font-600 text-ink-muted">
+        Preferences
+      </span>
+      <Chip
+        label="Starts after"
+        value={startsAfter === 0 ? "Any time" : formatTime(startsAfter)}
+      />
+      {shared && blocked.length > 0 && (
         <Chip
-          key={`${group.label}-${group.start}-${group.end}`}
           label="Blocked"
-          value={group.label ?? groupDays(group)}
-          detail={group.label ? `· ${groupDays(group)} ${groupTimes(group)}` : groupTimes(group)}
+          value={`${blocked.length} time ${blocked.length === 1 ? "block" : "blocks"}`}
         />
-      ))}
+      )}
+      {!shared &&
+        groupBlocked(blocked).map((group) => (
+          <Chip
+            key={`${group.label}-${group.start}-${group.end}`}
+            label="Blocked"
+            value={group.label ?? groupDays(group)}
+            detail={
+              group.label
+                ? `· ${groupDays(group)} ${groupTimes(group)}`
+                : groupTimes(group)
+            }
+          />
+        ))}
       <OnlyOpenPill checked={onlyOpen} disabled onChange={() => {}} />
-      {withSort && <Chip label="Sort" value={SORT_PRESETS[plan.sortPreset].label} className="ml-auto" />}
+      {withSort && (
+        <Chip
+          label="Sort"
+          value={SORT_PRESETS[plan.sortPreset].label}
+          className="ml-auto"
+        />
+      )}
     </div>
   );
 }

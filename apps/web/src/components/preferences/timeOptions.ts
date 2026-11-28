@@ -15,7 +15,10 @@ export function timesBetween(from: number, to: number, step = STEP): number[] {
   return times;
 }
 
-const toOption = (minutes: number): SelectOption => ({ value: String(minutes), label: formatTime(minutes) });
+const toOption = (minutes: number): SelectOption => ({
+  value: String(minutes),
+  label: formatTime(minutes),
+});
 
 /**
  * "Any time", then 7:00 AM to 1:00 PM by half hours. A value set elsewhere (a fix can pick any
@@ -27,7 +30,10 @@ export function startsAfterOptions(current: number): SelectOption[] {
     times.push(current);
     times.sort((a, b) => a - b);
   }
-  return [{ value: String(ANY_TIME), label: "Any time" }, ...times.map(toOption)];
+  return [
+    { value: String(ANY_TIME), label: "Any time" },
+    ...times.map(toOption),
+  ];
 }
 
 /** Choices for the start and end of a blocked time. */

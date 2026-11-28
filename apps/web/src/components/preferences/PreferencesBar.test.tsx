@@ -3,7 +3,11 @@ import userEvent from "@testing-library/user-event";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { SORT_PRESETS } from "@/lib/store";
 import { solved } from "@/lib/store/testing/fixtures";
-import { polyfillDialog, startTestPlanner, waitForSolve } from "@/components/sections/testing/plannerStore";
+import {
+  polyfillDialog,
+  startTestPlanner,
+  waitForSolve,
+} from "@/components/sections/testing/plannerStore";
 import { DrawingBar } from "@/components/schedule/DrawingBar";
 import { PreferencesBar } from "./PreferencesBar";
 import { SortSelect } from "./SortSelect";
@@ -13,10 +17,10 @@ async function choose(scope: HTMLElement, field: string, option: string) {
   await userEvent.click(screen.getByRole("option", { name: option }));
 }
 
-
 vi.mock("@/lib/store", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/store")>()),
-  usePlanner: (await import("@/components/sections/testing/plannerStore")).useTestPlanner,
+  usePlanner: (await import("@/components/sections/testing/plannerStore"))
+    .useTestPlanner,
 }));
 
 beforeAll(polyfillDialog);
@@ -25,7 +29,10 @@ beforeAll(polyfillDialog);
 function renderWithBar() {
   render(
     <>
-      <><PreferencesBar /><SortSelect /></>
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>
       <DrawingBar />
     </>,
   );
@@ -33,7 +40,9 @@ function renderWithBar() {
 
 async function openForm() {
   await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
-  await userEvent.click(screen.getByRole("button", { name: "Type a time instead" }));
+  await userEvent.click(
+    screen.getByRole("button", { name: "Type a time instead" }),
+  );
   return screen.getByRole("dialog", { name: "Block a time" });
 }
 
@@ -45,12 +54,22 @@ const work = [
 describe("PreferencesBar", () => {
   it("changes the start time from the same kind of list as Sort", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
-    render(<><PreferencesBar /><SortSelect /></>);
+    render(
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>,
+    );
 
     const select = screen.getByRole("combobox", { name: "Starts after" });
     expect(select).toHaveTextContent("Starts afterAny time");
     await userEvent.click(select);
-    await userEvent.click(within(screen.getByRole("listbox", { name: "Starts after" })).getByRole("option", { name: "10:00 AM" }));
+    await userEvent.click(
+      within(screen.getByRole("listbox", { name: "Starts after" })).getByRole(
+        "option",
+        { name: "10:00 AM" },
+      ),
+    );
     expect(select).toHaveTextContent("Starts after10:00 AM");
     expect(select).toHaveFocus();
 
@@ -63,11 +82,20 @@ describe("PreferencesBar", () => {
       courses: ["AE 2320"],
       preferences: { startsAfter: 540, blocked: work, onlyOpen: true },
     });
-    render(<><PreferencesBar /><SortSelect /></>);
+    render(
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>,
+    );
 
     expect(screen.getByText("Tue, Fri")).toBeInTheDocument();
     expect(screen.getByText("2 PM–4 PM")).toBeInTheDocument();
-    await userEvent.click(screen.getByRole("button", { name: "Remove blocked time Tue, Fri 2 PM–4 PM" }));
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: "Remove blocked time Tue, Fri 2 PM–4 PM",
+      }),
+    );
 
     expect(store.getState().preferences.blocked).toEqual([]);
     expect(screen.queryByText("Tue, Fri")).not.toBeInTheDocument();
@@ -76,13 +104,26 @@ describe("PreferencesBar", () => {
   it("moves focus to the next pill, then to Block a time, as pills are removed", async () => {
     await startTestPlanner({
       courses: ["AE 2320"],
-      preferences: { startsAfter: 540, blocked: [...work, { day: "Mon", start: 720, end: 780 }], onlyOpen: true },
+      preferences: {
+        startsAfter: 540,
+        blocked: [...work, { day: "Mon", start: 720, end: 780 }],
+        onlyOpen: true,
+      },
     });
-    render(<><PreferencesBar /><SortSelect /></>);
+    render(
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>,
+    );
 
-    screen.getByRole("button", { name: "Remove blocked time Tue, Fri 2 PM–4 PM" }).focus();
+    screen
+      .getByRole("button", { name: "Remove blocked time Tue, Fri 2 PM–4 PM" })
+      .focus();
     await userEvent.keyboard("{Enter}");
-    const lunch = screen.getByRole("button", { name: "Remove blocked time Mon 12 PM–1 PM" });
+    const lunch = screen.getByRole("button", {
+      name: "Remove blocked time Mon 12 PM–1 PM",
+    });
     expect(lunch).toHaveFocus();
 
     await userEvent.keyboard("{Enter}");
@@ -94,11 +135,17 @@ describe("PreferencesBar", () => {
     renderWithBar();
 
     const dialog = await openForm();
-    await userEvent.click(within(dialog).getByRole("checkbox", { name: "Monday" }));
-    await userEvent.click(within(dialog).getByRole("checkbox", { name: "Wednesday" }));
+    await userEvent.click(
+      within(dialog).getByRole("checkbox", { name: "Monday" }),
+    );
+    await userEvent.click(
+      within(dialog).getByRole("checkbox", { name: "Wednesday" }),
+    );
     await choose(dialog, "From", "10:00 AM");
     await choose(dialog, "To", "11:30 AM");
-    await userEvent.click(within(dialog).getByRole("button", { name: "Block time" }));
+    await userEvent.click(
+      within(dialog).getByRole("button", { name: "Block time" }),
+    );
 
     expect(store.getState().preferences.blocked).toEqual([
       { day: "Mon", start: 600, end: 690 },
@@ -114,14 +161,22 @@ describe("PreferencesBar", () => {
     renderWithBar();
 
     const dialog = await openForm();
-    const name = within(dialog).getByRole("textbox", { name: "Name (optional)" });
+    const name = within(dialog).getByRole("textbox", {
+      name: "Name (optional)",
+    });
     expect(name).toHaveValue("");
     await userEvent.type(name, "Work");
-    await userEvent.click(within(dialog).getByRole("checkbox", { name: "Tuesday" }));
-    await userEvent.click(within(dialog).getByRole("checkbox", { name: "Friday" }));
+    await userEvent.click(
+      within(dialog).getByRole("checkbox", { name: "Tuesday" }),
+    );
+    await userEvent.click(
+      within(dialog).getByRole("checkbox", { name: "Friday" }),
+    );
     await choose(dialog, "From", "2:00 PM");
     await choose(dialog, "To", "4:00 PM");
-    await userEvent.click(within(dialog).getByRole("button", { name: "Block time" }));
+    await userEvent.click(
+      within(dialog).getByRole("button", { name: "Block time" }),
+    );
 
     expect(store.getState().preferences.blocked).toEqual([
       { day: "Tue", start: 840, end: 960, label: "Work" },
@@ -129,7 +184,11 @@ describe("PreferencesBar", () => {
     ]);
     expect(screen.getByText("Work")).toBeInTheDocument();
     expect(screen.getByText("· Tue, Fri 2 PM–4 PM")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Remove blocked time Work, Tue, Fri 2 PM–4 PM" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", {
+        name: "Remove blocked time Work, Tue, Fri 2 PM–4 PM",
+      }),
+    ).toBeInTheDocument();
   });
 
   it("opens the block form with focus in the name field, not on Close", async () => {
@@ -137,8 +196,12 @@ describe("PreferencesBar", () => {
     renderWithBar();
 
     const dialog = await openForm();
-    expect(within(dialog).getByRole("textbox", { name: "Name (optional)" })).toHaveFocus();
-    expect(within(dialog).getByRole("button", { name: "Close" })).not.toHaveFocus();
+    expect(
+      within(dialog).getByRole("textbox", { name: "Name (optional)" }),
+    ).toHaveFocus();
+    expect(
+      within(dialog).getByRole("button", { name: "Close" }),
+    ).not.toHaveFocus();
   });
 
   it("asks for a day before blocking a time", async () => {
@@ -146,9 +209,13 @@ describe("PreferencesBar", () => {
     renderWithBar();
 
     const dialog = await openForm();
-    await userEvent.click(within(dialog).getByRole("button", { name: "Block time" }));
+    await userEvent.click(
+      within(dialog).getByRole("button", { name: "Block time" }),
+    );
 
-    expect(within(dialog).getByRole("alert")).toHaveTextContent("Pick at least one day.");
+    expect(within(dialog).getByRole("alert")).toHaveTextContent(
+      "Pick at least one day.",
+    );
     expect(store.getState().preferences.blocked).toEqual([]);
   });
 
@@ -162,7 +229,9 @@ describe("PreferencesBar", () => {
     const to = within(dialog).getByRole("combobox", { name: "To" });
     expect(to).toHaveTextContent("4:00 PM");
     await userEvent.click(to);
-    expect(screen.queryByRole("option", { name: "3:00 PM" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("option", { name: "3:00 PM" }),
+    ).not.toBeInTheDocument();
     expect(screen.getByRole("option", { name: "4:00 PM" })).toBeInTheDocument();
   });
 
@@ -172,18 +241,26 @@ describe("PreferencesBar", () => {
 
     const toggle = screen.getByRole("button", { name: "Block a time" });
     expect(toggle).toHaveAttribute("aria-pressed", "false");
-    expect(screen.queryByRole("group", { name: "Drawing mode" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("group", { name: "Drawing mode" }),
+    ).not.toBeInTheDocument();
     await userEvent.click(toggle);
 
     expect(store.getState().drawing).toBe(true);
     expect(toggle).toHaveAccessibleName("Drawing busy times");
     expect(toggle).toHaveAttribute("aria-pressed", "true");
-    expect(screen.getByRole("group", { name: "Drawing mode" })).toHaveTextContent("Drag on the calendar to block time, or start on a blocked time to erase it·Type a time instead·Done");
+    expect(
+      screen.getByRole("group", { name: "Drawing mode" }),
+    ).toHaveTextContent(
+      "Drag on the calendar to block time, or start on a blocked time to erase it·Type a time instead·Done",
+    );
 
     await userEvent.click(toggle);
     expect(store.getState().drawing).toBe(false);
     expect(toggle).toHaveAccessibleName("Block a time");
-    expect(screen.queryByRole("group", { name: "Drawing mode" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("group", { name: "Drawing mode" }),
+    ).not.toBeInTheDocument();
   });
 
   it("leaves drawing mode with Done or Escape and puts focus back on the toggle", async () => {
@@ -208,13 +285,20 @@ describe("PreferencesBar", () => {
 
     const dialog = await openForm();
     expect(store.getState().drawing).toBe(false);
-    await userEvent.click(within(dialog).getByRole("button", { name: "Cancel" }));
+    await userEvent.click(
+      within(dialog).getByRole("button", { name: "Cancel" }),
+    );
     expect(screen.getByRole("button", { name: "Block a time" })).toHaveFocus();
   });
 
   it("turns Only open sections off", async () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
-    render(<><PreferencesBar /><SortSelect /></>);
+    render(
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>,
+    );
 
     const toggle = screen.getByRole("switch", { name: "Only open sections" });
     expect(toggle).toBeChecked();
@@ -226,7 +310,12 @@ describe("PreferencesBar", () => {
 
   it("shows Sort with the current order and lists all six orders in table order", async () => {
     await startTestPlanner({ courses: ["AE 2320"], sortPreset: "fewestEarly" });
-    render(<><PreferencesBar /><SortSelect /></>);
+    render(
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>,
+    );
 
     const sort = screen.getByRole("combobox", { name: "Sort" });
     expect(sort).toHaveTextContent("SortFewest early classes");
@@ -250,24 +339,39 @@ describe("PreferencesBar", () => {
       expect(option).toHaveAccessibleDescription(orders[index][1]);
       expect(option).toHaveTextContent(orders[index].join(""));
     });
-    expect(within(list).getByRole("option", { selected: true })).toHaveTextContent("Fewest early classes");
+    expect(
+      within(list).getByRole("option", { selected: true }),
+    ).toHaveTextContent("Fewest early classes");
   });
 
   it("picks an order from the keyboard, solves by its measure, shows schedule 1 and keeps focus on Sort", async () => {
-    const { store, requests } = await startTestPlanner({ courses: ["AE 2320"], sortPreset: "fewestEarly" });
+    const { store, requests } = await startTestPlanner({
+      courses: ["AE 2320"],
+      sortPreset: "fewestEarly",
+    });
     store.getState().setScheduleIndex(1);
-    render(<><PreferencesBar /><SortSelect /></>);
+    render(
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>,
+    );
 
     const sort = screen.getByRole("combobox", { name: "Sort" });
     sort.focus();
     await userEvent.keyboard("{Enter}");
     await userEvent.keyboard("L");
-    expect(sort).toHaveAttribute("aria-activedescendant", screen.getByRole("option", { name: "Latest start" }).id);
+    expect(sort).toHaveAttribute(
+      "aria-activedescendant",
+      screen.getByRole("option", { name: "Latest start" }).id,
+    );
     await userEvent.keyboard("{Enter}");
 
     expect(store.getState().sortPreset).toBe("latestStart");
     await waitForSolve(store);
-    expect(requests.at(-1)?.sort?.primary).toBe(SORT_PRESETS.latestStart.primary);
+    expect(requests.at(-1)?.sort?.primary).toBe(
+      SORT_PRESETS.latestStart.primary,
+    );
     expect(store.getState().scheduleIndex).toBe(0);
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Sort" })).toBe(sort);
@@ -282,11 +386,18 @@ describe("PreferencesBar", () => {
       {
         solve: (request) =>
           request.sort?.primary === SORT_PRESETS.fewestGaps.primary
-            ? new Promise((resolve) => (release = () => resolve(solved(request))))
+            ? new Promise(
+                (resolve) => (release = () => resolve(solved(request))),
+              )
             : solved(request),
       },
     );
-    render(<><PreferencesBar /><SortSelect /></>);
+    render(
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>,
+    );
 
     await userEvent.click(screen.getByRole("combobox", { name: "Sort" }));
     await userEvent.click(screen.getByRole("option", { name: "Most compact" }));
@@ -302,8 +413,16 @@ describe("PreferencesBar", () => {
   });
 
   it("keeps the order on Escape", async () => {
-    const { store } = await startTestPlanner({ courses: ["AE 2320"], sortPreset: "bestOverall" });
-    render(<><PreferencesBar /><SortSelect /></>);
+    const { store } = await startTestPlanner({
+      courses: ["AE 2320"],
+      sortPreset: "bestOverall",
+    });
+    render(
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>,
+    );
 
     const sort = screen.getByRole("combobox", { name: "Sort" });
     sort.focus();
@@ -318,7 +437,10 @@ describe("PreferencesBar", () => {
     await startTestPlanner({ courses: ["AE 2320"] });
     render(
       <>
-        <><PreferencesBar /><SortSelect /></>
+        <>
+          <PreferencesBar />
+          <SortSelect />
+        </>
         <button type="button">After the row</button>
       </>,
     );
@@ -337,13 +459,26 @@ describe("PreferencesBar", () => {
       {
         solve: (request) => {
           const response = solved(request);
-          return response.ok ? { ...response, total: 1, schedules: response.schedules.slice(0, 1) } : response;
+          return response.ok
+            ? {
+                ...response,
+                total: 1,
+                schedules: response.schedules.slice(0, 1),
+              }
+            : response;
         },
       },
     );
-    render(<><PreferencesBar /><SortSelect /></>);
+    render(
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>,
+    );
 
-    expect(screen.queryByRole("combobox", { name: "Sort" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("combobox", { name: "Sort" }),
+    ).not.toBeInTheDocument();
   });
 
   it("hides Sort once a change leaves only one schedule", async () => {
@@ -352,17 +487,31 @@ describe("PreferencesBar", () => {
       {
         solve: (request) => {
           const response = solved(request);
-          if (!response.ok || request.preferences?.startsAfter !== 600) return response;
-          return { ...response, total: 1, schedules: response.schedules.slice(0, 1) };
+          if (!response.ok || request.preferences?.startsAfter !== 600)
+            return response;
+          return {
+            ...response,
+            total: 1,
+            schedules: response.schedules.slice(0, 1),
+          };
         },
       },
     );
-    render(<><PreferencesBar /><SortSelect /></>);
+    render(
+      <>
+        <PreferencesBar />
+        <SortSelect />
+      </>,
+    );
     expect(screen.getByRole("combobox", { name: "Sort" })).toBeInTheDocument();
 
     store.getState().setPreferences({ startsAfter: 600 });
     await waitForSolve(store);
 
-    await waitFor(() => expect(screen.queryByRole("combobox", { name: "Sort" })).not.toBeInTheDocument());
+    await waitFor(() =>
+      expect(
+        screen.queryByRole("combobox", { name: "Sort" }),
+      ).not.toBeInTheDocument(),
+    );
   });
 });

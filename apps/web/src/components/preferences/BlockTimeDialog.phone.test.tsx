@@ -1,7 +1,10 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
-import { polyfillDialog, startTestPlanner } from "@/components/sections/testing/plannerStore";
+import {
+  polyfillDialog,
+  startTestPlanner,
+} from "@/components/sections/testing/plannerStore";
 import { DrawingBar } from "@/components/schedule/DrawingBar";
 import { AddBlockedTimeButton } from "./AddBlockedTimeButton";
 import { BlockTimeButton } from "./BlockTimeButton";
@@ -18,7 +21,8 @@ async function choose(scope: HTMLElement, field: string, option: string) {
 
 vi.mock("@/lib/store", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/store")>()),
-  usePlanner: (await import("@/components/sections/testing/plannerStore")).useTestPlanner,
+  usePlanner: (await import("@/components/sections/testing/plannerStore"))
+    .useTestPlanner,
 }));
 
 beforeAll(polyfillDialog);
@@ -26,7 +30,10 @@ beforeAll(polyfillDialog);
 const realMatchMedia = window.matchMedia;
 
 afterEach(() => {
-  Object.defineProperty(window, "matchMedia", { writable: true, value: realMatchMedia });
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: realMatchMedia,
+  });
 });
 
 function mockPhoneViewport() {
@@ -63,7 +70,9 @@ function mockTabletViewport() {
 
 /** The <dialog> element behind the "Block a time" surface, whichever surface it is. */
 function blockDialog(): HTMLDialogElement {
-  return screen.getByRole("dialog", { name: "Block a time" }).closest("dialog")!;
+  return screen
+    .getByRole("dialog", { name: "Block a time" })
+    .closest("dialog")!;
 }
 
 describe("The Preferences screen's Add on a phone", () => {
@@ -72,7 +81,9 @@ describe("The Preferences screen's Add on a phone", () => {
     await startTestPlanner({ courses: ["AE 2320"] });
     render(<AddBlockedTimeButton />);
 
-    await userEvent.click(screen.getByRole("button", { name: "Add a blocked time" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Add a blocked time" }),
+    );
 
     const surface = blockDialog();
     // The bottom sheet spans the screen width and is rounded only along its top edge.
@@ -87,9 +98,13 @@ describe("The Preferences screen's Add on a phone", () => {
     await startTestPlanner({ courses: ["AE 2320"] });
     render(<AddBlockedTimeButton />);
 
-    await userEvent.click(screen.getByRole("button", { name: "Add a blocked time" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Add a blocked time" }),
+    );
 
-    expect(screen.getByRole("textbox", { name: "Name (optional)" })).not.toHaveFocus();
+    expect(
+      screen.getByRole("textbox", { name: "Name (optional)" }),
+    ).not.toHaveFocus();
   });
 
   it("still blocks a time from the sheet's form", async () => {
@@ -97,14 +112,22 @@ describe("The Preferences screen's Add on a phone", () => {
     const { store } = await startTestPlanner({ courses: ["AE 2320"] });
     render(<AddBlockedTimeButton />);
 
-    await userEvent.click(screen.getByRole("button", { name: "Add a blocked time" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Add a blocked time" }),
+    );
     const sheet = screen.getByRole("dialog", { name: "Block a time" });
-    await userEvent.click(within(sheet).getByRole("checkbox", { name: "Monday" }));
+    await userEvent.click(
+      within(sheet).getByRole("checkbox", { name: "Monday" }),
+    );
     await choose(sheet, "From", "10:00 AM");
     await choose(sheet, "To", "11:30 AM");
-    await userEvent.click(within(sheet).getByRole("button", { name: "Block time" }));
+    await userEvent.click(
+      within(sheet).getByRole("button", { name: "Block time" }),
+    );
 
-    expect(store.getState().preferences.blocked).toEqual([{ day: "Mon", start: 600, end: 690 }]);
+    expect(store.getState().preferences.blocked).toEqual([
+      { day: "Mon", start: 600, end: 690 },
+    ]);
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 });
@@ -113,10 +136,17 @@ describe("Type a time instead on a tablet and wider", () => {
   it("opens the centered dialog, not a bottom sheet", async () => {
     mockTabletViewport();
     await startTestPlanner({ courses: ["AE 2320"] });
-    render(<><BlockTimeButton /><DrawingBar /></>);
+    render(
+      <>
+        <BlockTimeButton />
+        <DrawingBar />
+      </>,
+    );
 
     await userEvent.click(screen.getByRole("button", { name: "Block a time" }));
-    await userEvent.click(screen.getByRole("button", { name: "Type a time instead" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Type a time instead" }),
+    );
 
     const surface = blockDialog();
     // The centered dialog centers itself and is not the full-width, top-rounded bottom sheet.

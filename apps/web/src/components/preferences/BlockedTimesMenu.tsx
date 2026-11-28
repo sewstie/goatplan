@@ -5,13 +5,24 @@ import { CaretDown, X } from "@phosphor-icons/react/ssr";
 import { count } from "@/components/schedule/scheduleCopy";
 import { cx } from "@/components/ui/cx";
 import { usePlanner } from "@/lib/store";
-import { groupBlocked, groupDays, groupTimes, removeGroup } from "./blockedTimes";
+import {
+  groupBlocked,
+  groupDays,
+  groupTimes,
+  removeGroup,
+} from "./blockedTimes";
 
 /**
  * In drawing mode, all blocked times as one pill of a fixed width, "3 blocked times ⌄", with a list
  * to remove each, so drawing doesn't add pills and push the calendar down. A disclosure, not a menu.
  */
-export function BlockedTimesMenu({ className, above = false }: { className?: string; above?: boolean }) {
+export function BlockedTimesMenu({
+  className,
+  above = false,
+}: {
+  className?: string;
+  above?: boolean;
+}) {
   const blocked = usePlanner((state) => state.preferences.blocked);
   const changeBlocked = usePlanner((state) => state.changeBlocked);
   const groups = useMemo(() => groupBlocked(blocked), [blocked]);
@@ -38,7 +49,8 @@ export function BlockedTimesMenu({ className, above = false }: { className?: str
     const index = removedIndex.current;
     if (index === null) return;
     removedIndex.current = null;
-    const buttons = root.current?.querySelectorAll<HTMLButtonElement>("li button") ?? [];
+    const buttons =
+      root.current?.querySelectorAll<HTMLButtonElement>("li button") ?? [];
     const next = buttons[Math.min(index, buttons.length - 1)];
     if (next) next.focus();
     else document.getElementById("tutorial-block-time")?.focus();
@@ -57,7 +69,8 @@ export function BlockedTimesMenu({ className, above = false }: { className?: str
         trigger.current?.focus();
       }}
       onBlur={(event) => {
-        if (open && !root.current?.contains(event.relatedTarget as Node | null)) setOpen(false);
+        if (open && !root.current?.contains(event.relatedTarget as Node | null))
+          setOpen(false);
       }}
     >
       <button
@@ -70,19 +83,32 @@ export function BlockedTimesMenu({ className, above = false }: { className?: str
         className="inline-flex min-h-32 w-full min-w-112 cursor-pointer items-center justify-between gap-6 rounded-pill border border-line bg-surface px-10 text-9 leading-13 whitespace-nowrap text-ink enabled:hover:bg-surface-selected disabled:cursor-default disabled:text-ink-muted"
       >
         {empty ? "No blocked times" : count("blocked time", groups.length)}
-        {!empty && <CaretDown aria-hidden className={cx("size-10 transition-transform", open && "rotate-180")} />}
+        {!empty && (
+          <CaretDown
+            aria-hidden
+            className={cx("size-10 transition-transform", open && "rotate-180")}
+          />
+        )}
       </button>
       <div
         id={panelId}
         hidden={!open}
-        className={cx("absolute left-0 z-30 w-280 max-w-[calc(100vw-32px)] rounded-card border border-line-popover bg-surface p-6 shadow-popover", above ? "bottom-[calc(100%+--spacing(6))]" : "top-[calc(100%+--spacing(6))]")}
+        className={cx(
+          "absolute left-0 z-30 w-280 max-w-[calc(100vw-32px)] rounded-card border border-line-popover bg-surface p-6 shadow-popover",
+          above
+            ? "bottom-[calc(100%+--spacing(6))]"
+            : "top-[calc(100%+--spacing(6))]",
+        )}
       >
         <ul aria-label="Blocked times" className="flex flex-col">
           {groups.map((group, index) => {
             const days = groupDays(group);
             const times = groupTimes(group);
             return (
-              <li key={`${group.label}-${group.start}-${group.end}`} className="flex items-center gap-8 rounded-control py-2 pr-2 pl-8 text-9 leading-13">
+              <li
+                key={`${group.label}-${group.start}-${group.end}`}
+                className="flex items-center gap-8 rounded-control py-2 pr-2 pl-8 text-9 leading-13"
+              >
                 <span className="min-w-0 flex-1">
                   {group.label && <b className="font-650">{group.label} · </b>}
                   {days} {times}
@@ -92,7 +118,12 @@ export function BlockedTimesMenu({ className, above = false }: { className?: str
                   aria-label={`Remove blocked time ${group.label ? `${group.label}, ` : ""}${days} ${times}`}
                   onClick={() => {
                     removedIndex.current = index;
-                    changeBlocked(removeGroup(blocked, group), { days: group.days, start: group.start, end: group.end, erased: true });
+                    changeBlocked(removeGroup(blocked, group), {
+                      days: group.days,
+                      start: group.start,
+                      end: group.end,
+                      erased: true,
+                    });
                   }}
                   className="flex size-32 shrink-0 cursor-pointer items-center justify-center rounded-control text-ink hover:bg-surface-selected"
                 >
