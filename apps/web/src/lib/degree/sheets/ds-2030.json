@@ -10,130 +10,37 @@
   "totalUnits": 15,
   "residencyUnits": 8,
   "crossLists": [
-    [
-      "CS 2022",
-      "MA 2201"
-    ],
-    [
-      "CS 4032",
-      "MA 3257"
-    ],
-    [
-      "CS 4033",
-      "MA 3457"
-    ],
-    [
-      "CS 3043",
-      "SS 3043"
-    ],
-    [
-      "CS 4300",
-      "IMGD 4300"
-    ],
-    [
-      "CS 4343",
-      "DS 4343"
-    ],
-    [
-      "CS 4344",
-      "DS 4344"
-    ],
-    [
-      "CS 4345",
-      "DS 4345"
-    ],
-    [
-      "CS 4433",
-      "DS 4433"
-    ],
-    [
-      "CS 4801",
-      "ECE 4802"
-    ],
-    [
-      "IMGD 4100",
-      "CS 4100"
-    ],
-    [
-      "GOV 2314",
-      "ID 2314"
-    ],
-    [
-      "BME 4011",
-      "ECE 4011"
-    ],
-    [
-      "BME 4023",
-      "ECE 4023"
-    ],
-    [
-      "RBE 4322",
-      "ME 4322"
-    ],
-    [
-      "BCB 4004",
-      "MA 4603"
-    ],
-    [
-      "DS 4635",
-      "MA 4635"
-    ],
-    [
-      "PH 2550",
-      "AE 2550"
-    ],
-    [
-      "BB 1003",
-      "BCB 1003"
-    ],
-    [
-      "BB 3010",
-      "BCB 3010"
-    ],
-    [
-      "BB 4001",
-      "BCB 4001"
-    ],
-    [
-      "BB 4190",
-      "CH 4190"
-    ],
-    [
-      "BME 4503",
-      "ME 4503"
-    ],
-    [
-      "BME 4504",
-      "ME 4504"
-    ],
-    [
-      "BME 4606",
-      "ME 4606"
-    ],
-    [
-      "BME 4814",
-      "ME 4814"
-    ],
-    [
-      "CE 4063",
-      "CHE 4063"
-    ],
-    [
-      "CS 4342",
-      "DS 4342"
-    ],
-    [
-      "CS 4802",
-      "BCB 4002"
-    ],
-    [
-      "CS 4803",
-      "BCB 4003"
-    ],
-    [
-      "PY 2731",
-      "RE 2731"
-    ]
+    ["CS 2022", "MA 2201"],
+    ["CS 4032", "MA 3257"],
+    ["CS 4033", "MA 3457"],
+    ["CS 3043", "SS 3043"],
+    ["CS 4300", "IMGD 4300"],
+    ["CS 4343", "DS 4343"],
+    ["CS 4344", "DS 4344"],
+    ["CS 4345", "DS 4345"],
+    ["CS 4433", "DS 4433"],
+    ["CS 4801", "ECE 4802"],
+    ["IMGD 4100", "CS 4100"],
+    ["GOV 2314", "ID 2314"],
+    ["BME 4011", "ECE 4011"],
+    ["BME 4023", "ECE 4023"],
+    ["RBE 4322", "ME 4322"],
+    ["BCB 4004", "MA 4603"],
+    ["DS 4635", "MA 4635"],
+    ["PH 2550", "AE 2550"],
+    ["BB 1003", "BCB 1003"],
+    ["BB 3010", "BCB 3010"],
+    ["BB 4001", "BCB 4001"],
+    ["BB 4190", "CH 4190"],
+    ["BME 4503", "ME 4503"],
+    ["BME 4504", "ME 4504"],
+    ["BME 4606", "ME 4606"],
+    ["BME 4814", "ME 4814"],
+    ["CE 4063", "CHE 4063"],
+    ["CS 4342", "DS 4342"],
+    ["CS 4802", "BCB 4002"],
+    ["CS 4803", "BCB 4003"],
+    ["PY 2731", "RE 2731"]
   ],
   "huaSubjects": [
     "AR",
@@ -157,18 +64,12 @@
   "onlyOneSets": [
     {
       "id": "calculus-i",
-      "courses": [
-        "MA 1020",
-        "MA 1021"
-      ],
+      "courses": ["MA 1020", "MA 1021"],
       "reason": "No credit for both calculus I alternatives"
     },
     {
       "id": "calculus-ii",
-      "courses": [
-        "MA 1022",
-        "MA 1120"
-      ],
+      "courses": ["MA 1022", "MA 1120"],
       "reason": "No credit for both calculus II alternatives"
     }
   ],
@@ -177,42 +78,26 @@
       "id": "hua",
       "name": "Humanities and Arts",
       "minUnits": 2,
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "lines": [1, 2, 3, 4, 5, 6],
       "note": "Finish five HUA courses before Inquiry. Check the theme and sequence with your advisor."
     },
     {
       "id": "wpe",
       "name": "Wellness and Physical Education",
       "minUnits": 0.333333,
-      "lines": [
-        7
-      ]
+      "lines": [7]
     },
     {
       "id": "social-science",
       "name": "Social Science",
       "minUnits": 0.666667,
-      "lines": [
-        8,
-        9
-      ]
+      "lines": [8, 9]
     },
     {
       "id": "iqp",
       "name": "Interactive Qualifying Project",
       "minUnits": 1,
-      "lines": [
-        10,
-        11,
-        12
-      ]
+      "lines": [10, 11, 12]
     },
     {
       "id": "free-electives",
@@ -220,101 +105,59 @@
       "minUnits": 1,
       "creditPool": true,
       "poolCredits": 9,
-      "lines": [
-        13,
-        14,
-        15
-      ]
+      "lines": [13, 14, 15]
     },
     {
       "id": "ds",
       "name": "Data Science Core",
       "minUnits": 1.0,
-      "lines": [
-        16,
-        17,
-        18
-      ]
+      "lines": [16, 17, 18]
     },
     {
       "id": "cs-foundation",
       "name": "Computer Science Foundation",
       "minUnits": 1.0,
-      "lines": [
-        19,
-        20,
-        21
-      ],
+      "lines": [19, 20, 21],
       "note": "Algorithms and two introductory or approved elective courses. At most one 1000-level course."
     },
     {
       "id": "math",
       "name": "Mathematical Sciences Foundation",
       "minUnits": 1.6666666666666667,
-      "lines": [
-        22,
-        23,
-        24,
-        25,
-        26
-      ],
+      "lines": [22, 23, 24, 25, 26],
       "note": "Statistics I and II, linear algebra, and two calculus or approved mathematics elective courses."
     },
     {
       "id": "business",
       "name": "Business Foundation",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        27,
-        28
-      ]
+      "lines": [27, 28]
     },
     {
       "id": "electives",
       "name": "Disciplinary Electives",
       "minUnits": 3.6666666666666665,
-      "lines": [
-        29,
-        30,
-        31,
-        32,
-        33,
-        34,
-        35,
-        36,
-        37,
-        38,
-        39
-      ],
+      "lines": [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
       "note": "Eleven approved electives, including four at 4000-level or above and one in each required category. Review differences between the sheet and catalog with your advisor."
     },
     {
       "id": "ethics",
       "name": "Data Privacy and Ethics",
       "minUnits": 0.3333333333333333,
-      "lines": [
-        40
-      ],
+      "lines": [40],
       "note": "If ethics also counts as social science, an extra free elective is required. Ask your advisor to review that placement; this audit counts each course once."
     },
     {
       "id": "science",
       "name": "Natural or Engineering Sciences",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        41,
-        42
-      ]
+      "lines": [41, 42]
     },
     {
       "id": "mqp",
       "name": "Major Qualifying Project",
       "minUnits": 1.0,
-      "lines": [
-        43,
-        44,
-        45
-      ]
+      "lines": [43, 44, 45]
     }
   ],
   "lines": [
@@ -406,10 +249,7 @@
       "units": 0.333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "HU 3900",
-          "HU 3910"
-        ]
+        "courses": ["HU 3900", "HU 3910"]
       },
       "displayName": "Inquiry / Practicum"
     },
@@ -476,9 +316,7 @@
       "subSlotUnits": 0.083333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "WPE"
-        ]
+        "subjects": ["WPE"]
       },
       "displayName": "WPE"
     },
@@ -500,9 +338,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ],
+        "additionalCourses": ["ID 2050"],
         "priority": -1
       },
       "displayName": "Social science"
@@ -525,9 +361,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ],
+        "additionalCourses": ["ID 2050"],
         "priority": -1
       },
       "displayName": "Social science"
@@ -599,9 +433,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "DS 1010"
-        ],
+        "courses": ["DS 1010"],
         "priority": 0
       }
     },
@@ -612,9 +444,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "DS 2010"
-        ],
+        "courses": ["DS 2010"],
         "priority": 0
       }
     },
@@ -625,9 +455,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "DS 3010"
-        ],
+        "courses": ["DS 3010"],
         "priority": 0
       }
     },
@@ -638,9 +466,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "CS 2223"
-        ],
+        "courses": ["CS 2223"],
         "priority": 0
       }
     },
@@ -720,9 +546,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 2611"
-        ],
+        "courses": ["MA 2611"],
         "priority": 0
       }
     },
@@ -733,9 +557,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 2612"
-        ],
+        "courses": ["MA 2612"],
         "priority": 0
       }
     },
@@ -746,10 +568,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 2071",
-          "MA 2072"
-        ],
+        "courses": ["MA 2071", "MA 2072"],
         "priority": 0
       }
     },
@@ -844,10 +663,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "BUS 2080",
-          "OIE 2081"
-        ],
+        "courses": ["BUS 2080", "OIE 2081"],
         "priority": 0
       }
     },
@@ -858,12 +674,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "OBC 1010",
-          "ETR 1100",
-          "MIS 3010",
-          "ETR 3633"
-        ],
+        "courses": ["OBC 1010", "ETR 1100", "MIS 3010", "ETR 3633"],
         "priority": 0
       }
     },
@@ -1613,44 +1424,18 @@
       "note": "At least three thematically-related courses in the same grouping",
       "confirmation": "hua-depth-confirmation",
       "section": "hua",
-      "lines": [
-        1,
-        2,
-        3,
-        5,
-        6
-      ]
+      "lines": [1, 2, 3, 5, 6]
     },
     {
       "id": "hua-breadth",
       "name": "Humanities breadth",
       "type": "groupBreadth",
       "groupings": {
-        "art-drama-music": [
-          "AR",
-          "TH",
-          "MU"
-        ],
-        "modern-languages": [
-          "AB",
-          "CN",
-          "ISE",
-          "GN",
-          "SP"
-        ],
-        "literature-writing": [
-          "EN",
-          "WR"
-        ],
-        "history-humanities": [
-          "HI",
-          "HU",
-          "INTL"
-        ],
-        "philosophy-religion": [
-          "PY",
-          "RE"
-        ]
+        "art-drama-music": ["AR", "TH", "MU"],
+        "modern-languages": ["AB", "CN", "ISE", "GN", "SP"],
+        "literature-writing": ["EN", "WR"],
+        "history-humanities": ["HI", "HU", "INTL"],
+        "philosophy-religion": ["PY", "RE"]
       },
       "allLanguageException": true,
       "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",
@@ -1685,32 +1470,21 @@
       "name": "Data access and management",
       "type": "area",
       "section": "electives",
-      "courses": [
-        "CS 3431",
-        "MIS 3720",
-        "CS 4432",
-        "CS 4433"
-      ]
+      "courses": ["CS 3431", "MIS 3720", "CS 4432", "CS 4433"]
     },
     {
       "id": "data-mining",
       "name": "Data mining and machine learning",
       "type": "area",
       "section": "electives",
-      "courses": [
-        "CS 4445",
-        "CS 4342"
-      ]
+      "courses": ["CS 4445", "CS 4342"]
     },
     {
       "id": "business-modeling",
       "name": "Business modeling and prediction",
       "type": "area",
       "section": "electives",
-      "courses": [
-        "MIS 4084",
-        "OIE 4430"
-      ]
+      "courses": ["MIS 4084", "OIE 4430"]
     },
     {
       "id": "ds-source-review",
@@ -1719,19 +1493,7 @@
       "confirmation": "ds-source-review-confirmation",
       "note": "The 2030 sheet includes CS 4343, CS 4344, CS 4345, CS 4802 and CS 4803 and their cross-lists, which the catalog elective list omits. Confirm these choices and any substitutions with your advisor.",
       "help": "The 2030 sheet includes CS 4343, CS 4344, CS 4345, CS 4802 and CS 4803 and their cross-lists, which the catalog elective list omits. Confirm these choices and any substitutions with your advisor.",
-      "lines": [
-        29,
-        30,
-        31,
-        32,
-        33,
-        34,
-        35,
-        36,
-        37,
-        38,
-        39
-      ],
+      "lines": [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
       "affectsLines": true
     },
     {
@@ -1749,11 +1511,7 @@
       "confirmation": "ds-mqp-advisor-confirmation",
       "note": "Confirm your MQP faculty advisor has a formal collaborative appointment in Data Science.",
       "help": "Confirm your MQP faculty advisor has a formal collaborative appointment in Data Science.",
-      "lines": [
-        43,
-        44,
-        45
-      ],
+      "lines": [43, 44, 45],
       "affectsLines": true
     },
     {
@@ -1763,13 +1521,7 @@
       "confirmation": "ds-foundation-review-confirmation",
       "note": "Confirm CS foundation substitutions at 3000-level or above. The PDF lists additional 2000-level electives while the catalog substitution rule specifies 3000-level or above. Review calculus substitutions and any unlisted courses with your advisor.",
       "help": "Confirm CS foundation substitutions at 3000-level or above. The PDF lists additional 2000-level electives while the catalog substitution rule specifies 3000-level or above. Review calculus substitutions and any unlisted courses with your advisor.",
-      "lines": [
-        19,
-        20,
-        21,
-        25,
-        26
-      ],
+      "lines": [19, 20, 21, 25, 26],
       "affectsLines": true
     },
     {
@@ -1779,14 +1531,7 @@
       "confirmation": "hua-sequence-confirmation",
       "note": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
       "help": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "lines": [1, 2, 3, 4, 5, 6],
       "affectsLines": true
     }
   ],

@@ -2,9 +2,7 @@
   {
     "code": "ECE 4011",
     "title": "Biomedical Signal Analysis",
-    "aliases": [
-      "BME 4011"
-    ],
+    "aliases": ["BME 4011"],
     "source": "https://wpi.cleancatalog.net/biomedical-engineering-electrical-and-computer-engineering/bme-4011ece-4011",
     "wording": "Recommended background: (ECE 2311; ECE 2312).",
     "background": {
@@ -21,9 +19,7 @@
   {
     "code": "ECE 4023",
     "title": "Biomedical Instrumentation Design",
-    "aliases": [
-      "BME 4023"
-    ],
+    "aliases": ["BME 4023"],
     "source": "https://wpi.cleancatalog.net/biomedical-engineering-electrical-and-computer-engineering/bme-4023ece-4023",
     "wording": "Recommended background: (BME 3012; BME 3013; (ECE 2010 or ECE 2019)).",
     "background": {
@@ -50,9 +46,7 @@
   {
     "code": "ECE 4802",
     "title": "Introduction to Cryptography and Communication Security",
-    "aliases": [
-      "CS 4801"
-    ],
+    "aliases": ["CS 4801"],
     "source": "https://wpi.cleancatalog.net/computer-science-electrical-and-computer-engineering/cs-4801ece-4802",
     "wording": "Recommended background: (ECE 2049 or CS 2301).",
     "background": {

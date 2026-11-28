@@ -20,9 +20,7 @@
         { "date": "2026-10-17", "name": "Fall Break" },
         { "date": "2026-10-18", "name": "Fall Break" }
       ],
-      "swaps": [
-        { "date": "2026-09-10", "runs": "Mon" }
-      ],
+      "swaps": [{ "date": "2026-09-10", "runs": "Mon" }],
       "notes": []
     },
     "2026-B": {
@@ -35,7 +33,10 @@
       ],
       "swaps": [],
       "notes": [
-        { "date": "2026-12-07", "text": "Dec 7 is a Reading/Makeup Day. Only add a meeting if your professor schedules one." }
+        {
+          "date": "2026-12-07",
+          "text": "Dec 7 is a Reading/Makeup Day. Only add a meeting if your professor schedules one."
+        }
       ]
     },
     "2027-C": {
@@ -53,15 +54,16 @@
         { "date": "2027-03-13", "name": "Spring Break" },
         { "date": "2027-03-14", "name": "Spring Break" }
       ],
-      "swaps": [
-        { "date": "2027-01-13", "runs": "Mon" }
-      ],
+      "swaps": [{ "date": "2027-01-13", "runs": "Mon" }],
       "notes": []
     },
     "2027-D": {
       "noClass": [
         { "date": "2027-03-29", "name": "Wellness Day" },
-        { "date": "2027-04-16", "name": "Undergraduate Research Projects Showcase" },
+        {
+          "date": "2027-04-16",
+          "name": "Undergraduate Research Projects Showcase"
+        },
         { "date": "2027-04-19", "name": "Patriots Day" }
       ],
       "swaps": [
@@ -75,9 +77,7 @@
         { "date": "2027-05-31", "name": "Memorial Day" },
         { "date": "2027-06-18", "name": "Juneteenth" }
       ],
-      "swaps": [
-        { "date": "2027-06-03", "runs": "Mon" }
-      ],
+      "swaps": [{ "date": "2027-06-03", "runs": "Mon" }],
       "notes": []
     }
   }

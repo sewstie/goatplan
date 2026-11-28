@@ -462,9 +462,7 @@
   {
     "code": "ME 4322",
     "title": "Modeling and Analysis of Mechatronic Systems",
-    "aliases": [
-      "RBE 4322"
-    ],
+    "aliases": ["RBE 4322"],
     "source": "https://wpi.cleancatalog.net/robotics-engineering-mechanical-and-materials-engineering/rbe-4322me-4322-0",
     "wording": "Recommended background: (MA 2051; MA 2071; ES 3004; ES 3001; ES 2501; ES 2503).",
     "background": {
@@ -609,9 +607,7 @@
   {
     "code": "ME 4503",
     "title": "Computational Biomechanics",
-    "aliases": [
-      "BME 4503"
-    ],
+    "aliases": ["BME 4503"],
     "source": "https://wpi.cleancatalog.net/biomedical-engineering-mechanical-and-materials-engineering/bme-4503me-4503",
     "wording": "Recommended background: (ES 2501; ES 2502; ES 2503; ME 3501; MA 2051; BME 2211).",
     "background": {
@@ -640,9 +636,7 @@
   {
     "code": "ME 4504",
     "title": "Biomechanics",
-    "aliases": [
-      "BME 4504"
-    ],
+    "aliases": ["BME 4504"],
     "source": "https://wpi.cleancatalog.net/biomedical-engineering-mechanical-and-materials-engineering/bme-4504me-4504",
     "wording": "Recommended background: (ES 2501; ES 2502; ES 2503; ME 3501; MA 2051).",
     "background": {
@@ -706,9 +700,7 @@
   {
     "code": "ME 4606",
     "title": "Biofluids",
-    "aliases": [
-      "BME 4606"
-    ],
+    "aliases": ["BME 4606"],
     "source": "https://wpi.cleancatalog.net/biomedical-engineering-mechanical-and-materials-engineering/bme-4606me-4606",
     "wording": "Recommended background: (ME 3501; ES 3004).",
     "background": {
@@ -734,9 +726,7 @@
   {
     "code": "ME 4814",
     "title": "Biomaterials",
-    "aliases": [
-      "BME 4814"
-    ],
+    "aliases": ["BME 4814"],
     "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering-biomedical-engineering/bme-4814me-4814",
     "wording": "Recommended background: (BB 3101; CH 1010; ES 2001; Differential and integral calculus knowledge).",
     "background": {
@@ -815,9 +805,7 @@
   {
     "code": "ME 4875",
     "title": "Introduction to Nanomaterials and Nanotechnology",
-    "aliases": [
-      "MTE 575"
-    ],
+    "aliases": ["MTE 575"],
     "source": "https://wpi.cleancatalog.net/mechanical-and-materials-engineering/me-4875mte-575",
     "wording": "Recommended background: ES 2001.",
     "background": {

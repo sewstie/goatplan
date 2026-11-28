@@ -31,10 +31,7 @@
   "onlyOneSets": [
     {
       "id": "research-alternatives",
-      "courses": [
-        "WR 2111",
-        "WR 4111"
-      ],
+      "courses": ["WR 2111", "WR 4111"],
       "reason": "The official PDF does not allow both courses to count."
     }
   ],
@@ -43,98 +40,49 @@
       "id": "writing",
       "name": "Writing and Rhetoric Core",
       "minUnits": 2.333333333333333,
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7
-      ]
+      "lines": [1, 2, 3, 4, 5, 6, 7]
     },
     {
       "id": "communication",
       "name": "Communication Electives",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        8,
-        9
-      ]
+      "lines": [8, 9]
     },
     {
       "id": "concentration",
       "name": "Subject-Matter Concentration",
       "minUnits": 4.0,
-      "lines": [
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21
-      ]
+      "lines": [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
     },
     {
       "id": "technical",
       "name": "Scientific/Technical Electives",
       "minUnits": 1.9999999999999998,
-      "lines": [
-        22,
-        23,
-        24,
-        25,
-        26,
-        27
-      ]
+      "lines": [22, 23, 24, 25, 26, 27]
     },
     {
       "id": "hua",
       "name": "Humanities and Arts",
       "minUnits": 1.9999999999999998,
-      "lines": [
-        28,
-        29,
-        30,
-        31,
-        32,
-        33
-      ]
+      "lines": [28, 29, 30, 31, 32, 33]
     },
     {
       "id": "social-science",
       "name": "Social Science",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        34,
-        35
-      ]
+      "lines": [34, 35]
     },
     {
       "id": "iqp",
       "name": "Interactive Qualifying Project",
       "minUnits": 1.0,
-      "lines": [
-        36,
-        37,
-        38
-      ]
+      "lines": [36, 37, 38]
     },
     {
       "id": "free-electives",
       "name": "Free Electives",
       "minUnits": 1.0,
-      "lines": [
-        39,
-        40,
-        41
-      ],
+      "lines": [39, 40, 41],
       "creditPool": true,
       "poolCredits": 9
     },
@@ -142,19 +90,13 @@
       "id": "wpe",
       "name": "Physical Education",
       "minUnits": 0.3333333333333333,
-      "lines": [
-        42
-      ]
+      "lines": [42]
     },
     {
       "id": "mqp",
       "name": "Major Qualifying Project",
       "minUnits": 1.0,
-      "lines": [
-        43,
-        44,
-        45
-      ]
+      "lines": [43, 44, 45]
     }
   ],
   "lines": [
@@ -165,10 +107,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "WR 2111",
-          "WR 4111"
-        ]
+        "courses": ["WR 2111", "WR 4111"]
       }
     },
     {
@@ -178,9 +117,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "WR 3112"
-        ]
+        "courses": ["WR 3112"]
       }
     },
     {
@@ -190,9 +127,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "WR 4500"
-        ]
+        "courses": ["WR 4500"]
       }
     },
     {
@@ -679,10 +614,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "HU 3900",
-          "HU 3910"
-        ]
+        "courses": ["HU 3900", "HU 3910"]
       }
     },
     {
@@ -703,9 +635,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ],
+        "additionalCourses": ["ID 2050"],
         "priority": 100000
       }
     },
@@ -727,9 +657,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ],
+        "additionalCourses": ["ID 2050"],
         "priority": 100000
       }
     },
@@ -794,9 +722,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "WPE"
-        ]
+        "subjects": ["WPE"]
       },
       "subSlots": 4,
       "subSlotUnits": 0.08333333333333333
@@ -837,15 +763,7 @@
       "confirmation": "writing-distribution-confirmation",
       "note": "Confirm at most one 1000-level course and one of WR 2210, WR 2450, WR 3210, WR 3450 or WR 4210. A WR-focused HU 3900/3910 needs approval by Professional Writing faculty or the Program Review Committee.",
       "help": "Confirm at most one 1000-level course and one of WR 2210, WR 2450, WR 3210, WR 3450 or WR 4210. A WR-focused HU 3900/3910 needs approval by Professional Writing faculty or the Program Review Committee.",
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7
-      ],
+      "lines": [1, 2, 3, 4, 5, 6, 7],
       "affectsLines": true
     },
     {
@@ -855,10 +773,7 @@
       "confirmation": "communication-approval-confirmation",
       "note": "Confirm both communication electives are approved. Other approved electives need manual review. ID 2050 and AP credit cannot count. These courses cannot overlap WPI free electives.",
       "help": "Confirm both communication electives are approved. Other approved electives need manual review. ID 2050 and AP credit cannot count. These courses cannot overlap WPI free electives.",
-      "lines": [
-        8,
-        9
-      ],
+      "lines": [8, 9],
       "affectsLines": true
     },
     {
@@ -868,20 +783,7 @@
       "confirmation": "concentration-approval-confirmation",
       "note": "Confirm four units in one discipline, or two units in each of two disciplines, unless shared with a second major.",
       "help": "Confirm four units in one discipline, or two units in each of two disciplines, unless shared with a second major.",
-      "lines": [
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21
-      ],
+      "lines": [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
       "affectsLines": true
     },
     {
@@ -891,14 +793,7 @@
       "confirmation": "technical-approval-confirmation",
       "note": "Confirm two units of approved scientific or technical electives.",
       "help": "Confirm two units of approved scientific or technical electives.",
-      "lines": [
-        22,
-        23,
-        24,
-        25,
-        26,
-        27
-      ],
+      "lines": [22, 23, 24, 25, 26, 27],
       "affectsLines": true
     },
     {
@@ -910,44 +805,18 @@
       "note": "At least three thematically-related courses in the same grouping",
       "confirmation": "hua-depth-confirmation",
       "section": "hua",
-      "lines": [
-        28,
-        29,
-        30,
-        31,
-        32
-      ]
+      "lines": [28, 29, 30, 31, 32]
     },
     {
       "id": "hua-breadth",
       "name": "Humanities breadth",
       "type": "groupBreadth",
       "groupings": {
-        "art-drama-music": [
-          "AR",
-          "TH",
-          "MU"
-        ],
-        "modern-languages": [
-          "AB",
-          "CN",
-          "ISE",
-          "GN",
-          "SP"
-        ],
-        "literature-writing": [
-          "EN",
-          "WR"
-        ],
-        "history-humanities": [
-          "HI",
-          "HU",
-          "INTL"
-        ],
-        "philosophy-religion": [
-          "PY",
-          "RE"
-        ]
+        "art-drama-music": ["AR", "TH", "MU"],
+        "modern-languages": ["AB", "CN", "ISE", "GN", "SP"],
+        "literature-writing": ["EN", "WR"],
+        "history-humanities": ["HI", "HU", "INTL"],
+        "philosophy-religion": ["PY", "RE"]
       },
       "allLanguageException": true,
       "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",
@@ -977,14 +846,7 @@
       "confirmation": "hua-sequence-confirmation",
       "note": "Confirm depth, breadth, the HUA elective, and completion of all five HUA courses before Inquiry. Review the modern-language exception.",
       "help": "Confirm depth, breadth, the HUA elective, and completion of all five HUA courses before Inquiry. Review the modern-language exception.",
-      "lines": [
-        28,
-        29,
-        30,
-        31,
-        32,
-        33
-      ],
+      "lines": [28, 29, 30, 31, 32, 33],
       "affectsLines": true
     },
     {
@@ -994,14 +856,7 @@
       "confirmation": "hua-ap-credit-confirmation",
       "note": "Confirm that no more than 1/3 unit of AP credit counts toward Humanities and Arts. The PDF states an AP limit; it does not give an IB limit.",
       "help": "Confirm that no more than 1/3 unit of AP credit counts toward Humanities and Arts. The PDF states an AP limit; it does not give an IB limit.",
-      "lines": [
-        28,
-        29,
-        30,
-        31,
-        32,
-        33
-      ],
+      "lines": [28, 29, 30, 31, 32, 33],
       "affectsLines": true
     }
   ],

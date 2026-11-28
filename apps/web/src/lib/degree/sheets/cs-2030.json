@@ -14,41 +14,25 @@
       "id": "hua",
       "name": "Humanities and Arts",
       "minUnits": 2,
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ]
+      "lines": [1, 2, 3, 4, 5, 6]
     },
     {
       "id": "wpe",
       "name": "Wellness and Physical Education",
       "minUnits": 0.333333,
-      "lines": [
-        7
-      ]
+      "lines": [7]
     },
     {
       "id": "social-science",
       "name": "Social Science",
       "minUnits": 0.666667,
-      "lines": [
-        8,
-        9
-      ]
+      "lines": [8, 9]
     },
     {
       "id": "iqp",
       "name": "Interactive Qualifying Project",
       "minUnits": 1,
-      "lines": [
-        10,
-        11,
-        12
-      ]
+      "lines": [10, 11, 12]
     },
     {
       "id": "free-electives",
@@ -56,62 +40,27 @@
       "minUnits": 1,
       "creditPool": true,
       "poolCredits": 9,
-      "lines": [
-        13,
-        14,
-        15
-      ]
+      "lines": [13, 14, 15]
     },
     {
       "id": "cs",
       "name": "Computer Science",
       "minUnits": 6,
       "lines": [
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28,
-        29,
-        30,
-        31,
-        32,
-        33
+        16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33
       ]
     },
     {
       "id": "math",
       "name": "Mathematics",
       "minUnits": 2.333333,
-      "lines": [
-        34,
-        35,
-        36,
-        37,
-        38,
-        39,
-        40
-      ]
+      "lines": [34, 35, 36, 37, 38, 39, 40]
     },
     {
       "id": "science",
       "name": "Basic Science and/or Engineering Science",
       "minUnits": 1.666667,
-      "lines": [
-        41,
-        42,
-        43,
-        44,
-        45
-      ]
+      "lines": [41, 42, 43, 44, 45]
     }
   ],
   "lines": [
@@ -257,10 +206,7 @@
       "units": 0.333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "HU 3900",
-          "HU 3910"
-        ]
+        "courses": ["HU 3900", "HU 3910"]
       },
       "displayName": "Inquiry / Practicum"
     },
@@ -273,9 +219,7 @@
       "subSlotUnits": 0.083333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "WPE"
-        ]
+        "subjects": ["WPE"]
       },
       "displayName": "WPE"
     },
@@ -297,9 +241,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ]
+        "additionalCourses": ["ID 2050"]
       },
       "displayName": "Social science"
     },
@@ -321,9 +263,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ]
+        "additionalCourses": ["ID 2050"]
       },
       "displayName": "Social science"
     },
@@ -396,13 +336,8 @@
         "type": "subjectMinLevel",
         "minLevel": 2000,
         "subject": "CS",
-        "additionalCourses": [
-          "CS 1101",
-          "CS 1102"
-        ],
-        "excludedCourses": [
-          "CS 2119"
-        ],
+        "additionalCourses": ["CS 1101", "CS 1102"],
+        "excludedCourses": ["CS 2119"],
         "priority": 4001
       },
       "displayName": "Introductory CS"
@@ -416,9 +351,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 2000,
-        "excludedCourses": [
-          "CS 2119"
-        ]
+        "excludedCourses": ["CS 2119"]
       },
       "displayName": "CS 2000+"
     },
@@ -431,9 +364,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 2000,
-        "excludedCourses": [
-          "CS 2119"
-        ]
+        "excludedCourses": ["CS 2119"]
       },
       "displayName": "CS 2000+"
     },
@@ -446,9 +377,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 2000,
-        "excludedCourses": [
-          "CS 2119"
-        ]
+        "excludedCourses": ["CS 2119"]
       },
       "displayName": "CS 2000+"
     },
@@ -461,9 +390,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 2000,
-        "excludedCourses": [
-          "CS 2119"
-        ]
+        "excludedCourses": ["CS 2119"]
       },
       "displayName": "CS 2000+"
     },
@@ -476,9 +403,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 2000,
-        "excludedCourses": [
-          "CS 2119"
-        ]
+        "excludedCourses": ["CS 2119"]
       },
       "displayName": "CS 2000+"
     },
@@ -491,9 +416,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 2000,
-        "excludedCourses": [
-          "CS 2119"
-        ]
+        "excludedCourses": ["CS 2119"]
       },
       "areaTag": "systems",
       "displayName": "Systems"
@@ -507,9 +430,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 2000,
-        "excludedCourses": [
-          "CS 2119"
-        ]
+        "excludedCourses": ["CS 2119"]
       },
       "areaTag": "theory",
       "displayName": "Theory & languages"
@@ -523,9 +444,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 2000,
-        "excludedCourses": [
-          "CS 2119"
-        ]
+        "excludedCourses": ["CS 2119"]
       },
       "areaTag": "design",
       "displayName": "Design"
@@ -539,9 +458,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 2000,
-        "excludedCourses": [
-          "CS 2119"
-        ]
+        "excludedCourses": ["CS 2119"]
       },
       "areaTag": "social",
       "displayName": "Social implications"
@@ -555,9 +472,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 4000,
-        "excludedCourses": [
-          "CS 5007"
-        ],
+        "excludedCourses": ["CS 5007"],
         "advanced": true,
         "priority": 1
       },
@@ -572,9 +487,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 4000,
-        "excludedCourses": [
-          "CS 5007"
-        ],
+        "excludedCourses": ["CS 5007"],
         "advanced": true,
         "priority": 1
       },
@@ -589,9 +502,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 4000,
-        "excludedCourses": [
-          "CS 5007"
-        ],
+        "excludedCourses": ["CS 5007"],
         "advanced": true,
         "priority": 1
       },
@@ -606,9 +517,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 4000,
-        "excludedCourses": [
-          "CS 5007"
-        ],
+        "excludedCourses": ["CS 5007"],
         "advanced": true,
         "priority": 1
       },
@@ -623,9 +532,7 @@
         "type": "subjectMinLevel",
         "subject": "CS",
         "minLevel": 4000,
-        "excludedCourses": [
-          "CS 5007"
-        ],
+        "excludedCourses": ["CS 5007"],
         "advanced": true,
         "priority": 1
       },
@@ -728,10 +635,7 @@
       "units": 0.333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 2621",
-          "MA 2631"
-        ]
+        "courses": ["MA 2621", "MA 2631"]
       },
       "displayName": "Probability"
     },
@@ -742,10 +646,7 @@
       "units": 0.333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 2611",
-          "MA 2612"
-        ]
+        "courses": ["MA 2611", "MA 2612"]
       },
       "displayName": "Statistics"
     },
@@ -756,12 +657,7 @@
       "units": 0.333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "BB",
-          "CH",
-          "GE",
-          "PH"
-        ]
+        "subjects": ["BB", "CH", "GE", "PH"]
       },
       "displayName": "Science"
     },
@@ -772,12 +668,7 @@
       "units": 0.333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "BB",
-          "CH",
-          "GE",
-          "PH"
-        ]
+        "subjects": ["BB", "CH", "GE", "PH"]
       },
       "displayName": "Science"
     },
@@ -788,12 +679,7 @@
       "units": 0.333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "BB",
-          "CH",
-          "GE",
-          "PH"
-        ]
+        "subjects": ["BB", "CH", "GE", "PH"]
       },
       "displayName": "Science"
     },
@@ -818,10 +704,7 @@
           "PH",
           "RBE"
         ],
-        "excludedCourses": [
-          "RBE 3100",
-          "BME 1004"
-        ]
+        "excludedCourses": ["RBE 3100", "BME 1004"]
       },
       "displayName": "Science"
     },
@@ -846,10 +729,7 @@
           "PH",
           "RBE"
         ],
-        "excludedCourses": [
-          "RBE 3100",
-          "BME 1004"
-        ]
+        "excludedCourses": ["RBE 3100", "BME 1004"]
       },
       "displayName": "Science"
     }
@@ -867,131 +747,46 @@
   "onlyOneSets": [
     {
       "id": "cs-intro",
-      "courses": [
-        "CS 1101",
-        "CS 1102"
-      ],
+      "courses": ["CS 1101", "CS 1102"],
       "reason": "Only one of CS 1101 and CS 1102 may count toward the CS requirement"
     },
     {
       "id": "cs-systems-programming",
-      "courses": [
-        "CS 2301",
-        "CS 2303"
-      ],
+      "courses": ["CS 2301", "CS 2303"],
       "reason": "Only one of CS 2301 and CS 2303 may count toward the CS requirement"
     },
     {
       "id": "cs-ood",
-      "courses": [
-        "CS 2102",
-        "CS 210X",
-        "CS 2103"
-      ],
+      "courses": ["CS 2102", "CS 210X", "CS 2103"],
       "reason": "Only one of CS 2102, CS 210X, and CS 2103 may count toward the CS requirement"
     }
   ],
   "crossLists": [
-    [
-      "CS 2022",
-      "MA 2201"
-    ],
-    [
-      "CS 4032",
-      "MA 3257"
-    ],
-    [
-      "CS 4033",
-      "MA 3457"
-    ],
-    [
-      "CS 3043",
-      "SS 3043"
-    ],
-    [
-      "CS 4300",
-      "IMGD 4300"
-    ],
-    [
-      "CS 4343",
-      "DS 4343"
-    ],
-    [
-      "CS 4344",
-      "DS 4344"
-    ],
-    [
-      "CS 4345",
-      "DS 4345"
-    ],
-    [
-      "CS 4433",
-      "DS 4433"
-    ],
-    [
-      "CS 4801",
-      "ECE 4802"
-    ],
-    [
-      "IMGD 4100",
-      "CS 4100"
-    ],
-    [
-      "GOV 2314",
-      "ID 2314"
-    ],
-    [
-      "BB 4190",
-      "CH 4190"
-    ],
-    [
-      "PH 2550",
-      "AE 2550"
-    ],
-    [
-      "BME 4011",
-      "ECE 4011"
-    ],
-    [
-      "BME 4023",
-      "ECE 4023"
-    ],
-    [
-      "BME 4503",
-      "ME 4503"
-    ],
-    [
-      "BME 4504",
-      "ME 4504"
-    ],
-    [
-      "BME 4606",
-      "ME 4606"
-    ],
-    [
-      "BME 4814",
-      "ME 4814"
-    ],
-    [
-      "RBE 4322",
-      "ME 4322"
-    ],
-    [
-      "BB 1003",
-      "BCB 1003"
-    ],
-    [
-      "BB 3010",
-      "BCB 3010"
-    ],
-    [
-      "BB 4001",
-      "BCB 4001"
-    ],
-    [
-      "CE 4063",
-      "CHE 4063"
-    ]
+    ["CS 2022", "MA 2201"],
+    ["CS 4032", "MA 3257"],
+    ["CS 4033", "MA 3457"],
+    ["CS 3043", "SS 3043"],
+    ["CS 4300", "IMGD 4300"],
+    ["CS 4343", "DS 4343"],
+    ["CS 4344", "DS 4344"],
+    ["CS 4345", "DS 4345"],
+    ["CS 4433", "DS 4433"],
+    ["CS 4801", "ECE 4802"],
+    ["IMGD 4100", "CS 4100"],
+    ["GOV 2314", "ID 2314"],
+    ["BB 4190", "CH 4190"],
+    ["PH 2550", "AE 2550"],
+    ["BME 4011", "ECE 4011"],
+    ["BME 4023", "ECE 4023"],
+    ["BME 4503", "ME 4503"],
+    ["BME 4504", "ME 4504"],
+    ["BME 4606", "ME 4606"],
+    ["BME 4814", "ME 4814"],
+    ["RBE 4322", "ME 4322"],
+    ["BB 1003", "BCB 1003"],
+    ["BB 3010", "BCB 3010"],
+    ["BB 4001", "BCB 4001"],
+    ["CE 4063", "CHE 4063"]
   ],
   "checks": [
     {
@@ -1071,12 +866,7 @@
       "id": "science-depth",
       "name": "Science depth",
       "type": "disciplineCount",
-      "disciplines": [
-        "BB",
-        "CH",
-        "GE",
-        "PH"
-      ],
+      "disciplines": ["BB", "CH", "GE", "PH"],
       "section": "science",
       "displayCourses": 3,
       "minFromOneDiscipline": 2
@@ -1090,44 +880,18 @@
       "note": "At least three thematically-related courses in the same grouping",
       "confirmation": "hua-depth-confirmation",
       "section": "hua",
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ]
+      "lines": [1, 2, 3, 4, 5]
     },
     {
       "id": "hua-breadth",
       "name": "Humanities breadth",
       "type": "groupBreadth",
       "groupings": {
-        "art-drama-music": [
-          "AR",
-          "TH",
-          "MU"
-        ],
-        "modern-languages": [
-          "AB",
-          "CN",
-          "ISE",
-          "GN",
-          "SP"
-        ],
-        "literature-writing": [
-          "EN",
-          "WR"
-        ],
-        "history-humanities": [
-          "HI",
-          "HU",
-          "INTL"
-        ],
-        "philosophy-religion": [
-          "PY",
-          "RE"
-        ]
+        "art-drama-music": ["AR", "TH", "MU"],
+        "modern-languages": ["AB", "CN", "ISE", "GN", "SP"],
+        "literature-writing": ["EN", "WR"],
+        "history-humanities": ["HI", "HU", "INTL"],
+        "philosophy-religion": ["PY", "RE"]
       },
       "allLanguageException": true,
       "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",

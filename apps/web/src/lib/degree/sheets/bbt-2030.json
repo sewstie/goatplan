@@ -10,18 +10,9 @@
   "totalUnits": 15,
   "residencyUnits": 8,
   "crossLists": [
-    [
-      "BB 4001",
-      "BCB 4001"
-    ],
-    [
-      "BCB 4004",
-      "MA 4603"
-    ],
-    [
-      "BME 4814",
-      "ME 4814"
-    ]
+    ["BB 4001", "BCB 4001"],
+    ["BCB 4004", "MA 4603"],
+    ["BME 4814", "ME 4814"]
   ],
   "huaSubjects": [
     "AR",
@@ -48,42 +39,26 @@
       "id": "hua",
       "name": "Humanities and Arts",
       "minUnits": 2,
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "lines": [1, 2, 3, 4, 5, 6],
       "note": "Finish five HUA courses before Inquiry. Check the theme and sequence with your advisor."
     },
     {
       "id": "wpe",
       "name": "Wellness and Physical Education",
       "minUnits": 0.333333,
-      "lines": [
-        7
-      ]
+      "lines": [7]
     },
     {
       "id": "social-science",
       "name": "Social Science",
       "minUnits": 0.666667,
-      "lines": [
-        8,
-        9
-      ]
+      "lines": [8, 9]
     },
     {
       "id": "iqp",
       "name": "Interactive Qualifying Project",
       "minUnits": 1,
-      "lines": [
-        10,
-        11,
-        12
-      ]
+      "lines": [10, 11, 12]
     },
     {
       "id": "free-electives",
@@ -91,84 +66,44 @@
       "minUnits": 1,
       "creditPool": true,
       "poolCredits": 9,
-      "lines": [
-        13,
-        14,
-        15
-      ]
+      "lines": [13, 14, 15]
     },
     {
       "id": "quantitative",
       "name": "Quantitative Reasoning",
       "minUnits": 1.6666666666666665,
-      "lines": [
-        16,
-        17,
-        18,
-        19,
-        20
-      ]
+      "lines": [16, 17, 18, 19, 20]
     },
     {
       "id": "chemistry",
       "name": "Chemistry",
       "minUnits": 1.6666666666666665,
-      "lines": [
-        21,
-        22,
-        23,
-        24,
-        25
-      ]
+      "lines": [21, 22, 23, 24, 25]
     },
     {
       "id": "biology",
       "name": "Biology and Biotechnology",
       "minUnits": 3.3333333333333335,
-      "lines": [
-        26,
-        27,
-        28,
-        29,
-        30,
-        31,
-        32,
-        33,
-        34,
-        35
-      ]
+      "lines": [26, 27, 28, 29, 30, 31, 32, 33, 34, 35]
     },
     {
       "id": "laboratory",
       "name": "Laboratory Experience",
       "minUnits": 1.3333333333333333,
-      "lines": [
-        36,
-        37,
-        38,
-        39
-      ],
+      "lines": [36, 37, 38, 39],
       "note": "Confirm lab credit from the PDF: one 1000-level lab, two 2000-level half labs, two 3000-level half labs, and two more 2000/3000-level half labs. A full lab replaces two half labs."
     },
     {
       "id": "related",
       "name": "Related Courses",
       "minUnits": 1.0,
-      "lines": [
-        40,
-        41,
-        42
-      ]
+      "lines": [40, 41, 42]
     },
     {
       "id": "mqp",
       "name": "Major Qualifying Project",
       "minUnits": 1.0,
-      "lines": [
-        43,
-        44,
-        45
-      ]
+      "lines": [43, 44, 45]
     }
   ],
   "lines": [
@@ -263,10 +198,7 @@
       "units": 0.333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "HU 3900",
-          "HU 3910"
-        ]
+        "courses": ["HU 3900", "HU 3910"]
       },
       "displayName": "Inquiry / Practicum"
     },
@@ -335,9 +267,7 @@
       "subSlotUnits": 0.083333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "WPE"
-        ]
+        "subjects": ["WPE"]
       },
       "displayName": "WPE"
     },
@@ -359,9 +289,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ],
+        "additionalCourses": ["ID 2050"],
         "priority": 100000
       },
       "displayName": "Social science"
@@ -384,9 +312,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ],
+        "additionalCourses": ["ID 2050"],
         "priority": 100000
       },
       "displayName": "Social science"
@@ -474,10 +400,7 @@
           "ME",
           "RBE"
         ],
-        "additionalCourses": [
-          "BB 3010",
-          "BB 4001"
-        ]
+        "additionalCourses": ["BB 3010", "BB 4001"]
       }
     },
     {
@@ -503,10 +426,7 @@
           "ME",
           "RBE"
         ],
-        "additionalCourses": [
-          "BB 3010",
-          "BB 4001"
-        ]
+        "additionalCourses": ["BB 3010", "BB 4001"]
       }
     },
     {
@@ -532,10 +452,7 @@
           "ME",
           "RBE"
         ],
-        "additionalCourses": [
-          "BB 3010",
-          "BB 4001"
-        ]
+        "additionalCourses": ["BB 3010", "BB 4001"]
       }
     },
     {
@@ -561,10 +478,7 @@
           "ME",
           "RBE"
         ],
-        "additionalCourses": [
-          "BB 3010",
-          "BB 4001"
-        ]
+        "additionalCourses": ["BB 3010", "BB 4001"]
       }
     },
     {
@@ -590,10 +504,7 @@
           "ME",
           "RBE"
         ],
-        "additionalCourses": [
-          "BB 3010",
-          "BB 4001"
-        ]
+        "additionalCourses": ["BB 3010", "BB 4001"]
       }
     },
     {
@@ -603,9 +514,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "CH"
-        ]
+        "subjects": ["CH"]
       }
     },
     {
@@ -615,9 +524,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "CH"
-        ]
+        "subjects": ["CH"]
       }
     },
     {
@@ -627,9 +534,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "CH"
-        ]
+        "subjects": ["CH"]
       }
     },
     {
@@ -639,9 +544,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "CH"
-        ]
+        "subjects": ["CH"]
       }
     },
     {
@@ -651,9 +554,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "CH"
-        ]
+        "subjects": ["CH"]
       }
     },
     {
@@ -663,9 +564,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB 11[0-9]{2}"
-        ]
+        "coursePatterns": ["BB 11[0-9]{2}"]
       }
     },
     {
@@ -675,9 +574,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB 11[0-9]{2}"
-        ]
+        "coursePatterns": ["BB 11[0-9]{2}"]
       }
     },
     {
@@ -687,9 +584,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB 2[0-79][0-9]{2}"
-        ]
+        "coursePatterns": ["BB 2[0-79][0-9]{2}"]
       }
     },
     {
@@ -699,9 +594,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB 2[0-79][0-9]{2}"
-        ]
+        "coursePatterns": ["BB 2[0-79][0-9]{2}"]
       }
     },
     {
@@ -711,9 +604,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB 2[0-79][0-9]{2}"
-        ]
+        "coursePatterns": ["BB 2[0-79][0-9]{2}"]
       }
     },
     {
@@ -723,9 +614,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB 2[0-79][0-9]{2}"
-        ]
+        "coursePatterns": ["BB 2[0-79][0-9]{2}"]
       }
     },
     {
@@ -735,12 +624,8 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB [34][0-79][0-9]{2}"
-        ],
-        "excludedCourses": [
-          "BB 4900"
-        ]
+        "coursePatterns": ["BB [34][0-79][0-9]{2}"],
+        "excludedCourses": ["BB 4900"]
       }
     },
     {
@@ -750,12 +635,8 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB [34][0-79][0-9]{2}"
-        ],
-        "excludedCourses": [
-          "BB 4900"
-        ]
+        "coursePatterns": ["BB [34][0-79][0-9]{2}"],
+        "excludedCourses": ["BB 4900"]
       }
     },
     {
@@ -765,12 +646,8 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB [34][0-79][0-9]{2}"
-        ],
-        "excludedCourses": [
-          "BB 4900"
-        ]
+        "coursePatterns": ["BB [34][0-79][0-9]{2}"],
+        "excludedCourses": ["BB 4900"]
       }
     },
     {
@@ -780,9 +657,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "BB 4900"
-        ]
+        "courses": ["BB 4900"]
       }
     },
     {
@@ -828,9 +703,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB [34][0-9]{3}"
-        ],
+        "coursePatterns": ["BB [34][0-9]{3}"],
         "courses": [
           "BCB 4001",
           "BCB 4004",
@@ -855,9 +728,7 @@
           "BB 575",
           "BB 576"
         ],
-        "excludedCourses": [
-          "BB 4900"
-        ]
+        "excludedCourses": ["BB 4900"]
       }
     },
     {
@@ -867,9 +738,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB [34][0-9]{3}"
-        ],
+        "coursePatterns": ["BB [34][0-9]{3}"],
         "courses": [
           "BCB 4001",
           "BCB 4004",
@@ -894,9 +763,7 @@
           "BB 575",
           "BB 576"
         ],
-        "excludedCourses": [
-          "BB 4900"
-        ]
+        "excludedCourses": ["BB 4900"]
       }
     },
     {
@@ -906,9 +773,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BB [34][0-9]{3}"
-        ],
+        "coursePatterns": ["BB [34][0-9]{3}"],
         "courses": [
           "BCB 4001",
           "BCB 4004",
@@ -933,9 +798,7 @@
           "BB 575",
           "BB 576"
         ],
-        "excludedCourses": [
-          "BB 4900"
-        ]
+        "excludedCourses": ["BB 4900"]
       }
     },
     {
@@ -976,44 +839,18 @@
       "note": "At least three thematically-related courses in the same grouping",
       "confirmation": "hua-depth-confirmation",
       "section": "hua",
-      "lines": [
-        1,
-        2,
-        3,
-        5,
-        6
-      ]
+      "lines": [1, 2, 3, 5, 6]
     },
     {
       "id": "hua-breadth",
       "name": "Humanities breadth",
       "type": "groupBreadth",
       "groupings": {
-        "art-drama-music": [
-          "AR",
-          "TH",
-          "MU"
-        ],
-        "modern-languages": [
-          "AB",
-          "CN",
-          "ISE",
-          "GN",
-          "SP"
-        ],
-        "literature-writing": [
-          "EN",
-          "WR"
-        ],
-        "history-humanities": [
-          "HI",
-          "HU",
-          "INTL"
-        ],
-        "philosophy-religion": [
-          "PY",
-          "RE"
-        ]
+        "art-drama-music": ["AR", "TH", "MU"],
+        "modern-languages": ["AB", "CN", "ISE", "GN", "SP"],
+        "literature-writing": ["EN", "WR"],
+        "history-humanities": ["HI", "HU", "INTL"],
+        "philosophy-religion": ["PY", "RE"]
       },
       "allLanguageException": true,
       "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",
@@ -1042,14 +879,7 @@
       "confirmation": "hua-sequence-confirmation",
       "note": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
       "help": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "lines": [1, 2, 3, 4, 5, 6],
       "affectsLines": true
     },
     {
@@ -1059,13 +889,7 @@
       "confirmation": "quantitative-distribution-confirmation",
       "note": "Confirm at least one statistics course or a BCB, CS or DS course in Quantitative Reasoning.",
       "help": "Confirm at least one statistics course or a BCB, CS or DS course in Quantitative Reasoning.",
-      "lines": [
-        16,
-        17,
-        18,
-        19,
-        20
-      ],
+      "lines": [16, 17, 18, 19, 20],
       "affectsLines": true
     },
     {
@@ -1075,12 +899,7 @@
       "confirmation": "lab-credit-confirmation",
       "note": "Confirm 4/3 units of laboratory experience, including the required levels. Each lab may count once. Confirm these lines only after completing the labs.",
       "help": "Confirm 4/3 units of laboratory experience, including the required levels. Each lab may count once. Confirm these lines only after completing the labs.",
-      "lines": [
-        36,
-        37,
-        38,
-        39
-      ],
+      "lines": [36, 37, 38, 39],
       "affectsLines": true
     },
     {
@@ -1090,11 +909,7 @@
       "confirmation": "related-graduate-limit-confirmation",
       "note": "Confirm at most one listed graduate course. Related half-unit laboratories and ISPs require manual credit review; the audit places only full courses automatically.",
       "help": "Confirm at most one listed graduate course. Related half-unit laboratories and ISPs require manual credit review; the audit places only full courses automatically.",
-      "lines": [
-        40,
-        41,
-        42
-      ],
+      "lines": [40, 41, 42],
       "affectsLines": true
     },
     {
@@ -1104,14 +919,7 @@
       "confirmation": "hua-ap-credit-confirmation",
       "note": "Confirm that no more than 1/3 unit of AP credit counts toward Humanities and Arts. The PDF states an AP limit; it does not give an IB limit.",
       "help": "Confirm that no more than 1/3 unit of AP credit counts toward Humanities and Arts. The PDF states an AP limit; it does not give an IB limit.",
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "lines": [1, 2, 3, 4, 5, 6],
       "affectsLines": true
     }
   ],

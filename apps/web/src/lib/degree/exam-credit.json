@@ -3,18 +3,12 @@
   "programs": {
     "AP": {
       "source": "https://www.wpi.edu/offices/registrar/policies-procedures/ap-credit",
-      "scores": [
-        1,
-        5
-      ],
+      "scores": [1, 5],
       "minScore": 4
     },
     "IB": {
       "source": "https://www.wpi.edu/offices/registrar/policies-procedures/ib-credit",
-      "scores": [
-        1,
-        7
-      ],
+      "scores": [1, 7],
       "minScore": 6,
       "level": "HL"
     }

@@ -10,15 +10,52 @@
   "totalUnits": 1,
   "residencyUnits": 0.333333,
   "sections": [
-    { "id": "fixture", "name": "Fixture engineering", "minUnits": 0.666666, "lines": [34, 36] },
-    { "id": "free-electives", "name": "Free electives", "minUnits": 0.333333, "lines": [35], "creditPool": true, "poolCredits": 3 }
+    {
+      "id": "fixture",
+      "name": "Fixture engineering",
+      "minUnits": 0.666666,
+      "lines": [34, 36]
+    },
+    {
+      "id": "free-electives",
+      "name": "Free electives",
+      "minUnits": 0.333333,
+      "lines": [35],
+      "creditPool": true,
+      "poolCredits": 3
+    }
   ],
   "lines": [
-    { "line": 34, "section": "fixture", "name": "Fixture mathematics", "units": 0.333333, "filter": { "type": "courses", "courses": ["MA 1021", "CS 1101"] } },
-    { "line": 35, "section": "free-electives", "name": "Fixture elective", "units": 0.333333, "filter": { "type": "any" } },
-    { "line": 36, "section": "fixture", "name": "Fixture project", "units": 0.333333, "filter": { "type": "manual" } }
+    {
+      "line": 34,
+      "section": "fixture",
+      "name": "Fixture mathematics",
+      "units": 0.333333,
+      "filter": { "type": "courses", "courses": ["MA 1021", "CS 1101"] }
+    },
+    {
+      "line": 35,
+      "section": "free-electives",
+      "name": "Fixture elective",
+      "units": 0.333333,
+      "filter": { "type": "any" }
+    },
+    {
+      "line": 36,
+      "section": "fixture",
+      "name": "Fixture project",
+      "units": 0.333333,
+      "filter": { "type": "manual" }
+    }
   ],
-  "manualItems": [{ "id": "project", "name": "Fixture project", "type": "checkbox", "line": 36 }],
+  "manualItems": [
+    {
+      "id": "project",
+      "name": "Fixture project",
+      "type": "checkbox",
+      "line": 36
+    }
+  ],
   "checks": [],
   "exclusions": [],
   "onlyOneSets": [],

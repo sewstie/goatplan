@@ -10,66 +10,21 @@
   "totalUnits": 15,
   "residencyUnits": 8,
   "crossLists": [
-    [
-      "CS 2022",
-      "MA 2201"
-    ],
-    [
-      "CS 4032",
-      "MA 3257"
-    ],
-    [
-      "CS 4033",
-      "MA 3457"
-    ],
-    [
-      "CS 3043",
-      "SS 3043"
-    ],
-    [
-      "CS 4300",
-      "IMGD 4300"
-    ],
-    [
-      "CS 4343",
-      "DS 4343"
-    ],
-    [
-      "CS 4344",
-      "DS 4344"
-    ],
-    [
-      "CS 4345",
-      "DS 4345"
-    ],
-    [
-      "CS 4433",
-      "DS 4433"
-    ],
-    [
-      "CS 4801",
-      "ECE 4802"
-    ],
-    [
-      "IMGD 4100",
-      "CS 4100"
-    ],
-    [
-      "GOV 2314",
-      "ID 2314"
-    ],
-    [
-      "BME 4011",
-      "ECE 4011"
-    ],
-    [
-      "BME 4023",
-      "ECE 4023"
-    ],
-    [
-      "RBE 4322",
-      "ME 4322"
-    ]
+    ["CS 2022", "MA 2201"],
+    ["CS 4032", "MA 3257"],
+    ["CS 4033", "MA 3457"],
+    ["CS 3043", "SS 3043"],
+    ["CS 4300", "IMGD 4300"],
+    ["CS 4343", "DS 4343"],
+    ["CS 4344", "DS 4344"],
+    ["CS 4345", "DS 4345"],
+    ["CS 4433", "DS 4433"],
+    ["CS 4801", "ECE 4802"],
+    ["IMGD 4100", "CS 4100"],
+    ["GOV 2314", "ID 2314"],
+    ["BME 4011", "ECE 4011"],
+    ["BME 4023", "ECE 4023"],
+    ["RBE 4322", "ME 4322"]
   ],
   "huaSubjects": [
     "AR",
@@ -96,42 +51,26 @@
       "id": "hua",
       "name": "Humanities and Arts",
       "minUnits": 2,
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "lines": [1, 2, 3, 4, 5, 6],
       "note": "Finish five HUA courses before Inquiry. Check the theme and sequence with your advisor."
     },
     {
       "id": "wpe",
       "name": "Wellness and Physical Education",
       "minUnits": 0.333333,
-      "lines": [
-        7
-      ]
+      "lines": [7]
     },
     {
       "id": "social-science",
       "name": "Social Science",
       "minUnits": 0.666667,
-      "lines": [
-        8,
-        9
-      ]
+      "lines": [8, 9]
     },
     {
       "id": "iqp",
       "name": "Interactive Qualifying Project",
       "minUnits": 1,
-      "lines": [
-        10,
-        11,
-        12
-      ]
+      "lines": [10, 11, 12]
     },
     {
       "id": "free-electives",
@@ -139,101 +78,59 @@
       "minUnits": 1,
       "creditPool": true,
       "poolCredits": 9,
-      "lines": [
-        13,
-        14,
-        15
-      ]
+      "lines": [13, 14, 15]
     },
     {
       "id": "math",
       "name": "Mathematics",
       "minUnits": 2.0,
-      "lines": [
-        16,
-        17,
-        18,
-        19,
-        20,
-        21
-      ],
+      "lines": [16, 17, 18, 19, 20, 21],
       "note": "Six math courses, including calculus, differential equations and linear algebra."
     },
     {
       "id": "science",
       "name": "Basic Science",
       "minUnits": 1.0,
-      "lines": [
-        22,
-        23,
-        24
-      ],
+      "lines": [22, 23, 24],
       "note": "One chemistry and two physics courses, or two chemistry and one physics. Confirm the mix in Requirement checks."
     },
     {
       "id": "math-science",
       "name": "Additional Mathematics and Basic Science",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        25,
-        26
-      ],
+      "lines": [25, 26],
       "note": "Two additional courses in MA, BB, CH, PH or GE. Confirm any GE choice with your advisor."
     },
     {
       "id": "mechanical",
       "name": "Mechanical Systems",
       "minUnits": 1.3333333333333333,
-      "lines": [
-        27,
-        28,
-        29,
-        30
-      ]
+      "lines": [27, 28, 29, 30]
     },
     {
       "id": "thermal",
       "name": "Thermal Systems",
       "minUnits": 1.3333333333333333,
-      "lines": [
-        31,
-        32,
-        33,
-        34
-      ],
+      "lines": [31, 32, 33, 34],
       "note": "Add ES 3001 as a course. Use the thermodynamics checkbox only for approved CH 3510/PH 2101 counted as science, with an extra engineering elective recorded. Confirm both with your advisor."
     },
     {
       "id": "other-engineering",
       "name": "Other Engineering Courses",
       "minUnits": 1.3333333333333333,
-      "lines": [
-        35,
-        36,
-        37,
-        38
-      ]
+      "lines": [35, 36, 37, 38]
     },
     {
       "id": "mqp",
       "name": "Major Qualifying Project",
       "minUnits": 1.0,
-      "lines": [
-        39,
-        40,
-        41
-      ]
+      "lines": [39, 40, 41]
     },
     {
       "id": "engineering-electives",
       "name": "Engineering Electives",
       "minUnits": 1.3333333333333333,
-      "lines": [
-        42,
-        43,
-        44,
-        45
-      ],
+      "lines": [42, 43, 44, 45],
       "note": "Four electives. Confirm course levels and at least two ME 2000/3000-level courses or ES 3011/ES 3323 in Requirement checks."
     }
   ],
@@ -326,10 +223,7 @@
       "units": 0.333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "HU 3900",
-          "HU 3910"
-        ]
+        "courses": ["HU 3900", "HU 3910"]
       },
       "displayName": "Inquiry / Practicum"
     },
@@ -396,9 +290,7 @@
       "subSlotUnits": 0.083333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "WPE"
-        ]
+        "subjects": ["WPE"]
       },
       "displayName": "WPE"
     },
@@ -420,9 +312,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ],
+        "additionalCourses": ["ID 2050"],
         "priority": -1
       },
       "displayName": "Social science"
@@ -445,9 +335,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ],
+        "additionalCourses": ["ID 2050"],
         "priority": -1
       },
       "displayName": "Social science"
@@ -519,9 +407,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 1021"
-        ]
+        "courses": ["MA 1021"]
       }
     },
     {
@@ -531,9 +417,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 1022"
-        ]
+        "courses": ["MA 1022"]
       }
     },
     {
@@ -543,9 +427,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 1023"
-        ]
+        "courses": ["MA 1023"]
       }
     },
     {
@@ -555,9 +437,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 1024"
-        ]
+        "courses": ["MA 1024"]
       }
     },
     {
@@ -567,9 +447,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 2051"
-        ]
+        "courses": ["MA 2051"]
       }
     },
     {
@@ -579,9 +457,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 2071"
-        ]
+        "courses": ["MA 2071"]
       }
     },
     {
@@ -591,9 +467,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "CH"
-        ]
+        "subjects": ["CH"]
       }
     },
     {
@@ -603,9 +477,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "PH"
-        ]
+        "subjects": ["PH"]
       }
     },
     {
@@ -615,10 +487,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "CH",
-          "PH"
-        ]
+        "subjects": ["CH", "PH"]
       }
     },
     {
@@ -628,13 +497,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "MA",
-          "BB",
-          "CH",
-          "PH",
-          "GE"
-        ]
+        "subjects": ["MA", "BB", "CH", "PH", "GE"]
       }
     },
     {
@@ -644,13 +507,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "MA",
-          "BB",
-          "CH",
-          "PH",
-          "GE"
-        ]
+        "subjects": ["MA", "BB", "CH", "PH", "GE"]
       }
     },
     {
@@ -660,9 +517,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "ES 2501"
-        ]
+        "courses": ["ES 2501"]
       }
     },
     {
@@ -672,9 +527,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "ES 2502"
-        ]
+        "courses": ["ES 2502"]
       }
     },
     {
@@ -684,9 +537,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "ES 2503"
-        ]
+        "courses": ["ES 2503"]
       }
     },
     {
@@ -696,12 +547,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "ME 4320",
-          "ME 4322",
-          "ME 4323",
-          "ME 4324"
-        ]
+        "courses": ["ME 4320", "ME 4322", "ME 4323", "ME 4324"]
       }
     },
     {
@@ -711,9 +557,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "ES 3001"
-        ]
+        "courses": ["ES 3001"]
       },
       "displayName": "Thermodynamics review"
     },
@@ -724,9 +568,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "ES 3004"
-        ]
+        "courses": ["ES 3004"]
       }
     },
     {
@@ -736,9 +578,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "ES 3003"
-        ]
+        "courses": ["ES 3003"]
       }
     },
     {
@@ -748,10 +588,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "ME 4422",
-          "ME 4429"
-        ]
+        "courses": ["ME 4422", "ME 4429"]
       }
     },
     {
@@ -761,9 +598,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "ES 2001"
-        ]
+        "courses": ["ES 2001"]
       }
     },
     {
@@ -773,12 +608,8 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "ECE"
-        ],
-        "excludedCourses": [
-          "ECE 1799"
-        ]
+        "subjects": ["ECE"],
+        "excludedCourses": ["ECE 1799"]
       }
     },
     {
@@ -788,10 +619,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "ME 3901",
-          "ME 3902"
-        ]
+        "courses": ["ME 3901", "ME 3902"]
       }
     },
     {
@@ -858,9 +686,7 @@
           "ME",
           "RBE"
         ],
-        "excludedCourses": [
-          "ECE 1799"
-        ]
+        "excludedCourses": ["ECE 1799"]
       }
     },
     {
@@ -881,9 +707,7 @@
           "ME",
           "RBE"
         ],
-        "excludedCourses": [
-          "ECE 1799"
-        ]
+        "excludedCourses": ["ECE 1799"]
       }
     },
     {
@@ -904,9 +728,7 @@
           "ME",
           "RBE"
         ],
-        "excludedCourses": [
-          "ECE 1799"
-        ]
+        "excludedCourses": ["ECE 1799"]
       }
     },
     {
@@ -927,9 +749,7 @@
           "ME",
           "RBE"
         ],
-        "excludedCourses": [
-          "ECE 1799"
-        ]
+        "excludedCourses": ["ECE 1799"]
       }
     }
   ],
@@ -943,44 +763,18 @@
       "note": "At least three thematically-related courses in the same grouping",
       "confirmation": "hua-depth-confirmation",
       "section": "hua",
-      "lines": [
-        1,
-        2,
-        3,
-        5,
-        6
-      ]
+      "lines": [1, 2, 3, 5, 6]
     },
     {
       "id": "hua-breadth",
       "name": "Humanities breadth",
       "type": "groupBreadth",
       "groupings": {
-        "art-drama-music": [
-          "AR",
-          "TH",
-          "MU"
-        ],
-        "modern-languages": [
-          "AB",
-          "CN",
-          "ISE",
-          "GN",
-          "SP"
-        ],
-        "literature-writing": [
-          "EN",
-          "WR"
-        ],
-        "history-humanities": [
-          "HI",
-          "HU",
-          "INTL"
-        ],
-        "philosophy-religion": [
-          "PY",
-          "RE"
-        ]
+        "art-drama-music": ["AR", "TH", "MU"],
+        "modern-languages": ["AB", "CN", "ISE", "GN", "SP"],
+        "literature-writing": ["EN", "WR"],
+        "history-humanities": ["HI", "HU", "INTL"],
+        "philosophy-religion": ["PY", "RE"]
       },
       "allLanguageException": true,
       "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",
@@ -1017,12 +811,7 @@
       "confirmation": "elective-distribution-confirmation",
       "note": "Confirm four engineering electives: courses must be 2000-level or above, except ES and ME may be 1000-level. At least two must be ME 2000/3000-level courses or ES 3011/ES 3323. Department matches are candidates, not approval.",
       "help": "Confirm four engineering electives: courses must be 2000-level or above, except ES and ME may be 1000-level. At least two must be ME 2000/3000-level courses or ES 3011/ES 3323. Department matches are candidates, not approval.",
-      "lines": [
-        42,
-        43,
-        44,
-        45
-      ],
+      "lines": [42, 43, 44, 45],
       "affectsLines": true
     },
     {
@@ -1032,9 +821,7 @@
       "confirmation": "thermodynamics-credit-confirmation",
       "note": "Confirm ES 3001 or an approved CH 3510/PH 2101 substitution. A CH or PH course counts only as science and requires an additional engineering elective. Record that elective in your history and confirm the engineering total and minimum 15 academic units with your advisor.",
       "help": "Confirm ES 3001 or an approved CH 3510/PH 2101 substitution. A CH or PH course counts only as science and requires an additional engineering elective. Record that elective in your history and confirm the engineering total and minimum 15 academic units with your advisor.",
-      "lines": [
-        31
-      ],
+      "lines": [31],
       "affectsLines": true
     },
     {
@@ -1044,14 +831,7 @@
       "confirmation": "math-equivalents-confirmation",
       "note": "Confirm the six math courses and any approved calculus equivalents against Workday.",
       "help": "Confirm the six math courses and any approved calculus equivalents against Workday.",
-      "lines": [
-        16,
-        17,
-        18,
-        19,
-        20,
-        21
-      ],
+      "lines": [16, 17, 18, 19, 20, 21],
       "affectsLines": true
     },
     {
@@ -1061,13 +841,7 @@
       "confirmation": "science-approval-confirmation",
       "note": "Confirm one chemistry and one physics course plus a third in either discipline. Additional math or science is separate. The sheet permits GE, while its program chart names GE 2341; review other GE courses with your advisor.",
       "help": "Confirm one chemistry and one physics course plus a third in either discipline. Additional math or science is separate. The sheet permits GE, while its program chart names GE 2341; review other GE courses with your advisor.",
-      "lines": [
-        22,
-        23,
-        24,
-        25,
-        26
-      ],
+      "lines": [22, 23, 24, 25, 26],
       "affectsLines": true
     },
     {
@@ -1077,9 +851,7 @@
       "confirmation": "programming-approval-confirmation",
       "note": "The tracking sheet includes CS 1000, CS 1005 and CS 1102 beyond the catalog examples. Confirm that your programming course meets the requirement.",
       "help": "The tracking sheet includes CS 1000, CS 1005 and CS 1102 beyond the catalog examples. Confirm that your programming course meets the requirement.",
-      "lines": [
-        38
-      ],
+      "lines": [38],
       "affectsLines": true
     },
     {
@@ -1089,14 +861,7 @@
       "confirmation": "hua-sequence-confirmation",
       "note": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
       "help": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "lines": [1, 2, 3, 4, 5, 6],
       "affectsLines": true
     },
     {

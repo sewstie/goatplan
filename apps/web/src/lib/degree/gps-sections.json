@@ -1,10 +1,7 @@
 {
   "checked": "2026-11-06",
   "source": "https://www.wpi.edu/academics/undergraduate/great-problems-seminar",
-  "courses": [
-    "FY 1100",
-    "FY 1101"
-  ],
+  "courses": ["FY 1100", "FY 1101"],
   "sections": [
     {
       "id": "green-worcester",

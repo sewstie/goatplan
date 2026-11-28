@@ -31,18 +31,12 @@
   "onlyOneSets": [
     {
       "id": "biomechanics-equivalents",
-      "courses": [
-        "BME 2502",
-        "ES 2502"
-      ],
+      "courses": ["BME 2502", "ES 2502"],
       "reason": "The official PDF does not allow both courses to count."
     },
     {
       "id": "biomaterials-equivalents",
-      "courses": [
-        "BME 2001",
-        "ES 2001"
-      ],
+      "courses": ["BME 2001", "ES 2001"],
       "reason": "The official PDF does not allow both courses to count."
     }
   ],
@@ -51,50 +45,32 @@
       "id": "hua",
       "name": "Humanities and Arts",
       "minUnits": 2,
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "lines": [1, 2, 3, 4, 5, 6],
       "note": "Finish five HUA courses before Inquiry. Check the theme and sequence with your advisor."
     },
     {
       "id": "wpe",
       "name": "Wellness and Physical Education",
       "minUnits": 0.333333,
-      "lines": [
-        7
-      ]
+      "lines": [7]
     },
     {
       "id": "social-science",
       "name": "Social Science",
       "minUnits": 0.666667,
-      "lines": [
-        8,
-        9
-      ]
+      "lines": [8, 9]
     },
     {
       "id": "iqp",
       "name": "Interactive Qualifying Project",
       "minUnits": 1,
-      "lines": [
-        10,
-        11,
-        12
-      ]
+      "lines": [10, 11, 12]
     },
     {
       "id": "free-electives",
       "name": "Free Electives",
       "minUnits": 0.3333333333333333,
-      "lines": [
-        13
-      ],
+      "lines": [13],
       "creditPool": true,
       "poolCredits": 3
     },
@@ -102,134 +78,86 @@
       "id": "mathematics",
       "name": "Mathematics",
       "minUnits": 1.9999999999999998,
-      "lines": [
-        14,
-        15,
-        16,
-        17,
-        18,
-        19
-      ]
+      "lines": [14, 15, 16, 17, 18, 19]
     },
     {
       "id": "biology",
       "name": "Biology",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        20,
-        21
-      ]
+      "lines": [20, 21]
     },
     {
       "id": "chemistry",
       "name": "Chemistry",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        22,
-        23
-      ]
+      "lines": [22, 23]
     },
     {
       "id": "physics",
       "name": "Physics",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        24,
-        25
-      ]
+      "lines": [24, 25]
     },
     {
       "id": "supplemental",
       "name": "Supplemental Science",
       "minUnits": 0.3333333333333333,
-      "lines": [
-        26
-      ]
+      "lines": [26]
     },
     {
       "id": "programming",
       "name": "Computer Programming",
       "minUnits": 0.3333333333333333,
-      "lines": [
-        27
-      ]
+      "lines": [27]
     },
     {
       "id": "physiology",
       "name": "Human Physiology 3000+",
       "minUnits": 0.3333333333333333,
-      "lines": [
-        28
-      ]
+      "lines": [28]
     },
     {
       "id": "mqp",
       "name": "Major Qualifying Project",
       "minUnits": 1.0,
-      "lines": [
-        29,
-        30,
-        31
-      ]
+      "lines": [29, 30, 31]
     },
     {
       "id": "engineering-distribution",
       "name": "Engineering Distribution",
       "minUnits": 1.3333333333333333,
-      "lines": [
-        32,
-        33,
-        34,
-        35
-      ]
+      "lines": [32, 33, 34, 35]
     },
     {
       "id": "engineering",
       "name": "Engineering 2000+",
       "minUnits": 1.0,
-      "lines": [
-        36,
-        37,
-        38
-      ]
+      "lines": [36, 37, 38]
     },
     {
       "id": "engineering-design",
       "name": "Engineering Design",
       "minUnits": 0.3333333333333333,
-      "lines": [
-        39
-      ]
+      "lines": [39]
     },
     {
       "id": "laboratory",
       "name": "BME Laboratories",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        40,
-        41,
-        42,
-        43
-      ],
+      "lines": [40, 41, 42, 43],
       "note": "Three 3000-level half-unit labs and one 4000-level half-unit lab forming an approved focus pair."
     },
     {
       "id": "advanced-engineering",
       "name": "Engineering 3000+",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        44,
-        45
-      ]
+      "lines": [44, 45]
     },
     {
       "id": "bme-depth",
       "name": "BME Depth 4000+",
       "minUnits": 0.6666666666666666,
-      "lines": [
-        46,
-        47
-      ]
+      "lines": [46, 47]
     }
   ],
   "lines": [
@@ -324,10 +252,7 @@
       "units": 0.333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "HU 3900",
-          "HU 3910"
-        ]
+        "courses": ["HU 3900", "HU 3910"]
       },
       "displayName": "Inquiry / Practicum"
     },
@@ -396,9 +321,7 @@
       "subSlotUnits": 0.083333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "WPE"
-        ]
+        "subjects": ["WPE"]
       },
       "displayName": "WPE"
     },
@@ -420,9 +343,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ],
+        "additionalCourses": ["ID 2050"],
         "priority": 100000
       },
       "displayName": "Social science"
@@ -445,9 +366,7 @@
           "STS",
           "DEV"
         ],
-        "additionalCourses": [
-          "ID 2050"
-        ],
+        "additionalCourses": ["ID 2050"],
         "priority": 100000
       },
       "displayName": "Social science"
@@ -498,9 +417,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 1021"
-        ]
+        "courses": ["MA 1021"]
       }
     },
     {
@@ -510,9 +427,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 1022"
-        ]
+        "courses": ["MA 1022"]
       }
     },
     {
@@ -522,9 +437,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 1023"
-        ]
+        "courses": ["MA 1023"]
       }
     },
     {
@@ -534,9 +447,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 1024"
-        ]
+        "courses": ["MA 1024"]
       }
     },
     {
@@ -546,9 +457,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 2051"
-        ]
+        "courses": ["MA 2051"]
       }
     },
     {
@@ -558,10 +467,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "MA 2610",
-          "MA 2611"
-        ]
+        "courses": ["MA 2610", "MA 2611"]
       }
     },
     {
@@ -571,9 +477,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "BB"
-        ]
+        "subjects": ["BB"]
       }
     },
     {
@@ -594,9 +498,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "CH 1010"
-        ]
+        "courses": ["CH 1010"]
       }
     },
     {
@@ -606,9 +508,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "CH 1020"
-        ]
+        "courses": ["CH 1020"]
       }
     },
     {
@@ -618,9 +518,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "PH 1110"
-        ]
+        "courses": ["PH 1110"]
       }
     },
     {
@@ -630,9 +528,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "PH 1120"
-        ]
+        "courses": ["PH 1120"]
       }
     },
     {
@@ -642,14 +538,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "subjects",
-        "subjects": [
-          "BB",
-          "PH",
-          "CH",
-          "MA",
-          "CS",
-          "FY"
-        ]
+        "subjects": ["BB", "PH", "CH", "MA", "CS", "FY"]
       }
     },
     {
@@ -842,9 +731,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "courses": [
-          "BME 3300"
-        ],
+        "courses": ["BME 3300"],
         "priority": -20
       }
     },
@@ -959,9 +846,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BME [4-9][0-9]{3}"
-        ],
+        "coursePatterns": ["BME [4-9][0-9]{3}"],
         "excludedCourses": [
           "BME 1001",
           "BME 1004",
@@ -991,9 +876,7 @@
       "units": 0.3333333333333333,
       "filter": {
         "type": "courses",
-        "coursePatterns": [
-          "BME [4-9][0-9]{3}"
-        ],
+        "coursePatterns": ["BME [4-9][0-9]{3}"],
         "excludedCourses": [
           "BME 1001",
           "BME 1004",
@@ -1027,44 +910,18 @@
       "note": "At least three thematically-related courses in the same grouping",
       "confirmation": "hua-depth-confirmation",
       "section": "hua",
-      "lines": [
-        1,
-        2,
-        3,
-        5,
-        6
-      ]
+      "lines": [1, 2, 3, 5, 6]
     },
     {
       "id": "hua-breadth",
       "name": "Humanities breadth",
       "type": "groupBreadth",
       "groupings": {
-        "art-drama-music": [
-          "AR",
-          "TH",
-          "MU"
-        ],
-        "modern-languages": [
-          "AB",
-          "CN",
-          "ISE",
-          "GN",
-          "SP"
-        ],
-        "literature-writing": [
-          "EN",
-          "WR"
-        ],
-        "history-humanities": [
-          "HI",
-          "HU",
-          "INTL"
-        ],
-        "philosophy-religion": [
-          "PY",
-          "RE"
-        ]
+        "art-drama-music": ["AR", "TH", "MU"],
+        "modern-languages": ["AB", "CN", "ISE", "GN", "SP"],
+        "literature-writing": ["EN", "WR"],
+        "history-humanities": ["HI", "HU", "INTL"],
+        "philosophy-religion": ["PY", "RE"]
       },
       "allLanguageException": true,
       "note": "At least one course outside the grouping used for depth; all-language students pass with check-yourself",
@@ -1086,14 +943,7 @@
       "confirmation": "hua-sequence-confirmation",
       "note": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
       "help": "Confirm a 2000-level or higher depth course and completion of five HUA courses before Inquiry. Review the modern-language exception with your advisor.",
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "lines": [1, 2, 3, 4, 5, 6],
       "affectsLines": true
     },
     {
@@ -1103,14 +953,7 @@
       "confirmation": "hua-ap-credit-confirmation",
       "note": "Confirm humanities credit allocation with your advisor. The BME PDF refers to the HUA requirement but does not specify an AP or IB cap.",
       "help": "Confirm humanities credit allocation with your advisor. The BME PDF refers to the HUA requirement but does not specify an AP or IB cap.",
-      "lines": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "lines": [1, 2, 3, 4, 5, 6],
       "affectsLines": true
     },
     {
@@ -1121,27 +964,8 @@
       "note": "Confirm 9/3 units of BME within 14/3 engineering units, at most one graduate course, an approved living systems lab and a 3000/4000-level focus pair. Labs cannot fill BME depth. BME 595 needs departmental approval. Confirm capstone design through your MQP advisor or BME 4301. Programming, human physiology and the four engineering topic rows refer to external approved lists and require confirmation.",
       "help": "Confirm 9/3 units of BME within 14/3 engineering units, at most one graduate course, an approved living systems lab and a 3000/4000-level focus pair. Labs cannot fill BME depth. BME 595 needs departmental approval. Confirm capstone design through your MQP advisor or BME 4301. Programming, human physiology and the four engineering topic rows refer to external approved lists and require confirmation.",
       "lines": [
-        27,
-        28,
-        29,
-        30,
-        31,
-        32,
-        33,
-        34,
-        35,
-        36,
-        37,
-        38,
-        39,
-        40,
-        41,
-        42,
-        43,
-        44,
-        45,
-        46,
-        47
+        27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,
+        45, 46, 47
       ],
       "affectsLines": true
     },
@@ -1152,23 +976,7 @@
       "confirmation": "bme-equivalents-confirmation",
       "note": "Confirm the required science topics and any approved equivalents. At least one biology course must be at 2000-level or above.",
       "help": "Confirm the required science topics and any approved equivalents. At least one biology course must be at 2000-level or above.",
-      "lines": [
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28
-      ],
+      "lines": [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
       "affectsLines": true
     }
   ],

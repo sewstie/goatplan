@@ -2,9 +2,7 @@
   {
     "code": "DS 4343",
     "title": "Deep Learning",
-    "aliases": [
-      "CS 4343"
-    ],
+    "aliases": ["CS 4343"],
     "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4343ds-4343",
     "wording": "(CS 4342; MA 2071; CS 2223)",
     "background": {
@@ -24,9 +22,7 @@
   {
     "code": "DS 4344",
     "title": "Natural Language Processing: From Foundations to Large Language Models",
-    "aliases": [
-      "CS 4344"
-    ],
+    "aliases": ["CS 4344"],
     "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4344ds-4344",
     "wording": "((CS 1004 or CS 1101 or CS 1102); (CS 2102 or CS 2103 or CS 2119); (DS 3010 or CS 4445 or CS 4342))",
     "background": {
@@ -76,9 +72,7 @@
   {
     "code": "DS 4345",
     "title": "Multi-Agent Systems",
-    "aliases": [
-      "CS 4345"
-    ],
+    "aliases": ["CS 4345"],
     "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4345ds-4345",
     "wording": "(Linear algebra, probability and Python knowledge; (DS 3010 or CS 4445 or CS 4342); Deep learning background such as CS/DS 4343 is encouraged)",
     "background": {
@@ -108,9 +102,7 @@
   {
     "code": "DS 4433",
     "title": "Big Data Management and Analytics",
-    "aliases": [
-      "CS 4433"
-    ],
+    "aliases": ["CS 4433"],
     "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4433ds-4433",
     "wording": "(CS 4432; Programming experience)",
     "background": {
@@ -246,9 +238,7 @@
   {
     "code": "DS 4635",
     "title": "Data Analytics and Statistical Learning",
-    "aliases": [
-      "MA 4635"
-    ],
+    "aliases": ["MA 4635"],
     "source": "https://wpi.cleancatalog.net/data-science-mathematical-sciences/ds-4635ma-4635",
     "wording": "(MA 2071; MA 2612; MA 2631; Ability to program in a scientific language)",
     "background": {
@@ -355,9 +345,7 @@
   {
     "code": "CS 2022",
     "title": "Discrete Mathematics",
-    "aliases": [
-      "MA 2201"
-    ],
+    "aliases": ["MA 2201"],
     "source": "https://wpi.cleancatalog.net/computer-science-mathematical-sciences/cs-2022ma-2201",
     "wording": "None.",
     "background": null

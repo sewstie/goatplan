@@ -279,9 +279,7 @@
         }
       ]
     },
-    "aliases": [
-      "ECE 4011"
-    ]
+    "aliases": ["ECE 4011"]
   },
   {
     "code": "BME 4012",
@@ -307,9 +305,7 @@
     "background": {
       "note": "Alternative or topic-based preparation. See the linked WPI description."
     },
-    "aliases": [
-      "ECE 4023"
-    ]
+    "aliases": ["ECE 4023"]
   },
   {
     "code": "BME 4201",
@@ -367,9 +363,7 @@
         }
       ]
     },
-    "aliases": [
-      "ME 4503"
-    ]
+    "aliases": ["ME 4503"]
   },
   {
     "code": "BME 4504",
@@ -395,9 +389,7 @@
         }
       ]
     },
-    "aliases": [
-      "ME 4504"
-    ]
+    "aliases": ["ME 4504"]
   },
   {
     "code": "BME 4505",
@@ -440,9 +432,7 @@
         }
       ]
     },
-    "aliases": [
-      "ME 4606"
-    ]
+    "aliases": ["ME 4606"]
   },
   {
     "code": "BME 4607",
@@ -496,9 +486,7 @@
         }
       ]
     },
-    "aliases": [
-      "ME 4814"
-    ]
+    "aliases": ["ME 4814"]
   },
   {
     "code": "BME 4828",

@@ -51,9 +51,7 @@
   {
     "code": "CS 2022",
     "title": "Discrete Mathematics",
-    "aliases": [
-      "MA 2201"
-    ],
+    "aliases": ["MA 2201"],
     "source": "https://wpi.cleancatalog.net/computer-science-mathematical-sciences/cs-2022ma-2201",
     "wording": "None.",
     "background": null
@@ -235,9 +233,7 @@
   {
     "code": "CS 3043",
     "title": "Social Implications of Information Processing",
-    "aliases": [
-      "SS 3043"
-    ],
+    "aliases": ["SS 3043"],
     "source": "https://wpi.cleancatalog.net/computer-science-social-science-policy-studies/cs-3043ss-3043",
     "wording": "A general knowledge of computers and computer systems.",
     "background": {
@@ -364,9 +360,7 @@
   {
     "code": "CS 4032",
     "title": "Numerical Methods for Linear and Nonlinear Systems",
-    "aliases": [
-      "MA 3257"
-    ],
+    "aliases": ["MA 3257"],
     "source": "https://wpi.cleancatalog.net/computer-science-mathematical-sciences/cs-4032ma-3257",
     "wording": "MA 2071. An ability to write computer programs in a scientific language is assumed.",
     "background": {
@@ -383,9 +377,7 @@
   {
     "code": "CS 4033",
     "title": "Numerical Methods for Calculus and Differential Equations",
-    "aliases": [
-      "MA 3457"
-    ],
+    "aliases": ["MA 3457"],
     "source": "https://wpi.cleancatalog.net/computer-science-mathematical-sciences/cs-4033ma-3457",
     "wording": "MA 2051. An ability to write computer programs in a scientific language is assumed. Undergraduate credit may not be earned for both this course and for MA 3255/CS 4031.",
     "background": {
@@ -483,9 +475,7 @@
   {
     "code": "CS 4300",
     "title": "Graphics, Simulation, and Aesthetics",
-    "aliases": [
-      "IMGD 4300"
-    ],
+    "aliases": ["IMGD 4300"],
     "source": "https://wpi.cleancatalog.net/computer-science-interactive-media-and-game-development/cs-4300imgd-4300",
     "wording": "Students should have experience with graphics, web, or game engine programming and multimedia development. One of CS 4731 (Computer Graphics), CS 4241 (Webware), or IMGD 4000 (Technical Game Development II) should provide sufficient background for this course.",
     "background": {
@@ -570,9 +560,7 @@
   {
     "code": "CS 4343",
     "title": "Deep Learning",
-    "aliases": [
-      "DS 4343"
-    ],
+    "aliases": ["DS 4343"],
     "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4343ds-4343",
     "wording": "Machine Learning (CS 4342), and knowledge of Linear Algebra (such as MA 2071) and Algorithms (such as CS 2223)",
     "background": {
@@ -592,9 +580,7 @@
   {
     "code": "CS 4344",
     "title": "Natural Language Processing: From Foundations to Large Language Models",
-    "aliases": [
-      "DS 4344"
-    ],
+    "aliases": ["DS 4344"],
     "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4344ds-4344",
     "wording": "Programming skills equivalent to (CS 1004 or CS 1101 or CS 1102) and (CS 2102 or CS 2103 or CS 2119); and machine learning equivalent to (DS 3010, CS 4445, or CS 4342).",
     "background": {
@@ -647,9 +633,7 @@
   {
     "code": "CS 4345",
     "title": "Multi-Agent Systems",
-    "aliases": [
-      "DS 4345"
-    ],
+    "aliases": ["DS 4345"],
     "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4345ds-4345",
     "wording": "Basic knowledge of linear algebra, probability theory, and Python programming. Familiarity with machine learning and deep learning equivalent to (DS 3010, CS 4445, CS 4342). Familiarity with deep learning equivalent to CS/DS 4343 encouraged.",
     "background": {
@@ -804,9 +788,7 @@
   {
     "code": "CS 4433",
     "title": "Big Data Management and Analytics",
-    "aliases": [
-      "DS 4433"
-    ],
+    "aliases": ["DS 4433"],
     "source": "https://wpi.cleancatalog.net/computer-science-data-science/cs-4433ds-4433",
     "wording": "Knowledge in database systems at the level of CS 4432, and programming experience are assumed.",
     "background": {
@@ -1006,9 +988,7 @@
   {
     "code": "CS 4801",
     "title": "Introduction to Cryptography and Communication Security",
-    "aliases": [
-      "ECE 4802"
-    ],
+    "aliases": ["ECE 4802"],
     "source": "https://wpi.cleancatalog.net/computer-science-electrical-and-computer-engineering/cs-4801ece-4802",
     "wording": "Experience in expressing algorithms in a modern programming language (e.g., ECE 2049 or CS 2301). ECE 2049 (Embedded Computing in Engineering Design) or CS 2301 (Systems Programming for Non-Majors) or equivalent.\n\nSuggested Background\nDiscrete mathematics (CS 2022/MA 2201 or equivalent)",
     "background": {
@@ -1058,9 +1038,7 @@
   {
     "code": "CS 4100",
     "title": "Artificial Intelligence for Interactive Media and Games",
-    "aliases": [
-      "IMGD 4100"
-    ],
+    "aliases": ["IMGD 4100"],
     "source": "https://wpi.cleancatalog.net/computer-science-interactive-media-and-game-development/imgd-4100cs-4100",
     "wording": "Object-oriented design concepts (CS 2102 or CS 2103), algorithms (CS 2223), and knowledge of technical game development (IMGD 3000 or IMGD 4000).",
     "background": {

@@ -84,17 +84,10 @@
             "minLength": 1
           }
         },
-        "required": [
-          "id",
-          "name",
-          "minUnits",
-          "lines"
-        ],
+        "required": ["id", "name", "minUnits", "lines"],
         "additionalProperties": false,
         "dependencies": {
-          "creditPool": [
-            "poolCredits"
-          ]
+          "creditPool": ["poolCredits"]
         }
       },
       "minItems": 1,
@@ -142,18 +135,10 @@
             "minLength": 1
           }
         },
-        "required": [
-          "line",
-          "section",
-          "name",
-          "units",
-          "filter"
-        ],
+        "required": ["line", "section", "name", "units", "filter"],
         "additionalProperties": false,
         "dependencies": {
-          "subSlots": [
-            "subSlotUnits"
-          ]
+          "subSlots": ["subSlotUnits"]
         }
       },
       "minItems": 1,
@@ -173,10 +158,7 @@
             "minLength": 1
           }
         },
-        "required": [
-          "course",
-          "reason"
-        ],
+        "required": ["course", "reason"],
         "additionalProperties": false
       },
       "minItems": 0,
@@ -205,11 +187,7 @@
             "minLength": 1
           }
         },
-        "required": [
-          "id",
-          "courses",
-          "reason"
-        ],
+        "required": ["id", "courses", "reason"],
         "additionalProperties": false
       },
       "minItems": 0,
@@ -380,11 +358,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "id",
-          "name",
-          "type"
-        ],
+        "required": ["id", "name", "type"],
         "additionalProperties": false,
         "allOf": [
           {
@@ -396,10 +370,7 @@
               }
             },
             "then": {
-              "required": [
-                "section",
-                "courses"
-              ]
+              "required": ["section", "courses"]
             }
           },
           {
@@ -428,12 +399,7 @@
               }
             },
             "then": {
-              "required": [
-                "section",
-                "lines",
-                "minCourses",
-                "confirmation"
-              ]
+              "required": ["section", "lines", "minCourses", "confirmation"]
             }
           },
           {
@@ -462,10 +428,7 @@
               }
             },
             "then": {
-              "required": [
-                "section",
-                "maxApIb"
-              ]
+              "required": ["section", "maxApIb"]
             }
           },
           {
@@ -477,9 +440,7 @@
               }
             },
             "then": {
-              "required": [
-                "minUnits"
-              ]
+              "required": ["minUnits"]
             }
           },
           {
@@ -491,11 +452,7 @@
               }
             },
             "then": {
-              "required": [
-                "section",
-                "maxCourses",
-                "levelCeiling"
-              ]
+              "required": ["section", "maxCourses", "levelCeiling"]
             }
           },
           {
@@ -507,9 +464,7 @@
               }
             },
             "then": {
-              "required": [
-                "section"
-              ]
+              "required": ["section"]
             }
           },
           {
@@ -521,10 +476,7 @@
               }
             },
             "then": {
-              "required": [
-                "section",
-                "minCourses"
-              ]
+              "required": ["section", "minCourses"]
             }
           },
           {
@@ -536,9 +488,7 @@
               }
             },
             "then": {
-              "required": [
-                "confirmation"
-              ]
+              "required": ["confirmation"]
             }
           }
         ]
@@ -571,11 +521,7 @@
             "minLength": 1
           }
         },
-        "required": [
-          "id",
-          "name",
-          "type"
-        ],
+        "required": ["id", "name", "type"],
         "additionalProperties": false
       },
       "minItems": 0,
@@ -629,13 +575,7 @@
       "type": "object",
       "properties": {
         "type": {
-          "enum": [
-            "courses",
-            "subjects",
-            "subjectMinLevel",
-            "manual",
-            "any"
-          ]
+          "enum": ["courses", "subjects", "subjectMinLevel", "manual", "any"]
         },
         "subject": {
           "type": "string",
@@ -697,9 +637,7 @@
           "uniqueItems": true
         }
       },
-      "required": [
-        "type"
-      ],
+      "required": ["type"],
       "additionalProperties": false,
       "allOf": [
         {
@@ -713,14 +651,10 @@
           "then": {
             "anyOf": [
               {
-                "required": [
-                  "courses"
-                ]
+                "required": ["courses"]
               },
               {
-                "required": [
-                  "coursePatterns"
-                ]
+                "required": ["coursePatterns"]
               }
             ]
           }
@@ -734,9 +668,7 @@
             }
           },
           "then": {
-            "required": [
-              "subjects"
-            ]
+            "required": ["subjects"]
           }
         },
         {
@@ -748,10 +680,7 @@
             }
           },
           "then": {
-            "required": [
-              "subject",
-              "minLevel"
-            ]
+            "required": ["subject", "minLevel"]
           }
         }
       ]
